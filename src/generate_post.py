@@ -188,6 +188,12 @@ def generate(market: str, date_str: str, price_data: dict, model: str = "claude-
     ) as stream:
         response = stream.get_final_message()
 
+    if response.stop_reason != "end_turn":
+        raise RuntimeError(
+            f"Claude 응답이 끝까지 완료되지 않았습니다 (stop_reason={response.stop_reason!r}). "
+            "max_tokens을 늘리거나 web_search max_uses를 줄여서 다시 시도하세요."
+        )
+
     return _parse_json_response(_extract_text(response))
 
 

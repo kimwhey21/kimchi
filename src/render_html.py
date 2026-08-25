@@ -11,6 +11,7 @@ insight_section의 icon/chart/table은 저작권 문제가 없도록 외부 이�
 """
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
@@ -81,7 +82,12 @@ def _to_card(entry: dict) -> dict:
 def _to_theme_card(label: str, ticker: str, price_data: dict) -> dict | None:
     entry = price_data["watchlist"].get(ticker) or price_data["macro"].get(ticker)
     if entry is None:
-        return None  # Claude가 잘못된 ticker를 골랐을 경우 조용히 건너뜀
+        print(
+            f"[경고] theme_section: '{ticker}'는 가격 데이터에 없는 ticker라 카드에서 "
+            f"빠졌습니다 (label: {label!r}). 본문에는 언급됐을 수 있으니 확인하세요.",
+            file=sys.stderr,
+        )
+        return None
     base = _to_card(entry)
     return {**base, "label": label, "sub_label": entry["name"]}
 
@@ -118,9 +124,17 @@ def render(market: str, date_str: str, price_data: dict, generated: dict) -> str
     ]
 
     stock_section = generated.get("stock_section") or {}
+    featured_tickers = stock_section.get("featured_tickers", [])
+    for t in featured_tickers:
+        if t not in price_data["watchlist"]:
+            print(
+                f"[경고] stock_section: '{t}'는 가격 데이터에 없는 ticker라 카드에서 "
+                f"빠졌습니다. 본문에는 언급됐을 수 있으니 확인하세요.",
+                file=sys.stderr,
+            )
     stock_cards = [
         _to_card({**price_data["watchlist"][t], "ticker": t})
-        for t in stock_section.get("featured_tickers", [])
+        for t in featured_tickers
         if t in price_data["watchlist"]
     ]
 
