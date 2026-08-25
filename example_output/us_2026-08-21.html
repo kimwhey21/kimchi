@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>장기금리 2007년來 최고인데도 3대지수는 왜 올랐을까</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root {
+    --up: #e34948;
+    --down: #2a78d6;
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e5e3dd;
+    --text: #17171a;
+    --text-muted: #6b6a66;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+    line-height: 1.7;
+  }
+  .eyebrow { font-size: 13px; color: var(--text-muted); letter-spacing: .02em; margin-bottom: 8px; }
+  h1 { font-size: 26px; font-weight: 700; line-height: 1.4; margin: 0 0 28px; }
+  h2 { font-size: 19px; font-weight: 700; margin: 40px 0 12px; }
+  h3 { font-size: 16px; font-weight: 700; margin: 20px 0 8px; }
+  p { margin: 0 0 14px; font-size: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .card .label { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
+  .card .label .ticker { color: var(--text-muted); opacity: .7; font-size: 12px; }
+  .card .sub-label { font-size: 12px; color: var(--text-muted); opacity: .8; }
+  .card .price { font-size: 20px; font-weight: 700; }
+  .card .delta { font-size: 13px; font-weight: 600; margin: 2px 0 8px; }
+  .card .delta.up { color: var(--up); }
+  .card .delta.down { color: var(--down); }
+  .cal-item { display: flex; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+  .cal-date { min-width: 66px; font-size: 13px; color: var(--text-muted); flex-shrink: 0; }
+  .cal-title { font-weight: 600; font-size: 14px; margin: 0 0 2px; }
+  .cal-desc { font-size: 13px; color: var(--text-muted); margin: 0; }
+  .closing { margin-top: 36px; padding-top: 24px; border-top: 1px dashed var(--border); }
+  .closing h2 { margin-top: 0; }
+  .closing p { font-style: italic; color: #333230; }
+  table.data-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .data-table th, .data-table td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .data-table th:first-child, .data-table td:first-child { text-align: left; }
+  .data-table thead th { color: var(--text-muted); font-weight: 600; font-size: 12px; }
+  .data-table td.up { color: var(--up); font-weight: 600; }
+  .data-table td.down { color: var(--down); font-weight: 600; }
+  .chart-wrap { position: relative; width: 100%; margin: 20px 0; }
+  .story-head { display: flex; align-items: center; gap: 10px; margin: 28px 0 8px; }
+  .story-icon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px; background: var(--card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+  .story-icon svg { width: 19px; height: 19px; }
+  .story-head h3 { margin: 0; }
+  .stat-compare { display: flex; align-items: center; gap: 14px; margin: 18px 0; padding: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; }
+  .stat-compare .stat-block { flex: 1; text-align: center; }
+  .stat-compare .stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .stat-compare .stat-value { font-size: 24px; font-weight: 700; }
+  .stat-compare .stat-arrow { flex-shrink: 0; text-align: center; color: var(--text-muted); }
+  .stat-compare .stat-multiple { display: block; margin-top: 2px; font-size: 13px; font-weight: 700; color: var(--up); }
+  footer { margin-top: 48px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 16px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">미국장 마감 시황 · 2026-08-21</div>
+  <h1>장기금리 2007년來 최고인데도 3대지수는 왜 올랐을까</h1>
+
+  <div class="grid">
+    
+    <div class="card">
+      <div class="label">다우존스</div>
+      <div class="price">53,277.01</div>
+      <div class="delta up">+0.98%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">S&amp;P500</div>
+      <div class="price">7,674.37</div>
+      <div class="delta up">+0.43%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">나스닥종합</div>
+      <div class="price">26,180.46</div>
+      <div class="delta up">+0.44%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">러셀2000</div>
+      <div class="price">3,017.87</div>
+      <div class="delta up">+0.85%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">VIX</div>
+      <div class="price">15.13</div>
+      <div class="delta down">-5.5%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">美 10년물 금리</div>
+      <div class="price">4.7%</div>
+      <div class="delta up">+1.51%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">美 30년물 금리</div>
+      <div class="price">5.28%</div>
+      <div class="delta up">+1.54%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">국제 금</div>
+      <div class="price">4,615.65달러</div>
+      <div class="delta up">+2.2%</div>
+    </div>
+    
+  </div>
+
+  
+  <h2>국채금리, 재무부 개입도 하루를 못 버텼습니다</h2>
+  
+  <p>이번 주 초 미국 재무부는 장기 국채 바이백 규모를 최소 두 배로 확대하겠다고 발표했습니다. 시장에 풀린 장기 국채를 정부가 직접 사들여 수급을 개선하고, 금리 상승 속도를 늦추겠다는 취지입니다. 발표 직후 30년물 금리가 약 10bp 급락하며 효과가 나타나는 듯했습니다.</p>
+  
+  <p>하지만 그 효과는 하루를 넘기지 못했습니다. 10년물 금리는 4.70%, 30년물 금리는 5.28%까지 재차 상승하며 바이백 발표 이전 수준으로 되돌아갔습니다. 미국 국가부채가 40조 달러를 넘어서며 국채 공급이 계속 늘어나는 가운데, AI 인프라 투자를 위한 빅테크의 대규모 회사채 발행까지 겹쳐 시중 자금을 두고 정부와 기업이 경쟁하는 구도가 형성되고 있습니다.</p>
+  
+  
+  <h2>경기는 견조한데, 소비는 흔들립니다</h2>
+  
+  <p>8월 서비스업 구매관리자지수(PMI) 예비치는 56.8을 기록해 전월(54.5) 대비 크게 개선됐습니다. 최근 20개월 사이 가장 큰 폭의 상승으로, 미국 민간 경제가 여전히 확장 국면에 있다는 신호로 해석됩니다.</p>
+  
+  <p>그러나 같은 날 발표된 월마트 실적은 정반대 메시지를 던졌습니다. 동일점포 매출 증가율이 2020년 이후 가장 낮은 수준에 그쳤고, 중산층과 저소득층 소비 흐름을 폭넓게 보여주는 이 회사의 실적 부진은 고금리와 높은 물가가 소비 심리까지 압박하기 시작한 것 아니냐는 우려로 이어졌습니다.</p>
+  
+  
+  <h2>반도체, 금리 충격에도 버틴 이유</h2>
+  
+  <p>금리가 다시 뛰었는데도 반도체 관련주는 지난번처럼 크게 흔들리지 않았습니다. 직전 거래일인 18일 필라델피아 반도체지수가 하루 새 5%를 넘게 밀리며 금리 부담을 먼저 소화한 영향이 커 보입니다. 당시 엔비디아와 마이크론 등 주요 종목도 동반 급락했었습니다.</p>
+  
+  <p>이번 조정을 두고는 AI 수요 자체가 식었다기보다 금리 상승에 따른 밸류에이션 눈높이 조정으로 보는 해석이 많습니다. 데이터센터 투자나 반도체 수요 전망이 꺾였다는 신호는 아직 확인되지 않고 있습니다. 다만 이런 흐름이 다음 실적 시즌까지 이어질지는 조금 더 지켜볼 필요가 있습니다.</p>
+  
+  
+
+  
+  <h2>에너지·암호화폐는 강세, 유통·바이오는 약세</h2>
+  <div class="grid">
+    
+    <div class="card">
+      <div class="label">에너지</div>
+      <div class="sub-label">WTI 원유</div>
+      <div class="delta up" style="font-size:18px; margin-top:2px;">+1.82%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">암호화폐 관련주</div>
+      <div class="sub-label">코인베이스</div>
+      <div class="delta up" style="font-size:18px; margin-top:2px;">+7.58%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">반도체</div>
+      <div class="sub-label">필라델피아 반도체 ETF</div>
+      <div class="delta down" style="font-size:18px; margin-top:2px;">-0.51%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">헬스케어·바이오</div>
+      <div class="sub-label">모더나</div>
+      <div class="delta down" style="font-size:18px; margin-top:2px;">-23.55%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">유통·소비재</div>
+      <div class="sub-label">월마트</div>
+      <div class="delta down" style="font-size:18px; margin-top:2px;">-9.15%</div>
+    </div>
+    
+  </div>
+  <p>국제유가가 급등하며 에너지 관련주가 강세를 보였고, 비트코인이 8만 달러 돌파를 시도하면서 코인베이스 등 암호화폐 관련주도 함께 올랐습니다. 반도체는 금리 상승 여파가 이어졌음에도 지난 거래일 급락 때 악재를 상당 부분 선반영해 낙폭이 크지 않았습니다. 반면 모더나는 전날 급등에 따른 차익실현 매물에, 월마트는 부진한 실적에 발목을 잡히며 헬스케어·유통 업종이 약세를 보였습니다.</p>
+  
+
+  
+  <h2>모더나·월마트는 급락, 코인베이스·디어는 급등</h2>
+  <div class="grid">
+    
+    <div class="card">
+      <div class="label">엔비디아 <span class="ticker">(NVDA)</span></div>
+      <div class="delta down" style="font-size:18px; margin-top:2px;">-0.98%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">마이크론 <span class="ticker">(MU)</span></div>
+      <div class="delta down" style="font-size:18px; margin-top:2px;">-0.77%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">인텔 <span class="ticker">(INTC)</span></div>
+      <div class="delta down" style="font-size:18px; margin-top:2px;">-2.24%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">테슬라 <span class="ticker">(TSLA)</span></div>
+      <div class="delta down" style="font-size:18px; margin-top:2px;">-1.7%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">월마트 <span class="ticker">(WMT)</span></div>
+      <div class="delta down" style="font-size:18px; margin-top:2px;">-9.15%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">모더나 <span class="ticker">(MRNA)</span></div>
+      <div class="delta down" style="font-size:18px; margin-top:2px;">-23.55%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">코인베이스 <span class="ticker">(COIN)</span></div>
+      <div class="delta up" style="font-size:18px; margin-top:2px;">+7.58%</div>
+    </div>
+    
+    <div class="card">
+      <div class="label">디어 <span class="ticker">(DE)</span></div>
+      <div class="delta up" style="font-size:18px; margin-top:2px;">+6.9%</div>
+    </div>
+    
+  </div>
+  <p>엔비디아(-0.98%), 마이크론(-0.77%), 인텔(-2.24%)은 지난 거래일 급락의 여진 속에 소폭 조정을 이어갔습니다. 테슬라는 전날 4.2% 급등에 따른 차익실현 매물에 1.7% 밀렸습니다.
+
+모더나는 전날 암 백신 임상 성공 소식에 177% 폭등했던 것에 대한 차익실현으로 23.55% 조정을 받았고, 미국 소비의 바로미터인 월마트는 동일점포 매출이 시장 기대를 밑돌면서 9.15% 급락했습니다. 반대로 비트코인이 8만 달러 돌파를 시도하면서 코인베이스가 7.58% 올랐고, 농기계 업체 디어는 깜짝 실적으로 6.9% 상승했습니다.</p>
+  
+
+  
+  <h2>금리와 엔비디아, 두 개의 시험대가 남았습니다</h2>
+  <p>10년물 금리가 다시 4.7% 위에서 고점을 시험하는지, 브렌트유가 배럴당 90달러 위에서 계속 머무는지가 다음 주 시장의 방향을 가늠할 잣대가 될 것으로 보입니다. 27일 엔비디아 실적과 27~29일 잭슨홀 심포지엄에서 나올 발언들도 금리와 AI 투자 심리 양쪽에 영향을 줄 수 있어 함께 지켜볼 만합니다.</p>
+  
+
+  
+  <h2>오늘 지수 밖에서 있었던 일들</h2>
+  
+  <div class="story-head">
+    <span class="story-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="20" height="7" rx="1.5"/><rect x="6" y="19" width="20" height="7" rx="1.5"/><circle cx="10" cy="9.5" r="1"/><circle cx="10" cy="22.5" r="1"/></svg></span>
+    <h3>AI 데이터센터, 이제는 전력이 병목입니다</h3>
+  </div>
+  
+  <p>GPU와 메모리 확보 경쟁이 한풀 꺾이자, 이번엔 전력이 새로운 병목으로 떠올랐습니다. 시장조사업체들에 따르면 일반 데이터센터는 랙당 5~15kW의 전력을 쓰는 반면, 고성능 AI 반도체로 구성된 AI 데이터센터는 랙당 30~100kW 이상을 필요로 합니다. 컨설팅업체 딜로이트는 미국 내 AI 데이터센터의 전력 수요가 2024년 4GW에서 2035년 123GW까지, 30배 넘게 늘어날 것으로 전망했습니다.</p>
+  
+  <p>문제는 공급 속도입니다. 송전망 연결에는 통상 수년이 걸리는데, AI 인프라 투자 속도는 그보다 훨씬 빠릅니다. 실제로 올여름 미국에서는 총 1,300억 달러 규모의 데이터센터 프로젝트 75건이 지역 전력망 부담과 전기요금 인상 논란을 이유로 멈춰 선 것으로 알려졌습니다. 시장조사기관 가트너는 2027년까지 새로 짓는 AI 데이터센터의 상당수가 전력 확보 문제로 가동에 차질을 빚을 수 있다고 내다봤습니다.</p>
+  
+  <p>이런 흐름 속에서 데이터센터 인근에서 직접 전력을 생산하는 &#39;온사이트 발전&#39; 수요가 빠르게 늘고 있고, 국내에서도 변압기·전선 등 전력 설비 기업들의 수주가 증가하는 추세입니다. 반도체 다음으로 전력 인프라 업종이 AI 투자 흐름의 다음 수혜 축으로 거론되는 이유입니다.</p>
+  
+  
+  <div class="stat-compare">
+    
+    <div class="stat-block">
+      <div class="stat-label">2024년</div>
+      <div class="stat-value">4GW</div>
+    </div>
+    
+    <div class="stat-arrow">→<span class="stat-multiple">30.8배</span></div>
+    
+    
+    <div class="stat-block">
+      <div class="stat-label">2035년(전망)</div>
+      <div class="stat-value">123GW</div>
+    </div>
+    
+    
+  </div>
+  
+  
+  <div class="story-head">
+    <span class="story-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="12" width="14" height="12" rx="2"/><circle cx="13" cy="17" r="1.4"/><circle cx="19" cy="17" r="1.4"/><line x1="16" y1="12" x2="16" y2="7"/><circle cx="16" cy="6" r="1.4"/><line x1="9" y1="18" x2="5" y2="18"/><line x1="23" y1="18" x2="27" y2="18"/></svg></span>
+    <h3>휴머노이드 로봇, &#39;누가 만드나&#39;에서 &#39;누가 파나&#39;로</h3>
+  </div>
+  
+  <p>올해 하반기 로봇 업계의 화두가 눈에 띄게 달라지고 있습니다. 몇 년 전까지는 어떤 회사가 인상적인 로봇 시연 영상을 공개하느냐가 관심사였다면, 이제는 실제로 누가 로봇을 팔고 양산 매출을 내고 있느냐로 무게중심이 옮겨가는 분위기입니다.</p>
+  
+  <p>테슬라는 옵티머스 양산 준비에 속도를 내고 있고, 현대차그룹은 CES 2026에서 완전 전기구동 아틀라스를 공개한 데 이어 8월부터 미국 조지아 공장 인근에 로봇 응용센터(RMAC) 가동을 시작했습니다. 보스턴다이내믹스의 하드웨어 설계 역량에 현대모비스·현대위아의 부품 공급, 엔비디아 GPU까지 결합하며 수직 계열화된 밸류체인을 갖춰가는 모습입니다.</p>
+  
+  <p>전자제조서비스(EMS) 업체들의 참여도 눈에 띕니다. 자빌은 앱트로닉과 손잡고 아폴로 휴머노이드를 생산하는 동시에 자사 라인에 직접 투입해 성능을 검증하고 있고, 플렉스와 폭스콘도 각각 로봇 전문기업들과 협력을 확대하고 있습니다.</p>
+  
+  <p>다만 아직은 산업 전반이 &#39;기술 시연&#39;과 &#39;상업화&#39; 사이 어디쯤에 있다는 평가가 많습니다. 실제 양산 매출이 언제, 얼마나 나오는지가 앞으로 이 업종을 평가하는 핵심 기준이 될 것으로 보입니다.</p>
+  
+  
+  <table class="data-table">
+    <tbody>
+      
+      <tr><td>테슬라</td><td>옵티머스 양산 준비</td></tr>
+      
+      <tr><td>현대차그룹</td><td>8월 美 조지아 로봇 응용센터 가동</td></tr>
+      
+      <tr><td>자빌 · 앱트로닉</td><td>아폴로 휴머노이드 생산·자체 실증</td></tr>
+      
+      <tr><td>플렉스 · 폭스콘</td><td>로봇 전문기업과 협력 확대</td></tr>
+      
+    </tbody>
+  </table>
+  
+  
+  <div class="story-head">
+    <span class="story-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="10"/><line x1="16" y1="10" x2="16" y2="22"/><line x1="12" y1="13" x2="20" y2="13"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
+    <h3>암호화폐 규제 법안, 표결이 9월로 다시 미뤄졌습니다</h3>
+  </div>
+  
+  <p>미국 암호화폐 시장의 향방을 가를 클래리티법(디지털자산시장 구조법) 상원 표결이 9월 15일로 재차 연기됐습니다. 이 법안은 그동안 미국 암호화폐 규제를 혼란스럽게 만들었던 핵심 문제, 즉 동일한 디지털 자산을 두고 증권거래위원회(SEC)와 상품선물거래위원회(CFTC) 중 어느 기관이 관할하는지가 불분명했던 문제를 정리하는 것을 목표로 합니다.</p>
+  
+  <p>법안 자체는 초당적 공감대를 얻고 있지만, 필리버스터를 넘는 60표 확보가 관건입니다. 공화당 표만으로는 부족해 민주당 의원 7명가량의 동참이 필요한데, 이해상충 공시 등 윤리 조항을 두고 이견이 남아있습니다. 예측시장 폴리마켓에서는 연내 통과 확률을 31%까지 낮춰 잡고 있습니다.</p>
+  
+  <p>표결 일정조차 잡지 못한 채 폐기될 뻔한 위기는 일단 넘겼다는 평가가 나오지만, 통과 여부에 따라 시장의 반응은 엇갈릴 수 있습니다. 투자은행 번스타인은 법안이 좌초할 경우 비트코인을 비롯한 암호화폐 시장이 한 차례 더 흔들릴 수 있다고 보면서도, 중간선거를 앞둔 3~4분기 사이 시장이 저점을 다지고 반등할 가능성도 함께 제시했습니다.</p>
+  
+  
+  <div class="chart-wrap" style="height: 220px;">
+    <canvas id="insightChart3" role="img" aria-label="클래리티법 연내 통과 확률 추이">클래리티법 연내 통과 확률 추이</canvas>
+  </div>
+  
+  
+  <div class="story-head">
+    <span class="story-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="8,20 11,12 21,12 24,20"/><line x1="8" y1="20" x2="24" y2="20"/></svg></span>
+    <h3>금값, 왜 이렇게 계속 오를까요</h3>
+  </div>
+  
+  <p>국제 금값이 올해 들어서만 온스당 5,600달러까지 오르며 사상 최고치를 새로 썼습니다. 이번 주에도 미국 재무부의 장기 국채 바이백 발표로 국채금리가 출렁이고 달러화 가치가 흔들리면서, 금값은 다시 심리적 저항선인 온스당 4,500달러를 뚫고 올라섰습니다.</p>
+  
+  <p>금값 상승을 이끄는 힘은 한두 가지가 아닙니다. 우선 각국 중앙은행의 매입세가 꾸준합니다. JP모건은 중앙은행들이 올해도 약 755톤의 금을 사들일 것으로 추정했습니다. 여기에 연준의 금리 인하 기대감에 따른 달러 약세, 미국의 대규모 재정적자에 따른 달러 신뢰 약화, 지정학적 긴장까지 겹치며 안전자산 수요를 계속 밀어올리고 있습니다.</p>
+  
+  <p>금만 오른 게 아닙니다. 국제 은 가격은 지난해 한 해에만 141%가량 급등해 45년 만에 최고 기록을 갈아치웠고, 은의 전체 시가총액은 애플·구글급 빅테크에 맞먹는 4조 달러까지 불어났습니다.</p>
+  
+  <p>다만 전문가들 사이에서도 온도차는 있습니다. 웰스파고는 연말 목표가로 4,900~5,100달러를 제시했지만, 조정 없이 지속적으로 오르기는 어렵다는 경고도 함께 나옵니다. 실제로 지난 1월 사상 최고치 이후에도 수백 달러 규모의 조정이 있었던 만큼, 급등락에 유의해야 한다는 지적입니다.</p>
+  
+  
+  <div class="chart-wrap" style="height: 220px;">
+    <canvas id="insightChart4" role="img" aria-label="국제 금값 추이 (온스당 달러)">국제 금값 추이 (온스당 달러)</canvas>
+  </div>
+  
+  
+  <div class="story-head">
+    <span class="story-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="16" y1="6" x2="16" y2="24"/><line x1="8" y1="10" x2="24" y2="10"/><path d="M8 10 L5 17 A4 4 0 0 0 11 17 Z"/><path d="M24 10 L21 17 A4 4 0 0 0 27 17 Z"/><line x1="12" y1="26" x2="20" y2="26"/></svg></span>
+    <h3>AI 투자, 거품 논쟁이 다시 뜨거워지고 있습니다</h3>
+  </div>
+  
+  <p>S&amp;P500 지수는 이제 상위 10개 기업이 전체 시가총액의 40% 이상을 차지할 만큼 특정 업종에 쏠려 있습니다. 대부분 AI와 관련된 기업들입니다. 마이크로소프트·구글·메타·아마존 등 대형 기술기업들은 영업현금흐름의 최대 60%를 AI 인프라 설비투자에 쏟아붓겠다고 밝혔고, 엔비디아 주가는 이익 대비 55배 수준에서 거래되고 있습니다.</p>
+  
+  <p>이 정도 집중도와 밸류에이션을 두고 월가의 시각은 엇갈립니다. 도이체방크가 전 세계 투자자 440명을 대상으로 실시한 조사에서는 응답자의 57%가 &#39;AI 밸류에이션 급락&#39;을 내년 시장의 가장 큰 위험 요인으로 꼽았습니다. MIT와 보스턴컨설팅그룹의 공동 연구에서는 생성형 AI에 투자한 조직의 95%가 아직 뚜렷한 수익을 내지 못하고 있다는 결과도 나왔습니다.</p>
+  
+  <p>반면 낙관론도 만만치 않습니다. AI 관련 투자가 이미 미국 경제 성장에서 소비자 지출보다 큰 비중을 차지할 정도로 실물 경제에 깊숙이 들어와 있다는 점, 그리고 최근 실적 시즌에서 하이퍼스케일러들의 클라우드 매출 성장이 투자자들의 우려를 상당 부분 달래줬다는 점이 근거로 꼽힙니다.</p>
+  
+  <p>결국 관건은 이 막대한 투자가 실제 수익으로 얼마나, 얼마나 빨리 이어지느냐 입니다. 다음 주 발표되는 엔비디아 실적이 이 질문에 대한 또 하나의 단서가 될 것으로 보입니다.</p>
+  
+  
+  <table class="data-table">
+    <tbody>
+      
+      <tr><td>S&amp;P500 상위 10개 기업 비중</td><td>40%+</td></tr>
+      
+      <tr><td>하이퍼스케일러 capex/현금흐름</td><td>최대 60%</td></tr>
+      
+      <tr><td>엔비디아 주가수익비율(PER)</td><td>약 55배</td></tr>
+      
+      <tr><td>&#39;AI 버블이 최대 위험&#39; 응답률(도이체방크)</td><td>57%</td></tr>
+      
+      <tr><td>생성형 AI 투자 후 미수익 조직 비율(MIT)</td><td>95%</td></tr>
+      
+    </tbody>
+  </table>
+  
+  
+  
+
+  
+  <h2>다음 주 주목할 일정</h2>
+  
+  <div class="cal-item">
+    <div class="cal-date">8/27(목)</div>
+    <div>
+      <p class="cal-title">엔비디아 2분기 실적 발표</p>
+      <p class="cal-desc">한국시간 오전 6시경. AI 인프라 수요와 대형 기술주 랠리 지속 여부의 분수령</p>
+    </div>
+  </div>
+  
+  <div class="cal-item">
+    <div class="cal-date">8/27~29</div>
+    <div>
+      <p class="cal-title">잭슨홀 경제정책 심포지엄</p>
+      <p class="cal-desc">연준 연례 행사. 올해 주제는 &#39;금융 혁신과 결제·정책&#39;</p>
+    </div>
+  </div>
+  
+  <div class="cal-item">
+    <div class="cal-date">8/28(금)</div>
+    <div>
+      <p class="cal-title">케빈 워시 연준 의장 기조연설</p>
+      <p class="cal-desc">한국시간 밤 11시. 금리 경로에 대한 힌트 여부 주목</p>
+    </div>
+  </div>
+  
+  
+
+  
+  <div class="closing">
+    <h2>오늘을 한 줄로 정리하면</h2>
+    <p>재무부가 나서도 하루를 못 버틴 금리, 그런데도 저가 매수세로 마감한 지수 — 오늘 하루는 &#39;불안하지만 아직은 버틸 만하다&#39;는 말이 어울리는 하루였습니다. 이 균형이 다음 주 엔비디아 실적과 잭슨홀을 지나서도 유지될지, 담담하게 지켜보겠습니다.</p>
+  </div>
+  
+
+  <footer>본 콘텐츠는 자동 수집된 시세 데이터를 기반으로 생성되었으며, 투자 판단의 참고 자료일 뿐 투자 권유가 아닙니다. 원금 손실이 발생할 수 있습니다.</footer>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+
+
+
+
+
+
+new Chart(document.getElementById('insightChart3'), {
+  type: "line",
+  data: {
+    labels: ["\uc5f0\ucd08 \uc804\ub9dd", "6\uc6d4", "8\uc6d4"],
+    datasets: [{
+      label: "%",
+      data: [75, 60, 31],
+      backgroundColor: 'rgba(42,120,214,0.75)',
+      borderColor: '#2a78d6',
+      borderRadius: 4,
+      tension: 0.3,
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: "\ud074\ub798\ub9ac\ud2f0\ubc95 \uc5f0\ub0b4 \ud1b5\uacfc \ud655\ub960 \ucd94\uc774", color: '#17171a', font: { size: 13, weight: '600' }, padding: { bottom: 10 } }
+    },
+    scales: {
+      y: { grid: { color: '#e5e3dd' }, ticks: { callback: v => v + ("%" || '') } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+
+
+new Chart(document.getElementById('insightChart4'), {
+  type: "line",
+  data: {
+    labels: ["2023\ub144 10\uc6d4", "2026\ub144 1\uc6d4(\ucd5c\uace0)", "2026\ub144 8\uc6d4(\ud604\uc7ac)"],
+    datasets: [{
+      label: "$",
+      data: [2000, 5600, 4615.65],
+      backgroundColor: 'rgba(42,120,214,0.75)',
+      borderColor: '#2a78d6',
+      borderRadius: 4,
+      tension: 0.3,
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: "\uad6d\uc81c \uae08\uac12 \ucd94\uc774 (\uc628\uc2a4\ub2f9 \ub2ec\ub7ec)", color: '#17171a', font: { size: 13, weight: '600' }, padding: { bottom: 10 } }
+    },
+    scales: {
+      y: { grid: { color: '#e5e3dd' }, ticks: { callback: v => v + ("$" || '') } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+# 미국장에서 매번 수집할 지수/종목 목록입니다.
+# name은 화면에 표시될 한글 이름, ticker는 야후 파이낸스 티커입니다.
+# is_yield: true 인 항목은 야후 표기(예: ^TNX=47.0)를 10으로 나눠 실제 %로 변환합니다.
+
+macro:
+  - { ticker: "^DJI",  name: "다우존스" }
+  - { ticker: "^GSPC", name: "S&P500" }
+  - { ticker: "^IXIC", name: "나스닥종합" }
+  - { ticker: "^RUT",  name: "러셀2000" }
+  - { ticker: "^VIX",  name: "VIX" }
+  - { ticker: "^TNX",  name: "美 10년물 금리", is_yield: true, unit: "%" }
+  - { ticker: "^TYX",  name: "美 30년물 금리", is_yield: true, unit: "%" }
+  - { ticker: "GC=F",  name: "국제 금", unit: "달러" }
+
+# 여기 있는 종목 전부가 매번 게시되는 게 아니라, generate_post.py 단계에서
+# Claude가 그날 뉴스를 참고해 이 중 최대 8개를 골라 카드로 보여줍니다.
+# 즉 "그날 진짜 관심 받은 종목"을 자동으로 추리는 역할입니다.
+watchlist:
+  - { ticker: "NVDA",  name: "엔비디아" }
+  - { ticker: "MU",    name: "마이크론" }
+  - { ticker: "INTC",  name: "인텔" }
+  - { ticker: "TSLA",  name: "테슬라" }
+  - { ticker: "AAPL",  name: "애플" }
+  - { ticker: "MSFT",  name: "마이크로소프트" }
+  - { ticker: "AMZN",  name: "아마존" }
+  - { ticker: "META",  name: "메타" }
+  - { ticker: "GOOGL", name: "알파벳" }
+  - { ticker: "WMT",   name: "월마트" }
+  - { ticker: "MRNA",  name: "모더나" }
+  - { ticker: "MRK",   name: "머크" }
+  - { ticker: "COIN",  name: "코인베이스" }
+  - { ticker: "DE",    name: "디어" }
+  - { ticker: "SOXX",  name: "필라델피아 반도체 ETF" }
+  - { ticker: "CL=F",  name: "WTI 원유" }

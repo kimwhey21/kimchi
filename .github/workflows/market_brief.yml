@@ -1,0 +1,52 @@
+name: Market Brief
+
+on:
+  schedule:
+    # 한국시간(KST) 기준 평일 07:00 = UTC 전날 22:00 → 미국장(전날 마감) 요약
+    - cron: "0 22 * * 0-4"
+    # 한국시간(KST) 기준 평일 16:00 = UTC 당일 07:00 → 한국장 마감 요약
+    - cron: "0 7 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      market:
+        description: "수동 실행 시 대상 시장 (us 또는 kr)"
+        required: true
+        default: "us"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 어떤 시장을 실행할지 결정
+        id: market
+        run: |
+          if [ "${{ github.event.schedule }}" = "0 22 * * 0-4" ]; then
+            echo "market=us" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 7 * * 1-5" ]; then
+            echo "market=kr" >> "$GITHUB_OUTPUT"
+          else
+            echo "market=${{ github.event.inputs.market }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 실행
+        run: python -m src.main --market ${{ steps.market.outputs.market }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: 결과물 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: market-brief-${{ steps.market.outputs.market }}
+          path: output/*.html
+
+      # TODO: 블로그 플랫폼이 정해지면 여기에 "임시저장으로 업로드" 단계를 추가하고,
+      # 텔레그램 등으로 미리보기+게시 버튼을 보내는 단계를 이어 붙입니다.

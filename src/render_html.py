@@ -1,0 +1,146 @@
+"""가격 데이터(fetch_*.py) + 생성된 문구(generate_post.py)를 합쳐
+최종 HTML 결과물을 만듭니다.
+
+카드에 들어가는 가격·등락률 숫자는 항상 fetch 단계의 실제
+데이터에서만 가져옵니다. generate_post.py가 돌려준 featured_tickers는
+"어떤 종목을 보여줄지"만 고르고, 숫자 자체는 여기서 원본 데이터를 다시
+조회해서 채웁니다.
+
+insight_section의 icon/chart/table은 저작권 문제가 없도록 외부 이미지를 쓰지 않고,
+아래 ICONS에 정의된 원본 SVG 아이콘과 Chart.js로만 구성합니다.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+
+from jinja2 import Environment, FileSystemLoader
+
+TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates"
+
+# 저작권 걱정 없는 원본 라인 아이콘. 32x32 뷰박스, currentColor 사용.
+ICONS: dict[str, str] = {
+    "server": (
+        '<rect x="6" y="6" width="20" height="7" rx="1.5"/>'
+        '<rect x="6" y="19" width="20" height="7" rx="1.5"/>'
+        '<circle cx="10" cy="9.5" r="1"/><circle cx="10" cy="22.5" r="1"/>'
+    ),
+    "robot": (
+        '<rect x="9" y="12" width="14" height="12" rx="2"/>'
+        '<circle cx="13" cy="17" r="1.4"/><circle cx="19" cy="17" r="1.4"/>'
+        '<line x1="16" y1="12" x2="16" y2="7"/><circle cx="16" cy="6" r="1.4"/>'
+        '<line x1="9" y1="18" x2="5" y2="18"/><line x1="23" y1="18" x2="27" y2="18"/>'
+    ),
+    "coin": (
+        '<circle cx="16" cy="16" r="10"/>'
+        '<line x1="16" y1="10" x2="16" y2="22"/>'
+        '<line x1="12" y1="13" x2="20" y2="13"/><line x1="12" y1="19" x2="20" y2="19"/>'
+    ),
+    "gold": (
+        '<polygon points="8,20 11,12 21,12 24,20"/>'
+        '<line x1="8" y1="20" x2="24" y2="20"/>'
+    ),
+    "scale": (
+        '<line x1="16" y1="6" x2="16" y2="24"/><line x1="8" y1="10" x2="24" y2="10"/>'
+        '<path d="M8 10 L5 17 A4 4 0 0 0 11 17 Z"/>'
+        '<path d="M24 10 L21 17 A4 4 0 0 0 27 17 Z"/>'
+        '<line x1="12" y1="26" x2="20" y2="26"/>'
+    ),
+    "chip": (
+        '<rect x="10" y="10" width="12" height="12" rx="1"/>'
+        '<line x1="13" y1="6" x2="13" y2="10"/><line x1="19" y1="6" x2="19" y2="10"/>'
+        '<line x1="13" y1="22" x2="13" y2="26"/><line x1="19" y1="22" x2="19" y2="26"/>'
+        '<line x1="6" y1="13" x2="10" y2="13"/><line x1="6" y1="19" x2="10" y2="19"/>'
+        '<line x1="22" y1="13" x2="26" y2="13"/><line x1="22" y1="19" x2="26" y2="19"/>'
+    ),
+    "battery": (
+        '<rect x="6" y="11" width="18" height="10" rx="1.5"/>'
+        '<rect x="24" y="14" width="2.5" height="4" rx="0.5"/>'
+        '<line x1="10" y1="14" x2="10" y2="18"/><line x1="14" y1="14" x2="14" y2="18"/>'
+    ),
+    "shield": (
+        '<path d="M16 5 L25 9 V16 C25 22 20 26 16 27 C12 26 7 22 7 16 V9 Z"/>'
+    ),
+}
+DEFAULT_ICON = "chip"
+
+
+def _to_card(entry: dict) -> dict:
+    direction = "up" if entry["change_pct"] >= 0 else "down"
+    sign = "+" if entry["change_pct"] >= 0 else ""
+    unit = entry.get("unit", "")
+    return {
+        "name": entry["name"],
+        "ticker": entry.get("ticker", ""),
+        "price": f'{entry["price"]:,}{unit}',
+        "change_pct": entry["change_pct"],
+        "change_label": f'{sign}{entry["change_pct"]}%',
+        "direction": direction,
+    }
+
+
+def _to_theme_card(label: str, ticker: str, price_data: dict) -> dict | None:
+    entry = price_data["watchlist"].get(ticker) or price_data["macro"].get(ticker)
+    if entry is None:
+        return None  # Claude가 잘못된 ticker를 골랐을 경우 조용히 건너뜀
+    base = _to_card(entry)
+    return {**base, "label": label, "sub_label": entry["name"]}
+
+
+def _prep_insight_section(insight_section: dict | None) -> dict | None:
+    if not insight_section:
+        return None
+    stories = []
+    for story in insight_section.get("stories", []):
+        icon_key = story.get("icon") if story.get("icon") in ICONS else DEFAULT_ICON
+        story = {**story, "icon_svg": ICONS[icon_key]}
+        chart = story.get("chart")
+        if chart and chart.get("type") == "stat" and chart.get("data"):
+            data = chart["data"]
+            multiples = []
+            for a, b in zip(data, data[1:]):
+                m = round(b / a, 1) if a else None
+                multiples.append(f"{m}배" if m else "")
+            story["chart"] = {**chart, "multiples": multiples}
+        stories.append(story)
+    return {**insight_section, "stories": stories}
+
+
+def render(market: str, date_str: str, price_data: dict, generated: dict) -> str:
+    macro_cards = [_to_card(v) for v in price_data["macro"].values()]
+
+    theme_section = generated.get("theme_section") or {}
+    theme_cards = [
+        card for card in (
+            _to_theme_card(h["label"], h["ticker"], price_data)
+            for h in theme_section.get("highlights", [])
+        )
+        if card is not None
+    ]
+
+    stock_section = generated.get("stock_section") or {}
+    stock_cards = [
+        _to_card({**price_data["watchlist"][t], "ticker": t})
+        for t in stock_section.get("featured_tickers", [])
+        if t in price_data["watchlist"]
+    ]
+
+    env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)), autoescape=True)
+    template = env.get_template("post.html.j2")
+
+    return template.render(
+        market_label="미국장" if market == "us" else "한국장",
+        date_str=date_str,
+        title=generated["title"],
+        narrative=generated["narrative"],
+        macro_cards=macro_cards,
+        theme_heading=theme_section.get("heading", "업종·테마"),
+        theme_commentary=theme_section.get("commentary", ""),
+        theme_cards=theme_cards,
+        stock_heading=stock_section.get("heading", "주요 종목"),
+        stock_commentary=stock_section.get("commentary", ""),
+        stock_cards=stock_cards,
+        outlook=generated.get("outlook"),
+        closing=generated.get("closing"),
+        insight_section=_prep_insight_section(generated.get("insight_section")),
+        calendar=generated.get("calendar", []),
+    )

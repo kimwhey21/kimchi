@@ -1,0 +1,20 @@
+# 한국장에서 매번 수집할 지수/종목 목록입니다.
+# ticker는 FinanceDataReader가 인식하는 코드입니다 (지수: KS11/KQ11, 종목: 6자리 코드).
+
+macro:
+  - { ticker: "KS11",    name: "코스피" }
+  - { ticker: "KQ11",    name: "코스닥" }
+  - { ticker: "USD/KRW", name: "원/달러 환율", unit: "원" }
+
+# generate_post.py 단계에서 Claude가 이 중 그날 의미 있었던 종목만 골라 카드로 보여줍니다.
+watchlist:
+  - { ticker: "005930", name: "삼성전자" }
+  - { ticker: "000660", name: "SK하이닉스" }
+  - { ticker: "035420", name: "네이버" }
+  - { ticker: "035720", name: "카카오" }
+  - { ticker: "373220", name: "LG에너지솔루션" }
+  - { ticker: "207940", name: "삼성바이오로직스" }
+  - { ticker: "086520", name: "에코프로" }
+  - { ticker: "247540", name: "에코프로비엠" }
+  - { ticker: "196170", name: "알테오젠" }
+  - { ticker: "277810", name: "레인보우로보틱스" }

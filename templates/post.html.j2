@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root {
+    --up: #e34948;
+    --down: #2a78d6;
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --border: #e5e3dd;
+    --text: #17171a;
+    --text-muted: #6b6a66;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+    line-height: 1.7;
+  }
+  .eyebrow { font-size: 13px; color: var(--text-muted); letter-spacing: .02em; margin-bottom: 8px; }
+  h1 { font-size: 26px; font-weight: 700; line-height: 1.4; margin: 0 0 28px; }
+  h2 { font-size: 19px; font-weight: 700; margin: 40px 0 12px; }
+  h3 { font-size: 16px; font-weight: 700; margin: 20px 0 8px; }
+  p { margin: 0 0 14px; font-size: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .card .label { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
+  .card .label .ticker { color: var(--text-muted); opacity: .7; font-size: 12px; }
+  .card .sub-label { font-size: 12px; color: var(--text-muted); opacity: .8; }
+  .card .price { font-size: 20px; font-weight: 700; }
+  .card .delta { font-size: 13px; font-weight: 600; margin: 2px 0 8px; }
+  .card .delta.up { color: var(--up); }
+  .card .delta.down { color: var(--down); }
+  .cal-item { display: flex; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; background: var(--card); }
+  .cal-date { min-width: 66px; font-size: 13px; color: var(--text-muted); flex-shrink: 0; }
+  .cal-title { font-weight: 600; font-size: 14px; margin: 0 0 2px; }
+  .cal-desc { font-size: 13px; color: var(--text-muted); margin: 0; }
+  .closing { margin-top: 36px; padding-top: 24px; border-top: 1px dashed var(--border); }
+  .closing h2 { margin-top: 0; }
+  .closing p { font-style: italic; color: #333230; }
+  table.data-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .data-table th, .data-table td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .data-table th:first-child, .data-table td:first-child { text-align: left; }
+  .data-table thead th { color: var(--text-muted); font-weight: 600; font-size: 12px; }
+  .data-table td.up { color: var(--up); font-weight: 600; }
+  .data-table td.down { color: var(--down); font-weight: 600; }
+  .chart-wrap { position: relative; width: 100%; margin: 20px 0; }
+  .story-head { display: flex; align-items: center; gap: 10px; margin: 28px 0 8px; }
+  .story-icon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px; background: var(--card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+  .story-icon svg { width: 19px; height: 19px; }
+  .story-head h3 { margin: 0; }
+  .story-photo { width: 100%; height: auto; border-radius: 12px; margin: 14px 0 4px; display: block; }
+  .photo-credit { font-size: 11px; color: var(--text-muted); margin: 0 0 14px; }
+  .photo-credit a { color: var(--text-muted); }
+  .stat-compare { display: flex; align-items: center; gap: 14px; margin: 18px 0; padding: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; }
+  .stat-compare .stat-block { flex: 1; text-align: center; }
+  .stat-compare .stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .stat-compare .stat-value { font-size: 24px; font-weight: 700; }
+  .stat-compare .stat-arrow { flex-shrink: 0; text-align: center; color: var(--text-muted); }
+  .stat-compare .stat-multiple { display: block; margin-top: 2px; font-size: 13px; font-weight: 700; color: var(--up); }
+  footer { margin-top: 48px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 16px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">{{ market_label }} 마감 시황 · {{ date_str }}</div>
+  <h1>{{ title }}</h1>
+
+  <div class="grid">
+    {% for c in macro_cards %}
+    <div class="card">
+      <div class="label">{{ c.name }}</div>
+      <div class="price">{{ c.price }}</div>
+      <div class="delta {{ c.direction }}">{{ c.change_label }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% for section in narrative %}
+  <h2>{{ section.heading }}</h2>
+  {% for para in section.body.split('\n\n') %}
+  <p>{{ para }}</p>
+  {% endfor %}
+  {% endfor %}
+
+  {% if theme_cards %}
+  <h2>{{ theme_heading }}</h2>
+  <div class="grid">
+    {% for c in theme_cards %}
+    <div class="card">
+      <div class="label">{{ c.label }}</div>
+      <div class="sub-label">{{ c.sub_label }}</div>
+      <div class="delta {{ c.direction }}" style="font-size:18px; margin-top:2px;">{{ c.change_label }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if theme_commentary %}<p>{{ theme_commentary }}</p>{% endif %}
+  {% endif %}
+
+  {% if stock_cards %}
+  <h2>{{ stock_heading }}</h2>
+  <div class="grid">
+    {% for c in stock_cards %}
+    <div class="card">
+      <div class="label">{{ c.name }}{% if c.ticker %} <span class="ticker">({{ c.ticker }})</span>{% endif %}</div>
+      <div class="delta {{ c.direction }}" style="font-size:18px; margin-top:2px;">{{ c.change_label }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if stock_commentary %}<p>{{ stock_commentary }}</p>{% endif %}
+  {% endif %}
+
+  {% if outlook %}
+  <h2>{{ outlook.heading }}</h2>
+  <p>{{ outlook.body }}</p>
+  {% endif %}
+
+  {% if insight_section %}
+  <h2>{{ insight_section.heading }}</h2>
+  {% for item in insight_section.stories %}
+  <div class="story-head">
+    <span class="story-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">{{ item.icon_svg|safe }}</svg></span>
+    <h3>{{ item.heading }}</h3>
+  </div>
+  {% if item.image %}
+  <img class="story-photo" src="{{ item.image.url }}" alt="{{ item.image.alt or item.heading }}" loading="lazy">
+  <p class="photo-credit">사진: <a href="{{ item.image.photographer_url }}" target="_blank" rel="noopener">{{ item.image.photographer }}</a> / Unsplash</p>
+  {% endif %}
+  {% for para in item.body.split('\n\n') %}
+  <p>{{ para }}</p>
+  {% endfor %}
+  {% if item.chart and item.chart.type == 'stat' %}
+  <div class="stat-compare">
+    {% for label in item.chart.labels %}
+    <div class="stat-block">
+      <div class="stat-label">{{ label }}</div>
+      <div class="stat-value">{{ item.chart.data[loop.index0] }}{{ item.chart.unit }}</div>
+    </div>
+    {% if not loop.last %}
+    <div class="stat-arrow">→<span class="stat-multiple">{{ item.chart.multiples[loop.index0] }}</span></div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% elif item.chart %}
+  <div class="chart-wrap" style="height: 220px;">
+    <canvas id="insightChart{{ loop.index }}" role="img" aria-label="{{ item.chart.title }}">{{ item.chart.title }}</canvas>
+  </div>
+  {% elif item.table %}
+  <table class="data-table">
+    <tbody>
+      {% for row in item.table %}
+      <tr><td>{{ row.label }}</td><td>{{ row.value }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+
+  {% if calendar %}
+  <h2>다음 주 주목할 일정</h2>
+  {% for ev in calendar %}
+  <div class="cal-item">
+    <div class="cal-date">{{ ev.date }}</div>
+    <div>
+      <p class="cal-title">{{ ev.title }}</p>
+      <p class="cal-desc">{{ ev.desc }}</p>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  {% if closing %}
+  <div class="closing">
+    <h2>{{ closing.heading }}</h2>
+    <p>{{ closing.body }}</p>
+  </div>
+  {% endif %}
+
+  <footer>투자 참고용이며 투자 권유가 아닙니다.</footer>
+
+{% set has_insight_charts = insight_section and (insight_section.stories|selectattr('chart')|list) %}
+{% if has_insight_charts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+{% for item in insight_section.stories %}
+{% if item.chart and item.chart.type != 'stat' %}
+new Chart(document.getElementById('insightChart{{ loop.index }}'), {
+  type: {{ item.chart.type|tojson }},
+  data: {
+    labels: {{ item.chart.labels|tojson }},
+    datasets: [{
+      label: {{ (item.chart.unit or '')|tojson }},
+      data: {{ item.chart.data|tojson }},
+      backgroundColor: 'rgba(42,120,214,0.75)',
+      borderColor: '#2a78d6',
+      borderRadius: 4,
+      tension: 0.3,
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: {{ item.chart.title|tojson }}, color: '#17171a', font: { size: 13, weight: '600' }, padding: { bottom: 10 } }
+    },
+    scales: {
+      y: { grid: { color: '#e5e3dd' }, ticks: { callback: v => v + ({{ (item.chart.unit or '')|tojson }} || '') } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+{% endif %}
+{% endfor %}
+{% endif %}
+</script>
+</body>
+</html>
