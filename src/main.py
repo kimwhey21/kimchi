@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src import fetch_images, generate_post, render_html, render_text
+from src import fetch_images, generate_post, history, render_html, render_text
 
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "output"
 
@@ -36,7 +36,10 @@ def run(market: str) -> Path:
     price_data = fetcher.fetch_all()
 
     print("[2/4] 제목/본문 생성 중 (Claude API)...")
-    generated = generate_post.generate(market, date_str, price_data)
+    recent_headings = history.load_recent_headings(market)
+    generated = generate_post.generate(
+        market, date_str, price_data, recent_headings=recent_headings
+    )
 
     print("[3/4] 인사이트 소재별 사진 검색 중 (Unsplash)...")
     if generated.get("insight_section", {}).get("stories"):
@@ -55,6 +58,9 @@ def run(market: str) -> Path:
     text_path.write_text(text, encoding="utf-8")
     print(f"완료: {out_path}")
     print(f"완료(텍스트): {text_path}")
+
+    history.append(market, date_str, generated)
+
     return out_path
 
 

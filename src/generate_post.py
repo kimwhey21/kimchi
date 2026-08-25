@@ -167,15 +167,29 @@ def _parse_json_response(text: str) -> dict:
     return json.loads(text, strict=False)
 
 
-def generate(market: str, date_str: str, price_data: dict, model: str = "claude-sonnet-5") -> dict:
+def generate(
+    market: str,
+    date_str: str,
+    price_data: dict,
+    model: str = "claude-sonnet-5",
+    recent_headings: list[str] | None = None,
+) -> dict:
     """가격 데이터를 넣으면 title / narrative / featured_tickers / calendar가 담긴 dict를 돌려줍니다."""
     client = anthropic.Anthropic()  # 환경변수 ANTHROPIC_API_KEY 를 자동으로 읽습니다
 
     market_label = "미국장" if market == "us" else "한국장"
+    recent_block = ""
+    if recent_headings:
+        recent_list = "\n".join(f"- {h}" for h in recent_headings)
+        recent_block = (
+            "\n\n[최근에 이미 사용한 제목/소제목 - 아래와 똑같거나 비슷한 표현·문장 구조를 "
+            f"반복하지 마세요]\n{recent_list}"
+        )
     user_content = (
         f"시장: {market_label}\n"
         f"기준일: {date_str}\n\n"
-        f"[가격 데이터]\n{json.dumps(price_data, ensure_ascii=False)}\n\n"
+        f"[가격 데이터]\n{json.dumps(price_data, ensure_ascii=False)}\n"
+        f"{recent_block}\n\n"
         "위 가격 데이터를 바탕으로 오늘자 시황 콘텐츠를 만들어 주세요."
     )
 
