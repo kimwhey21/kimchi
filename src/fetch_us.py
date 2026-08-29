@@ -11,6 +11,7 @@ yfinance로 주요 지수/금리와 관심 종목의 종가, 등락률, 최근 �
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import yaml
@@ -27,6 +28,11 @@ def _fetch_one(ticker: str, name: str, lookback: int = 7, is_yield: bool = False
         raise ValueError(f"{ticker}: 시세 데이터를 가져오지 못했습니다.")
 
     closes = hist["Close"].tolist()[-(lookback + 1):]
+    if any(math.isnan(c) for c in closes):
+        # Yahoo Finance가 일시적으로 결측치(NaN)를 줄 때가 있습니다. "숫자는 절대
+        # 지어내지 않는다"는 원칙상, 이 경우 nan을 그대로 쓰지 말고 여기서 실패해야
+        # 합니다 (전체 파이프라인이 멈추고, 발행 없이 다음 스케줄을 기다립니다).
+        raise ValueError(f"{ticker}: 시세 데이터에 결측값(NaN)이 있습니다.")
     if is_yield:
         closes = [c / 10 for c in closes]  # ^TNX, ^TYX 는 실제 금리*10 으로 표기됨
 

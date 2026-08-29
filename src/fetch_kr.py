@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import math
 from pathlib import Path
 
 import FinanceDataReader as fdr
@@ -34,6 +35,10 @@ def _fetch_one(
 
     df = df.tail(lookback + 1)
     closes = df["Close"].tolist()
+    if any(math.isnan(c) for c in closes):
+        # 데이터 소스가 일시적으로 결측치(NaN)를 줄 때가 있습니다. "숫자는 절대
+        # 지어내지 않는다"는 원칙상, nan을 그대로 쓰지 말고 여기서 실패해야 합니다.
+        raise ValueError(f"{ticker}: 시세 데이터에 결측값(NaN)이 있습니다.")
     prev_close, last_close = closes[-2], closes[-1]
     change_pct = (last_close - prev_close) / prev_close * 100
 
