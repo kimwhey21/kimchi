@@ -111,7 +111,14 @@ def _prep_insight_section(insight_section: dict | None) -> dict | None:
     return {**insight_section, "stories": stories}
 
 
-def render(market: str, date_str: str, price_data: dict, generated: dict) -> str:
+def render(
+    market: str,
+    date_str: str,
+    price_data: dict,
+    generated: dict,
+    lang: str = "ko",
+    market_label: str | None = None,
+) -> str:
     macro_cards = [_to_card(v) for v in price_data["macro"].values()]
 
     theme_section = generated.get("theme_section") or {}
@@ -142,7 +149,8 @@ def render(market: str, date_str: str, price_data: dict, generated: dict) -> str
     template = env.get_template("post.html.j2")
 
     return template.render(
-        market_label="미국장" if market == "us" else "한국장",
+        lang=lang,
+        market_label=market_label or ("미국장" if market == "us" else "한국장"),
         date_str=date_str,
         title=generated["title"],
         narrative=generated["narrative"],

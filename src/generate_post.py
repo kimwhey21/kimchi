@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 
 import anthropic
 
@@ -86,9 +87,11 @@ SYSTEM_PROMPT = """당신은 매일 두 번(미국장/한국장) 증시 마감 �
   },
   "closing": {
     "heading": "글 맨 끝에 붙는 마무리 코멘트의 소제목 (예: '오늘을 한 줄로 정리하면')",
-    "body": "2~3문장. 오늘 다룬 여러 이슈를 하나의 시각으로 묶어서 정리하는 짧은 소감. 뉴스 "
-            "앵커보다 조금 더 개인적이고 담백한 어조도 괜찮음. 매매 추천이나 '이렇게 하세요' "
-            "식 조언은 여기서도 금지"
+    "body": "5~7문장, 1~2개 문단(문단 사이는 빈 줄로 구분). narrative·theme_section·"
+            "stock_section에서 다룬 여러 이슈를 단순 재나열이 아니라 하나의 시각으로 "
+            "묶어서 정리하고, 그 시각이 왜 그날 흐름을 관통하는지까지 설명할 만큼 "
+            "충분히 채우세요. 뉴스 앵커보다 조금 더 개인적이고 담백한 어조도 괜찮음. "
+            "매매 추천이나 '이렇게 하세요' 식 조언은 여기서도 금지"
   },
   "insight_section": {
     "heading": "당일 시황과는 별개인 코너의 소제목. 고정 라벨 대신 그 안에 담을 소재를 암시하는 "
@@ -147,7 +150,7 @@ theme_section.highlights는 3~5개 정도가 적당합니다. 그날 실제로 �
 그날 데이터와 검색 결과에 맞춰 매번 새로 지어야 합니다.
 
 같은 글 안에서 "웃었다/울었다/흔들렸다/버텼다" 같은 감정을 의인화한 대비 동사를 반복해서
-쓰지 마세요. 또한 "훈풍이 불었다", "힘을 냈다" 같은 은유적·문학적 표현보다는 "상승/하락",
+쓰지 마세요. 또한 "훈풍이 불었다", "힘을 냈다", "뛰었다" 같은 은유적·구어체 표현보다는 "상승/하락",
 "강세/약세", "급등/급락", "조정" 같은 표준적인 금융 용어를 우선하세요. 다만 같은 글 안에서
 theme_section.heading과 stock_section.heading이 정확히 같은 단어 쌍(예: 둘 다 "상승/하락")을
 반복해서 쓰지는 마세요 — 최소 하나는 다른 단어 쌍(강세/약세, 급등/급락, 강세/조정 등)을
@@ -159,12 +162,35 @@ def _extract_text(response: anthropic.types.Message) -> str:
     return "".join(block.text for block in response.content if block.type == "text").strip()
 
 
+_TRAILING_COMMA_RE = re.compile(r",\s*([}\]])")
+
+
 def _parse_json_response(text: str) -> dict:
     if text.startswith("```"):
         text = text.split("```")[1]
         if text.startswith("json"):
             text = text[4:]
-    return json.loads(text, strict=False)
+    try:
+        return json.loads(text, strict=False)
+    except json.JSONDecodeError:
+        # Claude가 가끔 배열/객체 끝에 trailing comma를 붙여서 내보낼 때가 있어
+        # 그 경우만 정리해서 한 번 더 시도합니다.
+        return json.loads(_TRAILING_COMMA_RE.sub(r"\1", text), strict=False)
+
+
+_CITE_TAG_RE = re.compile(r"<cite[^>]*>(.*?)</cite>", re.DOTALL)
+
+
+def _strip_cite_tags(value):
+    """web_search 인용 표시로 Claude가 가끔 넣는 <cite index="...">...</cite>를
+    본문에 그대로 남기지 않고, 안쪽 텍스트만 남깁니다."""
+    if isinstance(value, str):
+        return _CITE_TAG_RE.sub(r"\1", value)
+    if isinstance(value, list):
+        return [_strip_cite_tags(v) for v in value]
+    if isinstance(value, dict):
+        return {k: _strip_cite_tags(v) for k, v in value.items()}
+    return value
 
 
 def generate(
@@ -208,7 +234,7 @@ def generate(
             "max_tokens을 늘리거나 web_search max_uses를 줄여서 다시 시도하세요."
         )
 
-    return _parse_json_response(_extract_text(response))
+    return _strip_cite_tags(_parse_json_response(_extract_text(response)))
 
 
 if __name__ == "__main__":
