@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import os
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -34,6 +35,41 @@ from src import (
 )
 
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "output"
+
+
+def _meta_description(generated: dict, limit: int = 300) -> str:
+    """검색엔진 메타 설명 + 워드프레스 홈 화면 글 미리보기(발췌문)에 함께 쓰입니다.
+    첫 narrative 섹션 전체를 이어붙여서 자르므로, 첫 문단만 쓸 때보다 홈
+    화면에서 실제로 무슨 내용인지 더 잘 드러납니다.
+    """
+    body = (generated.get("narrative") or [{}])[0].get("body", "").replace("\n\n", " ")
+    if len(body) <= limit:
+        return body.strip()
+    return body[:limit].rsplit(" ", 1)[0].strip() + "…"
+
+
+def _derive_tags(generated: dict, price_data: dict, lang: str = "ko", limit: int = 12) -> list[str]:
+    """그날 언급된 종목명·업종명을 태그로 씁니다. 관련 글 탐색·SEO에 가장
+    직접적으로 도움되는 조합이라 여기서 추가 LLM 호출 없이 만듭니다.
+    """
+    names: list[str] = []
+
+    stock_section = generated.get("stock_section") or {}
+    for ticker in stock_section.get("featured_tickers", []):
+        entry = price_data.get("watchlist", {}).get(ticker)
+        if entry:
+            names.append(entry.get("name_en") or entry["name"] if lang == "en" else entry["name"])
+
+    theme_section = generated.get("theme_section") or {}
+    for h in theme_section.get("highlights", []):
+        if h.get("label"):
+            names.append(h["label"])
+
+    seen: list[str] = []
+    for name in names:
+        if name and name not in seen:
+            seen.append(name)
+    return seen[:limit]
 
 
 def run(market: str, with_english: bool = False) -> Path:
@@ -71,7 +107,10 @@ def run(market: str, with_english: bool = False) -> Path:
         )
 
     print("[4/5] HTML 렌더링 중...")
-    html = render_html.render(market, date_str, price_data, generated)
+    subscribe_form_action = os.environ.get("SUBSCRIBE_FORM_ACTION")
+    html = render_html.render(
+        market, date_str, price_data, generated, subscribe_form_action=subscribe_form_action
+    )
     text = render_text.render(market, date_str, price_data, generated)
 
     OUTPUT_DIR.mkdir(exist_ok=True)
@@ -84,7 +123,13 @@ def run(market: str, with_english: bool = False) -> Path:
 
     if publish_wordpress.is_configured():
         print("[5/5] 워드프레스에 임시저장 업로드 중...")
-        result = publish_wordpress.publish_draft(generated["title"], html)
+        result = publish_wordpress.publish_draft(
+            generated["title"],
+            html,
+            excerpt=_meta_description(generated),
+            tags=_derive_tags(generated, price_data),
+            category="Daily",
+        )
         edit_link = result.get("link", "")
         print(f"완료(워드프레스 임시저장): id={result.get('id')} {edit_link}")
     else:
@@ -123,7 +168,8 @@ def _run_english_version(date_str: str, price_data: dict, generated: dict) -> No
 
     print("[EN 2/3] 영어 HTML 렌더링 중...")
     html_en = render_html.render(
-        "kr", date_str, price_data, generated_en, lang="en", market_label="Korea Market Close"
+        "kr", date_str, price_data, generated_en, lang="en", market_label="Korea Market Close",
+        subscribe_form_action=os.environ.get("SUBSCRIBE_FORM_ACTION"),
     )
     out_path_en = OUTPUT_DIR / f"kr_{date_str}_en.html"
     out_path_en.write_text(html_en, encoding="utf-8")
@@ -131,7 +177,14 @@ def _run_english_version(date_str: str, price_data: dict, generated: dict) -> No
 
     if publish_wordpress.is_configured():
         print("[EN 3/3] 워드프레스에 영어 버전 임시저장 업로드 중...")
-        result = publish_wordpress.publish_draft(generated_en["title"], html_en, lang="en")
+        result = publish_wordpress.publish_draft(
+            generated_en["title"],
+            html_en,
+            lang="en",
+            excerpt=_meta_description(generated_en),
+            tags=_derive_tags(generated_en, price_data, lang="en"),
+            category="Daily",
+        )
         print(f"완료(워드프레스 임시저장, 영어): id={result.get('id')} {result.get('link', '')}")
     else:
         print("[EN 3/3] WORDPRESS_* 환경변수가 없어 영어 버전 워드프레스 업로드는 건너뜁니다.")

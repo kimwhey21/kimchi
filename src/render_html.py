@@ -65,12 +65,16 @@ ICONS: dict[str, str] = {
 DEFAULT_ICON = "chip"
 
 
-def _to_card(entry: dict) -> dict:
+def _display_name(entry: dict, lang: str) -> str:
+    return entry.get("name_en") or entry["name"] if lang == "en" else entry["name"]
+
+
+def _to_card(entry: dict, lang: str = "ko") -> dict:
     direction = "up" if entry["change_pct"] >= 0 else "down"
     sign = "+" if entry["change_pct"] >= 0 else ""
     unit = entry.get("unit", "")
     return {
-        "name": entry["name"],
+        "name": _display_name(entry, lang),
         "ticker": entry.get("ticker", ""),
         "price": f'{entry["price"]:,}{unit}',
         "change_pct": entry["change_pct"],
@@ -79,7 +83,7 @@ def _to_card(entry: dict) -> dict:
     }
 
 
-def _to_theme_card(label: str, ticker: str, price_data: dict) -> dict | None:
+def _to_theme_card(label: str, ticker: str, price_data: dict, lang: str = "ko") -> dict | None:
     entry = price_data["watchlist"].get(ticker) or price_data["macro"].get(ticker)
     if entry is None:
         print(
@@ -88,8 +92,32 @@ def _to_theme_card(label: str, ticker: str, price_data: dict) -> dict | None:
             file=sys.stderr,
         )
         return None
-    base = _to_card(entry)
-    return {**base, "label": label, "sub_label": entry["name"]}
+    base = _to_card(entry, lang)
+    return {**base, "label": label, "sub_label": _display_name(entry, lang)}
+
+
+def _build_foreign_flow_table(price_data: dict, lang: str) -> list[dict] | None:
+    """해외 개인투자자를 위한 "오늘의 외국인 순매매 동향" 표를 만듭니다.
+
+    fetch_kr.py가 watchlist 종목마다 붙여준 foreign_net(외국인 순매매량,
+    양수=순매수)을 그대로 가져와 정렬만 합니다 — 숫자는 Claude가 만들지
+    않고 여기서 그대로 옮기기만 합니다 (다른 카드들과 동일한 원칙).
+    """
+    rows = [
+        {
+            "name": _display_name(entry, lang),
+            "ticker": ticker,
+            "foreign_net": entry["foreign_net"],
+            "foreign_ratio": entry.get("foreign_ratio"),
+            "direction": "up" if entry["foreign_net"] >= 0 else "down",
+        }
+        for ticker, entry in price_data.get("watchlist", {}).items()
+        if "foreign_net" in entry
+    ]
+    if not rows:
+        return None
+    rows.sort(key=lambda r: r["foreign_net"], reverse=True)
+    return rows
 
 
 def _prep_insight_section(insight_section: dict | None) -> dict | None:
@@ -118,13 +146,17 @@ def render(
     generated: dict,
     lang: str = "ko",
     market_label: str | None = None,
+    subscribe_form_action: str | None = None,
 ) -> str:
-    macro_cards = [_to_card(v) for v in price_data["macro"].values()]
+    macro_cards = [_to_card(v, lang) for v in price_data["macro"].values()]
+
+    first_body = (generated.get("narrative") or [{}])[0].get("body", "")
+    meta_description = first_body.split("\n\n")[0][:155].strip()
 
     theme_section = generated.get("theme_section") or {}
     theme_cards = [
         card for card in (
-            _to_theme_card(h["label"], h["ticker"], price_data)
+            _to_theme_card(h["label"], h["ticker"], price_data, lang)
             for h in theme_section.get("highlights", [])
         )
         if card is not None
@@ -140,10 +172,12 @@ def render(
                 file=sys.stderr,
             )
     stock_cards = [
-        _to_card({**price_data["watchlist"][t], "ticker": t})
+        _to_card({**price_data["watchlist"][t], "ticker": t}, lang)
         for t in featured_tickers
         if t in price_data["watchlist"]
     ]
+
+    foreign_flow_rows = _build_foreign_flow_table(price_data, lang) if market == "kr" else None
 
     env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)), autoescape=True)
     template = env.get_template("post.html.j2")
@@ -165,4 +199,7 @@ def render(
         closing=generated.get("closing"),
         insight_section=_prep_insight_section(generated.get("insight_section")),
         calendar=generated.get("calendar", []),
+        foreign_flow_rows=foreign_flow_rows,
+        meta_description=meta_description,
+        subscribe_form_action=subscribe_form_action,
     )

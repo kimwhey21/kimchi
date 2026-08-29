@@ -12,6 +12,11 @@ on:
         description: "수동 실행 시 대상 시장 (us 또는 kr)"
         required: true
         default: "us"
+      with_english:
+        description: "kr 실행 시 영어 번역판도 만들지 (Claude API 호출 1회 추가 = 비용 추가)"
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   run:
@@ -38,15 +43,22 @@ jobs:
           fi
 
       - name: 실행
-        run: python -m src.main --market ${{ steps.market.outputs.market }}
+        run: |
+          ARGS="--market ${{ steps.market.outputs.market }}"
+          if [ "${{ steps.market.outputs.market }}" = "kr" ] && [ "${{ github.event.inputs.with_english }}" = "true" ]; then
+            ARGS="$ARGS --en"
+          fi
+          python -m src.main $ARGS
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          SUBSCRIBE_FORM_ACTION: ${{ secrets.SUBSCRIBE_FORM_ACTION }}
 
-      - name: 결과물 업로드
+      - name: 결과물 업로드 (백업용)
         uses: actions/upload-artifact@v4
         with:
-          name: market-brief-${{ steps.market.outputs.market }}
-          path: output/*.html
-
-      # TODO: 블로그 플랫폼이 정해지면 여기에 "임시저장으로 업로드" 단계를 추가하고,
-      # 텔레그램 등으로 미리보기+게시 버튼을 보내는 단계를 이어 붙입니다.
+          name: market-brief-${{ steps.market.outputs.market }}-${{ github.run_id }}
+          path: output/*

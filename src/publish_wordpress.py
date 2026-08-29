@@ -102,7 +102,54 @@ def _to_wordpress_content(html_content: str) -> str:
     return f"<!-- wp:html -->\n{fragment}\n<!-- /wp:html -->"
 
 
-def publish_draft(title: str, html_content: str, lang: str | None = None) -> dict:
+def _get_or_create_term_id(
+    base_url: str, auth: tuple[str, str], endpoint: str, name: str, lang: str | None = None
+) -> int | None:
+    """워드프레스 태그/카테고리(taxonomy term)는 이름이 아니라 id로 지정해야
+    해서, 이름으로 기존 term을 찾아보고 없으면 새로 만듭니다.
+
+    lang: Polylang 사이트에서 카테고리처럼 언어별로 분리된 taxonomy는 생성 시
+    `?lang=` 쿼리 파라미터를 줘야 해당 언어의 term으로 만들어집니다 (글
+    생성 때와 같은 방식 — publish_draft의 lang 설명 참고).
+    """
+    try:
+        search = requests.get(
+            f"{base_url}/wp-json/wp/v2/{endpoint}",
+            auth=auth,
+            params={"search": name, "per_page": 100},
+            timeout=TIMEOUT_SECONDS,
+        )
+        match = next((t for t in search.json() if t.get("name") == name), None)
+        if match:
+            return match["id"]
+        created = requests.post(
+            f"{base_url}/wp-json/wp/v2/{endpoint}",
+            auth=auth,
+            params={"lang": lang} if lang else None,
+            json={"name": name},
+            timeout=TIMEOUT_SECONDS,
+        )
+        if created.status_code < 400:
+            return created.json()["id"]
+        print(f"[경고] {endpoint} 생성 실패 ('{name}'): {created.text[:200]}", file=sys.stderr)
+    except Exception as e:
+        print(f"[경고] {endpoint} 처리 실패 ('{name}'): {e!r}", file=sys.stderr)
+    return None
+
+
+def _get_or_create_tag_ids(base_url: str, auth: tuple[str, str], names: list[str]) -> list[int]:
+    ids = [_get_or_create_term_id(base_url, auth, "tags", name) for name in names]
+    return [i for i in ids if i is not None]
+
+
+def publish_draft(
+    title: str,
+    html_content: str,
+    lang: str | None = None,
+    excerpt: str | None = None,
+    tags: list[str] | None = None,
+    category: str | None = None,
+) -> dict:
     """워드프레스에 임시저장 글을 만들고 응답 JSON(dict)을 돌려줍니다.
 
     lang: Polylang 언어 코드(예: "en")로 글을 생성해봅니다. 참고: `GET
@@ -112,19 +159,42 @@ def publish_draft(title: str, html_content: str, lang: str | None = None) -> dic
     접두사가 붙고 해당 언어의 기본 카테고리로 분류되는 것으로 확인했습니다.
     그래도 사이트 설정에 따라 달라질 수 있으니, 아래에서 결과를 실제로
     확인해서 애매하면 수동 확인을 안내합니다.
+
+    excerpt: 검색엔진 메타 설명(SEO)으로 쓰일 짧은 요약. 이 사이트엔 별도
+    SEO 플러그인(Yoast/RankMath 등)이 안 깔려 있어서 전용 메타 설명 필드가
+    없는데, 워드프레스 기본 "발췌문(excerpt)" 필드는 테마가 메타 설명
+    대체용으로 자주 쓰므로 여기 넣어둡니다.
+
+    tags: 그날 언급된 종목명·테마명 같은 태그 이름 목록. 없는 태그는 자동으로
+    새로 만듭니다.
+
+    category: 카테고리 이름 (예: "시황"). 시황 자동생성 글과 나중에 추가할
+    다른 종류의 글을 홈 화면에서 구분해 보여주는 용도입니다. 없는 카테고리는
+    자동으로 만듭니다 (lang이 있으면 그 언어로).
     """
     base_url = os.environ["WORDPRESS_URL"].rstrip("/")
     username = os.environ["WORDPRESS_USERNAME"]
     app_password = os.environ["WORDPRESS_APP_PASSWORD"]
+    auth = (username, app_password)
 
     safe_content = _to_wordpress_content(html_content)
+
+    payload = {"title": title, "content": safe_content, "status": "draft"}
+    if excerpt:
+        payload["excerpt"] = excerpt
+    if tags:
+        payload["tags"] = _get_or_create_tag_ids(base_url, auth, tags)
+    if category:
+        cat_id = _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
+        if cat_id:
+            payload["categories"] = [cat_id]
 
     endpoint = f"{base_url}/wp-json/wp/v2/posts"
     response = requests.post(
         endpoint,
-        auth=(username, app_password),
+        auth=auth,
         params={"lang": lang} if lang else None,
-        json={"title": title, "content": safe_content, "status": "draft"},
+        json=payload,
         timeout=TIMEOUT_SECONDS,
     )
 

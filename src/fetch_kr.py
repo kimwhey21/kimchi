@@ -17,10 +17,14 @@ from pathlib import Path
 import FinanceDataReader as fdr
 import yaml
 
+from src import fetch_foreign_flows
+
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "watchlist_kr.yaml"
 
 
-def _fetch_one(ticker: str, name: str, lookback: int = 7, unit: str = "", **_ignore) -> dict:
+def _fetch_one(
+    ticker: str, name: str, name_en: str = "", lookback: int = 7, unit: str = "", **_ignore
+) -> dict:
     """종목/지수 하나의 최근 시세를 가져와 카드에 필요한 형태로 정리합니다."""
     end = dt.date.today()
     start = end - dt.timedelta(days=lookback * 3)  # 주말·공휴일 감안 여유있게 조회
@@ -36,6 +40,7 @@ def _fetch_one(ticker: str, name: str, lookback: int = 7, unit: str = "", **_ign
     return {
         "ticker": ticker,
         "name": name,
+        "name_en": name_en or name,
         "price": round(last_close, 2),
         "change_pct": round(change_pct, 2),
         "series": [round(c, 4) for c in closes],
@@ -48,6 +53,7 @@ def fetch_all() -> dict:
     config = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
     macro = {row["ticker"]: _fetch_one(**row) for row in config["macro"]}
     watchlist = {row["ticker"]: _fetch_one(**row) for row in config["watchlist"]}
+    fetch_foreign_flows.attach_foreign_flows(watchlist)
     return {"macro": macro, "watchlist": watchlist}
 
 
