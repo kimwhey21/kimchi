@@ -99,6 +99,7 @@
   <div class="mb-eyebrow">{{ market_label }}{{ "" if lang == "en" else " 마감 시황" }} · {{ date_str }}</div>
   <h1>{{ title }}</h1>
 
+  {% if macro_cards %}
   <div class="mb-grid">
     {% for c in macro_cards %}
     <div class="mb-card">
@@ -108,6 +109,7 @@
     </div>
     {% endfor %}
   </div>
+  {% endif %}
 
   {% if foreign_flow_rows %}
   <h2>{{ "Today's Foreign Investor Flows" if lang == "en" else "오늘의 외국인 매매동향" }}</h2>
@@ -181,7 +183,7 @@
   </div>
   {% if item.image %}
   <img class="mb-story-photo" src="{{ item.image.url }}" alt="{{ item.image.alt or item.heading }}" loading="lazy">
-  <p class="mb-photo-credit">사진: <a href="{{ item.image.photographer_url }}" target="_blank" rel="noopener">{{ item.image.photographer }}</a> / Unsplash</p>
+  <p class="mb-photo-credit">{{ "Photo" if lang == "en" else "사진" }}: <a href="{{ item.image.photographer_url }}" target="_blank" rel="noopener">{{ item.image.photographer }}</a> / Unsplash</p>
   {% endif %}
   {% for para in item.body.split('\n\n') %}
   <p>{{ para }}</p>

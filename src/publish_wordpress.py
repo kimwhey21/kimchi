@@ -220,3 +220,45 @@ def publish_draft(
             )
 
     return result
+
+
+def update_draft(
+    post_id: int,
+    title: str,
+    html_content: str,
+    lang: str | None = None,
+    excerpt: str | None = None,
+    tags: list[str] | None = None,
+    category: str | None = None,
+) -> dict:
+    """이미 올라간 글(주로 검수 중인 임시저장 글)의 내용을 그 자리에서
+    갱신합니다. publish_draft와 인자가 같지만 새 글을 만들지 않고
+    기존 post_id를 덮어써서, 피드백 반영마다 임시저장 글이 중복으로
+    쌓이는 걸 막습니다.
+    """
+    base_url = os.environ["WORDPRESS_URL"].rstrip("/")
+    username = os.environ["WORDPRESS_USERNAME"]
+    app_password = os.environ["WORDPRESS_APP_PASSWORD"]
+    auth = (username, app_password)
+
+    safe_content = _to_wordpress_content(html_content)
+
+    payload = {"title": title, "content": safe_content}
+    if excerpt:
+        payload["excerpt"] = excerpt
+    if tags:
+        payload["tags"] = _get_or_create_tag_ids(base_url, auth, tags)
+    if category:
+        cat_id = _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
+        if cat_id:
+            payload["categories"] = [cat_id]
+
+    endpoint = f"{base_url}/wp-json/wp/v2/posts/{post_id}"
+    response = requests.post(endpoint, auth=auth, json=payload, timeout=TIMEOUT_SECONDS)
+
+    if response.status_code >= 400:
+        raise WordPressPublishError(
+            f"워드프레스 업데이트 실패 (HTTP {response.status_code}): {response.text[:500]}"
+        )
+
+    return response.json()

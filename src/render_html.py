@@ -120,9 +120,10 @@ def _build_foreign_flow_table(price_data: dict, lang: str) -> list[dict] | None:
     return rows
 
 
-def _prep_insight_section(insight_section: dict | None) -> dict | None:
+def _prep_insight_section(insight_section: dict | None, lang: str = "ko") -> dict | None:
     if not insight_section:
         return None
+    suffix = "×" if lang == "en" else "배"
     stories = []
     for story in insight_section.get("stories", []):
         icon_key = story.get("icon") if story.get("icon") in ICONS else DEFAULT_ICON
@@ -133,7 +134,7 @@ def _prep_insight_section(insight_section: dict | None) -> dict | None:
             multiples = []
             for a, b in zip(data, data[1:]):
                 m = round(b / a, 1) if a else None
-                multiples.append(f"{m}배" if m else "")
+                multiples.append(f"{suffix}{m}" if (m and lang == "en") else f"{m}{suffix}" if m else "")
             story["chart"] = {**chart, "multiples": multiples}
         stories.append(story)
     return {**insight_section, "stories": stories}
@@ -197,7 +198,7 @@ def render(
         stock_cards=stock_cards,
         outlook=generated.get("outlook"),
         closing=generated.get("closing"),
-        insight_section=_prep_insight_section(generated.get("insight_section")),
+        insight_section=_prep_insight_section(generated.get("insight_section"), lang),
         calendar=generated.get("calendar", []),
         foreign_flow_rows=foreign_flow_rows,
         meta_description=meta_description,
