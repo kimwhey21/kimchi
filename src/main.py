@@ -48,6 +48,59 @@ def _meta_description(generated: dict, limit: int = 300) -> str:
     return body[:limit].rsplit(" ", 1)[0].strip() + "…"
 
 
+def _first_image(generated: dict) -> dict | None:
+    """인사이트 섹션에서 이미 구해온 사진 중 하나를 돌려줍니다.
+    _featured_image()가 제목에 언급된 종목/자산을 못 찾았을 때만 쓰는
+    최후의 대안입니다 — 본문 아무 소재나 대표 이미지로 쓰면 제목과 안 맞는
+    사진이 뜰 수 있어서, 가능하면 이 함수 대신 _featured_image()를 씁니다.
+    """
+    stories = (generated.get("insight_section") or {}).get("stories", [])
+    for story in stories:
+        if story.get("image"):
+            return story["image"]
+    return None
+
+
+def _featured_image(generated: dict, price_data: dict, lang: str = "ko") -> dict | None:
+    """대표 이미지는 제목에 실제로 언급된 종목 이름으로 새로 검색해서
+    구합니다. 인사이트 섹션 사진을 그냥 재활용하면(순서상 처음 나온 것)
+    그날 언급된 여러 종목 중 아무거나 뜰 수 있어 제목과 안 맞을 수 있기
+    때문입니다 (예: 제목은 "아마존 홀로 상승"인데 사진은 엔비디아).
+
+    watchlist(개별 종목)만 대상으로 합니다. macro(지수·환율·금리·원자재)는
+    일부러 뺐습니다 — 실제로 "원화"로 검색해봤더니 위안화 사진이 나오는 등,
+    통화·지수 같은 추상적인 개념은 Unsplash 검색 결과가 실제로 안 맞는
+    사진을 줄 때가 많아서(직접 다운받아 확인함) 브랜드/제품처럼 사진으로
+    분명하게 알아볼 수 있는 개별 종목만 이 방식을 씁니다.
+
+    제목 문자열 안에서 가장 먼저 등장하는 종목 이름을 찾아 그 이름으로
+    Unsplash를 다시 검색합니다 — Unsplash 검색은 무료라 추가 비용은 없습니다.
+    매치되는 종목이 하나도 없으면 _first_image()로 대체합니다.
+    """
+    title = generated.get("title", "")
+    name_field = "name_en" if lang == "en" else "name"
+    entries = price_data.get("watchlist", {})
+
+    matches = []
+    for entry in entries.values():
+        name = entry.get(name_field) or entry.get("name")
+        if name and name in title:
+            matches.append((title.index(name), entry.get("name_en") or name))
+    if not matches:
+        return _first_image(generated)
+
+    matches.sort(key=lambda m: m[0])
+    query = matches[0][1]
+
+    used_ids = {
+        s["image"]["id"]
+        for s in (generated.get("insight_section") or {}).get("stories", [])
+        if s.get("image")
+    }
+    image = fetch_images.search_image(query, exclude_ids=used_ids)
+    return image or _first_image(generated)
+
+
 def _derive_tags(generated: dict, price_data: dict, lang: str = "ko", limit: int = 12) -> list[str]:
     """그날 언급된 종목명·업종명을 태그로 씁니다. 관련 글 탐색·SEO에 가장
     직접적으로 도움되는 조합이라 여기서 추가 LLM 호출 없이 만듭니다.
@@ -129,6 +182,7 @@ def run(market: str, with_english: bool = False) -> Path:
             excerpt=_meta_description(generated),
             tags=_derive_tags(generated, price_data),
             category="Daily",
+            image=_featured_image(generated, price_data, lang="ko"),
         )
         edit_link = result.get("link", "")
         print(f"완료(워드프레스 임시저장): id={result.get('id')} {edit_link}")
@@ -184,6 +238,7 @@ def _run_english_version(date_str: str, price_data: dict, generated: dict) -> No
             excerpt=_meta_description(generated_en),
             tags=_derive_tags(generated_en, price_data, lang="en"),
             category="Daily",
+            image=_featured_image(generated_en, price_data, lang="en"),
         )
         print(f"완료(워드프레스 임시저장, 영어): id={result.get('id')} {result.get('link', '')}")
     else:

@@ -142,6 +142,55 @@ def _get_or_create_tag_ids(base_url: str, auth: tuple[str, str], names: list[str
     return [i for i in ids if i is not None]
 
 
+def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> int | None:
+    """fetch_images.py가 돌려준 이미지 dict(url/alt/photographer/photographer_url)를
+    실제로 내려받아 워드프레스 미디어 라이브러리에 올리고, 대표 이미지(featured
+    image)로 쓸 수 있는 첨부파일 id를 돌려줍니다.
+
+    실패해도 전체 업로드를 막으면 안 되므로 None을 돌려주고 넘어갑니다 —
+    대표 이미지는 있으면 좋지만 없다고 글 자체가 안 올라가면 안 됩니다.
+    """
+    try:
+        img_resp = requests.get(image["url"], timeout=TIMEOUT_SECONDS)
+        img_resp.raise_for_status()
+
+        filename = f"{image.get('id') or 'photo'}.jpg"
+        upload = requests.post(
+            f"{base_url}/wp-json/wp/v2/media",
+            auth=auth,
+            headers={
+                "Content-Disposition": f'attachment; filename="{filename}"',
+                "Content-Type": "image/jpeg",
+            },
+            data=img_resp.content,
+            timeout=TIMEOUT_SECONDS,
+        )
+        if upload.status_code >= 400:
+            print(f"[경고] 대표 이미지 업로드 실패: {upload.text[:200]}", file=sys.stderr)
+            return None
+        media_id = upload.json()["id"]
+
+        # Unsplash API 정책상 사진을 쓸 때는 사진작가/Unsplash 표기가 필요합니다.
+        # 대표 이미지 슬롯 자체엔 표기가 안 붙으므로 미디어 라이브러리 캡션에
+        # 남겨둡니다 (같은 사진이 본문에도 쓰였다면 거기엔 이미 표기가 있습니다).
+        photographer = image.get("photographer", "")
+        photographer_url = image.get("photographer_url", "")
+        caption = (
+            f'Photo: <a href="{photographer_url}" target="_blank" rel="noopener">'
+            f"{photographer}</a> / Unsplash"
+        )
+        requests.post(
+            f"{base_url}/wp-json/wp/v2/media/{media_id}",
+            auth=auth,
+            json={"alt_text": image.get("alt", ""), "caption": caption},
+            timeout=TIMEOUT_SECONDS,
+        )
+        return media_id
+    except Exception as e:
+        print(f"[경고] 대표 이미지 처리 실패: {e!r}", file=sys.stderr)
+        return None
+
+
 def publish_draft(
     title: str,
     html_content: str,
@@ -149,6 +198,7 @@ def publish_draft(
     excerpt: str | None = None,
     tags: list[str] | None = None,
     category: str | None = None,
+    image: dict | None = None,
 ) -> dict:
     """워드프레스에 임시저장 글을 만들고 응답 JSON(dict)을 돌려줍니다.
 
@@ -171,6 +221,10 @@ def publish_draft(
     category: 카테고리 이름 (예: "시황"). 시황 자동생성 글과 나중에 추가할
     다른 종류의 글을 홈 화면에서 구분해 보여주는 용도입니다. 없는 카테고리는
     자동으로 만듭니다 (lang이 있으면 그 언어로).
+
+    image: fetch_images.py가 돌려준 이미지 dict. 있으면 워드프레스 미디어
+    라이브러리에 올려서 대표 이미지(featured image)로 지정합니다 — 홈
+    화면 카드에 썸네일이 뜨게 하는 용도.
     """
     base_url = os.environ["WORDPRESS_URL"].rstrip("/")
     username = os.environ["WORDPRESS_USERNAME"]
@@ -188,6 +242,10 @@ def publish_draft(
         cat_id = _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
         if cat_id:
             payload["categories"] = [cat_id]
+    if image:
+        media_id = upload_featured_image(base_url, auth, image)
+        if media_id:
+            payload["featured_media"] = media_id
 
     endpoint = f"{base_url}/wp-json/wp/v2/posts"
     response = requests.post(
@@ -230,6 +288,7 @@ def update_draft(
     excerpt: str | None = None,
     tags: list[str] | None = None,
     category: str | None = None,
+    image: dict | None = None,
 ) -> dict:
     """이미 올라간 글(주로 검수 중인 임시저장 글)의 내용을 그 자리에서
     갱신합니다. publish_draft와 인자가 같지만 새 글을 만들지 않고
@@ -252,6 +311,10 @@ def update_draft(
         cat_id = _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
         if cat_id:
             payload["categories"] = [cat_id]
+    if image:
+        media_id = upload_featured_image(base_url, auth, image)
+        if media_id:
+            payload["featured_media"] = media_id
 
     endpoint = f"{base_url}/wp-json/wp/v2/posts/{post_id}"
     response = requests.post(endpoint, auth=auth, json=payload, timeout=TIMEOUT_SECONDS)

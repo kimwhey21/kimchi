@@ -63,11 +63,11 @@ def publish_guide(
     같은 자리에서 업데이트합니다 — 검수 피드백 반영 때마다 임시저장 글이
     중복으로 쌓이지 않게 하기 위함입니다.
     """
+    featured_image = None
     if insight_section and insight_section.get("stories"):
-        insight_section = {
-            **insight_section,
-            "stories": fetch_images.attach_images(insight_section["stories"]),
-        }
+        stories = fetch_images.attach_images(insight_section["stories"])
+        insight_section = {**insight_section, "stories": stories}
+        featured_image = next((s["image"] for s in stories if s.get("image")), None)
     generated = build_generated(title, sections, closing, insight_section)
     date_str = dt.date.today().isoformat()
 
@@ -93,6 +93,7 @@ def publish_guide(
             tags=tags,
             category=category,
             lang=lang,
+            image=featured_image,
         )
         print(f"완료(워드프레스 업데이트): id={result.get('id')} {result.get('link', '')}")
     else:
@@ -103,6 +104,7 @@ def publish_guide(
             excerpt=_meta_description(generated),
             tags=tags,
             category=category,
+            image=featured_image,
         )
         print(f"완료(워드프레스 임시저장): id={result.get('id')} {result.get('link', '')}")
     return result
