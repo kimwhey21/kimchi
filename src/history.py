@@ -24,7 +24,22 @@ def load_recent_headings(market: str, limit: int = MAX_HISTORY) -> list[str]:
     return [heading for entry in entries for heading in entry["headings"]]
 
 
-def append(market: str, date_str: str, generated: dict) -> None:
+def already_published(market: str, trading_date: str) -> bool:
+    """이 거래일(trading_date)을 이미 발행한 적 있는지 확인합니다.
+
+    실행한 "날짜"(date_str)가 아니라 시세 데이터가 실제로 가리키는 거래일
+    기준입니다 — 휴장일(공휴일·주말)에 스케줄이 돌면 데이터 소스가 그 전
+    거래일 값을 그대로 돌려주는데, 그 거래일을 이미 다른 실행에서 다뤘다면
+    똑같은 내용을 새 글로 또 발행하게 되므로 main.py에서 이 함수로 걸러냅니다.
+    """
+    path = _path(market)
+    if not path.exists():
+        return False
+    entries = json.loads(path.read_text(encoding="utf-8"))
+    return any(e.get("trading_date") == trading_date for e in entries)
+
+
+def append(market: str, date_str: str, generated: dict, trading_date: str | None = None) -> None:
     """오늘 생성 결과의 제목/소제목을 히스토리에 추가합니다."""
     STATE_DIR.mkdir(exist_ok=True)
     path = _path(market)
@@ -38,6 +53,6 @@ def append(market: str, date_str: str, generated: dict) -> None:
             headings.append(section["heading"])
 
     entries = [e for e in entries if e["date"] != date_str]  # 같은 날 재실행 시 갱신
-    entries.append({"date": date_str, "headings": headings})
+    entries.append({"date": date_str, "trading_date": trading_date, "headings": headings})
     entries = entries[-MAX_HISTORY:]
     path.write_text(json.dumps(entries, ensure_ascii=False, indent=2), encoding="utf-8")

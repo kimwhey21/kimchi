@@ -125,7 +125,7 @@ def _derive_tags(generated: dict, price_data: dict, lang: str = "ko", limit: int
     return seen[:limit]
 
 
-def run(market: str, with_english: bool = False) -> Path:
+def run(market: str, with_english: bool = False) -> Path | None:
     if market == "us":
         from src import fetch_us as fetcher
     elif market == "kr":
@@ -137,6 +137,14 @@ def run(market: str, with_english: bool = False) -> Path:
 
     print(f"[1/5] {market} 시세 수집 중...")
     price_data = fetcher.fetch_all()
+
+    trading_date = price_data.get("trading_date")
+    if trading_date and history.already_published(market, trading_date):
+        print(
+            f"[중단] {trading_date} 거래일은 이미 발행했습니다 (오늘 휴장이거나 재실행) — "
+            f"Claude API 호출·발행 없이 건너뜁니다."
+        )
+        return None
 
     generated_path = OUTPUT_DIR / f"{market}_{date_str}_generated.json"
     if generated_path.exists():
@@ -189,7 +197,7 @@ def run(market: str, with_english: bool = False) -> Path:
     else:
         print("[5/5] WORDPRESS_URL/USERNAME/APP_PASSWORD가 없어 워드프레스 업로드는 건너뜁니다.")
 
-    history.append(market, date_str, generated)
+    history.append(market, date_str, generated, trading_date=trading_date)
 
     if market == "kr" and with_english:
         _run_english_version(date_str, price_data, generated)

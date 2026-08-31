@@ -36,6 +36,7 @@ def _fetch_one(ticker: str, name: str, lookback: int = 7, is_yield: bool = False
         candidate = hist["Close"].tolist()[-(lookback + 1):]
         if not any(math.isnan(c) for c in candidate):
             closes = candidate
+            last_trading_date = hist.index[-1].date().isoformat()
             break
         # Yahoo Finance가 일시적으로 결측치(NaN)를 줄 때가 있습니다 (몇 초 후
         # 재조회하면 채워져 있는 경우가 많음). "숫자는 절대 지어내지 않는다"는
@@ -63,15 +64,23 @@ def _fetch_one(ticker: str, name: str, lookback: int = 7, is_yield: bool = False
         "change_pct": round(change_pct, 2),
         "series": [round(c, 4) for c in closes],
         "unit": unit,
+        "trading_date": last_trading_date,
     }
 
 
 def fetch_all() -> dict:
-    """설정 파일에 등록된 모든 지수/종목의 시세를 가져옵니다."""
+    """설정 파일에 등록된 모든 지수/종목의 시세를 가져옵니다.
+
+    trading_date: 다우존스(첫 macro 항목)의 실제 마지막 거래일입니다. 미국
+    증시가 휴장(공휴일·주말)이었다면 데이터 소스가 그 전 거래일 값을 그대로
+    돌려주므로, 이 값으로 "이 거래일을 이미 발행했는지"를 main.py에서
+    판단합니다.
+    """
     config = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
     macro = {row["ticker"]: _fetch_one(**row) for row in config["macro"]}
     watchlist = {row["ticker"]: _fetch_one(**row) for row in config["watchlist"]}
-    return {"macro": macro, "watchlist": watchlist}
+    trading_date = next(iter(macro.values()))["trading_date"]
+    return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date}
 
 
 if __name__ == "__main__":
