@@ -34,12 +34,14 @@
     margin: 0 auto;
     padding: 32px 20px 80px;
     line-height: 1.7;
+    word-break: keep-all;
   }
   .mb-eyebrow { font-size: 13px; color: var(--mb-text-muted); letter-spacing: .02em; margin-bottom: 8px; }
+  h1, h2, h3 { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; letter-spacing: normal; word-break: keep-all; }
   h1 { font-size: 26px; font-weight: 700; line-height: 1.4; margin: 0 0 28px; }
   h2 { font-size: 19px; font-weight: 700; margin: 40px 0 12px; }
   h3 { font-size: 16px; font-weight: 700; margin: 20px 0 8px; }
-  p { margin: 0 0 14px; font-size: 16px; }
+  p { margin: 0 0 14px; font-size: 16px; text-wrap: pretty; }
   .mb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
   .mb-card { background: var(--mb-card); border: 1px solid var(--mb-border); border-radius: 12px; padding: 16px; min-width: 0; overflow: hidden; }
   .mb-card .mb-label { font-size: 13px; color: var(--mb-text-muted); margin-bottom: 4px; overflow-wrap: break-word; }
