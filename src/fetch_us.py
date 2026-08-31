@@ -24,8 +24,8 @@ _NAN_RETRY_ATTEMPTS = 3
 _NAN_RETRY_DELAY_SECONDS = 5
 
 
-def _fetch_one(ticker: str, name: str, lookback: int = 7, is_yield: bool = False,
-                unit: str = "") -> dict:
+def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_yield: bool = False,
+                unit: str = "", **_ignore) -> dict:
     """종목/지수 하나의 최근 시세를 가져와 카드에 필요한 형태로 정리합니다."""
     closes: list[float] | None = None
     for attempt in range(1, _NAN_RETRY_ATTEMPTS + 1):
@@ -60,6 +60,7 @@ def _fetch_one(ticker: str, name: str, lookback: int = 7, is_yield: bool = False
     return {
         "ticker": ticker,
         "name": name,
+        "name_en": name_en or name,
         "price": round(last_close, 2),
         "change_pct": round(change_pct, 2),
         "series": [round(c, 4) for c in closes],
