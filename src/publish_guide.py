@@ -47,6 +47,26 @@ def build_generated(
     return generated
 
 
+def _featured_credit_html(image: dict, lang: str) -> str:
+    """대표 이미지 출처를 본문 맨 아래에 한 줄로 답니다.
+
+    대표 이미지는 본문에서 빼기 때문에(아래 publish_guide 참고) 사진 밑에 붙던
+    출처 표기도 같이 사라집니다. Unsplash는 법적으로 출처 표기를 요구하지는
+    않지만 이 사이트는 지금까지 계속 밝혀 왔으므로, 표기를 잃지 않도록 글
+    끝으로 옮깁니다.
+    """
+    if image.get("credit"):
+        return f'<p class="mb-photo-credit mb-featured-credit">{image["credit"]}</p>'
+    if image.get("photographer") and image.get("photographer_url"):
+        label = "Featured photo" if lang == "en" else "대표 사진"
+        return (
+            f'<p class="mb-photo-credit mb-featured-credit">{label}: '
+            f'<a href="{image["photographer_url"]}" target="_blank" rel="noopener">'
+            f'{image["photographer"]}</a> / Unsplash</p>'
+        )
+    return ""
+
+
 def publish_guide(
     slug: str,
     title: str,
@@ -67,14 +87,28 @@ def publish_guide(
     featured_image = None
     if insight_section and insight_section.get("stories"):
         stories = fetch_images.attach_images(insight_section["stories"])
-        insight_section = {**insight_section, "stories": stories}
         featured_image = next((s["image"] for s in stories if s.get("image")), None)
+        if featured_image:
+            # 대표 이미지는 글 맨 위에 크게 걸립니다. 같은 사진을 본문에도 그대로
+            # 두면 독자가 한 화면 안에서 같은 사진을 두 번 보게 되므로, 대표로
+            # 올라간 사진은 본문에서 뺍니다. 출처는 _featured_credit_html()로
+            # 글 끝에 남깁니다.
+            stories = [
+                {**s, "image": None} if s.get("image") is featured_image else s
+                for s in stories
+            ]
+        insight_section = {**insight_section, "stories": stories}
     generated = build_generated(title, sections, closing, insight_section)
     date_str = dt.date.today().isoformat()
 
     html = render_html.render(
         "guide", date_str, _EMPTY_PRICE_DATA, generated, lang=lang, market_label=market_label
     )
+
+    if featured_image:
+        credit = _featured_credit_html(featured_image, lang)
+        if credit and "<footer>" in html:
+            html = html.replace("<footer>", f"{credit}\n  <footer>", 1)
 
     OUTPUT_DIR.mkdir(exist_ok=True)
     out_path = OUTPUT_DIR / f"guide_{slug}_{date_str}.html"
