@@ -1,4 +1,4 @@
-"""영문 가이드 7편 끝에 시리즈 목차를 붙입니다.
+"""영문 가이드 8편 끝에 시리즈 목차를 붙입니다.
 
 원칙: **본문은 한 글자도 바꾸지 않습니다.** 문단 사이에 링크를 끼워 넣으면 읽는
 흐름이 끊기므로, 글이 완전히 끝난 뒤(마무리 문단 다음)에만 목차 블록을 답니다.
@@ -52,6 +52,7 @@ SERIES = [
     (197, "When you can trade", "Hours, price limits and the halts that stop them"),
     (200, "Doing the research", "Reading Korean filings in English on DART and KIND"),
     (244, "Reading the label", "Why MSCI still calls Korea an emerging market"),
+    (262, "Knowing the exits", "The delisting rules that now catch small KOSDAQ names"),
 ]
 
 _STYLE = (
@@ -95,7 +96,7 @@ def build_block(links: dict[int, str], current_id: int) -> str:
     return (
         f'{_STYLE}<section class="mb-series">'
         f"<h2>The Korea investing series</h2>"
-        f'<p class="mb-series-note">Seven guides, in the order they build on each other.</p>'
+        f'<p class="mb-series-note">Eight guides, in the order they build on each other.</p>'
         f'<ul class="mb-series-list">{"".join(rows)}</ul>'
         f"</section>"
     )
