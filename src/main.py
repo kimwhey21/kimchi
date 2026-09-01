@@ -26,6 +26,7 @@ load_dotenv()
 
 from src import (
     fetch_images,
+    fetch_news,
     generate_post,
     history,
     publish_wordpress,
@@ -153,8 +154,17 @@ def run(market: str, with_english: bool = False) -> Path | None:
     else:
         print("[2/5] 제목/본문 생성 중 (Claude API)...")
         recent_headings = history.load_recent_headings(market)
+        try:
+            recent_news = fetch_news.fetch_headlines(market)
+        except Exception as exc:  # noqa: BLE001 - RSS 실패로 파이프라인이 멈추면 안 됨
+            print(f"[2/5] 언론사 RSS 조회 실패, 건너뜁니다: {exc}")
+            recent_news = []
         generated = generate_post.generate(
-            market, date_str, price_data, recent_headings=recent_headings
+            market,
+            date_str,
+            price_data,
+            recent_headings=recent_headings,
+            recent_news=recent_news,
         )
         OUTPUT_DIR.mkdir(exist_ok=True)
         generated_path.write_text(

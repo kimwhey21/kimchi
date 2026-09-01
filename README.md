@@ -5,17 +5,23 @@
 ## 어떻게 동작하나요
 
 ```
-fetch_us.py / fetch_kr.py   →   generate_post.py   →   render_html.py
-   (실제 시세 수집)              (제목·설명·종목 선별)      (최종 HTML 생성)
+fetch_us.py / fetch_kr.py   →   generate_post.py   →   render_html.py   →   publish_wordpress.py
+   (실제 시세 수집)              (제목·설명·종목 선별)      (최종 HTML 생성)      (워드프레스 임시저장)
+                                      ↑
+                              fetch_news.py (언론사 RSS 헤드라인)
 ```
 
 1. **시세 수집** — `config/watchlist_us.yaml`, `config/watchlist_kr.yaml`에 등록된 지수·종목의
    실제 가격, 등락률, 최근 며칠간의 종가 흐름을 가져옵니다. (미국: yfinance / 한국: FinanceDataReader)
-2. **문구 생성** — Claude API에 그 가격 데이터를 통째로 넘기고, 웹 검색 도구로 "왜 그런 움직임이
-   나왔는지"를 찾아 앵커 톤 문장으로 정리하게 합니다. 제목, 소제목별 설명, 오늘 다룰 만한 종목 선정,
-   다음 주 일정까지 이 단계에서 나옵니다.
+2. **문구 생성** — Claude API에 그 가격 데이터와, 언론사 RSS(`fetch_news.py`)에서 모은 최근
+   헤드라인 목록을 함께 넘기고, 웹 검색 도구로 "왜 그런 움직임이 나왔는지"를 찾아 앵커 톤
+   문장으로 정리하게 합니다. 제목, 소제목별 설명, 오늘 다룰 만한 종목 선정, 다음 주 일정까지
+   이 단계에서 나옵니다.
 3. **HTML 렌더링** — 2번이 고른 종목의 실제 숫자를 1번 데이터에서 다시 채워 넣어 카드+스파크라인
    차트가 있는 HTML 파일로 만듭니다.
+4. **워드프레스 업로드** — `.env`에 `WORDPRESS_*` 값이 설정돼 있으면, 완성된 HTML을 워드프레스에
+   **임시저장(draft)**으로 자동 업로드합니다. 발행 여부는 사람이 검수 후 워드프레스 관리자
+   화면에서 직접 결정합니다 (자동으로 바로 공개 발행되지 않음).
 
 **중요 — 숫자의 출처**: 가격/등락률 숫자는 항상 1번(실시간 시세)에서만 나옵니다. Claude는 "어떤 종목을
 다룰지"와 "왜 그랬는지 설명"만 맡고, 숫자 자체를 새로 만들어내는 데는 관여하지 않습니다. 그래야
@@ -58,9 +64,15 @@ python -m src.main --market kr   # 한국장
 
 `.github/workflows/market_brief.yml`에 평일 기준 한국시간 07:00(미국장)/16:00(한국장) 두 번
 자동 실행되도록 cron이 설정되어 있습니다. GitHub 저장소의 Settings → Secrets → Actions에
-`ANTHROPIC_API_KEY`를 등록하면 그대로 동작합니다.
+아래 값을 등록하면 그대로 동작합니다.
 
-- 결과 HTML은 Actions 실행 화면의 "Artifacts"에서 내려받을 수 있습니다.
+- `ANTHROPIC_API_KEY` — 필수
+- `UNSPLASH_ACCESS_KEY` — 선택 (없으면 사진 없이 렌더링)
+- `WORDPRESS_URL`, `WORDPRESS_USERNAME`, `WORDPRESS_APP_PASSWORD` — 선택 (없으면 워드프레스
+  업로드 단계만 건너뛰고, 로컬 HTML 생성까지는 그대로 진행)
+- `SUBSCRIBE_FORM_ACTION` — 선택 (구독 폼 액션 URL)
+
+- 결과 HTML은 Actions 실행 화면의 "Artifacts"에서 백업용으로도 내려받을 수 있습니다.
 - cron 시간은 대략적인 값입니다. 정확한 장마감 타이밍과 살짝 오차가 있을 수 있어 필요하면
   조정하세요.
 
@@ -76,13 +88,28 @@ python -m src.main --market kr   # 한국장
 
 키가 없어도 파이프라인은 멈추지 않습니다 — 사진 없이 아이콘만으로 렌더링됩니다.
 
+## 뉴스 소스 (언론사 RSS)
+
+`src/fetch_news.py`가 시장별로 지정된 언론사 RSS를 조회해 최근 헤드라인 목록을 모읍니다.
+Claude의 웹 검색 도구 하나에만 의존하던 것을 보완하는 용도로, 문구 생성 프롬프트에
+"참고용 헤드라인 목록"으로 함께 들어갑니다 — Claude가 그날 실제로 어떤 기사가 나왔는지
+먼저 훑어보고, 그중 관련 있는 것만 web_search로 사실관계를 재확인한 뒤 씁니다(헤드라인
+문구를 그대로 베끼지 않음).
+
+- 기본 소스: 한국장 — 한국경제, 연합뉴스, 이데일리 / 미국장 — CNBC, Yahoo Finance, Investing.com
+- 소스를 추가/삭제하려면 `src/fetch_news.py`의 `FEEDS` 딕셔너리를 수정하면 됩니다.
+- RSS 요청은 무료라 Claude API 비용에 영향이 없습니다. 특정 피드가 그날 응답하지 않아도
+  개별적으로 건너뛰고 파이프라인은 계속 진행됩니다.
+- 매일경제(mk.co.kr)는 Cloudflare 봇 차단이 걸려 있어 목록에서 제외했습니다.
+
 ## 아직 안 되어 있는 것 (다음 단계)
 
-- **블로그 자동 게시**: 블로그 플랫폼이 정해지면 `render_html.py` 다음에 "임시저장으로 업로드"
-  단계를 추가하고, 텔레그램 등으로 미리보기+게시 버튼을 보내는 단계를 이어 붙이면 됩니다.
-  지금은 로컬 HTML 파일로 저장하는 데까지만 구현되어 있습니다.
-- **뉴스 소스 다양화**: 지금은 Claude의 웹 검색 도구 하나에만 의존합니다. 특정 언론사 RSS를
-  추가로 넣고 싶다면 `generate_post.py`의 프롬프트에 함께 넣어주는 방식으로 확장할 수 있습니다.
+- **발행 알림**: 지금은 워드프레스에 임시저장까지만 자동으로 올라가고, 검수는 사람이
+  워드프레스 관리자 화면에 직접 들어가서 합니다. 텔레그램 등으로 "새 임시저장 글이
+  올라왔습니다 + 미리보기 링크"를 보내는 알림 단계를 붙이면 검수 과정이 더 편해집니다.
+- **미국장 영어/한국장 영어 이외의 다국어**: 지금은 한국장(kr) 결과물만 `--en` 옵션으로
+  영어판을 함께 만듭니다 (`translate_post.py`). 미국장은 원문이 이미 영어 자료 기반이라
+  별도 번역판이 없습니다.
 
 ## 종목 목록 수정
 
@@ -106,11 +133,19 @@ market-brief/
 │   ├── watchlist_us.yaml
 │   └── watchlist_kr.yaml
 ├── src/
-│   ├── fetch_us.py       # 미국 시세 수집
-│   ├── fetch_kr.py       # 한국 시세 수집
-│   ├── generate_post.py  # Claude API로 제목/본문/종목선별/캘린더 생성
-│   ├── render_html.py    # 최종 HTML 조립
-│   └── main.py           # 전체 파이프라인 실행
+│   ├── fetch_us.py            # 미국 시세 수집
+│   ├── fetch_kr.py            # 한국 시세 수집
+│   ├── fetch_foreign_flows.py # 외국인 매매동향 수집 (한국장)
+│   ├── fetch_news.py          # 언론사 RSS 최근 헤드라인 수집
+│   ├── fetch_images.py        # Unsplash 인사이트 사진 검색
+│   ├── generate_post.py       # Claude API로 제목/본문/종목선별/캘린더 생성
+│   ├── translate_post.py      # 한국장 결과물의 영어 번역판 생성 (--en)
+│   ├── render_html.py         # 최종 HTML 조립
+│   ├── render_text.py         # 텍스트(.txt) 버전 조립
+│   ├── publish_wordpress.py   # 워드프레스 임시저장 업로드
+│   ├── publish_guide.py       # 상시(evergreen) 가이드 글 발행
+│   ├── history.py             # 최근 제목/발행 이력 기록 (중복 발행 방지)
+│   └── main.py                # 전체 파이프라인 실행
 ├── templates/
 │   └── post.html.j2
 ├── .github/workflows/

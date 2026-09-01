@@ -199,6 +199,7 @@ def generate(
     price_data: dict,
     model: str = "claude-sonnet-5",
     recent_headings: list[str] | None = None,
+    recent_news: list[dict] | None = None,
 ) -> dict:
     """가격 데이터를 넣으면 title / narrative / featured_tickers / calendar가 담긴 dict를 돌려줍니다."""
     client = anthropic.Anthropic()  # 환경변수 ANTHROPIC_API_KEY 를 자동으로 읽습니다
@@ -211,11 +212,21 @@ def generate(
             "\n\n[최근에 이미 사용한 제목/소제목 - 아래와 똑같거나 비슷한 표현·문장 구조를 "
             f"반복하지 마세요]\n{recent_list}"
         )
+    news_block = ""
+    if recent_news:
+        news_list = "\n".join(f"- ({n['source']}) {n['title']}" for n in recent_news)
+        news_block = (
+            "\n\n[참고: 언론사 RSS 최근 헤드라인 - 그날 실제로 어떤 기사가 나왔는지 훑어보는 "
+            "용도입니다. 여기 없는 내용을 다뤄도 되고, 여기 있는 헤드라인이라도 가격 데이터와 "
+            "무관하면 무시하세요. 본문에 쓰기 전에는 web_search로 사실관계를 다시 확인하세요 "
+            f"(헤드라인 문구를 그대로 베끼지 말 것)]\n{news_list}"
+        )
     user_content = (
         f"시장: {market_label}\n"
         f"기준일: {date_str}\n\n"
         f"[가격 데이터]\n{json.dumps(price_data, ensure_ascii=False)}\n"
-        f"{recent_block}\n\n"
+        f"{recent_block}"
+        f"{news_block}\n\n"
         "위 가격 데이터를 바탕으로 오늘자 시황 콘텐츠를 만들어 주세요."
     )
 
