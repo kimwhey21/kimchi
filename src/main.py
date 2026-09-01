@@ -1,16 +1,11 @@
-"""매일 두 번(미국장/한국장) 실행하는 진입점.
+"""한국장·미국장 시황을 무료 생성해 HTML과 워드프레스 초안으로 저장합니다.
 
 사용법:
     python -m src.main --market us
-    python -m src.main --market kr
-    python -m src.main --market kr --en   # 해외 독자용 영어 번역판도 함께 생성 (Claude API 1회 추가 호출)
+    python -m src.main --market kr --en
 
-흐름: 시세 수집(fetch_*.py) -> 문구 생성(generate_post.py) -> HTML 렌더링(render_html.py)
-      -> output/ 폴더에 저장 -> (설정돼 있으면) 워드프레스에 임시저장 업로드(publish_wordpress.py)
-
-비용 절약: 생성된 결과는 output/{market}_{date}_generated.json에 캐시됩니다. 같은 날
-같은 market으로 다시 실행하면(예: CSS만 바꾸고 재확인할 때) Claude API를 다시
-호출하지 않고 이 캐시를 재사용합니다. 새로 생성하고 싶으면 그 파일을 지우세요.
+외부 생성형 AI API는 호출하지 않습니다. 한국장 ``--en`` 옵션은 동일한 시세
+데이터에서 영어판을 별도로 작성하고 한국어판과 함께 검증한 뒤 업로드합니다.
 """
 from __future__ import annotations
 
@@ -18,6 +13,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import time
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -25,242 +21,249 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src import (
-    fetch_images,
+    editorial_quality,
+    editorial_quality_en,
+    data_quality,
     fetch_news,
-    generate_post,
+    featured_image,
+    generate_free,
+    generate_free_en,
     history,
     publish_wordpress,
     render_html,
     render_text,
-    translate_post,
 )
 
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "output"
+CACHE_VERSION = 4
 
 
 def _meta_description(generated: dict, limit: int = 300) -> str:
-    """검색엔진 메타 설명 + 워드프레스 홈 화면 글 미리보기(발췌문)에 함께 쓰입니다.
-    첫 narrative 섹션 전체를 이어붙여서 자르므로, 첫 문단만 쓸 때보다 홈
-    화면에서 실제로 무슨 내용인지 더 잘 드러납니다.
-    """
     body = (generated.get("narrative") or [{}])[0].get("body", "").replace("\n\n", " ")
     if len(body) <= limit:
         return body.strip()
     return body[:limit].rsplit(" ", 1)[0].strip() + "…"
 
 
-def _first_image(generated: dict) -> dict | None:
-    """인사이트 섹션에서 이미 구해온 사진 중 하나를 돌려줍니다.
-    _featured_image()가 제목에 언급된 종목/자산을 못 찾았을 때만 쓰는
-    최후의 대안입니다 — 본문 아무 소재나 대표 이미지로 쓰면 제목과 안 맞는
-    사진이 뜰 수 있어서, 가능하면 이 함수 대신 _featured_image()를 씁니다.
+def _focus_keyword(market: str, lang: str = "ko") -> str:
+    """시황 글의 Rank Math 포커스 키워드.
+
+    키워드를 안 넣으면 글 목록에 "키워드 미설정"으로 남고 Rank Math의 SEO
+    분석이 동작하지 않습니다. 시황은 매일 같은 형식이라 시장·언어별 고정
+    문구로 충분합니다.
     """
-    stories = (generated.get("insight_section") or {}).get("stories", [])
-    for story in stories:
-        if story.get("image"):
-            return story["image"]
-    return None
+    if lang == "en":
+        return "Kospi close" if market == "kr" else "US stocks close"
+    return "코스피 마감 시황" if market == "kr" else "뉴욕증시 마감"
 
 
-def _featured_image(generated: dict, price_data: dict, lang: str = "ko") -> dict | None:
-    """대표 이미지는 제목에 실제로 언급된 종목 이름으로 새로 검색해서
-    구합니다. 인사이트 섹션 사진을 그냥 재활용하면(순서상 처음 나온 것)
-    그날 언급된 여러 종목 중 아무거나 뜰 수 있어 제목과 안 맞을 수 있기
-    때문입니다 (예: 제목은 "아마존 홀로 상승"인데 사진은 엔비디아).
-
-    watchlist(개별 종목)만 대상으로 합니다. macro(지수·환율·금리·원자재)는
-    일부러 뺐습니다 — 실제로 "원화"로 검색해봤더니 위안화 사진이 나오는 등,
-    통화·지수 같은 추상적인 개념은 Unsplash 검색 결과가 실제로 안 맞는
-    사진을 줄 때가 많아서(직접 다운받아 확인함) 브랜드/제품처럼 사진으로
-    분명하게 알아볼 수 있는 개별 종목만 이 방식을 씁니다.
-
-    제목 문자열 안에서 가장 먼저 등장하는 종목 이름을 찾아 그 이름으로
-    Unsplash를 다시 검색합니다 — Unsplash 검색은 무료라 추가 비용은 없습니다.
-    매치되는 종목이 하나도 없으면 _first_image()로 대체합니다.
-    """
-    title = generated.get("title", "")
-    name_field = "name_en" if lang == "en" else "name"
-    entries = price_data.get("watchlist", {})
-
-    matches = []
-    for entry in entries.values():
-        name = entry.get(name_field) or entry.get("name")
-        if name and name in title:
-            matches.append((title.index(name), entry.get("name_en") or name))
-    if not matches:
-        return _first_image(generated)
-
-    matches.sort(key=lambda m: m[0])
-    query = matches[0][1]
-
-    used_ids = {
-        s["image"]["id"]
-        for s in (generated.get("insight_section") or {}).get("stories", [])
-        if s.get("image")
-    }
-    image = fetch_images.search_image(query, exclude_ids=used_ids)
-    return image or _first_image(generated)
-
-
-def _derive_tags(generated: dict, price_data: dict, lang: str = "ko", limit: int = 12) -> list[str]:
-    """그날 언급된 종목명·업종명을 태그로 씁니다. 관련 글 탐색·SEO에 가장
-    직접적으로 도움되는 조합이라 여기서 추가 LLM 호출 없이 만듭니다.
-    """
+def _derive_tags(
+    generated: dict, price_data: dict, lang: str = "ko", limit: int = 12
+) -> list[str]:
     names: list[str] = []
-
     stock_section = generated.get("stock_section") or {}
     for ticker in stock_section.get("featured_tickers", []):
         entry = price_data.get("watchlist", {}).get(ticker)
         if entry:
-            names.append(entry.get("name_en") or entry["name"] if lang == "en" else entry["name"])
+            names.append(
+                (entry.get("name_en") or entry["name"]) if lang == "en" else entry["name"]
+            )
 
-    theme_section = generated.get("theme_section") or {}
-    for h in theme_section.get("highlights", []):
-        if h.get("label"):
-            names.append(h["label"])
+    for highlight in (generated.get("theme_section") or {}).get("highlights", []):
+        if highlight.get("label"):
+            names.append(highlight["label"])
 
-    seen: list[str] = []
+    unique: list[str] = []
     for name in names:
-        if name and name not in seen:
-            seen.append(name)
-    return seen[:limit]
+        if name and name not in unique:
+            unique.append(name)
+    return unique[:limit]
 
 
-def run(market: str, with_english: bool = False) -> Path | None:
+def _read_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _write_json(path: Path, value: dict) -> None:
+    OUTPUT_DIR.mkdir(exist_ok=True)
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _read_current_cache(path: Path) -> dict | None:
+    if not path.exists():
+        return None
+    cached = _read_json(path)
+    if cached.get("_generator_version") != CACHE_VERSION:
+        print(f"[안내] 생성 규칙이 바뀌어 이전 캐시를 새로 만듭니다 ({path}).")
+        return None
+    return cached
+
+
+def _fetch_news_safely(market: str) -> list[dict]:
+    try:
+        return fetch_news.fetch_headlines(market)
+    except Exception as exc:  # noqa: BLE001 - RSS 장애가 종가 초안을 막지 않게 함
+        print(f"[경고] 언론사 RSS 조회 실패, 뉴스 링크 없이 계속합니다: {exc}")
+        return []
+
+
+def _draft_slug(market: str, date_str: str, lang: str) -> str:
+    return f"market-brief-{market}-{date_str}-{lang}"
+
+
+def _fetch_price_data(fetcher, market: str) -> dict:
+    attempts = 3 if market == "kr" else 1
+    for attempt in range(1, attempts + 1):
+        price_data = fetcher.fetch_all()
+        try:
+            data_quality.validate_trading_dates(market, price_data)
+            return price_data
+        except data_quality.MarketDataNotReadyError:
+            if attempt >= attempts:
+                raise
+            print(
+                f"[대기] 장마감 데이터 기준일이 아직 섞여 있어 45초 뒤 재확인합니다 "
+                f"({attempt}/{attempts})."
+            )
+            time.sleep(45)
+    raise RuntimeError("시세 수집 재시도 흐름이 비정상적으로 종료됐습니다.")
+
+
+def run(market: str, with_english: bool = False, publish: bool = True) -> Path | None:
     if market == "us":
         from src import fetch_us as fetcher
     elif market == "kr":
         from src import fetch_kr as fetcher
     else:
         raise ValueError("market은 'us' 또는 'kr' 이어야 합니다.")
+    if with_english and market != "kr":
+        raise ValueError("영어판 자동 생성은 한국장(--market kr)에서만 지원합니다.")
 
-    date_str = dt.date.today().isoformat()
-
-    print(f"[1/5] {market} 시세 수집 중...")
-    price_data = fetcher.fetch_all()
-
+    print(f"[1/4] {market} 시세 수집 중...")
+    price_data = _fetch_price_data(fetcher, market)
     trading_date = price_data.get("trading_date")
-    if trading_date and history.already_published(market, trading_date):
+    date_str = trading_date or dt.date.today().isoformat()
+
+    ko_cache = OUTPUT_DIR / f"{market}_{date_str}_generated_free.json"
+    en_cache = OUTPUT_DIR / f"kr_{date_str}_generated_free_en.json"
+    generated_ko = _read_current_cache(ko_cache)
+    generated_en = _read_current_cache(en_cache) if with_english else None
+    if (
+        trading_date
+        and history.already_published(market, trading_date)
+        and generated_ko is not None
+        and (not with_english or generated_en is not None)
+    ):
         print(
-            f"[중단] {trading_date} 거래일은 이미 발행했습니다 (오늘 휴장이거나 재실행) — "
-            f"Claude API 호출·발행 없이 건너뜁니다."
+            f"[중단] {trading_date} 거래일 결과가 이미 생성·처리되어 추가 작업 없이 건너뜁니다."
         )
         return None
 
-    generated_path = OUTPUT_DIR / f"{market}_{date_str}_generated.json"
-    if generated_path.exists():
-        print(f"[2/5] 캐시된 생성 결과 재사용 ({generated_path}) — Claude API 재호출 안 함.")
-        generated = json.loads(generated_path.read_text(encoding="utf-8"))
+    needs_news = generated_ko is None or (with_english and generated_en is None)
+    recent_news = _fetch_news_safely(market) if needs_news else []
+
+    if generated_ko is not None:
+        print(f"[2/4] 한국어 생성 결과 재사용 ({ko_cache}).")
     else:
-        print("[2/5] 제목/본문 생성 중 (Claude API)...")
-        recent_headings = history.load_recent_headings(market)
-        try:
-            recent_news = fetch_news.fetch_headlines(market)
-        except Exception as exc:  # noqa: BLE001 - RSS 실패로 파이프라인이 멈추면 안 됨
-            print(f"[2/5] 언론사 RSS 조회 실패, 건너뜁니다: {exc}")
-            recent_news = []
-        generated = generate_post.generate(
-            market,
-            date_str,
-            price_data,
-            recent_headings=recent_headings,
-            recent_news=recent_news,
+        print("[2/4] 시세·RSS 기반 한국어 시황 생성 중...")
+        generated_ko = generate_free.generate(
+            market, date_str, price_data, recent_news=recent_news
         )
-        OUTPUT_DIR.mkdir(exist_ok=True)
-        generated_path.write_text(
-            json.dumps(generated, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
+        generated_ko["_generator_version"] = CACHE_VERSION
+        _write_json(ko_cache, generated_ko)
 
-    print("[3/5] 인사이트 소재별 사진 검색 중 (Unsplash)...")
-    if generated.get("insight_section", {}).get("stories"):
-        generated["insight_section"]["stories"] = fetch_images.attach_images(
-            generated["insight_section"]["stories"]
-        )
+    if with_english:
+        if generated_en is not None:
+            print(f"[2/4] 영어 생성 결과 재사용 ({en_cache}).")
+        else:
+            print("[2/4] 같은 시세에서 영어 시황 직접 작성 중...")
+            generated_en = generate_free_en.generate(
+                date_str, price_data, recent_news=recent_news
+            )
+            generated_en["_generator_version"] = CACHE_VERSION
+            _write_json(en_cache, generated_en)
 
-    print("[4/5] HTML 렌더링 중...")
+    # 어느 한 언어라도 검사에 실패하면 워드프레스 업로드 전에 중단합니다.
+    editorial_quality.validate_generated(generated_ko)
+    if generated_en:
+        editorial_quality_en.validate_generated(generated_en)
+
+    print("[3/4] 한국어·영어 결과 렌더링 중..." if generated_en else "[3/4] 결과 렌더링 중...")
     subscribe_form_action = os.environ.get("SUBSCRIBE_FORM_ACTION")
-    html = render_html.render(
-        market, date_str, price_data, generated, subscribe_form_action=subscribe_form_action
+    html_ko = render_html.render(
+        market,
+        date_str,
+        price_data,
+        generated_ko,
+        subscribe_form_action=subscribe_form_action,
     )
-    text = render_text.render(market, date_str, price_data, generated)
-
+    text_ko = render_text.render(market, date_str, price_data, generated_ko)
     OUTPUT_DIR.mkdir(exist_ok=True)
     out_path = OUTPUT_DIR / f"{market}_{date_str}.html"
-    text_path = OUTPUT_DIR / f"{market}_{date_str}.txt"
-    out_path.write_text(html, encoding="utf-8")
-    text_path.write_text(text, encoding="utf-8")
-    print(f"완료: {out_path}")
-    print(f"완료(텍스트): {text_path}")
+    out_path.write_text(html_ko, encoding="utf-8")
+    (OUTPUT_DIR / f"{market}_{date_str}.txt").write_text(text_ko, encoding="utf-8")
 
-    if publish_wordpress.is_configured():
-        print("[5/5] 워드프레스에 임시저장 업로드 중...")
-        result = publish_wordpress.publish_draft(
-            generated["title"],
-            html,
-            excerpt=_meta_description(generated),
-            tags=_derive_tags(generated, price_data),
-            category="Daily",
-            image=_featured_image(generated, price_data, lang="ko"),
-        )
-        edit_link = result.get("link", "")
-        print(f"완료(워드프레스 임시저장): id={result.get('id')} {edit_link}")
-    else:
-        print("[5/5] WORDPRESS_URL/USERNAME/APP_PASSWORD가 없어 워드프레스 업로드는 건너뜁니다.")
-
-    history.append(market, date_str, generated, trading_date=trading_date)
-
-    if market == "kr" and with_english:
-        _run_english_version(date_str, price_data, generated)
-
-    return out_path
-
-
-def _run_english_version(date_str: str, price_data: dict, generated: dict) -> None:
-    """한국장 결과물을 해외 독자용 영어 버전으로 각색해 별도 HTML로 만들고,
-    (설정돼 있으면) 워드프레스에도 별도 임시저장 글로 올립니다.
-    """
-    generated_en_path = OUTPUT_DIR / f"kr_{date_str}_generated_en.json"
-    if generated_en_path.exists():
-        print(f"[EN 1/3] 캐시된 번역 결과 재사용 ({generated_en_path}) — Claude API 재호출 안 함.")
-        generated_en = json.loads(generated_en_path.read_text(encoding="utf-8"))
-    else:
-        print("[EN 1/3] 영어 버전 각색 중 (Claude API)...")
-        generated_en = translate_post.translate(generated)
-        generated_en_path.write_text(
-            json.dumps(generated_en, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
-
-    kr_images_by_query = {
-        story.get("image_query"): story.get("image")
-        for story in (generated.get("insight_section") or {}).get("stories", [])
-    }
-    en_stories = (generated_en.get("insight_section") or {}).get("stories") or []
-    for story in en_stories:
-        story["image"] = kr_images_by_query.get(story.get("image_query"))
-
-    print("[EN 2/3] 영어 HTML 렌더링 중...")
-    html_en = render_html.render(
-        "kr", date_str, price_data, generated_en, lang="en", market_label="Korea Market Close",
-        subscribe_form_action=os.environ.get("SUBSCRIBE_FORM_ACTION"),
-    )
-    out_path_en = OUTPUT_DIR / f"kr_{date_str}_en.html"
-    out_path_en.write_text(html_en, encoding="utf-8")
-    print(f"완료(영어): {out_path_en}")
-
-    if publish_wordpress.is_configured():
-        print("[EN 3/3] 워드프레스에 영어 버전 임시저장 업로드 중...")
-        result = publish_wordpress.publish_draft(
-            generated_en["title"],
-            html_en,
+    html_en: str | None = None
+    if generated_en:
+        html_en = render_html.render(
+            "kr",
+            date_str,
+            price_data,
+            generated_en,
             lang="en",
-            excerpt=_meta_description(generated_en),
-            tags=_derive_tags(generated_en, price_data, lang="en"),
-            category="Daily",
-            image=_featured_image(generated_en, price_data, lang="en"),
+            market_label="Korea Market Close",
+            subscribe_form_action=subscribe_form_action,
         )
-        print(f"완료(워드프레스 임시저장, 영어): id={result.get('id')} {result.get('link', '')}")
+        (OUTPUT_DIR / f"kr_{date_str}_en.html").write_text(html_en, encoding="utf-8")
+        (OUTPUT_DIR / f"kr_{date_str}_en.txt").write_text(
+            render_text.render("kr", date_str, price_data, generated_en, lang="en"),
+            encoding="utf-8",
+        )
+
+    print(f"완료: {out_path}")
+    if html_en:
+        print(f"완료(영어): {OUTPUT_DIR / f'kr_{date_str}_en.html'}")
+
+    image_path = OUTPUT_DIR / f"{market}_{date_str}_featured.png"
+    image = featured_image.create(market, date_str, price_data, image_path)
+    print(f"완료(대표 이미지): {image_path}")
+
+    if publish and publish_wordpress.is_configured():
+        print("[4/4] 워드프레스 임시저장 업로드 중...")
+        ko_result = publish_wordpress.publish_draft(
+            generated_ko["title"],
+            html_ko,
+            excerpt=_meta_description(generated_ko),
+            tags=_derive_tags(generated_ko, price_data),
+            category="Daily",
+            image=image,
+            slug=_draft_slug(market, date_str, "ko"),
+            focus_keyword=_focus_keyword(market, "ko"),
+        )
+        print(f"완료(한국어 초안): id={ko_result.get('id')} {ko_result.get('link', '')}")
+
+        if generated_en and html_en:
+            en_result = publish_wordpress.publish_draft(
+                generated_en["title"],
+                html_en,
+                lang="en",
+                excerpt=_meta_description(generated_en),
+                tags=_derive_tags(generated_en, price_data, lang="en"),
+                category="Daily",
+                image=image if not ko_result.get("featured_media") else None,
+                featured_media_id=ko_result.get("featured_media") or None,
+                slug=_draft_slug("kr", date_str, "en"),
+                focus_keyword=_focus_keyword("kr", "en"),
+            )
+            print(f"완료(영어 초안): id={en_result.get('id')} {en_result.get('link', '')}")
+    elif publish:
+        print("[4/4] 워드프레스 설정이 없어 파일 생성까지만 완료했습니다.")
     else:
-        print("[EN 3/3] WORDPRESS_* 환경변수가 없어 영어 버전 워드프레스 업로드는 건너뜁니다.")
+        print("[4/4] 시험 실행이라 워드프레스 업로드를 건너뛰었습니다.")
+
+    if publish:
+        history.append(market, date_str, generated_ko, trading_date=trading_date)
+    return out_path
 
 
 if __name__ == "__main__":
@@ -269,7 +272,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "--en",
         action="store_true",
-        help="한국장(kr)일 때 영어 번역판도 만듭니다. Claude API 호출이 1번 더 늘어납니다 (기본: 끔).",
+        help="한국장 시황의 영어판도 같은 데이터에서 무료로 생성합니다.",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="파일 생성과 품질 검사만 하고 워드프레스에는 올리지 않습니다.",
     )
     args = parser.parse_args()
-    run(args.market, with_english=args.en)
+    run(args.market, with_english=args.en, publish=not args.dry_run)

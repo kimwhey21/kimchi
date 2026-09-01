@@ -13,6 +13,7 @@ from __future__ import annotations
 import os
 import re
 import sys
+from pathlib import Path
 
 import requests
 
@@ -23,7 +24,6 @@ _HEAD_RE = re.compile(r"<head[^>]*>(.*?)</head>", re.IGNORECASE | re.DOTALL)
 _BODY_RE = re.compile(r"<body[^>]*>(.*?)</body>", re.IGNORECASE | re.DOTALL)
 _LINK_TAG_RE = re.compile(r"<link\b[^>]*>", re.IGNORECASE)
 _STYLE_TAG_RE = re.compile(r"<style[^>]*>(.*?)</style>", re.IGNORECASE | re.DOTALL)
-_CSS_RULE_RE = re.compile(r"([^{}]+)\{([^{}]*)\}")
 _SCOPE_CLASS = "mb-post"
 
 
@@ -33,16 +33,13 @@ def _scope_css(css: str, scope_class: str = _SCOPE_CLASS) -> str:
     (제목, 다른 글, 사이드바 등)에도 적용돼 사이트 레이아웃을 깨뜨리므로,
     모든 셀렉터 앞에 감싸는 div(.mb-post)를 붙여 그 안으로만 스코프합니다.
 
-    _CSS_RULE_RE는 한 겹까지만 중첩된 블록(@media 안에 평범한 규칙들만 있는
-    경우)은 우연히 문제없이 처리됩니다 — @media의 여는/닫는 중괄호 자체는
-    "선택자{본문}" 패턴에 안 걸려서 그대로 남고, 그 안의 개별 규칙만 하나씩
-    치환되기 때문입니다. 다만 @media 안에 :root나 * 처럼 더 복잡한 걸 넣거나
-    2단 이상 중첩되면 깨지니 새로 추가할 땐 이 함수 출력을 한번 확인하세요.
+    CSS는 @media처럼 중첩 블록을 가질 수 있습니다. 정규식으로 한 번에 바꾸면
+    중첩 중괄호를 잘못 짚어 모바일 규칙이 깨질 수 있으므로, 블록 경계를 직접
+    읽으면서 일반 선택자만 스코프합니다.
     """
     scope = f".{scope_class}"
 
-    def repl(match: re.Match) -> str:
-        selectors, body = match.group(1), match.group(2)
+    def scope_selectors(selectors: str) -> str:
         scoped = []
         for sel in selectors.split(","):
             sel = sel.strip()
@@ -54,13 +51,55 @@ def _scope_css(css: str, scope_class: str = _SCOPE_CLASS) -> str:
                 scoped.append(f"{scope}, {scope} *")
             else:
                 scoped.append(f"{scope} {sel}")
-        return f"{', '.join(scoped)} {{{body}}}"
+        return ", ".join(scoped)
 
-    return _CSS_RULE_RE.sub(repl, css)
+    output: list[str] = []
+    position = 0
+    length = len(css)
+    while position < length:
+        opening = css.find("{", position)
+        if opening == -1:
+            output.append(css[position:])
+            break
+
+        selector = css[position:opening]
+        depth = 1
+        closing = opening + 1
+        while closing < length and depth:
+            if css[closing] == "{":
+                depth += 1
+            elif css[closing] == "}":
+                depth -= 1
+            closing += 1
+
+        # 비정상 CSS는 원문을 유지합니다. 발행 과정이 스타일을 망가뜨리는
+        # 것보다 원문을 남기는 편이 안전합니다.
+        if depth:
+            output.append(css[position:])
+            break
+
+        body = css[opening + 1 : closing - 1]
+        stripped = selector.strip()
+        if stripped.startswith("@"):
+            # keyframes 내부의 from/to/% 선택자는 문서 선택자가 아니므로 손대지
+            # 않고, 미디어/지원 규칙처럼 일반 CSS를 담는 블록만 재귀 처리합니다.
+            if stripped.startswith(("@media", "@supports", "@container", "@layer")):
+                output.append(f"{selector}{{{_scope_css(body, scope_class)}}}")
+            else:
+                output.append(f"{selector}{{{body}}}")
+        else:
+            output.append(f"{scope_selectors(selector)} {{{body}}}")
+        position = closing
+
+    return "".join(output)
 
 # 스크립트가 통째로 빠지는 인사이트 섹션의 막대/선 차트는 빈 캔버스만 남아
 # 어색하게 보이므로, 워드프레스로 보낼 때는 아예 숨깁니다.
-_EXTRA_CSS = f".{_SCOPE_CLASS} .mb-chart-wrap{{display:none}}"
+_EXTRA_CSS = (
+    f".{_SCOPE_CLASS}{{width:100%;max-width:760px;margin:0 auto;padding:0!important;"
+    "box-sizing:border-box;overflow:hidden}}"
+    f".{_SCOPE_CLASS} .mb-chart-wrap{{display:none}}"
+)
 
 
 class WordPressPublishError(RuntimeError):
@@ -116,7 +155,11 @@ def _get_or_create_term_id(
         search = requests.get(
             f"{base_url}/wp-json/wp/v2/{endpoint}",
             auth=auth,
-            params={"search": name, "per_page": 100},
+            params={
+                "search": name,
+                "per_page": 100,
+                **({"lang": lang} if lang else {}),
+            },
             timeout=TIMEOUT_SECONDS,
         )
         match = next((t for t in search.json() if t.get("name") == name), None)
@@ -142,6 +185,29 @@ def _get_or_create_tag_ids(base_url: str, auth: tuple[str, str], names: list[str
     return [i for i in ids if i is not None]
 
 
+def _find_existing_post_by_slug(
+    base_url: str, auth: tuple[str, str], slug: str
+) -> dict | None:
+    """재실행 때 같은 글을 새로 만들지 않도록 고정 slug의 기존 글을 찾습니다."""
+    response = requests.get(
+        f"{base_url}/wp-json/wp/v2/posts",
+        auth=auth,
+        params=[
+            ("slug", slug),
+            ("context", "edit"),
+            ("per_page", "1"),
+            *(('status[]', status) for status in ("publish", "future", "draft", "pending", "private")),
+        ],
+        timeout=TIMEOUT_SECONDS,
+    )
+    if response.status_code >= 400:
+        raise WordPressPublishError(
+            f"기존 초안 확인 실패 (HTTP {response.status_code}): {response.text[:500]}"
+        )
+    posts = response.json()
+    return posts[0] if posts else None
+
+
 def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> int | None:
     """fetch_images.py가 돌려준 이미지 dict(url/alt/photographer/photographer_url)를
     실제로 내려받아 워드프레스 미디어 라이브러리에 올리고, 대표 이미지(featured
@@ -151,18 +217,27 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
     대표 이미지는 있으면 좋지만 없다고 글 자체가 안 올라가면 안 됩니다.
     """
     try:
-        img_resp = requests.get(image["url"], timeout=TIMEOUT_SECONDS)
-        img_resp.raise_for_status()
+        local_path = image.get("local_path")
+        if local_path:
+            path = Path(local_path)
+            image_bytes = path.read_bytes()
+            filename = path.name
+            content_type = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
+        else:
+            img_resp = requests.get(image["url"], timeout=TIMEOUT_SECONDS)
+            img_resp.raise_for_status()
+            image_bytes = img_resp.content
+            filename = f"{image.get('id') or 'photo'}.jpg"
+            content_type = "image/jpeg"
 
-        filename = f"{image.get('id') or 'photo'}.jpg"
         upload = requests.post(
             f"{base_url}/wp-json/wp/v2/media",
             auth=auth,
             headers={
                 "Content-Disposition": f'attachment; filename="{filename}"',
-                "Content-Type": "image/jpeg",
+                "Content-Type": content_type,
             },
-            data=img_resp.content,
+            data=image_bytes,
             timeout=TIMEOUT_SECONDS,
         )
         if upload.status_code >= 400:
@@ -170,15 +245,17 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
             return None
         media_id = upload.json()["id"]
 
-        # Unsplash API 정책상 사진을 쓸 때는 사진작가/Unsplash 표기가 필요합니다.
-        # 대표 이미지 슬롯 자체엔 표기가 안 붙으므로 미디어 라이브러리 캡션에
-        # 남겨둡니다 (같은 사진이 본문에도 쓰였다면 거기엔 이미 표기가 있습니다).
+        # Unsplash 사진에는 출처를, 별도로 만든 편집용 이미지에는 성격을 미디어
+        # 라이브러리 캡션으로 남깁니다.
         photographer = image.get("photographer", "")
         photographer_url = image.get("photographer_url", "")
-        caption = (
-            f'Photo: <a href="{photographer_url}" target="_blank" rel="noopener">'
-            f"{photographer}</a> / Unsplash"
-        )
+        if photographer and photographer_url:
+            caption = (
+                f'Photo: <a href="{photographer_url}" target="_blank" rel="noopener">'
+                f"{photographer}</a> / Unsplash"
+            )
+        else:
+            caption = image.get("caption", "Illustrative image created for this article.")
         requests.post(
             f"{base_url}/wp-json/wp/v2/media/{media_id}",
             auth=auth,
@@ -191,6 +268,40 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
         return None
 
 
+def set_focus_keyword(base_url: str, auth: tuple[str, str], post_id: int, keyword: str) -> bool:
+    """Rank Math의 포커스 키워드를 설정합니다.
+
+    워드프레스 기본 REST(`wp/v2/posts`)로는 이 값을 쓸 수 없어서, Rank Math가
+    제공하는 `rankmath/v1/updateMeta` 엔드포인트를 씁니다. 키워드를 안 넣으면
+    글 목록에 "키워드 미설정"으로 남고 Rank Math의 SEO 분석도 동작하지 않습니다.
+
+    읽어서 확인하는 경로가 REST에 없으므로(쓰기 전용), 실패해도 발행 자체를
+    막지 않고 경고만 남깁니다 — 키워드는 있으면 좋지만 없다고 글이 안 올라가면
+    안 되기 때문입니다.
+    """
+    try:
+        response = requests.post(
+            f"{base_url}/wp-json/rankmath/v1/updateMeta",
+            auth=auth,
+            json={
+                "objectID": post_id,
+                "objectType": "post",
+                "meta": {"rank_math_focus_keyword": keyword},
+            },
+            timeout=TIMEOUT_SECONDS,
+        )
+        if response.status_code >= 400:
+            print(
+                f"[경고] 포커스 키워드 설정 실패 (id={post_id}): {response.text[:200]}",
+                file=sys.stderr,
+            )
+            return False
+        return True
+    except Exception as e:  # noqa: BLE001 - 키워드 실패로 발행을 막지 않음
+        print(f"[경고] 포커스 키워드 설정 실패 (id={post_id}): {e!r}", file=sys.stderr)
+        return False
+
+
 def publish_draft(
     title: str,
     html_content: str,
@@ -199,6 +310,9 @@ def publish_draft(
     tags: list[str] | None = None,
     category: str | None = None,
     image: dict | None = None,
+    featured_media_id: int | None = None,
+    slug: str | None = None,
+    focus_keyword: str | None = None,
 ) -> dict:
     """워드프레스에 임시저장 글을 만들고 응답 JSON(dict)을 돌려줍니다.
 
@@ -231,9 +345,36 @@ def publish_draft(
     app_password = os.environ["WORDPRESS_APP_PASSWORD"]
     auth = (username, app_password)
 
+    if slug:
+        existing = _find_existing_post_by_slug(base_url, auth, slug)
+        if existing:
+            if existing.get("status") == "draft":
+                print(
+                    f"[안내] 같은 거래일의 기존 초안(id={existing.get('id')})을 갱신합니다."
+                )
+                existing_featured = existing.get("featured_media") or None
+                return update_draft(
+                    existing["id"],
+                    title,
+                    html_content,
+                    lang=lang,
+                    excerpt=excerpt,
+                    tags=tags,
+                    category=category,
+                    image=None if existing_featured else image,
+                    featured_media_id=featured_media_id or existing_featured,
+                )
+            print(
+                f"[안내] 같은 거래일 글(id={existing.get('id')})이 이미 "
+                f"{existing.get('status')} 상태라 새 초안을 만들지 않습니다."
+            )
+            return existing
+
     safe_content = _to_wordpress_content(html_content)
 
     payload = {"title": title, "content": safe_content, "status": "draft"}
+    if slug:
+        payload["slug"] = slug
     if excerpt:
         payload["excerpt"] = excerpt
     if tags:
@@ -242,7 +383,9 @@ def publish_draft(
         cat_id = _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
         if cat_id:
             payload["categories"] = [cat_id]
-    if image:
+    if featured_media_id:
+        payload["featured_media"] = featured_media_id
+    elif image:
         media_id = upload_featured_image(base_url, auth, image)
         if media_id:
             payload["featured_media"] = media_id
@@ -262,6 +405,9 @@ def publish_draft(
         )
 
     result = response.json()
+
+    if focus_keyword and result.get("id"):
+        set_focus_keyword(base_url, auth, result["id"], focus_keyword)
 
     if lang:
         link = result.get("link", "")
@@ -289,6 +435,8 @@ def update_draft(
     tags: list[str] | None = None,
     category: str | None = None,
     image: dict | None = None,
+    featured_media_id: int | None = None,
+    focus_keyword: str | None = None,
 ) -> dict:
     """이미 올라간 글(주로 검수 중인 임시저장 글)의 내용을 그 자리에서
     갱신합니다. publish_draft와 인자가 같지만 새 글을 만들지 않고
@@ -311,7 +459,9 @@ def update_draft(
         cat_id = _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
         if cat_id:
             payload["categories"] = [cat_id]
-    if image:
+    if featured_media_id:
+        payload["featured_media"] = featured_media_id
+    elif image:
         media_id = upload_featured_image(base_url, auth, image)
         if media_id:
             payload["featured_media"] = media_id
@@ -323,5 +473,8 @@ def update_draft(
         raise WordPressPublishError(
             f"워드프레스 업데이트 실패 (HTTP {response.status_code}): {response.text[:500]}"
         )
+
+    if focus_keyword:
+        set_focus_keyword(base_url, auth, post_id, focus_keyword)
 
     return response.json()

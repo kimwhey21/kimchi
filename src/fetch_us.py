@@ -28,8 +28,13 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
                 unit: str = "", **_ignore) -> dict:
     """종목/지수 하나의 최근 시세를 가져와 카드에 필요한 형태로 정리합니다."""
     closes: list[float] | None = None
+    ticker_client = yf.Ticker(ticker)
+    try:
+        quote_metadata = ticker_client.get_history_metadata()
+    except Exception:  # noqa: BLE001 - 메타데이터 실패 시 일봉으로 폴백
+        quote_metadata = {}
     for attempt in range(1, _NAN_RETRY_ATTEMPTS + 1):
-        hist = yf.Ticker(ticker).history(period=f"{lookback + 2}d")
+        hist = ticker_client.history(period=f"{lookback + 2}d")
         if hist.empty or len(hist) < 2:
             raise ValueError(f"{ticker}: 시세 데이터를 가져오지 못했습니다.")
 
@@ -51,10 +56,31 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
     if closes is None:
         raise ValueError(f"{ticker}: 시세 데이터에 결측값(NaN)이 있습니다 ({_NAN_RETRY_ATTEMPTS}번 재시도 후에도).")
 
-    if is_yield:
-        closes = [c / 10 for c in closes]  # ^TNX, ^TYX 는 실제 금리*10 으로 표기됨
+    # Yahoo Finance는 현재 ^TNX/^TYX를 이미 실제 금리(예: 4.758%)로 돌려줍니다.
+    # 과거처럼 10으로 나누면 4.758%가 0.48%로 잘못 표시됩니다.
 
-    prev_close, last_close = closes[-2], closes[-1]
+    historical_prev, last_close = closes[-2], closes[-1]
+    prev_close = historical_prev
+
+    # Yahoo 일봉 이력에는 드물게 직전 거래일 한 줄이 빠집니다. 2026-08-31에는
+    # 주요 지수와 DE의 8/28 값이 누락돼 8/27 대비 등락률이 계산됐습니다.
+    # 메타데이터의 previousClose는 이 경우에도 실제 직전 종가를 제공하므로,
+    # regularMarketPrice가 마지막 일봉과 일치할 때 우선 사용합니다.
+    try:
+        metadata_last = float(quote_metadata.get("regularMarketPrice"))
+        metadata_prev = float(quote_metadata.get("previousClose"))
+        tolerance = max(0.02, abs(last_close) * 0.001)
+        if (
+            math.isfinite(metadata_last)
+            and math.isfinite(metadata_prev)
+            and metadata_prev != 0
+            and abs(metadata_last - last_close) <= tolerance
+        ):
+            prev_close = metadata_prev
+    except (TypeError, ValueError, KeyError):
+        # 메타데이터가 없는 종목은 기존 일봉 계산으로 안전하게 폴백합니다.
+        pass
+
     change_pct = (last_close - prev_close) / prev_close * 100
 
     return {

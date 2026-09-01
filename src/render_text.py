@@ -4,25 +4,36 @@
 from __future__ import annotations
 
 
-def _fmt_price(entry: dict) -> str:
+def _fmt_price(entry: dict, lang: str = "ko") -> str:
     unit = entry.get("unit", "")
+    if lang == "en" and unit == "원":
+        unit = " KRW"
     sign = "+" if entry["change_pct"] >= 0 else ""
-    return f'{entry["name"]} {entry["price"]:,}{unit} ({sign}{entry["change_pct"]}%)'
+    name = (entry.get("name_en") or entry["name"]) if lang == "en" else entry["name"]
+    return f'{name} {entry["price"]:,}{unit} ({sign}{entry["change_pct"]}%)'
 
 
 def _fmt_section(heading: str, body: str) -> str:
     return f"■ {heading}\n\n{body}"
 
 
-def render(market: str, date_str: str, price_data: dict, generated: dict) -> str:
-    market_label = "미국장" if market == "us" else "한국장"
+def render(
+    market: str, date_str: str, price_data: dict, generated: dict, lang: str = "ko"
+) -> str:
+    market_label = (
+        ("US Market Close" if market == "us" else "Korea Market Close")
+        if lang == "en"
+        else ("미국장" if market == "us" else "한국장")
+    )
     lines: list[str] = []
 
     lines.append(generated["title"])
-    lines.append(f"{date_str} {market_label} 마감 시황")
+    lines.append(
+        f"{date_str} {market_label}" if lang == "en" else f"{date_str} {market_label} 마감 시황"
+    )
     lines.append("")
 
-    macro_line = " / ".join(_fmt_price(v) for v in price_data["macro"].values())
+    macro_line = " / ".join(_fmt_price(v, lang) for v in price_data["macro"].values())
     if macro_line:
         lines.append(macro_line)
         lines.append("")
@@ -38,7 +49,7 @@ def render(market: str, date_str: str, price_data: dict, generated: dict) -> str
         for h in theme_section.get("highlights", []):
             entry = price_data["watchlist"].get(h["ticker"]) or price_data["macro"].get(h["ticker"])
             if entry:
-                lines.append(f"- {h['label']}: {_fmt_price(entry)}")
+                lines.append(f"- {h['label']}: {_fmt_price(entry, lang)}")
         if theme_section.get("commentary"):
             lines.append("")
             lines.append(theme_section["commentary"])
@@ -51,7 +62,7 @@ def render(market: str, date_str: str, price_data: dict, generated: dict) -> str
         for t in stock_section.get("featured_tickers", []):
             entry = price_data["watchlist"].get(t)
             if entry:
-                lines.append(f"- {_fmt_price(entry)}")
+                lines.append(f"- {_fmt_price(entry, lang)}")
         if stock_section.get("commentary"):
             lines.append("")
             lines.append(stock_section["commentary"])
@@ -65,6 +76,15 @@ def render(market: str, date_str: str, price_data: dict, generated: dict) -> str
     closing = generated.get("closing")
     if closing:
         lines.append(_fmt_section(closing["heading"], closing["body"]))
+        lines.append("")
+
+    sources = generated.get("sources") or []
+    if sources:
+        lines.append("■ Sources" if lang == "en" else "■ 자료 확인")
+        for source in sources:
+            lines.append(f"- {source.get('name', '')}: {source.get('title', '')}")
+            if source.get("url"):
+                lines.append(f"  {source['url']}")
         lines.append("")
 
     insight_section = generated.get("insight_section")
@@ -95,6 +115,10 @@ def render(market: str, date_str: str, price_data: dict, generated: dict) -> str
             lines.append(f"- {item['date']} {item['title']}: {item['desc']}")
         lines.append("")
 
-    lines.append("투자 참고용이며 투자 권유가 아닙니다.")
+    lines.append(
+        "For informational purposes only. Not investment advice."
+        if lang == "en"
+        else "투자 참고용이며 투자 권유가 아닙니다."
+    )
 
     return "\n".join(lines).strip() + "\n"

@@ -1,10 +1,8 @@
 # 미국장에서 매번 수집할 지수/종목 목록입니다.
 # name은 화면에 표시될 한글 이름, ticker는 야후 파이낸스 티커입니다.
-# name_en은 대표 이미지 검색(main.py의 _featured_image)에 씁니다 — 한글
-# 이름을 그대로 Unsplash에 검색하면 결과가 아예 없거나("마이크론", "필라델피아
-# 반도체 ETF") 엉뚱한 사진("디어" → 하트 모양 간판 등)이 나오는 걸 직접
-# 확인해서 추가했습니다. name_en 없이 한글로 검색되던 게 원래 버그였습니다.
-# is_yield: true 인 항목은 야후 표기(예: ^TNX=47.0)를 10으로 나눠 실제 %로 변환합니다.
+# name_en은 대표 이미지의 영문 종목명과 향후 영어판 표기에 씁니다.
+# is_yield는 금리 항목을 표시하기 위한 메타데이터입니다. Yahoo는 현재 ^TNX/^TYX를
+# 실제 퍼센트 값(예: 4.75)으로 제공하므로 별도로 10으로 나누지 않습니다.
 
 macro:
   - { ticker: "^DJI",  name: "다우존스", name_en: "Dow Jones Industrial Average" }
@@ -16,23 +14,23 @@ macro:
   - { ticker: "^TYX",  name: "美 30년물 금리", name_en: "US 30-Year Treasury Yield", is_yield: true, unit: "%" }
   - { ticker: "GC=F",  name: "국제 금", name_en: "Gold", unit: "달러" }
 
-# 여기 있는 종목 전부가 매번 게시되는 게 아니라, generate_post.py 단계에서
-# Claude가 그날 뉴스를 참고해 이 중 최대 8개를 골라 카드로 보여줍니다.
+# 여기 있는 종목 전부가 매번 게시되는 게 아니라, 무료 생성기가
+# 절대 등락 폭이 큰 종목을 골라 카드로 보여줍니다.
 # 즉 "그날 진짜 관심 받은 종목"을 자동으로 추리는 역할입니다.
 watchlist:
   - { ticker: "NVDA",  name: "엔비디아", name_en: "NVIDIA" }
   - { ticker: "MU",    name: "마이크론", name_en: "Micron Technology" }
   - { ticker: "INTC",  name: "인텔", name_en: "Intel" }
-  - { ticker: "TSLA",  name: "테슬라", name_en: "Tesla Model 3" }
-  - { ticker: "AAPL",  name: "애플", name_en: "Apple Store" }
-  - { ticker: "MSFT",  name: "마이크로소프트", name_en: "Microsoft logo" }
+  - { ticker: "TSLA",  name: "테슬라", name_en: "Tesla" }
+  - { ticker: "AAPL",  name: "애플", name_en: "Apple" }
+  - { ticker: "MSFT",  name: "마이크로소프트", name_en: "Microsoft" }
   - { ticker: "AMZN",  name: "아마존", name_en: "Amazon" }
   - { ticker: "META",  name: "메타", name_en: "Meta" }
   - { ticker: "GOOGL", name: "알파벳", name_en: "Google" }
   - { ticker: "WMT",   name: "월마트", name_en: "Walmart" }
   - { ticker: "MRNA",  name: "모더나", name_en: "Moderna" }
-  - { ticker: "MRK",   name: "머크", name_en: "pharmaceutical laboratory" }
+  - { ticker: "MRK",   name: "머크", name_en: "Merck" }
   - { ticker: "COIN",  name: "코인베이스", name_en: "Coinbase" }
-  - { ticker: "DE",    name: "디어", name_en: "John Deere" }
-  - { ticker: "SOXX",  name: "필라델피아 반도체 ETF", name_en: "semiconductor chip manufacturing" }
-  - { ticker: "CL=F",  name: "WTI 원유", name_en: "crude oil" }
+  - { ticker: "DE",    name: "디어", name_en: "Deere & Company" }
+  - { ticker: "SOXX",  name: "필라델피아 반도체 ETF", name_en: "iShares Semiconductor ETF" }
+  - { ticker: "CL=F",  name: "WTI 원유", name_en: "WTI Crude Oil" }

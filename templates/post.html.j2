@@ -30,19 +30,22 @@
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--mb-bg);
     color: var(--mb-text);
-    max-width: 720px;
+    width: 100%;
+    max-width: 760px;
     margin: 0 auto;
     padding: 32px 20px 80px;
-    line-height: 1.7;
-    word-break: keep-all;
+    line-height: 1.78;
+    word-break: normal;
+    line-break: strict;
+    overflow-x: hidden;
   }
-  .mb-eyebrow { font-size: 13px; color: var(--mb-text-muted); letter-spacing: .02em; margin-bottom: 8px; }
-  h1, h2, h3 { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; letter-spacing: normal; word-break: keep-all; }
+  .mb-eyebrow { width: 100%; font-size: 13px; color: var(--mb-text-muted); letter-spacing: .02em; margin-bottom: 8px; }
+  h1, h2, h3 { max-width: 100%; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; letter-spacing: normal; word-break: keep-all; overflow-wrap: break-word; }
   h1 { font-size: 26px; font-weight: 700; line-height: 1.4; margin: 0 0 28px; }
   h2 { font-size: 19px; font-weight: 700; margin: 40px 0 12px; }
   h3 { font-size: 16px; font-weight: 700; margin: 20px 0 8px; }
-  p { margin: 0 0 14px; font-size: 16px; text-wrap: pretty; }
-  .mb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
+  p { width: 100%; max-width: none; margin: 0 0 16px; font-size: 16px; text-align: justify; text-justify: inter-character; text-wrap: wrap; word-break: normal; line-break: strict; overflow-wrap: break-word; }
+  .mb-grid { width: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
   .mb-card { background: var(--mb-card); border: 1px solid var(--mb-border); border-radius: 12px; padding: 16px; min-width: 0; overflow: hidden; }
   .mb-card .mb-label { font-size: 13px; color: var(--mb-text-muted); margin-bottom: 4px; overflow-wrap: break-word; }
   .mb-card .mb-label .mb-ticker { color: var(--mb-text-muted); opacity: .7; font-size: 12px; }
@@ -64,7 +67,7 @@
   .mb-subscribe-form { display: flex; gap: 8px; max-width: 380px; margin: 16px auto 0; }
   .mb-subscribe-form input[type="email"] { flex: 1; min-width: 0; padding: 10px 12px; border: 1px solid var(--mb-border); border-radius: 8px; font-size: 14px; }
   .mb-subscribe-form button { flex-shrink: 0; padding: 10px 16px; border: none; border-radius: 8px; background: var(--mb-text); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
-  .mb-table-wrap { overflow-x: auto; margin: 20px 0; }
+  .mb-table-wrap { width: 100%; max-width: 100%; overflow-x: auto; margin: 20px 0; }
   table.mb-data-table { width: 100%; min-width: 320px; border-collapse: collapse; margin: 0; }
   .mb-data-table th, .mb-data-table td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--mb-border); font-size: 14px; }
   .mb-data-table th:first-child, .mb-data-table td:first-child { text-align: left; }
@@ -76,8 +79,9 @@
   .mb-story-icon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px; background: var(--mb-card); border: 1px solid var(--mb-border); display: flex; align-items: center; justify-content: center; color: var(--mb-text-muted); }
   .mb-story-icon svg { width: 19px; height: 19px; }
   .mb-story-head h3 { margin: 0; }
-  .mb-story-photo { width: 100%; height: auto; border-radius: 12px; margin: 14px 0 4px; display: block; }
+  .mb-story-photo { width: 100%; max-width: 100%; height: auto; border-radius: 12px; margin: 14px 0 4px; display: block; }
   .mb-photo-credit { font-size: 11px; color: var(--mb-text-muted); margin: 0 0 14px; }
+  .mb-photo-credit, .mb-card p, .mb-cal-item p, .mb-subscribe p { text-align: left; }
   .mb-photo-credit a { color: var(--mb-text-muted); }
   .mb-stat-compare { display: flex; align-items: center; gap: 14px; margin: 18px 0; padding: 18px; background: var(--mb-card); border: 1px solid var(--mb-border); border-radius: 12px; }
   .mb-stat-compare .mb-stat-block { flex: 1; text-align: center; }
@@ -85,6 +89,12 @@
   .mb-stat-compare .mb-stat-value { font-size: 24px; font-weight: 700; }
   .mb-stat-compare .mb-stat-arrow { flex-shrink: 0; text-align: center; color: var(--mb-text-muted); }
   .mb-stat-compare .mb-stat-multiple { display: block; margin-top: 2px; font-size: 13px; font-weight: 700; color: var(--mb-up); }
+  .mb-sources { width: 100%; margin-top: 42px; padding-top: 22px; border-top: 1px solid var(--mb-border); }
+  .mb-sources h2 { margin: 0 0 12px; font-size: 17px; }
+  .mb-source-list { list-style: none; margin: 0; padding: 0; }
+  .mb-source-item { display: grid; grid-template-columns: minmax(80px, 110px) minmax(0, 1fr); gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--mb-border); }
+  .mb-source-name { color: var(--mb-text-muted); font-size: 12px; font-weight: 700; }
+  .mb-source-item a { min-width: 0; color: var(--mb-text); font-size: 13px; line-height: 1.55; text-decoration-thickness: 1px; text-underline-offset: 2px; overflow-wrap: break-word; }
   footer { margin-top: 48px; font-size: 12px; color: var(--mb-text-muted); border-top: 1px solid var(--mb-border); padding-top: 16px; }
 
   @media (max-width: 480px) {
@@ -94,6 +104,8 @@
     .mb-stat-compare { flex-wrap: wrap; justify-content: center; padding: 14px; gap: 10px 6px; }
     .mb-stat-compare .mb-stat-block { flex: 1 1 80px; min-width: 80px; }
     .mb-stat-compare .mb-stat-value { font-size: 20px; }
+    p { text-align: left; }
+    .mb-source-item { grid-template-columns: 1fr; gap: 3px; }
   }
 </style>
 </head>
@@ -106,6 +118,7 @@
     {% for c in macro_cards %}
     <div class="mb-card">
       <div class="mb-label">{{ c.name }}</div>
+      {% if c.as_of %}<div class="mb-sub-label">{{ c.as_of }}</div>{% endif %}
       <div class="mb-price">{{ c.price }}</div>
       <div class="mb-delta mb-{{ c.direction }}">{{ c.change_label }}</div>
     </div>
@@ -184,8 +197,12 @@
     <h3>{{ item.heading }}</h3>
   </div>
   {% if item.image %}
-  <img class="mb-story-photo" src="{{ item.image.url }}" alt="{{ item.image.alt or item.heading }}" loading="lazy">
+  <img class="mb-story-photo" src="{{ item.image.url }}" alt="{{ item.image.alt or item.heading }}"{% if item.image.width and item.image.height %} width="{{ item.image.width }}" height="{{ item.image.height }}"{% endif %} loading="lazy">
+  {% if item.image.credit %}
+  <p class="mb-photo-credit">{{ item.image.credit }}</p>
+  {% elif item.image.photographer and item.image.photographer_url %}
   <p class="mb-photo-credit">{{ "Photo" if lang == "en" else "사진" }}: <a href="{{ item.image.photographer_url }}" target="_blank" rel="noopener">{{ item.image.photographer }}</a> / Unsplash</p>
+  {% endif %}
   {% endif %}
   {% for para in item.body.split('\n\n') %}
   <p>{{ para }}</p>
@@ -240,6 +257,20 @@
     <p>{{ para }}</p>
     {% endfor %}
   </div>
+  {% endif %}
+
+  {% if source_notes %}
+  <section class="mb-sources" aria-label="{{ 'Sources' if lang == 'en' else '자료 출처' }}">
+    <h2>{{ "Sources" if lang == "en" else "자료 확인" }}</h2>
+    <ul class="mb-source-list">
+      {% for source in source_notes %}
+      <li class="mb-source-item">
+        <span class="mb-source-name">{{ source.name }}</span>
+        <a href="{{ source.url }}" target="_blank" rel="noopener">{{ source.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
   {% endif %}
 
   {% if subscribe_form_action %}

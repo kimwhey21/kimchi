@@ -5,4 +5,3 @@ output/
 state/
 .DS_Store
 .claude/
-{src,config,templates,output,.github/

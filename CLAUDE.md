@@ -5,6 +5,10 @@
 
 ## 검증 규칙 (반드시 지킬 것)
 
+- **한국어 시황을 작성하거나 고치기 전에 `docs/editorial-style.md`를 읽고 따른다.**
+  영어 시황 관용구를 직역하거나 시장을 불필요하게 의인화하지 않는다. 완성된
+  구조화 원고는 `src/editorial_quality.py`의 검사를 통과해야 한다.
+
 - **이미지는 쓰기 전에 실제로 다운받아 눈으로 확인한다.** alt text나 검색어만
   보고 판단하지 말 것. 실제로 있었던 일: Unsplash에서 "Korean won
   currency"/"Korean won banknote"로 검색했는데 결과가 중국 위안화(마오쩌둥
@@ -24,6 +28,23 @@
   탭 이름들) 검색해서야 정확한 위치("Titles & Meta → Global Meta" 탭)를
   찾았다. 게다가 알고 보니 그 설정은 이미 올바르게 되어 있었다 — 확인
   없이 추측한 게 완전히 시간 낭비였다.
+- **관리자 화면 경로를 안내하기 전에, 반드시 REST API로 현재 상태를 먼저
+  조회한다.** 조회로 확인되지 않은 화면 위치는 안내하지 않는다. 실제로 있었던
+  일(2026-09-01): 메타태그에 `google-site-verification`이 없는 것만 보고 "구글
+  서치콘솔 미등록"이라 단정했는데, `wp/v2/plugins`를 한 번만 조회했으면 Site Kit
+  by Google이 이미 연결돼 있는 걸 알 수 있었다. 이어서 검색 결과로 랭크매쓰 메뉴
+  경로를 안내했지만 실제 화면과 달라 사용자가 헤맸고, Site Kit API의 403을
+  "권한 부족"으로 오독했으나 실제로는 조회에 쓴 계정에 구글 인증이 없었을 뿐이다.
+  세 번 모두 원인은 **부분적 근거로 추측한 뒤 확인된 사실처럼 보고한 것**이다.
+  - 먼저 조회할 것: `wp/v2/plugins`(설치·활성 플러그인), `wp/v2/settings`,
+    `google-site-kit/v1/core/modules/data/list`(연결 상태), `pll/v1/settings`
+  - 확인 불가능한 항목은 "확인 못 했다"고 말하고, 사용자에게 한 번만 보면 되는
+    구체적 확인 지점을 요청한다.
+- **REST 액션 이름을 추측해서 호출하지 말 것.** 실제로 있었던 일: 랭크매쓰
+  사이트맵 캐시를 비우려고 `rankmath/v1/toolsAction`에 액션 이름을 추측해서
+  연달아 POST했다. 그 엔드포인트에는 설정 초기화 같은 위험한 액션도 있어서,
+  운이 나빴으면 라이브 사이트를 망가뜨릴 수 있었다. 문서로 확인된 형식만 쓰고,
+  아니면 사용자에게 넘긴다.
 - 화면(홈페이지, 발행된 글, 템플릿 변경사항)을 눈으로 확인해야 할 때는
   Playwright 헤드리스 브라우저(`playwright` pip 패키지 + Chromium, 이미
   이 컴퓨터에 설치돼 있음)로 스크린샷을 찍어서 실제로 본 뒤 결과를
@@ -36,19 +57,20 @@
     `POST /wp-json/wp-super-cache/v1/cache {"delete_cache": true}`로
     캐시를 지워야 변경사항이 바로 보인다.
 
-## 비용/토큰 관리
+## 비용/자동 발행 원칙
 
-- **아직 정식 운영 전(수정 단계)이므로 Anthropic API 크레딧을 최대한
-  아낀다.** 같은 날 같은 market으로 재실행하면 `output/{market}_{date}_
-  generated.json` 캐시를 재사용해 Claude API를 다시 호출하지 않는다 —
-  이 캐시 파일을 지우기 전엔 재생성되지 않는다는 걸 기억할 것.
-- **시황(daily) 글은 `generate_post.py`/`translate_post.py`를 통해
-  Anthropic API로 문구를 생성하지만, 상시(evergreen) 가이드 글은 그럴
-  필요가 없다.** 지금 대화 중인 Claude Code 세션이 직접 조사하고 써서
-  `src/publish_guide.py`로 바로 발행하면 별도 API 비용이 들지 않는다
-  (Claude Code 구독과 Anthropic Console API 크레딧은 별개 과금이기
-  때문). CSS만 바꾸는 등 코드만 고칠 때도 API를 다시 호출할 필요 없이
-  캐시된 HTML을 패치하면 된다.
+- 기본 자동 발행은 `src/generate_free.py`를 사용하며 외부 생성형 AI API를
+  호출하지 않는다. 실제 시세와 RSS 헤드라인만 정해진 형식으로 조합한다.
+- 평일 16:00 한국장 실행은 `--en`으로 한국어판과 영어판을 함께 만든다.
+  `src/generate_free_en.py`가 같은 가격 데이터에서 영어 문장을 직접 작성하고,
+  두 언어 품질 검사가 끝난 뒤 워드프레스 임시저장 단계로 넘어간다.
+- 대표 이미지는 `src/featured_image.py`가 실제 마감 수치로 만들며, 예약 경로에서
+  검수되지 않은 Unsplash 검색 결과를 자동으로 사용하지 않는다.
+- GitHub Actions에는 Anthropic·OpenAI·Unsplash 키를 전달하지 않는다.
+  유료 생성 경로(`generate_post.py`, `translate_post.py`)를 자동 실행에
+  다시 연결하지 말 것.
+- 무료 생성 결과는 `output/{market}_{trading_date}_generated_free.json`에
+  캐시된다. 자동 검증하지 못한 시장 원인·전망은 추측해서 넣지 않는다.
 
 ## 발행 워크플로우
 

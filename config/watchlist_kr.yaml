@@ -6,8 +6,8 @@ macro:
   - { ticker: "KQ11",    name: "코스닥", name_en: "KOSDAQ" }
   - { ticker: "USD/KRW", name: "원/달러 환율", name_en: "USD/KRW", unit: "원" }
 
-# generate_post.py 단계에서 Claude가 이 중 그날 의미 있었던 종목만 골라 카드로 보여줍니다.
-# name_en은 영어 번역판(translate_post.py --en) 카드에 쓰입니다.
+# 무료 생성기가 이 중 절대 등락 폭이 큰 종목을 골라 카드로 보여줍니다.
+# name_en은 같은 시세에서 직접 작성하는 영어판 카드와 본문에 쓰입니다.
 watchlist:
   - { ticker: "005930", name: "삼성전자", name_en: "Samsung Electronics" }
   - { ticker: "000660", name: "SK하이닉스", name_en: "SK Hynix" }

@@ -69,10 +69,12 @@ def _display_name(entry: dict, lang: str) -> str:
     return entry.get("name_en") or entry["name"] if lang == "en" else entry["name"]
 
 
-def _to_card(entry: dict, lang: str = "ko") -> dict:
+def _to_card(entry: dict, lang: str = "ko", reference_date: str | None = None) -> dict:
     direction = "up" if entry["change_pct"] >= 0 else "down"
     sign = "+" if entry["change_pct"] >= 0 else ""
     unit = entry.get("unit", "")
+    if lang == "en" and unit == "원":
+        unit = " KRW"
     return {
         "name": _display_name(entry, lang),
         "ticker": entry.get("ticker", ""),
@@ -80,6 +82,13 @@ def _to_card(entry: dict, lang: str = "ko") -> dict:
         "change_pct": entry["change_pct"],
         "change_label": f'{sign}{entry["change_pct"]}%',
         "direction": direction,
+        "as_of": (
+            (f"As of {entry['trading_date']}" if lang == "en" else f"{entry['trading_date']} 기준")
+            if reference_date
+            and entry.get("trading_date")
+            and entry["trading_date"] != reference_date
+            else ""
+        ),
     }
 
 
@@ -149,7 +158,7 @@ def render(
     market_label: str | None = None,
     subscribe_form_action: str | None = None,
 ) -> str:
-    macro_cards = [_to_card(v, lang) for v in price_data["macro"].values()]
+    macro_cards = [_to_card(v, lang, date_str) for v in price_data["macro"].values()]
 
     first_body = (generated.get("narrative") or [{}])[0].get("body", "")
     meta_description = first_body.split("\n\n")[0][:155].strip()
@@ -198,6 +207,7 @@ def render(
         stock_cards=stock_cards,
         outlook=generated.get("outlook"),
         closing=generated.get("closing"),
+        source_notes=generated.get("sources", []),
         insight_section=_prep_insight_section(generated.get("insight_section"), lang),
         calendar=generated.get("calendar", []),
         foreign_flow_rows=foreign_flow_rows,
