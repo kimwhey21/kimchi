@@ -62,8 +62,12 @@ _STYLE = (
     ".mb-post .mb-series-item{display:grid;grid-template-columns:22px minmax(0,1fr);"
     "gap:10px;padding:9px 0;border-bottom:1px solid var(--mb-border,#e5e3dd);align-items:baseline}"
     ".mb-post .mb-series-num{color:var(--mb-text-muted,#6b6a66);font-size:12px;font-weight:700}"
+    # 밑줄은 제목에만 긋습니다. 한 줄 설명까지 밑줄이 가면 목록이 답답해 보이는데,
+    # 링크 전체(<a>)에 밑줄을 주면 안쪽 설명 span으로 상속돼 끌 수 없습니다.
     ".mb-post .mb-series-item a{color:var(--mb-text,#17171a);font-size:14px;font-weight:600;"
-    "text-decoration-thickness:1px;text-underline-offset:2px}"
+    "text-decoration:none}"
+    ".mb-post .mb-series-label{text-decoration:underline;text-decoration-thickness:1px;"
+    "text-underline-offset:2px}"
     ".mb-post .mb-series-desc{display:block;margin-top:2px;font-size:13px;font-weight:400;"
     "color:var(--mb-text-muted,#6b6a66)}"
     ".mb-post .mb-series-current{color:var(--mb-text-muted,#6b6a66);font-size:14px;font-weight:600}"
@@ -83,7 +87,7 @@ def build_block(links: dict[int, str], current_id: int) -> str:
             )
         else:
             body = (
-                f'<a href="{links[post_id]}">{label}'
+                f'<a href="{links[post_id]}"><span class="mb-series-label">{label}</span>'
                 f'<span class="mb-series-desc">{desc}</span></a>'
             )
         rows.append(f'<li class="mb-series-item">{num}{body}</li>')
