@@ -268,6 +268,29 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
         return None
 
 
+def _featured_media_matches(
+    base_url: str, auth: tuple[str, str], media_id: int, image: dict
+) -> bool:
+    """기존 대표 이미지가 같은 데이터로 만든 것인지 alt text로 확인합니다.
+
+    대표 이미지의 alt에는 지수·환율 값이 들어갑니다. 같은 거래일을 재실행해도
+    값이 같으면 기존 미디어를 재사용하고, 장중값 정정처럼 숫자가 달라졌을 때만
+    새 파일을 올려 미디어 라이브러리 중복을 최소화합니다.
+    """
+    try:
+        response = requests.get(
+            f"{base_url}/wp-json/wp/v2/media/{media_id}",
+            auth=auth,
+            params={"context": "edit"},
+            timeout=TIMEOUT_SECONDS,
+        )
+        if response.status_code >= 400:
+            return False
+        return response.json().get("alt_text", "") == image.get("alt", "")
+    except Exception:  # noqa: BLE001 - 비교 실패 시 새 이미지로 안전하게 교체
+        return False
+
+
 def set_focus_keyword(base_url: str, auth: tuple[str, str], post_id: int, keyword: str) -> bool:
     """Rank Math의 포커스 키워드를 설정합니다.
 
@@ -353,6 +376,14 @@ def publish_draft(
                     f"[안내] 같은 거래일의 기존 초안(id={existing.get('id')})을 갱신합니다."
                 )
                 existing_featured = existing.get("featured_media") or None
+                replacement_image = None
+                resolved_featured = featured_media_id or existing_featured
+                if image and existing_featured:
+                    if _featured_media_matches(base_url, auth, existing_featured, image):
+                        resolved_featured = existing_featured
+                    else:
+                        replacement_image = image
+                        resolved_featured = None
                 return update_draft(
                     existing["id"],
                     title,
@@ -361,8 +392,8 @@ def publish_draft(
                     excerpt=excerpt,
                     tags=tags,
                     category=category,
-                    image=None if existing_featured else image,
-                    featured_media_id=featured_media_id or existing_featured,
+                    image=replacement_image if existing_featured else image,
+                    featured_media_id=resolved_featured,
                 )
             print(
                 f"[안내] 같은 거래일 글(id={existing.get('id')})이 이미 "

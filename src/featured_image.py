@@ -94,8 +94,11 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path) -> d
 
     output_path.parent.mkdir(exist_ok=True)
     canvas.save(output_path, format="PNG", optimize=True)
+    alt_values = ", ".join(
+        f"{_short_name(entry)} {entry['price']:,} ({_change(entry)})" for entry in macro
+    )
     return {
         "local_path": str(output_path),
-        "alt": f"{market_label.title()} data snapshot for {date_str}",
+        "alt": f"{market_label.title()} data snapshot for {date_str}: {alt_values}.",
         "caption": "Market snapshot graphic generated from the figures in this article.",
     }

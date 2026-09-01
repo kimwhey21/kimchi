@@ -23,8 +23,11 @@ class PublishIdempotencyTest(unittest.TestCase):
         self.env.stop()
 
     @patch("src.publish_wordpress.update_draft")
+    @patch("src.publish_wordpress._featured_media_matches", return_value=True)
     @patch("src.publish_wordpress._find_existing_post_by_slug")
-    def test_updates_existing_draft(self, find_existing, update_draft) -> None:
+    def test_updates_existing_draft(
+        self, find_existing, media_matches, update_draft
+    ) -> None:
         find_existing.return_value = {"id": 42, "status": "draft", "featured_media": 77}
         update_draft.return_value = {"id": 42, "status": "draft"}
 
@@ -39,6 +42,29 @@ class PublishIdempotencyTest(unittest.TestCase):
         update_draft.assert_called_once()
         self.assertIsNone(update_draft.call_args.kwargs["image"])
         self.assertEqual(update_draft.call_args.kwargs["featured_media_id"], 77)
+        media_matches.assert_called_once()
+
+    @patch("src.publish_wordpress.update_draft")
+    @patch("src.publish_wordpress._featured_media_matches", return_value=False)
+    @patch("src.publish_wordpress._find_existing_post_by_slug")
+    def test_replaces_featured_image_when_data_changed(
+        self, find_existing, media_matches, update_draft
+    ) -> None:
+        find_existing.return_value = {"id": 42, "status": "draft", "featured_media": 77}
+        update_draft.return_value = {"id": 42, "status": "draft", "featured_media": 88}
+        image = {"local_path": "/tmp/new.png", "alt": "new market values"}
+
+        result = publish_wordpress.publish_draft(
+            "Title",
+            "<html><body>Body</body></html>",
+            image=image,
+            slug="market-brief-kr-date-ko",
+        )
+
+        self.assertEqual(result["featured_media"], 88)
+        self.assertEqual(update_draft.call_args.kwargs["image"], image)
+        self.assertIsNone(update_draft.call_args.kwargs["featured_media_id"])
+        media_matches.assert_called_once()
 
     @patch("src.publish_wordpress.update_draft")
     @patch("src.publish_wordpress._find_existing_post_by_slug")
