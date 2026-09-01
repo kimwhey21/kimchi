@@ -27,7 +27,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src import fetch_kr, publish_wordpress, render_html, editorial_quality  # noqa: E402
+from src import fetch_kr, fetch_images, publish_wordpress, render_html, editorial_quality  # noqa: E402
 from publish_kr_brief_2026_09_01 import KO, EN, DATE, SOURCES  # noqa: E402
 
 KO_POST_ID, EN_POST_ID = 215, 216
@@ -88,6 +88,7 @@ KO_INSIGHT = {
         {
             "heading": "반도체가 버틴 이유는 수급만이 아닙니다",
             "icon": "chip",
+            "image_query": "semiconductor wafer",
             "body": (
                 "SK하이닉스는 외국인이 21만주 넘게 팔았는데도 1.14% 올랐고 삼성전자도 "
                 "0.38% 상승했습니다. 자사주 매입이라는 수급 요인이 컸지만, 업황 자체가 "
@@ -115,6 +116,7 @@ KO_INSIGHT = {
         {
             "heading": "환율 0.23% 상승이 물가로 이어지는 경로",
             "icon": "gold",
+            "image_query": "oil refinery pipeline",
             "body": (
                 "오늘 원/달러 환율은 1,372.70원으로 0.23% 올랐습니다. 연합뉴스는 중동 "
                 "긴장이 다시 높아진 것을 배경으로 지목했습니다. 하루 0.23%는 작아 보이지만 "
@@ -197,6 +199,7 @@ EN_INSIGHT = {
         {
             "heading": "Semis held up on more than flows",
             "icon": "chip",
+            "image_query": "semiconductor wafer",
             "body": (
                 "SK Hynix rose 1.14% despite foreign investors selling over 211,000 shares, and "
                 "Samsung Electronics gained 0.38%. Buyback flow explains part of it. The demand "
@@ -222,6 +225,7 @@ EN_INSIGHT = {
         {
             "heading": "How a 0.23% currency move reaches consumer prices",
             "icon": "gold",
+            "image_query": "oil refinery pipeline",
             "body": (
                 "The won weakened 0.23% to 1,372.70 today, which Yonhap linked to renewed Middle "
                 "East tension. A single day's 0.23% is small; the transmission path is not.\n\n"
@@ -251,8 +255,23 @@ EN_INSIGHT = {
 def main() -> None:
     price_data = fetch_kr.fetch_all()
 
-    ko = {**KO, "insight_section": KO_INSIGHT, "sources": SOURCES}
-    en = {**EN, "insight_section": EN_INSIGHT, "sources": SOURCES}
+    # 눈으로 확인한 검색어(웨이퍼/정유 플랜트)만 사진을 붙입니다. "자사주 매입",
+    # "배터리"처럼 추상적·범주적인 검색어는 결과가 어긋나서(졸업장, AA 건전지)
+    # 일부러 표·차트만 남겼습니다.
+    ko_stories = fetch_images.attach_images(
+        [dict(s) for s in KO_INSIGHT["stories"]]
+    )
+    ko_insight = {**KO_INSIGHT, "stories": ko_stories}
+    by_query = {s.get("image_query"): s.get("image") for s in ko_stories}
+    en_stories = []
+    for story in EN_INSIGHT["stories"]:
+        story = dict(story)
+        story["image"] = by_query.get(story.get("image_query"))
+        en_stories.append(story)
+    en_insight = {**EN_INSIGHT, "stories": en_stories}
+
+    ko = {**KO, "insight_section": ko_insight, "sources": SOURCES}
+    en = {**EN, "insight_section": en_insight, "sources": SOURCES}
 
     editorial_quality.validate_generated(ko)
     print("한국어 편집 기준 검사 통과")
