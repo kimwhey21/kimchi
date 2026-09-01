@@ -45,6 +45,16 @@ def _macro_summary(price_data: dict, date_str: str) -> str:
         return "No index or exchange-rate data was available."
     sentences = []
     for entry in entries:
+        if entry.get("quote_type") == "reference_rate":
+            reference = entry.get("reference_label_en") or entry.get(
+                "as_of_label_en", "time unavailable"
+            )
+            sentences.append(
+                f"The {_name(entry)} reference rate was {entry['price']:,}{_unit(entry)}, "
+                f"{_change_phrase(entry['change_pct'])} from the previous Hana Bank notice "
+                f"(as of {reference})."
+            )
+            continue
         as_of = entry.get("trading_date")
         note = f" (as of {as_of})" if as_of and as_of != date_str else ""
         sentences.append(

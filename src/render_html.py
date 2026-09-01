@@ -82,7 +82,7 @@ def _to_card(entry: dict, lang: str = "ko", reference_date: str | None = None) -
         "change_pct": entry["change_pct"],
         "change_label": f'{sign}{entry["change_pct"]}%',
         "direction": direction,
-        "as_of": (
+        "as_of": entry.get("as_of_label_en" if lang == "en" else "as_of_label") or (
             (f"As of {entry['trading_date']}" if lang == "en" else f"{entry['trading_date']} 기준")
             if reference_date
             and entry.get("trading_date")

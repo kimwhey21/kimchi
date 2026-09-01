@@ -90,12 +90,12 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path) -> d
             font=_font(28, True),
             fill="#FFFFFF",
         )
-    draw.text((906, 531), "CLOSING DATA", font=_font(18, True), fill="#8EA2B4")
+    draw.text((884, 531), "MARKET SNAPSHOT", font=_font(18, True), fill="#8EA2B4")
 
     output_path.parent.mkdir(exist_ok=True)
     canvas.save(output_path, format="PNG", optimize=True)
     return {
         "local_path": str(output_path),
         "alt": f"{market_label.title()} data snapshot for {date_str}",
-        "caption": "Market-close data graphic generated from the figures in this article.",
+        "caption": "Market snapshot graphic generated from the figures in this article.",
     }

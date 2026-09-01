@@ -17,6 +17,7 @@ import time
 from pathlib import Path
 
 import FinanceDataReader as fdr
+import requests
 import yaml
 
 from src import fetch_foreign_flows
@@ -25,6 +26,116 @@ CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "watchlist_kr.
 
 _NAN_RETRY_ATTEMPTS = 3
 _NAN_RETRY_DELAY_SECONDS = 5
+_NAVER_TIMEOUT_SECONDS = 10
+_NAVER_HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
+_NAVER_INDEX_CODES = {"KS11": "KOSPI", "KQ11": "KOSDAQ"}
+_NAVER_INDEX_URL = "https://polling.finance.naver.com/api/realtime"
+_NAVER_USDKRW_URL = "https://api.stock.naver.com/marketindex/exchange/FX_USDKRW"
+_NAVER_USDKRW_PRICES_URL = f"{_NAVER_USDKRW_URL}/prices"
+
+
+def _fetch_naver_index_quotes() -> dict[str, dict]:
+    """16시 직후에도 확정된 코스피·코스닥 종가만 가져옵니다.
+
+    FinanceDataReader 일봉은 거래일 날짜를 먼저 만들고 장중 값이 한동안 남을
+    수 있습니다. 네이버 실시간 지수 응답의 ``ms=CLOSE``를 함께 확인해야
+    장중 스냅숏을 종가로 잘못 발행하지 않을 수 있습니다.
+    """
+    response = requests.get(
+        _NAVER_INDEX_URL,
+        params={"query": "SERVICE_INDEX:KOSPI,KOSDAQ"},
+        headers=_NAVER_HEADERS,
+        timeout=_NAVER_TIMEOUT_SECONDS,
+    )
+    response.raise_for_status()
+    payload = response.json()
+    areas = (payload.get("result") or {}).get("areas") or []
+    datas = next(
+        (area.get("datas") or [] for area in areas if area.get("name") == "SERVICE_INDEX"),
+        [],
+    )
+    return {item.get("cd"): item for item in datas if item.get("cd")}
+
+
+def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None) -> dict:
+    """오늘 거래일 행을 네이버의 장마감 확정값으로 교체합니다."""
+    if entry.get("trading_date") != dt.date.today().isoformat():
+        return entry
+    code = _NAVER_INDEX_CODES[ticker]
+    if not quote or quote.get("ms") != "CLOSE":
+        raise ValueError(f"{code}: 장마감 확정 지수(ms=CLOSE)를 아직 확인하지 못했습니다.")
+
+    price = round(float(quote["nv"]) / 100, 2)
+    series = list(entry.get("series") or [])
+    if series:
+        series[-1] = price
+    return {
+        **entry,
+        "price": price,
+        "change_pct": round(float(quote["cr"]), 2),
+        "series": series,
+        "data_source": "Naver Finance realtime index",
+    }
+
+
+def _fetch_usdkrw_reference(
+    ticker: str, name: str, name_en: str = "", lookback: int = 7, unit: str = "", **_ignore
+) -> dict:
+    """원/달러는 하나은행의 최신 고시환율과 기준시각을 명시해 가져옵니다.
+
+    서울 외환시장 종가와 은행 고시환율은 서로 다른 값입니다. 16시 자동 글에서
+    Yahoo의 진행 중 환율을 '종가'로 쓰지 않도록, 구조화된 네이버 금융 응답의
+    ``priceDataType=NOTICE_ROUND``만 참고환율로 사용합니다.
+    """
+    detail_response = requests.get(
+        _NAVER_USDKRW_URL,
+        headers=_NAVER_HEADERS,
+        timeout=_NAVER_TIMEOUT_SECONDS,
+    )
+    detail_response.raise_for_status()
+    detail = (detail_response.json().get("exchangeInfo") or {})
+    if detail.get("priceDataType") != "NOTICE_ROUND":
+        raise ValueError("USD/KRW: 하나은행 고시환율 응답 형식을 확인하지 못했습니다.")
+
+    prices_response = requests.get(
+        _NAVER_USDKRW_PRICES_URL,
+        params={"page": 1, "pageSize": lookback + 1},
+        headers=_NAVER_HEADERS,
+        timeout=_NAVER_TIMEOUT_SECONDS,
+    )
+    prices_response.raise_for_status()
+    rows = prices_response.json()
+    if len(rows) < 2:
+        raise ValueError("USD/KRW: 최근 고시환율을 2개 이상 가져오지 못했습니다.")
+
+    traded_at = dt.datetime.fromisoformat(detail["localTradedAt"])
+    series = [
+        float(row["closePrice"].replace(",", ""))
+        for row in reversed(rows[: lookback + 1])
+    ]
+    price = float(detail["closePrice"].replace(",", ""))
+    # 상세 응답이 일별 목록보다 몇 초 더 최신일 수 있으므로 마지막 값은 상세
+    # 응답으로 맞춥니다.
+    series[-1] = price
+    reference_ko = f"{traded_at:%Y-%m-%d %H:%M} 하나은행 고시"
+    reference_en = f"{traded_at:%Y-%m-%d %H:%M} Hana Bank notice"
+    return {
+        "ticker": ticker,
+        "name": name,
+        "name_en": name_en or name,
+        "price": round(price, 2),
+        "change_pct": round(float(detail["fluctuationsRatio"]), 2),
+        "series": [round(value, 4) for value in series],
+        "unit": unit,
+        "trading_date": traded_at.date().isoformat(),
+        "quote_type": "reference_rate",
+        # 카드에는 짧은 표기를, 본문에는 날짜까지 포함한 전체 표기를 씁니다.
+        "as_of_label": f"{traded_at:%H:%M} 하나은행 고시",
+        "as_of_label_en": f"{traded_at:%H:%M} Hana Bank",
+        "reference_label": reference_ko,
+        "reference_label_en": reference_en,
+        "data_source": "Naver Finance / Hana Bank notice rate",
+    }
 
 
 def _fetch_one(
@@ -90,7 +201,19 @@ def fetch_all() -> dict:
     이미 발행했는지"를 main.py에서 판단합니다.
     """
     config = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
-    macro = {row["ticker"]: _fetch_one(**row) for row in config["macro"]}
+    index_quotes = _fetch_naver_index_quotes()
+    macro: dict[str, dict] = {}
+    for row in config["macro"]:
+        ticker = row["ticker"]
+        if ticker == "USD/KRW":
+            macro[ticker] = _fetch_usdkrw_reference(**row)
+            continue
+        entry = _fetch_one(**row)
+        if ticker in _NAVER_INDEX_CODES:
+            entry = _apply_final_index_quote(
+                entry, ticker, index_quotes.get(_NAVER_INDEX_CODES[ticker])
+            )
+        macro[ticker] = entry
     watchlist = {row["ticker"]: _fetch_one(**row) for row in config["watchlist"]}
     fetch_foreign_flows.attach_foreign_flows(watchlist)
     trading_date = next(iter(macro.values()))["trading_date"]

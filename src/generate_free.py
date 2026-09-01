@@ -54,6 +54,13 @@ def _change_sentence(entry: dict) -> str:
         movement = f"전일 대비 {abs(change):.2f}% 하락했습니다"
     else:
         movement = "전일과 같은 수준이었습니다"
+    if entry.get("quote_type") == "reference_rate":
+        movement = movement.replace("전일 대비", "전일 고시 대비")
+        reference = entry.get("reference_label") or entry.get("as_of_label", "기준시각 미상")
+        return (
+            f"{entry['name']} 참고값: {entry['price']:,}{entry.get('unit', '')}, "
+            f"{movement} ({reference})"
+        )
     return f"{entry['name']}: {entry['price']:,}{entry.get('unit', '')}, {movement}"
 
 
