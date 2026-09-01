@@ -36,7 +36,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src import editorial_quality, publish_wordpress, render_html  # noqa: E402
+from src import editorial_quality, featured_image, publish_wordpress, render_html  # noqa: E402
 
 EDITORIAL_DIR = Path(__file__).resolve().parent.parent / "editorial"
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "output"
@@ -74,6 +74,19 @@ def publish(path: Path, publish_live: bool = False) -> None:
     OUTPUT_DIR.mkdir(exist_ok=True)
     (OUTPUT_DIR / f"{market}_{date_str}_editorial.html").write_text(html_ko, encoding="utf-8")
 
+    # 대표 이미지는 실제 마감 수치로 생성합니다. 검수되지 않은 사진 검색 결과를
+    # 예약 경로에 쓰지 않는다는 AGENTS.md 원칙을 그대로 따릅니다.
+    # 업로드 여부와 무관하게 만들어 둡니다 — 자격증명 없이 돌려도 결과물을
+    # 눈으로 확인할 수 있어야 하기 때문입니다.
+    image_meta = None
+    try:
+        image_meta = featured_image.create(
+            market, date_str, price_data, OUTPUT_DIR / f"{market}_{date_str}_editorial.png"
+        )
+        print(f"대표 이미지 생성: {image_meta['local_path']}")
+    except Exception as exc:  # noqa: BLE001 - 이미지 실패로 발행을 막지 않음
+        print(f"[경고] 대표 이미지 생성 실패, 이미지 없이 계속합니다: {exc!r}")
+
     if not publish_wordpress.is_configured():
         print("WORDPRESS_* 환경변수가 없어 업로드를 건너뜁니다 (렌더링만 완료).")
         return
@@ -85,6 +98,7 @@ def publish(path: Path, publish_live: bool = False) -> None:
         excerpt=_excerpt(ko),
         tags=_KO_TAGS,
         category="Daily",
+        image=image_meta,
         slug=f"editorial-{market}-{date_str}-ko",
         focus_keyword="코스피 마감 시황" if market == "kr" else "뉴욕증시 마감",
     )
