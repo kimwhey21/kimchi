@@ -15,7 +15,9 @@ import requests
 # (2026-08-31 기준 확인: 매일경제는 Cloudflare 봇 차단(Just a moment...)이 걸려 있어 제외)
 FEEDS: dict[str, list[tuple[str, str]]] = {
     "kr": [
-        ("한국경제", "https://www.hankyung.com/feed/economy"),
+        # 한국경제는 경제 일반 피드가 시장과 무관한 생활·산업 기사까지 많이
+        # 섞이므로, 공식 RSS 안내에 있는 증권 전용 피드를 사용합니다.
+        ("한국경제", "https://www.hankyung.com/feed/finance"),
         ("연합뉴스", "https://www.yna.co.kr/rss/economy.xml"),
         ("이데일리", "http://rss.edaily.co.kr/stock_news.xml"),
     ],

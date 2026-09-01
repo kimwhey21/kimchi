@@ -35,7 +35,7 @@ from src import (
 )
 
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "output"
-CACHE_VERSION = 4
+CACHE_VERSION = 5
 
 
 def _meta_description(generated: dict, limit: int = 300) -> str:

@@ -1,13 +1,14 @@
 """실제 시세와 RSS만으로 외부 AI API 비용 없는 시황 초안을 만듭니다."""
 from __future__ import annotations
 
+import re
 
-_NEWS_TERMS = {
+_NEWS_PRIMARY_TERMS = {
     "kr": (
-        "증시", "주식", "코스피", "코스닥", "환율", "원화", "달러", "금리", "채권",
-        "반도체", "2차전지", "바이오", "외국인", "기관", "수급", "상장", "공시",
-        "실적", "순익", "영업이익", "매출", "기업", "배당", "자사주", "투자",
-        "펀드", "etf", "ipo", "관세", "수출",
+        "증시", "주식시장", "주가", "코스피", "코스닥", "환율", "원/달러",
+        "달러/원", "원·달러", "원달러", "금리", "채권", "국고채", "외국인",
+        "순매수", "순매도", "수급", "장초반", "장중", "마감", "거래대금",
+        "거래량", "상한가", "하한가", "상폐", "빚투", "신용융자", "공매도",
     ),
     "us": (
         "stock", "market", "nasdaq", "dow", "s&p", "treasury", "yield", "dollar",
@@ -15,6 +16,34 @@ _NEWS_TERMS = {
         "gold", "bitcoin", "tariff", "trade", "chip", "ai",
     ),
 }
+
+_NEWS_SECONDARY_TERMS = {
+    "kr": (
+        "반도체", "2차전지", "바이오", "실적", "순익", "영업이익", "매출",
+        "배당", "자사주", "공시", "상장", "펀드", "etf", "ipo", "관세",
+        "수출", "투자자",
+    ),
+    "us": (),
+}
+
+
+def _headline_term_count(title: str, terms: tuple[str, ...]) -> int:
+    """영문 짧은 검색어가 다른 단어 안에서 우연히 잡히는 일을 막습니다.
+
+    예를 들어 ``ai``가 ``chairman``에, ``rate``가 ``separate``에 포함됐다는
+    이유만으로 미국장 기사로 분류하면 안 됩니다. 한글·기호 포함 검색어는
+    일반 부분 문자열로, 영문·숫자 검색어는 단어 경계로 비교합니다.
+    """
+    count = 0
+    for term in terms:
+        if term.isascii() and term.isalnum():
+            matched = re.search(
+                rf"(?<![a-z0-9]){re.escape(term)}(?![a-z0-9])", title
+            )
+        else:
+            matched = term in title
+        count += bool(matched)
+    return count
 
 
 def _change_sentence(entry: dict) -> str:
@@ -114,14 +143,20 @@ def _select_diverse_headlines(
     recent_news: list[dict], limit: int = 6, market: str | None = None
 ) -> list[dict]:
     """시장 관련성을 먼저 본 뒤 매체별로 번갈아 골라 한 곳의 편중을 막습니다."""
-    terms = _NEWS_TERMS.get(market or "", ())
+    primary_terms = _NEWS_PRIMARY_TERMS.get(market or "", ())
+    secondary_terms = _NEWS_SECONDARY_TERMS.get(market or "", ())
     ranked: list[tuple[int, int, dict]] = []
     for index, item in enumerate(recent_news):
         title = item.get("title", "").lower()
-        score = sum(term in title for term in terms)
-        if not terms or score:
+        primary_hits = _headline_term_count(title, primary_terms)
+        secondary_hits = _headline_term_count(title, secondary_terms)
+        # 지수·환율·수급처럼 장 마감과 직접 연결되는 표현이 하나라도 있거나,
+        # 업종·실적 같은 보조 표현이 둘 이상 함께 있어야 시장 기사로 인정합니다.
+        relevant = primary_hits > 0 or secondary_hits >= 2
+        score = primary_hits * 10 + secondary_hits
+        if not primary_terms or relevant:
             ranked.append((score, index, item))
-    if terms and not ranked:
+    if primary_terms and not ranked:
         return []
 
     grouped: dict[str, list[tuple[int, int, dict]]] = {}
