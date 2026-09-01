@@ -79,24 +79,39 @@ def publish_guide(
     category: str = "Guides",
     post_id: int | None = None,
     focus_keyword: str | None = None,
+    featured_image_query: str | None = None,
 ) -> dict:
     """post_id를 주면 새 글을 만드는 대신 기존 글(예: 검수 중인 초안)을
     같은 자리에서 업데이트합니다 — 검수 피드백 반영 때마다 임시저장 글이
     중복으로 쌓이지 않게 하기 위함입니다.
+
+    featured_image_query: 대표 이미지 전용 검색어. 주면 본문 사진과 **별개로**
+    한 장을 더 찾아 대표 이미지로 씁니다. 주지 않으면 본문 첫 사진을 대표로
+    올리고 같은 사진이 두 번 보이지 않도록 본문에서는 뺍니다.
+    글 맨 위(대표)와 본문에 같은 사진이 나오던 문제 때문에 붙인 인자이고,
+    검색어를 부르는 쪽이 정하게 한 이유는 **받은 사진을 눈으로 확인한 사람만
+    그 검색어가 맞는지 판단할 수 있기 때문**입니다(원화 검색에 위안화가
+    나오는 식의 사고를 자동화로는 못 막습니다).
     """
     featured_image = None
     if insight_section and insight_section.get("stories"):
         stories = fetch_images.attach_images(insight_section["stories"])
-        featured_image = next((s["image"] for s in stories if s.get("image")), None)
-        if featured_image:
-            # 대표 이미지는 글 맨 위에 크게 걸립니다. 같은 사진을 본문에도 그대로
-            # 두면 독자가 한 화면 안에서 같은 사진을 두 번 보게 되므로, 대표로
-            # 올라간 사진은 본문에서 뺍니다. 출처는 _featured_credit_html()로
-            # 글 끝에 남깁니다.
-            stories = [
-                {**s, "image": None} if s.get("image") is featured_image else s
-                for s in stories
-            ]
+        if featured_image_query:
+            used = {s["image"]["id"] for s in stories if s.get("image")}
+            featured_image = fetch_images.search_image(
+                featured_image_query, exclude_ids=used
+            )
+        if featured_image is None:
+            featured_image = next((s["image"] for s in stories if s.get("image")), None)
+            if featured_image:
+                # 대표 이미지는 글 맨 위에 크게 걸립니다. 같은 사진을 본문에도
+                # 그대로 두면 독자가 한 화면 안에서 같은 사진을 두 번 보게 되므로,
+                # 대표로 올라간 사진은 본문에서 뺍니다. 출처는
+                # _featured_credit_html()로 글 끝에 남깁니다.
+                stories = [
+                    {**s, "image": None} if s.get("image") is featured_image else s
+                    for s in stories
+                ]
         insight_section = {**insight_section, "stories": stories}
     generated = build_generated(title, sections, closing, insight_section)
     date_str = dt.date.today().isoformat()
