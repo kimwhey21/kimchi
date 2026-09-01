@@ -40,23 +40,31 @@ def _fetch_one(
         if df.empty or len(df) < 2:
             raise ValueError(f"{ticker}: 시세 데이터를 가져오지 못했습니다.")
 
-        df = df.tail(lookback + 1)
-        candidate = df["Close"].tolist()
-        if not any(math.isnan(c) for c in candidate):
+        # 환율 데이터에는 최신 행이나 중간 거래일의 OHLC 일부가 비어 있는
+        # 경우가 있습니다. 원고에 쓰는 값은 종가뿐이므로 유효한 종가만 골라
+        # 최근 흐름을 만들고, 그중 마지막 두 값으로 등락률을 계산합니다.
+        # 마지막 유효 종가가 두 개보다 적을 때만 데이터 부족으로 재시도합니다.
+        valid_closes = df["Close"].dropna().tail(lookback + 1)
+        candidate = [float(value) for value in valid_closes.tolist()]
+        if len(candidate) >= 2 and all(math.isfinite(value) for value in candidate):
             closes = candidate
-            last_trading_date = df.index[-1].date().isoformat()
+            last_trading_date = valid_closes.index[-1].date().isoformat()
             break
         # 데이터 소스가 일시적으로 결측치(NaN)를 줄 때가 있습니다 (몇 초 후 재조회하면
         # 채워져 있는 경우가 많음). "숫자는 절대 지어내지 않는다"는 원칙상 nan을 그대로
         # 쓸 수는 없으니, 몇 번 재시도해보고 그래도 안 되면 최종적으로 실패시킵니다.
         print(
-            f"[경고] {ticker}: 시세 데이터에 결측값(NaN) 발견, 재시도 {attempt}/{_NAN_RETRY_ATTEMPTS}"
+            f"[경고] {ticker}: 유효한 종가가 부족하거나 비정상 값이 있어 재시도 "
+            f"{attempt}/{_NAN_RETRY_ATTEMPTS}"
         )
         if attempt < _NAN_RETRY_ATTEMPTS:
             time.sleep(_NAN_RETRY_DELAY_SECONDS)
 
     if closes is None:
-        raise ValueError(f"{ticker}: 시세 데이터에 결측값(NaN)이 있습니다 ({_NAN_RETRY_ATTEMPTS}번 재시도 후에도).")
+        raise ValueError(
+            f"{ticker}: 유효한 종가를 2개 이상 가져오지 못했습니다 "
+            f"({_NAN_RETRY_ATTEMPTS}번 재시도 후에도)."
+        )
 
     prev_close, last_close = closes[-2], closes[-1]
     change_pct = (last_close - prev_close) / prev_close * 100
