@@ -36,7 +36,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src import editorial_quality, featured_image, publish_wordpress, render_html  # noqa: E402
+from src import (  # noqa: E402
+    editorial_quality,
+    editorial_quality_en,
+    featured_image,
+    publish_wordpress,
+    render_html,
+)
 
 EDITORIAL_DIR = Path(__file__).resolve().parent.parent / "editorial"
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "output"
@@ -65,9 +71,13 @@ def publish(path: Path, publish_live: bool = False) -> None:
     ko = doc["ko"]
     en = doc.get("en")
 
-    # 한국어 원고는 저장소의 편집 기준을 통과해야 올라갑니다.
+    # 원고는 저장소의 편집 기준을 통과해야 올라갑니다. 자동 공개 경로에서는
+    # 이 검사가 유일한 안전장치라 영어판도 같이 검사합니다(main.py와 동일).
     editorial_quality.validate_generated(ko)
     print("한국어 편집 기준 검사 통과")
+    if en:
+        editorial_quality_en.validate_generated(en)
+        print("영어 편집 기준 검사 통과")
 
     market_label_en = "Korea Market Close" if market == "kr" else "U.S. Market Close"
     html_ko = render_html.render(market, date_str, price_data, ko)
@@ -101,8 +111,9 @@ def publish(path: Path, publish_live: bool = False) -> None:
         image=image_meta,
         slug=f"editorial-{market}-{date_str}-ko",
         focus_keyword="코스피 마감 시황" if market == "kr" else "뉴욕증시 마감",
+        status=status,
     )
-    print(f"한국어 초안: id={ko_result.get('id')} {ko_result.get('link','')}")
+    print(f"한국어 {status}: id={ko_result.get('id')} {ko_result.get('link','')}")
 
     if en:
         html_en = render_html.render(
@@ -121,22 +132,31 @@ def publish(path: Path, publish_live: bool = False) -> None:
             featured_media_id=ko_result.get("featured_media") or None,
             slug=f"editorial-{market}-{date_str}-en",
             focus_keyword="Kospi close" if market == "kr" else "US stocks close",
+            status=status,
         )
-        print(f"영어 초안: id={en_result.get('id')} {en_result.get('link','')}")
+        print(f"영어 {status}: id={en_result.get('id')} {en_result.get('link','')}")
 
-    print(f"상태: {status} (검수 후 공개 전환)")
+    print(
+        f"상태: {status}"
+        + (" (바로 공개)" if publish_live else " (검수 후 공개 전환)")
+    )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="커밋된 편집 원고를 워드프레스에 올립니다")
     parser.add_argument("path", nargs="?", help="editorial/*.json 경로 (생략하면 가장 최근 파일)")
+    parser.add_argument(
+        "--publish-live",
+        action="store_true",
+        help="임시저장이 아니라 바로 공개 상태로 올립니다 (원고 커밋 자동 실행 전용).",
+    )
     args = parser.parse_args()
 
     path = Path(args.path) if args.path else _latest_editorial()
     if path is None or not path.exists():
         sys.exit("발행할 원고 파일이 없습니다 (editorial/*.json).")
     print(f"원고: {path}")
-    publish(path)
+    publish(path, publish_live=args.publish_live)
 
 
 if __name__ == "__main__":
