@@ -1,0 +1,44 @@
+name: Editorial Publish
+
+# 클라우드 루틴(조사·집필 담당)이 editorial/ 아래에 원고를 커밋하면,
+# 워드프레스 시크릿을 가진 이 워크플로가 그 원고를 임시저장으로 올립니다.
+# 이렇게 나눠야 워드프레스 비밀번호가 GitHub 밖으로 나가지 않습니다.
+on:
+  push:
+    paths:
+      - "editorial/**.json"
+  workflow_dispatch:
+    inputs:
+      path:
+        description: "발행할 원고 경로 (비우면 가장 최근 파일)"
+        required: false
+        default: ""
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 원고 발행
+        run: python -m src.publish_editorial ${{ github.event.inputs.path }}
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          SUBSCRIBE_FORM_ACTION: ${{ secrets.SUBSCRIBE_FORM_ACTION }}
+
+      - name: 결과물 업로드 (백업용)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: editorial-${{ github.run_id }}
+          path: output/*_editorial*.html
+          if-no-files-found: ignore
