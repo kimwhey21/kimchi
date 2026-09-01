@@ -2,10 +2,13 @@ name: Market Brief
 
 on:
   schedule:
-    # 한국시간(KST) 기준 평일 07:00 = UTC 전날 22:00 → 미국장(전날 마감) 요약
-    - cron: "0 22 * * 0-4"
-    # 한국시간(KST) 기준 평일 16:00 = UTC 당일 07:00 → 한국장 마감 요약
-    - cron: "0 7 * * 1-5"
+    # 마감 정각에 돌리면 시세가 아직 안 채워져 실패합니다. 실제로 16:00 정각
+    # 스케줄은 USD/KRW가 NaN이라 3회(15초) 재시도 후 죽었고, 7분 뒤 수동
+    # 실행은 성공했습니다. 그래서 두 시장 모두 20분 뒤로 미룹니다.
+    # 한국시간(KST) 기준 평일 07:20 = UTC 전날 22:20 → 미국장(전날 마감) 요약
+    - cron: "20 22 * * 0-4"
+    # 한국시간(KST) 기준 평일 16:20 = UTC 당일 07:20 → 한국장 마감 요약
+    - cron: "20 7 * * 1-5"
   workflow_dispatch:
     inputs:
       market:
@@ -29,9 +32,9 @@ jobs:
       - name: 어떤 시장을 실행할지 결정
         id: market
         run: |
-          if [ "${{ github.event.schedule }}" = "0 22 * * 0-4" ]; then
+          if [ "${{ github.event.schedule }}" = "20 22 * * 0-4" ]; then
             echo "market=us" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "0 7 * * 1-5" ]; then
+          elif [ "${{ github.event.schedule }}" = "20 7 * * 1-5" ]; then
             echo "market=kr" >> "$GITHUB_OUTPUT"
           else
             echo "market=${{ github.event.inputs.market }}" >> "$GITHUB_OUTPUT"
@@ -42,6 +45,12 @@ jobs:
           ARGS="--market ${{ steps.market.outputs.market }}"
           if [ "${{ steps.market.outputs.market }}" = "kr" ]; then
             ARGS="$ARGS --en"
+          fi
+          # 예약 실행은 아무도 검수할 수 없으므로 바로 공개합니다. 수동 실행
+          # (workflow_dispatch)은 종전대로 임시저장으로 남겨, 손으로 돌릴 때
+          # 실수로 공개되는 일이 없게 합니다.
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            ARGS="$ARGS --publish-live"
           fi
           python -m src.main $ARGS
         env:

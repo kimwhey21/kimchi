@@ -336,8 +336,16 @@ def publish_draft(
     featured_media_id: int | None = None,
     slug: str | None = None,
     focus_keyword: str | None = None,
+    status: str = "draft",
 ) -> dict:
-    """워드프레스에 임시저장 글을 만들고 응답 JSON(dict)을 돌려줍니다.
+    """워드프레스에 글을 만들고 응답 JSON(dict)을 돌려줍니다.
+
+    status: 기본값은 "draft"입니다. 사람이 검수한 뒤 공개로 바꾸는 것이 이
+    저장소의 기본 원칙이라, 손으로 실행할 때는 그대로 두세요. 평일 자동
+    실행처럼 사람이 개입하지 않는 경로에서만 "publish"를 넘깁니다
+    (src/main.py의 --publish-live). 자동 공개가 안전한 이유는 그 앞단에
+    editorial_quality 검사가 있어서, 통과하지 못하면 예외로 멈추고 아무것도
+    올라가지 않기 때문입니다.
 
     lang: Polylang 언어 코드(예: "en")로 글을 생성해봅니다. 참고: `GET
     /wp/v2/posts?lang=en` 같은 목록 필터링은 이 사이트의 Polylang 무료판에서
@@ -394,6 +402,10 @@ def publish_draft(
                     category=category,
                     image=replacement_image if existing_featured else image,
                     featured_media_id=resolved_featured,
+                    # 자동 공개 실행에서 이 분기를 타면(앞선 실행이 남긴 초안이
+                    # 있는 경우) 내용만 갱신하고 초안 상태로 남는 일이 없도록
+                    # 요청받은 상태를 그대로 넘깁니다.
+                    status=status if status != "draft" else None,
                 )
             print(
                 f"[안내] 같은 거래일 글(id={existing.get('id')})이 이미 "
@@ -403,7 +415,7 @@ def publish_draft(
 
     safe_content = _to_wordpress_content(html_content)
 
-    payload = {"title": title, "content": safe_content, "status": "draft"}
+    payload = {"title": title, "content": safe_content, "status": status}
     if slug:
         payload["slug"] = slug
     if excerpt:
@@ -468,11 +480,15 @@ def update_draft(
     image: dict | None = None,
     featured_media_id: int | None = None,
     focus_keyword: str | None = None,
+    status: str | None = None,
 ) -> dict:
     """이미 올라간 글(주로 검수 중인 임시저장 글)의 내용을 그 자리에서
     갱신합니다. publish_draft와 인자가 같지만 새 글을 만들지 않고
     기존 post_id를 덮어써서, 피드백 반영마다 임시저장 글이 중복으로
     쌓이는 걸 막습니다.
+
+    status: 주지 않으면 글의 현재 상태를 그대로 둡니다 — 이미 공개된 글을
+    수정할 때 실수로 임시저장으로 되돌리지 않기 위함입니다.
     """
     base_url = os.environ["WORDPRESS_URL"].rstrip("/")
     username = os.environ["WORDPRESS_USERNAME"]
@@ -482,6 +498,8 @@ def update_draft(
     safe_content = _to_wordpress_content(html_content)
 
     payload = {"title": title, "content": safe_content}
+    if status:
+        payload["status"] = status
     if excerpt:
         payload["excerpt"] = excerpt
     if tags:

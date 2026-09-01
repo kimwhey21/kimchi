@@ -129,7 +129,18 @@ def _fetch_price_data(fetcher, market: str) -> dict:
     raise RuntimeError("시세 수집 재시도 흐름이 비정상적으로 종료됐습니다.")
 
 
-def run(market: str, with_english: bool = False, publish: bool = True) -> Path | None:
+def run(
+    market: str,
+    with_english: bool = False,
+    publish: bool = True,
+    publish_live: bool = False,
+) -> Path | None:
+    """publish_live: 사람 검수 없이 바로 공개 상태로 올립니다.
+
+    손으로 실행할 때는 꺼 두는 게 기본입니다. 평일 자동 실행처럼 아무도 검수할
+    수 없는 경로에서만 켭니다 — 그 앞단의 editorial_quality 검사가 통과하지
+    못하면 예외로 멈추므로, 검사를 통과한 원고만 공개됩니다.
+    """
     if market == "us":
         from src import fetch_us as fetcher
     elif market == "kr":
@@ -228,8 +239,9 @@ def run(market: str, with_english: bool = False, publish: bool = True) -> Path |
     image = featured_image.create(market, date_str, price_data, image_path)
     print(f"완료(대표 이미지): {image_path}")
 
+    status = "publish" if publish_live else "draft"
     if publish and publish_wordpress.is_configured():
-        print("[4/4] 워드프레스 임시저장 업로드 중...")
+        print(f"[4/4] 워드프레스 업로드 중... (상태: {status})")
         ko_result = publish_wordpress.publish_draft(
             generated_ko["title"],
             html_ko,
@@ -239,8 +251,9 @@ def run(market: str, with_english: bool = False, publish: bool = True) -> Path |
             image=image,
             slug=_draft_slug(market, date_str, "ko"),
             focus_keyword=_focus_keyword(market, "ko"),
+            status=status,
         )
-        print(f"완료(한국어 초안): id={ko_result.get('id')} {ko_result.get('link', '')}")
+        print(f"완료(한국어 {status}): id={ko_result.get('id')} {ko_result.get('link', '')}")
 
         if generated_en and html_en:
             en_result = publish_wordpress.publish_draft(
@@ -254,8 +267,9 @@ def run(market: str, with_english: bool = False, publish: bool = True) -> Path |
                 featured_media_id=ko_result.get("featured_media") or None,
                 slug=_draft_slug("kr", date_str, "en"),
                 focus_keyword=_focus_keyword("kr", "en"),
+                status=status,
             )
-            print(f"완료(영어 초안): id={en_result.get('id')} {en_result.get('link', '')}")
+            print(f"완료(영어 {status}): id={en_result.get('id')} {en_result.get('link', '')}")
     elif publish:
         print("[4/4] 워드프레스 설정이 없어 파일 생성까지만 완료했습니다.")
     else:
@@ -279,5 +293,15 @@ if __name__ == "__main__":
         action="store_true",
         help="파일 생성과 품질 검사만 하고 워드프레스에는 올리지 않습니다.",
     )
+    parser.add_argument(
+        "--publish-live",
+        action="store_true",
+        help="임시저장이 아니라 바로 공개 상태로 올립니다 (자동 실행 전용).",
+    )
     args = parser.parse_args()
-    run(args.market, with_english=args.en, publish=not args.dry_run)
+    run(
+        args.market,
+        with_english=args.en,
+        publish=not args.dry_run,
+        publish_live=args.publish_live,
+    )
