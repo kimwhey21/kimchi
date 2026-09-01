@@ -5,3 +5,8 @@ output/
 state/
 .DS_Store
 .claude/
+
+# 구글 서비스 계정 비밀키 (절대 커밋 금지)
+*service-account*.json
+*-seo-reader-*.json
+.google-service-account.json

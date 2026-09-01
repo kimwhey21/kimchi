@@ -58,6 +58,7 @@ def publish_guide(
     tags: list[str] | None = None,
     category: str = "Guides",
     post_id: int | None = None,
+    focus_keyword: str | None = None,
 ) -> dict:
     """post_id를 주면 새 글을 만드는 대신 기존 글(예: 검수 중인 초안)을
     같은 자리에서 업데이트합니다 — 검수 피드백 반영 때마다 임시저장 글이
@@ -94,6 +95,7 @@ def publish_guide(
             category=category,
             lang=lang,
             image=featured_image,
+            focus_keyword=focus_keyword,
         )
         print(f"완료(워드프레스 업데이트): id={result.get('id')} {result.get('link', '')}")
     else:
@@ -105,6 +107,7 @@ def publish_guide(
             tags=tags,
             category=category,
             image=featured_image,
+            focus_keyword=focus_keyword,
         )
         print(f"완료(워드프레스 임시저장): id={result.get('id')} {result.get('link', '')}")
     return result
