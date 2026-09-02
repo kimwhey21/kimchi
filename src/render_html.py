@@ -73,8 +73,10 @@ def _to_card(entry: dict, lang: str = "ko", reference_date: str | None = None) -
     direction = "up" if entry["change_pct"] >= 0 else "down"
     sign = "+" if entry["change_pct"] >= 0 else ""
     unit = entry.get("unit", "")
-    if lang == "en" and unit == "원":
-        unit = " KRW"
+    if lang == "en":
+        # 시세 파일의 단위는 한국어판 기준으로 들어 있습니다. 영어판에 그대로 쓰면
+        # 미국장 금 카드가 "4,433.0달러"로 나갑니다(2026-09-02 확인).
+        unit = {"원": " KRW", "달러": " USD"}.get(unit, unit)
     return {
         "name": _display_name(entry, lang),
         "ticker": entry.get("ticker", ""),

@@ -1,0 +1,863 @@
+{
+  "market": "us",
+  "date": "2026-09-02",
+  "price_data": {
+    "macro": {
+      "^DJI": {
+        "ticker": "^DJI",
+        "name": "다우존스",
+        "name_en": "Dow Jones Industrial Average",
+        "price": 53061.95,
+        "change_pct": 0.56,
+        "series": [
+          53277.0117,
+          53417.1602,
+          53577.3984,
+          53463.8789,
+          53569.4414,
+          53185.8984,
+          52766.8789,
+          53061.9492
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "^GSPC": {
+        "ticker": "^GSPC",
+        "name": "S&P500",
+        "name_en": "S&P 500",
+        "price": 7666.6,
+        "change_pct": 0.46,
+        "series": [
+          7674.3701,
+          7652.8599,
+          7677.2798,
+          7675.7002,
+          7730.9902,
+          7686.1401,
+          7631.4702,
+          7666.6001
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "^IXIC": {
+        "ticker": "^IXIC",
+        "name": "나스닥종합",
+        "name_en": "Nasdaq Composite",
+        "price": 26217.83,
+        "change_pct": 0.45,
+        "series": [
+          26180.4609,
+          25980.1895,
+          26151.3008,
+          26130.1992,
+          26541.3496,
+          26370.8906,
+          26099.7695,
+          26217.8281
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "^RUT": {
+        "ticker": "^RUT",
+        "name": "러셀2000",
+        "name_en": "Russell 2000",
+        "price": 2953.17,
+        "change_pct": 1.13,
+        "series": [
+          3017.8701,
+          2995.0801,
+          3010.02,
+          3005.8999,
+          3014.3401,
+          2956.45,
+          2920.1299,
+          2953.1663
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "^VIX": {
+        "ticker": "^VIX",
+        "name": "VIX",
+        "name_en": "VIX",
+        "price": 15.2,
+        "change_pct": -6.98,
+        "series": [
+          15.13,
+          15.85,
+          15.45,
+          15.21,
+          14.51,
+          14.92,
+          16.34,
+          15.2
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "^TNX": {
+        "ticker": "^TNX",
+        "name": "美 10년물 금리",
+        "name_en": "US 10-Year Treasury Yield",
+        "price": 4.8,
+        "change_pct": 0.0,
+        "series": [
+          4.738,
+          4.704,
+          4.639,
+          4.664,
+          4.672,
+          4.758,
+          4.796,
+          4.796
+        ],
+        "unit": "%",
+        "trading_date": "2026-09-02"
+      },
+      "^TYX": {
+        "ticker": "^TYX",
+        "name": "美 30년물 금리",
+        "name_en": "US 30-Year Treasury Yield",
+        "price": 5.27,
+        "change_pct": -0.02,
+        "series": [
+          5.276,
+          5.231,
+          5.174,
+          5.186,
+          5.191,
+          5.249,
+          5.268,
+          5.267
+        ],
+        "unit": "%",
+        "trading_date": "2026-09-02"
+      },
+      "GC=F": {
+        "ticker": "GC=F",
+        "name": "국제 금",
+        "name_en": "Gold",
+        "price": 4433.0,
+        "change_pct": 1.95,
+        "series": [
+          4640.7998,
+          4638.1001,
+          4598.2002,
+          4609.7002,
+          4478.1001,
+          4431.1001,
+          4348.0,
+          4433.0
+        ],
+        "unit": "달러",
+        "trading_date": "2026-09-02"
+      }
+    },
+    "watchlist": {
+      "NVDA": {
+        "ticker": "NVDA",
+        "name": "엔비디아",
+        "name_en": "NVIDIA",
+        "price": 224.41,
+        "change_pct": 3.21,
+        "series": [
+          208.48,
+          213.05,
+          209.66,
+          227.98,
+          217.55,
+          220.78,
+          217.44,
+          224.41
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "MU": {
+        "ticker": "MU",
+        "name": "마이크론",
+        "name_en": "Micron Technology",
+        "price": 956.08,
+        "change_pct": 2.43,
+        "series": [
+          910.43,
+          932.97,
+          938.4,
+          935.39,
+          932.86,
+          958.73,
+          933.44,
+          956.08
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "INTC": {
+        "ticker": "INTC",
+        "name": "인텔",
+        "name_en": "Intel",
+        "price": 90.05,
+        "change_pct": 1.21,
+        "series": [
+          87.26,
+          87.48,
+          88.24,
+          92.09,
+          89.47,
+          89.51,
+          88.97,
+          90.05
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "TSLA": {
+        "ticker": "TSLA",
+        "name": "테슬라",
+        "name_en": "Tesla",
+        "price": 357.01,
+        "change_pct": 0.26,
+        "series": [
+          348.95,
+          350.25,
+          345.82,
+          354.81,
+          348.75,
+          367.95,
+          356.09,
+          357.01
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "AAPL": {
+        "ticker": "AAPL",
+        "name": "애플",
+        "name_en": "Apple",
+        "price": 324.96,
+        "change_pct": -0.05,
+        "series": [
+          310.34,
+          309.9,
+          313.45,
+          314.58,
+          319.7,
+          316.85,
+          325.13,
+          324.96
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "MSFT": {
+        "ticker": "MSFT",
+        "name": "마이크로소프트",
+        "name_en": "Microsoft",
+        "price": 496.82,
+        "change_pct": -0.84,
+        "series": [
+          487.31,
+          491.71,
+          496.37,
+          505.06,
+          513.53,
+          507.29,
+          501.02,
+          496.82
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "AMZN": {
+        "ticker": "AMZN",
+        "name": "아마존",
+        "name_en": "Amazon",
+        "price": 254.98,
+        "change_pct": 0.02,
+        "series": [
+          262.07,
+          261.06,
+          260.28,
+          256.26,
+          266.43,
+          259.77,
+          254.92,
+          254.98
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "META": {
+        "ticker": "META",
+        "name": "메타",
+        "name_en": "Meta",
+        "price": 592.85,
+        "change_pct": 2.47,
+        "series": [
+          559.02,
+          570.05,
+          576.14,
+          571.1,
+          578.02,
+          572.34,
+          578.54,
+          592.85
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "GOOGL": {
+        "ticker": "GOOGL",
+        "name": "알파벳",
+        "name_en": "Google",
+        "price": 337.12,
+        "change_pct": 0.63,
+        "series": [
+          348.06,
+          346.96,
+          342.0,
+          340.65,
+          346.59,
+          339.35,
+          335.02,
+          337.12
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "WMT": {
+        "ticker": "WMT",
+        "name": "월마트",
+        "name_en": "Walmart",
+        "price": 106.09,
+        "change_pct": 0.16,
+        "series": [
+          106.49,
+          105.38,
+          104.34,
+          102.63,
+          103.09,
+          104.87,
+          105.92,
+          106.09
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "MRNA": {
+        "ticker": "MRNA",
+        "name": "모더나",
+        "name_en": "Moderna",
+        "price": 150.81,
+        "change_pct": -2.24,
+        "series": [
+          138.89,
+          158.83,
+          149.66,
+          142.77,
+          137.99,
+          140.34,
+          154.27,
+          150.81
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "MRK": {
+        "ticker": "MRK",
+        "name": "머크",
+        "name_en": "Merck",
+        "price": 151.64,
+        "change_pct": 1.19,
+        "series": [
+          152.55,
+          150.66,
+          156.45,
+          153.1,
+          149.54,
+          147.76,
+          149.86,
+          151.64
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "COIN": {
+        "ticker": "COIN",
+        "name": "코인베이스",
+        "name_en": "Coinbase",
+        "price": 174.96,
+        "change_pct": -1.05,
+        "series": [
+          179.48,
+          187.16,
+          181.78,
+          190.72,
+          178.64,
+          188.12,
+          176.82,
+          174.96
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "DE": {
+        "ticker": "DE",
+        "name": "디어",
+        "name_en": "Deere & Company",
+        "price": 698.37,
+        "change_pct": 3.3,
+        "series": [
+          647.47,
+          648.64,
+          630.66,
+          634.54,
+          622.66,
+          654.91,
+          676.08,
+          698.37
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "SOXX": {
+        "ticker": "SOXX",
+        "name": "필라델피아 반도체 ETF",
+        "name_en": "iShares Semiconductor ETF",
+        "price": 501.44,
+        "change_pct": 0.23,
+        "series": [
+          506.18,
+          514.06,
+          515.4,
+          525.43,
+          508.62,
+          511.04,
+          500.31,
+          501.44
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      },
+      "CL=F": {
+        "ticker": "CL=F",
+        "name": "WTI 원유",
+        "name_en": "WTI Crude Oil",
+        "price": 90.77,
+        "change_pct": 0.61,
+        "series": [
+          85.01,
+          82.36,
+          82.23,
+          83.53,
+          83.4,
+          85.76,
+          90.22,
+          90.77
+        ],
+        "unit": "",
+        "trading_date": "2026-09-02"
+      }
+    },
+    "trading_date": "2026-09-02"
+  },
+  "ko": {
+    "title": "국채 금리 상승이 멈추자 뉴욕증시는 사흘 만에 반등했습니다",
+    "narrative": [
+      {
+        "heading": "사흘 연속 하락을 끊었습니다",
+        "body": "9월 2일 뉴욕증시는 3대 지수가 모두 올랐습니다. 다우존스는 0.56% 오른 53,061.95, S&P500은 0.46% 오른 7,666.60, 나스닥종합은 0.45% 오른 26,217.83으로 마감했습니다. CNBC는 세 지수가 사흘 연속 하락을 끊었다고 전했습니다.\n\n상승 폭은 소형주에서 더 컸습니다. 러셀2000이 1.13% 올라 2,953.17로 마감해 대형주 지수보다 두 배 넘게 올랐습니다. 전날 이 지수는 낙폭이 가장 컸던 지수였습니다.\n\n변동성 지표도 함께 내렸습니다. VIX는 6.98% 내린 15.20으로 전날 16.34에서 다시 15선으로 돌아왔습니다."
+      },
+      {
+        "heading": "금리가 더 오르지 않은 것이 반등의 조건이었습니다",
+        "body": "이날 주가를 올린 재료는 주식 쪽에 있지 않았습니다.\n\nCNBC에 따르면 미 10년물 금리는 다섯 거래일 연속 오르며 4.81%를 넘어섰다가 이날 4.79%로 내려왔습니다. 같은 매체는 이 수준이 2023년 11월 이후 가장 높다고 전했습니다. 종가로 보면 10년물은 4.80%로 전날과 사실상 같았고 30년물도 5.27%로 제자리였습니다. 더 오르지 않았다는 사실 자체가 이날의 재료였습니다.\n\n인프라스트럭처 캐피털 어드바이저스의 제이 햇필드 최고경영자는 CNBC에 \"핵심 동인은 유가\"라며 유가가 고점을 지나고 있어 시장이 이날 조금 오를 수 있었다고 말했습니다. WTI는 0.61% 오른 배럴당 90.77달러로, 직전 며칠의 상승 속도에서는 확실히 느려졌습니다."
+      },
+      {
+        "heading": "고용 지표가 인상 논리를 흔들었습니다",
+        "body": "금리를 멈춰 세운 것은 개장 전에 나온 고용 지표였습니다.\n\nADP 집계에서 8월 미국 민간 고용은 3만 8,000명 늘어 블룸버그가 조사한 전망치 4만 7,000명에 못 미쳤습니다. 1월 이후 가장 느린 증가입니다. 재화 생산 부문에서 1만 명이 줄었고 그 안에서 제조업 감소가 1만 7,000명이었습니다. 신규 고용의 대부분은 교육·의료가 채웠습니다.\n\n이 숫자가 중요한 이유는 지금 시장이 인하가 아니라 인상 시점을 세고 있기 때문입니다. 유가와 물가를 근거로 9월 회의 인상이 거론되던 국면에서, 고용이 식고 있다는 증거는 그 전제를 반대 방향으로 당깁니다.\n\n금이 오른 것도 같은 계산에 들어맞습니다. 국제 금은 1.95% 오른 온스당 4,433달러로 마감해 사흘 연속 하락을 끊었습니다. 명목 금리가 더 오르지 않으면 이자를 주지 않는 금의 불리함이 줄어듭니다."
+      },
+      {
+        "heading": "대형 기술주 안에서 방향이 갈렸습니다",
+        "body": "지수는 함께 올랐지만 종목별 차이는 컸습니다.\n\n엔비디아가 3.21% 올라 224.41달러, 메타가 2.47% 올라 592.85달러, 마이크론이 2.43% 올라 956.08달러로 마감했습니다. 반대편에서 마이크로소프트는 0.84% 내렸고 애플은 0.05% 내려 사실상 보합이었습니다. 아마존도 0.02% 상승에 그쳤습니다.\n\n눈에 띄는 것은 반도체 지수입니다. 시가총액 상위인 엔비디아와 마이크론이 각각 3.21%, 2.43% 올랐는데도 필라델피아 반도체 ETF는 0.23% 상승에 그쳤습니다. 두 종목의 상승분을 나머지 구성 종목이 상쇄했다는 뜻입니다. 반도체 업종 전체가 오른 날이 아니라 특정 종목이 오른 날이었습니다.\n\n디어는 3.30% 올라 698.37달러로 워치리스트에서 가장 많이 올랐습니다. 내린 종목 쪽에서는 모더나가 2.24% 내린 150.81달러, 코인베이스가 1.05% 내린 174.96달러였습니다. 코인베이스가 내린 날 비트코인은 24시간 기준 1.67% 내린 7만 7,592달러 수준이었습니다."
+      }
+    ],
+    "theme_section": {
+      "heading": "등락 폭이 컸던 종목",
+      "commentary": "종가 기준으로 상승·하락 폭이 가장 컸던 종목입니다.",
+      "highlights": [
+        {
+          "label": "상승 폭 상위",
+          "ticker": "DE"
+        },
+        {
+          "label": "하락 폭 상위",
+          "ticker": "MRNA"
+        }
+      ]
+    },
+    "stock_section": {
+      "heading": "주요 종목 등락",
+      "commentary": "개별 재료가 있던 종목과 지수만 따라간 종목이 갈렸습니다.",
+      "featured_tickers": [
+        "DE",
+        "NVDA",
+        "META",
+        "MU",
+        "MSFT",
+        "MRNA"
+      ]
+    },
+    "outlook": {
+      "heading": "다음 거래일에 확인할 것",
+      "body": "첫째, 9월 4일 금요일에 나오는 8월 고용보고서입니다. 키플링어에 따르면 시장은 비농업 신규 고용 5만 8,000명을 예상하고 있습니다. 7월에는 2만 3,000명이 줄었고 실업률은 4.1%였으며 앞선 두 달 수치가 합계 10만 3,000명 하향 조정된 상태입니다. ADP가 먼저 보여준 둔화를 정부 통계가 확인하면 9월 인상 전망은 더 흔들립니다.\n\n둘째, 10년물 금리가 4.81% 아래에 머무는지입니다. 이날 반등은 금리가 오르지 않았다는 조건 위에 서 있었습니다. 조건이 사라지면 결과도 되돌려집니다.\n\n셋째, 유가입니다. 유가가 정말 고점을 지났는지는 아직 하루치 근거뿐입니다. 브렌트유는 전날 미군의 호르무즈 해협 인근 이란 목표물 타격 이후 배럴당 95달러 부근까지 올라 있습니다.\n\n넷째, 한국 시장으로 넘어오는 연결고리입니다. 코스피는 9월 2일 3.99% 내렸고 그 재료는 하루 앞선 미국의 금리와 유가였습니다. 이번에는 반대 방향의 재료가 하루 늦게 도착합니다. 다만 미국에서 오른 것은 반도체 업종 전체가 아니라 엔비디아와 마이크론이었으므로, 그 차이가 삼성전자와 SK하이닉스에 어떻게 반영되는지를 함께 봐야 합니다."
+    },
+    "closing": {
+      "heading": "정리하면",
+      "body": "이날 주가를 움직인 것은 기업이 아니라 지표였습니다. ADP 고용이 예상보다 약하게 나오면서 9월 인상 논리가 흔들렸고, 다섯 거래일 오르던 국채 금리가 멈췄습니다. 금리에 가장 민감했던 소형주가 가장 많이 오른 것이 그 순서를 그대로 보여줍니다. 다만 반등의 근거가 하루치 민간 집계라는 점은 남습니다. 같은 주 금요일에 나오는 정부 통계가 이 근거를 확인해 줄 수도, 지워 버릴 수도 있습니다."
+    },
+    "insight_section": {
+      "heading": "이날 눈여겨볼 세 가지",
+      "stories": [
+        {
+          "heading": "엔비디아가 메모리 설계 안으로 들어왔습니다",
+          "icon": "chip",
+          "body": "엔비디아는 3.21% 올라 224.41달러로 마감했습니다. 8월 26일 2분기 실적과 함께 공개한 NVHBM이 계속 재료로 남아 있습니다.\n\nNVHBM은 메모리 컨트롤러를 GPU 다이가 아니라 HBM 스택의 베이스 다이로 옮긴 구조입니다. 엔비디아는 스택당 대역폭이 HBM4E 대비 최대 30% 늘고 전력은 최대 15% 줄며, 메모리 인터페이스가 차지하던 자리가 비면서 연산 다이에서 최대 25%의 면적이 확보된다고 밝혔습니다.\n\n카운터포인트 리서치의 닐 샤 애널리스트는 벤징가에 이 기술이 엔비디아를 브로드컴과 마벨이 맡아 오던 시장 안으로 직접 들여보낸다고 말했습니다. 다만 엔비디아에는 아직 비교할 만한 베이스 다이 제품이 없다는 단서를 함께 달았습니다.\n\n한국 독자에게 이 이야기가 중요한 이유는 공급망에 있습니다. 서울경제는 엔비디아가 삼성전자에 12단이나 16단이 아니라 8단 구성의 HBM4E를 NVHBM용으로 맞춰 달라고 요청했다고 전했습니다. NVHBM은 D램만이 아니라 로직 기반 베이스 다이를 설계하고 생산하는 능력을 함께 요구하는데, 삼성전자는 두 가지를 모두 갖고 있다는 것이 같은 보도의 설명입니다.",
+          "table": [
+            {
+              "label": "엔비디아 종가",
+              "value": "224.41달러 (+3.21%)"
+            },
+            {
+              "label": "마이크론 종가",
+              "value": "956.08달러 (+2.43%)"
+            },
+            {
+              "label": "필라델피아 반도체 ETF",
+              "value": "501.44달러 (+0.23%)"
+            },
+            {
+              "label": "NVHBM 대역폭",
+              "value": "HBM4E 대비 스택당 최대 +30%"
+            },
+            {
+              "label": "NVHBM 전력·면적",
+              "value": "전력 최대 -15%, 연산 다이 여유 최대 25%"
+            }
+          ],
+          "image_query": "Nvidia GPU"
+        },
+        {
+          "heading": "반등의 근거는 하루치 민간 집계입니다",
+          "icon": "scale",
+          "body": "이날 반등을 만든 근거는 하나로 좁혀집니다. ADP가 집계한 8월 민간 고용 3만 8,000명입니다.\n\n전망치는 4만 7,000명이었고 실제 숫자는 그보다 9,000명 적었습니다. 1월 이후 가장 느린 증가입니다. 세부 항목이 더 눈에 띕니다. 재화 생산 부문이 1만 명 줄었고 그 안에서 제조업만 1만 7,000명 감소했습니다. 신규 고용은 교육·의료에 몰렸습니다. 임금은 이직자가 전년 대비 4.7%, 잔류자가 3.0% 올랐습니다.\n\n이 숫자가 금리를 멈춰 세운 이유는 지금 연준을 둘러싼 논쟁이 인하가 아니라 인상이기 때문입니다. 유가와 물가를 근거로 9월 회의 인상이 거론되던 자리에서 고용 둔화는 반대편 증거가 됩니다. 국채 금리가 다섯 거래일 만에 처음 멈춘 날이 이 발표가 나온 날이었습니다.\n\n다만 ADP는 민간 집계이고 정부 통계와 자주 어긋납니다. 9월 4일 금요일에 나오는 8월 고용보고서가 이 하루치 근거를 확인할지 지울지 결정합니다. 키플링어에 따르면 시장 예상은 5만 8,000명이고, 7월은 2만 3,000명 감소였으며 앞선 두 달이 합계 10만 3,000명 하향 조정된 상태입니다. 이날 반등이 서 있는 자리는 그만큼 좁습니다.",
+          "table": [
+            {
+              "label": "ADP 8월 민간 고용",
+              "value": "+3만 8,000명 (전망 +4만 7,000명)"
+            },
+            {
+              "label": "증가 속도",
+              "value": "1월 이후 최저"
+            },
+            {
+              "label": "제조업",
+              "value": "-1만 7,000명"
+            },
+            {
+              "label": "미 10년물 종가",
+              "value": "4.80% — 5거래일 상승 뒤 보합"
+            },
+            {
+              "label": "러셀2000",
+              "value": "+1.13% — 지수 중 최대 상승"
+            },
+            {
+              "label": "다음 확인",
+              "value": "9월 4일 8월 고용보고서 (예상 +5만 8,000명)"
+            }
+          ]
+        },
+        {
+          "heading": "디어의 사흘은 실적이 아니라 목표주가가 만들었습니다",
+          "icon": "robot",
+          "body": "디어는 3.30% 올라 698.37달러로 마감했습니다. 최근 사흘 동안 622.66달러에서 698.37달러까지 12.2% 올랐는데, 그사이 회사가 내놓은 발표는 확인되지 않습니다. 바뀐 것은 애널리스트의 추정이었습니다.\n\n24/7 월스트리트는 8월 31일 베어드가 디어와 AGCO를 아웃퍼폼으로 상향했다고 전했습니다. 그날 디어 종가는 5.18% 올랐습니다. 벤징가는 다음 날인 9월 1일 디어가 장중 654.05~675.75달러에서 거래되며 기존 52주 최고가 674.19달러를 넘어 사상 최고가를 새로 썼다고 전했습니다. Investing.com은 이어 에버코어 ISI가 디어와 CNH를 아웃퍼폼으로 올리고 데이비드 라소 애널리스트가 디어 목표주가를 632달러에서 813달러로 높인 뒤 디어가 3.3% 상승했다고 전했습니다.\n\n상향 근거는 세 가지로 정리됩니다. 3년의 침체를 지나며 북미 고마력 농기계가 노후화되고 대수도 줄었다는 것, 유통 재고가 감소했다는 것, 정밀농업 기술이 개선되고 있다는 것입니다. 라소는 작물 경제성 개선과 노후 장비, 재고 감소가 교체 수요 중심의 회복을 이끌 것으로 봤습니다.\n\n여기서 구분할 것이 있습니다. 목표주가는 사실이 아니라 전망입니다. 이 사흘 동안 디어의 실적이나 수주가 새로 공개된 것은 없고 주가는 바뀐 추정을 먼저 반영했습니다. 추정이 실제 주문으로 확인되는지는 다음 분기 실적에서 볼 일입니다.",
+          "table": [
+            {
+              "label": "디어 종가",
+              "value": "698.37달러 (+3.30%)"
+            },
+            {
+              "label": "최근 3거래일",
+              "value": "622.66달러 → 698.37달러 (+12.2%)"
+            },
+            {
+              "label": "베어드 (8월 31일)",
+              "value": "아웃퍼폼 상향, 목표주가 640 → 800달러"
+            },
+            {
+              "label": "에버코어 ISI",
+              "value": "아웃퍼폼 상향, 목표주가 632 → 813달러"
+            },
+            {
+              "label": "같은 기간 회사 발표",
+              "value": "확인되지 않음"
+            }
+          ]
+        }
+      ]
+    },
+    "sources": [
+      {
+        "name": "CNBC",
+        "title": "Stock market news for Sept. 2, 2026",
+        "url": "https://www.cnbc.com/2026/09/01/stock-market-today-live-updates.html"
+      },
+      {
+        "name": "CNBC",
+        "title": "10-year U.S. Treasury yield hits highest level since November 2023 as global bond sell-off continues",
+        "url": "https://www.cnbc.com/2026/09/02/bond-yields-treasurys-inflation.html"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "The private sector added 38,000 jobs last month, missing expectations, ADP says",
+        "url": "https://finance.yahoo.com/economy/article/the-private-sector-added-38000-jobs-last-month-missing-expectations-adp-says-123035565.html"
+      },
+      {
+        "name": "Benzinga",
+        "title": "Nvidia Moves Deeper Into Broadcom Territory Without Building The Chip",
+        "url": "https://www.benzinga.com/markets/tech/26/09/61540989/nvidia-moves-deeper-into-broadcom-territory-without-building-the-chip"
+      },
+      {
+        "name": "NVIDIA",
+        "title": "NVIDIA NVLink Fusion Expands With NVHBM Custom High-Bandwidth Memory",
+        "url": "https://blogs.nvidia.com/blog/nvlink-fusion-nvhbm-custom-high-bandwidth-memory/"
+      },
+      {
+        "name": "Seoul Economic Daily",
+        "title": "Samsung Takes Early Lead in Nvidia's Custom NVHBM Memory",
+        "url": "https://en.sedaily.com/finance/2026/08/28/samsung-takes-early-lead-in-nvidias-custom-nvhbm-memory"
+      },
+      {
+        "name": "Investing.com",
+        "title": "Deere, CNH stocks surge after Evercore ISI upgrade",
+        "url": "https://uk.investing.com/news/stock-market-news/deere-cnh-stocks-surge-after-evercore-isi-upgrade-93CH-4856316"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "Deere and AGCO Rally 4% as Baird Upgrades Both on North America Row Crop Demand",
+        "url": "https://247wallst.com/investing/2026/08/31/deere-and-agco-rally-4-as-baird-upgrades-both-on-north-america-row-crop-demand/"
+      },
+      {
+        "name": "Benzinga",
+        "title": "Deere Stock Hits All-Time High: What's Going On?",
+        "url": "https://www.benzinga.com/trading-ideas/movers/26/09/61560310/deere-stock-hits-all-time-high-whats-going-on"
+      },
+      {
+        "name": "Kiplinger",
+        "title": "August Jobs Report Preview: Key Expert Forecasts and What The Data Could Mean for the Fed and Investors",
+        "url": "https://www.kiplinger.com/investing/economy/jobs-report-august-2026-what-to-expect"
+      }
+    ]
+  },
+  "en": {
+    "title": "Stocks Snap a Three-Day Slide as the Bond Selloff Takes a Day Off",
+    "narrative": [
+      {
+        "heading": "The gains were widest where the pain had been",
+        "body": "All three major US indexes closed higher on September 2. The Dow Jones Industrial Average rose 0.56% to 53,061.95, the S&P 500 gained 0.46% to 7,666.60 and the Nasdaq Composite added 0.45% to 26,217.83. CNBC reported that the move snapped a three-day losing streak for all three.\n\nThe Russell 2000 did better than any of them, climbing 1.13% to 2,953.17 — more than double the large-cap gains. It had been the worst performer the previous session.\n\nVolatility came down with it. The VIX fell 6.98% to 15.20, back into the 15s after closing at 16.34 a day earlier."
+      },
+      {
+        "heading": "Nothing happened in the bond market, and that was the point",
+        "body": "The catalyst was an absence rather than an event.\n\nAccording to CNBC, the 10-year Treasury yield eased to 4.79% after a five-session climb that had carried it above 4.81%, the highest level since November 2023. On a closing basis the 10-year finished at 4.80%, effectively unchanged, and the 30-year held at 5.27%. For equities, a yield that stops rising is itself the news.\n\nJay Hatfield, chief executive of Infrastructure Capital Advisors, told CNBC that the key driver is oil, and that the market could manage a small rally because crude is topping out. WTI rose 0.61% to $90.77 a barrel — higher, but far slower than the preceding days."
+      },
+      {
+        "heading": "A soft payroll print undercut the case for a hike",
+        "body": "What stopped the yield climb arrived before the open.\n\nADP counted 38,000 private-sector jobs added in August, short of the 47,000 economists polled by Bloomberg had expected, and the slowest pace since January. Goods-producing employers cut 10,000 positions, with manufacturing alone down 17,000. Education and health care accounted for most of what was added.\n\nThat matters because the live debate around the Federal Reserve this month is not when it cuts but whether it hikes. Oil and inflation had built the case for a September increase; a cooling labor market pulls the other way.\n\nGold moved with the same logic, rising 1.95% to $4,433 an ounce and ending three straight declines. When nominal yields stop climbing, the cost of holding an asset that pays no interest falls with them."
+      },
+      {
+        "heading": "The megacap tape split in two",
+        "body": "The indexes moved together; the names inside them did not.\n\nNvidia rose 3.21% to $224.41, Meta 2.47% to $592.85 and Micron 2.43% to $956.08. On the other side, Microsoft fell 0.84%, Apple slipped 0.05% to essentially flat and Amazon managed 0.02%.\n\nThe semiconductor tape is worth a second look. Nvidia and Micron, the two largest holdings, gained 3.21% and 2.43%, and the iShares Semiconductor ETF still finished up only 0.23%. The rest of the basket absorbed almost the entire move. This was a day for two chip stocks, not for chips.\n\nDeere led the watchlist, up 3.30% to $698.37. On the losing side, Moderna fell 2.24% to $150.81 and Coinbase 1.05% to $174.96, with bitcoin down about 1.67% over 24 hours near $77,592."
+      }
+    ],
+    "theme_section": {
+      "heading": "Biggest moves",
+      "commentary": "Ranked by closing-price change.",
+      "highlights": [
+        {
+          "label": "Largest gain",
+          "ticker": "DE"
+        },
+        {
+          "label": "Largest decline",
+          "ticker": "MRNA"
+        }
+      ]
+    },
+    "stock_section": {
+      "heading": "Watchlist moves",
+      "commentary": "Names with their own catalyst, next to names that only tracked the index.",
+      "featured_tickers": [
+        "DE",
+        "NVDA",
+        "META",
+        "MU",
+        "MSFT",
+        "MRNA"
+      ]
+    },
+    "outlook": {
+      "heading": "What to watch next session",
+      "body": "First, the August employment report due Friday, September 4. Kiplinger reports a consensus of 58,000 nonfarm payrolls. July payrolls fell 23,000, unemployment stood at 4.1%, and the prior two months were revised down by a combined 103,000. If the government data confirms the slowdown ADP flagged, the September hike case weakens further.\n\nSecond, whether the 10-year stays below 4.81%. Wednesday's rally rested on a yield that stopped rising. Remove the condition and the result goes with it.\n\nThird, oil. One session is not enough to say the top is in. Brent sat near $95 a barrel after US strikes on Iranian targets around the Strait of Hormuz the previous day.\n\nFourth, the handoff to Asia. The KOSPI fell 3.99% on September 2 on the previous day's US yields and oil. The opposite input now arrives with the same one-day lag — but what rose in New York was Nvidia and Micron rather than the semiconductor complex, and that distinction matters for Samsung Electronics and SK Hynix."
+    },
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Data set prices on Wednesday, not earnings. A weaker ADP print undercut the September hike case, a five-day climb in Treasury yields stalled, and the most rate-sensitive part of the market — small caps — gained the most. What remains is the thinness of the evidence: one private payroll estimate. Friday's government report will either confirm it or erase it."
+    },
+    "insight_section": {
+      "heading": "Three things worth noting",
+      "stories": [
+        {
+          "heading": "Nvidia moved into the memory stack",
+          "icon": "chip",
+          "body": "Nvidia closed up 3.21% at $224.41. NVHBM, unveiled alongside its second-quarter results on August 26, is still doing work in the stock.\n\nNVHBM relocates the memory controller off the GPU die and into the base die of the HBM stack. Nvidia says the design delivers up to 30% more bandwidth per stack and up to 15% lower power than HBM4E, and that removing the memory interface frees as much as 25% of the accelerator die for compute.\n\nNeil Shah of Counterpoint Research told Benzinga the technology puts Nvidia directly into a market Broadcom and Marvell have served, while noting that Nvidia has no comparable base-die product of its own yet.\n\nThe supply-chain consequence lands in Korea. Seoul Economic Daily reports that Nvidia asked Samsung Electronics to build an 8-layer HBM4E for NVHBM rather than the taller 12- and 16-layer stacks it had been preparing. NVHBM requires a vendor that can design and manufacture logic-based base dies as well as DRAM, and per that report Samsung can do both.",
+          "table": [
+            {
+              "label": "Nvidia close",
+              "value": "$224.41 (+3.21%)"
+            },
+            {
+              "label": "Micron close",
+              "value": "$956.08 (+2.43%)"
+            },
+            {
+              "label": "iShares Semiconductor ETF",
+              "value": "$501.44 (+0.23%)"
+            },
+            {
+              "label": "NVHBM bandwidth",
+              "value": "up to +30% per stack vs HBM4E"
+            },
+            {
+              "label": "NVHBM power / die area",
+              "value": "up to -15% power, up to 25% die freed"
+            }
+          ],
+          "image_query": "Nvidia GPU"
+        },
+        {
+          "heading": "The rally rests on one private estimate",
+          "icon": "scale",
+          "body": "The evidence behind Wednesday's move comes down to a single number: 38,000 private jobs added in August, as counted by ADP.\n\nThe consensus was 47,000, so the miss was 9,000 — and the slowest pace since January. The detail is worse than the headline. Goods-producing employers shed 10,000 positions and manufacturing alone lost 17,000. Hiring concentrated in education and health care. Wages rose 4.7% year over year for job switchers and 3.0% for those who stayed.\n\nIt stopped the yield climb because the argument about the Fed right now runs toward a hike, not a cut. Against a September increase built on oil and inflation, a cooling labor market is evidence for the other side. The first session in five without a yield increase was the session this print landed.\n\nADP is a private estimate and diverges from the government series often enough to matter. The August employment report on Friday, September 4 decides whether this holds. Kiplinger puts the consensus at 58,000, against a 23,000 decline in July and downward revisions of 103,000 across the prior two months. That is a narrow base for a rally.",
+          "table": [
+            {
+              "label": "ADP August private jobs",
+              "value": "+38,000 (consensus +47,000)"
+            },
+            {
+              "label": "Pace",
+              "value": "slowest since January"
+            },
+            {
+              "label": "Manufacturing",
+              "value": "-17,000"
+            },
+            {
+              "label": "US 10-year close",
+              "value": "4.80% — flat after five days of gains"
+            },
+            {
+              "label": "Russell 2000",
+              "value": "+1.13% — best of the major indexes"
+            },
+            {
+              "label": "Next check",
+              "value": "August jobs report, Sept. 4 (consensus +58,000)"
+            }
+          ]
+        },
+        {
+          "heading": "Deere's three-day run came from price targets, not results",
+          "icon": "robot",
+          "body": "Deere closed up 3.30% at $698.37. Over three sessions the stock ran from $622.66 to $698.37, a gain of 12.2%, with no company announcement in that window. What changed was analyst estimates.\n\n24/7 Wall St. reported that Baird upgraded Deere and AGCO to Outperform on August 31; Deere closed up 5.18% that day. Benzinga reported that on September 1 the stock traded between $654.05 and $675.75, clearing its prior 52-week high of $674.19 for a genuine record. Investing.com then reported that Evercore ISI upgraded Deere and CNH to Outperform, with analyst David Raso lifting his Deere target to $813 from $632, and that Deere rose 3.3% on the call.\n\nThe reasoning is consistent across both notes: an aged and smaller North American high-horsepower fleet after a three-year downturn, reduced channel inventory, and improving precision agriculture technology. Raso expects better crop economics and an aging fleet to drive a replacement-led recovery.\n\nWorth separating: a price target is a forecast, not a fact. No earnings or order data was published during these three sessions. The stock has priced the revised estimates; whether orders follow is a question for the next quarter.",
+          "table": [
+            {
+              "label": "Deere close",
+              "value": "$698.37 (+3.30%)"
+            },
+            {
+              "label": "Last three sessions",
+              "value": "$622.66 → $698.37 (+12.2%)"
+            },
+            {
+              "label": "Baird (Aug. 31)",
+              "value": "Outperform, target $640 → $800"
+            },
+            {
+              "label": "Evercore ISI",
+              "value": "Outperform, target $632 → $813"
+            },
+            {
+              "label": "Company news in window",
+              "value": "none identified"
+            }
+          ]
+        }
+      ]
+    },
+    "sources": [
+      {
+        "name": "CNBC",
+        "title": "Stock market news for Sept. 2, 2026",
+        "url": "https://www.cnbc.com/2026/09/01/stock-market-today-live-updates.html"
+      },
+      {
+        "name": "CNBC",
+        "title": "10-year U.S. Treasury yield hits highest level since November 2023 as global bond sell-off continues",
+        "url": "https://www.cnbc.com/2026/09/02/bond-yields-treasurys-inflation.html"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "The private sector added 38,000 jobs last month, missing expectations, ADP says",
+        "url": "https://finance.yahoo.com/economy/article/the-private-sector-added-38000-jobs-last-month-missing-expectations-adp-says-123035565.html"
+      },
+      {
+        "name": "Benzinga",
+        "title": "Nvidia Moves Deeper Into Broadcom Territory Without Building The Chip",
+        "url": "https://www.benzinga.com/markets/tech/26/09/61540989/nvidia-moves-deeper-into-broadcom-territory-without-building-the-chip"
+      },
+      {
+        "name": "NVIDIA",
+        "title": "NVIDIA NVLink Fusion Expands With NVHBM Custom High-Bandwidth Memory",
+        "url": "https://blogs.nvidia.com/blog/nvlink-fusion-nvhbm-custom-high-bandwidth-memory/"
+      },
+      {
+        "name": "Seoul Economic Daily",
+        "title": "Samsung Takes Early Lead in Nvidia's Custom NVHBM Memory",
+        "url": "https://en.sedaily.com/finance/2026/08/28/samsung-takes-early-lead-in-nvidias-custom-nvhbm-memory"
+      },
+      {
+        "name": "Investing.com",
+        "title": "Deere, CNH stocks surge after Evercore ISI upgrade",
+        "url": "https://uk.investing.com/news/stock-market-news/deere-cnh-stocks-surge-after-evercore-isi-upgrade-93CH-4856316"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "Deere and AGCO Rally 4% as Baird Upgrades Both on North America Row Crop Demand",
+        "url": "https://247wallst.com/investing/2026/08/31/deere-and-agco-rally-4-as-baird-upgrades-both-on-north-america-row-crop-demand/"
+      },
+      {
+        "name": "Benzinga",
+        "title": "Deere Stock Hits All-Time High: What's Going On?",
+        "url": "https://www.benzinga.com/trading-ideas/movers/26/09/61560310/deere-stock-hits-all-time-high-whats-going-on"
+      },
+      {
+        "name": "Kiplinger",
+        "title": "August Jobs Report Preview: Key Expert Forecasts and What The Data Could Mean for the Fed and Investors",
+        "url": "https://www.kiplinger.com/investing/economy/jobs-report-august-2026-what-to-expect"
+      }
+    ]
+  }
+}
