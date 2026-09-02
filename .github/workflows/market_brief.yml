@@ -19,6 +19,9 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    # 수집한 시세를 data/ 아래로 커밋하기 위해 쓰기 권한이 필요합니다.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -60,6 +63,25 @@ jobs:
           WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
           WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
           SUBSCRIBE_FORM_ACTION: ${{ secrets.SUBSCRIBE_FORM_ACTION }}
+
+      - name: 시세 파일 커밋
+        # 조사·집필을 맡는 클라우드 루틴은 샌드박스 네트워크 정책 때문에
+        # 네이버·야후·KRX에 접속하지 못합니다(2026-09-02 실측: CONNECT 403).
+        # 러너에서는 받아지므로, 여기서 받은 시세를 저장소에 남겨 루틴이
+        # 읽어가게 합니다. data/**.json은 Editorial Publish를 트리거하지
+        # 않으므로(그쪽은 editorial/**.json만 봄) 발행이 두 번 일어나지 않습니다.
+        if: github.event_name == 'schedule'
+        run: |
+          if [ -z "$(git status --porcelain data/)" ]; then
+            echo "새로 커밋할 시세 파일이 없습니다."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "시세 데이터: ${{ steps.market.outputs.market }} $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin HEAD:main
 
       - name: 결과물 업로드 (백업용)
         uses: actions/upload-artifact@v4

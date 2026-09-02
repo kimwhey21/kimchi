@@ -1,0 +1,461 @@
+{
+  "macro": {
+    "^DJI": {
+      "ticker": "^DJI",
+      "name": "다우존스",
+      "name_en": "Dow Jones Industrial Average",
+      "price": 52766.88,
+      "change_pct": -0.79,
+      "series": [
+        52759.2109,
+        53277.0117,
+        53417.1602,
+        53577.3984,
+        53463.8789,
+        53569.4414,
+        53185.8984,
+        52766.8789
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "^GSPC": {
+      "ticker": "^GSPC",
+      "name": "S&P500",
+      "name_en": "S&P 500",
+      "price": 7631.47,
+      "change_pct": -0.71,
+      "series": [
+        7641.1602,
+        7674.3701,
+        7652.8599,
+        7677.2798,
+        7675.7002,
+        7730.9902,
+        7686.1401,
+        7631.4702
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "^IXIC": {
+      "ticker": "^IXIC",
+      "name": "나스닥종합",
+      "name_en": "Nasdaq Composite",
+      "price": 26099.77,
+      "change_pct": -1.03,
+      "series": [
+        26067.1699,
+        26180.4609,
+        25980.1895,
+        26151.3008,
+        26130.1992,
+        26541.3496,
+        26370.8906,
+        26099.7734
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "^RUT": {
+      "ticker": "^RUT",
+      "name": "러셀2000",
+      "name_en": "Russell 2000",
+      "price": 2920.13,
+      "change_pct": -1.23,
+      "series": [
+        2992.4299,
+        3017.8701,
+        2995.0801,
+        3010.02,
+        3005.8999,
+        3014.3401,
+        2956.45,
+        2920.1323
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "^VIX": {
+      "ticker": "^VIX",
+      "name": "VIX",
+      "name_en": "VIX",
+      "price": 16.34,
+      "change_pct": 9.52,
+      "series": [
+        16.01,
+        15.13,
+        15.85,
+        15.45,
+        15.21,
+        14.51,
+        14.92,
+        16.34
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "^TNX": {
+      "ticker": "^TNX",
+      "name": "美 10년물 금리",
+      "name_en": "US 10-Year Treasury Yield",
+      "price": 4.8,
+      "change_pct": 0.8,
+      "series": [
+        4.696,
+        4.738,
+        4.704,
+        4.639,
+        4.664,
+        4.672,
+        4.758,
+        4.796
+      ],
+      "unit": "%",
+      "trading_date": "2026-09-01"
+    },
+    "^TYX": {
+      "ticker": "^TYX",
+      "name": "美 30년물 금리",
+      "name_en": "US 30-Year Treasury Yield",
+      "price": 5.27,
+      "change_pct": 0.36,
+      "series": [
+        5.237,
+        5.276,
+        5.231,
+        5.174,
+        5.186,
+        5.191,
+        5.249,
+        5.268
+      ],
+      "unit": "%",
+      "trading_date": "2026-09-01"
+    },
+    "GC=F": {
+      "ticker": "GC=F",
+      "name": "국제 금",
+      "name_en": "Gold",
+      "price": 4365.3,
+      "change_pct": -0.71,
+      "series": [
+        4640.7998,
+        4638.1001,
+        4598.2002,
+        4609.7002,
+        4478.1001,
+        4431.1001,
+        4365.2998
+      ],
+      "unit": "달러",
+      "trading_date": "2026-09-01"
+    }
+  },
+  "watchlist": {
+    "NVDA": {
+      "ticker": "NVDA",
+      "name": "엔비디아",
+      "name_en": "NVIDIA",
+      "price": 217.44,
+      "change_pct": -1.39,
+      "series": [
+        214.72,
+        208.48,
+        213.05,
+        209.66,
+        227.98,
+        217.55,
+        220.78,
+        217.44
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "MU": {
+      "ticker": "MU",
+      "name": "마이크론",
+      "name_en": "Micron Technology",
+      "price": 933.44,
+      "change_pct": -2.64,
+      "series": [
+        966.78,
+        910.43,
+        932.97,
+        938.4,
+        935.39,
+        932.86,
+        958.73,
+        933.44
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "INTC": {
+      "ticker": "INTC",
+      "name": "인텔",
+      "name_en": "Intel",
+      "price": 88.97,
+      "change_pct": -0.6,
+      "series": [
+        90.07,
+        87.26,
+        87.48,
+        88.24,
+        92.09,
+        89.47,
+        89.51,
+        88.97
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "TSLA": {
+      "ticker": "TSLA",
+      "name": "테슬라",
+      "name_en": "Tesla",
+      "price": 356.09,
+      "change_pct": -3.22,
+      "series": [
+        362.86,
+        348.95,
+        350.25,
+        345.82,
+        354.81,
+        348.75,
+        367.95,
+        356.09
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "AAPL": {
+      "ticker": "AAPL",
+      "name": "애플",
+      "name_en": "Apple",
+      "price": 325.13,
+      "change_pct": 2.61,
+      "series": [
+        309.35,
+        310.34,
+        309.9,
+        313.45,
+        314.58,
+        319.7,
+        316.85,
+        325.13
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "MSFT": {
+      "ticker": "MSFT",
+      "name": "마이크로소프트",
+      "name_en": "Microsoft",
+      "price": 501.02,
+      "change_pct": -1.24,
+      "series": [
+        483.24,
+        487.31,
+        491.71,
+        496.37,
+        505.06,
+        513.53,
+        507.29,
+        501.02
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "AMZN": {
+      "ticker": "AMZN",
+      "name": "아마존",
+      "name_en": "Amazon",
+      "price": 254.92,
+      "change_pct": -1.87,
+      "series": [
+        258.63,
+        262.07,
+        261.06,
+        260.28,
+        256.26,
+        266.43,
+        259.77,
+        254.92
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "META": {
+      "ticker": "META",
+      "name": "메타",
+      "name_en": "Meta",
+      "price": 578.54,
+      "change_pct": 1.08,
+      "series": [
+        549.9,
+        559.02,
+        570.05,
+        576.14,
+        571.1,
+        578.02,
+        572.34,
+        578.54
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "GOOGL": {
+      "ticker": "GOOGL",
+      "name": "알파벳",
+      "name_en": "Google",
+      "price": 335.02,
+      "change_pct": -1.28,
+      "series": [
+        344.82,
+        348.06,
+        346.96,
+        342.0,
+        340.65,
+        346.59,
+        339.35,
+        335.02
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "WMT": {
+      "ticker": "WMT",
+      "name": "월마트",
+      "name_en": "Walmart",
+      "price": 105.92,
+      "change_pct": 1.0,
+      "series": [
+        103.7,
+        106.49,
+        105.38,
+        104.34,
+        102.63,
+        103.09,
+        104.87,
+        105.92
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "MRNA": {
+      "ticker": "MRNA",
+      "name": "모더나",
+      "name_en": "Moderna",
+      "price": 154.27,
+      "change_pct": 9.93,
+      "series": [
+        145.13,
+        138.89,
+        158.83,
+        149.66,
+        142.77,
+        137.99,
+        140.34,
+        154.27
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "MRK": {
+      "ticker": "MRK",
+      "name": "머크",
+      "name_en": "Merck",
+      "price": 149.86,
+      "change_pct": 1.42,
+      "series": [
+        148.99,
+        152.55,
+        150.66,
+        156.45,
+        153.1,
+        149.54,
+        147.76,
+        149.86
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "COIN": {
+      "ticker": "COIN",
+      "name": "코인베이스",
+      "name_en": "Coinbase",
+      "price": 176.82,
+      "change_pct": -6.01,
+      "series": [
+        186.49,
+        179.48,
+        187.16,
+        181.78,
+        190.72,
+        178.64,
+        188.12,
+        176.82
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "DE": {
+      "ticker": "DE",
+      "name": "디어",
+      "name_en": "Deere & Company",
+      "price": 676.08,
+      "change_pct": 3.23,
+      "series": [
+        620.94,
+        647.47,
+        648.64,
+        630.66,
+        634.54,
+        622.66,
+        654.91,
+        676.08
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "SOXX": {
+      "ticker": "SOXX",
+      "name": "필라델피아 반도체 ETF",
+      "name_en": "iShares Semiconductor ETF",
+      "price": 500.31,
+      "change_pct": -2.1,
+      "series": [
+        520.05,
+        506.18,
+        514.06,
+        515.4,
+        525.43,
+        508.62,
+        511.04,
+        500.31
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    },
+    "CL=F": {
+      "ticker": "CL=F",
+      "name": "WTI 원유",
+      "name_en": "WTI Crude Oil",
+      "price": 91.72,
+      "change_pct": 1.66,
+      "series": [
+        85.01,
+        82.36,
+        82.23,
+        83.53,
+        83.4,
+        85.76,
+        91.72
+      ],
+      "unit": "",
+      "trading_date": "2026-09-01"
+    }
+  },
+  "trading_date": "2026-09-01"
+}

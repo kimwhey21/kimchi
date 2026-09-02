@@ -85,6 +85,12 @@
 - GitHub Actions에는 Anthropic·OpenAI·Unsplash 키를 전달하지 않는다.
   유료 생성 경로(`generate_post.py`, `translate_post.py`)를 자동 실행에
   다시 연결하지 말 것.
+- **조사·집필은 클라우드 루틴이, 시세 수집은 GitHub Actions가 맡는다.** 루틴
+  샌드박스는 네이버·야후·KRX·언론사 RSS가 네트워크 정책에 막혀 있고(2026-09-02
+  실측: CONNECT 403) WebSearch만 열려 있다. 그래서 예약 실행이 시세를
+  `data/price_<market>_<거래일>.json`으로 커밋하고, 루틴이 그 파일을 읽어
+  원고를 쓴다. 루틴 프롬프트에서 `fetch_kr/fetch_us`를 직접 부르게 만들지 말 것 —
+  그렇게 두면 매일 같은 지점에서 멈춘다.
 - 무료 생성 결과는 `output/{market}_{trading_date}_generated_free.json`에
   캐시된다. 자동 검증하지 못한 시장 원인·전망은 추측해서 넣지 않는다.
 

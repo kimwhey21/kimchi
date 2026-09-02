@@ -35,6 +35,8 @@ from src import (
 )
 
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "output"
+# 클라우드 루틴이 읽을 시세 파일을 두는 곳. output/과 달리 저장소에 커밋합니다.
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 CACHE_VERSION = 7
 
 
@@ -176,6 +178,21 @@ def run(
     price_data = _fetch_price_data(fetcher, market)
     trading_date = price_data.get("trading_date")
     date_str = trading_date or dt.date.today().isoformat()
+
+    # 시세를 저장소에 커밋할 수 있는 위치에 남깁니다.
+    #
+    # 왜 필요한가: 조사·집필을 맡는 클라우드 루틴은 샌드박스 네트워크 정책 때문에
+    # 네이버·야후·KRX에 접속하지 못합니다(2026-09-02 실측: CONNECT 403). 그래서
+    # 루틴이 직접 fetch_kr/fetch_us를 부르면 매일 같은 지점에서 멈춥니다.
+    # 반면 GitHub Actions 러너에서는 정상적으로 받아집니다. 그 차이를 메우려고
+    # 여기서 파일로 떨어뜨리고, 워크플로가 커밋해 루틴이 읽어가게 합니다.
+    # (루틴의 WebSearch는 막혀 있지 않으므로 '왜 움직였는지' 조사는 루틴이 합니다.)
+    DATA_DIR.mkdir(exist_ok=True)
+    price_path = DATA_DIR / f"price_{market}_{date_str}.json"
+    price_path.write_text(
+        json.dumps(price_data, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    print(f"완료(시세 파일): {price_path}")
 
     ko_cache = OUTPUT_DIR / f"{market}_{date_str}_generated_free.json"
     en_cache = OUTPUT_DIR / f"kr_{date_str}_generated_free_en.json"

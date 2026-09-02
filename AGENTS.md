@@ -84,6 +84,10 @@
 - 예약 시황의 대표 이미지는 `src/featured_image.py`가 실제 지수·환율 수치로 만드는
   1200×630 데이터 그래픽을 사용한다. 검수할 수 없는 Unsplash 자동 검색을 예약 경로에
   다시 연결하지 않는다. 한국어판과 영어판은 같은 워드프레스 미디어를 공유한다.
+- **조사·집필은 클라우드 루틴이, 시세 수집은 GitHub Actions가 맡는다.** 루틴 샌드박스는
+  네이버·야후·KRX·언론사 RSS가 막혀 있고(2026-09-02 실측: CONNECT 403) WebSearch만
+  열려 있다. 예약 실행이 시세를 `data/price_<market>_<거래일>.json`으로 커밋하고
+  루틴이 그 파일을 읽는다. 루틴이 `fetch_kr/fetch_us`를 직접 부르게 만들지 말 것.
 - 무료 생성 결과는 `output/{market}_{trading_date}_generated_free.json`에 캐시된다.
   시장 원인이나 전망처럼 자동으로 검증할 수 없는 내용은 추측해서 넣지 않는다.
 - `generate_post.py`와 `translate_post.py`는 예전 유료 생성 방식의 참고 코드다.
