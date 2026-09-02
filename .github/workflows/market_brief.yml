@@ -46,12 +46,14 @@ jobs:
           if [ "${{ steps.market.outputs.market }}" = "kr" ]; then
             ARGS="$ARGS --en"
           fi
-          # 예약 실행은 아무도 검수할 수 없으므로 바로 공개합니다. 수동 실행
-          # (workflow_dispatch)은 종전대로 임시저장으로 남겨, 손으로 돌릴 때
-          # 실수로 공개되는 일이 없게 합니다.
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            ARGS="$ARGS --publish-live"
-          fi
+          # 이 경로는 --publish-live를 붙이지 않습니다. src/generate_free.py는
+          # 시세와 RSS 제목을 고정 문장 틀에 끼워 넣는 규칙 기반 코드라,
+          # 결과물이 "검수 전 초안"이지 발행 가능한 원고가 아닙니다.
+          # 2026-09-02에 한 번 예약 실행을 바로 공개해 봤다가 되돌렸습니다:
+          # 같은 숫자를 카드와 문단에 두 번 쓰고, 그날 장세와 무관한 RSS 제목을
+          # 붙이고, 매일 똑같은 마무리 문장이 나갔습니다.
+          # 바로 공개해도 되는 건 조사·집필이 끝난 editorial/*.json 뿐이며
+          # 그건 editorial_publish.yml이 담당합니다.
           python -m src.main $ARGS
         env:
           WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
