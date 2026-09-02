@@ -40,6 +40,7 @@ from src import (  # noqa: E402
     editorial_quality,
     editorial_quality_en,
     featured_image,
+    fetch_images,
     publish_wordpress,
     render_html,
 )
@@ -63,6 +64,64 @@ def _latest_editorial() -> Path | None:
     return files[-1] if files else None
 
 
+def _watchlist_names(price_data: dict) -> list[str]:
+    """그날 워치리스트에 실제로 들어 있는 종목명(한글·영문)을 모읍니다."""
+    names: list[str] = []
+    for entry in (price_data.get("watchlist") or {}).values():
+        for key in ("name", "name_en"):
+            value = (entry.get(key) or "").strip()
+            if value:
+                names.append(value)
+    return names
+
+
+def _concrete_image_query(query: str | None, price_data: dict) -> str | None:
+    """사진을 붙여도 되는 검색어인지 판단합니다. 아니면 None.
+
+    통과 조건은 하나입니다 — **검색어에 그날 워치리스트 종목명이 들어 있을 것.**
+
+    왜 이렇게 좁게 여는가: 이 경로는 사람 검수 없이 바로 공개됩니다. 검색어가
+    추상적이면 엉뚱한 사진이 그대로 나갑니다. 실제로 걸러낸 사례가 있습니다 —
+    "korean won banknote"에 중국 위안화(마오쩌둥) 지폐, "red traffic light"에
+    초록불, "currency exchange booth"에 태국 길거리 환전소, "hourglass on
+    wooden desk"에 아이맥이 놓인 책상. 반면 삼성전자·엔비디아처럼 사진으로
+    확인 가능한 대상은 검색이 비교적 안전합니다. src/main.py의 대표 이미지
+    로직이 watchlist만 대상으로 하고 macro(지수·환율·금리)를 제외하는 것과
+    같은 원칙입니다.
+
+    통과하지 못한 검색어는 조용히 버리지 않고 이유를 출력합니다.
+    """
+    if not query:
+        return None
+    lowered = query.lower()
+    for name in _watchlist_names(price_data):
+        if name.lower() in lowered:
+            return query
+    print(
+        f"[안내] 사진 없이 갑니다 — 검색어 '{query}'에 워치리스트 종목명이 없습니다. "
+        "검수 없이 공개되는 경로라 구체적인 종목명이 든 검색어만 사진을 붙입니다."
+    )
+    return None
+
+
+def _attach_story_images(doc_section: dict | None, price_data: dict) -> dict | None:
+    """인사이트 스토리에 사진을 붙입니다(위 조건을 통과한 것만)."""
+    if not doc_section or not doc_section.get("stories"):
+        return doc_section
+    stories = []
+    used: set[str] = set()
+    for story in doc_section["stories"]:
+        story = dict(story)
+        query = _concrete_image_query(story.get("image_query"), price_data)
+        image = fetch_images.search_image(query, exclude_ids=used) if query else None
+        if image:
+            used.add(image["id"])
+            print(f"[안내] 사진 첨부: '{query}' -> {image['id']} ({image.get('alt', '')[:40]})")
+        story["image"] = image
+        stories.append(story)
+    return {**doc_section, "stories": stories}
+
+
 def publish(path: Path, publish_live: bool = False) -> None:
     doc = json.loads(path.read_text(encoding="utf-8"))
     market = doc["market"]
@@ -78,6 +137,19 @@ def publish(path: Path, publish_live: bool = False) -> None:
     if en:
         editorial_quality_en.validate_generated(en)
         print("영어 편집 기준 검사 통과")
+
+    # 인사이트 스토리 사진. 한국어판에서 찾은 사진을 영어판이 그대로 쓰도록
+    # 순서를 맞춰 재사용합니다(같은 소재에 다른 사진이 붙지 않게, 그리고
+    # Unsplash 호출을 두 배로 늘리지 않게).
+    ko["insight_section"] = _attach_story_images(ko.get("insight_section"), price_data)
+    if en and en.get("insight_section") and ko.get("insight_section"):
+        ko_images = [s.get("image") for s in ko["insight_section"].get("stories", [])]
+        en_stories = []
+        for index, story in enumerate(en["insight_section"].get("stories", [])):
+            story = dict(story)
+            story["image"] = ko_images[index] if index < len(ko_images) else None
+            en_stories.append(story)
+        en["insight_section"] = {**en["insight_section"], "stories": en_stories}
 
     market_label_en = "Korea Market Close" if market == "kr" else "U.S. Market Close"
     html_ko = render_html.render(market, date_str, price_data, ko)

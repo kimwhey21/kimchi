@@ -26,6 +26,63 @@ _FONT_BOLD = (
 )
 
 
+# 그날 성격에 따라 카드 색을 바꿉니다.
+#
+# 왜: 이 카드는 매일 같은 레이아웃이라, 숫자만 바뀌면 목록에서 어제 글과
+# 구분이 안 됩니다. 사진을 자동으로 붙이는 방법은 검수를 못 해 위험하므로
+# (원화 검색에 위안화가 나온 사례), 대신 그날 대표 지수의 등락 폭으로
+# 배경과 강조색을 바꿔 한눈에 구분되게 합니다. 색은 데이터에서 나오므로
+# 잘못된 그림이 붙을 위험이 없습니다.
+#
+# 기준은 대표 지수(macro 첫 항목: 코스피 / 다우존스)의 등락률입니다.
+_TONES = {
+    "plunge": {  # -1.5% 이하
+        "page": "#F3ECEA", "panel": "#3A1D22", "card": "#4E262C",
+        "rule": "#6E3A42", "eyebrow": "#E8A79C", "muted": "#D9C4C0",
+        "label": "SHARP DECLINE",
+    },
+    "down": {    # -1.5% ~ -0.3%
+        "page": "#F2EFEC", "panel": "#2A2330", "card": "#3A3040",
+        "rule": "#544862", "eyebrow": "#C0A8D4", "muted": "#CFC6D6",
+        "label": "LOWER",
+    },
+    "flat": {    # -0.3% ~ +0.3%
+        "page": "#F6F3ED", "panel": "#13283F", "card": "#1C354E",
+        "rule": "#36506A", "eyebrow": "#8FC6E8", "muted": "#D8E2EA",
+        "label": "LITTLE CHANGED",
+    },
+    "up": {      # +0.3% ~ +1.5%
+        "page": "#EEF3EF", "panel": "#152F2A", "card": "#1E4038",
+        "rule": "#325B50", "eyebrow": "#87C9AE", "muted": "#CFDFD8",
+        "label": "HIGHER",
+    },
+    "surge": {   # +1.5% 이상
+        "page": "#EDF2EC", "panel": "#12331F", "card": "#1B462B",
+        "rule": "#2F6440", "eyebrow": "#8ED39B", "muted": "#CCE0CF",
+        "label": "SHARP GAIN",
+    },
+}
+
+
+def _tone(price_data: dict) -> dict:
+    """대표 지수의 등락률로 색 조합을 고릅니다."""
+    macro = list(price_data.get("macro", {}).values())
+    if not macro:
+        return _TONES["flat"]
+    change = macro[0].get("change_pct")
+    if change is None:
+        return _TONES["flat"]
+    if change <= -1.5:
+        return _TONES["plunge"]
+    if change <= -0.3:
+        return _TONES["down"]
+    if change < 0.3:
+        return _TONES["flat"]
+    if change < 1.5:
+        return _TONES["up"]
+    return _TONES["surge"]
+
+
 # 3:2 중앙 크롭에서 살아남는 좌우 안전 영역 (1200×630 기준, 각 변 127px 잘림)
 SAFE_LEFT = 140
 SAFE_RIGHT = 1060
@@ -66,25 +123,29 @@ def _change(entry: dict) -> str:
 
 def create(market: str, date_str: str, price_data: dict, output_path: Path) -> dict:
     """대표 이미지 파일을 만들고 publish_wordpress가 받는 메타데이터를 반환합니다."""
-    canvas = Image.new("RGB", (1200, 630), "#F6F3ED")
+    tone = _tone(price_data)
+    canvas = Image.new("RGB", (1200, 630), tone["page"])
     draw = ImageDraw.Draw(canvas)
 
     # 패널과 모든 글자는 안전 영역 안에만 둡니다 (모듈 상단 설명 참고).
-    draw.rounded_rectangle((SAFE_LEFT, 44, SAFE_RIGHT, 586), radius=30, fill="#13283F")
+    draw.rounded_rectangle((SAFE_LEFT, 44, SAFE_RIGHT, 586), radius=30, fill=tone["panel"])
     draw.text(
-        (_CONTENT_LEFT, 82), "FERMATA  /  MARKET BRIEF", font=_font(24, True), fill="#8FC6E8"
+        (_CONTENT_LEFT, 82),
+        "FERMATA  /  MARKET BRIEF",
+        font=_font(24, True),
+        fill=tone["eyebrow"],
     )
     date_font = _font(23)
     draw.text(
         (_CONTENT_RIGHT - draw.textlength(date_str, font=date_font), 82),
         date_str,
         font=date_font,
-        fill="#D8E2EA",
+        fill=tone["muted"],
     )
 
     market_label = "KOREA MARKET CLOSE" if market == "kr" else "U.S. MARKET CLOSE"
     draw.text((_CONTENT_LEFT, 142), market_label, font=_font(54, True), fill="#FFFFFF")
-    draw.line((_CONTENT_LEFT, 222, _CONTENT_RIGHT, 222), fill="#36506A", width=2)
+    draw.line((_CONTENT_LEFT, 222, _CONTENT_RIGHT, 222), fill=tone["rule"], width=2)
 
     macro = list(price_data.get("macro", {}).values())[:3]
     gap = 20
@@ -92,8 +153,10 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path) -> d
     for index, entry in enumerate(macro):
         left = _CONTENT_LEFT + index * (card_width + gap)
         right = left + card_width
-        draw.rounded_rectangle((left, 258, right, 438), radius=18, fill="#1C354E")
-        draw.text((left + 24, 283), _short_name(entry), font=_font(22, True), fill="#C9D5DF")
+        draw.rounded_rectangle((left, 258, right, 438), radius=18, fill=tone["card"])
+        draw.text(
+            (left + 24, 283), _short_name(entry), font=_font(22, True), fill=tone["muted"]
+        )
         unit = " KRW" if entry.get("unit") == "원" else entry.get("unit", "")
         draw.text(
             (left + 24, 329),
@@ -115,7 +178,7 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path) -> d
             (_CONTENT_LEFT, 487),
             "LARGEST WATCHLIST MOVE",
             font=_font(18, True),
-            fill="#8FC6E8",
+            fill=tone["eyebrow"],
         )
         draw.text(
             (_CONTENT_LEFT, 519),
@@ -123,12 +186,14 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path) -> d
             font=_font(28, True),
             fill="#FFFFFF",
         )
+    # 오른쪽 아래 라벨도 그날 성격을 말해 줍니다("SHARP DECLINE" 등).
     snapshot_font = _font(18, True)
+    snapshot_label = tone["label"]
     draw.text(
-        (_CONTENT_RIGHT - draw.textlength("MARKET SNAPSHOT", font=snapshot_font), 531),
-        "MARKET SNAPSHOT",
+        (_CONTENT_RIGHT - draw.textlength(snapshot_label, font=snapshot_font), 531),
+        snapshot_label,
         font=snapshot_font,
-        fill="#8EA2B4",
+        fill=tone["eyebrow"],
     )
 
     output_path.parent.mkdir(exist_ok=True)

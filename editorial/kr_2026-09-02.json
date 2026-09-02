@@ -375,7 +375,8 @@
               "label": "지수",
               "value": "코스피 -3.99% / 코스닥 -2.10%"
             }
-          ]
+          ],
+          "image_query": "Samsung Electronics building"
         },
         {
           "heading": "원화는 오히려 강해졌습니다",
@@ -398,7 +399,8 @@
               "label": "이날",
               "value": "패턴과 반대 — 원인은 확인되지 않음"
             }
-          ]
+          ],
+          "image_query": "korean won banknote"
         }
       ]
     },
@@ -507,7 +509,8 @@
               "label": "Indices",
               "value": "KOSPI -3.99% / KOSDAQ -2.10%"
             }
-          ]
+          ],
+          "image_query": "Samsung Electronics building"
         },
         {
           "heading": "The won strengthened anyway",
@@ -530,7 +533,8 @@
               "label": "This session",
               "value": "Opposite — cause not established"
             }
-          ]
+          ],
+          "image_query": "korean won banknote"
         }
       ]
     },

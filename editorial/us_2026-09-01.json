@@ -540,7 +540,8 @@
               "label": "10년물 금리",
               "value": "4.79% — 52주 최고치(7월 31일 4.75%) 상회"
             }
-          ]
+          ],
+          "image_query": "Coinbase app on phone"
         },
         {
           "heading": "인하 시점을 세던 시장이 인상을 말하기 시작했습니다",
@@ -567,7 +568,8 @@
               "label": "VIX",
               "value": "16.34 (+9.52%) — 절대 수준은 낮음"
             }
-          ]
+          ],
+          "image_query": "bond market yields"
         }
       ]
     },
