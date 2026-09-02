@@ -24,14 +24,39 @@ _AWKWARD_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
         re.compile(r"(?:증시|시장|지수)(?:를|가|는).*?(?:붉게|파랗게)\s*물들"),
         "색깔 비유 대신 상승·하락 폭을 직접 쓰세요.",
     ),
+    (
+        # "듀레이션이 긴 자산부터 맞았습니다" 같은 표현. 시장을 때리고 맞는
+        # 것으로 그리는 비유는 한국어 경제 기사에서 쓰지 않습니다.
+        re.compile(
+            r"(?:자산|지수|종목|증시|주가|섹터|업종|기술주|반도체)"
+            r"[가-힣]{0,4}(?:부터|까지|들|이|가|은|는|도|만)?\s*맞았"
+        ),
+        "'맞았다' 같은 피격 비유 대신 '낙폭이 컸다', '먼저 하락했다'처럼 직접 쓰세요.",
+    ),
+    (
+        re.compile(r"(?:얻어맞|두들겨\s*맞|강타(?:했|당했)|직격탄을\s*맞)"),
+        "타격 비유 대신 하락 폭과 원인을 직접 쓰세요.",
+    ),
 )
 
 
 def collect_issues(generated: dict) -> list[str]:
-    """제목과 소제목에서 어색한 한국어 표현을 찾아 설명 목록으로 반환합니다."""
+    """제목·소제목과 본문에서 어색한 한국어 표현을 찾아 설명 목록으로 반환합니다.
+
+    전에는 제목과 소제목만 봤습니다. 그런데 금지하려는 표현은 본문에 써도
+    똑같이 어색하고, 실제로 소제목에서 한 번 걸러낸 뒤에도 본문에 남는 일이
+    있었습니다. 그래서 본문 문단과 마무리까지 함께 검사합니다.
+    """
     fields: list[tuple[str, str]] = [("제목", str(generated.get("title", "")))]
     for index, section in enumerate(generated.get("narrative") or [], start=1):
         fields.append((f"본문 소제목 {index}", str(section.get("heading", ""))))
+        fields.append((f"본문 {index}", str(section.get("body", ""))))
+    for key, label in (("outlook", "전망 본문"), ("closing", "마무리 본문")):
+        fields.append((label, str((generated.get(key) or {}).get("body", ""))))
+    for index, story in enumerate(
+        (generated.get("insight_section") or {}).get("stories") or [], start=1
+    ):
+        fields.append((f"인사이트 본문 {index}", str(story.get("body", ""))))
 
     for key, label in (
         ("theme_section", "테마 소제목"),
