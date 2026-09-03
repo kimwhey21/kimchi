@@ -1,0 +1,28 @@
+name: Tests
+
+# 발행은 자동인데 테스트는 손으로 돌리고 있었습니다. 2026-09-03에 로컬에서
+# 돌린 테스트가 라이선스 필터 버그(CC BY-NC가 "cc by"에 걸려 통과)를 잡았는데,
+# 안 돌렸으면 그대로 커밋돼 검수 없이 공개되는 경로에 들어갔을 것입니다.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 테스트
+        # 네트워크·워드프레스 자격증명 없이 도는 테스트만 있습니다.
+        # 새로 추가할 때도 외부 호출은 mock으로 막아 주세요.
+        run: python -m unittest discover -s tests -v

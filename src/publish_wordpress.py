@@ -185,6 +185,59 @@ def _get_or_create_tag_ids(base_url: str, auth: tuple[str, str], names: list[str
     return [i for i in ids if i is not None]
 
 
+def verify_published(post_id: int, expected_title: str, expected_status: str = "publish") -> None:
+    """올린 글이 사이트에 실제로 반영됐는지 되읽어 확인합니다.
+
+    2026-09-03 아침에 워크플로가 초록 체크로 끝났는데 한국장 글은 올라가지
+    않았습니다. 발행 스크립트가 "성공"이라고 출력한 것과 사이트의 실제 상태가
+    달랐고, 그걸 알아챈 것은 사람이 사이트를 열어봤기 때문이었습니다.
+    자동화에서 가장 나쁜 실패 유형이라, 발행 뒤에는 되읽어서 확인합니다.
+
+    확인 실패는 예외로 올립니다 — 워크플로가 빨간 X로 끝나야 알아챕니다.
+    """
+    base_url = os.environ["WORDPRESS_URL"].rstrip("/")
+    auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
+    response = requests.get(
+        f"{base_url}/wp-json/wp/v2/posts/{post_id}",
+        auth=auth,
+        params={"context": "edit"},
+        timeout=TIMEOUT_SECONDS,
+    )
+    if response.status_code >= 400:
+        raise WordPressPublishError(
+            f"발행 확인 실패: 글 {post_id}을 되읽지 못했습니다 "
+            f"(HTTP {response.status_code})."
+        )
+    post = response.json()
+    status = post.get("status")
+    title = (post.get("title") or {}).get("raw") or (post.get("title") or {}).get("rendered", "")
+    content = (post.get("content") or {}).get("raw") or ""
+    problems = []
+    if status != expected_status:
+        problems.append(f"상태가 '{status}'입니다 (기대: '{expected_status}')")
+    if _normalize_title(title) != _normalize_title(expected_title):
+        problems.append(f"제목이 '{title[:40]}...'로 남아 있습니다")
+    if len(content) < 500:
+        problems.append(f"본문이 {len(content)}자뿐입니다")
+    if problems:
+        raise WordPressPublishError(
+            f"발행 확인 실패 (id={post_id}): " + ", ".join(problems) +
+            ". 스크립트는 성공이라고 했지만 사이트에는 반영되지 않았습니다."
+        )
+    print(f"[확인] id={post_id} 사이트 반영 확인 (상태 {status}, 제목 일치)")
+
+
+def _normalize_title(title: str) -> str:
+    """워드프레스가 따옴표·말줄임표를 바꿔 저장하므로 비교 전에 다듬습니다."""
+    replaced = (
+        title.replace("’", "'").replace("‘", "'")
+        .replace("“", '"').replace("”", '"')
+        .replace("…", "...").replace("&#8230;", "...")
+        .replace("&amp;", "&").replace("&#8217;", "'")
+    )
+    return re.sub(r"\s+", " ", replaced).strip()
+
+
 def _find_existing_post_by_slug(
     base_url: str, auth: tuple[str, str], slug: str
 ) -> dict | None:

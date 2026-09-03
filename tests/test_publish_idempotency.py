@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import unittest
+import unittest.mock
 from unittest.mock import patch
 
 from src import publish_wordpress
@@ -106,6 +107,69 @@ class PublishIdempotencyTest(unittest.TestCase):
         self.assertEqual(result["id"], 43)
         update_draft.assert_called_once()
         self.assertEqual(update_draft.call_args.kwargs["status"], "publish")
+
+
+class VerifyPublishedTest(unittest.TestCase):
+    """발행이 조용히 실패하는 것을 막는 확인 단계입니다.
+
+    2026-09-03 아침에 워크플로가 초록 체크로 끝났는데 한국장 글은 올라가지
+    않았습니다. 스크립트의 "성공"과 사이트의 실제 상태가 달랐고, 알아챈 것은
+    사람이 사이트를 열어봤기 때문이었습니다.
+    """
+
+    def setUp(self) -> None:
+        self.env = patch.dict(
+            os.environ,
+            {
+                "WORDPRESS_URL": "https://example.com",
+                "WORDPRESS_USERNAME": "tester",
+                "WORDPRESS_APP_PASSWORD": "app-pass",
+            },
+        )
+        self.env.start()
+        self.addCleanup(self.env.stop)
+
+    def _response(self, payload: dict, status_code: int = 200):
+        response = unittest.mock.Mock()
+        response.status_code = status_code
+        response.json.return_value = payload
+        return response
+
+    def _post(self, **overrides) -> dict:
+        post = {
+            "status": "publish",
+            "title": {"raw": "삼성중공업 8.58%, KB금융 5.20%"},
+            "content": {"raw": "본문" * 400},
+        }
+        post.update(overrides)
+        return post
+
+    def test_passes_when_site_matches(self) -> None:
+        with patch("src.publish_wordpress.requests.get", return_value=self._response(self._post())):
+            publish_wordpress.verify_published(331, "삼성중공업 8.58%, KB금융 5.20%")
+
+    def test_fails_when_old_title_remains(self) -> None:
+        stale = self._post(title={"raw": "예전 제목"})
+        with patch("src.publish_wordpress.requests.get", return_value=self._response(stale)):
+            with self.assertRaises(publish_wordpress.WordPressPublishError):
+                publish_wordpress.verify_published(331, "삼성중공업 8.58%, KB금융 5.20%")
+
+    def test_fails_when_still_draft(self) -> None:
+        draft = self._post(status="draft")
+        with patch("src.publish_wordpress.requests.get", return_value=self._response(draft)):
+            with self.assertRaises(publish_wordpress.WordPressPublishError):
+                publish_wordpress.verify_published(331, "삼성중공업 8.58%, KB금융 5.20%")
+
+    def test_fails_when_post_cannot_be_read_back(self) -> None:
+        with patch("src.publish_wordpress.requests.get", return_value=self._response({}, 404)):
+            with self.assertRaises(publish_wordpress.WordPressPublishError):
+                publish_wordpress.verify_published(331, "제목")
+
+    def test_smart_quotes_do_not_fail_the_check(self) -> None:
+        """워드프레스가 따옴표·말줄임표를 바꿔 저장해도 같은 제목으로 봅니다."""
+        saved = self._post(title={"raw": "델이 15.81% 올랐습니다… ‘AI 서버’"})
+        with patch("src.publish_wordpress.requests.get", return_value=self._response(saved)):
+            publish_wordpress.verify_published(325, "델이 15.81% 올랐습니다... 'AI 서버'")
 
 
 if __name__ == "__main__":

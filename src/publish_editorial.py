@@ -38,6 +38,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src import (  # noqa: E402
+    editorial_facts,
     editorial_quality,
     editorial_quality_en,
     featured_image,
@@ -182,9 +183,15 @@ def publish(path: Path, publish_live: bool = False) -> None:
     # 이 검사가 유일한 안전장치라 영어판도 같이 검사합니다(main.py와 동일).
     editorial_quality.validate_generated(ko)
     print("한국어 편집 기준 검사 통과")
+    # 형식 검사와 별개로 원고의 숫자를 시세와 대조합니다. 검수 없이 공개되는
+    # 경로라 "숫자는 시세에서만 가져온다"를 사람의 성실성에만 맡기지 않습니다.
+    editorial_facts.validate(ko, price_data, lang="ko")
+    print("시세 대조 검사 통과 (한국어)")
     if en:
         editorial_quality_en.validate_generated(en)
         print("영어 편집 기준 검사 통과")
+        editorial_facts.validate(en, price_data, lang="en")
+        print("시세 대조 검사 통과 (영어)")
 
     # 인사이트 스토리 사진. 한국어판에서 찾은 사진을 영어판이 그대로 쓰도록
     # 순서를 맞춰 재사용합니다(같은 소재에 다른 사진이 붙지 않게, 그리고
@@ -234,6 +241,8 @@ def publish(path: Path, publish_live: bool = False) -> None:
         status=status,
     )
     print(f"한국어 {status}: id={ko_result.get('id')} {ko_result.get('link','')}")
+    if publish_live:
+        publish_wordpress.verify_published(ko_result["id"], ko["title"])
 
     if en:
         html_en = render_html.render(
@@ -255,6 +264,8 @@ def publish(path: Path, publish_live: bool = False) -> None:
             status=status,
         )
         print(f"영어 {status}: id={en_result.get('id')} {en_result.get('link','')}")
+        if publish_live:
+            publish_wordpress.verify_published(en_result["id"], en["title"])
 
     print(
         f"상태: {status}"
