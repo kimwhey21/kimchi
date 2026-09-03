@@ -91,6 +91,26 @@ def _names_by_length(price_data: dict, lang: str) -> list[tuple[str, dict]]:
     return sorted((p for p in pairs if p[0]), key=lambda p: len(p[0]), reverse=True)
 
 
+def _same_sentence_tail(text: str, end: int, names: list[tuple[str, dict]]) -> str:
+    """종목명 뒤에서, **같은 문장 안에 그 종목만 있는** 구간을 돌려줍니다.
+
+    창을 글자 수로만 자르면 다음 문장의 숫자를 끌어옵니다. 실제로 이런 문장에서
+    걸렸습니다 — "삼성전기가 3.71% 내렸고 한미반도체와 SK하이닉스, 삼성전자가
+    뒤를 이었다. 코스닥 장비주도 심텍 4.78% ... 밀렸다." 뒤 문장의 4.78%가
+    앞 문장 종목들의 등락률로 읽혔습니다. 문장 경계와 다음 종목명에서 끊습니다.
+    """
+    tail = text[end : end + _WINDOW_AFTER]
+    for boundary in ("다.", ". ", "\n"):
+        cut = tail.find(boundary)
+        if cut >= 0:
+            tail = tail[:cut]
+    for name, _ in names:
+        cut = tail.find(name)
+        if cut >= 0:
+            tail = tail[:cut]
+    return tail
+
+
 def _quoted_moves(text: str, names: list[tuple[str, dict]]) -> list[tuple[dict, float]]:
     """글에서 (종목, 원고가 적은 등락률) 쌍을 뽑습니다."""
     found: list[tuple[dict, float]] = []
@@ -111,7 +131,7 @@ def _quoted_moves(text: str, names: list[tuple[str, dict]]) -> list[tuple[dict, 
                 continue
             if not _MOVE_WORDS.search(window) and "(" not in window:
                 continue
-            for match in _PERCENT.finditer(text[end : end + _WINDOW_AFTER]):
+            for match in _PERCENT.finditer(_same_sentence_tail(text, end, names)):
                 found.append((entry, float(match.group(1))))
                 break  # 이름 뒤 첫 번째 비율만 봅니다
     return found

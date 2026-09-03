@@ -69,6 +69,19 @@ class QuotedNumberTest(unittest.TestCase):
         doc = _doc("삼성중공업이 8.58% 올랐습니다. 에코프로비엠은 0.19% 오르고 에코프로는 0.37% 내렸습니다.")
         self.assertEqual(collect_issues(doc, PRICE_DATA), [])
 
+    def test_does_not_borrow_a_number_from_the_next_sentence(self) -> None:
+        """이름 뒤 창이 다음 문장까지 넘어가면 남의 숫자를 가져옵니다."""
+        doc = _doc(
+            "삼성중공업이 8.58% 올랐다. 에코프로와 삼성전자가 뒤를 이었다. "
+            "코스닥 장비주도 심텍 4.78% 하락으로 밀렸다."
+        )
+        self.assertEqual(collect_issues(doc, PRICE_DATA), [])
+
+    def test_does_not_borrow_a_number_from_the_next_stock(self) -> None:
+        doc = _doc("삼성중공업이 8.58% 올랐고 삼성전자와 에코프로비엠은 0.19% 상승했다.")
+        # '삼성전자' 뒤 숫자는 '에코프로비엠'의 것이므로 삼성전자에 붙이지 않습니다.
+        self.assertEqual(collect_issues(doc, PRICE_DATA), [])
+
     def test_english_names_are_checked(self) -> None:
         doc = {
             "title": "Samsung Heavy Industries rose 8.58%",
