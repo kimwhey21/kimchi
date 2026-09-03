@@ -1,0 +1,292 @@
+{
+  "macro": {
+    "KS11": {
+      "ticker": "KS11",
+      "name": "코스피",
+      "name_en": "KOSPI",
+      "price": 6579.48,
+      "change_pct": 0.26,
+      "series": [
+        6742.74,
+        6808.21,
+        6912.37,
+        6788.88,
+        6820.02,
+        6835.8,
+        6562.72,
+        6579.48
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "data_source": "Naver Finance realtime index"
+    },
+    "KQ11": {
+      "ticker": "KQ11",
+      "name": "코스닥",
+      "name_en": "KOSDAQ",
+      "price": 790.21,
+      "change_pct": -1.71,
+      "series": [
+        827.15,
+        826.87,
+        837.65,
+        838.41,
+        834.29,
+        821.25,
+        803.98,
+        790.21
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "data_source": "Naver Finance realtime index"
+    },
+    "USD/KRW": {
+      "ticker": "USD/KRW",
+      "name": "원/달러 환율",
+      "name_en": "USD/KRW",
+      "price": 1357.0,
+      "change_pct": -0.24,
+      "series": [
+        1383.5,
+        1386.0,
+        1382.0,
+        1381.0,
+        1369.5,
+        1375.5,
+        1360.3,
+        1357.0
+      ],
+      "unit": "원",
+      "trading_date": "2026-09-03",
+      "quote_type": "reference_rate",
+      "as_of_label": "16:26 하나은행 고시",
+      "as_of_label_en": "16:26 Hana Bank",
+      "reference_label": "2026-09-03 16:26 하나은행 고시",
+      "reference_label_en": "2026-09-03 16:26 Hana Bank notice",
+      "data_source": "Naver Finance / Hana Bank notice rate"
+    }
+  },
+  "watchlist": {
+    "005930": {
+      "ticker": "005930",
+      "name": "삼성전자",
+      "name_en": "Samsung Electronics",
+      "price": 250000.0,
+      "change_pct": -0.2,
+      "series": [
+        257000.0,
+        261500.0,
+        266000.0,
+        257000.0,
+        260000.0,
+        261000.0,
+        250500.0,
+        250000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": -1321536,
+      "institution_net": -2977902,
+      "foreign_ratio": 46.69
+    },
+    "000660": {
+      "ticker": "000660",
+      "name": "SK하이닉스",
+      "name_en": "SK Hynix",
+      "price": 1596000.0,
+      "change_pct": -1.05,
+      "series": [
+        1678000.0,
+        1688000.0,
+        1730000.0,
+        1653000.0,
+        1674000.0,
+        1693000.0,
+        1613000.0,
+        1596000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": -651507,
+      "institution_net": -295219,
+      "foreign_ratio": 50.47
+    },
+    "035420": {
+      "ticker": "035420",
+      "name": "네이버",
+      "name_en": "Naver",
+      "price": 207500.0,
+      "change_pct": -0.72,
+      "series": [
+        220500.0,
+        220000.0,
+        216500.0,
+        220500.0,
+        217000.0,
+        215000.0,
+        209000.0,
+        207500.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": 76335,
+      "institution_net": -155161,
+      "foreign_ratio": 36.02
+    },
+    "035720": {
+      "ticker": "035720",
+      "name": "카카오",
+      "name_en": "Kakao",
+      "price": 35350.0,
+      "change_pct": 0.71,
+      "series": [
+        36050.0,
+        36350.0,
+        36000.0,
+        36850.0,
+        36550.0,
+        36500.0,
+        35100.0,
+        35350.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": -380763,
+      "institution_net": -27876,
+      "foreign_ratio": 29.17
+    },
+    "373220": {
+      "ticker": "373220",
+      "name": "LG에너지솔루션",
+      "name_en": "LG Energy Solution",
+      "price": 365500.0,
+      "change_pct": 5.18,
+      "series": [
+        349500.0,
+        351000.0,
+        370500.0,
+        370000.0,
+        378000.0,
+        367000.0,
+        347500.0,
+        365500.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": 54939,
+      "institution_net": -42466,
+      "foreign_ratio": 5.54
+    },
+    "207940": {
+      "ticker": "207940",
+      "name": "삼성바이오로직스",
+      "name_en": "Samsung Biologics",
+      "price": 1477000.0,
+      "change_pct": -1.6,
+      "series": [
+        1585000.0,
+        1599000.0,
+        1594000.0,
+        1486000.0,
+        1518000.0,
+        1520000.0,
+        1501000.0,
+        1477000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": 3956,
+      "institution_net": -4289,
+      "foreign_ratio": 13.07
+    },
+    "086520": {
+      "ticker": "086520",
+      "name": "에코프로",
+      "name_en": "Ecopro",
+      "price": 81700.0,
+      "change_pct": -0.37,
+      "series": [
+        85200.0,
+        87000.0,
+        92000.0,
+        90200.0,
+        91300.0,
+        87200.0,
+        82000.0,
+        81700.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": -83199,
+      "institution_net": -102054,
+      "foreign_ratio": 19.08
+    },
+    "247540": {
+      "ticker": "247540",
+      "name": "에코프로비엠",
+      "name_en": "Ecopro BM",
+      "price": 106500.0,
+      "change_pct": 0.19,
+      "series": [
+        110729.0,
+        109744.0,
+        116142.0,
+        116339.0,
+        118898.0,
+        114370.0,
+        106300.0,
+        106500.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": 14709,
+      "institution_net": -177826,
+      "foreign_ratio": 14.7
+    },
+    "196170": {
+      "ticker": "196170",
+      "name": "알테오젠",
+      "name_en": "Alteogen",
+      "price": 283000.0,
+      "change_pct": -5.19,
+      "series": [
+        305500.0,
+        311500.0,
+        311500.0,
+        320000.0,
+        307500.0,
+        301000.0,
+        298500.0,
+        283000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": -316139,
+      "institution_net": -116942,
+      "foreign_ratio": 14.96
+    },
+    "277810": {
+      "ticker": "277810",
+      "name": "레인보우로보틱스",
+      "name_en": "Rainbow Robotics",
+      "price": 436500.0,
+      "change_pct": 0.0,
+      "series": [
+        454500.0,
+        450500.0,
+        471000.0,
+        456000.0,
+        460500.0,
+        449500.0,
+        436500.0,
+        436500.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "foreign_net": 13848,
+      "institution_net": -11188,
+      "foreign_ratio": 5.53
+    }
+  },
+  "trading_date": "2026-09-03"
+}
