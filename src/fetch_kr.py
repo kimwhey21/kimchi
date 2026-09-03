@@ -20,7 +20,7 @@ import FinanceDataReader as fdr
 import requests
 import yaml
 
-from src import fetch_foreign_flows
+from src import fetch_foreign_flows, fetch_movers
 
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "watchlist_kr.yaml"
 
@@ -214,10 +214,74 @@ def fetch_all() -> dict:
                 entry, ticker, index_quotes.get(_NAVER_INDEX_CODES[ticker])
             )
         macro[ticker] = entry
-    watchlist = {row["ticker"]: _fetch_one(**row) for row in config["watchlist"]}
-    fetch_foreign_flows.attach_foreign_flows(watchlist)
+    watchlist = {
+        row["ticker"]: {**_fetch_one(**row), "source": "core"}
+        for row in config["watchlist"]
+    }
     trading_date = next(iter(macro.values()))["trading_date"]
+    watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
+    fetch_foreign_flows.attach_foreign_flows(watchlist)
     return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date}
+
+
+def _fetch_dynamic_tier(
+    config: dict, core: dict[str, dict], trading_date: str
+) -> dict[str, dict]:
+    """그날 거래대금 상위 종목을 코어 워치리스트 뒤에 붙입니다.
+
+    코어와 달리 여기서는 종목 하나가 실패해도 그 종목만 빼고 진행합니다.
+    이름도 모르는 종목 하나 때문에 그날 발행 전체가 멈추면 안 되기 때문입니다.
+    같은 이유로 기준일이 코어와 다른 종목(거래정지·데이터 지연 등)도 버립니다 —
+    data_quality.validate_trading_dates가 기준일이 섞인 걸 발행 중단 사유로
+    보기 때문에, 여기서 걸러야 코어만으로라도 글이 나갑니다.
+    """
+    settings = config.get("dynamic") or {}
+    if not settings.get("enabled"):
+        return {}
+
+    name_en_map = config.get("name_en_map") or {}
+    try:
+        movers = fetch_movers.fetch_top_turnover(
+            exclude_tickers=set(core),
+            count=settings.get("count", 6),
+            universe_size=settings.get("universe_size", 100),
+            min_market_cap=settings.get("min_market_cap", 1_000_000_000_000),
+            markets=tuple(settings.get("markets") or ("KOSPI", "KOSDAQ")),
+        )
+    except Exception as exc:
+        print(f"[경고] 거래대금 상위 종목을 가져오지 못해 코어 워치리스트로만 진행합니다: {exc}")
+        return {}
+
+    added: dict[str, dict] = {}
+    for mover in movers:
+        ticker, name = mover["ticker"], mover["name"]
+        name_en = name_en_map.get(name)
+        if not name_en:
+            print(
+                f"[안내] '{name}'의 영어 표기가 config/watchlist_kr.yaml의 "
+                "name_en_map에 없어 영어판에도 한글 이름이 나갑니다."
+            )
+        try:
+            entry = _fetch_one(ticker=ticker, name=name, name_en=name_en or name)
+        except Exception as exc:
+            print(f"[안내] 동적 편입 제외 — {name}({ticker}) 시세 조회 실패: {exc}")
+            continue
+        if entry.get("trading_date") != trading_date:
+            print(
+                f"[안내] 동적 편입 제외 — {name}({ticker}) 기준일 {entry.get('trading_date')}"
+                f"이 코어({trading_date})와 다릅니다."
+            )
+            continue
+        added[ticker] = {
+            **entry,
+            "source": "dynamic",
+            "trading_value": mover["trading_value"],
+        }
+
+    if added:
+        names = ", ".join(entry["name"] for entry in added.values())
+        print(f"[안내] 그날 거래대금 상위로 편입: {names}")
+    return added
 
 
 if __name__ == "__main__":

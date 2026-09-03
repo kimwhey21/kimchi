@@ -121,6 +121,42 @@ def _change(entry: dict) -> str:
     return f"{entry['change_pct']:+.2f}%"
 
 
+def _is_renderable(entry: dict) -> bool:
+    """이 이미지의 폰트로 이름이 그려지는지 — 즉 영문 표기가 있는지 봅니다.
+
+    대표 이미지는 영어로만 짜여 있습니다(제목 "KOREA MARKET CLOSE", 라벨 KOSPI,
+    Helvetica 계열 폰트). 그래서 한글 이름을 그리면 글자가 아니라 두부 상자
+    (□□□□)가 찍힙니다. 실제로 name_en이 없는 편입 종목을 대문에 걸었다가
+    "□□□□□ +8.58%"가 나온 것을 스크린샷으로 확인하고 이 검사를 넣었습니다.
+
+    코어 종목은 config에 name_en이 모두 있고, 그날 편입 종목은 name_en_map에
+    있을 때만 통과합니다.
+    """
+    name = _name(entry)
+    return bool(name) and all(ord(char) < 0x2E80 for char in name)
+
+
+def lead_watchlist_entry(price_data: dict) -> dict | None:
+    """대문에 이름을 걸 종목 — 그날 절대 등락 폭이 가장 큰 워치리스트 종목입니다.
+
+    그날 거래대금으로 자동 편입된 종목(source="dynamic")도 후보에 넣습니다.
+    한 번 코어만 고르게 해봤다가 되돌렸습니다. 이미지에 걸리는 라벨이
+    "LARGEST WATCHLIST MOVE"인데, 워치리스트에 삼성중공업(+8.58%)이 들어 있는
+    상태에서 KB금융(+5.20%)을 걸면 라벨이 사실과 어긋나기 때문입니다.
+
+    사진(publish_editorial._concrete_image_query)과 달리 여기서는 편입 종목을
+    막을 이유가 없습니다. 대표 이미지는 데이터에서 텍스트를 그리는 것이라
+    "엉뚱한 그림이 붙는" 위험 자체가 없습니다. 다만 영문 표기가 없는 종목은
+    글자가 깨지므로 건너뛰고 다음 순위를 봅니다.
+    """
+    ranked = sorted(
+        price_data.get("watchlist", {}).values(),
+        key=lambda entry: abs(entry["change_pct"]),
+        reverse=True,
+    )
+    return next((entry for entry in ranked if _is_renderable(entry)), None)
+
+
 def create(market: str, date_str: str, price_data: dict, output_path: Path) -> dict:
     """대표 이미지 파일을 만들고 publish_wordpress가 받는 메타데이터를 반환합니다."""
     tone = _tone(price_data)
@@ -167,13 +203,8 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path) -> d
         change_color = "#F08A7A" if entry["change_pct"] >= 0 else "#82B6F2"
         draw.text((left + 24, 384), _change(entry), font=_font(27, True), fill=change_color)
 
-    ranked = sorted(
-        price_data.get("watchlist", {}).values(),
-        key=lambda entry: abs(entry["change_pct"]),
-        reverse=True,
-    )
-    if ranked:
-        lead = ranked[0]
+    lead = lead_watchlist_entry(price_data)
+    if lead:
         draw.text(
             (_CONTENT_LEFT, 487),
             "LARGEST WATCHLIST MOVE",

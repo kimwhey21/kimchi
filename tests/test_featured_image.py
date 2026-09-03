@@ -6,7 +6,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from src.featured_image import create
+from src.featured_image import create, lead_watchlist_entry
 
 
 class FeaturedImageTest(unittest.TestCase):
@@ -48,6 +48,61 @@ class FeaturedImageTest(unittest.TestCase):
                 self.assertEqual(image.size, (1200, 630))
                 self.assertEqual(image.format, "PNG")
             self.assertEqual(metadata["local_path"], str(output))
+
+    def test_largest_move_includes_dynamic_tier(self) -> None:
+        """대문에 거는 종목은 편입 종목까지 포함해 그날 등락 폭 1위입니다.
+
+        라벨이 "LARGEST WATCHLIST MOVE"이므로 워치리스트에 더 크게 움직인
+        종목이 있는데 다른 종목을 걸면 라벨이 사실과 어긋납니다.
+        """
+        price_data = {
+            "macro": {
+                "KS11": {"name": "코스피", "name_en": "KOSPI", "price": 6579.48, "change_pct": 0.26},
+            },
+            "watchlist": {
+                "105560": {
+                    "name": "KB금융",
+                    "name_en": "KB Financial Group",
+                    "change_pct": 5.2,
+                    "source": "core",
+                },
+                "010140": {
+                    "name": "삼성중공업",
+                    "name_en": "Samsung Heavy Industries",
+                    "change_pct": 8.58,
+                    "source": "dynamic",
+                },
+            },
+        }
+        lead = lead_watchlist_entry(price_data)
+        self.assertEqual(lead["name"], "삼성중공업")
+        self.assertNotEqual(lead["name_en"], lead["name"])
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "featured.png"
+            create("kr", "2026-09-03", price_data, output)
+            self.assertTrue(output.exists())
+
+    def test_skips_stock_without_english_name(self) -> None:
+        """영문 표기가 없으면 대문에 두부 상자(□□□□)가 찍힙니다 — 건너뜁니다."""
+        price_data = {
+            "macro": {},
+            "watchlist": {
+                "105560": {
+                    "name": "KB금융",
+                    "name_en": "KB Financial Group",
+                    "change_pct": 5.2,
+                    "source": "core",
+                },
+                "010140": {
+                    # name_en_map에 없어 한글 이름이 그대로 들어온 편입 종목
+                    "name": "삼성중공업",
+                    "name_en": "삼성중공업",
+                    "change_pct": 8.58,
+                    "source": "dynamic",
+                },
+            },
+        }
+        self.assertEqual(lead_watchlist_entry(price_data)["name"], "KB금융")
 
 
 if __name__ == "__main__":

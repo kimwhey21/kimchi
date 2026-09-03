@@ -18,6 +18,9 @@ from jinja2 import Environment, FileSystemLoader
 
 TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates"
 
+# 외국인 순매매 표에 남길 줄 수 (순매수 상위 N + 순매도 상위 N).
+_FOREIGN_FLOW_ROWS = 5
+
 # 저작권 걱정 없는 원본 라인 아이콘. 32x32 뷰박스, currentColor 사용.
 ICONS: dict[str, str] = {
     "server": (
@@ -113,6 +116,10 @@ def _build_foreign_flow_table(price_data: dict, lang: str) -> list[dict] | None:
     fetch_kr.py가 watchlist 종목마다 붙여준 foreign_net(외국인 순매매량,
     양수=순매수)을 그대로 가져와 정렬만 합니다 — 숫자는 Claude가 만들지
     않고 여기서 그대로 옮기기만 합니다 (다른 카드들과 동일한 원칙).
+
+    워치리스트 전체를 나열하지 않고 **순매수 상위 5 + 순매도 상위 5**만
+    남깁니다. 코어 21종목에 그날 편입 종목까지 붙으면 표가 30줄 가까이 되어,
+    읽는 사람이 "오늘 외국인이 어디로 갔나"를 한눈에 볼 수 없게 됩니다.
     """
     rows = [
         {
@@ -128,7 +135,9 @@ def _build_foreign_flow_table(price_data: dict, lang: str) -> list[dict] | None:
     if not rows:
         return None
     rows.sort(key=lambda r: r["foreign_net"], reverse=True)
-    return rows
+    if len(rows) <= _FOREIGN_FLOW_ROWS * 2:
+        return rows
+    return rows[:_FOREIGN_FLOW_ROWS] + rows[-_FOREIGN_FLOW_ROWS:]
 
 
 def _prep_insight_section(insight_section: dict | None, lang: str = "ko") -> dict | None:

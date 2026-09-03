@@ -113,7 +113,7 @@ def _foreign_flow_summary(price_data: dict) -> str | None:
         f"Foreign investors were net buyers in {bought} tracked stocks and net sellers in {sold}. "
         f"The largest net purchase was {_name(top_buy)} at {top_buy['foreign_net']:+,} shares; "
         f"the largest net sale was {_name(top_sell)} at {top_sell['foreign_net']:+,} shares. "
-        "The table above includes the full watchlist and foreign ownership ratios."
+        "The table above lists the largest net purchases and sales with foreign ownership ratios."
     )
 
 

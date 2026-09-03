@@ -6,16 +6,177 @@ macro:
   - { ticker: "KQ11",    name: "코스닥", name_en: "KOSDAQ" }
   - { ticker: "USD/KRW", name: "원/달러 환율", name_en: "USD/KRW", unit: "원" }
 
-# 무료 생성기가 이 중 절대 등락 폭이 큰 종목을 골라 카드로 보여줍니다.
-# name_en은 같은 시세에서 직접 작성하는 영어판 카드와 본문에 쓰입니다.
+# ── 코어 워치리스트 ────────────────────────────────────────────────────
+# 매일 무조건 수집하는 고정 목록입니다. 기준은 "그날 어느 업종이 움직이든
+# 최소한 섹터 대표 한 종목은 데이터로 잡힌다"입니다.
+#
+# 전에는 10개였고 반도체 2 / 2차전지 3 / 바이오 2 / 플랫폼 2 / 로봇 1로
+# 쏠려 있었습니다. 그래서 2026-09-03처럼 보험·은행이 주도한 날에는 KB금융
+# (+5.20%)·신한지주(+3.62%)를 카드로도, 외국인 수급으로도, 대표 이미지로도
+# 담지 못하고 본문 문장으로만 인용했습니다. 그 구멍을 메우려고 섹터별로
+# 다시 짰습니다. 종목 하나 추가 비용은 시세 0.19초 + 외국인 수급 0.13초라
+# 개수 자체는 제약이 아닙니다.
+#
+# 코어만 사진(publish_editorial._concrete_image_query)과 대표 이미지의
+# LARGEST MOVE 대상이 됩니다 — 아래 dynamic으로 들어온 종목은 제외됩니다.
 watchlist:
+  # 반도체
   - { ticker: "005930", name: "삼성전자", name_en: "Samsung Electronics" }
   - { ticker: "000660", name: "SK하이닉스", name_en: "SK Hynix" }
+  - { ticker: "009150", name: "삼성전기", name_en: "Samsung Electro-Mechanics" }
+  - { ticker: "042700", name: "한미반도체", name_en: "Hanmi Semiconductor" }
+  # 금융
+  - { ticker: "105560", name: "KB금융", name_en: "KB Financial Group" }
+  - { ticker: "055550", name: "신한지주", name_en: "Shinhan Financial Group" }
+  - { ticker: "032830", name: "삼성생명", name_en: "Samsung Life Insurance" }
+  # 자동차
+  - { ticker: "005380", name: "현대차", name_en: "Hyundai Motor" }
+  - { ticker: "000270", name: "기아", name_en: "Kia" }
+  # 조선·방산·원전
+  - { ticker: "329180", name: "HD현대중공업", name_en: "HD Hyundai Heavy Industries" }
+  - { ticker: "012450", name: "한화에어로스페이스", name_en: "Hanwha Aerospace" }
+  - { ticker: "034020", name: "두산에너빌리티", name_en: "Doosan Enerbility" }
+  # 2차전지 (에코프로는 에코프로비엠과 테마가 겹쳐 코어에서 뺐습니다.
+  # 그날 크게 움직이면 아래 dynamic으로 자동 편입됩니다.)
+  - { ticker: "373220", name: "LG에너지솔루션", name_en: "LG Energy Solution" }
+  - { ticker: "247540", name: "에코프로비엠", name_en: "Ecopro BM" }
+  # 바이오
+  - { ticker: "207940", name: "삼성바이오로직스", name_en: "Samsung Biologics" }
+  - { ticker: "196170", name: "알테오젠", name_en: "Alteogen" }
+  - { ticker: "068270", name: "셀트리온", name_en: "Celltrion" }
+  # 플랫폼·소비
   - { ticker: "035420", name: "네이버", name_en: "Naver" }
   - { ticker: "035720", name: "카카오", name_en: "Kakao" }
-  - { ticker: "373220", name: "LG에너지솔루션", name_en: "LG Energy Solution" }
-  - { ticker: "207940", name: "삼성바이오로직스", name_en: "Samsung Biologics" }
-  - { ticker: "086520", name: "에코프로", name_en: "Ecopro" }
-  - { ticker: "247540", name: "에코프로비엠", name_en: "Ecopro BM" }
-  - { ticker: "196170", name: "알테오젠", name_en: "Alteogen" }
+  - { ticker: "278470", name: "에이피알", name_en: "APR" }
+  # 로봇
   - { ticker: "277810", name: "레인보우로보틱스", name_en: "Rainbow Robotics" }
+
+# ── 동적 티어: 그날 주도주 자동 편입 ──────────────────────────────────
+# 코어를 아무리 넓혀도 "목록 밖에서 터진 날"은 남습니다. 그래서 그날 실제로
+# 돈이 몰린 종목을 자동으로 붙입니다 (fetch_movers.py).
+#
+# 기준은 **거래대금**입니다. 등락률 상위로 뽑으면 안 됩니다 — 2026-09-03에
+# 실측했더니 등락률 상위는 써니전자 +11.80%, 레버리지 ETN 같은 것들이었고,
+# 거래대금 상위는 삼성전기·KB금융·두산에너빌리티·현대차처럼 그날 글이 실제로
+# 다뤄야 했던 종목이 나왔습니다.
+#
+# 실패해도 코어만으로 글이 나갑니다 (fetch_movers가 빈 목록을 돌려줌).
+dynamic:
+  enabled: true
+  count: 6                          # 코어에 없는 상위 몇 개를 붙일지
+  universe_size: 100                # 시장별 시가총액 상위 N개 안에서만 고름
+  min_market_cap: 1000000000000     # 시가총액 하한 (1조 원)
+  markets: ["KOSPI", "KOSDAQ"]
+
+# 동적 티어로 들어온 종목의 영어 표기입니다. 코어는 위에 name_en이 있고,
+# 동적 편입 종목은 시세 API가 한글 이름만 주기 때문에 여기서 이름을 찾습니다.
+# 없는 종목은 한글 이름을 그대로 써서 영어판에도 한글이 노출되므로,
+# 자주 올라오는 이름이 보이면 여기에 추가하세요 (로그에 안내가 출력됩니다).
+name_en_map:
+  SK스퀘어: SK Square
+  삼성SDI: Samsung SDI
+  LG화학: LG Chem
+  POSCO홀딩스: POSCO Holdings
+  현대모비스: Hyundai Mobis
+  하나금융지주: Hana Financial Group
+  우리금융지주: Woori Financial Group
+  메리츠금융지주: Meritz Financial Group
+  삼성화재: Samsung Fire & Marine Insurance
+  한화오션: Hanwha Ocean
+  HD한국조선해양: HD Korea Shipbuilding & Offshore Engineering
+  HD현대일렉트릭: HD Hyundai Electric
+  현대로템: Hyundai Rotem
+  LIG넥스원: LIG Nex1
+  한국항공우주: Korea Aerospace Industries
+  효성중공업: Hyosung Heavy Industries
+  두산: Doosan
+  두산밥캣: Doosan Bobcat
+  에코프로: Ecopro
+  포스코퓨처엠: POSCO Future M
+  삼성물산: Samsung C&T
+  SK이노베이션: SK Innovation
+  SK: SK Inc.
+  LG: LG Corp.
+  삼성에스디에스: Samsung SDS
+  크래프톤: Krafton
+  넷마블: Netmarble
+  엔씨소프트: NCSoft
+  카카오뱅크: KakaoBank
+  하이브: HYBE
+  아모레퍼시픽: Amorepacific
+  KT: KT
+  SK텔레콤: SK Telecom
+  LG유플러스: LG Uplus
+  한국전력: KEPCO
+  고려아연: Korea Zinc
+  HMM: HMM
+  대한항공: Korean Air
+  유한양행: Yuhan
+  한미약품: Hanmi Pharmaceutical
+  SK바이오팜: SK Biopharmaceuticals
+  리가켐바이오: LigaChem Biosciences
+  펩트론: Peptron
+  클래시스: Classys
+  파마리서치: Pharma Research
+  HLB: HLB
+  실리콘투: Silicon2
+  솔브레인: Soulbrain
+  주성엔지니어링: Jusung Engineering
+  원익IPS: Wonik IPS
+  심텍: Simmtech
+  이오테크닉스: EO Technics
+  리노공업: Leeno Industrial
+  테크윙: Techwing
+  피에스케이홀딩스: PSK Holdings
+  LG전자: LG Electronics
+  LG이노텍: LG Innotek
+  LG씨엔에스: LG CNS
+  LS: LS Corp.
+  LS ELECTRIC: LS Electric
+  삼성중공업: Samsung Heavy Industries
+  삼성증권: Samsung Securities
+  삼성E&A: Samsung E&A
+  현대건설: Hyundai E&C
+  현대글로비스: Hyundai Glovis
+  현대오토에버: Hyundai AutoEver
+  한화: Hanwha Corporation
+  한화시스템: Hanwha Systems
+  한화솔루션: Hanwha Solutions
+  LIG디펜스앤에어로스페이스: LIG Defense & Aerospace
+  KT&G: KT&G
+  기업은행: Industrial Bank of Korea
+  미래에셋증권: Mirae Asset Securities
+  NH투자증권: NH Investment & Securities
+  한국금융지주: Korea Investment Holdings
+  키움증권: Kiwoom Securities
+  DB손해보험: DB Insurance
+  HD현대: HD Hyundai
+  HD현대마린솔루션: HD Hyundai Marine Solution
+  S-Oil: S-Oil
+  GS: GS Holdings
+  포스코인터내셔널: POSCO International
+  한진칼: Hanjin KAL
+  한국타이어앤테크놀로지: Hankook Tire & Technology
+  대우건설: Daewoo E&C
+  코웨이: Coway
+  삼양식품: Samyang Foods
+  이수페타시스: Isu Petasys
+  HPSP: HPSP
+  동진쎄미켐: Dongjin Semichem
+  덕산네오룩스: Duksan Neolux
+  하나머티리얼즈: Hana Materials
+  코미코: Komico
+  고영: Koh Young Technology
+  파크시스템스: Park Systems
+  씨젠: Seegene
+  휴젤: Hugel
+  HK이노엔: HK inno.N
+  셀트리온제약: Celltrion Pharm
+  에스티팜: ST Pharm
+  동국제약: Dongkook Pharmaceutical
+  인바디: InBody
+  펄어비스: Pearl Abyss
+  카카오게임즈: Kakao Games
+  에스엠: SM Entertainment
+  JYP Ent.: JYP Entertainment
+  와이지엔터테인먼트: YG Entertainment
