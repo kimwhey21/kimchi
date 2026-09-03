@@ -1,0 +1,1099 @@
+{
+  "market": "us",
+  "date": "2026-09-03",
+  "price_data": {
+    "macro": {
+      "^DJI": {
+        "ticker": "^DJI",
+        "name": "다우존스",
+        "name_en": "Dow Jones Industrial Average",
+        "price": 53686.11,
+        "change_pct": 1.18,
+        "series": [
+          53577.3984,
+          53463.8789,
+          53569.4414,
+          53559.9883,
+          53185.8984,
+          52766.8789,
+          53061.9492,
+          53686.1094
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03"
+      },
+      "^GSPC": {
+        "ticker": "^GSPC",
+        "name": "S&P500",
+        "name_en": "S&P 500",
+        "price": 7747.71,
+        "change_pct": 1.06,
+        "series": [
+          7677.2798,
+          7675.7002,
+          7730.9902,
+          7711.7598,
+          7686.1401,
+          7631.4702,
+          7666.6001,
+          7747.71
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03"
+      },
+      "^IXIC": {
+        "ticker": "^IXIC",
+        "name": "나스닥종합",
+        "name_en": "Nasdaq Composite",
+        "price": 26584.06,
+        "change_pct": 1.4,
+        "series": [
+          26151.3008,
+          26130.1992,
+          26541.3496,
+          26402.4199,
+          26370.8906,
+          26099.7695,
+          26217.8301,
+          26584.0605
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03"
+      },
+      "^RUT": {
+        "ticker": "^RUT",
+        "name": "러셀2000",
+        "name_en": "Russell 2000",
+        "price": 2968.27,
+        "change_pct": 0.51,
+        "series": [
+          3010.02,
+          3005.8999,
+          3014.3401,
+          2972.3701,
+          2956.45,
+          2920.1299,
+          2953.1699,
+          2968.271
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03"
+      },
+      "^VIX": {
+        "ticker": "^VIX",
+        "name": "VIX",
+        "name_en": "VIX",
+        "price": 14.32,
+        "change_pct": -5.79,
+        "series": [
+          15.45,
+          15.21,
+          14.51,
+          14.43,
+          14.92,
+          16.34,
+          15.2,
+          14.32
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03"
+      },
+      "^TNX": {
+        "ticker": "^TNX",
+        "name": "美 10년물 금리",
+        "name_en": "US 10-Year Treasury Yield",
+        "price": 4.76,
+        "change_pct": -0.71,
+        "series": [
+          4.639,
+          4.664,
+          4.672,
+          4.72,
+          4.758,
+          4.796,
+          4.796,
+          4.762
+        ],
+        "unit": "%",
+        "trading_date": "2026-09-03"
+      },
+      "^TYX": {
+        "ticker": "^TYX",
+        "name": "美 30년물 금리",
+        "name_en": "US 30-Year Treasury Yield",
+        "price": 5.24,
+        "change_pct": -0.46,
+        "series": [
+          5.174,
+          5.186,
+          5.191,
+          5.206,
+          5.249,
+          5.268,
+          5.267,
+          5.243
+        ],
+        "unit": "%",
+        "trading_date": "2026-09-03"
+      },
+      "GC=F": {
+        "ticker": "GC=F",
+        "name": "국제 금",
+        "name_en": "Gold",
+        "price": 4523.7,
+        "change_pct": 3.6,
+        "series": [
+          4638.1001,
+          4598.2002,
+          4609.7002,
+          4478.1001,
+          4431.1001,
+          4348.0,
+          4366.2998,
+          4523.7002
+        ],
+        "unit": "달러",
+        "trading_date": "2026-09-03"
+      }
+    },
+    "watchlist": {
+      "NVDA": {
+        "ticker": "NVDA",
+        "name": "엔비디아",
+        "name_en": "NVIDIA",
+        "price": 228.45,
+        "change_pct": 1.8,
+        "series": [
+          213.05,
+          209.66,
+          227.98,
+          217.55,
+          220.78,
+          217.44,
+          224.41,
+          228.45
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "MU": {
+        "ticker": "MU",
+        "name": "마이크론",
+        "name_en": "Micron Technology",
+        "price": 958.16,
+        "change_pct": 0.22,
+        "series": [
+          932.97,
+          938.4,
+          935.39,
+          932.86,
+          958.73,
+          933.44,
+          956.08,
+          958.16
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "INTC": {
+        "ticker": "INTC",
+        "name": "인텔",
+        "name_en": "Intel",
+        "price": 91.67,
+        "change_pct": 1.8,
+        "series": [
+          87.48,
+          88.24,
+          92.09,
+          89.47,
+          89.51,
+          88.97,
+          90.05,
+          91.67
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "TSLA": {
+        "ticker": "TSLA",
+        "name": "테슬라",
+        "name_en": "Tesla",
+        "price": 376.36,
+        "change_pct": 5.42,
+        "series": [
+          350.25,
+          345.82,
+          354.81,
+          348.75,
+          367.95,
+          356.09,
+          357.01,
+          376.365
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "AAPL": {
+        "ticker": "AAPL",
+        "name": "애플",
+        "name_en": "Apple",
+        "price": 328.21,
+        "change_pct": 1.0,
+        "series": [
+          309.9,
+          313.45,
+          314.58,
+          319.7,
+          316.85,
+          325.13,
+          324.96,
+          328.21
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "MSFT": {
+        "ticker": "MSFT",
+        "name": "마이크로소프트",
+        "name_en": "Microsoft",
+        "price": 510.12,
+        "change_pct": 2.68,
+        "series": [
+          491.71,
+          496.37,
+          505.06,
+          513.53,
+          507.29,
+          501.02,
+          496.82,
+          510.12
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "AMZN": {
+        "ticker": "AMZN",
+        "name": "아마존",
+        "name_en": "Amazon",
+        "price": 258.9,
+        "change_pct": 1.54,
+        "series": [
+          261.06,
+          260.28,
+          256.26,
+          266.43,
+          259.77,
+          254.92,
+          254.98,
+          258.9
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "META": {
+        "ticker": "META",
+        "name": "메타",
+        "name_en": "Meta",
+        "price": 610.68,
+        "change_pct": 3.01,
+        "series": [
+          570.05,
+          576.14,
+          571.1,
+          578.02,
+          572.34,
+          578.54,
+          592.85,
+          610.68
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "GOOGL": {
+        "ticker": "GOOGL",
+        "name": "알파벳",
+        "name_en": "Google",
+        "price": 342.48,
+        "change_pct": 1.59,
+        "series": [
+          346.96,
+          342.0,
+          340.65,
+          346.59,
+          339.35,
+          335.02,
+          337.12,
+          342.48
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "WMT": {
+        "ticker": "WMT",
+        "name": "월마트",
+        "name_en": "Walmart",
+        "price": 108.42,
+        "change_pct": 2.2,
+        "series": [
+          105.38,
+          104.34,
+          102.63,
+          103.09,
+          104.87,
+          105.92,
+          106.09,
+          108.42
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "MRNA": {
+        "ticker": "MRNA",
+        "name": "모더나",
+        "name_en": "Moderna",
+        "price": 148.87,
+        "change_pct": -1.29,
+        "series": [
+          158.83,
+          149.66,
+          142.77,
+          137.99,
+          140.34,
+          154.27,
+          150.81,
+          148.87
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "MRK": {
+        "ticker": "MRK",
+        "name": "머크",
+        "name_en": "Merck",
+        "price": 152.34,
+        "change_pct": 0.46,
+        "series": [
+          156.45,
+          153.1,
+          149.54,
+          148.35,
+          147.76,
+          149.86,
+          151.64,
+          152.34
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "COIN": {
+        "ticker": "COIN",
+        "name": "코인베이스",
+        "name_en": "Coinbase",
+        "price": 192.7,
+        "change_pct": 10.14,
+        "series": [
+          187.16,
+          181.78,
+          190.72,
+          178.64,
+          188.12,
+          176.82,
+          174.96,
+          192.7
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "DE": {
+        "ticker": "DE",
+        "name": "디어",
+        "name_en": "Deere & Company",
+        "price": 694.41,
+        "change_pct": -0.57,
+        "series": [
+          630.66,
+          634.54,
+          622.66,
+          630.33,
+          654.91,
+          676.08,
+          698.37,
+          694.41
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "SOXX": {
+        "ticker": "SOXX",
+        "name": "필라델피아 반도체 ETF",
+        "name_en": "iShares Semiconductor ETF",
+        "price": 502.2,
+        "change_pct": 0.15,
+        "series": [
+          514.06,
+          515.4,
+          525.43,
+          508.62,
+          511.04,
+          500.31,
+          501.44,
+          502.2
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "CL=F": {
+        "ticker": "CL=F",
+        "name": "WTI 원유",
+        "name_en": "WTI Crude Oil",
+        "price": 91.78,
+        "change_pct": 0.85,
+        "series": [
+          82.36,
+          82.23,
+          83.53,
+          83.4,
+          85.76,
+          90.22,
+          91.01,
+          91.78
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core"
+      },
+      "AVGO": {
+        "ticker": "AVGO",
+        "name": "브로드컴",
+        "name_en": "Broadcom",
+        "price": 357.16,
+        "change_pct": -2.74,
+        "series": [
+          356.74,
+          355.59,
+          371.54,
+          368.79,
+          370.34,
+          369.68,
+          367.24,
+          357.16
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 21475554705.72,
+        "sector": "Technology"
+      },
+      "SPCX": {
+        "ticker": "SPCX",
+        "name": "스페이스X",
+        "name_en": "Space Exploration Technologies",
+        "price": 149.74,
+        "change_pct": 6.42,
+        "series": [
+          137.95,
+          139.63,
+          140.87,
+          141.5,
+          143.69,
+          142.23,
+          140.71,
+          149.74
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 18125217805.04,
+        "sector": "Technology"
+      },
+      "SNDK": {
+        "ticker": "SNDK",
+        "name": "샌디스크",
+        "name_en": "Sandisk",
+        "price": 1554.99,
+        "change_pct": 0.1,
+        "series": [
+          1480.77,
+          1499.37,
+          1484.95,
+          1484.98,
+          1566.7,
+          1536.87,
+          1553.4,
+          1554.99
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 13487847975.87,
+        "sector": "Technology"
+      },
+      "DELL": {
+        "ticker": "DELL",
+        "name": "델 테크놀로지스",
+        "name_en": "Dell Technologies",
+        "price": 516.39,
+        "change_pct": 4.91,
+        "series": [
+          451.5,
+          463.82,
+          472.26,
+          456.24,
+          456.01,
+          425.0,
+          492.2,
+          516.39
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 10480134017.22,
+        "sector": "Technology"
+      },
+      "SNOW": {
+        "ticker": "SNOW",
+        "name": "Snowflake",
+        "name_en": "Snowflake",
+        "price": 356.47,
+        "change_pct": 16.55,
+        "series": [
+          317.02,
+          315.37,
+          329.11,
+          328.0,
+          331.43,
+          319.8,
+          305.84,
+          356.47
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 7773580145.2300005,
+        "sector": "Technology"
+      },
+      "PLTR": {
+        "ticker": "PLTR",
+        "name": "팔란티어",
+        "name_en": "Palantir Technologies",
+        "price": 182.53,
+        "change_pct": 7.71,
+        "series": [
+          172.73,
+          177.5,
+          185.93,
+          186.29,
+          186.38,
+          179.92,
+          169.46,
+          182.53
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 6939891904.15,
+        "sector": "Technology"
+      }
+    },
+    "trading_date": "2026-09-03"
+  },
+  "ko": {
+    "title": "9월 금리 인상 확률이 내려오자 뉴욕증시는 3거래일 만에 반등했다",
+    "narrative": [
+      {
+        "heading": "3거래일 만의 반등, 나스닥 1.40%",
+        "body": "9월 3일 뉴욕증시는 3대 지수가 모두 올랐다. 다우존스는 1.18% 오른 53,686.11, S&P500은 1.06% 오른 7,747.71, 나스닥종합은 1.40% 오른 26,584.06으로 마감했다. 사흘 이어지던 하락이 멈췄다. 러셀2000은 0.51% 올랐고 VIX는 5.79% 내린 14.32였다.\n\n방향을 돌린 것은 연준이었다.\n\n크리스토퍼 월러 연준 이사가 앞으로 2주간 물가 지표에서 둔화가 확인되면 9월 15~16일 회의에서 기준금리를 3.50~3.75%로 동결하는 데 찬성하겠다고 밝혔다. 물가가 높게 나오면 인상도 고려하겠다는 단서를 달았지만, 시장은 앞쪽을 읽었다. 선물시장이 반영한 9월 인상 확률은 하루 만에 10%포인트 넘게 낮아져 50%선으로 내려왔다.\n\n지금 미국 시장이 다투는 것은 인하 시점이 아니라 인상 여부다. 10년물 국채금리가 4.76%, 30년물이 5.24%로 내렸고 주가는 그만큼 올랐다. 같은 날 나온 주간 신규 실업수당 청구는 20만 6천 건으로 예상치 20만 5천 건을 조금 웃돌았다."
+      },
+      {
+        "heading": "같은 AI 실적, 갈린 반응",
+        "body": "전날 장 마감 뒤 실적을 낸 두 회사의 주가가 반대로 움직였다.\n\n스노우플레이크(Snowflake)가 16.55% 올라 356.47달러로 마감했다. 워치리스트에서 등락 폭이 가장 컸다. 2분기 제품 매출이 14억 9천만 달러로 전년 대비 37% 늘었고, 성장률은 세 분기 연속 높아졌다. 조정 주당순이익은 0.62달러로 시장 예상 0.45달러를 넘겼다. 회사는 연간 제품 매출 전망을 60억 7천만 달러로 올려 잡았다. 실적 발표 다음 날 여러 증권사가 목표주가를 올렸는데, 이는 전망이지 확정된 숫자가 아니다.\n\n브로드컴은 2.74% 내렸다. 분기 매출 295억 9천만 달러와 조정 주당순이익 3.32달러는 모두 예상을 넘었고, AI 반도체 매출은 170억 달러로 전년 대비 221% 늘었다. 그런데 다음 분기 매출 전망 348억 달러가 시장이 기대하던 350억 달러에 미치지 못했다.\n\n두 회사 모두 AI 수요를 확인해주는 숫자를 냈다. 주가를 가른 것은 수요의 크기가 아니라 기대치와의 거리였다."
+      },
+      {
+        "heading": "돈이 간 곳은 반도체가 아니라 소프트웨어",
+        "body": "업종별로 보면 이날 상승은 고르지 않았다.\n\n마이크로소프트가 2.68%, 메타가 3.01% 올랐고 팔란티어는 7.71% 상승했다. 팔란티어는 전날 알파벳의 AI 국방 시장 진입 소식에 밀렸다가 PwC와의 기업용 AI 협력을 넓힌다는 발표로 하락분을 되돌렸다. 마이크로소프트는 회계연도 2027년부터 사업 부문을 둘로 통합하고 애저(Azure) 매출을 분기마다 따로 공개하기로 했다. 6월 분기 애저 매출은 294억 달러로 전년 대비 42% 늘었다.\n\n반도체는 제자리였다. 필라델피아 반도체 ETF가 0.15%, 마이크론이 0.22%, 샌디스크가 0.10% 오르는 데 그쳤다. 엔비디아는 1.80%, 델 테크놀로지스는 전날 실적 이후 목표주가 상향이 이어지며 4.91% 올랐다.\n\n지수를 1% 넘게 밀어 올린 힘은 AI 하드웨어가 아니라 소프트웨어에서 나왔다. 기업들이 AI 때문에 기존 소프트웨어 지출을 줄일 것이라는 걱정이 올해 이 업종을 눌러 왔는데, 스노우플레이크의 실적이 그 걱정의 근거를 하루 동안 약하게 만들었다.\n\n지수가 1% 넘게 오른 날에도 모더나는 1.29%, 디어는 0.57% 내렸다."
+      },
+      {
+        "heading": "금 3.6% 상승, 호르무즈는 그대로",
+        "body": "주식만 오른 날은 아니다. 금은 3.6% 오른 온스당 4,523.70달러로 마감했다. 이란을 둘러싼 충돌이 이어지는 가운데 미국의 공격이 오래 가지 않을 것이라는 발언이 나오면서, 안전자산 수요와 위험 선호가 같은 날 함께 붙었다. WTI 원유는 0.85% 오른 배럴당 91.78달러로 6주 만의 최고 수준 부근에 머물렀다. 사우디 유조선이 공격받은 뒤 호르무즈 해협을 지나는 선박은 크게 줄어든 상태다.\n\n개별 종목에서는 회사마다의 재료가 지수보다 큰 폭을 만들었다. 테슬라가 5.42% 올랐다. 오스틴에서 열리는 사이버캡 공개 행사를 앞두고 매수가 몰렸고, 모델 Y L의 주행거리가 회사가 밝힌 값보다 길게 나온 미국 환경보호청 인증 수치도 더해졌다. 스페이스X는 스타십 14차 시험 발사를 앞두고 6.42% 상승했다.\n\n코인베이스는 10.14% 올랐다. 비트코인이 약 4개월 만에 8만 1천 달러를 넘어섰고, 미국 주식 무기한 선물 사업을 진전시켰다는 소식이 겹쳤다.\n\n앞선 한국 거래일과 조건이 달라진 대목이 여기다. 9월 3일 코스피는 조선과 금융이 받쳐 0.26% 올랐고, 금융주 강세는 미국 시장금리가 높게 유지된다는 전제 위에 있었다. 그 전제가 하루 만에 한 칸 물러섰다."
+      }
+    ],
+    "theme_section": {
+      "heading": "등락 폭이 컸던 종목",
+      "commentary": "상승과 하락 양쪽 끝에 선 두 종목이다. 둘 다 전날 장 마감 뒤 실적을 냈다.",
+      "highlights": [
+        {
+          "label": "상승 상위",
+          "ticker": "SNOW"
+        },
+        {
+          "label": "낙폭 상위",
+          "ticker": "AVGO"
+        }
+      ]
+    },
+    "stock_section": {
+      "heading": "주요 종목 등락",
+      "commentary": "소프트웨어로 옮겨간 자금과, 같은 날 반대로 움직인 종목을 함께 놓았다.",
+      "featured_tickers": [
+        "SNOW",
+        "MSFT",
+        "TSLA",
+        "COIN",
+        "AVGO",
+        "MRNA"
+      ]
+    },
+    "outlook": {
+      "heading": "다음 거래일에 확인할 것",
+      "body": "첫째, 물가와 고용이다. 4일 8월 고용보고서는 5만 3천 명 증가가 예상되고, 11일에는 8월 소비자물가가 나온다. 월러가 동결 지지의 조건으로 든 것이 바로 물가 둔화다. 이 두 숫자가 인상 확률을 다시 올리면 반등의 근거는 그대로 사라진다.\n\n둘째, 소프트웨어와 반도체의 방향 차이가 이어지는지다. 하루 차이로는 순환매인지 추세인지 알 수 없다. 반도체가 따라 오르지 않은 채 소프트웨어만 오르는 날이 반복되면 그때는 자금의 이동으로 읽을 수 있다.\n\n셋째, 중동이다. 금이 3.6% 오르고 유가가 6주 최고 수준 부근에 머문 것은 충돌이 끝나지 않았다는 뜻이다. 호르무즈 해협 통항이 더 줄면 유가와 주식이 같은 날 반대로 움직이는 장면이 다시 나온다.\n\n넷째, 한국 시장과의 연결이다. 미국 금리가 내려온 것은 앞선 거래일 코스피를 받친 금융주의 전제를 약하게 만든다. 반대로 반도체는 미국에서도 제자리였던 만큼, 나스닥 상승률만 보고 국내 반도체주의 강세를 기대하기는 어렵다."
+    },
+    "closing": {
+      "heading": "남는 것",
+      "body": "지수의 방향을 만든 것은 연준 인사 한 사람의 발언이고, 폭을 만든 것은 기업이 낸 숫자였다. 인상 확률이 내려온 자리에서 스노우플레이크는 16.55% 올랐고 브로드컴은 2.74% 내렸다.\n\n동결은 아직 결정된 것이 아니다. 월러도 조건을 달았고, 그 조건은 11일 물가 지표에서 확인된다. 사흘치 하락을 하루에 되돌린 만큼, 반대 방향으로 하루에 되돌아갈 여지도 남아 있다."
+    },
+    "insight_section": {
+      "heading": "이날 눈여겨볼 네 가지",
+      "stories": [
+        {
+          "heading": "가속으로 답한 스노우플레이크",
+          "icon": "server",
+          "body": "데이터 플랫폼 회사의 실적에서 시장이 본 것은 매출 규모가 아니라 성장률의 방향이다. 2분기 제품 매출은 14억 9천만 달러로 전년 대비 37% 늘었다. 지난 회계연도 말 30%였던 성장률이 세 분기 연속 높아진 결과다.\n\n총매출은 15억 5천만 달러로 전년 대비 35% 증가했고, 조정 주당순이익은 0.62달러로 시장 예상 0.45달러를 넘겼다. 회사는 연간 제품 매출 전망을 60억 7천만 달러로, 조정 영업이익률 전망을 13.5%에서 14.5%로 올렸다.\n\n회사 설명에 따르면 성장의 절반 가까이가 AI 관련 제품에서 나왔다. 데이터 위에서 AI를 돌리는 고객이 플랫폼 전체를 더 많이 쓰게 된다는 것이 경영진의 설명이다.\n\n주가는 16.55% 올라 356.47달러로 마감했다. 이 회사 하나의 실적이 소프트웨어 업종 전체의 분위기를 바꿨다는 점이 이날의 특징이다. 다만 목표주가 상향은 애널리스트의 전망이고, 확인은 다음 분기 숫자에서 이뤄진다.",
+          "table": [
+            {
+              "label": "종가",
+              "value": "356.47달러 (+16.55%)"
+            },
+            {
+              "label": "2분기 제품 매출",
+              "value": "14억 9천만 달러 (전년 대비 +37%)"
+            },
+            {
+              "label": "조정 주당순이익",
+              "value": "0.62달러 (예상 0.45달러)"
+            },
+            {
+              "label": "연간 제품 매출 전망",
+              "value": "60억 7천만 달러로 상향"
+            },
+            {
+              "label": "조정 영업이익률 전망",
+              "value": "13.5% → 14.5%"
+            }
+          ]
+        },
+        {
+          "heading": "예상을 넘고도 내린 브로드컴",
+          "icon": "chip",
+          "body": "브로드컴의 분기 실적은 나쁘지 않았다. 매출 295억 9천만 달러, 조정 주당순이익 3.32달러로 둘 다 시장 예상을 웃돌았다. AI 반도체 매출은 170억 달러로 전년 대비 221% 늘었다.\n\n주가는 2.74% 내렸다. 이유는 다음 분기 전망에 있다. 회사가 제시한 4분기 매출 348억 달러는 시장이 기대하던 350억 달러에 못 미친다. 차이는 2억 달러 남짓이지만, AI 수요에 주가가 크게 기대고 있는 회사에서는 그 정도로도 방향이 바뀐다.\n\n같은 날 반도체 업종 전체가 조용했다. 필라델피아 반도체 ETF는 0.15% 올랐고 마이크론은 0.22%, 샌디스크는 0.10% 상승에 그쳤다. 엔비디아만 1.80% 올랐다.\n\n정리하면 AI 하드웨어의 실적은 여전히 강하고, 주가는 그 강함이 기대만큼인지를 본다. 한국 메모리 종목을 볼 때도 같은 기준이 적용된다. 수요가 확인됐다는 소식과 주가가 오른다는 것은 다른 문장이다.",
+          "table": [
+            {
+              "label": "종가",
+              "value": "357.16달러 (-2.74%)"
+            },
+            {
+              "label": "분기 매출",
+              "value": "295억 9천만 달러 (예상 293억 6천만 달러)"
+            },
+            {
+              "label": "조정 주당순이익",
+              "value": "3.32달러 (예상 3.24달러)"
+            },
+            {
+              "label": "AI 반도체 매출",
+              "value": "170억 달러 (전년 대비 +221%)"
+            },
+            {
+              "label": "다음 분기 매출 전망",
+              "value": "348억 달러 (기대치 350억 달러)"
+            }
+          ]
+        },
+        {
+          "heading": "사이버캡을 앞둔 테슬라",
+          "icon": "battery",
+          "body": "테슬라는 5.42% 올라 376.36달러로 마감했다. 워치리스트의 대형 기술주 가운데 가장 큰 폭이다.\n\n앞에 놓인 것은 오스틴에서 열리는 사이버캡 공개 행사다. 운전대와 페달이 없는 2인승 자율주행 차량으로, 회사가 준비 중인 로보택시 서비스의 주력 모델로 예고돼 있다. 행사 자체가 실적은 아니지만, 자율주행 계획의 진척을 눈으로 확인하는 자리라 매수가 미리 붙었다.\n\n여기에 미국 환경보호청의 모델 Y L 인증 주행거리가 회사가 광고한 값보다 길게 나온 것이 더해졌다. 가장 많이 팔리는 차의 상품성이 올라간 소식이다.\n\n확인할 지점은 행사 이후다. 공개된 차량이 언제부터 몇 대나 운행되는지가 나오지 않으면, 이날 상승은 기대만 반영한 것으로 남는다.",
+          "table": [
+            {
+              "label": "종가",
+              "value": "376.36달러 (+5.42%)"
+            },
+            {
+              "label": "앞둔 일정",
+              "value": "오스틴 사이버캡 공개 행사"
+            },
+            {
+              "label": "사이버캡",
+              "value": "운전대·페달 없는 2인승 자율주행차"
+            },
+            {
+              "label": "추가 재료",
+              "value": "모델 Y L 환경보호청 인증 주행거리 상향"
+            },
+            {
+              "label": "스페이스X",
+              "value": "149.74달러 (+6.42%)"
+            }
+          ],
+          "image_query": "Tesla electric car"
+        },
+        {
+          "heading": "금리 기대가 물러나자 오른 코인베이스",
+          "icon": "coin",
+          "body": "코인베이스는 10.14% 올라 192.70달러로 마감했다. 코어 종목 가운데 상승 폭이 가장 컸다.\n\n직접적인 배경은 비트코인이다. 이 가격은 약 4개월 만에 8만 1천 달러를 넘어섰다. 9월 금리 인상 확률이 낮아진 것이 위험자산 전반에 같은 방향으로 작용했고, 암호화폐 관련 종목이 그중 반응이 컸다.\n\n회사 쪽 재료도 있었다. 미국 주식을 기초로 한 무기한 선물 사업을 준비하며 파생상품 거래와 중개 관련 등록 절차를 진행했다는 소식이 전해졌다. 거래소 수익이 암호화폐 거래량에만 묶여 있지 않게 만드는 방향이다.\n\n이 종목은 금리 기대의 대리 지표에 가깝다. 11일 물가 지표가 인상 쪽으로 나오면 가장 먼저 반대로 움직일 자리에 있다.",
+          "table": [
+            {
+              "label": "종가",
+              "value": "192.70달러 (+10.14%)"
+            },
+            {
+              "label": "비트코인",
+              "value": "약 4개월 만에 8만 1천 달러 상회"
+            },
+            {
+              "label": "9월 인상 확률",
+              "value": "하루 만에 10%포인트 넘게 하락, 50%선"
+            },
+            {
+              "label": "미 10년물 금리",
+              "value": "4.76%"
+            },
+            {
+              "label": "VIX",
+              "value": "14.32 (-5.79%)"
+            }
+          ],
+          "image_query": "Coinbase app on phone"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "name": "Yahoo Finance",
+        "title": "Stock market today: Dow, S&P 500 post best day in a month, Nasdaq jumps as rate-hike fears ease",
+        "url": "https://finance.yahoo.com/markets/live/stock-market-today-thursday-september-3-dow-sp-500-nasdaq-futures-081525933.html"
+      },
+      {
+        "name": "The Motley Fool",
+        "title": "Stock Market Midday, Sept. 3: Stocks Rally as Treasury Yields Fall, Broadcom Falls Despite Earnings Beat",
+        "url": "https://www.fool.com/coverage/stock-market-today/2026/09/03/stock-market-midday-sept-3-stocks-rally-as-treasury-yields-fall-broadcom-falls-despite-earnings-beat/"
+      },
+      {
+        "name": "Investing.com",
+        "title": "Fed's Waller open to September rate hold—if disinflation holds up",
+        "url": "https://www.investing.com/news/economy-news/feds-waller-open-to-september-rate-holdif-disinflation-holds-up-4887926"
+      },
+      {
+        "name": "CNBC",
+        "title": "Snowflake is ripping after its earnings report. Two analysts say there's more upside to come",
+        "url": "https://www.cnbc.com/2026/09/03/snowflake-is-ripping-two-analysts-say-theres-more-upside-to-come.html"
+      },
+      {
+        "name": "Seeking Alpha",
+        "title": "Snowflake signals FY 2027 product revenue of $6.07B with 14.5% non-GAAP operating margin guidance",
+        "url": "https://seekingalpha.com/news/4639794-snowflake-signals-fy-2027-product-revenue-of-6_07b-with-14_5-percent-non-gaap-operating"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "Broadcom stock falls as chipmaker's strong results 'not enough to keep investors happy'",
+        "url": "https://finance.yahoo.com/markets/stocks/article/broadcom-stock-falls-as-chipmakers-strong-results-not-enough-to-keep-investors-happy-205929042.html"
+      },
+      {
+        "name": "CNBC",
+        "title": "Microsoft to start disclosing Azure quarterly revenue as company consolidates business units",
+        "url": "https://www.cnbc.com/2026/09/02/microsoft-to-disclose-azure-revenue-as-part-of-segment-changes.html"
+      },
+      {
+        "name": "The Motley Fool",
+        "title": "Why Palantir Stock Bounced Back Today",
+        "url": "https://www.fool.com/investing/2026/09/03/why-palantir-stock-bounced-back-today/"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "Tesla Advances 6% as Traders Await Cybercab Event, Lucid Rises 3%, Rivian Ticks Up",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-advances-6-traders-await-143004424.html"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "SpaceX Rises 7% as Starship Test 14 Approaches, Tesla Jumps 7%, Rocket Lab Ticks Up",
+        "url": "https://247wallst.com/investing/2026/09/03/spacex-rises-7-as-starship-test-14-approaches-tesla-jumps-7-rocket-lab-ticks-up/"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "Crypto Stocks Jump After Bitcoin Rises 5%",
+        "url": "https://finance.yahoo.com/markets/crypto/articles/crypto-stocks-jump-bitcoin-rises-212150439.html"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "Gold price today, Thursday, September 3, 2026: Gold moves higher on hopes that Iran war reescalation will be short-lived",
+        "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-thursday-september-3-2026-gold-moves-higher-on-hopes-that-iran-war-reescalation-will-be-short-lived-110444019.html"
+      },
+      {
+        "name": "EnergyNow",
+        "title": "Oil Climbs to Fresh Six-Week Highs as U.S.-Iran Escalation Deepens Hormuz Supply Fears",
+        "url": "https://energynow.com/2026/09/oil-climbs-to-fresh-six-week-highs-as-u-s-iran-escalation-deepens-hormuz-supply-fears/"
+      },
+      {
+        "name": "Seoul Economic Daily",
+        "title": "U.S. Jobless Claims Rise to 206,000, Topping Forecasts",
+        "url": "https://en.sedaily.com/international/2026/09/03/us-jobless-claims-rise-to-206000-topping-forecasts"
+      }
+    ]
+  },
+  "en": {
+    "title": "Wall Street snaps a three-day slide as September rate-hike odds slip",
+    "narrative": [
+      {
+        "heading": "Three days of losses end; Nasdaq up 1.40%",
+        "body": "All three major US indexes closed higher on Sept. 3. The Dow Jones Industrial Average rose 1.18% to 53,686.11, the S&P 500 added 1.06% to 7,747.71 and the Nasdaq Composite gained 1.40% to 26,584.06, ending a three-day losing streak. The Russell 2000 rose 0.51% and the VIX fell 5.79% to 14.32.\n\nThe turn came from the Fed.\n\nGovernor Christopher Waller said that if the next two weeks of data keep showing disinflation, he would back holding the federal funds rate at 3.50%-3.75% at the Sept. 15-16 meeting. He left a hike on the table if inflation runs hot, but traders focused on the first half of that sentence. Futures pricing for a September hike fell by more than 10 percentage points in a day, to roughly a coin flip.\n\nThis is a market arguing about whether rates go up, not when they come down. The 10-year Treasury yield eased to 4.76% and the 30-year to 5.24%. Weekly jobless claims came in at 206,000, marginally above the 205,000 consensus."
+      },
+      {
+        "heading": "Two AI earnings reports, two opposite reactions",
+        "body": "Both companies reported after Wednesday's close. Their shares went in opposite directions.\n\nSnowflake closed up 16.55% at $356.47, the biggest move on the watchlist. Second-quarter product revenue of $1.49 billion grew 37% year over year, the third straight quarter of acceleration, and adjusted earnings of $0.62 a share beat the $0.45 consensus. The company lifted its full-year product revenue outlook to $6.07 billion.\n\nBroadcom fell 2.74%. Quarterly revenue of $29.59 billion and adjusted earnings of $3.32 a share both beat, and AI semiconductor revenue rose 221% year over year to $17 billion. The problem was the guide: about $34.8 billion for the current quarter against roughly $35.0 billion expected.\n\nBoth results confirmed AI demand. What separated the two stocks was not the size of that demand but the distance from what investors had already priced in."
+      },
+      {
+        "heading": "The bid was in software, not silicon",
+        "body": "The rally was not evenly spread.\n\nMicrosoft rose 2.68% and Meta rose 3.01%, while Palantir gained 7.71%, recovering the previous session's drop on news of Alphabet entering the AI defense market after it widened its enterprise AI partnership with PwC US. Microsoft also said it will collapse its reporting into two segments from fiscal 2027 and disclose Azure revenue separately each quarter; Azure brought in $29.4 billion in the June quarter, up 42% year over year.\n\nChips sat still. The iShares Semiconductor ETF rose 0.15%, Micron 0.22% and Sandisk 0.10%. NVIDIA added 1.80%, and Dell Technologies rose 4.91% as price target increases followed its results from the prior session.\n\nIn other words, the force behind a 1%-plus day came from software rather than AI hardware. The fear that enterprises would cut legacy software budgets to fund AI has weighed on the group all year, and one set of numbers loosened it for a session.\n\nNot everything joined in: Moderna fell 1.29% and Deere & Company lost 0.57%."
+      },
+      {
+        "heading": "Gold up 3.6% while equities rallied",
+        "body": "Gold settled 3.6% higher at $4,523.70 an ounce. The conflict around Iran continued, but comments suggesting the US strike would not drag on let safe-haven demand and risk appetite rise on the same day. WTI crude added 0.85% to $91.78 a barrel, near a six-week high, with traffic through the Strait of Hormuz sharply reduced after an attack on a Saudi tanker.\n\nSingle-stock catalysts produced the day's biggest moves. Tesla rose 5.42% ahead of its Cybercab unveiling in Austin, a two-seat autonomous vehicle with no steering wheel or pedals intended as the core model of its robotaxi fleet; new EPA figures showing the Model Y L travels farther per charge than advertised added to the bid. SpaceX gained 6.42% ahead of the 14th Starship test flight.\n\nCoinbase jumped 10.14% as bitcoin topped $81,000 for the first time in about four months and the exchange advanced plans for perpetual futures on US stocks.\n\nFor readers watching Seoul, the setup shifted overnight. The KOSPI closed 0.26% higher on Sept. 3 on shipbuilders and financials, and the bid for bank and insurance shares rested on US market rates staying high. That assumption gave ground within a day."
+      }
+    ],
+    "theme_section": {
+      "heading": "Widest moves of the session",
+      "commentary": "The two ends of the watchlist. Both companies reported after Wednesday's close.",
+      "highlights": [
+        {
+          "label": "Top gainer",
+          "ticker": "SNOW"
+        },
+        {
+          "label": "Biggest decline",
+          "ticker": "AVGO"
+        }
+      ]
+    },
+    "stock_section": {
+      "heading": "Notable movers",
+      "commentary": "Where the money went, and what moved the other way on the same day.",
+      "featured_tickers": [
+        "SNOW",
+        "MSFT",
+        "TSLA",
+        "COIN",
+        "AVGO",
+        "MRNA"
+      ]
+    },
+    "outlook": {
+      "heading": "What to check next session",
+      "body": "First, prices and payrolls. August employment data is due Sept. 4 with 53,000 jobs expected, and August CPI lands Sept. 11. Waller tied his support for a hold to continued disinflation, so those two prints can put the hike back on the table and remove the basis for this rally.\n\nSecond, whether software keeps outrunning chips. One session cannot separate rotation from trend. If chips keep sitting out while software rises, that starts to look like money moving rather than a single earnings reaction.\n\nThird, the Middle East. Gold up 3.6% and crude near a six-week high say the conflict is unresolved. Further disruption at Hormuz would put oil and equities back on opposite paths.\n\nFourth, the read-through to Korea. Lower US yields weaken the premise behind the bank and insurance rally that lifted the KOSPI in the prior session. Chips, meanwhile, went nowhere in New York, so a strong Nasdaq print is thin grounds for expecting Korean memory names to follow."
+    },
+    "closing": {
+      "heading": "What stands",
+      "body": "Direction came from one Fed governor's remarks; the size of the moves came from company numbers. With the odds of a hike easing, Snowflake rose 16.55% and Broadcom fell 2.74% on the same day, both after results that confirmed AI demand.\n\nA hold is not settled. Waller attached a condition, and that condition gets tested by the Sept. 11 inflation print. Three sessions of losses were reversed in a day, which is also how quickly the reversal could run the other way."
+    },
+    "insight_section": {
+      "heading": "Four things worth a second look",
+      "stories": [
+        {
+          "heading": "Snowflake answered with acceleration",
+          "icon": "server",
+          "body": "What investors bought was not the size of the revenue but the direction of the growth rate. Second-quarter product revenue was $1.49 billion, up 37% year over year — the third consecutive quarter of acceleration from the 30% pace reported at the end of the last fiscal year.\n\nTotal revenue reached $1.55 billion, up 35%, and adjusted earnings of $0.62 a share cleared the $0.45 consensus. Full-year product revenue guidance went to $6.07 billion and the non-GAAP operating margin target rose to 14.5% from 13.5%.\n\nManagement credited AI products for close to half of that growth, arguing that customers running AI on their data end up consuming more of the platform overall.\n\nThe stock closed at $356.47, up 16.55%. One company's quarter changed the tone for the entire software group. The price target increases that followed are forecasts, though; the confirmation is next quarter's numbers.",
+          "table": [
+            {
+              "label": "Close",
+              "value": "$356.47 (+16.55%)"
+            },
+            {
+              "label": "Q2 product revenue",
+              "value": "$1.49B (+37% YoY)"
+            },
+            {
+              "label": "Adjusted EPS",
+              "value": "$0.62 vs $0.45 expected"
+            },
+            {
+              "label": "FY product revenue guide",
+              "value": "raised to $6.07B"
+            },
+            {
+              "label": "Operating margin guide",
+              "value": "13.5% → 14.5%"
+            }
+          ]
+        },
+        {
+          "heading": "Broadcom beat, and still fell",
+          "icon": "chip",
+          "body": "The quarter itself was fine. Revenue of $29.59 billion and adjusted earnings of $3.32 a share both came in ahead of estimates, and AI semiconductor revenue climbed 221% year over year to $17 billion.\n\nThe stock fell 2.74% anyway. The guide did it: about $34.8 billion for the current quarter against a consensus near $35.0 billion. The gap is a couple of hundred million dollars, which is enough when a share price leans this heavily on AI demand.\n\nThe rest of the group was quiet. The iShares Semiconductor ETF rose 0.15%, Micron 0.22% and Sandisk 0.10%, with NVIDIA up 1.80%.\n\nAI hardware earnings are still strong; what share prices now test is whether the strength matches what was already assumed. The same standard applies to Korean memory names — confirmed demand and a rising stock are two different statements.",
+          "table": [
+            {
+              "label": "Close",
+              "value": "$357.16 (-2.74%)"
+            },
+            {
+              "label": "Quarterly revenue",
+              "value": "$29.59B vs $29.36B expected"
+            },
+            {
+              "label": "Adjusted EPS",
+              "value": "$3.32 vs $3.24 expected"
+            },
+            {
+              "label": "AI chip revenue",
+              "value": "$17B (+221% YoY)"
+            },
+            {
+              "label": "Next-quarter guide",
+              "value": "~$34.8B vs ~$35.0B expected"
+            }
+          ]
+        },
+        {
+          "heading": "Tesla ahead of the Cybercab",
+          "icon": "battery",
+          "body": "Tesla closed at $376.36, up 5.42%, the largest gain among the big-cap tech names on the watchlist.\n\nThe catalyst sits ahead of it: the Cybercab unveiling in Austin. The vehicle is a two-seat autonomous car with no steering wheel or pedals, positioned as the main model for the company's robotaxi network. An event is not an earnings report, but it is a chance to see the autonomy roadmap in physical form, and buyers moved first.\n\nA second item helped. New EPA certification showed the Model Y L travels farther on a charge than the company had advertised — a product improvement in its best-selling vehicle.\n\nThe test comes after the event. Without a schedule for how many of these vehicles actually enter service and when, the move stays a bet on expectations.",
+          "table": [
+            {
+              "label": "Close",
+              "value": "$376.36 (+5.42%)"
+            },
+            {
+              "label": "Upcoming",
+              "value": "Cybercab unveiling in Austin"
+            },
+            {
+              "label": "Cybercab",
+              "value": "Two-seat autonomous vehicle, no wheel or pedals"
+            },
+            {
+              "label": "Added catalyst",
+              "value": "Higher EPA range for the Model Y L"
+            },
+            {
+              "label": "SpaceX",
+              "value": "$149.74 (+6.42%)"
+            }
+          ],
+          "image_query": "Tesla electric car"
+        },
+        {
+          "heading": "Coinbase rose as hike odds retreated",
+          "icon": "coin",
+          "body": "Coinbase closed at $192.70, up 10.14%, the biggest gain among the core watchlist names.\n\nBitcoin did most of the work, topping $81,000 for the first time in about four months. Lower odds of a September rate increase lifted risk assets broadly, and crypto-linked equities responded most.\n\nThere was company news too: the exchange moved ahead with perpetual futures on US stocks, filing registrations tied to its derivatives and brokerage operations. The direction of travel is revenue that is not tied purely to crypto trading volume.\n\nThis stock now trades as a proxy for rate expectations. If the Sept. 11 inflation print pushes the hike back into view, it is first in line to move the other way.",
+          "table": [
+            {
+              "label": "Close",
+              "value": "$192.70 (+10.14%)"
+            },
+            {
+              "label": "Bitcoin",
+              "value": "Above $81,000, a four-month high"
+            },
+            {
+              "label": "September hike odds",
+              "value": "Down more than 10 points in a day, near 50%"
+            },
+            {
+              "label": "US 10-year yield",
+              "value": "4.76%"
+            },
+            {
+              "label": "VIX",
+              "value": "14.32 (-5.79%)"
+            }
+          ],
+          "image_query": "Coinbase app on phone"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "name": "Yahoo Finance",
+        "title": "Stock market today: Dow, S&P 500 post best day in a month, Nasdaq jumps as rate-hike fears ease",
+        "url": "https://finance.yahoo.com/markets/live/stock-market-today-thursday-september-3-dow-sp-500-nasdaq-futures-081525933.html"
+      },
+      {
+        "name": "The Motley Fool",
+        "title": "Stock Market Midday, Sept. 3: Stocks Rally as Treasury Yields Fall, Broadcom Falls Despite Earnings Beat",
+        "url": "https://www.fool.com/coverage/stock-market-today/2026/09/03/stock-market-midday-sept-3-stocks-rally-as-treasury-yields-fall-broadcom-falls-despite-earnings-beat/"
+      },
+      {
+        "name": "Investing.com",
+        "title": "Fed's Waller open to September rate hold—if disinflation holds up",
+        "url": "https://www.investing.com/news/economy-news/feds-waller-open-to-september-rate-holdif-disinflation-holds-up-4887926"
+      },
+      {
+        "name": "CNBC",
+        "title": "Snowflake is ripping after its earnings report. Two analysts say there's more upside to come",
+        "url": "https://www.cnbc.com/2026/09/03/snowflake-is-ripping-two-analysts-say-theres-more-upside-to-come.html"
+      },
+      {
+        "name": "Seeking Alpha",
+        "title": "Snowflake signals FY 2027 product revenue of $6.07B with 14.5% non-GAAP operating margin guidance",
+        "url": "https://seekingalpha.com/news/4639794-snowflake-signals-fy-2027-product-revenue-of-6_07b-with-14_5-percent-non-gaap-operating"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "Broadcom stock falls as chipmaker's strong results 'not enough to keep investors happy'",
+        "url": "https://finance.yahoo.com/markets/stocks/article/broadcom-stock-falls-as-chipmakers-strong-results-not-enough-to-keep-investors-happy-205929042.html"
+      },
+      {
+        "name": "CNBC",
+        "title": "Microsoft to start disclosing Azure quarterly revenue as company consolidates business units",
+        "url": "https://www.cnbc.com/2026/09/02/microsoft-to-disclose-azure-revenue-as-part-of-segment-changes.html"
+      },
+      {
+        "name": "The Motley Fool",
+        "title": "Why Palantir Stock Bounced Back Today",
+        "url": "https://www.fool.com/investing/2026/09/03/why-palantir-stock-bounced-back-today/"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "Tesla Advances 6% as Traders Await Cybercab Event, Lucid Rises 3%, Rivian Ticks Up",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-advances-6-traders-await-143004424.html"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "SpaceX Rises 7% as Starship Test 14 Approaches, Tesla Jumps 7%, Rocket Lab Ticks Up",
+        "url": "https://247wallst.com/investing/2026/09/03/spacex-rises-7-as-starship-test-14-approaches-tesla-jumps-7-rocket-lab-ticks-up/"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "Crypto Stocks Jump After Bitcoin Rises 5%",
+        "url": "https://finance.yahoo.com/markets/crypto/articles/crypto-stocks-jump-bitcoin-rises-212150439.html"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "Gold price today, Thursday, September 3, 2026: Gold moves higher on hopes that Iran war reescalation will be short-lived",
+        "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-thursday-september-3-2026-gold-moves-higher-on-hopes-that-iran-war-reescalation-will-be-short-lived-110444019.html"
+      },
+      {
+        "name": "EnergyNow",
+        "title": "Oil Climbs to Fresh Six-Week Highs as U.S.-Iran Escalation Deepens Hormuz Supply Fears",
+        "url": "https://energynow.com/2026/09/oil-climbs-to-fresh-six-week-highs-as-u-s-iran-escalation-deepens-hormuz-supply-fears/"
+      },
+      {
+        "name": "Seoul Economic Daily",
+        "title": "U.S. Jobless Claims Rise to 206,000, Topping Forecasts",
+        "url": "https://en.sedaily.com/international/2026/09/03/us-jobless-claims-rise-to-206000-topping-forecasts"
+      }
+    ]
+  }
+}
