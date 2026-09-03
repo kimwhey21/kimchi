@@ -407,9 +407,44 @@ def publish_draft(
                     # 요청받은 상태를 그대로 넘깁니다.
                     status=status if status != "draft" else None,
                 )
+            if status == "publish":
+                # 이미 공개된 같은 거래일 글을 정정본으로 덮어씁니다.
+                #
+                # 전에는 여기서 그냥 돌아갔습니다. 그래서 같은 거래일 원고를 다시
+                # 써서 커밋해도 사이트에는 옛 글이 그대로 남았습니다 — 고쳐 쓴
+                # 이유가 무엇이든 반영될 방법이 없었습니다. 같은 거래일에 글을
+                # 두 개 만들지 않으면서 내용을 바로잡으려면 덮어쓰는 것이 맞습니다.
+                # (URL과 글 번호는 그대로 유지되고, 워드프레스 리비전에 이전
+                # 내용이 남습니다.)
+                print(
+                    f"[안내] 이미 공개된 같은 거래일 글(id={existing.get('id')})을 "
+                    "새 원고로 덮어씁니다."
+                )
+                existing_featured = existing.get("featured_media") or None
+                replacement_image = None
+                resolved_featured = featured_media_id or existing_featured
+                if image and existing_featured:
+                    if _featured_media_matches(base_url, auth, existing_featured, image):
+                        resolved_featured = existing_featured
+                    else:
+                        replacement_image = image
+                        resolved_featured = None
+                return update_draft(
+                    existing["id"],
+                    title,
+                    html_content,
+                    lang=lang,
+                    excerpt=excerpt,
+                    tags=tags,
+                    category=category,
+                    image=replacement_image if existing_featured else image,
+                    featured_media_id=resolved_featured,
+                    status="publish",
+                )
+            # 손으로 돌리는 임시저장 실행은 공개된 글을 건드리지 않습니다.
             print(
                 f"[안내] 같은 거래일 글(id={existing.get('id')})이 이미 "
-                f"{existing.get('status')} 상태라 새 초안을 만들지 않습니다."
+                f"{existing.get('status')} 상태라 임시저장으로 덮어쓰지 않습니다."
             )
             return existing
 
