@@ -10,9 +10,19 @@ on:
   workflow_dispatch:
     inputs:
       path:
-        description: "발행할 원고 경로 (비우면 가장 최근 파일)"
+        description: "발행할 원고 경로 (비우면 가장 최근 파일). 공백으로 여러 개 지정 가능"
         required: false
         default: ""
+      publish_live:
+        # 기본값은 종전대로 임시저장입니다. 이 스위치는 이미 공개된 같은
+        # 거래일 글을 정정본으로 다시 올려야 할 때만 켭니다 — 원고를 고쳐
+        # 썼는데 커밋 내용이 같아 push 트리거가 걸리지 않는 경우입니다.
+        # (2026-09-03: 대표 이미지 alt 수정과 사진 키 전달 뒤 두 글을 다시
+        # 공개해야 했는데, 원고 파일 자체는 바뀌지 않아 이 경로가 필요했습니다.)
+        description: "공개 상태로 발행 (기본은 임시저장)"
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   publish:
@@ -61,7 +71,8 @@ jobs:
         # 손으로 돌리는 workflow_dispatch는 종전대로 임시저장입니다.
         run: |
           ARGS="${{ steps.pick.outputs.files }}"
-          if [ "${{ github.event_name }}" = "push" ]; then
+          if [ "${{ github.event_name }}" = "push" ] || \
+             [ "${{ github.event.inputs.publish_live }}" = "true" ]; then
             ARGS="$ARGS --publish-live"
           fi
           python -m src.publish_editorial $ARGS
@@ -70,6 +81,16 @@ jobs:
           WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
           WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
           SUBSCRIBE_FORM_ACTION: ${{ secrets.SUBSCRIBE_FORM_ACTION }}
+          # 인사이트 스토리 사진용입니다. 이 키가 없으면 fetch_images가 조용히
+          # None을 돌려주기 때문에(fetch_images.py), 자동 공개된 글에는 사진이
+          # 한 장도 붙지 않았습니다 — 2026-09-03에 확인했습니다.
+          #
+          # 생성형 AI 키(Anthropic·OpenAI)를 주지 않는 원칙은 그대로입니다.
+          # 그 원칙은 유료 생성 경로가 자동 실행에 다시 붙는 것을 막으려는
+          # 것이고, Unsplash는 사진 검색만 하는 무료 키라 성격이 다릅니다.
+          # 사진은 그날 코어 종목명이 든 검색어에만 붙습니다
+          # (publish_editorial._concrete_image_query).
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
 
       - name: 결과물 업로드 (백업용)
         if: always()

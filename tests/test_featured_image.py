@@ -79,8 +79,13 @@ class FeaturedImageTest(unittest.TestCase):
         self.assertNotEqual(lead["name_en"], lead["name"])
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "featured.png"
-            create("kr", "2026-09-03", price_data, output)
+            metadata = create("kr", "2026-09-03", price_data, output)
             self.assertTrue(output.exists())
+        # alt에 대문 종목이 들어가야 합니다. publish_wordpress가 이 alt로 기존
+        # 대표 이미지를 재사용할지 판단하기 때문에, 빠지면 지수 값이 같은 날
+        # 옛 이미지가 그대로 남습니다.
+        self.assertIn("Samsung Heavy Industries", metadata["alt"])
+        self.assertIn("+8.58%", metadata["alt"])
 
     def test_skips_stock_without_english_name(self) -> None:
         """영문 표기가 없으면 대문에 두부 상자(□□□□)가 찍힙니다 — 건너뜁니다."""

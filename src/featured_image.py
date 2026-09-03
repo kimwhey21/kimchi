@@ -232,6 +232,16 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path) -> d
     alt_values = ", ".join(
         f"{_short_name(entry)} {entry['price']:,} ({_change(entry)})" for entry in macro
     )
+    # 그림에 그린 LARGEST WATCHLIST MOVE도 alt에 넣습니다.
+    #
+    # 설명글로서 맞기도 하지만, publish_wordpress._featured_media_matches가 이
+    # alt로 "같은 데이터로 만든 이미지인지"를 판단하기 때문이기도 합니다.
+    # 지수 값만 넣었더니 2026-09-03에 이런 일이 있었습니다 — 워치리스트가
+    # 넓어져 대문 종목이 알테오젠에서 삼성중공업으로 바뀌었는데, 지수 숫자가
+    # 같아 alt가 동일했고, 기존 미디어를 재사용하는 바람에 제목은 삼성중공업
+    # 8.58%인데 대표 이미지는 "Alteogen -5.19%"인 글이 공개됐습니다.
+    if lead:
+        alt_values += f", largest watchlist move {_name(lead)} ({_change(lead)})"
     return {
         "local_path": str(output_path),
         "alt": f"{market_label.title()} data snapshot for {date_str}: {alt_values}.",

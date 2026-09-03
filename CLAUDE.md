@@ -102,9 +102,12 @@
   편입 종목도 후보에 넣는다 — 데이터에서 텍스트를 그리는 것이라 틀린 그림이 붙을
   위험이 없고, 라벨이 "LARGEST WATCHLIST MOVE"라 더 크게 움직인 종목을 빼면
   라벨이 사실과 어긋난다.
-- GitHub Actions에는 Anthropic·OpenAI·Unsplash 키를 전달하지 않는다.
-  유료 생성 경로(`generate_post.py`, `translate_post.py`)를 자동 실행에
-  다시 연결하지 말 것.
+- GitHub Actions에는 **Anthropic·OpenAI 키를 전달하지 않는다.** 유료 생성
+  경로(`generate_post.py`, `translate_post.py`)를 자동 실행에 다시 연결하지 말 것.
+  반면 **Unsplash 키는 `editorial_publish.yml`에만 전달한다** — 사진 검색만 하는
+  무료 키라 성격이 다르고, 없으면 `fetch_images`가 조용히 None을 돌려줘 자동
+  공개된 글에 사진이 한 장도 붙지 않는다(2026-09-03 확인). 사진이 붙는 범위는
+  키가 아니라 `_concrete_image_query`(코어 종목명)가 정한다.
 - **조사·집필은 클라우드 루틴이, 시세 수집은 GitHub Actions가 맡는다.** 루틴
   샌드박스는 네이버·야후·KRX·언론사 RSS가 네트워크 정책에 막혀 있고(2026-09-02
   실측: CONNECT 403) WebSearch만 열려 있다. 그래서 예약 실행이 시세를

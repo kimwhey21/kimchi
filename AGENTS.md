@@ -67,8 +67,9 @@
 ## 비용/자동 발행 원칙
 
 - **기본 자동 발행은 외부 생성형 AI API를 호출하지 않는다.** `src/generate_free.py`가
-  실제 시세와 RSS 헤드라인만으로 정해진 형식의 시황을 작성한다. GitHub Actions에도
-  Anthropic·OpenAI·Unsplash 키를 전달하지 않는다.
+  실제 시세와 RSS 헤드라인만으로 정해진 형식의 시황을 작성한다. GitHub Actions에
+  Anthropic·OpenAI 키를 전달하지 않는다. Unsplash 키는 사진 검색 전용 무료 키라
+  `editorial_publish.yml`에만 전달한다 — 없으면 자동 공개 글에 사진이 붙지 않는다.
 - 평일 16:20 한국장 예약 실행은 `--en`을 켜 한국어판과 영어판을 모두 만든다.
   영어판은 `src/generate_free_en.py`가 같은 가격 데이터에서 직접 작성하며 유료 번역
   API를 쓰지 않는다. 두 원고의 품질 검사가 끝나기 전에는 워드프레스에 올리지 않는다.
