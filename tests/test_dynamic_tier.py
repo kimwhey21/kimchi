@@ -75,6 +75,63 @@ class TopTurnoverTest(unittest.TestCase):
             )
 
 
+def _nasdaq_row(symbol: str, name: str, price: str, volume: str, cap: str) -> dict:
+    return {
+        "symbol": symbol,
+        "name": name,
+        "lastsale": price,
+        "volume": volume,
+        "marketCap": cap,
+        "sector": "Technology",
+    }
+
+
+class UsTopDollarVolumeTest(unittest.TestCase):
+    def _fetch(self, rows: list[dict], **kwargs) -> list[dict]:
+        response = mock.Mock()
+        response.json.return_value = {"data": {"rows": rows}}
+        response.raise_for_status.return_value = None
+        with mock.patch.object(fetch_movers.requests, "get", return_value=response):
+            return fetch_movers.fetch_top_dollar_volume_us(
+                exclude_tickers=kwargs.pop("exclude", set()), **kwargs
+            )
+
+    def test_ranks_by_price_times_volume(self) -> None:
+        """스크리너는 거래대금을 주지 않으므로 종가 x 거래량으로 계산합니다."""
+        picked = self._fetch(
+            [
+                # 주가가 낮아 거래량은 많지만 거래대금은 작은 종목
+                _nasdaq_row("F", "Ford Motor Company", "$12.00", "100000000", "5e10"),
+                _nasdaq_row("DELL", "Dell Technologies Inc.", "$180.00", "100000000", "3e11"),
+            ],
+            count=2,
+        )
+        self.assertEqual([row["ticker"] for row in picked], ["DELL", "F"])
+
+    def test_cleans_legal_suffixes_from_name(self) -> None:
+        picked = self._fetch(
+            [_nasdaq_row("PLTR", "Palantir Technologies Inc. Class A", "$170.00", "40000000", "4e11")],
+            count=1,
+        )
+        self.assertEqual(picked[0]["name"], "Palantir Technologies")
+
+    def test_drops_preferred_units_and_small_caps(self) -> None:
+        picked = self._fetch(
+            [
+                _nasdaq_row("ABC^B", "Some Bank Preferred Series B", "$25.00", "90000000", "5e10"),
+                _nasdaq_row("XYZU", "Startup Acquisition Unit", "$10.00", "90000000", "5e10"),
+                _nasdaq_row("TINY", "Tiny Corp. Common Stock", "$50.00", "90000000", "1e9"),
+                _nasdaq_row("AVGO", "Broadcom Inc.", "$350.00", "40000000", "1.7e12"),
+            ],
+            count=4,
+        )
+        self.assertEqual([row["ticker"] for row in picked], ["AVGO"])
+
+    def test_network_failure_returns_empty_list(self) -> None:
+        with mock.patch.object(fetch_movers.requests, "get", side_effect=OSError("boom")):
+            self.assertEqual(fetch_movers.fetch_top_dollar_volume_us(set()), [])
+
+
 def _price_data(count: int) -> dict:
     """순매수 +N ~ 순매도 -N 종목이 고르게 있는 워치리스트를 만듭니다."""
     watchlist = {}

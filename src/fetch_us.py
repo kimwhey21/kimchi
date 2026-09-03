@@ -18,6 +18,8 @@ from pathlib import Path
 import yaml
 import yfinance as yf
 
+from src import fetch_movers
+
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "watchlist_us.yaml"
 
 _NAN_RETRY_ATTEMPTS = 3
@@ -112,9 +114,77 @@ def fetch_all() -> dict:
     """
     config = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
     macro = {row["ticker"]: _fetch_one(**row) for row in config["macro"]}
-    watchlist = {row["ticker"]: _fetch_one(**row) for row in config["watchlist"]}
+    watchlist = {
+        row["ticker"]: {**_fetch_one(**row), "source": "core"}
+        for row in config["watchlist"]
+    }
     trading_date = next(iter(macro.values()))["trading_date"]
+    watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
     return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date}
+
+
+def _fetch_dynamic_tier(
+    config: dict, core: dict[str, dict], trading_date: str
+) -> dict[str, dict]:
+    """그날 거래대금 상위 종목을 코어 워치리스트 뒤에 붙입니다.
+
+    한국장(fetch_kr._fetch_dynamic_tier)과 같은 구조입니다. 코어와 달리 종목
+    하나가 실패해도 그 종목만 빼고 진행하고, 기준일이 코어와 다른 종목도
+    버립니다 — 이름도 모르는 종목 하나 때문에 그날 발행이 멈추면 안 됩니다.
+    """
+    settings = config.get("dynamic") or {}
+    if not settings.get("enabled"):
+        return {}
+
+    # 스크리너 이름("Dell Technologies Inc.")과 설정 키("Dell Technologies")가
+    # 법인 형태 표기 때문에 어긋나므로, 양쪽 다 다듬어서 맞춥니다.
+    name_ko_map = {
+        fetch_movers.clean_us_name(key).lower(): value
+        for key, value in (config.get("name_ko_map") or {}).items()
+    }
+    try:
+        movers = fetch_movers.fetch_top_dollar_volume_us(
+            exclude_tickers=set(core),
+            count=settings.get("count", 6),
+            min_market_cap=settings.get("min_market_cap", 10_000_000_000),
+        )
+    except Exception as exc:
+        print(f"[경고] 거래대금 상위 종목을 가져오지 못해 코어 워치리스트로만 진행합니다: {exc}")
+        return {}
+
+    added: dict[str, dict] = {}
+    for mover in movers:
+        ticker, name_en = mover["ticker"], mover["name"]
+        name_ko = name_ko_map.get(name_en.lower())
+        if not name_ko:
+            print(
+                f"[안내] '{name_en}'의 한글 표기가 config/watchlist_us.yaml의 "
+                "name_ko_map에 없어 한국어판에도 영문 이름이 나갑니다."
+            )
+        try:
+            entry = _fetch_one(
+                ticker=ticker, name=name_ko or name_en, name_en=name_en
+            )
+        except Exception as exc:
+            print(f"[안내] 동적 편입 제외 — {name_en}({ticker}) 시세 조회 실패: {exc}")
+            continue
+        if entry.get("trading_date") != trading_date:
+            print(
+                f"[안내] 동적 편입 제외 — {name_en}({ticker}) 기준일 "
+                f"{entry.get('trading_date')}이 코어({trading_date})와 다릅니다."
+            )
+            continue
+        added[ticker] = {
+            **entry,
+            "source": "dynamic",
+            "trading_value": mover["trading_value"],
+            "sector": mover["sector"],
+        }
+
+    if added:
+        names = ", ".join(entry["name"] for entry in added.values())
+        print(f"[안내] 그날 거래대금 상위로 편입: {names}")
+    return added
 
 
 if __name__ == "__main__":

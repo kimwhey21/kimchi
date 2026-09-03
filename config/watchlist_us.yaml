@@ -34,3 +34,90 @@ watchlist:
   - { ticker: "DE",    name: "디어", name_en: "Deere & Company" }
   - { ticker: "SOXX",  name: "필라델피아 반도체 ETF", name_en: "iShares Semiconductor ETF" }
   - { ticker: "CL=F",  name: "WTI 원유", name_en: "WTI Crude Oil" }
+
+# ── 동적 티어: 그날 주도주 자동 편입 ──────────────────────────────────
+# 위 16개는 고정이라 목록 밖에서 터진 날을 담지 못합니다. 2026-09-02가
+# 그랬습니다 — DELL이 15.81% 오르며 거래대금 181억 달러를 기록했는데
+# 워치리스트에 없어 카드로 만들 수 없었고, AVGO·SNDK·PLTR도 마찬가지였습니다.
+#
+# 나스닥 스크리너(api.nasdaq.com/api/screener/stocks)가 한 번의 요청으로 미국
+# 상장 종목 전체의 종가·거래량·시가총액을 주므로, 거래대금(종가 x 거래량)으로
+# 줄을 세워 상위 몇 개를 붙입니다. ETF는 이 엔드포인트에서 이미 빠져 있고
+# (SPY·QQQ가 상위에 없음), 우선주·워런트는 fetch_movers가 거릅니다.
+#
+# 실패해도 코어 16종목만으로 글이 나갑니다.
+dynamic:
+  enabled: true
+  count: 6
+  min_market_cap: 10000000000    # 시가총액 하한 (100억 달러)
+
+# 동적 편입 종목의 한글 표기입니다. 코어는 위에 name이 있고, 편입 종목은
+# 스크리너가 영문명만 주기 때문에 여기서 찾습니다. 없으면 영문명을 그대로
+# 쓰고 로그에 안내가 출력되니, 자주 올라오는 이름이 보이면 추가하세요.
+name_ko_map:
+  Broadcom: 브로드컴
+  Advanced Micro Devices: AMD
+  Dell Technologies: 델 테크놀로지스
+  Sandisk Corporation: 샌디스크
+  Palantir Technologies: 팔란티어
+  Space Exploration Technologies: 스페이스X
+  Oracle Corporation: 오라클
+  Netflix: 넷플릭스
+  Salesforce: 세일즈포스
+  Adobe: 어도비
+  Cisco Systems: 시스코
+  Qualcomm: 퀄컴
+  Texas Instruments: 텍사스인스트루먼트
+  Applied Materials: 어플라이드 머티리얼즈
+  Lam Research Corporation: 램리서치
+  KLA Corporation: KLA
+  Arm Holdings plc American Depositary Shares: ARM
+  Super Micro Computer: 슈퍼마이크로컴퓨터
+  Marvell Technology: 마벨 테크놀로지
+  Western Digital Corporation: 웨스턴디지털
+  Seagate Technology Holdings plc: 시게이트
+  International Business Machines: IBM
+  Uber Technologies: 우버
+  Airbnb: 에어비앤비
+  Shopify Inc.: 쇼피파이
+  Block: 블록
+  PayPal Holdings: 페이팔
+  Robinhood Markets: 로빈후드
+  MicroStrategy Incorporated: 마이크로스트래티지
+  JPMorgan Chase & Co.: JP모건
+  Bank of America Corporation: 뱅크오브아메리카
+  Wells Fargo & Company: 웰스파고
+  Citigroup: 씨티그룹
+  Goldman Sachs Group: 골드만삭스
+  Morgan Stanley: 모건스탠리
+  Berkshire Hathaway Inc.: 버크셔해서웨이
+  Visa Inc.: 비자
+  Mastercard Incorporated: 마스터카드
+  Exxon Mobil Corporation: 엑슨모빌
+  Chevron Corporation: 셰브런
+  Eli Lilly and Company: 일라이릴리
+  Johnson & Johnson: 존슨앤드존슨
+  Pfizer: 화이자
+  AbbVie Inc.: 애브비
+  UnitedHealth Group Incorporated: 유나이티드헬스
+  Novo Nordisk A/S: 노보노디스크
+  Costco Wholesale Corporation: 코스트코
+  The Home Depot: 홈디포
+  McDonald's Corporation: 맥도날드
+  Starbucks Corporation: 스타벅스
+  Nike: 나이키
+  The Coca-Cola Company: 코카콜라
+  Walt Disney Company: 디즈니
+  Boeing Company: 보잉
+  Caterpillar Inc.: 캐터필러
+  General Electric Company: GE
+  Lockheed Martin Corporation: 록히드마틴
+  RTX Corporation: RTX
+  Ford Motor Company: 포드
+  General Motors Company: GM
+  Rivian Automotive: 리비안
+  Lucid Group: 루시드
+  Alibaba Group Holding Limited: 알리바바
+  Taiwan Semiconductor Manufacturing Company Ltd.: TSMC
+  ASML Holding N.V.: ASML
+  Coupang: 쿠팡

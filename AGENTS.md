@@ -87,11 +87,12 @@
 - 인사이트 스토리 사진은 **검색어에 그날 코어 종목명이 들어 있을 때만** 붙는다
   (`publish_editorial._concrete_image_query`). 검수 없이 공개되는 경로라 추상 검색어는
   막는다("korean won banknote" -> 중국 위안화 사례). 이 가드를 넓히지 않는다.
-- 한국장 워치리스트는 **코어(고정 21종목) + 동적(그날 거래대금 상위 편입)** 2단이다.
-  코어는 `config/watchlist_kr.yaml`, 편입은 `src/fetch_movers.py`가 맡고 편입분에는
-  `source: "dynamic"`이 붙는다. 편입 기준을 등락률로 바꾸지 않는다 — 등락률 상위에는
-  잡주·레버리지 ETN이 올라온다(2026-09-03 실측). 편입 종목은 사진 대상에서
-  제외되고, 기준일이 코어와 다르면 버려진다. 대표 이미지의 LARGEST MOVE에는
+- 워치리스트는 두 시장 모두 **코어(고정) + 동적(그날 거래대금 상위 편입)** 2단이다.
+  코어는 `config/watchlist_kr.yaml`(21종목)·`config/watchlist_us.yaml`(16종목),
+  편입은 `src/fetch_movers.py`가 맡고(한국장 네이버 금융, 미국장 나스닥 스크리너)
+  편입분에는 `source: "dynamic"`이 붙는다. 편입 기준을 등락률로 바꾸지 않는다 —
+  등락률 상위에는 잡주·레버리지 ETN이 올라온다(2026-09-03 실측). 편입 종목은 사진
+  대상에서 제외되고, 기준일이 코어와 다르면 버려진다. 대표 이미지의 LARGEST MOVE에는
   편입 종목도 포함된다(라벨이 사실과 어긋나지 않게).
 - 카드 6개(`stock_section.featured_tickers`) 편성 기준은 `docs/editorial-style.md`의
   "종목 선정" 절을 따른다 — 등락률 순으로 기계적으로 자르지 않는다.

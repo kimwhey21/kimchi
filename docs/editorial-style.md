@@ -45,13 +45,15 @@
 
 ## 종목 선정 (카드 6개를 무엇으로 채울까)
 
-`price_data.watchlist`에는 두 종류가 섞여 있고, 각 항목의 `source` 필드로
-구분한다.
+한국장·미국장 모두 `price_data.watchlist`에는 두 종류가 섞여 있고, 각 항목의
+`source` 필드로 구분한다.
 
-- `source: "core"` — `config/watchlist_kr.yaml`의 고정 목록. 섹터 대표로
-  구성돼 있어 그날 어느 업종이 움직여도 최소 한 종목은 잡힌다.
+- `source: "core"` — `config/watchlist_kr.yaml` / `config/watchlist_us.yaml`의
+  고정 목록. 섹터 대표로 구성돼 있어 그날 어느 업종이 움직여도 최소 한
+  종목은 잡힌다.
 - `source: "dynamic"` — 그날 거래대금 상위로 자동 편입된 종목. 목록 밖에서
-  터진 날을 메우려고 붙인다. `trading_value`(거래대금, 원)가 함께 들어온다.
+  터진 날을 메우려고 붙인다. `trading_value`(한국장은 원, 미국장은 달러)가
+  함께 들어오고, 미국장은 `sector`도 들어온다.
 
 `stock_section.featured_tickers` 6개는 등락률 순으로 기계적으로 자르지 말고
 다음을 채운다.
