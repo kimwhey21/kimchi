@@ -199,7 +199,7 @@
   {% if item.image %}
   <img class="mb-story-photo" src="{{ item.image.url }}" alt="{{ item.image.alt or item.heading }}"{% if item.image.width and item.image.height %} width="{{ item.image.width }}" height="{{ item.image.height }}"{% endif %} loading="lazy">
   {% if item.image.credit %}
-  <p class="mb-photo-credit">{{ item.image.credit }}</p>
+  <p class="mb-photo-credit">{% if item.image.credit_url %}<a href="{{ item.image.credit_url }}" target="_blank" rel="noopener">{{ item.image.credit }}</a>{% else %}{{ item.image.credit }}{% endif %}</p>
   {% elif item.image.photographer and item.image.photographer_url %}
   <p class="mb-photo-credit">{{ "Photo" if lang == "en" else "사진" }}: <a href="{{ item.image.photographer_url }}" target="_blank" rel="noopener">{{ item.image.photographer }}</a> / Unsplash</p>
   {% endif %}

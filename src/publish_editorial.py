@@ -109,7 +109,17 @@ def _watchlist_names(price_data: dict) -> list[str]:
 
 
 def _concrete_image_query(query: str | None, price_data: dict) -> str | None:
-    """사진을 붙여도 되는 검색어인지 판단합니다. 아니면 None.
+    """사진을 붙여도 되는 검색어면 그대로, 아니면 None을 돌려줍니다."""
+    matched = _matched_core_name(query, price_data)
+    return query if matched else None
+
+
+def _matched_core_name(query: str | None, price_data: dict) -> str | None:
+    """검색어 안에 들어 있는 코어 종목명을 돌려줍니다. 없으면 None.
+
+    반환된 이름은 두 곳에 쓰입니다. 첫째, 사진을 붙여도 되는 검색어인지 판단
+    (아래 설명). 둘째, Unsplash에 결과가 없을 때 위키미디어에서 그 회사 사진을
+    찾는 열쇠 — 검색어가 아니라 종목 자체로 찾아야 엉뚱한 사진을 피합니다.
 
     통과 조건은 하나입니다 — **검색어에 그날 워치리스트 종목명이 들어 있을 것.**
 
@@ -129,7 +139,7 @@ def _concrete_image_query(query: str | None, price_data: dict) -> str | None:
     lowered = query.lower()
     for name in _watchlist_names(price_data):
         if name.lower() in lowered:
-            return query
+            return name
     print(
         f"[안내] 사진 없이 갑니다 — 검색어 '{query}'에 워치리스트 종목명이 없습니다. "
         "검수 없이 공개되는 경로라 구체적인 종목명이 든 검색어만 사진을 붙입니다."
@@ -145,8 +155,13 @@ def _attach_story_images(doc_section: dict | None, price_data: dict) -> dict | N
     used: set[str] = set()
     for story in doc_section["stories"]:
         story = dict(story)
-        query = _concrete_image_query(story.get("image_query"), price_data)
-        image = fetch_images.search_image(query, exclude_ids=used) if query else None
+        query = story.get("image_query")
+        entity = _matched_core_name(query, price_data)
+        image = (
+            fetch_images.search_image(query, exclude_ids=used, entity=entity)
+            if entity
+            else None
+        )
         if image:
             used.add(image["id"])
             print(f"[안내] 사진 첨부: '{query}' -> {image['id']} ({image.get('alt', '')[:40]})")
