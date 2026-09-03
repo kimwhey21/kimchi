@@ -621,7 +621,7 @@
       },
       {
         "heading": "델의 실적은 AI 서버 주문잔고 950억 달러였습니다",
-        "body": "델이 발표한 것은 분기 실적과 함께 제시한 주문 규모였습니다.\n\nYahoo Finance에 따르면 델은 분기에 AI 서버 신규 주문 609억 달러를 기록했고, 분기 말 주문잔고는 950억 달러였습니다. 분기 매출은 470억 달러로 전년 대비 58% 증가했고, 조정 주당순이익은 7.04달러로 203% 늘었습니다.\n\n회사는 연간 전망도 올렸습니다. The Motley Fool에 따르면 델은 FY27 매출 전망을 250억 달러 올려 1,920억 달러로 제시했고, 이는 전년 대비 약 70% 증가입니다. 조정 주당순이익 전망은 25.50달러로 148% 증가입니다.\n\n같은 방향의 종목이 함께 올랐습니다. 24/7 Wall St.에 따르면 휴렛팩커드 엔터프라이즈가 1.94%, HP가 2.16% 상승했습니다. 서버를 만드는 회사들이 함께 오른 하루입니다."
+        "body": "델이 발표한 것은 분기 실적과 함께 제시한 주문 규모였습니다.\n\n델은 분기에 AI 서버 신규 주문 609억 달러를 기록했고, 분기 말 주문잔고는 950억 달러였습니다. 분기 매출은 470억 달러로 전년 대비 58% 증가했고, 조정 주당순이익은 7.04달러로 203% 늘었습니다.\n\n회사는 연간 전망도 올렸습니다. FY27 매출 전망을 250억 달러 올려 1,920억 달러로 제시했고, 이는 전년 대비 약 70% 증가입니다. 조정 주당순이익 전망은 25.50달러로 148% 증가입니다.\n\n같은 방향의 종목이 함께 올랐습니다. 휴렛팩커드 엔터프라이즈가 1.94%, HP가 2.16% 상승했습니다. 서버를 만드는 회사들이 함께 오른 하루입니다."
       },
       {
         "heading": "메모리는 따라 올랐고, 반도체 설계는 따라오지 않았습니다",
@@ -629,12 +629,12 @@
       },
       {
         "heading": "팔란티어는 5.81% 내렸습니다",
-        "body": "같은 날 가장 크게 내린 종목은 팔란티어로, 5.81% 하락한 169.46달러였습니다.\n\nThe Motley Fool은 하락의 배경으로 차익 실현을 지목했습니다. 이 회사는 미 육군 TITAN 계약을 새로 따냈고 AIG의 피터 자피노를 금융 부문 총괄로 영입했는데도 주가는 내렸습니다. 같은 기사는 주가가 이익 대비 약 144배 수준까지 올라 있었다는 점과, 10년물 국채금리가 3년래 최고 수준에 가까워진 것이 성장주에 부담이 됐다는 점을 함께 들었습니다.\n\n이날 금리는 10년물 4.80%, 30년물 5.27%로 전 거래일과 거의 같았습니다. 금리가 더 오르지 않은 것이 지수 반등의 조건이었지만, 이미 높은 수준이라는 사실 자체는 그대로 남아 있습니다.\n\n금은 1.95% 올라 온스당 4,433달러였습니다. 주식과 금이 같이 오른 하루입니다."
+        "body": "같은 날 가장 크게 내린 종목은 팔란티어로, 5.81% 하락한 169.46달러였습니다.\n\n회사 쪽 소식은 나쁘지 않았습니다. 미 육군 TITAN 계약을 새로 따냈고, AIG의 피터 자피노를 금융 부문 총괄로 영입했습니다. 그런데도 주가는 내렸습니다. 배경으로 지목된 것은 차익 실현입니다 — 주가가 이익 대비 약 144배까지 올라 있었고, 10년물 국채금리가 3년래 최고 수준에 가까워 성장주에 부담이 되는 구간이었습니다.\n\n이날 금리는 10년물 4.80%, 30년물 5.27%로 전 거래일과 거의 같았습니다. 금리가 더 오르지 않은 것이 지수 반등의 조건이었지만, 이미 높은 수준이라는 사실 자체는 그대로 남아 있습니다.\n\n금은 1.95% 올라 온스당 4,433달러였습니다. 주식과 금이 같이 오른 하루입니다."
       }
     ],
     "theme_section": {
-      "heading": "이날 양쪽 끝",
-      "commentary": "같은 날 가장 크게 오른 종목과 가장 크게 내린 종목입니다.",
+      "heading": "등락 폭이 컸던 종목",
+      "commentary": "종가 기준으로 상승과 하락 양쪽 끝에 있던 종목입니다.",
       "highlights": [
         {
           "label": "상승 상위",
@@ -672,7 +672,7 @@
         {
           "heading": "델의 주문잔고 950억 달러가 뜻하는 것",
           "icon": "server",
-          "body": "델이 발표한 숫자는 매출보다 주문에 무게가 실려 있습니다. Yahoo Finance에 따르면 분기 AI 서버 신규 주문이 609억 달러, 분기 말 주문잔고가 950억 달러입니다. 주문잔고는 이미 받아둔 주문 중 아직 인도하지 않은 물량이므로, 앞으로의 매출을 가늠하는 숫자입니다.\n\n분기 실적도 함께 나왔습니다. 매출 470억 달러로 전년 대비 58% 증가, 조정 주당순이익 7.04달러로 203% 증가입니다. 회사는 FY27 매출 전망을 250억 달러 올려 1,920억 달러로 제시했습니다. 전망은 회사가 제시한 것이지 확정된 실적이 아닙니다.\n\n주가는 15.81% 올라 492.20달러로 마감했고 거래량은 3개월 평균의 353%였습니다. 같은 날 휴렛팩커드 엔터프라이즈 1.94%, HP 2.16% 상승으로 서버를 만드는 회사들이 함께 올랐습니다.\n\n확인할 지점은 인도입니다. 주문잔고는 계약이지 매출이 아닙니다. 이 물량이 실제로 언제 얼마씩 인도되는지가 다음 분기 실적에서 드러납니다.",
+          "body": "델이 발표한 숫자는 매출보다 주문에 무게가 실려 있습니다. 분기 AI 서버 신규 주문이 609억 달러, 분기 말 주문잔고가 950억 달러입니다. 주문잔고는 이미 받아둔 주문 중 아직 인도하지 않은 물량이므로, 앞으로의 매출을 가늠하는 숫자입니다.\n\n분기 실적도 함께 나왔습니다. 매출 470억 달러로 전년 대비 58% 증가, 조정 주당순이익 7.04달러로 203% 증가입니다. 회사는 FY27 매출 전망을 250억 달러 올려 1,920억 달러로 제시했습니다. 전망은 회사가 제시한 것이지 확정된 실적이 아닙니다.\n\n주가는 15.81% 올라 492.20달러로 마감했고 거래량은 3개월 평균의 353%였습니다. 같은 날 휴렛팩커드 엔터프라이즈 1.94%, HP 2.16% 상승으로 서버를 만드는 회사들이 함께 올랐습니다.\n\n확인할 지점은 인도입니다. 주문잔고는 계약이지 매출이 아닙니다. 이 물량이 실제로 언제 얼마씩 인도되는지가 다음 분기 실적에서 드러납니다.",
           "table": [
             {
               "label": "델 종가",
@@ -727,7 +727,7 @@
         {
           "heading": "좋은 소식이 나온 종목이 5.81% 내렸습니다",
           "icon": "scale",
-          "body": "팔란티어는 이날 5.81% 내린 169.46달러로 마감했습니다. 워치리스트에서 낙폭이 가장 컸습니다.\n\n하락의 이유가 악재는 아니었습니다. The Motley Fool에 따르면 이 회사는 미 육군 TITAN 계약을 새로 확보했고, AIG의 피터 자피노를 금융 부문 글로벌 총괄로 영입했습니다. 회사 쪽 소식은 양쪽 모두 긍정적이었는데 주가는 내렸습니다.\n\n같은 기사는 차익 실현을 배경으로 지목하면서, 주가가 이익 대비 약 144배 수준까지 올라 있었다는 점과 10년물 국채금리가 3년래 최고 수준에 가까워진 점을 함께 들었습니다. 이익이 먼 미래에 있는 종목일수록 금리가 높을 때 할인 부담이 커집니다.\n\n이날 지수가 오른 것과 팔란티어가 내린 것은 모순이 아닙니다. 지수는 금리가 더 오르지 않아 올랐고, 팔란티어는 금리가 이미 높다는 사실 때문에 내렸습니다. 같은 금리를 두 방향으로 읽은 하루입니다.",
+          "body": "팔란티어는 이날 5.81% 내린 169.46달러로 마감했습니다. 워치리스트에서 낙폭이 가장 컸습니다.\n\n하락의 이유가 악재는 아니었습니다. 이 회사는 미 육군 TITAN 계약을 새로 확보했고, AIG의 피터 자피노를 금융 부문 글로벌 총괄로 영입했습니다. 회사 쪽 소식은 양쪽 모두 긍정적이었는데 주가는 내렸습니다.\n\n배경으로 지목된 것은 차익 실현입니다. 주가는 이익 대비 약 144배 수준까지 올라 있었고, 10년물 국채금리는 3년래 최고 수준에 가까웠습니다. 이익이 먼 미래에 있는 종목일수록 금리가 높을 때 할인 부담이 커집니다.\n\n이날 지수가 오른 것과 팔란티어가 내린 것은 모순이 아닙니다. 지수는 금리가 더 오르지 않아 올랐고, 팔란티어는 금리가 이미 높다는 사실 때문에 내렸습니다. 같은 금리를 두 방향으로 읽은 하루입니다.",
           "table": [
             {
               "label": "팔란티어 종가",
@@ -790,7 +790,7 @@
       },
       {
         "heading": "The number was a $95 billion AI server backlog",
-        "body": "What Dell reported alongside its quarter was the size of its order book.\n\nAccording to Yahoo Finance, the company booked a record $60.9 billion in AI server orders during the quarter and ended it with a $95 billion backlog. Quarterly revenue was $47 billion, up 58% year over year, and adjusted earnings per share rose 203% to $7.04.\n\nManagement raised the full-year outlook with it. The Motley Fool reports Dell lifted its FY27 revenue guidance by $25 billion to $192 billion, close to 70% growth, with adjusted EPS guidance of $25.50, a 148% increase.\n\nThe rest of the server business moved with it. 24/7 Wall St. reports Hewlett Packard Enterprise closed 1.94% higher and HP 2.16% higher."
+        "body": "What Dell reported alongside its quarter was the size of its order book.\n\nThe company booked a record $60.9 billion in AI server orders during the quarter and ended it with a $95 billion backlog. Quarterly revenue was $47 billion, up 58% year over year, and adjusted earnings per share rose 203% to $7.04.\n\nManagement raised the full-year outlook with it, lifting FY27 revenue guidance by $25 billion to $192 billion — close to 70% growth — with adjusted EPS guidance of $25.50, a 148% increase.\n\nThe rest of the server business moved with it: Hewlett Packard Enterprise closed 1.94% higher and HP 2.16% higher."
       },
       {
         "heading": "Memory followed. Chip designers did not.",
@@ -798,12 +798,12 @@
       },
       {
         "heading": "Palantir fell 5.81%",
-        "body": "The day's largest decline was Palantir, down 5.81% at $169.46.\n\nThe Motley Fool attributed the fall to profit-taking. The company had won a new US Army TITAN contract and hired AIG's Peter Zaffino as its global head of financial services, and the stock fell anyway. The same report notes the shares had run to roughly 144 times earnings, and that the 10-year Treasury yield near three-year highs weighs on growth names.\n\nYields themselves barely moved: the 10-year at 4.80% and the 30-year at 5.27%, both effectively unchanged. Yields not rising further was the condition for the index rebound; that they are already high did not change.\n\nGold rose 1.95% to $4,433 an ounce — equities and gold higher on the same day."
+        "body": "The day's largest decline was Palantir, down 5.81% at $169.46.\n\nThe fall was read as profit-taking. The company had won a new US Army TITAN contract and hired AIG's Peter Zaffino as its global head of financial services, and the stock fell anyway — after a run that left it at roughly 144 times earnings, with the 10-year Treasury yield near three-year highs weighing on growth names.\n\nYields themselves barely moved: the 10-year at 4.80% and the 30-year at 5.27%, both effectively unchanged. Yields not rising further was the condition for the index rebound; that they are already high did not change.\n\nGold rose 1.95% to $4,433 an ounce — equities and gold higher on the same day."
       }
     ],
     "theme_section": {
-      "heading": "The two ends of the day",
-      "commentary": "The largest gain and the largest decline on the same session.",
+      "heading": "Biggest moves",
+      "commentary": "The two ends of the watchlist by closing-price change.",
       "highlights": [
         {
           "label": "Largest gain",
@@ -841,7 +841,7 @@
         {
           "heading": "What a $95 billion backlog means",
           "icon": "server",
-          "body": "The weight of Dell's report sat in orders rather than revenue. Yahoo Finance reports $60.9 billion in new AI server orders during the quarter and a $95 billion backlog at the end of it. A backlog is business already booked and not yet delivered, which makes it a read on revenue still to come.\n\nThe quarter itself was strong: $47 billion in revenue, up 58% year over year, and adjusted EPS of $7.04, up 203%. Management raised FY27 revenue guidance by $25 billion to $192 billion. That figure is company guidance, not a result.\n\nThe stock closed 15.81% higher at $492.20 on 353% of average volume. Hewlett Packard Enterprise rose 1.94% and HP 2.16% the same day.\n\nThe thing to track is delivery. A backlog is a set of contracts, not revenue. When and how fast it converts is what the next few quarters will show.",
+          "body": "The weight of Dell's report sat in orders rather than revenue. There were $60.9 billion in new AI server orders during the quarter and a $95 billion backlog at the end of it. A backlog is business already booked and not yet delivered, which makes it a read on revenue still to come.\n\nThe quarter itself was strong: $47 billion in revenue, up 58% year over year, and adjusted EPS of $7.04, up 203%. Management raised FY27 revenue guidance by $25 billion to $192 billion. That figure is company guidance, not a result.\n\nThe stock closed 15.81% higher at $492.20 on 353% of average volume. Hewlett Packard Enterprise rose 1.94% and HP 2.16% the same day.\n\nThe thing to track is delivery. A backlog is a set of contracts, not revenue. When and how fast it converts is what the next few quarters will show.",
           "table": [
             {
               "label": "Dell close",
@@ -896,7 +896,7 @@
         {
           "heading": "Good news, and the stock fell 5.81%",
           "icon": "scale",
-          "body": "Palantir closed down 5.81% at $169.46, the largest decline on the watchlist.\n\nThe cause was not bad news. The Motley Fool reports the company won a new US Army TITAN contract and hired AIG's Peter Zaffino as global head of financial services. Both are company-level positives, and the stock still fell.\n\nThe same report points to profit-taking, with the shares having run to roughly 144 times earnings, and to the 10-year Treasury yield sitting near three-year highs. The further into the future a company's earnings sit, the more a high discount rate costs it.\n\nThe index rising while Palantir fell is not a contradiction. The index rose because yields stopped climbing; Palantir fell because yields are already high. One rate, read two ways in a single session.",
+          "body": "Palantir closed down 5.81% at $169.46, the largest decline on the watchlist.\n\nThe cause was not bad news. The company won a new US Army TITAN contract and hired AIG's Peter Zaffino as global head of financial services. Both are company-level positives, and the stock still fell.\n\nWhat it looks like is profit-taking: the shares had run to roughly 144 times earnings, and the 10-year Treasury yield sits near three-year highs. The further into the future a company's earnings sit, the more a high discount rate costs it.\n\nThe index rising while Palantir fell is not a contradiction. The index rose because yields stopped climbing; Palantir fell because yields are already high. One rate, read two ways in a single session.",
           "table": [
             {
               "label": "Palantir close",
