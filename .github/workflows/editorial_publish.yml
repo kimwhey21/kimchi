@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 아래 '발행할 원고 결정'이 직전 커밋과 비교하려면 이력이 필요합니다.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -26,6 +29,28 @@ jobs:
 
       - name: 의존성 설치
         run: pip install -r requirements.txt
+
+      - name: 발행할 원고 결정
+        id: pick
+        # 푸시에 실제로 들어 있던 원고 파일을 그대로 넘깁니다.
+        #
+        # 전에는 아무 경로도 넘기지 않고 스크립트의 "가장 최근 파일"에 맡겼는데,
+        # 그 기본값이 파일명 알파벳 순이라 "us" > "kr"로 미국장 원고가 항상
+        # 이겼습니다. 2026-09-03 한국장 원고를 커밋했을 때 미국장 글이 다시
+        # 올라가고(이미 공개 상태라 아무 변화 없음) 한국장 글은 발행되지 않은
+        # 채 워크플로가 성공으로 끝났습니다.
+        run: |
+          FILES=""
+          if [ -n "${{ github.event.inputs.path }}" ]; then
+            FILES="${{ github.event.inputs.path }}"
+          elif [ "${{ github.event_name }}" = "push" ] && \
+               [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            FILES=$(git diff --name-only --diff-filter=d \
+                      "${{ github.event.before }}" "${{ github.sha }}" -- editorial \
+                    | grep '\.json$' | tr '\n' ' ' || true)
+          fi
+          echo "발행 대상: ${FILES:-(지정 없음 → 가장 최근 거래일 원고)}"
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
 
       - name: 원고 발행
         # 원고 커밋(push)으로 자동 실행된 경우에는 바로 공개합니다 — 루틴이
@@ -35,7 +60,7 @@ jobs:
         # 멈춰 아무것도 올라가지 않습니다.
         # 손으로 돌리는 workflow_dispatch는 종전대로 임시저장입니다.
         run: |
-          ARGS="${{ github.event.inputs.path }}"
+          ARGS="${{ steps.pick.outputs.files }}"
           if [ "${{ github.event_name }}" = "push" ]; then
             ARGS="$ARGS --publish-live"
           fi

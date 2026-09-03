@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -59,15 +60,47 @@ def _excerpt(doc: dict, limit: int = 300) -> str:
     return body[:limit].rsplit(" ", 1)[0].strip() + "…"
 
 
+_NAME_DATE = re.compile(r"(\d{4}-\d{2}-\d{2})\.json$")
+
+
+def _editorial_order(path: Path) -> tuple[str, float]:
+    """파일명에 든 거래일을 우선 보고, 없으면 수정 시각으로 정렬합니다."""
+    match = _NAME_DATE.search(path.name)
+    return (match.group(1) if match else "", path.stat().st_mtime)
+
+
 def _latest_editorial() -> Path | None:
-    files = sorted(EDITORIAL_DIR.glob("*.json"))
+    """가장 최근 거래일 원고를 고릅니다.
+
+    전에는 `sorted(glob("*.json"))[-1]`이었습니다. 그건 '가장 최근'이 아니라
+    '파일명 알파벳 마지막'이고, "us" > "kr"이라 미국장 원고가 하나라도 있으면
+    한국장 원고는 날짜가 더 최신이어도 절대 선택되지 않았습니다.
+
+    2026-09-03에 실제로 그렇게 됐습니다. 그날 한국장 원고(kr_2026-09-03.json)를
+    커밋했더니 워크플로가 us_2026-09-02.json을 골랐고, 그 글은 이미 공개 상태라
+    아무것도 바뀌지 않은 채 초록 체크로 끝났습니다. 한국장 글은 발행되지 않았고
+    실패로 잡히지도 않았습니다.
+
+    이제 워크플로는 푸시에 실제로 들어 있던 파일 경로를 넘기므로 이 함수는
+    수동 실행(workflow_dispatch, 경로를 비운 경우)의 기본값으로만 쓰입니다.
+    """
+    files = sorted(EDITORIAL_DIR.glob("*.json"), key=_editorial_order)
     return files[-1] if files else None
 
 
 def _watchlist_names(price_data: dict) -> list[str]:
-    """그날 워치리스트에 실제로 들어 있는 종목명(한글·영문)을 모읍니다."""
+    """사진을 붙여도 되는 종목명(한글·영문)을 모읍니다 — **코어 종목만**.
+
+    거래대금 상위로 그날 자동 편입된 종목(source="dynamic")은 제외합니다.
+    이 경로는 사람 검수 없이 바로 공개되는데, 편입 종목은 매일 달라지고 그중
+    상당수는 사진으로 확인할 만한 대상이 없습니다(지주회사, 중견 제조사 등).
+    삼성전자·현대차처럼 사진이 분명한 대상만 통과시키는 원칙을 유지하려면
+    목록이 고정된 코어만 여는 것이 맞습니다.
+    """
     names: list[str] = []
     for entry in (price_data.get("watchlist") or {}).values():
+        if entry.get("source") == "dynamic":
+            continue
         for key in ("name", "name_en"):
             value = (entry.get(key) or "").strip()
             if value:
@@ -216,7 +249,13 @@ def publish(path: Path, publish_live: bool = False) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="커밋된 편집 원고를 워드프레스에 올립니다")
-    parser.add_argument("path", nargs="?", help="editorial/*.json 경로 (생략하면 가장 최근 파일)")
+    # 한 번의 푸시에 한국장·미국장 원고가 함께 들어올 수 있어 경로를 여러 개
+    # 받습니다. 하나만 받던 시절에는 나머지가 조용히 발행되지 않았습니다.
+    parser.add_argument(
+        "paths",
+        nargs="*",
+        help="editorial/*.json 경로 (생략하면 가장 최근 거래일 파일 하나)",
+    )
     parser.add_argument(
         "--publish-live",
         action="store_true",
@@ -224,11 +263,22 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    path = Path(args.path) if args.path else _latest_editorial()
-    if path is None or not path.exists():
+    if args.paths:
+        paths = [Path(p) for p in args.paths]
+    else:
+        latest = _latest_editorial()
+        paths = [latest] if latest else []
+    if not paths:
         sys.exit("발행할 원고 파일이 없습니다 (editorial/*.json).")
-    print(f"원고: {path}")
-    publish(path, publish_live=args.publish_live)
+
+    # 하나라도 없는 경로가 있으면 아무것도 올리기 전에 멈춥니다.
+    missing = [p for p in paths if not p.exists()]
+    if missing:
+        sys.exit("원고 파일이 없습니다: " + ", ".join(str(p) for p in missing))
+
+    for path in paths:
+        print(f"원고: {path}")
+        publish(path, publish_live=args.publish_live)
 
 
 if __name__ == "__main__":
