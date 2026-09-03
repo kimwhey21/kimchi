@@ -171,7 +171,8 @@
         224.41
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "MU": {
       "ticker": "MU",
@@ -190,7 +191,8 @@
         956.08
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "INTC": {
       "ticker": "INTC",
@@ -209,7 +211,8 @@
         90.05
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "TSLA": {
       "ticker": "TSLA",
@@ -228,7 +231,8 @@
         357.01
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "AAPL": {
       "ticker": "AAPL",
@@ -247,7 +251,8 @@
         324.96
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "MSFT": {
       "ticker": "MSFT",
@@ -266,7 +271,8 @@
         496.82
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "AMZN": {
       "ticker": "AMZN",
@@ -285,7 +291,8 @@
         254.98
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "META": {
       "ticker": "META",
@@ -304,7 +311,8 @@
         592.85
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "GOOGL": {
       "ticker": "GOOGL",
@@ -323,7 +331,8 @@
         337.12
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "WMT": {
       "ticker": "WMT",
@@ -342,7 +351,8 @@
         106.09
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "MRNA": {
       "ticker": "MRNA",
@@ -361,7 +371,8 @@
         150.81
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "MRK": {
       "ticker": "MRK",
@@ -380,7 +391,8 @@
         151.64
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "COIN": {
       "ticker": "COIN",
@@ -399,7 +411,8 @@
         174.96
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "DE": {
       "ticker": "DE",
@@ -418,7 +431,8 @@
         698.37
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "SOXX": {
       "ticker": "SOXX",
@@ -437,7 +451,8 @@
         501.44
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
     },
     "CL=F": {
       "ticker": "CL=F",
@@ -456,7 +471,140 @@
         90.77
       ],
       "unit": "",
-      "trading_date": "2026-09-02"
+      "trading_date": "2026-09-02",
+      "source": "core"
+    },
+    "DELL": {
+      "ticker": "DELL",
+      "name": "델 테크놀로지스",
+      "name_en": "Dell Technologies",
+      "price": 492.2,
+      "change_pct": 15.81,
+      "series": [
+        433.19,
+        451.5,
+        463.82,
+        472.26,
+        456.24,
+        456.01,
+        425.0,
+        492.2
+      ],
+      "unit": "",
+      "trading_date": "2026-09-02",
+      "source": "dynamic",
+      "trading_value": 18073716401.8,
+      "sector": "Technology"
+    },
+    "AVGO": {
+      "ticker": "AVGO",
+      "name": "브로드컴",
+      "name_en": "Broadcom",
+      "price": 367.24,
+      "change_pct": -0.66,
+      "series": [
+        358.76,
+        356.74,
+        355.59,
+        371.54,
+        368.79,
+        370.34,
+        369.68,
+        367.24
+      ],
+      "unit": "",
+      "trading_date": "2026-09-02",
+      "source": "dynamic",
+      "trading_value": 14278042211.28,
+      "sector": "Technology"
+    },
+    "SNDK": {
+      "ticker": "SNDK",
+      "name": "샌디스크",
+      "name_en": "Sandisk",
+      "price": 1553.4,
+      "change_pct": 1.08,
+      "series": [
+        1493.12,
+        1480.77,
+        1499.37,
+        1484.95,
+        1484.98,
+        1566.7,
+        1536.87,
+        1553.4
+      ],
+      "unit": "",
+      "trading_date": "2026-09-02",
+      "source": "dynamic",
+      "trading_value": 13887027844.2,
+      "sector": "Technology"
+    },
+    "SPCX": {
+      "ticker": "SPCX",
+      "name": "스페이스X",
+      "name_en": "Space Exploration Technologies",
+      "price": 140.71,
+      "change_pct": -1.07,
+      "series": [
+        135.0,
+        137.95,
+        139.63,
+        140.87,
+        141.5,
+        143.69,
+        142.23,
+        140.71
+      ],
+      "unit": "",
+      "trading_date": "2026-09-02",
+      "source": "dynamic",
+      "trading_value": 7021959758.120001,
+      "sector": "Technology"
+    },
+    "PLTR": {
+      "ticker": "PLTR",
+      "name": "팔란티어",
+      "name_en": "Palantir Technologies",
+      "price": 169.46,
+      "change_pct": -5.81,
+      "series": [
+        175.89,
+        172.73,
+        177.5,
+        185.93,
+        186.29,
+        186.38,
+        179.92,
+        169.46
+      ],
+      "unit": "",
+      "trading_date": "2026-09-02",
+      "source": "dynamic",
+      "trading_value": 6757103961.8,
+      "sector": "Technology"
+    },
+    "AMD": {
+      "ticker": "AMD",
+      "name": "AMD",
+      "name_en": "Advanced Micro Devices",
+      "price": 457.06,
+      "change_pct": -0.55,
+      "series": [
+        456.75,
+        479.18,
+        480.93,
+        476.67,
+        465.58,
+        470.72,
+        459.61,
+        457.06
+      ],
+      "unit": "",
+      "trading_date": "2026-09-02",
+      "source": "dynamic",
+      "trading_value": 5456953605.0,
+      "sector": "Technology"
     }
   },
   "trading_date": "2026-09-02"

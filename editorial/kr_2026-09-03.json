@@ -90,7 +90,8 @@
         "trading_date": "2026-09-03",
         "foreign_net": -1321536,
         "institution_net": -2977902,
-        "foreign_ratio": 46.69
+        "foreign_ratio": 46.69,
+        "source": "core"
       },
       "000660": {
         "ticker": "000660",
@@ -112,7 +113,8 @@
         "trading_date": "2026-09-03",
         "foreign_net": -651507,
         "institution_net": -295219,
-        "foreign_ratio": 50.47
+        "foreign_ratio": 50.47,
+        "source": "core"
       },
       "035420": {
         "ticker": "035420",
@@ -134,7 +136,8 @@
         "trading_date": "2026-09-03",
         "foreign_net": 76335,
         "institution_net": -155161,
-        "foreign_ratio": 36.02
+        "foreign_ratio": 36.02,
+        "source": "core"
       },
       "035720": {
         "ticker": "035720",
@@ -156,7 +159,8 @@
         "trading_date": "2026-09-03",
         "foreign_net": -380763,
         "institution_net": -27876,
-        "foreign_ratio": 29.17
+        "foreign_ratio": 29.17,
+        "source": "core"
       },
       "373220": {
         "ticker": "373220",
@@ -178,7 +182,8 @@
         "trading_date": "2026-09-03",
         "foreign_net": 54939,
         "institution_net": -42466,
-        "foreign_ratio": 5.54
+        "foreign_ratio": 5.54,
+        "source": "core"
       },
       "207940": {
         "ticker": "207940",
@@ -200,7 +205,8 @@
         "trading_date": "2026-09-03",
         "foreign_net": 3956,
         "institution_net": -4289,
-        "foreign_ratio": 13.07
+        "foreign_ratio": 13.07,
+        "source": "core"
       },
       "086520": {
         "ticker": "086520",
@@ -222,7 +228,8 @@
         "trading_date": "2026-09-03",
         "foreign_net": -83199,
         "institution_net": -102054,
-        "foreign_ratio": 19.08
+        "foreign_ratio": 19.08,
+        "source": "core"
       },
       "247540": {
         "ticker": "247540",
@@ -244,7 +251,8 @@
         "trading_date": "2026-09-03",
         "foreign_net": 14709,
         "institution_net": -177826,
-        "foreign_ratio": 14.7
+        "foreign_ratio": 14.7,
+        "source": "core"
       },
       "196170": {
         "ticker": "196170",
@@ -266,7 +274,8 @@
         "trading_date": "2026-09-03",
         "foreign_net": -316139,
         "institution_net": -116942,
-        "foreign_ratio": 14.96
+        "foreign_ratio": 14.96,
+        "source": "core"
       },
       "277810": {
         "ticker": "277810",
@@ -288,38 +297,459 @@
         "trading_date": "2026-09-03",
         "foreign_net": 13848,
         "institution_net": -11188,
-        "foreign_ratio": 5.53
+        "foreign_ratio": 5.53,
+        "source": "core"
+      },
+      "009150": {
+        "ticker": "009150",
+        "name": "삼성전기",
+        "name_en": "Samsung Electro-Mechanics",
+        "price": 1348000.0,
+        "change_pct": -3.71,
+        "series": [
+          1362000.0,
+          1330000.0,
+          1385000.0,
+          1421000.0,
+          1458000.0,
+          1430000.0,
+          1400000.0,
+          1348000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": -110441,
+        "institution_net": -72871,
+        "foreign_ratio": 37.68
+      },
+      "042700": {
+        "ticker": "042700",
+        "name": "한미반도체",
+        "name_en": "Hanmi Semiconductor",
+        "price": 210500.0,
+        "change_pct": -1.41,
+        "series": [
+          217500.0,
+          219500.0,
+          222000.0,
+          219500.0,
+          220500.0,
+          215000.0,
+          213500.0,
+          210500.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": 67122,
+        "institution_net": -78099,
+        "foreign_ratio": 7.68
+      },
+      "105560": {
+        "ticker": "105560",
+        "name": "KB금융",
+        "name_en": "KB Financial Group",
+        "price": 177900.0,
+        "change_pct": 5.2,
+        "series": [
+          166400.0,
+          166600.0,
+          168100.0,
+          171600.0,
+          173300.0,
+          171200.0,
+          169100.0,
+          177900.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": -143011,
+        "institution_net": 370147,
+        "foreign_ratio": 79.18
+      },
+      "055550": {
+        "ticker": "055550",
+        "name": "신한지주",
+        "name_en": "Shinhan Financial Group",
+        "price": 114500.0,
+        "change_pct": 3.62,
+        "series": [
+          106500.0,
+          107400.0,
+          108800.0,
+          109700.0,
+          108900.0,
+          111100.0,
+          110500.0,
+          114500.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": -170974,
+        "institution_net": 444698,
+        "foreign_ratio": 62.01
+      },
+      "032830": {
+        "ticker": "032830",
+        "name": "삼성생명",
+        "name_en": "Samsung Life Insurance",
+        "price": 303000.0,
+        "change_pct": 3.06,
+        "series": [
+          285000.0,
+          309500.0,
+          307000.0,
+          310000.0,
+          306000.0,
+          309500.0,
+          294000.0,
+          303000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": 39031,
+        "institution_net": -2336,
+        "foreign_ratio": 23.18
+      },
+      "005380": {
+        "ticker": "005380",
+        "name": "현대차",
+        "name_en": "Hyundai Motor",
+        "price": 383500.0,
+        "change_pct": 1.46,
+        "series": [
+          421000.0,
+          408000.0,
+          398000.0,
+          399500.0,
+          403500.0,
+          400500.0,
+          378000.0,
+          383500.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": 77716,
+        "institution_net": 2807,
+        "foreign_ratio": 24.29
+      },
+      "000270": {
+        "ticker": "000270",
+        "name": "기아",
+        "name_en": "Kia",
+        "price": 127400.0,
+        "change_pct": 2.41,
+        "series": [
+          134900.0,
+          131400.0,
+          126100.0,
+          128000.0,
+          131000.0,
+          131200.0,
+          124400.0,
+          127400.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": 198357,
+        "institution_net": -28443,
+        "foreign_ratio": 39.28
+      },
+      "329180": {
+        "ticker": "329180",
+        "name": "HD현대중공업",
+        "name_en": "HD Hyundai Heavy Industries",
+        "price": 435000.0,
+        "change_pct": 3.08,
+        "series": [
+          464500.0,
+          464500.0,
+          470000.0,
+          457000.0,
+          449500.0,
+          453000.0,
+          422000.0,
+          435000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": -27683,
+        "institution_net": 38150,
+        "foreign_ratio": 14.02
+      },
+      "012450": {
+        "ticker": "012450",
+        "name": "한화에어로스페이스",
+        "name_en": "Hanwha Aerospace",
+        "price": 1047000.0,
+        "change_pct": 2.15,
+        "series": [
+          1102000.0,
+          1087000.0,
+          1150000.0,
+          1157000.0,
+          1102000.0,
+          1058000.0,
+          1025000.0,
+          1047000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": -4037,
+        "institution_net": 18776,
+        "foreign_ratio": 45.46
+      },
+      "034020": {
+        "ticker": "034020",
+        "name": "두산에너빌리티",
+        "name_en": "Doosan Enerbility",
+        "price": 79200.0,
+        "change_pct": 3.39,
+        "series": [
+          80700.0,
+          85800.0,
+          85900.0,
+          88200.0,
+          82500.0,
+          81400.0,
+          76600.0,
+          79200.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": -249502,
+        "institution_net": 291424,
+        "foreign_ratio": 23.64
+      },
+      "068270": {
+        "ticker": "068270",
+        "name": "셀트리온",
+        "name_en": "Celltrion",
+        "price": 187100.0,
+        "change_pct": 0.43,
+        "series": [
+          189600.0,
+          193400.0,
+          191300.0,
+          190700.0,
+          188900.0,
+          188000.0,
+          186300.0,
+          187100.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": -44456,
+        "institution_net": 56520,
+        "foreign_ratio": 25.42
+      },
+      "278470": {
+        "ticker": "278470",
+        "name": "에이피알",
+        "name_en": "APR",
+        "price": 406000.0,
+        "change_pct": -3.1,
+        "series": [
+          440500.0,
+          442000.0,
+          434500.0,
+          461500.0,
+          464500.0,
+          432500.0,
+          419000.0,
+          406000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "core",
+        "foreign_net": 28490,
+        "institution_net": -61810,
+        "foreign_ratio": 38.1
+      },
+      "402340": {
+        "ticker": "402340",
+        "name": "SK스퀘어",
+        "name_en": "SK Square",
+        "price": 981000.0,
+        "change_pct": -0.1,
+        "series": [
+          1060000.0,
+          1058000.0,
+          1068000.0,
+          1028000.0,
+          1037000.0,
+          1067000.0,
+          982000.0,
+          981000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 344063000000,
+        "foreign_net": 21025,
+        "institution_net": -14552,
+        "foreign_ratio": 46.22
+      },
+      "006400": {
+        "ticker": "006400",
+        "name": "삼성SDI",
+        "name_en": "Samsung SDI",
+        "price": 539000.0,
+        "change_pct": 0.19,
+        "series": [
+          519000.0,
+          516000.0,
+          569000.0,
+          571000.0,
+          577000.0,
+          569000.0,
+          538000.0,
+          539000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 237375000000,
+        "foreign_net": 131,
+        "institution_net": -9989,
+        "foreign_ratio": 25.84
+      },
+      "010140": {
+        "ticker": "010140",
+        "name": "삼성중공업",
+        "name_en": "Samsung Heavy Industries",
+        "price": 21650.0,
+        "change_pct": 8.58,
+        "series": [
+          20450.0,
+          20700.0,
+          21000.0,
+          21200.0,
+          20900.0,
+          21000.0,
+          19940.0,
+          21650.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 151618000000,
+        "foreign_net": 1205924,
+        "institution_net": 1486884,
+        "foreign_ratio": 28.96
+      },
+      "012330": {
+        "ticker": "012330",
+        "name": "현대모비스",
+        "name_en": "Hyundai Mobis",
+        "price": 423500.0,
+        "change_pct": 1.93,
+        "series": [
+          498000.0,
+          464000.0,
+          451500.0,
+          450500.0,
+          453500.0,
+          443500.0,
+          415500.0,
+          423500.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 149455000000,
+        "foreign_net": 67611,
+        "institution_net": -12628,
+        "foreign_ratio": 37.74
+      },
+      "316140": {
+        "ticker": "316140",
+        "name": "우리금융지주",
+        "name_en": "Woori Financial Group",
+        "price": 34650.0,
+        "change_pct": 0.43,
+        "series": [
+          32600.0,
+          33000.0,
+          32950.0,
+          33900.0,
+          33800.0,
+          34550.0,
+          34500.0,
+          34650.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 145464000000,
+        "foreign_net": 13051580,
+        "institution_net": 1006253,
+        "foreign_ratio": 50.11
+      },
+      "096770": {
+        "ticker": "096770",
+        "name": "SK이노베이션",
+        "name_en": "SK Innovation",
+        "price": 130800.0,
+        "change_pct": -0.53,
+        "series": [
+          125000.0,
+          111200.0,
+          112000.0,
+          116900.0,
+          125500.0,
+          135300.0,
+          131500.0,
+          130800.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-03",
+        "source": "dynamic",
+        "trading_value": 133398000000,
+        "foreign_net": 51920,
+        "institution_net": 85505,
+        "foreign_ratio": 15.18
       }
     },
     "trading_date": "2026-09-03"
   },
   "ko": {
-    "title": "개인·외국인·기관이 모두 팔았지만 코스피는 자사주 매수에 힘입어 0.26% 올랐습니다",
+    "title": "삼성중공업 8.58%, KB금융 5.20%… 코스피를 올린 것은 반도체가 아니었습니다",
     "narrative": [
       {
-        "heading": "장중 6,439까지 내려갔다가 상승으로 돌아섰습니다",
-        "body": "9월 3일 코스피는 16.76포인트, 0.26% 오른 6,579.48로 마감했습니다. 코스닥은 13.77포인트, 1.71% 내린 790.21로 800선을 내줬습니다.\n\n종가만 보면 조용한 날이지만 장중 등락 폭은 240포인트가 넘습니다. EBN에 따르면 지수는 6,650.33으로 출발해 6,682.97까지 올랐다가, 오후에 전 거래일보다 123.33포인트(1.88%) 낮은 6,439.49까지 내려갔습니다. 그리고 마감 전에 낙폭을 모두 되돌렸습니다.\n\n방향을 바꾼 재료는 중동이었습니다. 이란이 쿠웨이트에 주둔한 미군 기지를 미사일과 드론으로 공격했다는 소식이 오후 2시를 지나 전해지자 위험 회피 심리가 빠르게 퍼졌습니다. 이날 거래대금은 18조 8,900억 원, 거래량은 3억 5,393만 주였고 상승 424종목, 하락 433종목으로 갈렸습니다."
+        "heading": "지수는 0.26% 올랐고, 장중 등락 폭은 240포인트가 넘었습니다",
+        "body": "9월 3일 코스피는 16.76포인트, 0.26% 오른 6,579.48로 마감했습니다. 코스닥은 13.77포인트, 1.71% 내린 790.21로 800선을 내줬습니다.\n\n종가만 보면 조용한 날이지만 장중에는 아니었습니다. 위키트리에 따르면 코스피는 6,682.97까지 올랐다가 6,439.49까지 내려갔고, 마감 전에 낙폭을 모두 되돌렸습니다. 고점과 저점의 차이가 243포인트입니다.\n\n오후 급락의 계기는 중동이었습니다. 이란이 쿠웨이트에 주둔한 미군 기지를 미사일과 드론으로 공격했다는 소식이 오후 2시를 지나 전해지자 위험 회피 심리가 빠르게 퍼졌습니다. 코스피 거래대금은 18조 8,900억 원이었고 상승 424종목, 하락 433종목으로 갈렸습니다."
       },
       {
-        "heading": "세 주체가 모두 팔았고 받아낸 곳은 기타법인이었습니다",
-        "body": "이날 유가증권시장 수급표에는 매수 주체가 사실상 하나뿐이었습니다.\n\n더퍼블릭에 따르면 개인이 5,397억 원, 외국인이 4,867억 원, 기관이 6,340억 원을 순매도했습니다. 반대편에서 기타법인이 1조 6,657억 원을 순매수했습니다. 세 주체가 판 금액의 합과 기타법인이 산 금액이 거의 같습니다.\n\n기타법인 규모가 커진 이유는 자사주입니다. 상장사가 자기 주식을 사면 거래소 투자자별 통계에서 기타법인 매매로 집계되는데, 삼성전자와 SK하이닉스가 진행 중인 자사주 매입이 여기에 들어갑니다. 이투데이는 최근 기타법인의 하루 순매수 규모를 1조 6천억 원 안팎으로 집계했습니다.\n\n이 구도를 알아야 이날 상승의 성격이 보입니다. 지수를 끌어올린 것은 새로 들어온 투자 수요가 아니라, 정해진 기간에 정해진 금액을 사기로 이미 공시된 매수였습니다."
+        "heading": "오른 업종은 조선·금융·자동차·발전이었습니다",
+        "body": "이날 상승 종목을 늘어놓으면 한 방향이 보입니다. 삼성중공업이 8.58% 올라 21,650원, HD현대중공업이 3.08% 올라 435,000원, 한화에어로스페이스가 2.15% 올라 1,047,000원으로 마감했습니다. 금융에서는 KB금융이 5.20%, 신한지주가 3.62%, 삼성생명이 3.06% 올랐습니다. 두산에너빌리티는 3.39%, 기아는 2.41%, 현대차는 1.46% 상승했습니다.\n\n반대편은 기술주였습니다. 삼성전기가 3.71% 내렸고 알테오젠은 5.19%, 에이피알은 3.10% 하락했습니다. 삼성바이오로직스 1.60%, 한미반도체 1.41%, SK하이닉스 1.05%, 삼성전자 0.20% 하락으로 반도체와 바이오가 나란히 밀렸습니다.\n\n조선은 아침부터 강했습니다. CBC뉴스는 오전 9시 44분 기준으로 한화오션·대한조선·HD한국조선해양이 함께 오르고 있다고 전했습니다. 다만 그 시각 삼성중공업 상승률은 1.55%였고, 8%대 상승은 오후에 만들어졌습니다. 이날 삼성중공업 상승의 직접적인 계기를 밝힌 보도는 확인하지 못했습니다. 확인된 재료는 8월 31일 공시한 4,445억 원 규모 컨테이너운반선 2척 수주입니다."
       },
       {
-        "heading": "반도체 대신 보험과 은행이 올랐습니다",
-        "body": "업종별로는 금리가 높을 때 유리한 쪽으로 자금이 옮겨 갔습니다.\n\n머니투데이에 따르면 KRX 보험지수가 3.65% 오른 4,603.67, KRX 은행지수가 2.51% 오른 1,736.61로 마감했습니다. KB금융이 5%대, 삼성생명이 3%대 상승했습니다. 미국 시장금리가 높은 수준에 머무는 동안 운용 수익이 늘어나는 업종입니다.\n\n반도체는 반대 방향이었습니다. 삼성전자는 0.20% 내린 250,000원, SK하이닉스는 1.05% 내린 1,596,000원이었고 삼성전기는 3.71% 하락했습니다. 아침에는 미국 금리 부담이 줄었다는 해석에 반도체가 반등하며 출발했지만, 오후 급락 구간을 지나면서 상승분을 반납했습니다.\n\n워치리스트에서 가장 많이 오른 종목은 LG에너지솔루션이었습니다. 5.18% 오른 365,500원으로 마감했습니다."
+        "heading": "지수를 떠받친 매수 주체는 상장사 자신이었습니다",
+        "body": "업종이 갈린 것과 별개로, 지수가 상승으로 마감할 수 있었던 이유는 수급표에 있습니다.\n\n더퍼블릭에 따르면 유가증권시장에서 개인이 5,397억 원, 외국인이 4,867억 원, 기관이 6,340억 원을 순매도했고 기타법인이 1조 6,657억 원을 순매수했습니다. 세 주체가 판 금액의 합과 기타법인이 산 금액이 거의 같습니다.\n\n기타법인이 커진 이유는 자사주입니다. 상장사가 자기 주식을 사면 거래소 투자자별 통계에서 기타법인 매매로 집계되는데, 삼성전자와 SK하이닉스가 진행 중인 자사주 매입이 여기에 들어갑니다. 이투데이는 최근 기타법인의 하루 순매수 규모를 1조 6천억 원 안팎으로 집계했습니다.\n\n그래서 이날 상승은 두 겹입니다. 아래에서는 자사주가 대형주 하단을 받쳤고, 위에서는 조선·금융·자동차가 지수를 끌어올렸습니다. 새로 들어온 투자 수요가 지수를 올린 날로 읽기는 어렵습니다."
       },
       {
         "heading": "코스닥은 800선을 내줬습니다",
-        "body": "코스피와 코스닥의 방향이 갈린 날입니다. 코스닥에는 자사주 매입으로 지수를 떠받칠 초대형주가 없습니다.\n\nCBC뉴스에 따르면 코스닥에서는 개인이 3,403억 원을 순매수했고 기관이 1,974억 원, 외국인이 1,320억 원을 순매도했습니다. 코스피와 달리 개인이 매수 쪽에 섰습니다.\n\n시가총액 1위 알테오젠이 15,500원(5.19%) 내린 283,000원으로 마감했고 심텍이 4.78%, 원익IPS가 4.28%, 주성엔지니어링이 3.28% 내렸습니다. 반도체 장비주가 나란히 하락하면서 지수 낙폭이 커졌습니다.\n\n환율은 주식과 방향이 달랐습니다. 이날 원/달러는 1,357.0원(하나은행 16:26 고시)으로 0.24% 내렸고, 서울 외환시장 주간거래 종가는 9.4원 내린 1,359.3원이었습니다. 이데일리는 약달러와 저가 매수를 배경으로 지목했습니다. 브렌트유는 배럴당 95달러 부근에 머물렀습니다."
+        "body": "코스피와 코스닥의 방향이 갈린 날입니다. 코스닥에는 자사주 매입으로 지수를 떠받칠 초대형주가 없고, 이날 오른 업종의 대표 종목도 대부분 코스피에 있습니다.\n\nCBC뉴스에 따르면 코스닥에서는 개인이 3,403억 원을 순매수했고 기관이 1,974억 원, 외국인이 1,320억 원을 순매도했습니다. 시가총액 1위 알테오젠이 15,500원(5.19%) 내린 283,000원으로 마감했고 심텍이 4.78%, 원익IPS가 4.28%, 주성엔지니어링이 3.28% 내렸습니다.\n\n환율은 주식과 방향이 달랐습니다. 원/달러는 1,357.0원(하나은행 16:26 고시)으로 0.24% 내렸고, 서울 외환시장 주간거래 종가는 9.4원 내린 1,359.3원이었습니다."
       }
     ],
     "theme_section": {
-      "heading": "등락 폭이 컸던 종목",
-      "commentary": "종가 기준으로 상승과 하락 양쪽 끝에 있던 종목입니다.",
+      "heading": "이날 양쪽 끝",
+      "commentary": "같은 날 가장 크게 오른 종목과 가장 크게 내린 종목입니다.",
       "highlights": [
         {
           "label": "상승 상위",
-          "ticker": "373220"
+          "ticker": "010140"
         },
         {
           "label": "낙폭 상위",
@@ -329,23 +759,23 @@
     },
     "stock_section": {
       "heading": "주요 종목 등락",
-      "commentary": "자사주 매입이 받친 반도체 대형주와, 코스닥 낙폭을 키운 종목을 함께 놓았습니다.",
+      "commentary": "이날 지수를 끌어올린 조선·금융과, 같은 날 반대로 움직인 반도체·바이오를 함께 놓았습니다.",
       "featured_tickers": [
-        "373220",
+        "010140",
+        "105560",
         "005930",
         "000660",
         "196170",
-        "207940",
-        "247540"
+        "009150"
       ]
     },
     "outlook": {
       "heading": "다음 거래일에 확인할 것",
-      "body": "첫째, 중동입니다. 이날 장중 급락의 직접적인 계기가 쿠웨이트 주둔 미군 기지 공격 소식이었던 만큼, 충돌이 더 번지는지에 따라 장중 변동 폭이 다시 커질 수 있습니다.\n\n둘째, 기타법인 매수가 이어지는지입니다. 자사주 매입은 기간과 한도가 정해진 매수라 언젠가 끝납니다. 이 매수가 줄어드는 날 개인·외국인·기관이 여전히 파는 쪽이면 이날과 같은 마감은 나오지 않습니다.\n\n셋째, 코스닥 800선입니다. 코스닥에는 자사주로 지수를 받칠 초대형주가 없어 수급 변화가 지수에 더 빨리 반영됩니다.\n\n넷째, 보험·은행의 강세가 하루짜리인지입니다. 이날 상승은 미국 금리가 높게 유지된다는 전제에 기댄 것이라, 금리가 내려오면 근거도 같이 약해집니다."
+      "body": "첫째, 중동입니다. 이날 장중 급락의 계기가 쿠웨이트 주둔 미군 기지 공격 소식이었던 만큼, 충돌이 더 번지는지에 따라 장중 변동 폭이 다시 커질 수 있습니다.\n\n둘째, 조선주의 상승이 이어지는지입니다. 이날 삼성중공업 8.58% 상승의 계기를 밝힌 보도는 확인되지 않았습니다. 수주 공시처럼 확인 가능한 재료가 뒤따르는지 보고 판단할 문제입니다.\n\n셋째, 기타법인 매수가 이어지는지입니다. 자사주 매입은 공시된 기간과 금액 안에서만 이뤄집니다. 이 매수가 줄어드는 날 개인·외국인·기관이 여전히 파는 쪽이면 이날과 같은 마감은 나오지 않습니다.\n\n넷째, 금융주 강세가 하루짜리인지입니다. 미국 시장금리가 높게 유지된다는 전제에 기댄 상승이라, 금리가 내려오면 근거도 함께 약해집니다."
     },
     "closing": {
       "heading": "정리하면",
-      "body": "코스피는 올랐지만 이날 산 주체는 개인도 외국인도 기관도 아니었습니다. 상장사가 스스로 사들인 자사주가 세 주체의 매도 물량을 받아내면서 지수가 상승으로 마감했습니다. 같은 장치가 없는 코스닥이 1.71% 내려 800선을 내준 것이 그 차이를 보여줍니다."
+      "body": "코스피는 0.26% 올랐지만 그 안에서 종목은 뚜렷하게 갈렸습니다. 조선·금융·자동차·발전이 오르고 반도체·바이오가 내렸습니다. 여기에 상장사가 사들인 자사주가 세 투자 주체의 매도 물량을 받아내면서 지수가 상승으로 마감했습니다. 같은 장치가 없고 오른 업종의 대표 종목도 적은 코스닥이 1.71% 내려 800선을 내준 것이 그 차이를 보여줍니다."
     },
     "insight_section": {
       "heading": "이날 눈여겨볼 세 가지",
@@ -353,7 +783,7 @@
         {
           "heading": "지수는 올랐는데 산 주체는 상장사 자신이었습니다",
           "icon": "scale",
-          "body": "투자자별 수급을 나란히 놓으면 이날 상승의 출처가 좁혀집니다. 더퍼블릭에 따르면 유가증권시장에서 개인 5,397억 원, 외국인 4,867억 원, 기관 6,340억 원이 순매도였고, 기타법인만 1조 6,657억 원 순매수였습니다. 세 주체의 매도 합계가 1조 6,604억 원이니 기타법인 한 곳이 거의 그대로 받아낸 셈입니다.\n\n기타법인은 원래 지수를 좌우하는 주체가 아닙니다. 지금 이 항목이 커진 것은 삼성전자와 SK하이닉스가 자사주를 사고 있기 때문입니다. 상장사의 자기주식 취득은 거래소 통계에서 기타법인 매매로 잡힙니다. 이투데이는 최근 이 규모가 하루 1조 6천억 원 안팎으로 이어지고 있다고 전했습니다.\n\n그래서 이날 종가는 수요가 살아났다는 신호로 읽기 어렵습니다. 블록미디어는 지수가 장중 6,400선까지 내려갔다가 상승 마감한 것을 하방 경직성의 확인으로 보면서도, 외국인과 기관이 동시 순매도를 이어가고 코스닥이 1.71% 내린 점에서 투자 심리가 회복된 것으로 보기는 어렵다고 전했습니다.\n\n확인할 지점은 하나로 좁혀집니다. 자사주 매입은 공시된 기간과 금액 안에서만 이뤄집니다. 그 매수가 줄어드는 시점에 나머지 세 주체가 어느 쪽에 서 있는지가 다음 국면을 가릅니다.",
+          "body": "투자자별 수급을 나란히 놓으면 이날 상승의 출처가 좁혀집니다. 더퍼블릭에 따르면 유가증권시장에서 개인 5,397억 원, 외국인 4,867억 원, 기관 6,340억 원이 순매도였고, 기타법인만 1조 6,657억 원 순매수였습니다. 세 주체의 매도 합계가 1조 6,604억 원이니 기타법인 한 곳이 거의 그대로 받아낸 셈입니다.\n\n기타법인은 원래 지수를 좌우하는 주체가 아닙니다. 지금 이 항목이 커진 것은 삼성전자와 SK하이닉스가 자사주를 사고 있기 때문입니다. 상장사의 자기주식 취득은 거래소 통계에서 기타법인 매매로 잡힙니다. 이투데이는 최근 이 규모가 하루 1조 6천억 원 안팎으로 이어지고 있다고 전했습니다.\n\n정작 그 두 종목의 종가는 삼성전자 0.20% 하락, SK하이닉스 1.05% 하락이었습니다. 자사주 매입이 주가를 끌어올린 것이 아니라 하단을 받친 날에 가깝습니다. 블록미디어도 지수가 6,400선까지 내려갔다가 상승 마감한 것을 하방 경직성의 확인으로 보면서, 외국인과 기관이 동시에 순매도한 점에서 투자 심리가 회복된 것으로 보기는 어렵다고 전했습니다.\n\n확인할 지점은 하나로 좁혀집니다. 자사주 매입은 공시된 기간과 금액 안에서만 이뤄집니다. 그 매수가 줄어드는 시점에 나머지 세 주체가 어느 쪽에 서 있는지가 다음 국면을 가릅니다.",
           "table": [
             {
               "label": "개인",
@@ -372,64 +802,63 @@
               "value": "1조 6,657억 원 순매수"
             },
             {
-              "label": "코스피 종가",
-              "value": "6,579.48 (+0.26%)"
+              "label": "삼성전자 종가",
+              "value": "250,000원 (-0.20%)"
             }
           ],
           "image_query": "Samsung Electronics semiconductor"
         },
         {
-          "heading": "LG에너지솔루션이 5.18% 오른 재료는 ESS였습니다",
-          "icon": "battery",
-          "body": "이날 워치리스트에서 유일하게 5% 넘게 오른 종목입니다. LG에너지솔루션은 18,000원(5.18%) 오른 365,500원으로 마감했습니다.\n\n국제뉴스에 따르면 하나증권 김현주 연구원은 정부가 에너지 안보를 중심에 둔 전환을 추진하면서 태양광과 ESS 시장이 커질 것으로 봤습니다. 국내 ESS 시장이 성장하면 국내에 탈중국 공급망이 자연스럽게 자리 잡고, 이것이 북미 사업에도 긍정적으로 작용한다는 설명입니다. 하나증권은 이날 매수 의견과 목표주가 48만 원을 유지했습니다. 목표주가는 확정된 사실이 아니라 증권사의 전망입니다.\n\n수급은 방향이 갈렸습니다. 외국인이 54,939주를 순매수했고 기관은 42,466주를 순매도했습니다. 외국인 보유율은 5.54%로 워치리스트 안에서 가장 낮은 축이라, 외국인 매매가 주가에 미치는 영향이 반도체 대형주와는 다릅니다.\n\n같은 2차전지 안에서도 온도 차가 있었습니다. 에코프로비엠은 0.19% 오르는 데 그쳤고 에코프로는 0.37% 내렸습니다. 업종 전체가 아니라 ESS라는 재료에 반응한 하루였습니다.",
+          "heading": "조선주가 이날 상승률 1위였고, 이유는 아직 설명되지 않았습니다",
+          "icon": "server",
+          "body": "삼성중공업은 8.58% 올라 21,650원으로 마감했습니다. 이날 시황에서 등락률이 가장 큰 종목이었고, 외국인은 1,205,924주를 순매수했습니다.\n\n조선 업종 전체가 아침부터 강했습니다. CBC뉴스는 오전 9시 44분 기준으로 동일스틸럭스 16.41%, 한화오션 1.71%, 대한조선 1.46%, HD한국조선해양 1.21% 상승을 전했습니다. 다만 같은 시각 삼성중공업은 1.55%였고 HD현대중공업은 0.59% 하락 중이었습니다. 두 종목 모두 오후에 방향이 바뀌어 삼성중공업 8.58%, HD현대중공업 3.08% 상승으로 마감했습니다.\n\n오후의 상승 폭을 설명한 보도는 확인하지 못했습니다. 확인된 사실은 8월 31일 공시입니다. 아주경제에 따르면 삼성중공업은 아프리카 지역 선사로부터 컨테이너운반선 2척을 4,445억 원에 수주했다고 공시했습니다. 이 공시는 이날 상승의 배경일 수는 있어도 상승 폭을 설명하는 근거로는 부족합니다.\n\n그래서 이 상승은 아직 확인 단계에 있습니다. 수주 공시나 정책 발표처럼 문서로 남는 재료가 뒤따르는지, 아니면 다음 거래일에 되돌리는지를 보고 판단하는 편이 순서에 맞습니다.",
           "table": [
             {
-              "label": "LG에너지솔루션",
-              "value": "365,500원 (+5.18%)"
+              "label": "삼성중공업",
+              "value": "21,650원 (+8.58%)"
             },
             {
               "label": "외국인",
-              "value": "54,939주 순매수"
+              "value": "1,205,924주 순매수"
             },
             {
-              "label": "기관",
-              "value": "42,466주 순매도"
+              "label": "HD현대중공업",
+              "value": "435,000원 (+3.08%)"
             },
             {
-              "label": "에코프로비엠",
-              "value": "106,500원 (+0.19%)"
+              "label": "한화에어로스페이스",
+              "value": "1,047,000원 (+2.15%)"
             },
             {
-              "label": "에코프로",
-              "value": "81,700원 (-0.37%)"
+              "label": "확인된 재료",
+              "value": "8/31 컨테이너선 2척 4,445억 원 수주"
             }
-          ],
-          "image_query": "LG Energy Solution battery"
+          ]
         },
         {
-          "heading": "금리가 높게 유지되는 동안 자금은 보험·은행으로 갔습니다",
+          "heading": "금리가 높게 유지되는 동안 자금은 금융주로 갔습니다",
           "icon": "shield",
-          "body": "이날 상승 업종은 성장주가 아니라 금리 수혜 업종이었습니다. 머니투데이에 따르면 KRX 보험지수가 3.65% 오른 4,603.67, KRX 은행지수가 2.51% 오른 1,736.61로 마감했습니다. KB금융이 5%대, 삼성생명이 3%대 올랐습니다.\n\n반대편에는 반도체가 있었습니다. 삼성전자가 0.20%, SK하이닉스가 1.05% 내렸고 삼성전기는 3.71% 하락했습니다. 코스닥에서도 심텍 4.78%, 원익IPS 4.28%, 주성엔지니어링 3.28% 하락으로 반도체 장비주가 나란히 밀렸습니다.\n\n두 방향은 같은 전제를 공유합니다. 미국 시장금리가 높은 수준에 머문다는 전제입니다. 금리가 높으면 보험·은행의 운용 수익은 늘고, 먼 미래의 이익으로 평가받는 반도체와 장비주는 할인율 부담이 커집니다.\n\n그래서 이 로테이션은 개별 기업의 실적 발표에서 나온 것이 아닙니다. 전제가 바뀌면 방향도 함께 바뀝니다. 다음 거래일 미국 금리가 어디에 있는지를 먼저 보고 이 업종들의 등락을 읽는 편이 순서에 맞습니다.",
+          "body": "이날 오른 업종은 성장주가 아니라 금리 수혜 업종이었습니다. KB금융이 5.20% 오른 177,900원, 신한지주가 3.62% 오른 114,500원, 삼성생명이 3.06% 오른 303,000원으로 마감했습니다. 머니투데이에 따르면 KRX 보험지수는 3.65% 오른 4,603.67, KRX 은행지수는 2.51% 오른 1,736.61이었습니다.\n\n반대편에는 반도체가 있었습니다. 삼성전기가 3.71%, 한미반도체가 1.41%, SK하이닉스가 1.05%, 삼성전자가 0.20% 내렸습니다. 코스닥에서도 심텍 4.78%, 원익IPS 4.28%, 주성엔지니어링 3.28% 하락으로 반도체 장비주가 나란히 밀렸습니다.\n\n두 방향은 같은 전제를 공유합니다. 미국 시장금리가 높은 수준에 머문다는 전제입니다. 금리가 높으면 보험·은행의 운용 수익은 늘고, 먼 미래의 이익으로 평가받는 반도체와 장비주는 할인율 부담이 커집니다.\n\n다만 금융주 안에서도 온도 차가 있었습니다. 우리금융지주는 0.43% 오르는 데 그쳤습니다. 업종 전체가 같은 폭으로 오른 것이 아니라 종목별로 갈렸다는 뜻이고, 이 상승이 실적 발표가 아니라 금리 전제에서 나온 만큼 전제가 바뀌면 방향도 함께 바뀝니다.",
           "table": [
             {
-              "label": "KRX 보험지수",
-              "value": "4,603.67 (+3.65%)"
+              "label": "KB금융",
+              "value": "177,900원 (+5.20%)"
             },
             {
-              "label": "KRX 은행지수",
-              "value": "1,736.61 (+2.51%)"
+              "label": "신한지주",
+              "value": "114,500원 (+3.62%)"
             },
             {
-              "label": "삼성전자",
-              "value": "250,000원 (-0.20%)"
+              "label": "삼성생명",
+              "value": "303,000원 (+3.06%)"
             },
             {
-              "label": "SK하이닉스",
-              "value": "1,596,000원 (-1.05%)"
+              "label": "우리금융지주",
+              "value": "34,650원 (+0.43%)"
             },
             {
               "label": "삼성전기",
-              "value": "-3.71%"
+              "value": "1,348,000원 (-3.71%)"
             }
           ]
         }
@@ -468,6 +897,21 @@
       },
       {
         "name": "CBC뉴스",
+        "title": "조선 관련주 강세…동일스틸럭스 16%대 급등, 한화오션·삼성중공업 상승",
+        "url": "https://www.cbci.co.kr/news/articleView.html?idxno=603430"
+      },
+      {
+        "name": "아주경제",
+        "title": "삼성중공업, 4445억원 규모 컨테이너운반선 2척 수주",
+        "url": "https://www.ajunews.com/view/20260831091919921"
+      },
+      {
+        "name": "위키트리",
+        "title": "코스피 6579.48 마감…삼전·하이닉스 대형주 약세",
+        "url": "https://www.wikitree.co.kr/articles/1157092"
+      },
+      {
+        "name": "CBC뉴스",
         "title": "코스닥 800선 하회…알테오젠 원익IPS 심텍 등 풀썩",
         "url": "https://www.cbci.co.kr/news/articleView.html?idxno=603603"
       },
@@ -475,41 +919,36 @@
         "name": "국제뉴스",
         "title": "LG에너지솔루션 주가 4%↑…\"태양광·ESS시장 성장 전망\"",
         "url": "https://www.gukjenews.com/news/articleView.html?idxno=3683509"
-      },
-      {
-        "name": "머니투데이",
-        "title": "원/달러 환율 9.4원 내린 1359.3원 마감",
-        "url": "https://www.mt.co.kr/economy/2026/09/03/2026090315353672880"
       }
     ]
   },
   "en": {
-    "title": "KOSPI Closes Up 0.26% Because Companies Bought Their Own Shares",
+    "title": "Shipbuilders and Banks Lifted the KOSPI, Not Chips",
     "narrative": [
       {
-        "heading": "The index fell to 6,439 intraday, then closed higher",
-        "body": "The KOSPI closed on September 3 at 6,579.48, up 16.76 points or 0.26%. The KOSDAQ fell 13.77 points, or 1.71%, to 790.21, giving up the 800 level.\n\nThe close looks quiet; the intraday range was more than 240 points. According to EBN, the index opened at 6,650.33, reached 6,682.97, then fell in the afternoon to 6,439.49 — 123.33 points, or 1.88%, below the previous close. It recovered all of that before the bell.\n\nThe turn came from the Middle East. Shortly after 2pm, reports that Iran had struck US military bases in Kuwait with missiles and drones spread quickly through the market. Turnover was 18.89 trillion won on 353.93 million shares, with 424 gainers against 433 decliners."
+        "heading": "A 0.26% gain, and a 243-point intraday range",
+        "body": "The KOSPI closed on September 3 at 6,579.48, up 16.76 points or 0.26%. The KOSDAQ fell 13.77 points, or 1.71%, to 790.21, giving up the 800 level.\n\nThe close looks quiet; the session was not. According to Wikitree, the index reached 6,682.97 and fell as low as 6,439.49 before recovering the entire decline into the bell — a range of 243 points.\n\nThe afternoon drop followed reports, shortly after 2pm, that Iran had struck US military bases in Kuwait with missiles and drones. Turnover on the main board was 18.89 trillion won, with 424 gainers against 433 decliners."
       },
       {
-        "heading": "All three investor groups sold, and one buyer absorbed it",
-        "body": "On the main board there was effectively a single buyer.\n\nThe Public reports net selling of 539.7 billion won by retail investors, 486.7 billion by foreigners and 634.0 billion by institutions. On the other side, the category the exchange calls other corporations bought a net 1.67 trillion won. The three groups' combined selling and that single number are almost identical.\n\nThe reason that category has grown is share buybacks. When a listed company purchases its own stock, the exchange records it under other corporations, and the buyback programs running at Samsung Electronics and SK Hynix fall into that line. Etoday puts recent daily net buying in the category at around 1.6 trillion won.\n\nThat matters for how the day should be read. The bid that lifted the index was not new investment demand; it was buying already disclosed in advance, for a set amount over a set period."
+        "heading": "Shipbuilding, financials, autos and power generation rose",
+        "body": "List the day's gainers and a pattern appears. Samsung Heavy Industries closed 8.58% higher at 21,650 won, HD Hyundai Heavy Industries 3.08% higher at 435,000 won and Hanwha Aerospace 2.15% higher at 1,047,000 won. In financials, KB Financial Group rose 5.20%, Shinhan 3.62% and Samsung Life 3.06%. Doosan Enerbility added 3.39%, Kia 2.41% and Hyundai Motor 1.46%.\n\nTechnology sat on the other side. Samsung Electro-Mechanics fell 3.71%, Alteogen 5.19% and APR 3.10%. Samsung Biologics lost 1.60%, Hanmi Semiconductor 1.41%, SK Hynix 1.05% and Samsung Electronics 0.20%.\n\nShipbuilders were strong from the open. CBC News reported Hanwha Ocean, Daehan Shipbuilding and HD Korea Shipbuilding all higher as of 9:44am. At that hour, though, Samsung Heavy was up only 1.55%; the rest of the move came in the afternoon. No report we could find explained that afternoon move. The one confirmed catalyst is an August 31 disclosure: two container ships ordered for 444.5 billion won."
       },
       {
-        "heading": "Insurers and banks rose while chips fell",
-        "body": "Money moved toward the sectors that benefit from higher rates.\n\nAccording to Money Today, the KRX insurance index closed 3.65% higher at 4,603.67 and the KRX bank index 2.51% higher at 1,736.61. KB Financial gained about 5% and Samsung Life about 3%. These are the businesses whose investment income improves while US market yields stay elevated.\n\nSemiconductors went the other way. Samsung Electronics closed down 0.20% at 250,000 won and SK Hynix down 1.05% at 1,596,000 won, while Samsung Electro-Mechanics fell 3.71%. Chips had opened higher on the view that US rate pressure had eased, and gave those gains back through the afternoon selloff.\n\nThe best performer on the watchlist was LG Energy Solution, up 5.18% at 365,500 won."
+        "heading": "The bid under the index came from the companies themselves",
+        "body": "Sector rotation explains which stocks rose. It does not explain how the index finished higher, and for that the flow table is the place to look.\n\nThe Public reports main-board net selling of 539.7 billion won by retail investors, 486.7 billion by foreigners and 634.0 billion by institutions, against net buying of 1.67 trillion won by the category the exchange calls other corporations. The three groups' combined selling and that single number are almost identical.\n\nThat category has grown because of buybacks. When a listed company purchases its own stock, the exchange records it under other corporations, and the programs running at Samsung Electronics and SK Hynix fall into that line. Etoday puts recent daily net buying in the category at around 1.6 trillion won.\n\nSo the session had two layers: buybacks holding up the large caps from below, and shipbuilders, banks and automakers pulling the index up from above. Neither layer is new investment demand arriving."
       },
       {
         "heading": "The KOSDAQ gave up 800",
-        "body": "The two indices parted ways, and the KOSDAQ has no mega caps buying back their own shares to hold it up.\n\nCBC News reports that on the KOSDAQ retail investors bought a net 340.3 billion won while institutions sold 197.4 billion and foreigners 132.0 billion — retail on the buying side, unlike on the main board.\n\nAlteogen, the largest KOSDAQ stock by market value, fell 15,500 won, or 5.19%, to 283,000 won. Simmtech fell 4.78%, Wonik IPS 4.28% and Jusung Engineering 3.28%. Chip equipment names declining together widened the index's loss.\n\nThe currency moved the other way from equities. The won closed at 1,357.0 per dollar on the 16:26 Hana Bank notice, down 0.24%; the Seoul market's daytime session settled 9.4 won lower at 1,359.3. Edaily pointed to a softer dollar and bargain buying. Brent crude held near $95 a barrel."
+        "body": "The two indices parted ways. The KOSDAQ has no mega caps buying back their own shares, and most of the stocks that rose on the day are listed on the main board.\n\nCBC News reports that on the KOSDAQ retail investors bought a net 340.3 billion won while institutions sold 197.4 billion and foreigners 132.0 billion. Alteogen, the largest KOSDAQ stock by market value, fell 5.19% to 283,000 won; Simmtech fell 4.78%, Wonik IPS 4.28% and Jusung Engineering 3.28%.\n\nThe currency moved the other way from equities. The won closed at 1,357.0 per dollar on the 16:26 Hana Bank notice, down 0.24%, while the Seoul market's daytime session settled 9.4 won lower at 1,359.3."
       }
     ],
     "theme_section": {
-      "heading": "Biggest moves",
-      "commentary": "The two ends of the watchlist by closing-price change.",
+      "heading": "The two ends of the day",
+      "commentary": "The largest gain and the largest decline on the same session.",
       "highlights": [
         {
           "label": "Largest gain",
-          "ticker": "373220"
+          "ticker": "010140"
         },
         {
           "label": "Largest decline",
@@ -519,23 +958,23 @@
     },
     "stock_section": {
       "heading": "Watchlist moves",
-      "commentary": "The large caps held up by buybacks, next to the names that widened the KOSDAQ's loss.",
+      "commentary": "The shipbuilder and bank that lifted the index, next to the chip and biotech names that moved the other way.",
       "featured_tickers": [
-        "373220",
+        "010140",
+        "105560",
         "005930",
         "000660",
         "196170",
-        "207940",
-        "247540"
+        "009150"
       ]
     },
     "outlook": {
       "heading": "What to watch next session",
-      "body": "First, the Middle East. The afternoon drop followed reports of strikes on US bases in Kuwait, so a further escalation would widen intraday ranges again.\n\nSecond, whether the corporate bid continues. Buybacks run for a disclosed period and a disclosed amount, so they end. On the day that bid thins, a session like this one does not produce the same close if the other three groups are still selling.\n\nThird, the KOSDAQ's 800 level. Without mega-cap buybacks underneath it, changes in flows show up in that index faster.\n\nFourth, whether the strength in insurers and banks lasts beyond a day. It rests on US yields staying high; if they fall back, so does the case for it."
+      "body": "First, the Middle East. The afternoon drop followed reports of strikes on US bases in Kuwait, so further escalation would widen intraday ranges again.\n\nSecond, whether the shipbuilding move holds. No report explained Samsung Heavy's 8.58% gain, so the test is whether a documented catalyst — an order, a policy decision — follows it.\n\nThird, whether the corporate bid continues. Buybacks run for a disclosed period and a disclosed amount, so they end. On the day that bid thins, a session like this one does not produce the same close if the other three groups are still selling.\n\nFourth, whether the strength in financials lasts beyond a day. It rests on US yields staying high; if they fall back, so does the case for it."
     },
     "closing": {
       "heading": "The takeaway",
-      "body": "The KOSPI rose, but the buyer was not retail, foreign or institutional money. Listed companies buying their own shares absorbed the selling from all three, and the index finished higher. The KOSDAQ, which has no such mechanism, fell 1.71% and gave up 800 — that gap is the day's real information."
+      "body": "The KOSPI rose 0.26%, and underneath that number the market split cleanly: shipbuilders, banks, automakers and power up, chips and biotech down. Buybacks by listed companies absorbed the selling from retail, foreign and institutional investors, and the index finished higher. The KOSDAQ — no buyback bid, and few of the day's winning sectors — fell 1.71% and gave up 800."
     },
     "insight_section": {
       "heading": "Three things worth noting",
@@ -543,7 +982,7 @@
         {
           "heading": "The index rose, and the buyer was the companies themselves",
           "icon": "scale",
-          "body": "Set the flows side by side and the source of the gain narrows to one line. The Public reports main-board net selling of 539.7 billion won from retail, 486.7 billion from foreigners and 634.0 billion from institutions, against net buying of 1.67 trillion won from other corporations. The three groups sold 1.66 trillion won combined, and that single category took almost all of it.\n\nOther corporations do not usually drive the index. The line has grown because Samsung Electronics and SK Hynix are buying their own stock, and the exchange books corporate treasury purchases there. Etoday reports the category has been running near 1.6 trillion won a day.\n\nSo the close is hard to read as demand returning. Block Media described the recovery from the 6,400s as evidence of support under the market, while noting that sentiment has not recovered given continued simultaneous selling by foreigners and institutions and the KOSDAQ's 1.71% decline.\n\nThat leaves one thing to track. Buybacks happen only within the disclosed window and amount. Where the other three groups stand when that bid thins is what decides the next phase.",
+          "body": "Set the flows side by side and the source of the gain narrows to one line. The Public reports main-board net selling of 539.7 billion won from retail, 486.7 billion from foreigners and 634.0 billion from institutions, against net buying of 1.67 trillion won from other corporations. The three groups sold 1.66 trillion won combined, and that single category took almost all of it.\n\nOther corporations do not usually drive the index. The line has grown because Samsung Electronics and SK Hynix are buying their own stock, and the exchange books corporate treasury purchases there. Etoday reports the category has been running near 1.6 trillion won a day.\n\nBoth of those stocks still finished lower — Samsung Electronics down 0.20%, SK Hynix down 1.05%. The buyback did not lift them; it put a floor under them. Block Media described the recovery from the 6,400s as evidence of support under the market while noting that sentiment has not recovered, given simultaneous selling by foreigners and institutions.\n\nThat leaves one thing to track. Buybacks happen only within the disclosed window and amount. Where the other three groups stand when that bid thins is what decides the next phase.",
           "table": [
             {
               "label": "Retail",
@@ -562,64 +1001,63 @@
               "value": "1.67tn won net bought"
             },
             {
-              "label": "KOSPI close",
-              "value": "6,579.48 (+0.26%)"
+              "label": "Samsung Electronics",
+              "value": "250,000 won (-0.20%)"
             }
           ],
           "image_query": "Samsung Electronics semiconductor"
         },
         {
-          "heading": "LG Energy Solution rose 5.18% on energy storage",
-          "icon": "battery",
-          "body": "It was the only watchlist name to gain more than 5%, closing 18,000 won higher at 365,500 won.\n\nGukje News reports that Hana Securities analyst Kim Hyun-joo sees the solar and ESS markets expanding as the government pushes an energy-security-led transition. Growth in the domestic ESS market would establish a supply chain outside China inside Korea, which the analyst reads as positive for the North American business. Hana kept a buy rating and a 480,000 won target price on the day. That target is a forecast, not a fact.\n\nFlows split. Foreign investors bought a net 54,939 shares while institutions sold a net 42,466. Foreign ownership stands at 5.54%, among the lowest on the watchlist, so foreign trading moves this stock differently than it moves the large-cap chipmakers.\n\nThe rest of the battery complex did not follow. Ecopro BM added 0.19% and Ecopro fell 0.37%. The market was pricing a specific catalyst, not the sector.",
+          "heading": "The day's best performer was a shipbuilder, and no one has explained why",
+          "icon": "server",
+          "body": "Samsung Heavy Industries closed 8.58% higher at 21,650 won, the largest move on the watchlist, with foreign investors buying a net 1,205,924 shares.\n\nThe sector was strong from the open. CBC News reported Dongil Steel up 16.41%, Hanwha Ocean 1.71%, Daehan Shipbuilding 1.46% and HD Korea Shipbuilding 1.21% as of 9:44am. At that hour Samsung Heavy was up 1.55% and HD Hyundai Heavy was down 0.59%. Both turned in the afternoon, finishing up 8.58% and 3.08%.\n\nWe could not find a report explaining the afternoon move. The confirmed item is a disclosure from August 31: Ajunews reports Samsung Heavy booked an order for two container ships from an African shipping company worth 444.5 billion won. That may be background, but it does not account for the size of the move.\n\nSo this one is unresolved. Whether a documented catalyst follows, or the move reverses next session, is what settles it.",
           "table": [
             {
-              "label": "LG Energy Solution",
-              "value": "365,500 won (+5.18%)"
+              "label": "Samsung Heavy Industries",
+              "value": "21,650 won (+8.58%)"
             },
             {
               "label": "Foreign",
-              "value": "54,939 shares net bought"
+              "value": "1,205,924 shares net bought"
             },
             {
-              "label": "Institutions",
-              "value": "42,466 shares net sold"
+              "label": "HD Hyundai Heavy",
+              "value": "435,000 won (+3.08%)"
             },
             {
-              "label": "Ecopro BM",
-              "value": "106,500 won (+0.19%)"
+              "label": "Hanwha Aerospace",
+              "value": "1,047,000 won (+2.15%)"
             },
             {
-              "label": "Ecopro",
-              "value": "81,700 won (-0.37%)"
+              "label": "Confirmed catalyst",
+              "value": "Aug 31: two container ships, 444.5bn won"
             }
-          ],
-          "image_query": "LG Energy Solution battery"
+          ]
         },
         {
-          "heading": "While yields stay high, money sits in insurers and banks",
+          "heading": "While yields stay high, money sits in financials",
           "icon": "shield",
-          "body": "The sectors that rose were not growth names. Money Today reports the KRX insurance index closed 3.65% higher at 4,603.67 and the KRX bank index 2.51% higher at 1,736.61, with KB Financial up about 5% and Samsung Life about 3%.\n\nSemiconductors sat on the other side. Samsung Electronics fell 0.20% and SK Hynix 1.05%, with Samsung Electro-Mechanics down 3.71%. On the KOSDAQ, chip equipment fell together: Simmtech 4.78%, Wonik IPS 4.28%, Jusung Engineering 3.28%.\n\nBoth sides rest on the same assumption — that US market yields stay high. High yields lift investment income at insurers and banks, and raise the discount applied to earnings that chipmakers and equipment suppliers will not book for years.\n\nThis rotation did not come out of company results. When the assumption changes, the direction changes with it, so the sensible order is to check where US yields are first and read these sectors second.",
+          "body": "The sectors that rose were not growth names. KB Financial Group closed 5.20% higher at 177,900 won, Shinhan 3.62% higher at 114,500 won and Samsung Life 3.06% higher at 303,000 won. Money Today reports the KRX insurance index closed 3.65% higher at 4,603.67 and the KRX bank index 2.51% higher at 1,736.61.\n\nSemiconductors sat on the other side: Samsung Electro-Mechanics down 3.71%, Hanmi Semiconductor 1.41%, SK Hynix 1.05% and Samsung Electronics 0.20%. On the KOSDAQ, chip equipment fell together — Simmtech 4.78%, Wonik IPS 4.28%, Jusung Engineering 3.28%.\n\nBoth sides rest on the same assumption: that US market yields stay high. High yields lift investment income at insurers and banks, and raise the discount applied to earnings that chipmakers and equipment suppliers will not book for years.\n\nThe move was not uniform even within financials — Woori Financial Group added only 0.43%. And because the case rests on a rate assumption rather than on results, it changes when the assumption does.",
           "table": [
             {
-              "label": "KRX insurance index",
-              "value": "4,603.67 (+3.65%)"
+              "label": "KB Financial Group",
+              "value": "177,900 won (+5.20%)"
             },
             {
-              "label": "KRX bank index",
-              "value": "1,736.61 (+2.51%)"
+              "label": "Shinhan Financial Group",
+              "value": "114,500 won (+3.62%)"
             },
             {
-              "label": "Samsung Electronics",
-              "value": "250,000 won (-0.20%)"
+              "label": "Samsung Life",
+              "value": "303,000 won (+3.06%)"
             },
             {
-              "label": "SK Hynix",
-              "value": "1,596,000 won (-1.05%)"
+              "label": "Woori Financial Group",
+              "value": "34,650 won (+0.43%)"
             },
             {
               "label": "Samsung Electro-Mechanics",
-              "value": "-3.71%"
+              "value": "1,348,000 won (-3.71%)"
             }
           ]
         }
@@ -658,6 +1096,21 @@
       },
       {
         "name": "CBC뉴스",
+        "title": "조선 관련주 강세…동일스틸럭스 16%대 급등, 한화오션·삼성중공업 상승",
+        "url": "https://www.cbci.co.kr/news/articleView.html?idxno=603430"
+      },
+      {
+        "name": "아주경제",
+        "title": "삼성중공업, 4445억원 규모 컨테이너운반선 2척 수주",
+        "url": "https://www.ajunews.com/view/20260831091919921"
+      },
+      {
+        "name": "위키트리",
+        "title": "코스피 6579.48 마감…삼전·하이닉스 대형주 약세",
+        "url": "https://www.wikitree.co.kr/articles/1157092"
+      },
+      {
+        "name": "CBC뉴스",
         "title": "코스닥 800선 하회…알테오젠 원익IPS 심텍 등 풀썩",
         "url": "https://www.cbci.co.kr/news/articleView.html?idxno=603603"
       },
@@ -665,11 +1118,6 @@
         "name": "국제뉴스",
         "title": "LG에너지솔루션 주가 4%↑…\"태양광·ESS시장 성장 전망\"",
         "url": "https://www.gukjenews.com/news/articleView.html?idxno=3683509"
-      },
-      {
-        "name": "머니투데이",
-        "title": "원/달러 환율 9.4원 내린 1359.3원 마감",
-        "url": "https://www.mt.co.kr/economy/2026/09/03/2026090315353672880"
       }
     ]
   }

@@ -87,7 +87,8 @@
       "trading_date": "2026-09-03",
       "foreign_net": -1321536,
       "institution_net": -2977902,
-      "foreign_ratio": 46.69
+      "foreign_ratio": 46.69,
+      "source": "core"
     },
     "000660": {
       "ticker": "000660",
@@ -109,7 +110,8 @@
       "trading_date": "2026-09-03",
       "foreign_net": -651507,
       "institution_net": -295219,
-      "foreign_ratio": 50.47
+      "foreign_ratio": 50.47,
+      "source": "core"
     },
     "035420": {
       "ticker": "035420",
@@ -131,7 +133,8 @@
       "trading_date": "2026-09-03",
       "foreign_net": 76335,
       "institution_net": -155161,
-      "foreign_ratio": 36.02
+      "foreign_ratio": 36.02,
+      "source": "core"
     },
     "035720": {
       "ticker": "035720",
@@ -153,7 +156,8 @@
       "trading_date": "2026-09-03",
       "foreign_net": -380763,
       "institution_net": -27876,
-      "foreign_ratio": 29.17
+      "foreign_ratio": 29.17,
+      "source": "core"
     },
     "373220": {
       "ticker": "373220",
@@ -175,7 +179,8 @@
       "trading_date": "2026-09-03",
       "foreign_net": 54939,
       "institution_net": -42466,
-      "foreign_ratio": 5.54
+      "foreign_ratio": 5.54,
+      "source": "core"
     },
     "207940": {
       "ticker": "207940",
@@ -197,7 +202,8 @@
       "trading_date": "2026-09-03",
       "foreign_net": 3956,
       "institution_net": -4289,
-      "foreign_ratio": 13.07
+      "foreign_ratio": 13.07,
+      "source": "core"
     },
     "086520": {
       "ticker": "086520",
@@ -219,7 +225,8 @@
       "trading_date": "2026-09-03",
       "foreign_net": -83199,
       "institution_net": -102054,
-      "foreign_ratio": 19.08
+      "foreign_ratio": 19.08,
+      "source": "core"
     },
     "247540": {
       "ticker": "247540",
@@ -241,7 +248,8 @@
       "trading_date": "2026-09-03",
       "foreign_net": 14709,
       "institution_net": -177826,
-      "foreign_ratio": 14.7
+      "foreign_ratio": 14.7,
+      "source": "core"
     },
     "196170": {
       "ticker": "196170",
@@ -263,7 +271,8 @@
       "trading_date": "2026-09-03",
       "foreign_net": -316139,
       "institution_net": -116942,
-      "foreign_ratio": 14.96
+      "foreign_ratio": 14.96,
+      "source": "core"
     },
     "277810": {
       "ticker": "277810",
@@ -285,7 +294,428 @@
       "trading_date": "2026-09-03",
       "foreign_net": 13848,
       "institution_net": -11188,
-      "foreign_ratio": 5.53
+      "foreign_ratio": 5.53,
+      "source": "core"
+    },
+    "009150": {
+      "ticker": "009150",
+      "name": "삼성전기",
+      "name_en": "Samsung Electro-Mechanics",
+      "price": 1348000.0,
+      "change_pct": -3.71,
+      "series": [
+        1362000.0,
+        1330000.0,
+        1385000.0,
+        1421000.0,
+        1458000.0,
+        1430000.0,
+        1400000.0,
+        1348000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": -110441,
+      "institution_net": -72871,
+      "foreign_ratio": 37.68
+    },
+    "042700": {
+      "ticker": "042700",
+      "name": "한미반도체",
+      "name_en": "Hanmi Semiconductor",
+      "price": 210500.0,
+      "change_pct": -1.41,
+      "series": [
+        217500.0,
+        219500.0,
+        222000.0,
+        219500.0,
+        220500.0,
+        215000.0,
+        213500.0,
+        210500.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": 67122,
+      "institution_net": -78099,
+      "foreign_ratio": 7.68
+    },
+    "105560": {
+      "ticker": "105560",
+      "name": "KB금융",
+      "name_en": "KB Financial Group",
+      "price": 177900.0,
+      "change_pct": 5.2,
+      "series": [
+        166400.0,
+        166600.0,
+        168100.0,
+        171600.0,
+        173300.0,
+        171200.0,
+        169100.0,
+        177900.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": -143011,
+      "institution_net": 370147,
+      "foreign_ratio": 79.18
+    },
+    "055550": {
+      "ticker": "055550",
+      "name": "신한지주",
+      "name_en": "Shinhan Financial Group",
+      "price": 114500.0,
+      "change_pct": 3.62,
+      "series": [
+        106500.0,
+        107400.0,
+        108800.0,
+        109700.0,
+        108900.0,
+        111100.0,
+        110500.0,
+        114500.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": -170974,
+      "institution_net": 444698,
+      "foreign_ratio": 62.01
+    },
+    "032830": {
+      "ticker": "032830",
+      "name": "삼성생명",
+      "name_en": "Samsung Life Insurance",
+      "price": 303000.0,
+      "change_pct": 3.06,
+      "series": [
+        285000.0,
+        309500.0,
+        307000.0,
+        310000.0,
+        306000.0,
+        309500.0,
+        294000.0,
+        303000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": 39031,
+      "institution_net": -2336,
+      "foreign_ratio": 23.18
+    },
+    "005380": {
+      "ticker": "005380",
+      "name": "현대차",
+      "name_en": "Hyundai Motor",
+      "price": 383500.0,
+      "change_pct": 1.46,
+      "series": [
+        421000.0,
+        408000.0,
+        398000.0,
+        399500.0,
+        403500.0,
+        400500.0,
+        378000.0,
+        383500.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": 77716,
+      "institution_net": 2807,
+      "foreign_ratio": 24.29
+    },
+    "000270": {
+      "ticker": "000270",
+      "name": "기아",
+      "name_en": "Kia",
+      "price": 127400.0,
+      "change_pct": 2.41,
+      "series": [
+        134900.0,
+        131400.0,
+        126100.0,
+        128000.0,
+        131000.0,
+        131200.0,
+        124400.0,
+        127400.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": 198357,
+      "institution_net": -28443,
+      "foreign_ratio": 39.28
+    },
+    "329180": {
+      "ticker": "329180",
+      "name": "HD현대중공업",
+      "name_en": "HD Hyundai Heavy Industries",
+      "price": 435000.0,
+      "change_pct": 3.08,
+      "series": [
+        464500.0,
+        464500.0,
+        470000.0,
+        457000.0,
+        449500.0,
+        453000.0,
+        422000.0,
+        435000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": -27683,
+      "institution_net": 38150,
+      "foreign_ratio": 14.02
+    },
+    "012450": {
+      "ticker": "012450",
+      "name": "한화에어로스페이스",
+      "name_en": "Hanwha Aerospace",
+      "price": 1047000.0,
+      "change_pct": 2.15,
+      "series": [
+        1102000.0,
+        1087000.0,
+        1150000.0,
+        1157000.0,
+        1102000.0,
+        1058000.0,
+        1025000.0,
+        1047000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": -4037,
+      "institution_net": 18776,
+      "foreign_ratio": 45.46
+    },
+    "034020": {
+      "ticker": "034020",
+      "name": "두산에너빌리티",
+      "name_en": "Doosan Enerbility",
+      "price": 79200.0,
+      "change_pct": 3.39,
+      "series": [
+        80700.0,
+        85800.0,
+        85900.0,
+        88200.0,
+        82500.0,
+        81400.0,
+        76600.0,
+        79200.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": -249502,
+      "institution_net": 291424,
+      "foreign_ratio": 23.64
+    },
+    "068270": {
+      "ticker": "068270",
+      "name": "셀트리온",
+      "name_en": "Celltrion",
+      "price": 187100.0,
+      "change_pct": 0.43,
+      "series": [
+        189600.0,
+        193400.0,
+        191300.0,
+        190700.0,
+        188900.0,
+        188000.0,
+        186300.0,
+        187100.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": -44456,
+      "institution_net": 56520,
+      "foreign_ratio": 25.42
+    },
+    "278470": {
+      "ticker": "278470",
+      "name": "에이피알",
+      "name_en": "APR",
+      "price": 406000.0,
+      "change_pct": -3.1,
+      "series": [
+        440500.0,
+        442000.0,
+        434500.0,
+        461500.0,
+        464500.0,
+        432500.0,
+        419000.0,
+        406000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "core",
+      "foreign_net": 28490,
+      "institution_net": -61810,
+      "foreign_ratio": 38.1
+    },
+    "402340": {
+      "ticker": "402340",
+      "name": "SK스퀘어",
+      "name_en": "SK Square",
+      "price": 981000.0,
+      "change_pct": -0.1,
+      "series": [
+        1060000.0,
+        1058000.0,
+        1068000.0,
+        1028000.0,
+        1037000.0,
+        1067000.0,
+        982000.0,
+        981000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "dynamic",
+      "trading_value": 344063000000,
+      "foreign_net": 21025,
+      "institution_net": -14552,
+      "foreign_ratio": 46.22
+    },
+    "006400": {
+      "ticker": "006400",
+      "name": "삼성SDI",
+      "name_en": "Samsung SDI",
+      "price": 539000.0,
+      "change_pct": 0.19,
+      "series": [
+        519000.0,
+        516000.0,
+        569000.0,
+        571000.0,
+        577000.0,
+        569000.0,
+        538000.0,
+        539000.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "dynamic",
+      "trading_value": 237375000000,
+      "foreign_net": 131,
+      "institution_net": -9989,
+      "foreign_ratio": 25.84
+    },
+    "010140": {
+      "ticker": "010140",
+      "name": "삼성중공업",
+      "name_en": "Samsung Heavy Industries",
+      "price": 21650.0,
+      "change_pct": 8.58,
+      "series": [
+        20450.0,
+        20700.0,
+        21000.0,
+        21200.0,
+        20900.0,
+        21000.0,
+        19940.0,
+        21650.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "dynamic",
+      "trading_value": 151618000000,
+      "foreign_net": 1205924,
+      "institution_net": 1486884,
+      "foreign_ratio": 28.96
+    },
+    "012330": {
+      "ticker": "012330",
+      "name": "현대모비스",
+      "name_en": "Hyundai Mobis",
+      "price": 423500.0,
+      "change_pct": 1.93,
+      "series": [
+        498000.0,
+        464000.0,
+        451500.0,
+        450500.0,
+        453500.0,
+        443500.0,
+        415500.0,
+        423500.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "dynamic",
+      "trading_value": 149455000000,
+      "foreign_net": 67611,
+      "institution_net": -12628,
+      "foreign_ratio": 37.74
+    },
+    "316140": {
+      "ticker": "316140",
+      "name": "우리금융지주",
+      "name_en": "Woori Financial Group",
+      "price": 34650.0,
+      "change_pct": 0.43,
+      "series": [
+        32600.0,
+        33000.0,
+        32950.0,
+        33900.0,
+        33800.0,
+        34550.0,
+        34500.0,
+        34650.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "dynamic",
+      "trading_value": 145464000000,
+      "foreign_net": 13051580,
+      "institution_net": 1006253,
+      "foreign_ratio": 50.11
+    },
+    "096770": {
+      "ticker": "096770",
+      "name": "SK이노베이션",
+      "name_en": "SK Innovation",
+      "price": 130800.0,
+      "change_pct": -0.53,
+      "series": [
+        125000.0,
+        111200.0,
+        112000.0,
+        116900.0,
+        125500.0,
+        135300.0,
+        131500.0,
+        130800.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-03",
+      "source": "dynamic",
+      "trading_value": 133398000000,
+      "foreign_net": 51920,
+      "institution_net": 85505,
+      "foreign_ratio": 15.18
     }
   },
   "trading_date": "2026-09-03"
