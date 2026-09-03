@@ -147,6 +147,12 @@ def _fetch_dynamic_tier(
             exclude_tickers=set(core),
             count=settings.get("count", 6),
             min_market_cap=settings.get("min_market_cap", 10_000_000_000),
+            # 스크리너가 당일 데이터로 갱신됐는지 로그로 확인하려고 넘깁니다.
+            reference_prices={
+                ticker: float(entry["price"])
+                for ticker, entry in list(core.items())[:3]
+                if entry.get("price")
+            },
         )
     except Exception as exc:
         print(f"[경고] 거래대금 상위 종목을 가져오지 못해 코어 워치리스트로만 진행합니다: {exc}")

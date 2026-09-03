@@ -1,0 +1,36 @@
+name: Publish Check
+
+# 발행 시각이 지난 뒤 "그날 글이 실제로 사이트에 있는지"를 확인합니다.
+#
+# editorial_publish.yml의 verify_published는 발행 스크립트가 돌았을 때만
+# 동작합니다. 루틴이 원고를 못 써서 아무것도 커밋되지 않은 날이나, 예약 실행이
+# 시세를 못 받고 멈춘 날은 아무도 실패를 알리지 않습니다. 2026-09-03 아침에
+# 워크플로가 성공으로 끝났는데 한국장 글이 올라가지 않은 것을 사람이 사이트를
+# 열어보고서야 알았습니다. 이 워크플로가 실패하면 깃허브가 메일을 보냅니다.
+on:
+  schedule:
+    # 한국장 발행(07:40 UTC / 16:40 KST) 40분 뒤
+    - cron: "20 8 * * 1-5"
+    # 미국장 발행(22:40 UTC / 07:40 KST 다음날) 40분 뒤
+    - cron: "20 23 * * 0-4"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 발행 확인
+        run: python -m src.check_publication
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}

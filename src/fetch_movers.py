@@ -191,6 +191,7 @@ def fetch_top_dollar_volume_us(
     exclude_tickers: set[str],
     count: int = 6,
     min_market_cap: float = 10_000_000_000.0,
+    reference_prices: dict[str, float] | None = None,
 ) -> list[dict]:
     """미국장 거래대금(= 종가 x 거래량) 상위 종목을 돌려줍니다.
 
@@ -201,7 +202,11 @@ def fetch_top_dollar_volume_us(
     한국장(fetch_top_turnover)과 달리 시가총액 상위 N개로 우주를 자르지 않고
     시가총액 하한만 둡니다. 응답에 전 종목이 들어 있어 굳이 자를 이유가 없고,
     하한(기본 100억 달러)만으로 테마성 소형주가 걸러지기 때문입니다.
+
+    reference_prices에 {티커: 종가}를 주면 스크리너 값과 대조한 결과를 로그로
+    남깁니다. 마감 뒤 스크리너가 언제 갱신되는지 확인하기 위한 것입니다.
     """
+    reference_prices = reference_prices or {}
     try:
         response = requests.get(
             _US_URL,
@@ -219,6 +224,20 @@ def fetch_top_dollar_volume_us(
     for item in rows:
         symbol = (item.get("symbol") or "").strip()
         name = (item.get("name") or "").strip()
+        if symbol and symbol in reference_prices:
+            # 스크리너가 마감 뒤 언제 당일 데이터로 바뀌는지 아직 실측하지
+            # 못했습니다. 늦게 갱신되면 시세는 오늘 것인데 편입 순위만 어제
+            # 기준이 됩니다. 코어 종목의 종가와 대조한 결과를 로그에 남겨,
+            # 실행 기록만 보고도 어긋난 날을 알 수 있게 합니다.
+            screener_price = _us_number(item.get("lastsale"))
+            expected = reference_prices[symbol]
+            if expected and screener_price:
+                gap = abs(screener_price - expected) / expected * 100
+                verdict = "같음" if gap < 0.5 else f"차이 {gap:.2f}%"
+                print(
+                    f"[확인] 스크리너 {symbol} {screener_price:,.2f} vs 종가 "
+                    f"{expected:,.2f} — {verdict}"
+                )
         if not symbol or symbol in exclude_tickers:
             continue
         if not _is_us_common_stock(symbol, name):
