@@ -142,7 +142,10 @@ def sector_bars(price_data: dict, output_path: Path, title: str = "업종별 등
         reverse=True,
     )
     if not rows:
-        return output_path
+        # 그릴 게 없으면 없는 경로를 돌려주지 않고 분명히 알립니다.
+        # 조용히 넘기면 호출한 쪽이 존재하지 않는 파일을 업로드하려다
+        # FileNotFoundError로 끝납니다(2026-09-04에 실제로 그랬습니다).
+        raise ValueError("sector_bars: sector가 붙은 종목이 없습니다")
 
     row_h, top = 46, 78
     h = top + row_h * len(rows) + 30
@@ -179,7 +182,7 @@ def flow_chart(price_data: dict, output_path: Path, top_n: int = 5,
         if e.get("foreign_net") is not None
     ]
     if not rows:
-        return output_path
+        raise ValueError("flow_chart: 외국인 순매매 데이터가 없습니다")
     rows.sort(key=lambda e: e["foreign_net"], reverse=True)
     picked = rows[:top_n] + rows[-top_n:]
 
@@ -223,7 +226,7 @@ def two_day_compare(price_data: dict, output_path: Path, previous: dict | None =
     today = price_data.get("watchlist") or {}
     picks = [t for t in (tickers or []) if t in today and t in prev]
     if not picks:
-        return output_path
+        raise ValueError("two_day_compare: 비교할 종목이 없습니다")
 
     row_h, top = 56, 86
     h = top + row_h * len(picks) + 34

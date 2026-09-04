@@ -89,6 +89,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "반도체",
         "foreign_net": -115377,
         "institution_net": 2489812,
         "foreign_ratio": 46.71
@@ -112,6 +113,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "반도체",
         "foreign_net": 308833,
         "institution_net": 96776,
         "foreign_ratio": 50.49
@@ -135,6 +137,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "반도체",
         "foreign_net": 141281,
         "institution_net": 61273,
         "foreign_ratio": 37.79
@@ -158,6 +161,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "반도체",
         "foreign_net": 353063,
         "institution_net": 223808,
         "foreign_ratio": 8.04
@@ -181,6 +185,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "금융",
         "foreign_net": -268088,
         "institution_net": 148680,
         "foreign_ratio": 79.09
@@ -204,6 +209,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "금융",
         "foreign_net": -355054,
         "institution_net": 279592,
         "foreign_ratio": 61.94
@@ -227,6 +233,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "금융",
         "foreign_net": -34282,
         "institution_net": 555,
         "foreign_ratio": 23.17
@@ -250,6 +257,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "자동차",
         "foreign_net": -60899,
         "institution_net": -53849,
         "foreign_ratio": 24.28
@@ -273,6 +281,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "자동차",
         "foreign_net": -69915,
         "institution_net": -34363,
         "foreign_ratio": 39.24
@@ -296,6 +305,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "조선·방산",
         "foreign_net": -28068,
         "institution_net": 19472,
         "foreign_ratio": 14.01
@@ -319,6 +329,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "조선·방산",
         "foreign_net": -11430,
         "institution_net": 10268,
         "foreign_ratio": 45.42
@@ -342,6 +353,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "발전·원전",
         "foreign_net": -413237,
         "institution_net": 266790,
         "foreign_ratio": 23.55
@@ -365,6 +377,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "2차전지",
         "foreign_net": -37840,
         "institution_net": 33949,
         "foreign_ratio": 5.54
@@ -388,6 +401,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "2차전지",
         "foreign_net": -37292,
         "institution_net": -3215,
         "foreign_ratio": 14.6
@@ -411,6 +425,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "바이오",
         "foreign_net": -2643,
         "institution_net": -5671,
         "foreign_ratio": 13.06
@@ -434,6 +449,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "바이오",
         "foreign_net": 52680,
         "institution_net": 27042,
         "foreign_ratio": 14.48
@@ -457,6 +473,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "바이오",
         "foreign_net": -71886,
         "institution_net": 57121,
         "foreign_ratio": 25.39
@@ -480,6 +497,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "플랫폼",
         "foreign_net": 71022,
         "institution_net": 146602,
         "foreign_ratio": 36.03
@@ -503,6 +521,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "플랫폼",
         "foreign_net": -26590,
         "institution_net": 305095,
         "foreign_ratio": 29.15
@@ -526,6 +545,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "소비재",
         "foreign_net": 9902,
         "institution_net": -58972,
         "foreign_ratio": 38.11
@@ -549,6 +569,7 @@
         "unit": "",
         "trading_date": "2026-09-04",
         "source": "core",
+        "sector": "로봇",
         "foreign_net": 15641,
         "institution_net": 24058,
         "foreign_ratio": 5.73
