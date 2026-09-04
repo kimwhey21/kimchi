@@ -1,7 +1,11 @@
 """Build an English Korea-market draft without a paid generative-AI API."""
 from __future__ import annotations
 
+import re
+
 from src.generate_free import _select_diverse_headlines
+
+_HANGUL_RE = re.compile(r"[가-힣]")
 
 
 _SOURCE_NAMES = {
@@ -130,10 +134,38 @@ def _source_notes(recent_news: list[dict] | None) -> list[dict]:
     ]
 
 
+def _english_ready(price_data: dict) -> dict:
+    """Drop watchlist entries whose English name is still Korean.
+
+    2026-09-04 한국장이 이것 때문에 통째로 실패했다. 그날 거래대금 상위로 편입된
+    로보티즈·원익홀딩스가 `name_en_map`에 없어 name_en에 한글이 그대로 들어왔고,
+    영어 초안 제목과 본문에 한글이 섞이면서 editorial_quality_en이 예외를 냈다.
+    그 예외로 프로세스가 죽는 바람에 이미 정상적으로 받아 둔 시세 파일까지
+    커밋되지 못했고, 루틴이 읽을 데이터가 없어 그날 글이 나가지 않았다.
+
+    영어판에서 종목 하나가 빠지는 것과 그날 발행 전체가 멈추는 것 중에는
+    전자가 낫다. 한국어판은 그대로 그 종목을 쓴다 — 여기서만 걸러낸다.
+    (AGENTS.md: "이름도 모르는 종목 하나가 그날 발행 전체를 멈추게 하면 안 된다")
+    """
+    watchlist = {}
+    for ticker, entry in (price_data.get("watchlist") or {}).items():
+        name_en = str(entry.get("name_en") or "")
+        if _HANGUL_RE.search(name_en):
+            print(
+                f"[안내] 영어판에서 제외 — {entry.get('name')}({ticker})의 영어 표기가 "
+                "없습니다. config/watchlist_kr.yaml의 name_en_map에 추가하면 다음부터 "
+                "영어판에도 나옵니다."
+            )
+            continue
+        watchlist[ticker] = entry
+    return {**price_data, "watchlist": watchlist}
+
+
 def generate(
     date_str: str, price_data: dict, recent_news: list[dict] | None = None
 ) -> dict:
     """Create English copy directly from the same facts as the Korean edition."""
+    price_data = _english_ready(price_data)
     watchlist = list(price_data.get("watchlist", {}).values())
     ranked = sorted(watchlist, key=lambda entry: abs(entry["change_pct"]), reverse=True)
     positive = sorted(

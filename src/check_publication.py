@@ -62,11 +62,43 @@ def _wordpress_post(slug: str) -> dict | None:
     return posts[0] if posts else None
 
 
+def _actual_trading_date(market: str) -> str | None:
+    """지금 시점에서 마지막으로 장이 열린 날을 데이터 소스에 물어봅니다.
+
+    저장소 파일만 보면 "오늘 데이터가 아예 안 들어온 날"을 놓칩니다. 2026-09-04이
+    그랬습니다 — 시세 수집이 실패해 그날 파일이 없었는데, 점검은 가장 최근 파일
+    (9월 3일)과 그 원고를 보고 정상이라고 끝냈습니다.
+
+    휴장일에 헛경보를 내지 않으려고 달력 대신 지수의 실제 마지막 거래일을
+    씁니다. 조회에 실패하면 None을 돌려주고 이 검사만 건너뜁니다 — 점검 도구가
+    네트워크 문제로 빨간 X를 내는 것은 도움이 되지 않습니다.
+    """
+    try:
+        import FinanceDataReader as fdr
+
+        symbol = "KS11" if market == "kr" else "DJI"
+        start = (dt.date.today() - dt.timedelta(days=10)).isoformat()
+        frame = fdr.DataReader(symbol, start)
+        if frame.empty:
+            return None
+        return frame.index[-1].date().isoformat()
+    except Exception as exc:  # noqa: BLE001 - 확인 못 하면 검사만 건너뜁니다
+        print(f"[안내] {market}: 실제 거래일을 확인하지 못해 최신성 검사를 건너뜁니다 ({exc}).")
+        return None
+
+
 def check_market(market: str, check_site: bool) -> list[str]:
     problems: list[str] = []
     trading_date = _latest_trading_date(market)
     if not trading_date:
         return [f"{market}: 시세 파일이 하나도 없습니다 (data/price_{market}_*.json)."]
+
+    actual = _actual_trading_date(market)
+    if actual and actual > trading_date:
+        problems.append(
+            f"{market}: 마지막 거래일은 {actual}인데 저장소의 최신 시세 파일은 "
+            f"{trading_date}입니다. 그날 시세 수집이 실패했거나 커밋되지 않았습니다."
+        )
 
     manuscript = EDITORIAL_DIR / f"{market}_{trading_date}.json"
     if not manuscript.exists():
