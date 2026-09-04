@@ -44,6 +44,26 @@ _KO_BOLD = (
 )
 
 
+def ensure_korean_font() -> str:
+    """한글 폰트가 없으면 그림을 만들지 않습니다.
+
+    2026-09-04에 실제로 겪었습니다. 로컬 맥에서는 AppleSDGothicNeo로 잘 나왔는데
+    GitHub Actions 러너(우분투)에는 한글 폰트가 없어 종목명이 전부 두부(□□□)로
+    찍힌 그림이 사이트에 올라갔습니다. 대표 이미지에서 같은 문제를 한 번 겪고도
+    본문 그래픽에서 되풀이했습니다.
+
+    깨진 그림을 내보내는 것보다 그림 없이 나가는 편이 낫습니다. 워크플로에
+    fonts-nanum을 설치해 두었고, 그래도 없으면 여기서 멈춥니다.
+    """
+    for path in _KO_REGULAR:
+        if Path(path).exists():
+            return path
+    raise ValueError(
+        "한글 폰트를 찾지 못해 데이터 그래픽을 만들지 않습니다. "
+        "우분투라면 fonts-nanum을 설치하세요."
+    )
+
+
 def _font(size: int, bold: bool = False):
     for path in _KO_BOLD if bold else _KO_REGULAR:
         if Path(path).exists():
@@ -265,6 +285,7 @@ def build(kind: str, price_data: dict, output_path: Path, **kwargs) -> dict:
     """원고의 graphic 지정을 그림 파일로 만들고 렌더러가 쓸 정보를 돌려줍니다."""
     # output/은 저장소에 없습니다(gitignore). 러너에서 처음 그릴 때 만듭니다 —
     # 2026-09-04 첫 실행이 이 디렉터리가 없어 FileNotFoundError로 끝났습니다.
+    ensure_korean_font()
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     builder = BUILDERS[kind]
     builder(price_data, output_path, **kwargs)
