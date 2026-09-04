@@ -41,6 +41,7 @@ from src import (  # noqa: E402
     data_graphics,
     editorial_facts,
     editorial_quality,
+    editorial_title,
     editorial_quality_en,
     featured_image,
     fetch_images,
@@ -232,6 +233,11 @@ def publish(path: Path, publish_live: bool = False) -> None:
     # 경로라 "숫자는 시세에서만 가져온다"를 사람의 성실성에만 맡기지 않습니다.
     editorial_facts.validate(ko, price_data, lang="ko")
     print("시세 대조 검사 통과 (한국어)")
+    # 제목 문법은 문서에만 적혀 있었고, 규칙을 전부 어긴 제목이 위 두 검사를
+    # 그대로 통과했습니다(2026-09-04 실측). 검수 없이 공개되는 경로라 기계적으로
+    # 잡을 수 있는 것은 여기서 막습니다. 영어판 제목은 이 문법의 대상이 아닙니다.
+    editorial_title.validate(ko, price_data)
+    print("제목 문법 검사 통과 (한국어)")
     if en:
         editorial_quality_en.validate_generated(en)
         print("영어 편집 기준 검사 통과")
