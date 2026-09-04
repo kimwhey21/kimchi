@@ -66,6 +66,18 @@ _WINDOW_BEFORE, _WINDOW_AFTER = 20, 45
 _MACRO_FILLER = re.compile(r"^[은는이가도의을를]?[\s0-9,.\-+()원달러포인트p]*$")
 
 
+_TAG = re.compile(r"<[^>]+>")
+
+
+def _strip_tags(text: str) -> str:
+    """강조 태그를 걷어냅니다.
+
+    원고는 숫자를 <b>로 강조합니다("코스피 6,687.21 <b>+1.64%</b>"). 태그를 그대로
+    두면 이름과 등락률 사이에 낯선 글자가 끼어, 아래 인접 규칙이 남의 숫자로 봅니다.
+    """
+    return _TAG.sub("", text)
+
+
 def _texts(doc: dict) -> list[tuple[str, str]]:
     """원고에서 숫자가 들어갈 수 있는 자리를 (위치 이름, 글) 목록으로 모읍니다."""
     out: list[tuple[str, str]] = [("제목", str(doc.get("title", "")))]
@@ -86,7 +98,7 @@ def _texts(doc: dict) -> list[tuple[str, str]]:
     for key in ("theme_section", "stock_section"):
         section = doc.get(key) or {}
         out.append((key, str(section.get("commentary", ""))))
-    return [(where, text) for where, text in out if text]
+    return [(where, _strip_tags(text)) for where, text in out if text]
 
 
 def _entries(price_data: dict) -> list[dict]:
@@ -182,14 +194,20 @@ def _quoted_moves(text: str, names: list[tuple[str, dict]]) -> list[tuple[dict, 
                 continue
             if _OTHER_DAY.search(window):
                 continue
-            if not _MOVE_WORDS.search(window) and "(" not in window:
-                continue
             tail = _same_sentence_tail(text, end, names)
-            for match in _PERCENT.finditer(tail):
-                if entry.get("_is_macro") and not _MACRO_FILLER.match(tail[: match.start()]):
-                    break  # 사이에 다른 낱말이 있으면 그 지수의 숫자가 아닙니다
-                found.append((entry, float(match.group(1))))
-                break  # 이름 뒤 첫 번째 비율만 봅니다
+            match = _PERCENT.search(tail)
+            if match is None:
+                continue
+            if entry.get("_is_macro"):
+                # 지수·환율은 요약 줄에서 움직임을 뜻하는 말 없이 숫자만 나열합니다
+                # ("코스피 6,687.21 +1.64%"). 그래서 종목과 달리 _MOVE_WORDS를
+                # 요구하지 않고, **이름과 등락률이 붙어 있는지**로 판단합니다.
+                # 사이에 다른 낱말이 끼면("코스닥 장비주도 심텍 4.78%") 남의 숫자입니다.
+                if not _MACRO_FILLER.match(tail[: match.start()]):
+                    continue
+            elif not _MOVE_WORDS.search(window) and "(" not in window:
+                continue
+            found.append((entry, float(match.group(1))))
     return found
 
 

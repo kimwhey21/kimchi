@@ -160,9 +160,42 @@ class MacroNumberTest(unittest.TestCase):
         doc = _doc("삼성중공업이 8.58% 올랐습니다. 원/달러는 0.53% 내린 1,351.3원으로 마감했습니다.")
         self.assertEqual(collect_issues(doc, PRICE_DATA), [])
 
-    def test_index_bullet_line_is_checked(self) -> None:
-        doc = _doc("삼성중공업이 8.58% 올랐습니다.\n\n코스피 6,687.21 +1.64%")
+    def test_wrong_index_in_bullet_line_fails(self) -> None:
+        """1절 요약 줄은 움직임을 뜻하는 말 없이 숫자만 적고, 강조는 <b>로 넣습니다.
+
+        전에는 이 형식을 아예 검사하지 않아 코스피에 아무 숫자나 써도 통과했습니다.
+        맞는 값으로 '통과'만 확인하면 검사가 돌았는지 안 돌았는지 구분하지 못하므로,
+        틀린 값이 걸리는지로 확인합니다.
+        """
+        doc = _doc("삼성중공업이 8.58% 올랐습니다.\n\n코스피 6,687.21 <b>+9.99%</b>")
+        issues = collect_issues(doc, PRICE_DATA)
+        self.assertEqual(len(issues), 1)
+        self.assertIn("코스피", issues[0])
+        self.assertIn("1.64", issues[0])
+
+    def test_correct_index_in_bullet_line_passes(self) -> None:
+        doc = _doc("삼성중공업이 8.58% 올랐습니다.\n\n코스피 6,687.21 <b>+1.64%</b>")
         self.assertEqual(collect_issues(doc, PRICE_DATA), [])
+
+    def test_wrong_index_inside_bold_tags_fails(self) -> None:
+        """강조 태그가 이름과 숫자 사이에 끼어도 대조합니다."""
+        doc = _doc("삼성중공업이 8.58% 올랐습니다. 코스피는 <b>9.99%</b> 올랐습니다.")
+        issues = collect_issues(doc, PRICE_DATA)
+        self.assertEqual(len(issues), 1)
+        self.assertIn("코스피", issues[0])
+
+    def test_wrong_fx_in_bullet_line_fails(self) -> None:
+        """앞뒤에 움직임을 뜻하는 말이 하나도 없는 요약 줄만 두고 봅니다.
+
+        본문에 산문 문장을 섞으면 앞 문장의 '올랐습니다'가 창(이름 앞 20자)에 걸려
+        요약 줄 처리와 무관하게 통과합니다. 그러면 이 테스트가 아무것도 증명하지
+        못합니다 — 실제로 처음 쓴 판이 그랬습니다.
+        """
+        doc = _doc("코스피 6,687.21 <b>+1.64%</b>\n\n원/달러 1,351.3원 -0.58%")
+        issues = collect_issues(doc, PRICE_DATA)
+        self.assertEqual(len(issues), 1)
+        self.assertIn("원/달러", issues[0])
+        self.assertIn("0.53", issues[0])
 
     def test_index_as_a_modifier_is_not_a_move(self) -> None:
         """'코스닥 장비주도 심텍 4.78%'의 4.78%는 심텍의 것입니다."""
