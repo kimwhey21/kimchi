@@ -214,8 +214,14 @@ def fetch_all() -> dict:
                 entry, ticker, index_quotes.get(_NAVER_INDEX_CODES[ticker])
             )
         macro[ticker] = entry
+    # sector는 _fetch_one이 쓰지 않지만 원고와 업종 그래픽에서 필요하므로
+    # 설정에서 그대로 실어 나릅니다.
     watchlist = {
-        row["ticker"]: {**_fetch_one(**row), "source": "core"}
+        row["ticker"]: {
+            **_fetch_one(**row),
+            "source": "core",
+            **({"sector": row["sector"]} if row.get("sector") else {}),
+        }
         for row in config["watchlist"]
     }
     trading_date = next(iter(macro.values()))["trading_date"]

@@ -81,6 +81,9 @@
   .mb-story-head h3 { margin: 0; }
   .mb-story-photo { width: 100%; max-width: 100%; height: auto; border-radius: 12px; margin: 14px 0 4px; display: block; }
   .mb-photo-credit { font-size: 11px; color: var(--mb-text-muted); margin: 0 0 14px; }
+  /* 본문 사이에 들어가는 데이터 그래픽. 그날 시세로 그린 것이라 사진과 달리
+     출처 표기가 필요 없습니다. */
+  .mb-figure { width: 100%; max-width: 100%; height: auto; border-radius: 12px; margin: 20px 0; display: block; border: 1px solid var(--mb-border); }
   .mb-photo-credit, .mb-card p, .mb-cal-item p, .mb-subscribe p { text-align: left; }
   .mb-photo-credit a { color: var(--mb-text-muted); }
   .mb-stat-compare { display: flex; align-items: center; gap: 14px; margin: 18px 0; padding: 18px; background: var(--mb-card); border: 1px solid var(--mb-border); border-radius: 12px; }
@@ -153,8 +156,11 @@
   {% for section in narrative %}
   <h2>{{ section.heading }}</h2>
   {% for para in section.body.split('\n\n') %}
-  <p>{{ para }}</p>
+  <p>{{ para|safe }}</p>
   {% endfor %}
+  {% if section.graphic %}
+  <img class="mb-figure" src="{{ section.graphic.url }}" alt="{{ section.graphic.alt }}" loading="lazy">
+  {% endif %}
   {% endfor %}
 
   {% if theme_cards %}

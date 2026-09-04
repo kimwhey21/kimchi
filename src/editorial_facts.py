@@ -51,6 +51,12 @@ _INTRADAY = re.compile(
     r"|afternoon|opened|by midday)",
     re.IGNORECASE,
 )
+# 다른 거래일의 숫자를 인용한 자리도 건너뜁니다. 이틀을 비교하는 서술은
+# 좋은 원고에서 흔합니다 — "KB금융은 어제 5.20% 오르고 오늘 3.32% 내렸습니다".
+# 장중 인용과 같은 이유로, 오늘 종가와 다른 것이 정상인 숫자입니다.
+_OTHER_DAY = re.compile(
+    r"(어제|전날|지난|직전|이틀|전 거래일|다음 거래일|\d+월 \d+일|\d+/\d+|→)"
+)
 _WINDOW_BEFORE, _WINDOW_AFTER = 20, 45
 
 
@@ -128,6 +134,8 @@ def _quoted_moves(text: str, names: list[tuple[str, dict]]) -> list[tuple[dict, 
             claimed.append((at, end))
             window = text[max(0, at - _WINDOW_BEFORE) : end + _WINDOW_AFTER]
             if _NOT_A_MOVE.search(window) or _INTRADAY.search(window):
+                continue
+            if _OTHER_DAY.search(window):
                 continue
             if not _MOVE_WORDS.search(window) and "(" not in window:
                 continue

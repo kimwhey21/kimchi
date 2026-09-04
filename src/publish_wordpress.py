@@ -261,6 +261,31 @@ def _find_existing_post_by_slug(
     return posts[0] if posts else None
 
 
+def upload_image_url(image: dict) -> str | None:
+    """본문에 넣을 그림을 미디어 라이브러리에 올리고 공개 URL을 돌려줍니다.
+
+    본문 데이터 그래픽(src/data_graphics.py)은 로컬 파일로 만들어지므로,
+    글에 넣으려면 먼저 사이트에 올려야 합니다. 대표 이미지와 달리 첨부파일
+    id가 아니라 URL이 필요합니다.
+    """
+    base_url = os.environ["WORDPRESS_URL"].rstrip("/")
+    auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
+    media_id = upload_featured_image(base_url, auth, image)
+    if not media_id:
+        return None
+    try:
+        response = requests.get(
+            f"{base_url}/wp-json/wp/v2/media/{media_id}",
+            auth=auth,
+            timeout=TIMEOUT_SECONDS,
+        )
+        response.raise_for_status()
+        return response.json().get("source_url")
+    except Exception as exc:  # noqa: BLE001 - 그림이 없어도 글은 나가야 합니다
+        print(f"[경고] 본문 그림 URL 조회 실패: {exc!r}", file=sys.stderr)
+        return None
+
+
 def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> int | None:
     """fetch_images.py가 돌려준 이미지 dict(url/alt/photographer/photographer_url)를
     실제로 내려받아 워드프레스 미디어 라이브러리에 올리고, 대표 이미지(featured

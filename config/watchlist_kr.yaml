@@ -21,35 +21,35 @@ macro:
 # LARGEST MOVE 대상이 됩니다 — 아래 dynamic으로 들어온 종목은 제외됩니다.
 watchlist:
   # 반도체
-  - { ticker: "005930", name: "삼성전자", name_en: "Samsung Electronics" }
-  - { ticker: "000660", name: "SK하이닉스", name_en: "SK Hynix" }
-  - { ticker: "009150", name: "삼성전기", name_en: "Samsung Electro-Mechanics" }
-  - { ticker: "042700", name: "한미반도체", name_en: "Hanmi Semiconductor" }
+  - { ticker: "005930", name: "삼성전자", name_en: "Samsung Electronics", sector: "반도체" }
+  - { ticker: "000660", name: "SK하이닉스", name_en: "SK Hynix", sector: "반도체" }
+  - { ticker: "009150", name: "삼성전기", name_en: "Samsung Electro-Mechanics", sector: "반도체" }
+  - { ticker: "042700", name: "한미반도체", name_en: "Hanmi Semiconductor", sector: "반도체" }
   # 금융
-  - { ticker: "105560", name: "KB금융", name_en: "KB Financial Group" }
-  - { ticker: "055550", name: "신한지주", name_en: "Shinhan Financial Group" }
-  - { ticker: "032830", name: "삼성생명", name_en: "Samsung Life Insurance" }
+  - { ticker: "105560", name: "KB금융", name_en: "KB Financial Group", sector: "금융" }
+  - { ticker: "055550", name: "신한지주", name_en: "Shinhan Financial Group", sector: "금융" }
+  - { ticker: "032830", name: "삼성생명", name_en: "Samsung Life Insurance", sector: "금융" }
   # 자동차
-  - { ticker: "005380", name: "현대차", name_en: "Hyundai Motor" }
-  - { ticker: "000270", name: "기아", name_en: "Kia" }
+  - { ticker: "005380", name: "현대차", name_en: "Hyundai Motor", sector: "자동차" }
+  - { ticker: "000270", name: "기아", name_en: "Kia", sector: "자동차" }
   # 조선·방산·원전
-  - { ticker: "329180", name: "HD현대중공업", name_en: "HD Hyundai Heavy Industries" }
-  - { ticker: "012450", name: "한화에어로스페이스", name_en: "Hanwha Aerospace" }
-  - { ticker: "034020", name: "두산에너빌리티", name_en: "Doosan Enerbility" }
+  - { ticker: "329180", name: "HD현대중공업", name_en: "HD Hyundai Heavy Industries", sector: "조선·방산" }
+  - { ticker: "012450", name: "한화에어로스페이스", name_en: "Hanwha Aerospace", sector: "조선·방산" }
+  - { ticker: "034020", name: "두산에너빌리티", name_en: "Doosan Enerbility", sector: "발전·원전" }
   # 2차전지 (에코프로는 에코프로비엠과 테마가 겹쳐 코어에서 뺐습니다.
   # 그날 크게 움직이면 아래 dynamic으로 자동 편입됩니다.)
-  - { ticker: "373220", name: "LG에너지솔루션", name_en: "LG Energy Solution" }
-  - { ticker: "247540", name: "에코프로비엠", name_en: "Ecopro BM" }
+  - { ticker: "373220", name: "LG에너지솔루션", name_en: "LG Energy Solution", sector: "2차전지" }
+  - { ticker: "247540", name: "에코프로비엠", name_en: "Ecopro BM", sector: "2차전지" }
   # 바이오
-  - { ticker: "207940", name: "삼성바이오로직스", name_en: "Samsung Biologics" }
-  - { ticker: "196170", name: "알테오젠", name_en: "Alteogen" }
-  - { ticker: "068270", name: "셀트리온", name_en: "Celltrion" }
+  - { ticker: "207940", name: "삼성바이오로직스", name_en: "Samsung Biologics", sector: "바이오" }
+  - { ticker: "196170", name: "알테오젠", name_en: "Alteogen", sector: "바이오" }
+  - { ticker: "068270", name: "셀트리온", name_en: "Celltrion", sector: "바이오" }
   # 플랫폼·소비
-  - { ticker: "035420", name: "네이버", name_en: "Naver" }
-  - { ticker: "035720", name: "카카오", name_en: "Kakao" }
-  - { ticker: "278470", name: "에이피알", name_en: "APR" }
+  - { ticker: "035420", name: "네이버", name_en: "Naver", sector: "플랫폼" }
+  - { ticker: "035720", name: "카카오", name_en: "Kakao", sector: "플랫폼" }
+  - { ticker: "278470", name: "에이피알", name_en: "APR", sector: "소비재" }
   # 로봇
-  - { ticker: "277810", name: "레인보우로보틱스", name_en: "Rainbow Robotics" }
+  - { ticker: "277810", name: "레인보우로보틱스", name_en: "Rainbow Robotics", sector: "로봇" }
 
 # ── 동적 티어: 그날 주도주 자동 편입 ──────────────────────────────────
 # 코어를 아무리 넓혀도 "목록 밖에서 터진 날"은 남습니다. 그래서 그날 실제로

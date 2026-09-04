@@ -82,6 +82,13 @@ class QuotedNumberTest(unittest.TestCase):
         # '삼성전자' 뒤 숫자는 '에코프로비엠'의 것이므로 삼성전자에 붙이지 않습니다.
         self.assertEqual(collect_issues(doc, PRICE_DATA), [])
 
+    def test_previous_day_quote_is_allowed(self) -> None:
+        """이틀을 비교하는 서술은 오늘 종가와 달라야 정상입니다."""
+        doc = _doc(
+            "삼성중공업이 8.58% 올랐습니다. 삼성전자는 어제 3.45% 올랐다가 오늘 0.20% 내렸습니다."
+        )
+        self.assertEqual(collect_issues(doc, PRICE_DATA), [])
+
     def test_english_names_are_checked(self) -> None:
         doc = {
             "title": "Samsung Heavy Industries rose 8.58%",

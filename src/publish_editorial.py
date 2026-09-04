@@ -38,6 +38,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src import (  # noqa: E402
+    data_graphics,
     editorial_facts,
     editorial_quality,
     editorial_quality_en,
@@ -47,8 +48,9 @@ from src import (  # noqa: E402
     render_html,
 )
 
-EDITORIAL_DIR = Path(__file__).resolve().parent.parent / "editorial"
-OUTPUT_DIR = Path(__file__).resolve().parent.parent / "output"
+ROOT = Path(__file__).resolve().parent.parent
+EDITORIAL_DIR = ROOT / "editorial"
+OUTPUT_DIR = ROOT / "output"
 
 _KO_TAGS = ["코스피", "코스닥", "원달러 환율"]
 _EN_TAGS = ["KOSPI", "KOSDAQ", "Korean won"]
@@ -171,6 +173,48 @@ def _attach_story_images(doc_section: dict | None, price_data: dict) -> dict | N
     return {**doc_section, "stories": stories}
 
 
+def _attach_section_graphics(doc_section: list, price_data: dict, market: str,
+                             date_str: str, previous: dict | None) -> None:
+    """본문 절에 지정된 데이터 그래픽을 만들어 사이트에 올리고 URL을 채웁니다.
+
+    사진과 달리 이 그림은 그날 시세에서 그리므로 숫자가 어긋날 수 없습니다.
+    업로드에 실패하면 그림 없이 글이 나갑니다 — 그림 하나가 발행을 막으면 안 됩니다.
+    """
+    for index, section in enumerate(doc_section or [], start=1):
+        spec = section.get("graphic")
+        if not isinstance(spec, dict) or not spec.get("kind"):
+            continue
+        kind = spec["kind"]
+        options = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt")}
+        if kind == "two_day_compare":
+            options["previous"] = previous
+        try:
+            local = OUTPUT_DIR / f"{market}_{date_str}_{index}_{kind}.png"
+            data_graphics.build(kind, price_data, local, **options)
+            url = publish_wordpress.upload_image_url(
+                {"local_path": str(local), "alt": spec.get("title", ""),
+                 "caption": "이 글의 시세로 만든 데이터 그래픽입니다."}
+            )
+            if url:
+                section["graphic"] = {"url": url, "alt": spec.get("title", "")}
+                print(f"[안내] 본문 그래픽: {kind} -> {url}")
+            else:
+                section.pop("graphic", None)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[안내] 본문 그래픽 생략 — {kind}: {exc!r}")
+            section.pop("graphic", None)
+
+
+def _previous_price_data(market: str, date_str: str) -> dict | None:
+    """전 거래일 시세 파일(이틀 비교 그래픽용)."""
+    files = sorted(
+        p for p in (ROOT / "data").glob(f"price_{market}_*.json") if p.stem < f"price_{market}_{date_str}"
+    )
+    if not files:
+        return None
+    return json.loads(files[-1].read_text(encoding="utf-8"))
+
+
 def publish(path: Path, publish_live: bool = False) -> None:
     doc = json.loads(path.read_text(encoding="utf-8"))
     market = doc["market"]
@@ -192,6 +236,13 @@ def publish(path: Path, publish_live: bool = False) -> None:
         print("영어 편집 기준 검사 통과")
         editorial_facts.validate(en, price_data, lang="en")
         print("시세 대조 검사 통과 (영어)")
+
+    # 본문 데이터 그래픽 (한국어판). 그날 시세로 그리므로 숫자가 어긋날 수 없습니다.
+    if publish_wordpress.is_configured():
+        _attach_section_graphics(
+            ko.get("narrative"), price_data, market, date_str,
+            _previous_price_data(market, date_str),
+        )
 
     # 인사이트 스토리 사진. 한국어판에서 찾은 사진을 영어판이 그대로 쓰도록
     # 순서를 맞춰 재사용합니다(같은 소재에 다른 사진이 붙지 않게, 그리고
