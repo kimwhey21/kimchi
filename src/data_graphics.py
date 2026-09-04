@@ -260,6 +260,9 @@ BUILDERS = {"index_card": index_card, "sector_bars": sector_bars,
 
 def build(kind: str, price_data: dict, output_path: Path, **kwargs) -> dict:
     """원고의 graphic 지정을 그림 파일로 만들고 렌더러가 쓸 정보를 돌려줍니다."""
+    # output/은 저장소에 없습니다(gitignore). 러너에서 처음 그릴 때 만듭니다 —
+    # 2026-09-04 첫 실행이 이 디렉터리가 없어 FileNotFoundError로 끝났습니다.
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     builder = BUILDERS[kind]
     builder(price_data, output_path, **kwargs)
     return {"local_path": str(output_path), "kind": kind}

@@ -216,6 +216,7 @@ def _previous_price_data(market: str, date_str: str) -> dict | None:
 
 
 def publish(path: Path, publish_live: bool = False) -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     doc = json.loads(path.read_text(encoding="utf-8"))
     market = doc["market"]
     date_str = doc["date"]

@@ -342,7 +342,12 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
         )
         return media_id
     except Exception as e:
-        print(f"[경고] 대표 이미지 처리 실패: {e!r}", file=sys.stderr)
+        # 어디서 막혔는지 알 수 있게 경로를 함께 남깁니다. 경로 없이 찍힌
+        # FileNotFoundError 하나로 원인을 좁히느라 시간을 썼습니다(2026-09-04).
+        print(
+            f"[경고] 대표 이미지 처리 실패: {e!r} (local_path={image.get('local_path')})",
+            file=sys.stderr,
+        )
         return None
 
 
