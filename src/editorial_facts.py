@@ -59,6 +59,12 @@ _OTHER_DAY = re.compile(
 )
 _WINDOW_BEFORE, _WINDOW_AFTER = 20, 45
 
+# 지수·환율 이름과 등락률 사이에 올 수 있는 것: 조사, 숫자, 단위, 부호뿐입니다.
+# 종목명과 달리 지수 이름은 수식어로도 쓰여서("코스닥 장비주도 심텍 4.78%"),
+# 뒤에 나오는 첫 퍼센트를 그대로 가져오면 남의 숫자를 읽습니다. 실제로 2026-09-03
+# 원고의 저 문장에서 4.78%(심텍)를 코스닥 등락률로 읽었습니다.
+_MACRO_FILLER = re.compile(r"^[은는이가도의을를]?[\s0-9,.\-+()원달러포인트p]*$")
+
 
 def _texts(doc: dict) -> list[tuple[str, str]]:
     """원고에서 숫자가 들어갈 수 있는 자리를 (위치 이름, 글) 목록으로 모읍니다."""
@@ -84,17 +90,54 @@ def _texts(doc: dict) -> list[tuple[str, str]]:
 
 
 def _entries(price_data: dict) -> list[dict]:
+    """그날의 주인공을 고를 때 쓰는 목록 — 종목만 봅니다.
+
+    지수나 환율이 크게 움직인 날 그것이 '주인공'으로 뽑히면 안 됩니다. 이 검사가
+    요구하는 것은 '가장 크게 움직인 종목을 다뤘는가'이기 때문입니다.
+    """
     return list((price_data.get("watchlist") or {}).values())
+
+
+def _checkable_entries(price_data: dict) -> list[dict]:
+    """숫자를 대조할 목록 — 종목에 지수·환율을 더합니다.
+
+    전에는 워치리스트만 봤습니다. 그래서 2026-09-04 한국장 원고가 원/달러 등락률을
+    두 군데 모두 -0.58%로 적었는데(시세는 -0.53%) 검사를 그대로 통과했습니다.
+    카드는 시세에서 그리므로 -0.53%로 나와, 같은 글 안에서 숫자가 갈렸습니다.
+
+    다만 **값 자체가 퍼센트인 항목(금리)은 뺍니다.** 원고는 금리를 "미 10년물
+    4.761%"처럼 수준으로 적는데, 그것을 등락률로 읽으면 멀쩡한 문장이 걸립니다.
+    """
+    macro = [
+        {**entry, "_is_macro": True}
+        for entry in (price_data.get("macro") or {}).values()
+        if str(entry.get("unit") or "") != "%"
+    ]
+    return _entries(price_data) + macro
+
+
+# 원고가 부르는 이름이 시세 파일의 name과 다른 경우입니다. 짧고 흔한 말은
+# 넣지 않습니다 — '금'을 넣으면 금리·금융이 걸립니다.
+_ALIASES = {
+    "원/달러 환율": ("원/달러", "원·달러", "원달러"),
+    "나스닥종합": ("나스닥",),
+    "S&P500": ("S&P 500",),
+    "Nasdaq Composite": ("Nasdaq",),
+}
 
 
 def _names_by_length(price_data: dict, lang: str) -> list[tuple[str, dict]]:
     """긴 이름부터 봅니다 — '에코프로비엠'을 '에코프로'로 잘못 읽지 않으려고."""
     key = "name_en" if lang == "en" else "name"
-    pairs = [
-        (str(entry.get(key) or entry.get("name") or ""), entry)
-        for entry in _entries(price_data)
-    ]
-    return sorted((p for p in pairs if p[0]), key=lambda p: len(p[0]), reverse=True)
+    pairs: list[tuple[str, dict]] = []
+    for entry in _checkable_entries(price_data):
+        name = str(entry.get(key) or entry.get("name") or "")
+        if not name:
+            continue
+        pairs.append((name, entry))
+        for alias in _ALIASES.get(name, ()):
+            pairs.append((alias, entry))
+    return sorted(pairs, key=lambda p: len(p[0]), reverse=True)
 
 
 def _same_sentence_tail(text: str, end: int, names: list[tuple[str, dict]]) -> str:
@@ -131,6 +174,8 @@ def _quoted_moves(text: str, names: list[tuple[str, dict]]) -> list[tuple[dict, 
             start = end
             if any(s <= at < e for s, e in claimed):
                 continue  # '에코프로비엠' 안의 '에코프로'
+            if end < len(text) and text[end].isdigit():
+                continue  # '나스닥100', '코스피200'은 다른 지표입니다
             claimed.append((at, end))
             window = text[max(0, at - _WINDOW_BEFORE) : end + _WINDOW_AFTER]
             if _NOT_A_MOVE.search(window) or _INTRADAY.search(window):
@@ -139,7 +184,10 @@ def _quoted_moves(text: str, names: list[tuple[str, dict]]) -> list[tuple[dict, 
                 continue
             if not _MOVE_WORDS.search(window) and "(" not in window:
                 continue
-            for match in _PERCENT.finditer(_same_sentence_tail(text, end, names)):
+            tail = _same_sentence_tail(text, end, names)
+            for match in _PERCENT.finditer(tail):
+                if entry.get("_is_macro") and not _MACRO_FILLER.match(tail[: match.start()]):
+                    break  # 사이에 다른 낱말이 있으면 그 지수의 숫자가 아닙니다
                 found.append((entry, float(match.group(1))))
                 break  # 이름 뒤 첫 번째 비율만 봅니다
     return found
@@ -153,7 +201,9 @@ def collect_issues(doc: dict, price_data: dict, lang: str = "ko") -> list[str]:
         return issues
 
     names = _names_by_length(price_data, lang)
-    known_percents = {round(abs(float(e["change_pct"])), 2) for e in entries}
+    known_percents = {
+        round(abs(float(e["change_pct"])), 2) for e in _checkable_entries(price_data)
+    }
     for where, text in _texts(doc):
         for entry, quoted in _quoted_moves(text, names):
             actual = round(abs(float(entry["change_pct"])), 2)

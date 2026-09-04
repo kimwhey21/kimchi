@@ -10,6 +10,16 @@ import unittest
 from src.editorial_facts import EditorialFactError, collect_issues, validate
 
 PRICE_DATA = {
+    "macro": {
+        "KS11": {"ticker": "KS11", "name": "코스피", "name_en": "KOSPI",
+                  "price": 6687.21, "change_pct": 1.64, "unit": ""},
+        "KQ11": {"ticker": "KQ11", "name": "코스닥", "name_en": "KOSDAQ",
+                  "price": 813.5, "change_pct": -1.71, "unit": ""},
+        "USD/KRW": {"ticker": "USD/KRW", "name": "원/달러 환율", "name_en": "USD/KRW",
+                     "price": 1351.3, "change_pct": -0.53, "unit": "원"},
+        "^TNX": {"ticker": "^TNX", "name": "美 10년물 금리", "name_en": "US 10-Year Treasury Yield",
+                  "price": 4.761, "change_pct": -0.71, "unit": "%"},
+    },
     "watchlist": {
         "010140": {"ticker": "010140", "name": "삼성중공업", "name_en": "Samsung Heavy Industries",
                     "price": 21650.0, "change_pct": 8.58, "source": "dynamic"},
@@ -130,6 +140,52 @@ class LeadStockCoverageTest(unittest.TestCase):
         }
         doc = {"title": "조용한 하루였습니다", "narrative": [{"heading": "h", "body": "지수는 보합이었습니다."}]}
         self.assertEqual(collect_issues(doc, quiet), [])
+
+
+class MacroNumberTest(unittest.TestCase):
+    """지수·환율 등락률도 대조합니다.
+
+    2026-09-04 한국장 원고가 원/달러를 두 군데 모두 -0.58%로 적었는데(시세 -0.53%)
+    검사를 통과했습니다. 워치리스트 종목만 보고 있었기 때문입니다.
+    """
+
+    def test_wrong_fx_move_fails(self) -> None:
+        doc = _doc("삼성중공업이 8.58% 올랐습니다. 원/달러는 0.58% 내린 1,351.3원으로 마감했습니다.")
+        issues = collect_issues(doc, PRICE_DATA)
+        self.assertEqual(len(issues), 1)
+        self.assertIn("원/달러", issues[0])
+        self.assertIn("0.53", issues[0])
+
+    def test_correct_fx_move_passes(self) -> None:
+        doc = _doc("삼성중공업이 8.58% 올랐습니다. 원/달러는 0.53% 내린 1,351.3원으로 마감했습니다.")
+        self.assertEqual(collect_issues(doc, PRICE_DATA), [])
+
+    def test_index_bullet_line_is_checked(self) -> None:
+        doc = _doc("삼성중공업이 8.58% 올랐습니다.\n\n코스피 6,687.21 +1.64%")
+        self.assertEqual(collect_issues(doc, PRICE_DATA), [])
+
+    def test_index_as_a_modifier_is_not_a_move(self) -> None:
+        """'코스닥 장비주도 심텍 4.78%'의 4.78%는 심텍의 것입니다."""
+        doc = _doc(
+            "삼성중공업이 8.58% 올랐습니다. "
+            "코스닥 장비주도 심텍 4.78%, 원익IPS 4.28% 하락으로 나란히 밀렸다."
+        )
+        self.assertEqual(collect_issues(doc, PRICE_DATA), [])
+
+    def test_yield_level_is_not_read_as_a_move(self) -> None:
+        """금리는 수준을 퍼센트로 적습니다 — 등락률로 읽으면 멀쩡한 문장이 걸립니다."""
+        doc = _doc("삼성중공업이 8.58% 올랐습니다. 美 10년물 금리는 4.761% 수준으로 내렸습니다.")
+        self.assertEqual(collect_issues(doc, PRICE_DATA), [])
+
+    def test_macro_never_becomes_the_lead(self) -> None:
+        """지수가 종목보다 크게 움직여도 '그날의 주인공'은 종목입니다."""
+        loud = {
+            "macro": {"KQ11": {"ticker": "KQ11", "name": "코스닥", "name_en": "KOSDAQ",
+                                "price": 813.5, "change_pct": -30.0, "unit": ""}},
+            "watchlist": PRICE_DATA["watchlist"],
+        }
+        doc = _doc("삼성중공업이 8.58% 올랐습니다.")
+        self.assertEqual(collect_issues(doc, loud), [])
 
 
 if __name__ == "__main__":
