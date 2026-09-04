@@ -59,7 +59,14 @@
   .mb-cal-title { font-weight: 600; font-size: 14px; margin: 0 0 2px; }
   .mb-cal-desc { font-size: 13px; color: var(--mb-text-muted); margin: 0; }
   .mb-closing { margin-top: 36px; padding-top: 24px; border-top: 1px dashed var(--mb-border); text-align: center; }
-  .mb-closing h2 { margin-top: 0; font-size: 23px; }
+  /* 사이트 로고(홈 버튼)와 같은 서체로 맞춘 브랜드 표식입니다.
+     Beiruti는 테마가 전역으로 싣고 있어 글 페이지에서도 그대로 쓸 수 있습니다
+     (2026-09-04 확인: document.fonts.check("600 40px Beiruti") === true).
+     크기는 로고보다 작게 둡니다 — 같은 크기로 두면 글 중간에 사이트 제목이
+     한 번 더 나온 것처럼 보입니다. */
+  .mb-closing h2 { margin-top: 0; font-family: 'Beiruti', 'Pretendard', sans-serif;
+    font-size: 19px; font-weight: 600; text-transform: uppercase; letter-spacing: 2.4px;
+    color: var(--mb-text-muted); }
   .mb-closing p { font-style: italic; color: #333230; text-align: left; }
   .mb-subscribe { margin-top: 32px; padding: 24px; background: var(--mb-card); border: 1px solid var(--mb-border); border-radius: 14px; text-align: center; }
   .mb-subscribe h2 { margin-top: 0; font-size: 19px; }
@@ -192,7 +199,9 @@
 
   {% if outlook %}
   <h2>{{ outlook.heading }}</h2>
-  <p>{{ outlook.body }}</p>
+  {% for para in outlook.body.split('\n\n') %}
+  <p>{{ para|safe }}</p>
+  {% endfor %}
   {% endif %}
 
   {% if insight_section %}
@@ -211,7 +220,7 @@
   {% endif %}
   {% endif %}
   {% for para in item.body.split('\n\n') %}
-  <p>{{ para }}</p>
+  <p>{{ para|safe }}</p>
   {% endfor %}
   {% if item.chart and item.chart.type == 'stat' %}
   <div class="mb-stat-compare">
@@ -260,7 +269,7 @@
   <div class="mb-closing">
     <h2>{{ closing.heading }}</h2>
     {% for para in closing.body.split('\n\n') %}
-    <p>{{ para }}</p>
+    <p>{{ para|safe }}</p>
     {% endfor %}
   </div>
   {% endif %}

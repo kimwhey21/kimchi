@@ -196,7 +196,7 @@ def _attach_section_graphics(doc_section: list, price_data: dict, market: str,
                  "caption": "이 글의 시세로 만든 데이터 그래픽입니다."}
             )
             if url:
-                section["graphic"] = {"url": url, "alt": spec.get("title", "")}
+                section["graphic"] = {"url": url, "alt": spec.get("title", ""), "kind": kind}
                 print(f"[안내] 본문 그래픽: {kind} -> {url}")
             else:
                 section.pop("graphic", None)

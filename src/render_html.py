@@ -198,7 +198,19 @@ def render(
         if t in price_data["watchlist"]
     ]
 
-    foreign_flow_rows = _build_foreign_flow_table(price_data, lang) if market == "kr" else None
+    # 본문에 외국인 순매매 그래픽(flow_chart)이 이미 들어간 글에서는 이 표를 뺍니다.
+    # 같은 종목·같은 숫자가 글 시작 전에 한 번, 본문에서 또 한 번 나오는데,
+    # 표가 글보다 먼저 있어서 읽는 사람이 문장을 만나기도 전에 숫자부터 봅니다.
+    # (규칙 기반 초안에는 그 그래픽이 없으므로 거기서는 표가 그대로 남습니다.)
+    has_flow_graphic = any(
+        (section.get("graphic") or {}).get("kind") == "flow_chart"
+        for section in (generated.get("narrative") or [])
+    )
+    foreign_flow_rows = (
+        _build_foreign_flow_table(price_data, lang)
+        if market == "kr" and not has_flow_graphic
+        else None
+    )
 
     env = Environment(loader=FileSystemLoader(str(TEMPLATE_DIR)), autoescape=True)
     template = env.get_template("post.html.j2")
