@@ -277,8 +277,103 @@ def two_day_compare(price_data: dict, output_path: Path, previous: dict | None =
     return output_path
 
 
+def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
+                title: str = "오늘 많이 움직인 종목") -> Path:
+    """종목명 · 최근 주가 흐름 · 등락률을 한 줄씩 세운 목록입니다.
+
+    벤치마크(재테크농부) 시황 본문의 이미지 349장을 받아 보니 대부분이 사진이
+    아니라 이런 모양의 표·차트였습니다 — 종목 옆에 작은 추이선과 등락률이 붙은
+    목록. 우리 글은 이미지가 5장인데 그쪽은 중앙값 14장이라, 차이를 사진이 아니라
+    데이터 그래픽으로 메웁니다. 사진과 달리 여기 그리는 것은 전부 시세 파일에서
+    나오므로 틀린 그림이 붙을 수 없습니다.
+
+    절대 등락률 상위 `top_n`개를 오른 것부터 세웁니다.
+    """
+    rows = [
+        e for e in (price_data.get("watchlist") or {}).values()
+        if e.get("change_pct") is not None
+    ]
+    if not rows:
+        raise ValueError("movers_list: 등락률이 있는 종목이 없습니다")
+    rows.sort(key=lambda e: abs(float(e["change_pct"])), reverse=True)
+    picked = sorted(rows[:top_n], key=lambda e: float(e["change_pct"]), reverse=True)
+
+    row_h, top = 62, 78
+    h = top + row_h * len(picked) + 24
+    img = Image.new("RGB", (W, h), BG)
+    d = ImageDraw.Draw(img)
+    d.text((32, 26), title, font=_font(21, True), fill=SUB)
+
+    for i, e in enumerate(picked):
+        y = top + i * row_h
+        color = _color(float(e["change_pct"]))
+        d.rounded_rectangle([32, y, W - 32, y + row_h - 10], 12, fill=PANEL, outline=LINE)
+        d.text((54, y + 10), str(e["name"])[:14], font=_font(20, True), fill=INK)
+        d.text((54, y + 33), str(e.get("ticker", "")), font=_font(15), fill=SUB)
+        _sparkline(d, e.get("series"), (W - 340, y + 12, W - 210, y + 40), color)
+        price = _fmt(float(e["price"]), "원" if e.get("unit") == "원" else "")
+        d.text((W - 190, y + 8), price, font=_font(19), fill=INK)
+        pct = f"{float(e['change_pct']):+.2f}%"
+        d.text((W - 190, y + 32), pct, font=_font(19, True), fill=color)
+    img.save(output_path, format="PNG", optimize=True)
+    return output_path
+
+
+def flow_compare(price_data: dict, output_path: Path, top_n: int = 5,
+                 title: str = "외국인과 기관, 같은 종목에서 반대로") -> Path:
+    """같은 종목의 외국인·기관 순매매를 나란히 놓습니다.
+
+    `institution_net`은 시세 파일에 늘 들어 있었는데 어디에도 그려지지 않았습니다.
+    외국인만 보면 "무엇을 팔았다"까지만 보이고, 기관을 나란히 놓아야 그 매도를
+    누가 받았는지가 보입니다(2026-09-04: 외국인이 판 신한지주·KB금융을 기관이
+    받았습니다).
+
+    외국인 순매수 상위와 순매도 상위를 각각 top_n개씩 세웁니다.
+    """
+    rows = [
+        e for e in (price_data.get("watchlist") or {}).values()
+        if e.get("foreign_net") is not None and e.get("institution_net") is not None
+    ]
+    if not rows:
+        raise ValueError("flow_compare: 외국인·기관 순매매가 함께 있는 종목이 없습니다")
+    rows.sort(key=lambda e: e["foreign_net"], reverse=True)
+    picked = rows[:top_n] + rows[-top_n:]
+
+    row_h, top, bar_h = 54, 100, 18
+    h = top + row_h * len(picked) + 30
+    img = Image.new("RGB", (W, h), BG)
+    d = ImageDraw.Draw(img)
+    d.text((32, 26), title, font=_font(21, True), fill=SUB)
+    # 범례
+    d.rounded_rectangle([32, 62, 56, 62 + 14], 4, fill=INK)
+    d.text((64, 60), "외국인", font=_font(16), fill=SUB)
+    d.rounded_rectangle([132, 62, 156, 62 + 14], 4, fill=FLAT)
+    d.text((164, 60), "기관", font=_font(16), fill=SUB)
+
+    span = max(max(abs(e["foreign_net"]), abs(e["institution_net"])) for e in picked) or 1
+    mid, half = 430, 230
+    d.line([mid, top - 8, mid, h - 20], fill=LINE, width=1)
+    for i, e in enumerate(picked):
+        y = top + i * row_h
+        d.text((32, y + 12), str(e["name"])[:12], font=_font(18, True), fill=INK)
+        for j, (key, fill) in enumerate((("foreign_net", INK), ("institution_net", FLAT))):
+            net = e[key]
+            width = abs(net) / span * half
+            by = y + 4 + j * (bar_h + 4)
+            if net >= 0:
+                d.rounded_rectangle([mid, by, mid + width, by + bar_h], 4, fill=fill)
+            else:
+                d.rounded_rectangle([mid - width, by, mid, by + bar_h], 4, fill=fill)
+            label = f"{net:+,}"
+            d.text((W - 32 - d.textlength(label, font=_font(15)), by + 1), label,
+                   font=_font(15), fill=SUB)
+    img.save(output_path, format="PNG", optimize=True)
+    return output_path
+
+
 BUILDERS = {"index_card": index_card, "sector_bars": sector_bars,
-            "flow_chart": flow_chart, "two_day_compare": two_day_compare}
+            "flow_chart": flow_chart, "two_day_compare": two_day_compare,
+            "movers_list": movers_list, "flow_compare": flow_compare}
 
 
 def build(kind: str, price_data: dict, output_path: Path, **kwargs) -> dict:
