@@ -1,0 +1,612 @@
+{
+  "macro": {
+    "^DJI": {
+      "ticker": "^DJI",
+      "name": "다우존스",
+      "name_en": "Dow Jones Industrial Average",
+      "price": 53414.25,
+      "change_pct": -0.51,
+      "series": [
+        53463.8789,
+        53569.4414,
+        53559.9883,
+        53185.8984,
+        52766.8789,
+        53061.9492,
+        53686.1094,
+        53414.25
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04"
+    },
+    "^GSPC": {
+      "ticker": "^GSPC",
+      "name": "S&P500",
+      "name_en": "S&P 500",
+      "price": 7718.6,
+      "change_pct": -0.38,
+      "series": [
+        7675.7002,
+        7730.9902,
+        7711.7598,
+        7686.1401,
+        7631.4702,
+        7666.6001,
+        7747.71,
+        7718.6001
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04"
+    },
+    "^IXIC": {
+      "ticker": "^IXIC",
+      "name": "나스닥종합",
+      "name_en": "Nasdaq Composite",
+      "price": 26506.99,
+      "change_pct": -0.29,
+      "series": [
+        26130.1992,
+        26541.3496,
+        26402.4199,
+        26370.8906,
+        26099.7695,
+        26217.8301,
+        26584.0605,
+        26506.9902
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04"
+    },
+    "^RUT": {
+      "ticker": "^RUT",
+      "name": "러셀2000",
+      "name_en": "Russell 2000",
+      "price": 2975.65,
+      "change_pct": 0.25,
+      "series": [
+        3005.8999,
+        3014.3401,
+        2972.3701,
+        2956.45,
+        2920.1299,
+        2953.1699,
+        2968.27,
+        2975.6499
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04"
+    },
+    "^VIX": {
+      "ticker": "^VIX",
+      "name": "VIX",
+      "name_en": "VIX",
+      "price": 14.53,
+      "change_pct": 1.47,
+      "series": [
+        15.21,
+        14.51,
+        14.43,
+        14.92,
+        16.34,
+        15.2,
+        14.32,
+        14.53
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04"
+    },
+    "^TNX": {
+      "ticker": "^TNX",
+      "name": "美 10년물 금리",
+      "name_en": "US 10-Year Treasury Yield",
+      "price": 4.78,
+      "change_pct": 0.46,
+      "series": [
+        4.664,
+        4.672,
+        4.72,
+        4.758,
+        4.796,
+        4.796,
+        4.762,
+        4.784
+      ],
+      "unit": "%",
+      "trading_date": "2026-09-04"
+    },
+    "^TYX": {
+      "ticker": "^TYX",
+      "name": "美 30년물 금리",
+      "name_en": "US 30-Year Treasury Yield",
+      "price": 5.25,
+      "change_pct": 0.06,
+      "series": [
+        5.186,
+        5.191,
+        5.206,
+        5.249,
+        5.268,
+        5.267,
+        5.243,
+        5.246
+      ],
+      "unit": "%",
+      "trading_date": "2026-09-04"
+    },
+    "GC=F": {
+      "ticker": "GC=F",
+      "name": "국제 금",
+      "name_en": "Gold",
+      "price": 4429.8,
+      "change_pct": -1.38,
+      "series": [
+        4598.2002,
+        4609.7002,
+        4478.1001,
+        4431.1001,
+        4348.0,
+        4366.2998,
+        4491.7002,
+        4429.7998
+      ],
+      "unit": "달러",
+      "trading_date": "2026-09-04"
+    }
+  },
+  "watchlist": {
+    "NVDA": {
+      "ticker": "NVDA",
+      "name": "엔비디아",
+      "name_en": "NVIDIA",
+      "price": 230.36,
+      "change_pct": 0.84,
+      "series": [
+        209.66,
+        227.98,
+        217.55,
+        220.78,
+        217.44,
+        224.41,
+        228.45,
+        230.36
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "MU": {
+      "ticker": "MU",
+      "name": "마이크론",
+      "name_en": "Micron Technology",
+      "price": 1016.59,
+      "change_pct": 6.1,
+      "series": [
+        938.4,
+        935.39,
+        932.86,
+        958.73,
+        933.44,
+        956.08,
+        958.16,
+        1016.59
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "INTC": {
+      "ticker": "INTC",
+      "name": "인텔",
+      "name_en": "Intel",
+      "price": 95.8,
+      "change_pct": 4.51,
+      "series": [
+        88.24,
+        92.09,
+        89.47,
+        89.51,
+        88.97,
+        90.05,
+        91.67,
+        95.8
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "TSLA": {
+      "ticker": "TSLA",
+      "name": "테슬라",
+      "name_en": "Tesla",
+      "price": 354.08,
+      "change_pct": -5.92,
+      "series": [
+        345.82,
+        354.81,
+        348.75,
+        367.95,
+        356.09,
+        357.01,
+        376.37,
+        354.08
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "AAPL": {
+      "ticker": "AAPL",
+      "name": "애플",
+      "name_en": "Apple",
+      "price": 319.97,
+      "change_pct": -2.51,
+      "series": [
+        313.45,
+        314.58,
+        319.7,
+        316.85,
+        325.13,
+        324.96,
+        328.21,
+        319.97
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "MSFT": {
+      "ticker": "MSFT",
+      "name": "마이크로소프트",
+      "name_en": "Microsoft",
+      "price": 499.7,
+      "change_pct": -2.04,
+      "series": [
+        496.37,
+        505.06,
+        513.53,
+        507.29,
+        501.02,
+        496.82,
+        510.12,
+        499.7
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "AMZN": {
+      "ticker": "AMZN",
+      "name": "아마존",
+      "name_en": "Amazon",
+      "price": 258.51,
+      "change_pct": -0.15,
+      "series": [
+        260.28,
+        256.26,
+        266.43,
+        259.77,
+        254.92,
+        254.98,
+        258.9,
+        258.51
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "META": {
+      "ticker": "META",
+      "name": "메타",
+      "name_en": "Meta",
+      "price": 616.77,
+      "change_pct": 1.0,
+      "series": [
+        576.14,
+        571.1,
+        578.02,
+        572.34,
+        578.54,
+        592.85,
+        610.68,
+        616.77
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "GOOGL": {
+      "ticker": "GOOGL",
+      "name": "알파벳",
+      "name_en": "Google",
+      "price": 338.46,
+      "change_pct": -1.11,
+      "series": [
+        341.7803,
+        340.4312,
+        346.3674,
+        339.132,
+        334.8048,
+        336.9034,
+        342.26,
+        338.46
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "WMT": {
+      "ticker": "WMT",
+      "name": "월마트",
+      "name_en": "Walmart",
+      "price": 107.14,
+      "change_pct": -1.18,
+      "series": [
+        104.34,
+        102.63,
+        103.09,
+        104.87,
+        105.92,
+        106.09,
+        108.42,
+        107.14
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "MRNA": {
+      "ticker": "MRNA",
+      "name": "모더나",
+      "name_en": "Moderna",
+      "price": 145.55,
+      "change_pct": -2.23,
+      "series": [
+        149.66,
+        142.77,
+        137.99,
+        140.34,
+        154.27,
+        150.81,
+        148.87,
+        145.55
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "MRK": {
+      "ticker": "MRK",
+      "name": "머크",
+      "name_en": "Merck",
+      "price": 150.33,
+      "change_pct": -1.32,
+      "series": [
+        153.1,
+        149.54,
+        148.35,
+        147.76,
+        149.86,
+        151.64,
+        152.34,
+        150.33
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "COIN": {
+      "ticker": "COIN",
+      "name": "코인베이스",
+      "name_en": "Coinbase",
+      "price": 184.64,
+      "change_pct": -4.18,
+      "series": [
+        181.78,
+        190.72,
+        178.64,
+        188.12,
+        176.82,
+        174.96,
+        192.7,
+        184.64
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "DE": {
+      "ticker": "DE",
+      "name": "디어",
+      "name_en": "Deere & Company",
+      "price": 693.53,
+      "change_pct": -0.13,
+      "series": [
+        634.54,
+        622.66,
+        630.33,
+        654.91,
+        676.08,
+        698.37,
+        694.41,
+        693.53
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "SOXX": {
+      "ticker": "SOXX",
+      "name": "필라델피아 반도체 ETF",
+      "name_en": "iShares Semiconductor ETF",
+      "price": 519.86,
+      "change_pct": 3.52,
+      "series": [
+        515.4,
+        525.43,
+        508.62,
+        511.04,
+        500.31,
+        501.44,
+        502.2,
+        519.86
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "CL=F": {
+      "ticker": "CL=F",
+      "name": "WTI 원유",
+      "name_en": "WTI Crude Oil",
+      "price": 91.48,
+      "change_pct": 0.2,
+      "series": [
+        82.23,
+        83.53,
+        83.4,
+        85.76,
+        90.22,
+        91.01,
+        91.3,
+        91.48
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "core"
+    },
+    "SNDK": {
+      "ticker": "SNDK",
+      "name": "샌디스크",
+      "name_en": "Sandisk",
+      "price": 1740.0,
+      "change_pct": 11.9,
+      "series": [
+        1499.37,
+        1484.95,
+        1484.98,
+        1566.7,
+        1536.87,
+        1553.4,
+        1554.99,
+        1740.0
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "dynamic",
+      "trading_value": 28694895060.0,
+      "sector": "Technology"
+    },
+    "AVGO": {
+      "ticker": "AVGO",
+      "name": "브로드컴",
+      "name_en": "Broadcom",
+      "price": 357.9,
+      "change_pct": 0.21,
+      "series": [
+        355.59,
+        371.54,
+        368.79,
+        370.34,
+        369.68,
+        367.24,
+        357.16,
+        357.9
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "dynamic",
+      "trading_value": 11729585593.109999,
+      "sector": "Technology"
+    },
+    "AMD": {
+      "ticker": "AMD",
+      "name": "AMD",
+      "name_en": "Advanced Micro Devices",
+      "price": 477.57,
+      "change_pct": 4.69,
+      "series": [
+        480.93,
+        476.67,
+        465.58,
+        470.72,
+        459.61,
+        457.06,
+        456.16,
+        477.57
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "dynamic",
+      "trading_value": 9385183194.21,
+      "sector": "Technology"
+    },
+    "SPCX": {
+      "ticker": "SPCX",
+      "name": "스페이스X",
+      "name_en": "Space Exploration Technologies",
+      "price": 147.95,
+      "change_pct": -1.2,
+      "series": [
+        139.63,
+        140.87,
+        141.5,
+        143.69,
+        142.23,
+        140.71,
+        149.74,
+        147.95
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "dynamic",
+      "trading_value": 7242110778.099999,
+      "sector": "Technology"
+    },
+    "DELL": {
+      "ticker": "DELL",
+      "name": "델 테크놀로지스",
+      "name_en": "Dell Technologies",
+      "price": 524.14,
+      "change_pct": 1.5,
+      "series": [
+        463.82,
+        472.26,
+        456.24,
+        456.01,
+        425.0,
+        492.2,
+        516.39,
+        524.14
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "dynamic",
+      "trading_value": 5822736777.5,
+      "sector": "Technology"
+    },
+    "TSM": {
+      "ticker": "TSM",
+      "name": "TSMC",
+      "name_en": "Taiwan Semiconductor Manufacturing",
+      "price": 428.91,
+      "change_pct": 2.85,
+      "series": [
+        417.69,
+        427.3,
+        417.52,
+        415.32,
+        414.0,
+        415.5,
+        417.01,
+        428.91
+      ],
+      "unit": "",
+      "trading_date": "2026-09-04",
+      "source": "dynamic",
+      "trading_value": 5264729138.610001,
+      "sector": "Technology"
+    }
+  },
+  "trading_date": "2026-09-04",
+  "missing": []
+}
