@@ -6,7 +6,10 @@ name: Editorial Publish
 on:
   push:
     paths:
-      - "editorial/**.json"
+      # 하위 폴더는 넣지 않습니다. `editorial/features/`의 기준표 원고는 스키마가
+      # 달라(market·price_data 없음) 이 워크플로가 발행할 수 없습니다. `**`로 두면
+      # 기준표를 커밋할 때마다 자동 발행이 그 파일로 죽습니다.
+      - "editorial/*.json"
   workflow_dispatch:
     inputs:
       path:
@@ -62,7 +65,7 @@ jobs:
                [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
             FILES=$(git diff --name-only --diff-filter=d \
                       "${{ github.event.before }}" "${{ github.sha }}" -- editorial \
-                    | grep '\.json$' | tr '\n' ' ' || true)
+                    | grep -E '^editorial/[^/]+\.json$' | tr '\n' ' ' || true)
           fi
           echo "발행 대상: ${FILES:-(지정 없음 → 가장 최근 거래일 원고)}"
           echo "files=$FILES" >> "$GITHUB_OUTPUT"

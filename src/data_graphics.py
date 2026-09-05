@@ -358,16 +358,24 @@ def flow_compare(price_data: dict, output_path: Path, top_n: int = 5,
     누가 받았는지가 보입니다(2026-09-04: 외국인이 판 신한지주·KB금융을 기관이
     받았습니다).
 
-    외국인 순매수 상위와 순매도 상위를 각각 top_n개씩 세웁니다.
+    **실제로 방향이 갈린 종목만 담습니다.** 전에는 외국인 순매수 상위와 순매도
+    상위를 그냥 잘라 왔는데, 그러면 둘 다 순매수인 종목이 맨 위에 올라와 제목
+    ("같은 종목에서 반대로")과 그림이 어긋났습니다. 2026-09-06에 실제로 상위 다섯
+    줄이 전부 양쪽 순매수였습니다. 제목이 사실이 아닌 그림은 틀린 그림입니다.
     """
     rows = [
         e for e in (price_data.get("watchlist") or {}).values()
         if e.get("foreign_net") is not None and e.get("institution_net") is not None
+        and e["foreign_net"] != 0 and e["institution_net"] != 0
     ]
     if not rows:
         raise ValueError("flow_compare: 외국인·기관 순매매가 함께 있는 종목이 없습니다")
-    rows.sort(key=lambda e: e["foreign_net"], reverse=True)
-    picked = rows[:top_n] + rows[-top_n:]
+    opposed = [e for e in rows if (e["foreign_net"] > 0) != (e["institution_net"] > 0)]
+    if not opposed:
+        raise ValueError("flow_compare: 그날 외국인과 기관이 반대로 간 종목이 없습니다")
+    # 겹치는 물량이 클수록 "한쪽이 판 것을 다른 쪽이 받았다"가 뚜렷합니다.
+    opposed.sort(key=lambda e: -min(abs(e["foreign_net"]), abs(e["institution_net"])))
+    picked = opposed[:top_n * 2]
 
     row_h, top, bar_h = 54, 100, 18
     h = top + row_h * len(picked) + 30

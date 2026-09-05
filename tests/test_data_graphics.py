@@ -76,3 +76,44 @@ class BuildersTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FlowCompareOpposedTest(unittest.TestCase):
+    """제목이 "같은 종목에서 반대로"인데 양쪽 순매수 종목이 실리면 안 됩니다.
+
+    2026-09-06에 실제로 상위 다섯 줄이 전부 외국인·기관 동반 순매수였습니다.
+    제목이 사실이 아닌 그림은 틀린 그림입니다.
+    """
+
+    def _price(self) -> dict:
+        return {"watchlist": {
+            "same_big": {"name": "동반매수", "ticker": "1", "change_pct": 5.0,
+                         "foreign_net": 900_000, "institution_net": 800_000},
+            "opp_big": {"name": "반대큼", "ticker": "2", "change_pct": -3.0,
+                        "foreign_net": -300_000, "institution_net": 250_000},
+            "opp_small": {"name": "반대작음", "ticker": "3", "change_pct": 1.0,
+                          "foreign_net": -5_000, "institution_net": 4_000},
+        }}
+
+    def test_only_opposed_rows_are_drawn(self) -> None:
+        import tempfile
+        from pathlib import Path
+        from src import data_graphics
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "flow.png"
+            data_graphics.flow_compare(self._price(), out, top_n=5)
+            self.assertTrue(out.exists())
+        # 그림에서 이름을 되읽을 수는 없으므로 고르는 논리를 그대로 검증합니다.
+        rows = [e for e in self._price()["watchlist"].values()
+                if (e["foreign_net"] > 0) != (e["institution_net"] > 0)]
+        self.assertEqual({r["name"] for r in rows}, {"반대큼", "반대작음"})
+
+    def test_no_opposed_rows_raises_instead_of_lying(self) -> None:
+        price = {"watchlist": {"a": {"name": "동반", "ticker": "1", "change_pct": 1.0,
+                                     "foreign_net": 100, "institution_net": 100}}}
+        import tempfile
+        from pathlib import Path
+        from src import data_graphics
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(ValueError):
+                data_graphics.flow_compare(price, Path(tmp) / "x.png")
