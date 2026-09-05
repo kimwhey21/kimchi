@@ -97,6 +97,18 @@ jobs:
           # (publish_editorial._concrete_image_query).
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
 
+      - name: 벤치마크 대조 (보고만)
+        # 검사가 통과했다는 것은 "encode한 규칙을 어기지 않았다"는 뜻이지
+        # "벤치마크에 가까워졌다"는 뜻이 아닙니다. 2026-09-05에 검사 다섯 개를
+        # 통과한 글이 '습니다' 57%(벤치마크 45%)·문장 136개(벤치마크 38개)로
+        # 나갔고, 사람이 읽고 지적할 때까지 아무도 몰랐습니다.
+        #
+        # 발행을 막지는 않습니다(|| true). 어미 비율을 기계로 강제하면 억지로
+        # 어미만 바꾼 글이 나옵니다. 여기서는 어긋난 항목을 로그에 남기기만 하고,
+        # 고칠지는 사람이 판단합니다.
+        if: always()
+        run: python -m scripts.compare_to_benchmark ${{ steps.pick.outputs.files }} || true
+
       - name: 결과물 업로드 (백업용)
         if: always()
         uses: actions/upload-artifact@v4
