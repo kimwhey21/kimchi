@@ -22,8 +22,13 @@ from src import fetch_movers
 
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "watchlist_us.yaml"
 
-_NAN_RETRY_ATTEMPTS = 3
-_NAN_RETRY_DELAY_SECONDS = 5
+# 결측값(NaN) 재시도. 전에는 5초 간격 3회, 즉 재시도 창이 총 15초뿐이었습니다.
+# 그런데 실제로 관측된 지연은 분 단위입니다 — 2026-08-31~09-01에 정각 실행이
+# USD/KRW 결측으로 3회 연속 죽었고, **7분 뒤** 수동 실행은 성공했습니다.
+# 15초 창으로는 애초에 닿지 않는 지연이었습니다. 지수 백오프로 창을 4분으로
+# 넓힙니다(10 + 30 + 60 + 120초).
+_NAN_RETRY_DELAYS = (10, 30, 60, 120)
+_NAN_RETRY_ATTEMPTS = len(_NAN_RETRY_DELAYS) + 1
 
 
 def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_yield: bool = False,
@@ -57,7 +62,7 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
             f"{attempt}/{_NAN_RETRY_ATTEMPTS}"
         )
         if attempt < _NAN_RETRY_ATTEMPTS:
-            time.sleep(_NAN_RETRY_DELAY_SECONDS)
+            time.sleep(_NAN_RETRY_DELAYS[attempt - 1])
 
     if closes is None:
         raise ValueError(
@@ -104,6 +109,30 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
     }
 
 
+# 이것만 없으면 그날 발행을 포기합니다. 나머지는 빠져도 글은 나갑니다.
+# 2026-09-01에 원/달러 하나가 결측이라 지수 2개와 종목 27개를 통째로 버렸습니다.
+# 환율 한 줄을 못 쓰는 것과 그날 시황이 통째로 없는 것은 다른 크기의 손해입니다.
+_REQUIRED = {"^DJI", "^GSPC", "^IXIC"}
+
+
+def _fetch_group(rows, extra=None) -> tuple[dict, list[str]]:
+    """설정의 각 줄을 받아오되, 필수가 아닌 항목의 실패는 건너뜁니다."""
+    out: dict[str, dict] = {}
+    missing: list[str] = []
+    for row in rows:
+        ticker = row["ticker"]
+        try:
+            entry = _fetch_one(**row)
+        except Exception as exc:  # noqa: BLE001
+            if ticker in _REQUIRED:
+                raise
+            missing.append(f"{row.get('name', ticker)}({ticker})")
+            print(f"[안내] 시세 제외 — {row.get('name', ticker)}({ticker}): {exc}")
+            continue
+        out[ticker] = {**entry, **(extra(row) if extra else {})}
+    return out, missing
+
+
 def fetch_all() -> dict:
     """설정 파일에 등록된 모든 지수/종목의 시세를 가져옵니다.
 
@@ -113,14 +142,23 @@ def fetch_all() -> dict:
     판단합니다.
     """
     config = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
-    macro = {row["ticker"]: _fetch_one(**row) for row in config["macro"]}
-    watchlist = {
-        row["ticker"]: {**_fetch_one(**row), "source": "core"}
-        for row in config["watchlist"]
-    }
-    trading_date = next(iter(macro.values()))["trading_date"]
+    macro, miss_macro = _fetch_group(config["macro"])
+    watchlist, miss_stock = _fetch_group(
+        config["watchlist"], extra=lambda row: {"source": "core"}
+    )
+    if not watchlist:
+        raise ValueError("워치리스트 종목을 하나도 받지 못했습니다.")
+    # 거래일은 필수 지수에서 읽습니다. 선택 항목이 빠져도 기준일은 흔들리지
+    # 않아야 합니다.
+    trading_date = next(
+        macro[t]["trading_date"] for t in _REQUIRED if t in macro
+    )
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
-    return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date}
+    missing = miss_macro + miss_stock
+    if missing:
+        print(f"[안내] 시세에서 빠진 항목 {len(missing)}개: {', '.join(missing)}")
+    return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date,
+            "missing": missing}
 
 
 def _fetch_dynamic_tier(

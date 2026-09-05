@@ -18,8 +18,22 @@ on:
     # 마지막 거래일이라, 휴장이면 파일명이 그대로여서 커밋할 것이 없고 루틴도
     # 같은 거래일 원고가 이미 있어 종료합니다.
     - cron: "20 22 * * 1-5"
+    # 재시도 두 번. 첫 실행이 성공했으면 같은 거래일 파일을 다시 써도 내용이
+    # 같아 커밋할 것이 없고, main.py의 "[중단] … 이미 생성·처리되어 건너뜁니다"
+    # 가드에 걸려 바로 끝납니다. 실패했을 때만 실제로 일을 합니다.
+    #
+    # 왜 필요한가: 하루에 시도가 한 번뿐이라, 죽으면 사람이 알아채기 전까지
+    # 그날이 통째로 없어집니다. 2026-08-31~09-01에 정각 실행이 USD/KRW 결측으로
+    # 세 번 연속 죽었고 7분 뒤 수동 실행은 성공했습니다. 그때는 스케줄을 20분
+    # 미루는 것으로 덮었지만, 지연이 21분이면 또 같은 일이 납니다.
+    #
+    # 루틴이 :40에 원고를 쓰므로 재시도는 그 전에 끝나야 합니다.
+    - cron: "27 22 * * 1-5"
+    - cron: "34 22 * * 1-5"
     # 한국시간(KST) 기준 평일 16:20 = UTC 당일 07:20 → 한국장 마감 요약
     - cron: "20 7 * * 1-5"
+    - cron: "27 7 * * 1-5"
+    - cron: "34 7 * * 1-5"
   workflow_dispatch:
     inputs:
       market:
@@ -46,13 +60,14 @@ jobs:
       - name: 어떤 시장을 실행할지 결정
         id: market
         run: |
-          if [ "${{ github.event.schedule }}" = "20 22 * * 1-5" ]; then
-            echo "market=us" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "20 7 * * 1-5" ]; then
-            echo "market=kr" >> "$GITHUB_OUTPUT"
-          else
-            echo "market=${{ github.event.inputs.market }}" >> "$GITHUB_OUTPUT"
-          fi
+          # 시장은 예약의 "시(hour)"로 가릅니다. 재시도가 생기면서 분만 다른
+          # 예약이 여럿이 됐는데, 전체 문자열로 비교하면 하나 추가할 때마다
+          # 여기도 같이 고쳐야 하고 빠뜨리면 조용히 엉뚱한 시장을 돌립니다.
+          case "${{ github.event.schedule }}" in
+            *" 22 * * "*) echo "market=us" >> "$GITHUB_OUTPUT" ;;
+            *" 7 * * "*)  echo "market=kr" >> "$GITHUB_OUTPUT" ;;
+            *)            echo "market=${{ github.event.inputs.market }}" >> "$GITHUB_OUTPUT" ;;
+          esac
 
       - name: 실행
         run: |
