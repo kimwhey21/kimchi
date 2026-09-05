@@ -294,7 +294,7 @@
     "trading_date": "2026-09-01"
   },
   "ko": {
-    "title": "코스피는 자사주 매입에 0.23% 올랐고, 코스닥은 1.56% 하락했습니다",
+    "title": "에코프로 4.49% 급락. 코스피는 오르고 코스닥만 1.56% 하락한 이유.",
     "narrative": [
       {
         "heading": "지수는 올랐지만, 판 쪽이 훨씬 많았습니다",
@@ -438,7 +438,7 @@
     "narrative": [
       {
         "heading": "The index rose. Almost everyone else was selling.",
-        "body": "On September 1 the KOSPI closed at 6,835.80, up 15.78 points or 0.23%. The KOSDAQ, Korea's secondary board for smaller and growth companies, fell 13.04 points to 821.25, a decline of 1.56%. The won weakened 0.23% against the dollar to 1,372.70.\n\nThe index number hides what actually happened. According to Asiae's session tally, retail investors, foreign investors and domestic institutions were all net sellers of KOSPI shares. Exactly one category was buying: \"other corporations,\" to the tune of ₩1.69 trillion.\n\nOf the ten stocks on our Korea watchlist, three rose and seven fell. The index and the individual stocks moved in opposite directions."
+        "body": "On September 1 the KOSPI closed at 6,835.80, up 15.78 points or 0.23%. The KOSDAQ, Korea's secondary board for smaller and growth companies, fell 13.04 points to 821.25, a decline of 1.56%. The won weakened 0.23% against the dollar to 1,372.70.\n\nThe index number hides what actually happened. According to Asiae's session tally, retail investors, foreign investors and domestic institutions were all net sellers of KOSPI shares. Exactly one category was buying: \"other corporations,\" to the tune of ₩1.69 trillion.\n\nOf the ten Korean stocks we follow, three rose and seven fell. The index and the individual stocks moved in opposite directions."
       },
       {
         "heading": "That ₩1.69 trillion is corporate buybacks",
@@ -459,7 +459,7 @@
     },
     "closing": {
       "heading": "The session in one line",
-      "body": "Behind a 0.23% gain sits a session in which retail, foreign and institutional investors all sold, and companies bought their own shares to absorb it.\n\nThat is why the index number is a poor summary of the day. A 1.56% decline on the KOSDAQ, and seven of ten watchlist stocks falling, is closer to how it actually felt."
+      "body": "Behind a 0.23% gain sits a session in which retail, foreign and institutional investors all sold, and companies bought their own shares to absorb it.\n\nThat is why the index number is a poor summary of the day. A 1.56% decline on the KOSDAQ, and seven of the ten stocks we follow falling, is closer to how it actually felt."
     },
     "sources": [
       {
