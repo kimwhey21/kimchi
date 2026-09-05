@@ -1,0 +1,1096 @@
+{
+  "market": "us",
+  "date": "2026-09-04",
+  "price_data": {
+    "macro": {
+      "^DJI": {
+        "ticker": "^DJI",
+        "name": "다우존스",
+        "name_en": "Dow Jones Industrial Average",
+        "price": 53414.25,
+        "change_pct": -0.51,
+        "series": [
+          53463.8789,
+          53569.4414,
+          53559.9883,
+          53185.8984,
+          52766.8789,
+          53061.9492,
+          53686.1094,
+          53414.25
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04"
+      },
+      "^GSPC": {
+        "ticker": "^GSPC",
+        "name": "S&P500",
+        "name_en": "S&P 500",
+        "price": 7718.6,
+        "change_pct": -0.38,
+        "series": [
+          7675.7002,
+          7730.9902,
+          7711.7598,
+          7686.1401,
+          7631.4702,
+          7666.6001,
+          7747.71,
+          7718.6001
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04"
+      },
+      "^IXIC": {
+        "ticker": "^IXIC",
+        "name": "나스닥종합",
+        "name_en": "Nasdaq Composite",
+        "price": 26506.99,
+        "change_pct": -0.29,
+        "series": [
+          26130.1992,
+          26541.3496,
+          26402.4199,
+          26370.8906,
+          26099.7695,
+          26217.8301,
+          26584.0605,
+          26506.9902
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04"
+      },
+      "^RUT": {
+        "ticker": "^RUT",
+        "name": "러셀2000",
+        "name_en": "Russell 2000",
+        "price": 2975.65,
+        "change_pct": 0.25,
+        "series": [
+          3005.8999,
+          3014.3401,
+          2972.3701,
+          2956.45,
+          2920.1299,
+          2953.1699,
+          2968.27,
+          2975.6499
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04"
+      },
+      "^VIX": {
+        "ticker": "^VIX",
+        "name": "VIX",
+        "name_en": "VIX",
+        "price": 14.53,
+        "change_pct": 1.47,
+        "series": [
+          15.21,
+          14.51,
+          14.43,
+          14.92,
+          16.34,
+          15.2,
+          14.32,
+          14.53
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04"
+      },
+      "^TNX": {
+        "ticker": "^TNX",
+        "name": "美 10년물 금리",
+        "name_en": "US 10-Year Treasury Yield",
+        "price": 4.78,
+        "change_pct": 0.46,
+        "series": [
+          4.664,
+          4.672,
+          4.72,
+          4.758,
+          4.796,
+          4.796,
+          4.762,
+          4.784
+        ],
+        "unit": "%",
+        "trading_date": "2026-09-04"
+      },
+      "^TYX": {
+        "ticker": "^TYX",
+        "name": "美 30년물 금리",
+        "name_en": "US 30-Year Treasury Yield",
+        "price": 5.25,
+        "change_pct": 0.06,
+        "series": [
+          5.186,
+          5.191,
+          5.206,
+          5.249,
+          5.268,
+          5.267,
+          5.243,
+          5.246
+        ],
+        "unit": "%",
+        "trading_date": "2026-09-04"
+      },
+      "GC=F": {
+        "ticker": "GC=F",
+        "name": "국제 금",
+        "name_en": "Gold",
+        "price": 4429.8,
+        "change_pct": -1.38,
+        "series": [
+          4598.2002,
+          4609.7002,
+          4478.1001,
+          4431.1001,
+          4348.0,
+          4366.2998,
+          4491.7002,
+          4429.7998
+        ],
+        "unit": "달러",
+        "trading_date": "2026-09-04"
+      }
+    },
+    "watchlist": {
+      "NVDA": {
+        "ticker": "NVDA",
+        "name": "엔비디아",
+        "name_en": "NVIDIA",
+        "price": 230.36,
+        "change_pct": 0.84,
+        "series": [
+          209.66,
+          227.98,
+          217.55,
+          220.78,
+          217.44,
+          224.41,
+          228.45,
+          230.36
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "MU": {
+        "ticker": "MU",
+        "name": "마이크론",
+        "name_en": "Micron Technology",
+        "price": 1016.59,
+        "change_pct": 6.1,
+        "series": [
+          938.4,
+          935.39,
+          932.86,
+          958.73,
+          933.44,
+          956.08,
+          958.16,
+          1016.59
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "INTC": {
+        "ticker": "INTC",
+        "name": "인텔",
+        "name_en": "Intel",
+        "price": 95.8,
+        "change_pct": 4.51,
+        "series": [
+          88.24,
+          92.09,
+          89.47,
+          89.51,
+          88.97,
+          90.05,
+          91.67,
+          95.8
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "TSLA": {
+        "ticker": "TSLA",
+        "name": "테슬라",
+        "name_en": "Tesla",
+        "price": 354.08,
+        "change_pct": -5.92,
+        "series": [
+          345.82,
+          354.81,
+          348.75,
+          367.95,
+          356.09,
+          357.01,
+          376.37,
+          354.08
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "AAPL": {
+        "ticker": "AAPL",
+        "name": "애플",
+        "name_en": "Apple",
+        "price": 319.97,
+        "change_pct": -2.51,
+        "series": [
+          313.45,
+          314.58,
+          319.7,
+          316.85,
+          325.13,
+          324.96,
+          328.21,
+          319.97
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "MSFT": {
+        "ticker": "MSFT",
+        "name": "마이크로소프트",
+        "name_en": "Microsoft",
+        "price": 499.7,
+        "change_pct": -2.04,
+        "series": [
+          496.37,
+          505.06,
+          513.53,
+          507.29,
+          501.02,
+          496.82,
+          510.12,
+          499.7
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "AMZN": {
+        "ticker": "AMZN",
+        "name": "아마존",
+        "name_en": "Amazon",
+        "price": 258.51,
+        "change_pct": -0.15,
+        "series": [
+          260.28,
+          256.26,
+          266.43,
+          259.77,
+          254.92,
+          254.98,
+          258.9,
+          258.51
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "META": {
+        "ticker": "META",
+        "name": "메타",
+        "name_en": "Meta",
+        "price": 616.77,
+        "change_pct": 1.0,
+        "series": [
+          576.14,
+          571.1,
+          578.02,
+          572.34,
+          578.54,
+          592.85,
+          610.68,
+          616.77
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "GOOGL": {
+        "ticker": "GOOGL",
+        "name": "알파벳",
+        "name_en": "Google",
+        "price": 338.46,
+        "change_pct": -1.11,
+        "series": [
+          341.7803,
+          340.4312,
+          346.3674,
+          339.132,
+          334.8048,
+          336.9034,
+          342.26,
+          338.46
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "WMT": {
+        "ticker": "WMT",
+        "name": "월마트",
+        "name_en": "Walmart",
+        "price": 107.14,
+        "change_pct": -1.18,
+        "series": [
+          104.34,
+          102.63,
+          103.09,
+          104.87,
+          105.92,
+          106.09,
+          108.42,
+          107.14
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "MRNA": {
+        "ticker": "MRNA",
+        "name": "모더나",
+        "name_en": "Moderna",
+        "price": 145.55,
+        "change_pct": -2.23,
+        "series": [
+          149.66,
+          142.77,
+          137.99,
+          140.34,
+          154.27,
+          150.81,
+          148.87,
+          145.55
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "MRK": {
+        "ticker": "MRK",
+        "name": "머크",
+        "name_en": "Merck",
+        "price": 150.33,
+        "change_pct": -1.32,
+        "series": [
+          153.1,
+          149.54,
+          148.35,
+          147.76,
+          149.86,
+          151.64,
+          152.34,
+          150.33
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "COIN": {
+        "ticker": "COIN",
+        "name": "코인베이스",
+        "name_en": "Coinbase",
+        "price": 184.64,
+        "change_pct": -4.18,
+        "series": [
+          181.78,
+          190.72,
+          178.64,
+          188.12,
+          176.82,
+          174.96,
+          192.7,
+          184.64
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "DE": {
+        "ticker": "DE",
+        "name": "디어",
+        "name_en": "Deere & Company",
+        "price": 693.53,
+        "change_pct": -0.13,
+        "series": [
+          634.54,
+          622.66,
+          630.33,
+          654.91,
+          676.08,
+          698.37,
+          694.41,
+          693.53
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "SOXX": {
+        "ticker": "SOXX",
+        "name": "필라델피아 반도체 ETF",
+        "name_en": "iShares Semiconductor ETF",
+        "price": 519.86,
+        "change_pct": 3.52,
+        "series": [
+          515.4,
+          525.43,
+          508.62,
+          511.04,
+          500.31,
+          501.44,
+          502.2,
+          519.86
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "CL=F": {
+        "ticker": "CL=F",
+        "name": "WTI 원유",
+        "name_en": "WTI Crude Oil",
+        "price": 91.48,
+        "change_pct": 0.2,
+        "series": [
+          82.23,
+          83.53,
+          83.4,
+          85.76,
+          90.22,
+          91.01,
+          91.3,
+          91.48
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "core"
+      },
+      "SNDK": {
+        "ticker": "SNDK",
+        "name": "샌디스크",
+        "name_en": "Sandisk",
+        "price": 1740.0,
+        "change_pct": 11.9,
+        "series": [
+          1499.37,
+          1484.95,
+          1484.98,
+          1566.7,
+          1536.87,
+          1553.4,
+          1554.99,
+          1740.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "dynamic",
+        "trading_value": 28694895060.0,
+        "sector": "Technology"
+      },
+      "AVGO": {
+        "ticker": "AVGO",
+        "name": "브로드컴",
+        "name_en": "Broadcom",
+        "price": 357.9,
+        "change_pct": 0.21,
+        "series": [
+          355.59,
+          371.54,
+          368.79,
+          370.34,
+          369.68,
+          367.24,
+          357.16,
+          357.9
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "dynamic",
+        "trading_value": 11729585593.109999,
+        "sector": "Technology"
+      },
+      "AMD": {
+        "ticker": "AMD",
+        "name": "AMD",
+        "name_en": "Advanced Micro Devices",
+        "price": 477.57,
+        "change_pct": 4.69,
+        "series": [
+          480.93,
+          476.67,
+          465.58,
+          470.72,
+          459.61,
+          457.06,
+          456.16,
+          477.57
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "dynamic",
+        "trading_value": 9385183194.21,
+        "sector": "Technology"
+      },
+      "SPCX": {
+        "ticker": "SPCX",
+        "name": "스페이스X",
+        "name_en": "Space Exploration Technologies",
+        "price": 147.95,
+        "change_pct": -1.2,
+        "series": [
+          139.63,
+          140.87,
+          141.5,
+          143.69,
+          142.23,
+          140.71,
+          149.74,
+          147.95
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "dynamic",
+        "trading_value": 7242110778.099999,
+        "sector": "Technology"
+      },
+      "DELL": {
+        "ticker": "DELL",
+        "name": "델 테크놀로지스",
+        "name_en": "Dell Technologies",
+        "price": 524.14,
+        "change_pct": 1.5,
+        "series": [
+          463.82,
+          472.26,
+          456.24,
+          456.01,
+          425.0,
+          492.2,
+          516.39,
+          524.14
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "dynamic",
+        "trading_value": 5822736777.5,
+        "sector": "Technology"
+      },
+      "TSM": {
+        "ticker": "TSM",
+        "name": "TSMC",
+        "name_en": "Taiwan Semiconductor Manufacturing",
+        "price": 428.91,
+        "change_pct": 2.85,
+        "series": [
+          417.69,
+          427.3,
+          417.52,
+          415.32,
+          414.0,
+          415.5,
+          417.01,
+          428.91
+        ],
+        "unit": "",
+        "trading_date": "2026-09-04",
+        "source": "dynamic",
+        "trading_value": 5264729138.610001,
+        "sector": "Technology"
+      }
+    },
+    "trading_date": "2026-09-04",
+    "missing": []
+  },
+  "ko": {
+    "title": "샌디스크 11.90% 급등! 고용지표에 지수는 내렸는데 메모리만 오른 이유.",
+    "narrative": [
+      {
+        "heading": "1. 오늘 시장 핵심",
+        "body": "다우존스 53,414.25 <b>-0.51%</b>\n\nS&P500 7,718.60 <b>-0.38%</b>\n\n나스닥 26,506.99 <b>-0.29%</b>\n\n러셀2000 2,975.65 <b>+0.25%</b>\n\nVIX 14.53 <b>+1.47%</b>\n\n미 8월 비농업 고용 <b>16만 2천 명</b> (예상 5만 3천 명)\n\n9월 금리 인상 확률 49.4% → <b>60.2%</b>\n\n미 10년물 국채금리 4.78%\n\n9월 4일 뉴욕증시는 3대 지수가 모두 내렸습니다.\n\n지수만 보면 조용한 하루입니다. 셋 다 0.5% 안쪽에서 움직였습니다.\n\n안을 열어 보면 다릅니다.\n\n필라델피아 반도체 ETF는 3.52% 올랐고, 애플은 2.51% 내렸습니다. 같은 시장 안에서 하루 만에 6%포인트 가까이 벌어졌습니다.\n\n이 간격을 만든 것은 아침에 나온 고용 지표 하나입니다."
+      },
+      {
+        "heading": "2. 고용 16만 2천 – 예상의 세 배",
+        "body": "미국 노동부가 8월 비농업 고용을 16만 2천 명으로 발표했습니다. 시장이 기다린 숫자는 5만 3천 명이었습니다.\n\n세 배입니다.\n\n실업률은 4.1%로 전달과 같았고, 마이너스로 나왔던 7월 수치는 플러스로 수정됐습니다.\n\n고용이 식고 있다는 그림이 발표 한 번에 지워졌습니다.\n\n연준의 다음 회의는 9월 15~16일입니다. 지금 기준금리는 3.50~3.75%입니다.\n\nCME 페드워치가 반영한 9월 인상 확률은 전날 49.4%에서 60.2%로 올랐습니다.\n\n국채금리도 같이 올랐습니다. 2년물이 4.39%, 10년물이 4.78%입니다.\n\n짧은 쪽이 더 크게 움직였습니다. 시장이 값을 매긴 것은 먼 미래가 아니라 2주 뒤 회의라는 뜻입니다."
+      },
+      {
+        "heading": "3. 금리가 올라도 오른 반도체",
+        "graphic": {
+          "kind": "movers_list",
+          "title": "오늘 많이 움직인 종목 (9월 4일)"
+        },
+        "body": "금리가 오르면 성장주가 먼저 밀린다는 것이 교과서입니다.\n\n이날은 그대로 되지 않았습니다.\n\n필라델피아 반도체 ETF는 3.52% 올랐습니다. 세 지수가 모두 내린 날에 나온 숫자입니다.\n\n많이 오른 종목을 늘어놓으면 업종이 하나로 모입니다. 샌디스크가 11.90%로 가장 컸고, 마이크론이 6.10%로 뒤를 이었습니다.\n\n인텔과 AMD도 4%대로 올랐고, TSMC는 2.85% 상승 마감했습니다.\n\n다만 반도체가 통째로 오른 것은 아닙니다.\n\n엔비디아는 0.84% 오르는 데 그쳤고, 브로드컴은 0.21%로 제자리였습니다.\n\n오른 쪽은 AI 반도체 전체가 아니라 메모리와 스토리지였습니다. 이 구분이 이날 장의 성격을 정합니다."
+      },
+      {
+        "heading": "4. 샌디스크 11.90%와 메모리 가격",
+        "graphic": {
+          "kind": "two_day_compare",
+          "title": "어제(9/3)와 오늘(9/4), 반도체 종목의 등락",
+          "tickers": [
+            "SNDK",
+            "MU",
+            "INTC",
+            "SOXX",
+            "NVDA",
+            "AVGO"
+          ]
+        },
+        "body": "샌디스크는 11.90% 오른 1,740.00달러로 마감했습니다. 이날 워치리스트에서 가장 큰 상승 폭입니다.\n\n전날 이 종목의 상승률은 0.10%였습니다. 이틀 사이 회사가 낸 공시는 없습니다.\n\n바뀐 것은 가격 전망입니다.\n\n키뱅크는 3분기 D램 계약가가 15~20%, 낸드가 30~40% 오를 것으로 봤습니다. 4분기에도 각각 15%가량 더 오른다는 전망입니다.\n\n메모리는 지금 만들어서 파는 것이 아니라, 팔 물건이 모자라 값이 오르는 국면에 들어와 있습니다.\n\n수요 쪽 증거는 같은 주에 나왔습니다. 델 테크놀로지스의 AI 서버 수주잔고가 한 분기 만에 513억 달러에서 950억 달러로 늘었습니다.\n\n주문은 쌓이는데 출하가 따라가지 못하는 상태이고, 그 병목의 상당 부분이 메모리입니다.\n\n이날 델 테크놀로지스는 1.50% 올라 마감했습니다.\n\n위 그림에서 어제와 오늘을 나란히 놓고 보면 차이가 분명합니다. 어제는 반도체 안에서 종목별로 방향이 갈렸고, 오늘은 메모리 쪽만 한 줄로 올랐습니다."
+      },
+      {
+        "heading": "5. 반대편 – 테슬라와 애플",
+        "graphic": {
+          "kind": "two_day_compare",
+          "title": "어제(9/3)와 오늘(9/4), 대형 기술주의 등락",
+          "tickers": [
+            "TSLA",
+            "AAPL",
+            "MSFT",
+            "GOOGL",
+            "COIN",
+            "META"
+          ]
+        },
+        "body": "이날 가장 크게 내린 종목은 테슬라입니다. 5.92% 하락했습니다.\n\n목요일 밤 오스틴에서 열린 사이버캡 공개 행사는 초청자만 들어갔고, 중계도 없었습니다. 일론 머스크는 무대에 오르지 않았습니다.\n\n가격도, 생산 일정도, 규제 승인 절차도 공개되지 않았습니다.\n\n다음 날 아침에는 미 도로교통안전국(NHTSA)이 조사에 착수했습니다. 운전대와 페달, 거울이 없는 차를 테슬라가 스스로 안전 기준 예외로 인증한 근거를 묻는 조사입니다.\n\n행사가 비워 둔 자리를 규제 당국이 채운 하루가 됐습니다.\n\n애플은 2.51% 내렸습니다. 준비 중인 폴더블 아이폰의 생산 차질이 하락 배경으로 지목됐습니다.\n\n마이크로소프트 2.04%, 알파벳 1.11% 하락으로 대형 기술주가 함께 밀렸습니다.\n\n지수를 끌어내린 쪽은 여기입니다. 시가총액이 큰 종목이 내리면 반도체가 아무리 올라도 지수는 내려갑니다.\n\n다우존스가 세 지수 중 낙폭이 가장 컸던 것도 같은 이유로 봅니다."
+      },
+      {
+        "heading": "6. 금리에 먼저 반응한 자산",
+        "body": "주식보다 빨리 움직인 쪽이 있습니다.\n\n국제 금은 1.38% 내린 4,429.80달러로 마감했습니다. 현물 금은 장중 2% 넘게 밀려 온스당 4,376달러까지 내려갔습니다.\n\n금리가 오르면 이자를 주지 않는 자산이 먼저 불리해집니다.\n\n비트코인도 같은 시간에 8만 달러 아래로 내려갔습니다. 고용 발표 직후 5분 동안 1,430달러가 빠졌습니다.\n\n코인베이스는 4.18% 내렸습니다.\n\n하루 전 10.14% 급등의 상당 부분을 되돌린 자리입니다.\n\n러셀2000은 0.25% 올라 3대 지수와 다른 방향으로 마감했습니다. 대형주가 내린 자리에서 중소형주는 버텼습니다.\n\nWTI 원유는 0.20% 오른 91.48달러였습니다. 원자재 쪽에서 이날 이야기가 된 것은 원유가 아니라 금이었습니다."
+      }
+    ],
+    "outlook": {
+      "heading": "7. 다음 거래일에 확인할 것",
+      "body": "연준 회의까지 큰 지표가 하나 더 남았습니다. 8월 소비자물가가 9월 11일에 나옵니다.\n\n고용이 강하게 나온 다음이라 물가까지 높으면 인상 확률은 60%대에서 더 올라갑니다.\n\n반대로 물가가 식으면, 이날 오른 반도체는 두 번째 근거를 얻습니다.\n\n두 번째로 볼 것은 메모리 가격입니다.\n\n이날 상승은 실적이 아니라 가격 전망에서 나왔습니다. 전망치가 실제 분기 계약 가격으로 확인되는지가 관전 지점입니다.\n\n한국 시장에는 곧바로 이어집니다. 삼성전자와 SK하이닉스가 같은 사이클 안에 있습니다.\n\n월요일 한국장에서 볼 것은 지수 등락률이 아니라, 메모리 종목이 미국과 같은 방향으로 움직이는지입니다.\n\n세 번째는 테슬라입니다. NHTSA 조사가 사이버캡 인증에서 더 넓어지는지 확인해야 합니다."
+    },
+    "closing": {
+      "heading": "Fermata's Take",
+      "body": "이날 미국 시장에는 두 개의 이야기가 같은 시간에 흘렀습니다.\n\n하나는 금리입니다. 고용 발표 하나로 인상 확률이 10%포인트 넘게 올랐고, 금과 비트코인이 먼저 반응했습니다.\n\n다른 하나는 메모리입니다. 값이 금리와 무관하게 오르고 있어서, 반도체는 금리 소식을 그냥 지나쳤습니다.\n\n지수는 이 둘을 섞은 평균입니다.\n\n0.38% 하락이라는 숫자 안에 11.90%와 -5.92%가 함께 들어 있습니다. 이런 날 지수 등락률이 알려주는 것은 거의 없다고 봅니다.\n\n봐야 할 것은 방향이 아니라 무엇이 무엇을 움직였는가입니다.\n\n메모리를 움직인 것은 연준이 아니라 낸드 가격이었고, 테슬라를 움직인 것은 금리가 아니라 규제 당국이었습니다.\n\n둘 다 다음 주에도 그대로 남아 있습니다."
+    },
+    "insight_section": {
+      "heading": "이날 눈여겨볼 네 가지",
+      "stories": [
+        {
+          "heading": "메모리 값이 오르는 방식",
+          "icon": "chip",
+          "image_query": "Micron Technology memory chip",
+          "body": "이날 메모리 종목을 올린 것은 실적이 아닙니다. 실적은 아직 나오지 않았습니다.\n\n오른 것은 가격 전망입니다. 키뱅크는 3분기 D램 계약가가 15~20%, 낸드가 30~40% 오를 것으로 봤습니다.\n\n메모리는 원래 값이 오르내리는 산업입니다. 다만 이번 국면은 공급이 줄어서 오르는 것이 아닙니다.\n\n같은 공장이 AI용 HBM을 만드느라 일반 D램을 덜 찍어내면서 값이 오릅니다. 수요가 아니라 생산 배분이 가격을 밀어 올리는 구조입니다.\n\n이런 상승은 새 공장이 돌기 전까지 잘 꺾이지 않습니다. 대신 전망이 계약 가격으로 확인되지 않으면 되돌림도 빠릅니다.\n\n확인할 것은 하나입니다. 전망치가 아니라 실제 분기 계약 가격입니다.",
+          "table": [
+            {
+              "label": "샌디스크",
+              "value": "+11.90%"
+            },
+            {
+              "label": "마이크론",
+              "value": "+6.10%"
+            },
+            {
+              "label": "필라델피아 반도체 ETF",
+              "value": "+3.52%"
+            },
+            {
+              "label": "TSMC",
+              "value": "+2.85%"
+            },
+            {
+              "label": "엔비디아",
+              "value": "+0.84%"
+            }
+          ]
+        },
+        {
+          "heading": "엔비디아가 산 것",
+          "icon": "robot",
+          "image_query": "Nvidia GPU",
+          "body": "엔비디아가 허깅페이스를 129억 달러에 인수하기로 했습니다. 계약은 9월 2일, 발표는 3일이었습니다.\n\n허깅페이스는 칩 회사가 아닙니다. 오픈소스 모델과 데이터셋을 올려놓고 나누는 플랫폼입니다.\n\n여기에 모델 300만 개와 개발자 1,800만 명이 모여 있습니다. 칩을 파는 회사가 칩을 쓰는 사람들이 모인 곳을 산 셈입니다.\n\n주가 반응은 크지 않았습니다. 129억 달러는 이 회사 규모에서 큰 돈이 아니고, 인수가 매출을 바로 늘리지도 않습니다.\n\n대신 이 소식이 밀어 올린 쪽은 메모리와 스토리지였습니다. AI 개발이 계속된다는 신호를 데이터센터 부품이 받았습니다.",
+          "table": [
+            {
+              "label": "인수 대상",
+              "value": "허깅페이스"
+            },
+            {
+              "label": "금액",
+              "value": "129억 달러"
+            },
+            {
+              "label": "플랫폼 규모",
+              "value": "모델 300만 개 · 개발자 1,800만 명"
+            },
+            {
+              "label": "엔비디아 종가",
+              "value": "230.36달러"
+            },
+            {
+              "label": "엔비디아 등락률",
+              "value": "+0.84%"
+            }
+          ]
+        },
+        {
+          "heading": "사이버캡이 답하지 않은 것",
+          "icon": "battery",
+          "image_query": "Tesla electric car",
+          "body": "테슬라가 목요일 밤 오스틴에서 사이버캡을 공개했습니다.\n\n공개 방식이 먼저 눈에 띕니다. 초청자만 참석했고, 중계는 없었으며, 일론 머스크는 나오지 않았습니다.\n\n내용에서는 가격과 생산 일정, 규제 승인 절차가 빠졌습니다. 몇 대를 언제부터 굴리는지가 없는 자율주행 발표는 기대치를 확인해 주지 못합니다.\n\n다음 날 NHTSA가 조사에 들어갔습니다. 운전대와 페달, 거울 없이 만든 차를 회사가 스스로 안전 기준 예외로 인증한 근거를 묻습니다.\n\n주가는 5.92% 내렸습니다. 하루 전 오른 5.42%를 반납하고도 더 빠진 자리입니다.\n\n자율주행은 발표가 아니라 규제로 결정되는 영역입니다. 이날 시장이 확인한 것은 그 순서라고 봅니다.",
+          "table": [
+            {
+              "label": "테슬라 종가",
+              "value": "354.08달러"
+            },
+            {
+              "label": "테슬라 등락률",
+              "value": "-5.92%"
+            },
+            {
+              "label": "하루 전 등락률",
+              "value": "+5.42%"
+            },
+            {
+              "label": "행사",
+              "value": "사이버캡 공개 (미국 오스틴)"
+            },
+            {
+              "label": "규제",
+              "value": "NHTSA 자체 인증 조사"
+            }
+          ]
+        },
+        {
+          "heading": "금리에 가장 먼저 반응한 자산",
+          "icon": "coin",
+          "image_query": "Coinbase app on phone",
+          "body": "고용 발표는 미국 동부 시각 오전 8시 30분에 나왔습니다. 반응 속도는 자산마다 달랐습니다.\n\n비트코인이 5분 만에 1,430달러 빠졌습니다. 발표 전 8만 2,240달러였던 가격이 7만 8,649달러까지 내려갔습니다.\n\n금도 장중 2% 넘게 밀렸습니다. 주식은 그보다 느렸고 폭도 작았습니다.\n\n이자를 주지 않는 자산일수록 금리 소식에 빨리 반응합니다. 코인베이스가 4.18% 내린 것은 그 반응의 주식 버전입니다.\n\n다만 이런 반응은 오래 남지 않는 편입니다. 두 주 뒤 회의 결과가 나오면 지금의 확률 계산은 한 번에 지워집니다.",
+          "table": [
+            {
+              "label": "비트코인",
+              "value": "8만 달러 하회"
+            },
+            {
+              "label": "발표 전 고점",
+              "value": "82,240달러"
+            },
+            {
+              "label": "장중 저점",
+              "value": "78,649달러"
+            },
+            {
+              "label": "코인베이스",
+              "value": "-4.18%"
+            },
+            {
+              "label": "국제 금",
+              "value": "-1.38%"
+            }
+          ]
+        }
+      ]
+    },
+    "sources": [
+      {
+        "name": "Yahoo Finance",
+        "title": "Stock Market Today (Sept. 4, 2026): S&P 500 edges lower after key jobs report",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-today-sept-4-133716564.html"
+      },
+      {
+        "name": "TheStreet",
+        "title": "Stock Market Today (Sept. 4, 2026): Yields jump, stocks fall after jobs report surprises to upside",
+        "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-sept-04-2026"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "Jobs report live updates: US adds 162,000 jobs in August, blowing past estimates",
+        "url": "https://finance.yahoo.com/economy/live/august-jobs-report-live-updates-labor-market-155619193.html"
+      },
+      {
+        "name": "Charles Schwab",
+        "title": "Hot Jobs Report Hurts Stocks, Lifts Rate Hike Odds",
+        "url": "https://www.schwab.com/learn/story/stock-market-update-open"
+      },
+      {
+        "name": "The Motley Fool",
+        "title": "Why Sandisk Stock Rallied Today",
+        "url": "https://www.fool.com/investing/2026/09/04/why-sandisk-stock-rallied-today/"
+      },
+      {
+        "name": "Investing.com",
+        "title": "Why is SanDisk stock surging today?",
+        "url": "https://www.investing.com/news/stock-market-news/why-is-sandisk-stock-surging-today-93CH-4858661"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "SanDisk Rises 8%, Micron Gains 5%: Is the NAND Pricing Cycle Still Accelerating?",
+        "url": "https://247wallst.com/investing/2026/09/04/sandisk-soars-8-is-the-nand-pricing-cycle-still-accelerating/"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "Intel Climbs 4%, AMD Rises 3%, NVIDIA Ticks Up as Chip Stocks Shrug Off Rising Rate Hike Odds",
+        "url": "https://247wallst.com/investing/2026/09/04/intel-climbs-4-as-chip-stocks-shrug-off-rising-rate-hike-odds-nvidia-and-amd-move-higher/"
+      },
+      {
+        "name": "Converge Digest",
+        "title": "Dell's AI Server Backlog Surges to $95 Billion as Demand Accelerates",
+        "url": "https://convergedigest.com/dell-ai-server-backlog-95-billion-q2-fy2027/"
+      },
+      {
+        "name": "TechCrunch",
+        "title": "Nvidia confirms it will buy Hugging Face for $12.9 billion",
+        "url": "https://techcrunch.com/2026/09/03/nvidia-confirms-it-will-buy-hugging-face-for-12-9-billion/"
+      },
+      {
+        "name": "CNBC",
+        "title": "Tesla's stock drops as Cybercab update 'underwhelms,' NHTSA probe",
+        "url": "https://www.cnbc.com/2026/09/04/teslas-stock-drops-as-cybercab-update-underwhelms-nhtsa-probe.html"
+      },
+      {
+        "name": "The Motley Fool",
+        "title": "Why Apple Stock Sank on Friday",
+        "url": "https://www.fool.com/investing/2026/09/04/why-apple-stock-sank-on-friday/"
+      },
+      {
+        "name": "CNBC",
+        "title": "Gold slides more than 2% after robust U.S. payrolls boosts rate hike bets",
+        "url": "https://www.cnbc.com/2026/09/04/gold-holds-ground-with-us-payrolls-data-on-radar.html"
+      },
+      {
+        "name": "CoinDesk",
+        "title": "Bitcoin price news: BTC tumbles below $80,000 after strong August jobs numbers",
+        "url": "https://www.coindesk.com/markets/2026/09/04/u-s-added-stronger-than-expected-162-000-jobs-in-august-as-labor-market-bounced-back"
+      }
+    ]
+  },
+  "en": {
+    "title": "Sandisk up 11.9% as memory chips shrug off a hot jobs report that sank the indexes",
+    "narrative": [
+      {
+        "heading": "Indexes down, memory up",
+        "body": "All three major U.S. indexes closed lower on Friday, Sept. 4. The Dow gave up 0.51% to 53,414.25, the S&P 500 lost 0.38% to 7,718.60 and the Nasdaq Composite eased 0.29% to 26,506.99.\n\nThe headline moves were small. What sat underneath them was not.\n\nThe iShares Semiconductor ETF (SOXX) rose 3.52% on a day when every headline index finished in the red. Apple dropped 2.51%.\n\nRoughly six percentage points separated the two, and one data release opened the gap."
+      },
+      {
+        "heading": "Payrolls at three times the estimate",
+        "body": "The U.S. economy added 162,000 jobs in August. Economists had looked for about 53,000, and July's negative print was revised into positive territory.\n\nThe unemployment rate held at 4.1%.\n\nThe Federal Reserve meets Sept. 15-16 with the funds rate at 3.50% to 3.75%. After the release, CME FedWatch showed the odds of a September hike at 60.2%, up from 49.4% a day earlier.\n\nYields followed. The two-year Treasury yield rose to 4.39% and the 10-year to 4.78%.\n\nThe front end moved more, which is what a market repricing a meeting two weeks out looks like."
+      },
+      {
+        "heading": "Chips rose while rates did",
+        "body": "Textbook logic says long-duration equities fall first when yields rise. Friday did not follow the script.\n\nSandisk closed at $1,740.00, up 11.90%, the biggest move on the watchlist. Micron Technology gained 6.10%.\n\nIntel added 4.51% and AMD rose 4.69%. Taiwan Semiconductor Manufacturing closed 2.85% higher.\n\nThe whole sector did not participate. NVIDIA rose 0.84% and Broadcom rose 0.21%.\n\nThe bid was in memory and storage rather than in AI logic, and that distinction defines the session."
+      },
+      {
+        "heading": "What is repricing memory",
+        "body": "The stock had barely moved a day earlier, closing 0.10% higher. No company filing arrived in between.\n\nWhat changed was the price outlook. KeyBanc expects third-quarter DRAM contract prices to rise 15% to 20% and NAND to rise 30% to 40%, with roughly another 15% in the fourth quarter.\n\nDemand evidence landed in the same week. Dell Technologies reported an AI server backlog of $95 billion, up from $51.3 billion a quarter earlier. Orders are accumulating faster than machines ship, and memory is a large share of that bottleneck.\n\nDell Technologies added 1.50% on Friday.\n\nThis is a supply-allocation story more than a demand story. The same fabs are steering capacity toward HBM for AI data centers, which leaves less conventional DRAM to sell."
+      },
+      {
+        "heading": "The other side: Tesla and Apple",
+        "body": "Tesla fell 5.92%, the steepest decline on the watchlist.\n\nThe company showed the Cybercab in Austin on Thursday night. The event was invitation-only, it was not streamed, and Elon Musk did not appear. Pricing, production cadence and regulatory approval were all left out.\n\nOn Friday morning the National Highway Traffic Safety Administration opened an audit query into how the company self-certified a vehicle with no steering wheel, pedals or mirrors.\n\nApple dropped 2.51% on reports of production problems with its planned foldable iPhone. Microsoft lost 2.04% and Alphabet 1.11%.\n\nThat is where the index damage came from. When the heaviest weights fall, semiconductors cannot carry a cap-weighted index on their own."
+      },
+      {
+        "heading": "What repriced fastest",
+        "body": "Gold settled 1.38% lower at $4,429.80. Spot gold was down more than 2% during the session, near $4,376 an ounce.\n\nBitcoin slipped below $80,000, losing $1,430 in the five minutes after the payrolls print. It had traded as high as $82,240 earlier in the day and reached $78,649.\n\nCoinbase dropped 4.18%, giving back much of a 10.14% gain from the prior session.\n\nAssets that pay no yield reprice first when the rate path shifts. Equities were slower and smaller.\n\nRussell 2000 rose 0.25%, the only index of the four to finish higher."
+      }
+    ],
+    "outlook": {
+      "heading": "What to check next session",
+      "body": "One major print stands between here and the Fed meeting: August CPI on Sept. 11.\n\nA hot number on top of hot payrolls pushes hike odds further above 60%. A soft one hands Friday's chip rally a second argument.\n\nSecond, whether the memory price forecasts turn into signed contracts. Friday's move came from an outlook, not from results.\n\nThird, the read-across to Seoul. Samsung Electronics and SK Hynix sit inside the same memory cycle, and Monday's Korean session is the first chance to see whether memory names there track U.S. memory names rather than the index.\n\nFourth, how far the NHTSA review of the Cybercab extends beyond self-certification."
+    },
+    "closing": {
+      "heading": "Fermata's Take",
+      "body": "Two stories ran through the same session.\n\nOne was rates. A single jobs report moved September hike odds more than ten points, and metals and crypto repriced within minutes.\n\nThe other was memory, where contract prices are rising for reasons that have nothing to do with the Fed. That is why chips could ignore the bond market on a day when little else could.\n\nAn index is the average of those two stories.\n\nA 0.38% decline holds both an 11.90% gain and a 5.92% loss inside it. On a day like this the index number tells you very little.\n\nWhat moved what is the part worth keeping. NAND pricing moved memory, and a regulator moved Tesla.\n\nBoth are still in place next week."
+    },
+    "insight_section": {
+      "heading": "Four things worth noting",
+      "stories": [
+        {
+          "heading": "How memory prices are actually rising",
+          "icon": "chip",
+          "image_query": "Micron Technology memory chip",
+          "body": "Friday's memory rally did not come from earnings. None were released.\n\nIt came from the price outlook. KeyBanc expects third-quarter DRAM contract prices up 15% to 20% and NAND up 30% to 40%.\n\nMemory has always been a cyclical business, but this leg is unusual in its cause. Supply is not shrinking; it is being reallocated. Fabs are pushing wafers toward HBM for AI data centers, which leaves less conventional DRAM and NAND for everyone else.\n\nAllocation-driven price cycles do not break until new capacity runs. They also unwind quickly if forecasts fail to show up in signed contracts.\n\nThe number to watch is the quarterly contract price, not the forecast.",
+          "table": [
+            {
+              "label": "Sandisk",
+              "value": "+11.90%"
+            },
+            {
+              "label": "Micron Technology",
+              "value": "+6.10%"
+            },
+            {
+              "label": "iShares Semiconductor ETF",
+              "value": "+3.52%"
+            },
+            {
+              "label": "Taiwan Semiconductor Manufacturing",
+              "value": "+2.85%"
+            },
+            {
+              "label": "NVIDIA",
+              "value": "+0.84%"
+            }
+          ]
+        },
+        {
+          "heading": "What Nvidia bought",
+          "icon": "robot",
+          "image_query": "Nvidia GPU",
+          "body": "Nvidia agreed to acquire Hugging Face for $12.9 billion. The agreement was signed Sept. 2 and announced the following day.\n\nHugging Face does not make chips. It runs the platform where open-source models and datasets are hosted and shared, with three million models and roughly 18 million developers on it.\n\nThe buyer sells silicon; the target is where the people who use silicon gather.\n\nThe share reaction was muted. NVIDIA rose 0.84%, since $12.9 billion is small against this balance sheet and the deal adds no immediate revenue.\n\nThe names it did lift were memory and storage. A confirmation that AI build-out continues lands hardest on the parts that fill the racks.",
+          "table": [
+            {
+              "label": "Target",
+              "value": "Hugging Face"
+            },
+            {
+              "label": "Price",
+              "value": "$12.9 billion"
+            },
+            {
+              "label": "Platform",
+              "value": "3M models, ~18M developers"
+            },
+            {
+              "label": "NVIDIA close",
+              "value": "$230.36"
+            },
+            {
+              "label": "NVIDIA change",
+              "value": "+0.84%"
+            }
+          ]
+        },
+        {
+          "heading": "What the Cybercab did not answer",
+          "icon": "battery",
+          "image_query": "Tesla electric car",
+          "body": "Tesla closed at $354.08, down 5.92%. The previous session it had gained 5.42%.\n\nStart with how the reveal was staged. Invitation-only, no livestream, and no appearance from the chief executive.\n\nThen what was missing from it: price, production cadence, and the regulatory path. An autonomy event without a unit count or a start date cannot settle expectations.\n\nThe next morning NHTSA opened an audit query into the company's decision to self-certify a vehicle built without a steering wheel, pedals or mirrors.\n\nAutonomy is decided by regulators, not by launch events. Friday was the market confirming that order.",
+          "table": [
+            {
+              "label": "Tesla close",
+              "value": "$354.08"
+            },
+            {
+              "label": "Tesla change",
+              "value": "-5.92%"
+            },
+            {
+              "label": "Prior session",
+              "value": "+5.42%"
+            },
+            {
+              "label": "Event",
+              "value": "Cybercab reveal, Austin"
+            },
+            {
+              "label": "Regulator",
+              "value": "NHTSA audit query"
+            }
+          ]
+        },
+        {
+          "heading": "What repriced first",
+          "icon": "coin",
+          "image_query": "Coinbase app on phone",
+          "body": "Payrolls landed at 8:30 a.m. Eastern. The speed of the response varied by asset.\n\nBitcoin lost $1,430 in five minutes, sliding from $82,240 earlier in the day to as low as $78,649.\n\nGold was down more than 2% intraday. Equities moved later and by less.\n\nAssets that pay no yield are the most sensitive to a change in the rate path. Coinbase fell 4.18%, which is the equity version of that same reaction.\n\nThese moves rarely persist. Once the Sept. 15-16 decision is known, the probability math behind them is erased in a single session.",
+          "table": [
+            {
+              "label": "Bitcoin",
+              "value": "below $80,000"
+            },
+            {
+              "label": "Pre-report high",
+              "value": "$82,240"
+            },
+            {
+              "label": "Session low",
+              "value": "$78,649"
+            },
+            {
+              "label": "Coinbase",
+              "value": "-4.18%"
+            },
+            {
+              "label": "Gold",
+              "value": "-1.38%"
+            }
+          ]
+        }
+      ]
+    },
+    "sources": [
+      {
+        "name": "Yahoo Finance",
+        "title": "Stock Market Today (Sept. 4, 2026): S&P 500 edges lower after key jobs report",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-today-sept-4-133716564.html"
+      },
+      {
+        "name": "TheStreet",
+        "title": "Stock Market Today (Sept. 4, 2026): Yields jump, stocks fall after jobs report surprises to upside",
+        "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-sept-04-2026"
+      },
+      {
+        "name": "Yahoo Finance",
+        "title": "Jobs report live updates: US adds 162,000 jobs in August, blowing past estimates",
+        "url": "https://finance.yahoo.com/economy/live/august-jobs-report-live-updates-labor-market-155619193.html"
+      },
+      {
+        "name": "Charles Schwab",
+        "title": "Hot Jobs Report Hurts Stocks, Lifts Rate Hike Odds",
+        "url": "https://www.schwab.com/learn/story/stock-market-update-open"
+      },
+      {
+        "name": "The Motley Fool",
+        "title": "Why Sandisk Stock Rallied Today",
+        "url": "https://www.fool.com/investing/2026/09/04/why-sandisk-stock-rallied-today/"
+      },
+      {
+        "name": "Investing.com",
+        "title": "Why is SanDisk stock surging today?",
+        "url": "https://www.investing.com/news/stock-market-news/why-is-sandisk-stock-surging-today-93CH-4858661"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "SanDisk Rises 8%, Micron Gains 5%: Is the NAND Pricing Cycle Still Accelerating?",
+        "url": "https://247wallst.com/investing/2026/09/04/sandisk-soars-8-is-the-nand-pricing-cycle-still-accelerating/"
+      },
+      {
+        "name": "24/7 Wall St.",
+        "title": "Intel Climbs 4%, AMD Rises 3%, NVIDIA Ticks Up as Chip Stocks Shrug Off Rising Rate Hike Odds",
+        "url": "https://247wallst.com/investing/2026/09/04/intel-climbs-4-as-chip-stocks-shrug-off-rising-rate-hike-odds-nvidia-and-amd-move-higher/"
+      },
+      {
+        "name": "Converge Digest",
+        "title": "Dell's AI Server Backlog Surges to $95 Billion as Demand Accelerates",
+        "url": "https://convergedigest.com/dell-ai-server-backlog-95-billion-q2-fy2027/"
+      },
+      {
+        "name": "TechCrunch",
+        "title": "Nvidia confirms it will buy Hugging Face for $12.9 billion",
+        "url": "https://techcrunch.com/2026/09/03/nvidia-confirms-it-will-buy-hugging-face-for-12-9-billion/"
+      },
+      {
+        "name": "CNBC",
+        "title": "Tesla's stock drops as Cybercab update 'underwhelms,' NHTSA probe",
+        "url": "https://www.cnbc.com/2026/09/04/teslas-stock-drops-as-cybercab-update-underwhelms-nhtsa-probe.html"
+      },
+      {
+        "name": "The Motley Fool",
+        "title": "Why Apple Stock Sank on Friday",
+        "url": "https://www.fool.com/investing/2026/09/04/why-apple-stock-sank-on-friday/"
+      },
+      {
+        "name": "CNBC",
+        "title": "Gold slides more than 2% after robust U.S. payrolls boosts rate hike bets",
+        "url": "https://www.cnbc.com/2026/09/04/gold-holds-ground-with-us-payrolls-data-on-radar.html"
+      },
+      {
+        "name": "CoinDesk",
+        "title": "Bitcoin price news: BTC tumbles below $80,000 after strong August jobs numbers",
+        "url": "https://www.coindesk.com/markets/2026/09/04/u-s-added-stronger-than-expected-162-000-jobs-in-august-as-labor-market-bounced-back"
+      }
+    ]
+  }
+}
