@@ -275,8 +275,12 @@ def publish(path: Path, publish_live: bool = False) -> None:
     # 눈으로 확인할 수 있어야 하기 때문입니다.
     image_meta = None
     try:
+        # 원고를 함께 넘깁니다 — 제목이 종목 하나를 부르면 그 종목을 대문에
+        # 크게 세우고, 여럿을 부르거나 지수가 주인공인 날이면 상위 셋을
+        # 나열합니다(featured_image.choose_layout).
         image_meta = featured_image.create(
-            market, date_str, price_data, OUTPUT_DIR / f"{market}_{date_str}_editorial.png"
+            market, date_str, price_data,
+            OUTPUT_DIR / f"{market}_{date_str}_editorial.png", ko,
         )
         print(f"대표 이미지 생성: {image_meta['local_path']}")
     except Exception as exc:  # noqa: BLE001 - 이미지 실패로 발행을 막지 않음

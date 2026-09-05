@@ -64,7 +64,13 @@ def ensure_korean_font() -> str:
     )
 
 
-def _font(size: int, bold: bool = False):
+def korean_font(size: int, bold: bool = False):
+    """한글이 그려지는 폰트. featured_image도 같은 목록을 씁니다.
+
+    폰트 목록을 두 곳에 두면 한쪽만 고쳐져 한쪽 그림만 두부(□)로 나갑니다.
+    실제로 대표 이미지에서 한 번, 본문 그래픽에서 또 한 번 겪은 문제라
+    목록을 여기 한 곳에만 둡니다.
+    """
     for path in _KO_BOLD if bold else _KO_REGULAR:
         if Path(path).exists():
             try:
@@ -74,6 +80,15 @@ def _font(size: int, bold: bool = False):
             except Exception:
                 continue
     return ImageFont.load_default(size=size)
+
+
+def has_korean_font() -> bool:
+    """한글 폰트가 있는지 — 없으면 대표 이미지는 영문 표기로 물러섭니다."""
+    return any(Path(path).exists() for path in _KO_REGULAR)
+
+
+def _font(size: int, bold: bool = False):
+    return korean_font(size, bold)
 
 # featured_image와 같은 색을 씁니다 — 글 전체가 한 벌로 보이게.
 BG = "#F5F1EA"
@@ -99,6 +114,18 @@ def _fmt(value: float, unit: str = "") -> str:
     if abs(value) >= 1000:
         return f"{value:,.0f}{unit}"
     return f"{value:,.2f}{unit}"
+
+
+def _stock_unit(entry: dict) -> str:
+    """종목 주가에 붙일 단위. 한국 종목코드는 여섯 자리 숫자입니다.
+
+    시세 파일에 시장 표시가 따로 없어 종목코드로 봅니다. 단위 없이 "22,500"만
+    적으면 달러인지 원인지 읽는 사람이 알 수 없습니다.
+    """
+    if entry.get("unit"):
+        return str(entry["unit"])
+    ticker = str(entry.get("ticker", ""))
+    return "원" if ticker.isdigit() and len(ticker) == 6 else ""
 
 
 def _sparkline(draw: ImageDraw.ImageDraw, series, box, color: str) -> None:
@@ -304,17 +331,20 @@ def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
     d = ImageDraw.Draw(img)
     d.text((32, 26), title, font=_font(21, True), fill=SUB)
 
+    # 대표 이미지의 타일과 같은 모양입니다 — 왼쪽 색 막대가 방향, 이름은 크게,
+    # 등락률은 오른쪽 끝에. 대문과 본문이 한 벌로 보이게 맞춘 것입니다.
     for i, e in enumerate(picked):
         y = top + i * row_h
         color = _color(float(e["change_pct"]))
         d.rounded_rectangle([32, y, W - 32, y + row_h - 10], 12, fill=PANEL, outline=LINE)
-        d.text((54, y + 10), str(e["name"])[:14], font=_font(20, True), fill=INK)
-        d.text((54, y + 33), str(e.get("ticker", "")), font=_font(15), fill=SUB)
-        _sparkline(d, e.get("series"), (W - 340, y + 12, W - 210, y + 40), color)
-        price = _fmt(float(e["price"]), "원" if e.get("unit") == "원" else "")
-        d.text((W - 190, y + 8), price, font=_font(19), fill=INK)
+        d.rounded_rectangle([32, y, 38, y + row_h - 10], 3, fill=color)
+        d.text((58, y + 9), str(e["name"])[:14], font=_font(23, True), fill=INK)
+        price = _fmt(float(e["price"]), _stock_unit(e))
+        d.text((58, y + 36), price, font=_font(15), fill=SUB)
+        _sparkline(d, e.get("series"), (W - 320, y + 14, W - 200, y + 38), color)
         pct = f"{float(e['change_pct']):+.2f}%"
-        d.text((W - 190, y + 32), pct, font=_font(19, True), fill=color)
+        pf = _font(26, True)
+        d.text((W - 58 - d.textlength(pct, font=pf), y + 13), pct, font=pf, fill=color)
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
@@ -371,9 +401,59 @@ def flow_compare(price_data: dict, output_path: Path, top_n: int = 5,
     return output_path
 
 
+def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = None,
+                    title: str = "") -> Path:
+    """한 종목만 크게 세웁니다 — 이름, 등락률, 최근 흐름.
+
+    대표 이미지의 single 레이아웃과 같은 모양입니다. 그날 이야기가 종목 하나로
+    설명되는 날(2026-09-02 델 테크놀로지스, 09-04 원익홀딩스)에는 그 종목을
+    다루는 문단 옆에 표 대신 이 그림을 붙입니다. 목록형 그림(movers_list)은
+    "여럿이 함께 움직였다"를 말하고, 이 그림은 "오늘은 이 종목이다"를 말합니다.
+
+    ticker를 주면 그 종목을, 주지 않으면 그날 절대 등락 폭 1위를 그립니다.
+    """
+    rows = [
+        e for e in (price_data.get("watchlist") or {}).values()
+        if e.get("change_pct") is not None
+    ]
+    if not rows:
+        raise ValueError("stock_spotlight: 등락률이 있는 종목이 없습니다")
+    if ticker:
+        picked = next((e for e in rows if str(e.get("ticker")) == str(ticker)), None)
+        if picked is None:
+            raise ValueError(f"stock_spotlight: {ticker}는 그날 시세에 없습니다")
+    else:
+        picked = max(rows, key=lambda e: abs(float(e["change_pct"])))
+
+    change = float(picked["change_pct"])
+    color = _color(change)
+    h = 300
+    img = Image.new("RGB", (W, h), BG)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([32, 24, W - 32, h - 24], 16, fill=PANEL, outline=LINE)
+    if title:
+        d.text((60, 48), title, font=_font(19, True), fill=SUB)
+
+    name = str(picked["name"])
+    nf = _font(52, True)
+    while d.textlength(name, font=nf) > 470 and nf.size > 26:
+        nf = _font(nf.size - 4, True)
+    d.text((60, 88), name, font=nf, fill=INK)
+    d.text((60, 168), f"{change:+.2f}%", font=_font(76, True), fill=color)
+    price = _fmt(float(picked["price"]), _stock_unit(picked))
+    d.text((60, 254), price, font=_font(20), fill=SUB)
+
+    # 오른쪽에 최근 흐름. 대표 이미지와 달리 본문은 폭이 넓어 크게 들어갑니다.
+    _sparkline(d, picked.get("series"), (W - 400, 96, W - 60, 236), color)
+    d.text((W - 400, 254), "최근 8거래일", font=_font(16), fill=SUB)
+    img.save(output_path, format="PNG", optimize=True)
+    return output_path
+
+
 BUILDERS = {"index_card": index_card, "sector_bars": sector_bars,
             "flow_chart": flow_chart, "two_day_compare": two_day_compare,
-            "movers_list": movers_list, "flow_compare": flow_compare}
+            "movers_list": movers_list, "flow_compare": flow_compare,
+            "stock_spotlight": stock_spotlight}
 
 
 def build(kind: str, price_data: dict, output_path: Path, **kwargs) -> dict:
