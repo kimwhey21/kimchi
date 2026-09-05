@@ -115,6 +115,18 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
 _REQUIRED = {"^DJI", "^GSPC", "^IXIC"}
 
 
+# 코어 종목이 몇 개까지 빠져도 그날 시세를 쓸 것인가.
+#
+# 부분 실패를 허용하면서 하한을 두지 않았더니, 코어가 대부분 빠져도 "정상"인
+# price_data가 나왔습니다. 그다음이 문제입니다 — editorial_facts는 **살아남은**
+# 종목 중에서 '그날 1위'를 고르므로, 빠진 종목이 진짜 1위였어도 알 수 없습니다.
+# 자료 장애가 '글 없음'이 아니라 '핵심 종목이 빠진 채 완성된 글'로 바뀝니다.
+#
+# 그래서 하한을 둡니다. 이 밑으로 내려가면 그날 시세를 쓰지 않고 실패시킵니다 —
+# 재시도 스케줄(:20/:27/:34)이 있으므로 한 번 실패해도 그날이 끝나지 않습니다.
+_MIN_CORE_COVERAGE = 0.8
+
+
 def _fetch_group(rows, extra=None) -> tuple[dict, list[str]]:
     """설정의 각 줄을 받아오되, 필수가 아닌 항목의 실패는 건너뜁니다."""
     out: dict[str, dict] = {}
@@ -133,6 +145,27 @@ def _fetch_group(rows, extra=None) -> tuple[dict, list[str]]:
     return out, missing
 
 
+def _require_core_coverage(got: dict, configured: list, missing: list[str]) -> None:
+    """코어 종목이 하한보다 많이 빠지면 그날 시세를 쓰지 않습니다.
+
+    빠진 종목의 등락률은 알 수 없으므로, 그 종목이 그날 1위였는지도 알 수 없습니다.
+    editorial_facts의 '그날 1위를 다뤘는가' 검사가 살아남은 종목만 보고 통과해
+    버리기 때문에, 여기서 막지 않으면 자료 장애가 '핵심 종목이 빠진 완성된 글'로
+    조용히 바뀝니다.
+    """
+    total = len(configured)
+    if not total:
+        return
+    ratio = len(got) / total
+    if ratio < _MIN_CORE_COVERAGE:
+        raise ValueError(
+            f"코어 종목을 {len(got)}/{total}개만 받았습니다"
+            f"({ratio:.0%} < {_MIN_CORE_COVERAGE:.0%}). 빠진 종목이 그날 1위였는지 "
+            f"확인할 수 없으므로 이 시세로는 글을 쓰지 않습니다. "
+            f"빠진 항목: {', '.join(missing) or '(기록 없음)'}"
+        )
+
+
 def fetch_all() -> dict:
     """설정 파일에 등록된 모든 지수/종목의 시세를 가져옵니다.
 
@@ -146,8 +179,7 @@ def fetch_all() -> dict:
     watchlist, miss_stock = _fetch_group(
         config["watchlist"], extra=lambda row: {"source": "core"}
     )
-    if not watchlist:
-        raise ValueError("워치리스트 종목을 하나도 받지 못했습니다.")
+    _require_core_coverage(watchlist, config["watchlist"], miss_macro + miss_stock)
     # 거래일은 필수 지수에서 읽습니다. 선택 항목이 빠져도 기준일은 흔들리지
     # 않아야 합니다.
     trading_date = next(

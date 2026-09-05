@@ -29,9 +29,15 @@ class UsPartialFetchTest(unittest.TestCase):
             {"ticker": "^IXIC", "name": "나스닥종합"},
             {"ticker": "GC=F", "name": "국제 금"},
         ],
+        # 실제 코어는 16종목입니다. 픽스처가 2개면 하나만 빠져도 50%가 되어
+        # 커버리지 하한(80%)과 부딪힙니다.
         "watchlist": [
-            {"ticker": "NVDA", "name": "엔비디아"},
-            {"ticker": "TSLA", "name": "테슬라"},
+            {"ticker": t, "name": n} for t, n in (
+                ("NVDA", "엔비디아"), ("TSLA", "테슬라"), ("AAPL", "애플"),
+                ("MSFT", "마이크로소프트"), ("AMZN", "아마존"), ("META", "메타"),
+                ("MU", "마이크론"), ("INTC", "인텔"), ("COIN", "코인베이스"),
+                ("MRNA", "모더나"),
+            )
         ],
     }
 
@@ -49,7 +55,7 @@ class UsPartialFetchTest(unittest.TestCase):
     def test_optional_macro_failure_is_skipped(self) -> None:
         data = self._run({"GC=F"})
         self.assertNotIn("GC=F", data["macro"])
-        self.assertEqual(len(data["watchlist"]), 2)
+        self.assertEqual(len(data["watchlist"]), 10)
         self.assertEqual(data["trading_date"], "2026-09-04")
         self.assertTrue(any("GC=F" in m for m in data["missing"]))
 
@@ -66,7 +72,18 @@ class UsPartialFetchTest(unittest.TestCase):
 
     def test_all_stocks_failing_raises(self) -> None:
         with self.assertRaises(ValueError):
-            self._run({"NVDA", "TSLA"})
+            self._run({"NVDA", "TSLA", "AAPL", "MSFT", "AMZN", "META",
+                       "MU", "INTC", "COIN", "MRNA"})
+
+    def test_core_coverage_floor(self) -> None:
+        """빠진 종목이 그날 1위였는지 알 수 없으므로 하한 아래면 쓰지 않습니다.
+
+        editorial_facts는 살아남은 종목 중에서 '그날 1위'를 고릅니다. 여기서
+        막지 않으면 자료 장애가 '핵심 종목이 빠진 완성된 글'로 조용히 바뀝니다.
+        """
+        with self.assertRaises(ValueError) as ctx:
+            self._run({"TSLA", "AAPL", "MSFT"})   # 10종목 중 3개 = 70% < 80%
+        self.assertIn("코어 종목을", str(ctx.exception))
 
     def test_nothing_missing_reports_empty(self) -> None:
         data = self._run(set())
@@ -81,8 +98,13 @@ class KrPartialFetchTest(unittest.TestCase):
             {"ticker": "USD/KRW", "name": "원/달러 환율"},
         ],
         "watchlist": [
-            {"ticker": "005930", "name": "삼성전자", "sector": "반도체"},
-            {"ticker": "000660", "name": "SK하이닉스", "sector": "반도체"},
+            {"ticker": t, "name": n, "sector": sec} for t, n, sec in (
+                ("005930", "삼성전자", "반도체"), ("000660", "SK하이닉스", "반도체"),
+                ("005490", "POSCO홀딩스", "철강"), ("035420", "네이버", "플랫폼"),
+                ("035720", "카카오", "플랫폼"), ("051910", "LG화학", "화학"),
+                ("006400", "삼성SDI", "2차전지"), ("105560", "KB금융", "금융"),
+                ("055550", "신한지주", "금융"), ("005380", "현대차", "자동차"),
+            )
         ],
     }
 
@@ -113,7 +135,7 @@ class KrPartialFetchTest(unittest.TestCase):
         data = self._run({"USD/KRW"})
         self.assertNotIn("USD/KRW", data["macro"])
         self.assertIn("KS11", data["macro"])
-        self.assertEqual(len(data["watchlist"]), 2)
+        self.assertEqual(len(data["watchlist"]), 10)
         self.assertEqual(data["trading_date"], "2026-09-04")
         self.assertTrue(any("USD/KRW" in m for m in data["missing"]))
 
