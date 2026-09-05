@@ -50,6 +50,75 @@ _AWKWARD_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
 )
 
 
+# 등락을 말할 때 쓰는 '내리다'. 벤치마크 본문 60편을 세어 보니 하락 계열이
+# 523회(하락 425 · 하락했 72 · 하락한 26)인데 내리- 계열은 53회로 10배 차이였다.
+# 우리 원고는 반대로 '내렸습니다'가 기본값이었다.
+#
+# 다만 '내리다'가 전부 등락은 아니라서, 아래 세 갈래는 그대로 둔다.
+#   - 금리를 내리다  : 인하이지 하락이 아니다
+#   - 끌어내리다      : 다른 합성어다("지수를 끌어내린 쪽")
+#   - 내려가다/내려오다/내려서다 : 다른 동사다("8만 달러 아래로 내려갔습니다")
+# '내려' 뒤에 보조동사가 붙으면 '내려가다/내려오다/내려서다'라는 다른 동사다.
+_DECLINE_VERB = re.compile(r"내(렸|린|려(?![가갔갈오왔올서섰설놓두주줄]))")
+_NOT_A_DECLINE = re.compile(r"(금리|결론|판단|평가|명령|지시|처방|진단|끌어)")
+# 창이 좁으면 "금리를 0.25%포인트 내렸습니다"에서 '금리'를 놓친다.
+_DECLINE_WINDOW = 28
+
+
+def _decline_wording(field: str, text: str) -> list[str]:
+    """등락을 '내렸다'로 쓴 자리를 모읍니다."""
+    issues: list[str] = []
+    for match in _DECLINE_VERB.finditer(text):
+        before = text[max(0, match.start() - _DECLINE_WINDOW) : match.start()]
+        if _NOT_A_DECLINE.search(before):
+            continue
+        snippet = text[max(0, match.start() - 18) : match.end() + 6].strip()
+        issues.append(
+            f"{field} '...{snippet}...': 등락은 '하락했습니다'로 씁니다. "
+            "'내렸습니다'는 벤치마크 본문에서 하락 계열의 10분의 1로만 쓰입니다. "
+            "(금리 인하·끌어내리다·내려가다는 그대로 두세요.)"
+        )
+    return issues
+
+
+# 우리 쪽 장치 이름. 읽는 사람에게는 뜻이 없고, 글을 시스템 설명서처럼 만든다.
+# "이날 워치리스트에서 가장 큰 상승 폭입니다"는 그 종목이 그날 시장 전체에서
+# 1등이었다는 말이 아니라 우리 목록 안에서 1등이었다는 말인데, 읽는 사람은
+# 그 목록을 모른다. 범위를 밝히려면 '우리가 보는 종목 가운데'처럼 쓴다.
+_INTERNAL_JARGON = re.compile(r"(워치리스트|watchlist|동적 편입|코어 종목|dynamic 편입)", re.IGNORECASE)
+
+# 벤치마크가 한 번도 쓰지 않은 말. 제목뿐 아니라 본문·소제목에서도 막습니다 —
+# 2026-09-04에 '코앞'·'문턱'을 제목에서 걸렀더니, 다음 날 자동 발행 원고가
+# 소제목에 '반대편'을 썼습니다(제가 쓴 '외국인 – ...' 형식을 보고 따라 만든
+# 것이라, 제 실수가 매일 복제되는 구조였습니다).
+#
+# 세어 본 결과: 반대편은 본문 60편·제목 1,089개에 0회. 같은 뜻으로 그쪽이
+# 쓰는 말은 약세(113회)·부진(63회)·반대로(47회)입니다.
+_NEVER_USED = {
+    "반대편": "약세·부진·반대로를 쓰세요 (본문 60편·제목 1,089개에 0회).",
+    "코앞": "제목 1,089개에 0회입니다.",
+    "문턱": "제목 1,089개에 0회입니다.",
+}
+
+
+def _invented(field: str, text: str) -> list[str]:
+    return [
+        f"{field}: '{word}'는 벤치마크가 쓰지 않는 말입니다 — {why}"
+        for word, why in _NEVER_USED.items()
+        if word in text
+    ]
+
+
+def _jargon(field: str, text: str) -> list[str]:
+    match = _INTERNAL_JARGON.search(text)
+    if not match:
+        return []
+    return [
+        f"{field}: '{match.group()}'는 우리 쪽 장치 이름이라 글에 쓰지 않습니다. "
+        "범위를 밝혀야 하면 '우리가 보는 종목 가운데'처럼 쓰세요."
+    ]
+
+
 def collect_issues(generated: dict) -> list[str]:
     """제목·소제목과 본문에서 어색한 한국어 표현을 찾아 설명 목록으로 반환합니다.
 
@@ -86,6 +155,9 @@ def collect_issues(generated: dict) -> list[str]:
         for pattern, guidance in _AWKWARD_PATTERNS:
             if pattern.search(text):
                 issues.append(f"{field} '{text}': {guidance}")
+        issues += _decline_wording(field, text)
+        issues += _jargon(field, text)
+        issues += _invented(field, text)
     return issues
 
 

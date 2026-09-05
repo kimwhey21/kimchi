@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import unittest
 
-from src.editorial_quality import EditorialQualityError, validate_generated
+from src.editorial_quality import (
+    EditorialQualityError,
+    collect_issues,
+    validate_generated,
+)
 
 
 class EditorialQualityTest(unittest.TestCase):
@@ -20,3 +24,59 @@ class EditorialQualityTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DeclineWordingTest(unittest.TestCase):
+    """등락은 '하락했습니다'로 씁니다.
+
+    벤치마크 본문 60편에서 하락 계열이 523회(하락 425·하락했 72·하락한 26)인데
+    내리- 계열은 53회로 10배 차이였습니다. 우리 원고는 반대로 '내렸습니다'가
+    기본값이었습니다.
+    """
+
+    def test_price_decline_is_blocked(self) -> None:
+        for text in ("테슬라는 5.92% 내렸습니다", "3대 지수가 모두 내렸습니다",
+                     "2.51% 내린 종목", "가장 크게 내린 종목은 테슬라입니다"):
+            with self.subTest(text=text):
+                self.assertTrue(collect_issues({"title": "제목", "narrative": [
+                    {"heading": "h", "body": text}]}))
+
+    def test_other_senses_are_allowed(self) -> None:
+        """'내리다'가 전부 등락은 아닙니다."""
+        for text in ("연준이 금리를 0.25%포인트 내렸습니다",
+                     "지수를 끌어내린 쪽은 여기입니다",
+                     "8만 달러 아래로 내려갔습니다",
+                     "유가가 내려오면 부담이 줄어듭니다",
+                     "그런 결론을 내렸습니다",
+                     "원화 가치가 내려가면 수익률이 깎입니다"):
+            with self.subTest(text=text):
+                self.assertEqual(collect_issues({"title": "제목", "narrative": [
+                    {"heading": "h", "body": text}]}), [])
+
+
+class JargonTest(unittest.TestCase):
+    def test_watchlist_is_blocked(self) -> None:
+        """'워치리스트'는 우리 쪽 장치 이름이라 독자에게 뜻이 없습니다."""
+        issues = collect_issues({"title": "제목", "narrative": [
+            {"heading": "h", "body": "이날 워치리스트에서 가장 큰 상승 폭입니다."}]})
+        self.assertEqual(len(issues), 1)
+        self.assertIn("워치리스트", issues[0])
+
+    def test_scope_can_still_be_stated(self) -> None:
+        self.assertEqual(collect_issues({"title": "제목", "narrative": [
+            {"heading": "h", "body": "우리가 보는 종목 가운데 가장 큰 상승 폭입니다."}]}), [])
+
+
+class InventedWordTest(unittest.TestCase):
+    def test_never_used_words_are_blocked(self) -> None:
+        """제목에서 걸렀더니 다음 날 소제목에 '반대편'이 나왔습니다."""
+        for word in ("반대편", "코앞", "문턱"):
+            with self.subTest(word=word):
+                self.assertTrue(collect_issues({"title": "제목", "narrative": [
+                    {"heading": f"5. {word} – 테슬라와 애플", "body": "본문입니다."}]}))
+
+    def test_benchmark_wording_passes(self) -> None:
+        for heading in ("5. 테슬라와 애플의 약세", "3. 반도체 부진", "4. 반대로 오른 종목"):
+            with self.subTest(heading=heading):
+                self.assertEqual(collect_issues({"title": "제목", "narrative": [
+                    {"heading": heading, "body": "본문입니다."}]}), [])

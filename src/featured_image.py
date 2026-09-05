@@ -207,7 +207,11 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path) -> d
     if lead:
         draw.text(
             (_CONTENT_LEFT, 487),
-            "LARGEST WATCHLIST MOVE",
+            # 라벨은 사실이어야 합니다. 이 종목은 시장 전체 1등이 아니라 우리가
+            # 보는 종목 가운데 1등이므로 "LARGEST MOVE"로 줄이면 과장이 됩니다.
+            # 그렇다고 "WATCHLIST"는 우리 쪽 장치 이름이라 읽는 사람에게 뜻이
+            # 없습니다. 범위를 밝히면서 장치 이름은 빼는 표현으로 씁니다.
+            "BIGGEST MOVE WE TRACK",
             font=_font(18, True),
             fill=tone["eyebrow"],
         )
@@ -241,7 +245,7 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path) -> d
     # 같아 alt가 동일했고, 기존 미디어를 재사용하는 바람에 제목은 삼성중공업
     # 8.58%인데 대표 이미지는 "Alteogen -5.19%"인 글이 공개됐습니다.
     if lead:
-        alt_values += f", largest watchlist move {_name(lead)} ({_change(lead)})"
+        alt_values += f", biggest move we track {_name(lead)} ({_change(lead)})"
     return {
         "local_path": str(output_path),
         "alt": f"{market_label.title()} data snapshot for {date_str}: {alt_values}.",

@@ -71,7 +71,7 @@ def _macro_summary(price_data: dict, date_str: str) -> str:
 def _watchlist_summary(price_data: dict) -> str:
     entries = list(price_data.get("watchlist", {}).values())
     if not entries:
-        return "No watchlist data was available."
+        return "No price data was available for the stocks we follow."
     up = sum(entry["change_pct"] > 0 for entry in entries)
     down = sum(entry["change_pct"] < 0 for entry in entries)
     flat = len(entries) - up - down
@@ -192,7 +192,9 @@ def generate(
     sources = _source_notes(recent_news)
     narrative = [
         {"heading": "Indexes and exchange rate", "body": _macro_summary(price_data, date_str)},
-        {"heading": "Breadth across the watchlist", "body": _watchlist_summary(price_data)},
+        # "watchlist" is our own plumbing — the reader has never seen that list.
+        {"heading": "Breadth across the stocks we follow",
+         "body": _watchlist_summary(price_data)},
     ]
     recent_trend = _recent_trend_summary(price_data)
     if recent_trend:
