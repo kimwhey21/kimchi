@@ -298,7 +298,7 @@
     "narrative": [
       {
         "heading": "지수는 올랐지만, 판 쪽이 훨씬 많았습니다",
-        "body": "9월 1일 코스피는 15.78포인트 오른 6,835.80으로 마감했습니다. 상승률은 0.23%입니다. 같은 날 코스닥은 13.04포인트 내린 821.25로 1.56% 하락했고, 원/달러 환율은 1,372.70원으로 0.23% 올랐습니다.\n\n지수만 보면 무난한 하루로 보이지만 수급을 열어보면 그림이 다릅니다. 아시아경제 집계에 따르면 이날 코스피에서 개인과 외국인, 기관이 모두 순매도였고, 순매수는 기타법인 한 곳뿐이었습니다. 그 규모가 1조6,888억원입니다.\n\n저희가 추적하는 관심 종목 10개 중에서도 3개만 올랐고 7개가 내렸습니다. 지수의 방향과 종목의 방향이 반대였던 날입니다."
+        "body": "9월 1일 코스피는 15.78포인트 오른 6,835.80으로 마감했습니다. 상승률은 0.23%입니다. 같은 날 코스닥은 13.04포인트 하락한 821.25로 1.56% 하락했고, 원/달러 환율은 1,372.70원으로 0.23% 올랐습니다.\n\n지수만 보면 무난한 하루로 보이지만 수급을 열어보면 그림이 다릅니다. 아시아경제 집계에 따르면 이날 코스피에서 개인과 외국인, 기관이 모두 순매도였고, 순매수는 기타법인 한 곳뿐이었습니다. 그 규모가 1조6,888억원입니다.\n\n저희가 추적하는 관심 종목 10개 중에서도 3개만 올랐고 7개가 하락했습니다. 지수의 방향과 종목의 방향이 반대였던 날입니다."
       },
       {
         "heading": "기타법인 1조6,888억원의 정체는 자사주 매입입니다",
@@ -306,47 +306,13 @@
       },
       {
         "heading": "코스닥에는 같은 방어막이 없었습니다",
-        "body": "코스닥의 수급은 정반대였습니다. 개인이 4,338억원을 순매수했지만 외국인이 1,515억원, 기관이 2,748억원을 순매도했습니다. 코스피를 떠받친 자사주 매입 같은 대형 매수 주체가 없었고, 지수는 1.56% 내렸습니다.\n\n하락을 이끈 건 2차전지였습니다. 에코프로가 4.49% 내린 8만7,200원, 에코프로비엠이 3.81% 내린 11만6,200원으로 마감했고, 코스피 상장사인 LG에너지솔루션도 2.91% 하락한 36만7,000원이었습니다. 업종별로는 건설이 3.50% 내려 낙폭이 가장 컸고, 기계·장비가 1.34% 하락했습니다.\n\n오른 업종은 성격이 달랐습니다. 유통이 2.98%, 보험이 2.15%, 금융이 1.52% 올랐습니다. 성장주에서 빠진 돈이 방어적인 업종으로 옮겨간 하루로 읽힙니다."
+        "body": "코스닥의 수급은 정반대였습니다. 개인이 4,338억원을 순매수했지만 외국인이 1,515억원, 기관이 2,748억원을 순매도했습니다. 코스피를 떠받친 자사주 매입 같은 대형 매수 주체가 없었고, 지수는 1.56% 하락했습니다.\n\n하락을 이끈 건 2차전지였습니다. 에코프로가 4.49% 하락한 8만7,200원, 에코프로비엠이 3.81% 하락한 11만6,200원으로 마감했고, 코스피 상장사인 LG에너지솔루션도 2.91% 하락한 36만7,000원이었습니다. 업종별로는 건설이 3.50% 하락해 낙폭이 가장 컸고, 기계·장비가 1.34% 하락했습니다.\n\n오른 업종은 성격이 달랐습니다. 유통이 2.98%, 보험이 2.15%, 금융이 1.52% 올랐습니다. 성장주에서 빠진 돈이 방어적인 업종으로 옮겨간 하루로 읽힙니다."
       },
       {
         "heading": "환율은 중동發 불확실성을 반영했습니다",
         "body": "원/달러 환율은 1,372.70원으로 0.23% 올랐습니다. 연합뉴스는 중동 긴장이 다시 높아진 가운데 저가 매수세가 유입되며 환율이 소폭 올랐다고 전했습니다. 한국경제도 코스피가 중동 긴장을 딛고 강보합으로 마감했다고 보도했습니다.\n\n환율 상승은 외국인 수급에 부담입니다. 원화 가치가 내려가면 달러 기준 수익률이 깎이기 때문입니다. 이날 외국인이 코스피와 코스닥에서 모두 순매도였던 것과 무관하지 않은 흐름입니다."
       }
     ],
-    "theme_section": {
-      "heading": "2차전지는 하락, 반도체는 상승",
-      "commentary": "같은 시장 안에서 방향이 갈렸습니다. 반도체 대형주는 자사주 매입이라는 수급 요인으로 버텼고, 2차전지는 매수 주체 없이 낙폭을 키웠습니다. 아래 카드는 각 테마를 대표하는 종목의 실제 마감 등락률입니다.",
-      "highlights": [
-        {
-          "label": "반도체",
-          "ticker": "000660"
-        },
-        {
-          "label": "2차전지",
-          "ticker": "086520"
-        },
-        {
-          "label": "인터넷",
-          "ticker": "035420"
-        },
-        {
-          "label": "바이오",
-          "ticker": "196170"
-        }
-      ]
-    },
-    "stock_section": {
-      "heading": "외국인이 판 종목과 산 종목이 엇갈렸습니다",
-      "commentary": "외국인 순매도 1위는 SK하이닉스(21만1,935주)였지만 주가는 1.14% 올랐습니다. 반대로 카카오는 외국인이 10만2,298주를 순매수했는데도 0.14% 내렸습니다. 외국인 수급만으로 그날 주가를 설명할 수 없었던 날입니다. 알테오젠은 외국인이 11만8,301주를 순매도하며 2.11% 하락해, 수급과 주가 방향이 일치한 쪽에 속했습니다.",
-      "featured_tickers": [
-        "000660",
-        "005930",
-        "035720",
-        "196170",
-        "086520",
-        "373220"
-      ]
-    },
     "outlook": {
       "heading": "다음 거래일에 확인할 것",
       "body": "첫째, 기타법인 순매수가 계속되는지입니다. 자사주 매입은 예정된 기간과 금액이 정해진 프로그램이므로 무한정 이어지지 않습니다. 이 매수가 줄어들 때 지수가 버티는지가 관건입니다.\n\n둘째, 코스닥과 코스피의 격차입니다. 이틀 연속 코스피만 방어된 구도라면 지수 상승이 시장 전반의 회복을 뜻하지 않습니다. 코스닥이 함께 오르는지 확인해야 방향을 판단할 수 있습니다.\n\n셋째, 환율입니다. 중동 관련 불확실성이 이어지면 원화 약세가 외국인 순매도를 자극할 수 있습니다."
@@ -406,7 +372,7 @@
         {
           "heading": "2차전지의 무게중심이 전기차에서 ESS로 옮겨가고 있습니다",
           "icon": "battery",
-          "body": "오늘 에코프로가 4.49%, 에코프로비엠이 3.81%, LG에너지솔루션이 2.91% 내렸습니다. 전기차 수요 둔화, 이른바 캐즘이 여전히 주가에 남아 있다는 뜻이지만, 업계가 보는 그림은 조금 달라졌습니다.\n\nLG에너지솔루션은 미국 사업에서 2026년을 기점으로 ESS(에너지저장장치) 출하량이 전기차용 출하량을 추월할 것으로 전망됩니다. AI 데이터센터 투자가 늘면서 전력 저장 수요가 함께 커진 결과입니다. 배터리 회사의 성장 동력이 자동차에서 전력 인프라로 이동하는 구조 변화입니다.\n\n에코프로 쪽에서도 방향 전환이 보입니다. 에코프로머티는 올해 매출 1조원, 영업이익 1,076억원으로 흑자 전환이 예상되고, 전구체 외부 판매 비중이 2025년 25%에서 2026년 70%까지 확대될 것으로 전망됩니다. 계열사 안에서만 팔던 소재를 밖에 파는 회사로 바뀌는 중입니다.\n\n다만 이 수치들은 전망이지 확정된 실적이 아닙니다. 오늘의 하락은 그 전망이 아직 주가에 온전히 반영되지 않았다는 사실을 보여줍니다.",
+          "body": "오늘 에코프로가 4.49%, 에코프로비엠이 3.81%, LG에너지솔루션이 2.91% 하락했습니다. 전기차 수요 둔화, 이른바 캐즘이 여전히 주가에 남아 있다는 뜻이지만, 업계가 보는 그림은 조금 달라졌습니다.\n\nLG에너지솔루션은 미국 사업에서 2026년을 기점으로 ESS(에너지저장장치) 출하량이 전기차용 출하량을 추월할 것으로 전망됩니다. AI 데이터센터 투자가 늘면서 전력 저장 수요가 함께 커진 결과입니다. 배터리 회사의 성장 동력이 자동차에서 전력 인프라로 이동하는 구조 변화입니다.\n\n에코프로 쪽에서도 방향 전환이 보입니다. 에코프로머티는 올해 매출 1조원, 영업이익 1,076억원으로 흑자 전환이 예상되고, 전구체 외부 판매 비중이 2025년 25%에서 2026년 70%까지 확대될 것으로 전망됩니다. 계열사 안에서만 팔던 소재를 밖에 파는 회사로 바뀌는 중입니다.\n\n다만 이 수치들은 전망이지 확정된 실적이 아닙니다. 오늘의 하락은 그 전망이 아직 주가에 온전히 반영되지 않았다는 사실을 보여줍니다.",
           "table": [
             {
               "label": "에코프로머티 예상 매출",
@@ -487,40 +453,6 @@
         "body": "The won slipped 0.23% to 1,372.70 per dollar. Yonhap attributed the move to renewed Middle East tension combined with bargain-hunting dollar demand. Hankyung likewise described the KOSPI as closing modestly higher despite that tension.\n\nFor a foreign holder this matters directly. A weaker won reduces dollar-denominated returns on Korean equities regardless of what the share price does — which is consistent with foreign investors selling on both boards that day."
       }
     ],
-    "theme_section": {
-      "heading": "Semiconductors held, batteries did not",
-      "commentary": "The split within a single session was clean. Large-cap semiconductors were supported by a flow factor — the buyback — while battery names fell with no comparable bid. The cards below show the actual closing move for a representative stock in each theme.",
-      "highlights": [
-        {
-          "label": "Semiconductors",
-          "ticker": "000660"
-        },
-        {
-          "label": "Batteries",
-          "ticker": "086520"
-        },
-        {
-          "label": "Internet",
-          "ticker": "035420"
-        },
-        {
-          "label": "Biotech",
-          "ticker": "196170"
-        }
-      ]
-    },
-    "stock_section": {
-      "heading": "Foreign flows did not decide the day",
-      "commentary": "The largest foreign net sale was SK Hynix, at 211,935 shares — and the stock rose 1.14%. Kakao saw net foreign buying of 102,298 shares and still slipped 0.14%. Alteogen was the case where flow and price agreed: foreign investors sold a net 118,301 shares and the stock fell 2.11%.",
-      "featured_tickers": [
-        "000660",
-        "005930",
-        "035720",
-        "196170",
-        "086520",
-        "373220"
-      ]
-    },
     "outlook": {
       "heading": "What to watch next session",
       "body": "First, whether corporate net buying continues. Buyback programs run to a disclosed size and schedule; they do not last indefinitely. The test is what the index does when that bid thins out.\n\nSecond, the KOSPI–KOSDAQ gap. If only the large-cap index is being defended, an index gain does not mean the market recovered. A KOSDAQ that rises alongside it would say something different.\n\nThird, the won. Sustained Middle East risk that keeps the currency weak gives foreign investors a reason to keep selling."

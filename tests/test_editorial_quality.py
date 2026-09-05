@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 
+from src import editorial_quality
 from src.editorial_quality import (
     EditorialQualityError,
     collect_issues,
@@ -80,3 +81,30 @@ class InventedWordTest(unittest.TestCase):
             with self.subTest(heading=heading):
                 self.assertEqual(collect_issues({"title": "제목", "narrative": [
                     {"heading": heading, "body": "본문입니다."}]}), [])
+
+
+class DeclineVerbExclusionTest(unittest.TestCase):
+    """'내려-'로 시작하는 다른 동사를 등락으로 잘못 잡지 않는지 봅니다.
+
+    어미를 하나씩 열거하다 '내려온'을 빠뜨려, "인상 확률이 내려온 자리에서"가
+    걸렸습니다(2026-09-05). 지금은 어간 음절 블록 전체를 제외합니다.
+    """
+
+    def test_other_verbs_are_not_declines(self) -> None:
+        for text in (
+            "인상 확률이 내려온 자리에서 스노우플레이크는 올랐다",
+            "금리가 내려오면 근거도 약해진다",
+            "지수가 6,400선까지 내려갔다",
+            "가격이 8만 달러 아래로 내려왔다",
+            "짐을 내려놓았다",
+            "값을 내려주었다",
+            "자리에서 내려섰다",
+        ):
+            with self.subTest(text=text):
+                self.assertEqual(editorial_quality._decline_wording("본문", text), [])
+
+    def test_real_declines_are_still_caught(self) -> None:
+        for text in ("코스피가 1.5% 내렸습니다", "7개가 내렸습니다", "두 배 더 내린 이유"):
+            with self.subTest(text=text):
+                self.assertTrue(editorial_quality._decline_wording("본문", text))
+

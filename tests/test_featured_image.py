@@ -138,6 +138,33 @@ class NameTest(unittest.TestCase):
             self.assertEqual(featured_image._name(_stock("원익홀딩스", "Wonik Holdings", 29.91)),
                              "원익홀딩스")
 
+    def test_english_edition_uses_english_names(self) -> None:
+        """영어 글에 한글 이름이 박힌 그림이 붙으면 무슨 종목인지 알 수 없습니다."""
+        entry = _stock("원익홀딩스", "Wonik Holdings", 29.91)
+        with mock.patch.object(data_graphics, "has_korean_font", return_value=True):
+            self.assertEqual(featured_image._name(entry, "en"), "Wonik Holdings")
+
+    def test_english_edition_shortens_long_index_names(self) -> None:
+        """'Dow Jones Industrial Average'를 그대로 쓰면 카드를 넘칩니다."""
+        entry = {"name": "다우존스", "name_en": "Dow Jones Industrial Average",
+                 "price": 53414.25, "change_pct": -0.51}
+        self.assertEqual(featured_image._name(entry, "en"), "Dow Jones")
+
+    def test_english_edition_labels_and_currency(self) -> None:
+        self.assertTrue(featured_image._market_line("kr", "2026-09-04", "en")
+                        .startswith("Korea Market Close"))
+        won = {"name": "원/달러 환율", "name_en": "USD/KRW", "price": 1351.3, "unit": "원"}
+        self.assertEqual(featured_image._price(won, "en"), "1,351.3 KRW")
+        self.assertEqual(featured_image._price(won, "ko"), "1,351.3원")
+
+    def test_two_languages_get_different_alt(self) -> None:
+        """alt가 같으면 영어 글에 한국어 그림이 그대로 재사용됩니다."""
+        directory = Path(tempfile.mkdtemp())
+        ko = create("kr", "2026-09-04", CROWD, directory / "ko.png", None, lang="ko")
+        en = create("kr", "2026-09-04", CROWD, directory / "en.png", None, lang="en")
+        self.assertNotEqual(ko["alt"], en["alt"])
+        self.assertEqual(ko["layout"], en["layout"])
+
     def test_falls_back_to_english_without_a_korean_font(self) -> None:
         """우분투 러너에 fonts-nanum이 없으면 한글이 두부(□□□)로 찍힙니다.
 

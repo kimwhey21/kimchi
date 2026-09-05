@@ -273,7 +273,11 @@ def publish(path: Path, publish_live: bool = False) -> None:
     # 예약 경로에 쓰지 않는다는 AGENTS.md 원칙을 그대로 따릅니다.
     # 업로드 여부와 무관하게 만들어 둡니다 — 자격증명 없이 돌려도 결과물을
     # 눈으로 확인할 수 있어야 하기 때문입니다.
+    # 언어마다 따로 만듭니다. 영어 글에 한글 종목명이 박힌 그림이 붙으면 읽는
+    # 사람이 무슨 종목인지 알 수 없습니다. 레이아웃은 두 언어가 같습니다 —
+    # 같은 날 같은 이야기이므로 한국어 원고 하나로 정합니다.
     image_meta = None
+    image_meta_en = None
     try:
         # 원고를 함께 넘깁니다 — 제목이 종목 하나를 부르면 그 종목을 대문에
         # 크게 세우고, 여럿을 부르거나 지수가 주인공인 날이면 상위 셋을
@@ -283,6 +287,12 @@ def publish(path: Path, publish_live: bool = False) -> None:
             OUTPUT_DIR / f"{market}_{date_str}_editorial.png", ko,
         )
         print(f"대표 이미지 생성: {image_meta['local_path']}")
+        if en:
+            image_meta_en = featured_image.create(
+                market, date_str, price_data,
+                OUTPUT_DIR / f"{market}_{date_str}_editorial_en.png", ko, lang="en",
+            )
+            print(f"대표 이미지(영어) 생성: {image_meta_en['local_path']}")
     except Exception as exc:  # noqa: BLE001 - 이미지 실패로 발행을 막지 않음
         print(f"[경고] 대표 이미지 생성 실패, 이미지 없이 계속합니다: {exc!r}")
 
@@ -320,7 +330,7 @@ def publish(path: Path, publish_live: bool = False) -> None:
             excerpt=_excerpt(en),
             tags=_EN_TAGS,
             category="Daily",
-            featured_media_id=ko_result.get("featured_media") or None,
+            image=image_meta_en,
             slug=f"editorial-{market}-{date_str}-en",
             focus_keyword="Kospi close" if market == "kr" else "US stocks close",
             status=status,

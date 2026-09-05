@@ -56,33 +56,48 @@ def _font(size: int, bold: bool = True):
     return data_graphics.korean_font(size, bold)
 
 
-def _name(entry: dict) -> str:
+# 영문판에서 그대로 쓰면 카드를 넘치는 지수 이름들
+_EN_ALIASES = {
+    "Dow Jones Industrial Average": "Dow Jones",
+    "Nasdaq Composite": "Nasdaq",
+    "US 10-Year Treasury Yield": "U.S. 10Y Yield",
+    "US 30-Year Treasury Yield": "U.S. 30Y Yield",
+}
+
+
+def _name(entry: dict, lang: str = "ko") -> str:
     """그림에 쓸 이름.
 
-    한글 폰트가 있으면 한글 이름을, 없으면(우분투 러너에 fonts-nanum이 빠진 경우)
+    영문판(lang="en")은 영어 독자가 읽는 글이므로 영문 표기만 씁니다. 한국어판은
+    한글 이름을 쓰되, 한글 폰트가 없으면(우분투 러너에 fonts-nanum이 빠진 경우)
     영문 표기로 물러섭니다. 한글 폰트 없이 한글을 그리면 두부 상자(□□□)가 찍힌
     그림이 그대로 사이트에 올라갑니다 — 2026-09-04에 실제로 겪은 일입니다.
     """
+    korean = entry.get("name") or entry.get("ticker", "Market")
+    english = entry.get("name_en") or entry.get("name") or entry.get("ticker", "Market")
+    if lang == "en":
+        return _EN_ALIASES.get(english, english)
     if data_graphics.has_korean_font():
-        return entry.get("name") or entry.get("name_en") or entry.get("ticker", "Market")
-    return entry.get("name_en") or entry.get("ticker", "Market")
+        return korean
+    return _EN_ALIASES.get(english, english)
 
 
 def _change(entry: dict) -> str:
     return f"{entry['change_pct']:+.2f}%"
 
 
-def _price(entry: dict) -> str:
+def _price(entry: dict, lang: str = "ko") -> str:
     """지수·환율은 호가 그대로 씁니다(코스피 6,687.21 / 원/달러 1,351.3원)."""
-    unit = "원" if entry.get("unit") == "원" else ""
-    return f"{entry['price']:,}{unit}"
+    if entry.get("unit") != "원":
+        return f"{entry['price']:,}"
+    return f"{entry['price']:,} KRW" if lang == "en" else f"{entry['price']:,}원"
 
 
-def _stock_price(entry: dict, market: str) -> str:
+def _stock_price(entry: dict, market: str, lang: str = "ko") -> str:
     """종목 주가. 108,000.0과 154.27이 섞이면 타일이 지저분해집니다."""
     value = entry["price"]
     if market == "kr":
-        return f"{value:,.0f}원"
+        return f"{value:,.0f} KRW" if lang == "en" else f"{value:,.0f}원"
     return f"{value:,.0f}" if abs(value) >= 1000 else f"{value:,.2f}"
 
 
@@ -186,10 +201,11 @@ def _lead_for(price_data: dict, doc: dict | None) -> dict | None:
     return lead_watchlist_entry(price_data)
 
 
-def _market_line(market: str, date_str: str) -> str:
-    label = "한국장 마감" if market == "kr" else "미국장 마감"
-    if not data_graphics.has_korean_font():
-        label = "KOREA MARKET CLOSE" if market == "kr" else "U.S. MARKET CLOSE"
+def _market_line(market: str, date_str: str, lang: str = "ko") -> str:
+    if lang == "en" or not data_graphics.has_korean_font():
+        label = "Korea Market Close" if market == "kr" else "U.S. Market Close"
+    else:
+        label = "한국장 마감" if market == "kr" else "미국장 마감"
     return f"{label}  ·  {date_str}"
 
 
@@ -205,13 +221,14 @@ def _fit(draw, text: str, size: int, width: int, bold: bool = True):
     return font
 
 
-def _draw_macro_row(draw, top: int, price_data: dict, *, ink: str, sub: str, dark: bool) -> None:
+def _draw_macro_row(draw, top: int, price_data: dict, *, ink: str, sub: str,
+                    dark: bool, lang: str) -> None:
     """아래쪽 지수 한 줄. 시황이니 마감 숫자는 대문에 남습니다."""
     up, down = (_UP_DARK, _DOWN_DARK) if dark else (_UP, _DOWN)
     x = _CONTENT_LEFT
     for entry in _macro(price_data):
-        draw.text((x, top), _name(entry), font=_font(19, False), fill=sub)
-        price = _price(entry)
+        draw.text((x, top), _name(entry, lang), font=_font(19, False), fill=sub)
+        price = _price(entry, lang)
         draw.text((x, top + 26), price, font=_font(24), fill=ink)
         draw.text(
             (x + draw.textlength(price, font=_font(24)) + 10, top + 29),
@@ -223,13 +240,13 @@ def _draw_macro_row(draw, top: int, price_data: dict, *, ink: str, sub: str, dar
 
 
 def _render_single(canvas: Image.Image, market: str, date_str: str,
-                   price_data: dict, lead: dict) -> None:
+                   price_data: dict, lead: dict, lang: str) -> None:
     """주인공이 하나인 날 — 종목명과 등락률만으로 채웁니다."""
     draw = ImageDraw.Draw(canvas)
     ink, sub, line = "#111111", "#8A9099", "#DDDDDD"
 
     draw.text((_CONTENT_LEFT, 96), "FERMATA", font=_font(22), fill=ink)
-    meta = _market_line(market, date_str)
+    meta = _market_line(market, date_str, lang)
     draw.text(
         (_CONTENT_RIGHT - draw.textlength(meta, font=_font(22, False)), 98),
         meta, font=_font(22, False), fill=sub,
@@ -237,63 +254,69 @@ def _render_single(canvas: Image.Image, market: str, date_str: str,
     draw.line((_CONTENT_LEFT, 140, _CONTENT_RIGHT, 140), fill=ink, width=3)
 
     width = _CONTENT_RIGHT - _CONTENT_LEFT
-    draw.text((_CONTENT_LEFT, 196), _name(lead),
-              font=_fit(draw, _name(lead), 78, width), fill=ink)
+    name = _name(lead, lang)
+    draw.text((_CONTENT_LEFT, 196), name, font=_fit(draw, name, 78, width), fill=ink)
     change = _change(lead)
     draw.text((_CONTENT_LEFT, 300), change,
               font=_fit(draw, change, 140, width),
               fill=_UP if lead["change_pct"] >= 0 else _DOWN)
 
     draw.line((_CONTENT_LEFT, 486, _CONTENT_RIGHT, 486), fill=line, width=1)
-    _draw_macro_row(draw, 508, price_data, ink=ink, sub=sub, dark=False)
+    _draw_macro_row(draw, 508, price_data, ink=ink, sub=sub, dark=False, lang=lang)
 
 
 def _render_trio(canvas: Image.Image, market: str, date_str: str,
-                 price_data: dict, top3: list[dict]) -> None:
-    """여러 종목이 함께 움직인 날 — 상위 셋을 나열합니다."""
+                 price_data: dict, top3: list[dict], lang: str) -> None:
+    """여러 종목이 함께 움직인 날 — 상위 셋을 나열합니다.
+
+    머리글을 달지 않습니다. 한때 "오늘 크게 움직인 종목"을 붙였는데, 종목명과
+    등락률이 이미 그 말을 하고 있어 글자만 늘었습니다. 게다가 최상급을 피하려고
+    고른 문구라 길기만 하고, 목록 썸네일 크기에서는 읽히지도 않았습니다.
+    """
     draw = ImageDraw.Draw(canvas)
     ink, sub, tile = "#FFFFFF", "#6B7280", "#1C2029"
 
-    draw.text((_CONTENT_LEFT, 74), "FERMATA", font=_font(22), fill=sub)
-    meta = _market_line(market, date_str)
+    draw.text((_CONTENT_LEFT, 88), "FERMATA", font=_font(22), fill=sub)
+    meta = _market_line(market, date_str, lang)
     draw.text(
-        (_CONTENT_RIGHT - draw.textlength(meta, font=_font(22, False)), 74),
+        (_CONTENT_RIGHT - draw.textlength(meta, font=_font(22, False)), 88),
         meta, font=_font(22, False), fill=sub,
     )
-    # "가장 크게"라고 쓰면 시장 전체 1위라는 뜻이 됩니다. 이 셋은 우리가 보는
-    # 종목 가운데 상위 셋이므로, 최상급을 빼서 사실만 남깁니다.
-    heading = "오늘 크게 움직인 종목" if data_graphics.has_korean_font() else "BIGGEST MOVES WE TRACK"
-    draw.text((_CONTENT_LEFT, 122), heading, font=_font(38), fill=ink)
 
-    top = 196
+    top = 148
     for entry in top3:
         up = entry["change_pct"] >= 0
         accent = _UP_DARK if up else _DOWN_DARK
-        draw.rounded_rectangle((SAFE_LEFT, top, SAFE_RIGHT, top + 110), radius=16, fill=tile)
-        draw.rounded_rectangle((SAFE_LEFT, top, SAFE_LEFT + 7, top + 110), radius=4, fill=accent)
-        name = _name(entry)
-        draw.text((SAFE_LEFT + 30, top + 26), name,
-                  font=_fit(draw, name, 38, 460), fill=ink)
-        draw.text((SAFE_LEFT + 30, top + 74), _stock_price(entry, market),
+        draw.rounded_rectangle((SAFE_LEFT, top, SAFE_RIGHT, top + 118), radius=16, fill=tile)
+        draw.rounded_rectangle((SAFE_LEFT, top, SAFE_LEFT + 7, top + 118), radius=4, fill=accent)
+        name = _name(entry, lang)
+        draw.text((SAFE_LEFT + 30, top + 28), name,
+                  font=_fit(draw, name, 40, 460), fill=ink)
+        draw.text((SAFE_LEFT + 30, top + 80), _stock_price(entry, market, lang),
                   font=_font(20, False), fill=sub)
         change = _change(entry)
-        font = _font(46)
-        draw.text((SAFE_RIGHT - 30 - draw.textlength(change, font=font), top + 30),
+        font = _font(48)
+        draw.text((SAFE_RIGHT - 30 - draw.textlength(change, font=font), top + 34),
                   change, font=font, fill=accent)
-        top += 128
+        top += 138
 
     x = _CONTENT_LEFT
     for entry in _macro(price_data):
-        draw.text((x, 578), f"{_name(entry)} {_change(entry)}", font=_font(19, False), fill=sub)
+        draw.text((x, 572), f"{_name(entry, lang)} {_change(entry)}",
+                  font=_font(19, False), fill=sub)
         x += 270
 
 
 def create(market: str, date_str: str, price_data: dict, output_path: Path,
-           doc: dict | None = None) -> dict:
+           doc: dict | None = None, lang: str = "ko") -> dict:
     """대표 이미지 파일을 만들고 publish_wordpress가 받는 메타데이터를 반환합니다.
 
-    doc: 그날 원고(한국어). 제목이 부른 종목으로 레이아웃과 주인공을 정합니다.
-         없으면(main.py의 규칙 기반 초안) 수치만 보고 정합니다.
+    doc:  그날 원고(한국어). 제목이 부른 종목으로 레이아웃과 주인공을 정합니다.
+          없으면(main.py의 규칙 기반 초안) 수치만 보고 정합니다.
+    lang: 그림에 쓸 언어. 영어판 글에는 종목명·지수명·시장 라벨이 모두 영어로
+          들어가야 합니다 — 영어 글에 한글 이름이 박힌 그림이 붙으면 읽는
+          사람이 무슨 종목인지 알 수 없습니다. 레이아웃 선택은 두 언어가 같으므로
+          (같은 날 같은 이야기) 한국어 원고 하나로 정합니다.
     """
     layout = choose_layout(price_data, doc)
     ranked = _ranked(price_data)
@@ -301,18 +324,16 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path,
     if layout == "trio":
         drawn = ranked[:3]
         canvas = Image.new("RGB", (1200, 630), "#12141A")
-        _render_trio(canvas, market, date_str, price_data, drawn)
+        _render_trio(canvas, market, date_str, price_data, drawn, lang)
     else:
         lead = _lead_for(price_data, doc)
         drawn = [lead] if lead else []
         canvas = Image.new("RGB", (1200, 630), "#FBFBF9")
-        if lead:
-            _render_single(canvas, market, date_str, price_data, lead)
-        else:
+        if not lead:
             # 종목이 하나도 없으면 지수만 그립니다(자료 장애 날).
-            _render_single(canvas, market, date_str, price_data,
-                           _macro(price_data)[0] if _macro(price_data) else
-                           {"name": "-", "price": 0, "change_pct": 0.0})
+            lead = _macro(price_data)[0] if _macro(price_data) else {
+                "name": "-", "name_en": "-", "price": 0, "change_pct": 0.0}
+        _render_single(canvas, market, date_str, price_data, lead, lang)
 
     output_path.parent.mkdir(exist_ok=True)
     canvas.save(output_path, format="PNG", optimize=True)
@@ -326,6 +347,10 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path,
     # 기존 미디어를 재사용하는 바람에 제목은 삼성중공업 8.58%인데 대표 이미지는
     # "Alteogen -5.19%"인 글이 공개됐습니다. 레이아웃이 바뀌어도 그린 종목
     # 목록이 달라지므로 alt가 함께 달라집니다.
+    #
+    # alt는 언어와 무관하게 영어로 씁니다(워드프레스 미디어 설명). 다만 한국어판과
+    # 영어판은 서로 다른 파일이므로 뒤에 언어를 붙여 alt가 겹치지 않게 합니다 —
+    # 겹치면 영어 글에 한국어 그림이 재사용됩니다.
     market_label = "Korea Market Close" if market == "kr" else "U.S. Market Close"
     macro_values = ", ".join(
         f"{entry.get('name_en') or entry.get('name')} {entry['price']:,} ({_change(entry)})"
@@ -340,7 +365,7 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path,
         alt += f", biggest moves we track {stock_values}"
     return {
         "local_path": str(output_path),
-        "alt": alt + ".",
+        "alt": f"{alt} [{lang}].",
         "caption": "Market snapshot graphic generated from the figures in this article.",
         "layout": layout,
     }
