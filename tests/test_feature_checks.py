@@ -26,11 +26,17 @@ class TitleTest(unittest.TestCase):
     def test_good_title_passes(self) -> None:
         self.assertEqual(feature_checks.collect_issues(_doc(self.GOOD), graphics=6), [])
 
-    def test_indicator_jargon_in_title_is_caught(self) -> None:
-        """제목에 FWD PER을 넣었다가 지적받았습니다. 벤치마크 100편 중 1편만 예외."""
+    def test_indicator_jargon_is_a_note_not_a_block(self) -> None:
+        """지표 용어는 알려만 줍니다.
+
+        벤치마크에도 예외가 있습니다(`저평가 반도체 주식은? 8개 FWD PER 분석`).
+        드문 것을 금지로 바꾸면 쓸 수 있는 제목이 좁아집니다.
+        """
+        notes: list[str] = []
         issues = feature_checks.collect_issues(
-            _doc("SK하이닉스 FWD PER 3.5배. 확인할 다섯 가지"), graphics=6)
-        self.assertTrue(any("지표 용어" in i for i in issues), issues)
+            _doc("SK하이닉스 FWD PER 3.5배. 확인할 다섯 가지"), graphics=6, notes_out=notes)
+        self.assertFalse(any("지표 용어" in i for i in issues), issues)
+        self.assertTrue(any("지표 용어" in n for n in notes), notes)
 
     def test_korean_numeral_counts_as_a_hook(self) -> None:
         """`확인할 다섯 가지`는 범위 축소 장치입니다.
@@ -47,10 +53,10 @@ class TitleTest(unittest.TestCase):
             _doc("메모리 반도체 업황 정리"), graphics=6)
         self.assertTrue(any("후킹 장치가 없" in i for i in issues), issues)
 
-    def test_polite_ending_is_caught(self) -> None:
-        issues = feature_checks.collect_issues(
-            _doc("SK하이닉스 지금 사도 될까? 10월 27일에 갈립니다"), graphics=6)
-        self.assertTrue(any("존댓말" in i for i in issues), issues)
+    def test_polite_ending_is_allowed(self) -> None:
+        """벤치마크 시황 제목의 15%가 존댓말로 끝납니다. 막지 않습니다."""
+        self.assertEqual(feature_checks.collect_issues(
+            _doc("SK하이닉스 지금 사도 될까? 10월 27일에 갈립니다"), graphics=6), [])
 
 
 class BodyTest(unittest.TestCase):
@@ -83,12 +89,41 @@ class BodyTest(unittest.TestCase):
             _doc(TitleTest.GOOD, body_extra="저는 매도했습니다."), graphics=6)
         self.assertTrue(any("포지션 화법" in i for i in issues), issues)
 
-    def test_missing_beginner_note_is_caught(self) -> None:
+    def _with_body(self, body: str) -> dict:
         doc = _doc(TitleTest.GOOD)
         for section in doc["ko"]["narrative"]:
-            section["body"] = "본문입니다."
-        issues = feature_checks.collect_issues(doc, graphics=6)
+            section["body"] = body
+        return doc
+
+    def test_beginner_note_required_when_jargon_piles_up(self) -> None:
+        """설명이 필요한 말이 여럿 나오는데 설명이 없으면 막습니다.
+
+        무조건 요구하지도, 그냥 넘기지도 않습니다. 벤치마크의 30%라는 숫자는
+        "열 편 중 세 편에 넣어라"가 아니라 **그런 말이 나온 글에는 넣은 결과**입니다.
+        """
+        issues = feature_checks.collect_issues(
+            self._with_body("PER은 3.5배이고 HBM 계약가가 오릅니다."), graphics=6)
         self.assertTrue(any("초보자" in i for i in issues), issues)
+
+    def test_beginner_note_present_passes(self) -> None:
+        issues = feature_checks.collect_issues(
+            self._with_body("초보자 설명: PER은 …. HBM 계약가가 오릅니다."), graphics=6)
+        self.assertEqual(issues, [])
+
+    def test_few_jargon_terms_only_note(self) -> None:
+        notes: list[str] = []
+        issues = feature_checks.collect_issues(
+            self._with_body("순매수가 늘었습니다."), graphics=6, notes_out=notes)
+        self.assertFalse(any("초보자" in i for i in issues), issues)
+        self.assertTrue(any("설명" in n for n in notes), notes)
+
+    def test_plain_body_needs_nothing(self) -> None:
+        """설명할 말이 없는 글에까지 설명을 요구하지 않습니다."""
+        notes: list[str] = []
+        issues = feature_checks.collect_issues(
+            self._with_body("주가가 올랐습니다."), graphics=6, notes_out=notes)
+        self.assertEqual(issues, [])
+        self.assertEqual([n for n in notes if "설명" in n], [])
 
 
 class RealArticleTest(unittest.TestCase):

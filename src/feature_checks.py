@@ -26,7 +26,6 @@ import re
 import sys
 from pathlib import Path
 
-from src.editorial_title import _POLITE_ENDING
 
 # 제목 후킹 장치. 벤치마크 100편에서 추린 다섯 유형입니다(docs/feature-style.md 1절).
 HOOKS = {
@@ -47,10 +46,31 @@ JARGON = ("FWD PER", "PER", "EPS", "PBR", "ROE", "밸류에이션", "컨센서�
 MIN_GRAPHICS = 6          # 벤치마크 이미지 p25
 MIN_SECTIONS = 5
 
+# 설명 없이 지나가면 초보자가 문장을 못 따라가는 말들. 벤치마크는 이런 말이
+# 나올 때마다 `초보자용 설명` 블록을 따로 답니다(100편 중 30%).
+#
+# 30%라는 숫자는 "열 편 중 세 편에 넣어라"는 뜻이 아닙니다. **이런 말이 나온 글에는
+# 넣고, 안 나온 글에는 안 넣은 결과**가 30%입니다. 그래서 개수가 아니라
+# 글 안에 실제로 그런 말이 있는지로 봅니다.
+JARGON_IN_BODY = (
+    "PER", "EPS", "FWD", "밸류에이션", "컨센서스", "가이던스", "CAPEX",
+    "HBM", "D램", "낸드", "계약가", "현물가", "매출총이익률", "영업이익률",
+    "이동평균", "50일선", "200일선", "볼린저", "순매수", "순매도", "공매도",
+    "듀레이션", "베이시스", "bp", "선물시장", "패시브", "ETF",
+)
 
-def collect_issues(doc: dict, graphics: int | None = None) -> list[str]:
+
+def collect_issues(doc: dict, graphics: int | None = None,
+                   notes_out: list[str] | None = None) -> list[str]:
+    """막을 것만 돌려줍니다.
+
+    **드문 것과 틀린 것을 구분합니다.** 벤치마크에서 드물 뿐인 어법(존댓말 제목,
+    지표 용어, 초보자 설명 생략)을 차단으로 바꿨더니 쓸 수 있는 글이 좁아지고
+    통계에 맞추는 글이 나왔습니다. 그런 항목은 `notes_out`으로 알려만 줍니다.
+    """
     ko = doc.get("ko") or doc
     issues: list[str] = []
+    notes: list[str] = notes_out if notes_out is not None else []
 
     title = ko.get("title") or ""
     if not title:
@@ -62,17 +82,15 @@ def collect_issues(doc: dict, graphics: int | None = None) -> list[str]:
             f"제목에 후킹 장치가 없습니다: {title!r} — 다섯 유형 중 하나는 써야 합니다"
             f"({', '.join(HOOKS)}). docs/feature-style.md 1절.")
 
+    # 지표 용어는 **막지 않고 알려만 줍니다.** 벤치마크에도 예외가 있습니다
+    # (`저평가 반도체 주식은? 8개 FWD PER 분석`). 드문 것을 금지로 바꾸면
+    # 쓸 수 있는 제목이 좁아집니다.
     for word in JARGON:
         if word in title:
-            issues.append(
-                f"제목에 지표 용어 {word!r}가 있습니다 — 지표는 본문에, 제목에는 "
-                f"누구나 아는 말을 씁니다. 벤치마크 100편 중 1편만 예외였습니다.")
+            notes.append(
+                f"제목에 지표 용어 {word!r}가 있습니다. 벤치마크 100편 중 1편만 "
+                f"이렇게 씁니다 — 누구나 아는 말로 바꿀 수 있는지 한 번 보십시오.")
             break
-
-    # 존댓말 판정은 `editorial_title`의 것을 그대로 씁니다. 검사를 두 벌 두면
-    # 한쪽만 고쳐져 서로 다른 답을 내놓습니다.
-    if _POLITE_ENDING.search(title):
-        issues.append("제목이 존댓말로 끝납니다 — 명사형으로 끊거나 반말로 단정합니다.")
 
     sections = ko.get("narrative") or []
     if len(sections) < MIN_SECTIONS:
@@ -93,8 +111,19 @@ def collect_issues(doc: dict, graphics: int | None = None) -> list[str]:
             issues.append(f"제목의 {date}이 본문에 없습니다 — 제목이 약속한 것을 "
                           f"본문이 다뤄야 합니다.")
 
+    # 초보자 설명: 무조건 요구하지도, 그냥 넘기지도 않습니다. **글에 설명이 필요한
+    # 말이 실제로 들어 있는지**를 보고 정합니다. 매번 요구하면 필요 없는 자리에도
+    # 들어가고, 그냥 넘기면 PER·HBM·계약가가 설명 없이 지나갑니다.
+    used = [word for word in JARGON_IN_BODY if word in body]
     if "초보자" not in body:
-        issues.append("초보자 설명이 없습니다 — 벤치마크 30%가 본문에 끼워 넣습니다.")
+        if len(used) >= 3:
+            issues.append(
+                f"초보자 설명이 없는데 설명이 필요한 말이 {len(used)}개 나옵니다: "
+                f"{', '.join(used[:8])}. 이 중 이 글의 논지에 꼭 필요한 것 하나는 "
+                f"풀어 쓰십시오. docs/feature-style.md 0절.")
+        elif used:
+            notes.append(f"설명이 필요할 수 있는 말: {', '.join(used)}. "
+                         f"독자가 모르면 논지를 못 따라가는지 보십시오.")
 
     # 우리는 종목을 들고 있지 않습니다. 1인칭 포지션 화법을 흉내 내면 거짓말이 됩니다.
     for phrase in ("제가 매수", "제가 매도", "저는 매수", "저는 매도", "제 계좌",
@@ -125,13 +154,16 @@ def main() -> int:
     args = parser.parse_args()
 
     doc = json.loads(Path(args.path).read_text(encoding="utf-8"))
-    issues = collect_issues(doc, args.graphics)
+    notes: list[str] = []
+    issues = collect_issues(doc, args.graphics, notes_out=notes)
     title = (doc.get("ko") or doc).get("title", "")
     hooks = [name for name, pattern in HOOKS.items() if re.search(pattern, title)]
     print(f"제목: {title} ({len(title)}자)")
     print(f"후킹 장치: {', '.join(hooks) or '없음'}")
+    for note in notes:
+        print(f"  (참고) {note}")
     if not issues:
-        print("기준표 검사 통과")
+        print("가이드 검사 통과")
         return 0
     print("어긋난 항목:")
     for issue in issues:

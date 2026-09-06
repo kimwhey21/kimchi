@@ -45,10 +45,18 @@ class BlockedTest(unittest.TestCase):
         self.assertEqual(len(issues), 1)
         self.assertIn("퀴즈", issues[0])
 
-    def test_polite_ending_is_blocked(self) -> None:
-        issues = collect_issues({"title": "코스피 1.64% 상승, 반도체가 이끌었습니다"})
-        self.assertEqual(len(issues), 1)
-        self.assertIn("존댓말", issues[0])
+    def test_polite_ending_is_allowed(self) -> None:
+        """존댓말 제목을 막지 않습니다.
+
+        전에는 "시황 제목의 존댓말 어미는 4%뿐"이라는 옛 표본을 근거로 막았습니다.
+        2026-09-06에 최근 시황 46편을 다시 세니 15%가 존댓말로 끝났습니다 —
+        `내일 고용보고서가 결정합니다` 같은 것이 벤치마크의 실제 제목입니다.
+        드문 것과 틀린 것은 다릅니다.
+        """
+        self.assertEqual(
+            collect_issues({"title": "코스피 1.64% 상승, 반도체가 이끌었습니다"}), [])
+        self.assertEqual(
+            collect_issues({"title": "미국 증시 반등 시작? 내일 고용보고서가 결정합니다"}), [])
 
     def test_invented_words_are_blocked(self) -> None:
         """코앞·문턱·상한가는 벤치마크 제목 1,089개에 0회입니다."""
