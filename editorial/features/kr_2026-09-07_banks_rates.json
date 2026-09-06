@@ -241,9 +241,9 @@
   }
  ],
  "featured_photo": {
-  "local_path": "output/features/cover_photo.jpg",
-  "alt": "은행 금고문",
-  "credit": "사진: David Trinks / Unsplash",
-  "credit_url": "https://unsplash.com/photos/a-close-up-of-a-metal-door-with-a-lock-tEP6TI8pXW4"
+  "local_path": "output/features/cover_kb.jpg",
+  "alt": "KB국민은행 옥천지점 외관",
+  "credit": "사진: LandAndTree / 위키미디어 공용 (CC0)",
+  "credit_url": "https://commons.wikimedia.org/wiki/File:Kookmin_Bank_Okcheon_Branch_20240730.jpg"
  }
 }

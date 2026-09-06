@@ -41,9 +41,9 @@
  },
  "category_id": 153,
  "featured_photo": {
-  "local_path": "output/features/cover_photo_semi.jpg",
-  "alt": "실리콘 웨이퍼 위의 반도체 다이",
-  "credit": "사진: Laura Ockel / Unsplash",
-  "credit_url": "https://unsplash.com/photos/silicon-wafer-with-iridescent-microchip-grid-qOx9KsvpqcM"
+  "local_path": "output/features/cover_hynix.jpg",
+  "alt": "SK하이닉스 DDR5 Tall MRDIMM 메모리 모듈",
+  "credit": "사진: 4300streetcar / 위키미디어 공용 (CC BY 4.0)",
+  "credit_url": "https://commons.wikimedia.org/wiki/File:SK_Hynix_DDR5_Tall_MRDIMM.jpg"
  }
 }
