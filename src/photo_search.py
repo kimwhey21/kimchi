@@ -44,8 +44,15 @@ import sys
 from pathlib import Path
 
 import requests
+from PIL import Image
 
 API = "https://api.openverse.org/v1/images/"
+
+# 위키미디어 원본은 5000px이 넘습니다(KB국민은행 사진이 5328x4000이었습니다).
+# 그대로 올리면 워드프레스가 썸네일을 여러 벌 만들고 원본도 그대로 남습니다.
+# 서버에 최적화 플러그인을 하나 더 두는 대신 **올리기 전에 여기서 줄입니다.**
+MAX_EDGE = 1600
+JPEG_QUALITY = 85
 HEADERS = {"User-Agent": "market-brief/1.0 (https://fermata.it.kr)"}
 TIMEOUT = 30
 
@@ -79,8 +86,26 @@ def search(query: str, limit: int = 8, commercial_only: bool = True) -> list[dic
     return rows
 
 
+def _shrink(path: Path) -> tuple[int, int]:
+    """긴 변을 MAX_EDGE로 맞춥니다. 이미 작으면 그대로 둡니다."""
+    with Image.open(path) as image:
+        image = image.convert("RGB")
+        width, height = image.size
+        if max(width, height) <= MAX_EDGE:
+            image.save(path, "JPEG", quality=JPEG_QUALITY, optimize=True)
+            return width, height
+        scale = MAX_EDGE / max(width, height)
+        size = (round(width * scale), round(height * scale))
+        image.resize(size, Image.LANCZOS).save(
+            path, "JPEG", quality=JPEG_QUALITY, optimize=True)
+        return size
+
+
 def download(rows: list[dict], out_dir: Path) -> list[dict]:
-    """후보를 파일로 내려받습니다. **보고 고르라고 받는 것입니다.**"""
+    """후보를 내려받아 **긴 변 1600px로 줄여** 저장합니다.
+
+    보고 고르라고 받는 것이고, 고른 그대로 표지로 올라가므로 여기서 줄여 둡니다.
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
     saved = []
     for index, row in enumerate(rows, 1):
@@ -93,6 +118,13 @@ def download(rows: list[dict], out_dir: Path) -> list[dict]:
             continue
         path = out_dir / f"{index:02d}.jpg"
         path.write_bytes(data)
+        before = len(data)
+        try:
+            row["size"] = _shrink(path)
+        except Exception as exc:
+            row["error"] = f"줄이기 실패 {type(exc).__name__}"
+            continue
+        row["bytes_before"], row["bytes_after"] = before, path.stat().st_size
         row["local_path"] = str(path)
         saved.append(row)
     return saved
@@ -124,8 +156,11 @@ def main() -> int:
     saved = download(rows, out)
     print(f"'{args.query}' 후보 {len(saved)}장 → {out}\n")
     for row in saved:
+        w, h = row.get("size", (0, 0))
+        before_kb = row.get("bytes_before", 0) // 1024
+        after_kb = row.get("bytes_after", 0) // 1024
         print(f"  {Path(row['local_path']).name}  [{row['license']:<10}] "
-              f"{row['title'][:40]:<42} {row['source']}")
+              f"{row['title'][:36]:<38} {w}x{h}  {before_kb}KB→{after_kb}KB")
         print(f"     {credit(row)}")
     print("\n**받은 파일을 직접 열어 보고 고르십시오.** 검색어만 믿고 붙이지 마십시오 — "
           "`korean bank`가 계곡 사진으로 나온 적이 있습니다.")
