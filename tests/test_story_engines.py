@@ -382,6 +382,33 @@ class KeyedSourceTest(unittest.TestCase):
         self.assertEqual(row["period_high"], 4.90)
         self.assertEqual(row["period_low"], 4.20)
 
+    def test_ecos_unknown_table_is_refused(self) -> None:
+        """통계표 코드를 추측해서 부르지 않습니다."""
+        with mock.patch.dict(story_engines.os.environ, {"ECOS_API_KEY": "k"}):
+            result = story_engines.ecos(table="아무거나")
+        self.assertIn("모르는 표", result["error"])
+
+    def test_ecos_pairs_latest_with_previous(self) -> None:
+        """항목별 최신값과 그 직전값을 짝지어 변화를 냅니다.
+
+        마지막 몇 줄만 잘라 보여주면 같은 날짜의 다른 항목들만 보입니다.
+        """
+        payload = {"StatisticSearch": {"row": [
+            {"ITEM_NAME1": "CD(91일)", "TIME": "20260903", "DATA_VALUE": "3.10", "UNIT_NAME": "연%"},
+            {"ITEM_NAME1": "CD(91일)", "TIME": "20260904", "DATA_VALUE": "3.12", "UNIT_NAME": "연%"},
+            {"ITEM_NAME1": "CP(91일)", "TIME": "20260904", "DATA_VALUE": "3.25", "UNIT_NAME": "연%"},
+        ]}}
+        response = mock.Mock(status_code=200)
+        response.json = lambda: payload
+        with mock.patch.dict(story_engines.os.environ, {"ECOS_API_KEY": "k"}), \
+             mock.patch.object(story_engines.requests, "get", lambda *a, **k: response):
+            result = story_engines.ecos(table="market_rate")
+        cd = next(i for i in result["items"] if i["name"] == "CD(91일)")
+        self.assertEqual(cd["date"], "20260904")
+        self.assertEqual(cd["change"], 0.02)
+        cp = next(i for i in result["items"] if i["name"] == "CP(91일)")
+        self.assertIsNone(cp["change"])
+
     def test_ecos_auth_failure_is_surfaced(self) -> None:
         response = mock.Mock(status_code=200)
         response.json = lambda: {"RESULT": {"CODE": "INFO-100",

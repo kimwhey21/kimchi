@@ -768,34 +768,78 @@ def fred(days: int = 90) -> dict:
             "rows": rows}
 
 
-def ecos(code: str = "722Y001", days: int = 90) -> dict:
-    """한국은행 ECOS 통계를 가져옵니다(기본값은 시장금리).
+# ECOS 통계표 코드는 목록 API(StatisticTableList)로 확인한 것만 씁니다.
+# 추측해서 부르지 않습니다 — 저장소가 REST 액션 이름을 추측했다가 위험한
+# 엔드포인트를 두드린 적이 있습니다(CLAUDE.md).
+#
+# 주기가 표마다 다릅니다. `D`로 못 박으면 월별 표는 빈손으로 돌아옵니다.
+ECOS_TABLES = {
+    "policy_rate": ("722Y001", "D", "한국은행 기준금리"),
+    "market_rate": ("817Y002", "D", "시장금리(일별)"),
+    "trade": ("901Y118", "M", "통관 수출입 총괄"),
+    "cpi": ("901Y009", "M", "소비자물가지수"),
+    "ppi": ("404Y014", "M", "생산자물가지수"),
+}
 
-    통계표 코드는 ECOS 화면에서 확인해 넘기십시오 — **코드를 추측해서 부르지
-    않습니다.** 저장소가 REST 액션 이름을 추측했다가 위험한 엔드포인트를 두드린
-    적이 있습니다(CLAUDE.md).
+
+def ecos(table: str = "market_rate", months: int | None = None) -> dict:
+    """한국은행 ECOS 통계를 가져옵니다.
+
+    벤치마크가 `한국 수출 데이터도 같은 방향을 가리킵니다`처럼 쓰는 자료입니다.
+    우리 시세 파일에는 없는 종류라 그런 문장을 쓸 수 없었습니다.
     """
     key = os.environ.get("ECOS_API_KEY")
     if not key:
         return {"engine": "ecos",
                 "error": "ECOS_API_KEY가 없습니다. https://ecos.bok.or.kr/api/ 에서 "
                          "무료 발급 후 .env에 넣으십시오."}
-    end = dt.date.today().strftime("%Y%m%d")
-    start = (dt.date.today() - dt.timedelta(days=days)).strftime("%Y%m%d")
-    url = (f"https://ecos.bok.or.kr/api/StatisticSearch/{key}/json/kr/1/100/"
-           f"{code}/D/{start}/{end}")
+    if table not in ECOS_TABLES:
+        return {"engine": "ecos",
+                "error": f"모르는 표 이름입니다: {table}. "
+                         f"쓸 수 있는 것: {', '.join(ECOS_TABLES)}"}
+    code, cycle, label = ECOS_TABLES[table]
+    today = dt.date.today()
+    # ECOS는 오래된 것부터 돌려주고 요청한 건수에서 자릅니다. 일별 표는 항목이
+    # 스무 개 넘어서 6개월을 달라고 하면 300건이 3월에서 끊깁니다 — 최신 값을
+    # 보러 왔는데 반년 전 값이 나옵니다. 그래서 주기별로 창을 다르게 잡고
+    # 건수도 넉넉히 요청합니다.
+    if months is None:
+        months = 2 if cycle == "D" else 14
+    since = today - dt.timedelta(days=31 * months)
+    fmt = "%Y%m%d" if cycle == "D" else "%Y%m"
+    url = (f"https://ecos.bok.or.kr/api/StatisticSearch/{key}/json/kr/1/9000/"
+           f"{code}/{cycle}/{since.strftime(fmt)}/{today.strftime(fmt)}")
     try:
         payload = requests.get(url, timeout=25).json()
     except Exception as exc:
         return {"engine": "ecos", "error": f"조회 실패: {exc}"}
-    if "RESULT" in payload:                    # 인증 실패 등은 여기로 옵니다
-        return {"engine": "ecos",
+    if "RESULT" in payload:                    # 인증 실패·자료 없음이 여기로 옵니다
+        return {"engine": "ecos", "table": table,
                 "error": payload["RESULT"].get("MESSAGE", "알 수 없는 오류")}
+
     rows = (payload.get("StatisticSearch") or {}).get("row") or []
-    return {"engine": "ecos", "code": code, "count": len(rows),
-            "rows": [{"date": r.get("TIME"), "name": r.get("ITEM_NAME1"),
-                      "value": r.get("DATA_VALUE"), "unit": r.get("UNIT_NAME")}
-                     for r in rows[-10:]]}
+    # 항목별로 가장 최근 값과 그 직전 값을 짝지어 변화를 함께 돌려줍니다. 마지막
+    # 몇 줄만 잘라 보여주면 같은 날짜의 다른 항목들만 보입니다.
+    by_item: dict[str, list[dict]] = {}
+    for row in rows:
+        by_item.setdefault(row.get("ITEM_NAME1") or "?", []).append(row)
+    items = []
+    for name, series in by_item.items():
+        series.sort(key=lambda r: r.get("TIME") or "")
+        latest = series[-1]
+        previous = series[-2] if len(series) > 1 else None
+        try:
+            change = (round(float(latest["DATA_VALUE"]) - float(previous["DATA_VALUE"]), 3)
+                      if previous else None)
+        except (TypeError, ValueError):
+            change = None
+        items.append({"name": name, "date": latest.get("TIME"),
+                      "value": latest.get("DATA_VALUE"),
+                      "unit": latest.get("UNIT_NAME"), "change": change,
+                      "points": len(series)})
+    items.sort(key=lambda i: i["name"])
+    return {"engine": "ecos", "table": table, "code": code, "label": label,
+            "cycle": cycle, "items": items}
 
 
 # ── 출력 ───────────────────────────────────────────────────────────────
@@ -851,9 +895,11 @@ def _print(result: dict) -> None:
                   f"기간 최저 {row['period_low']:.2f}({row['period_low_date']}) "
                   f"최고 {row['period_high']:.2f}({row['period_high_date']})")
     elif engine == "ecos":
-        print(f"[한국은행 ECOS] 표 {result['code']} · {result['count']}건")
-        for row in result["rows"]:
-            print(f"  {row['date']}  {row['name']}  {row['value']} {row['unit'] or ''}")
+        print(f"[한국은행 ECOS] {result['label']} ({result['code']}, 주기 {result['cycle']})")
+        for item in result["items"][:14]:
+            change = "" if item["change"] is None else f"  ({item['change']:+})"
+            print(f"  {item['date']}  {item['name'][:26]:<27}"
+                  f"{item['value']:>10} {item['unit'] or ''}{change}")
     elif engine == "sectors":
         print(f"[업종 등락] {result['asof']} · 업종 {result['count']}개")
         for label, rows in (("오른 쪽", result["gainers"]), ("내린 쪽", result["losers"])):
@@ -915,6 +961,7 @@ def main() -> int:
     parser.add_argument("--market", choices=["kr", "us"], default="us")
     parser.add_argument("--days", type=int)
     parser.add_argument("--date")
+    parser.add_argument("--table", help=f"ECOS 표 이름: {', '.join(ECOS_TABLES)}")
     parser.add_argument("--json", action="store_true", help="사람이 읽는 표 대신 JSON")
     args = parser.parse_args()
 
@@ -927,7 +974,7 @@ def main() -> int:
         "institutions": lambda: institutions(),
         "sectors": lambda: sectors(),
         "fred": lambda: fred(args.days or 90),
-        "ecos": lambda: ecos(days=args.days or 90),
+        "ecos": lambda: ecos(args.table or "market_rate"),
         "flows": lambda: flows(args.date),
         "seasonality": lambda: seasonality(args.market),
     }
