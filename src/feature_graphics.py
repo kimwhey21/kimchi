@@ -173,23 +173,21 @@ def checklist(items: list[dict], output_path: Path,
     return output_path
 
 
-def cover(output_path: Path, kicker: str, headline: str,
+def cover(output_path: Path, kicker: str, subject: str,
           left: dict | None = None, right: dict | None = None) -> Path:
-    """기준표 글의 대표 이미지.
+    """가이드 글의 대표 이미지.
 
-    **본문 그래픽을 대표 이미지로 돌려쓰지 않습니다.** 그렇게 했더니 목록과 글
-    상단에 같은 그림이 두 번 보였고, 대표 이미지 자리는 가로로 잘려 제목이
-    읽히지도 않았습니다(2026-09-06). 저장소에 `fix_duplicate_featured_image.py`가
-    남아 있는 것을 보면 전에도 같은 일이 있었습니다.
+    **제목을 그리지 않습니다.** 2026-09-06에 표지에 제목을 크게 넣었더니 글을
+    열었을 때 표지의 제목과 본문 h1이 같은 문장으로 두 번 보였습니다. 저장소는
+    이미 같은 이유로 대표 이미지에서 머리글을 뺀 적이 있습니다(2b7cce6
+    "대표 이미지에서 머리글을 빼고"). 표지에는 제목이 말하지 않는 것 — 숫자 —
+    만 담습니다.
 
-    1200x630으로 그립니다 — 워드프레스와 SNS 미리보기가 쓰는 비율이라 어디서
-    잘려도 가운데 글자가 남습니다.
+    1200x630으로 그리되 테마가 3:2로 잘라 보여주므로 가운데로 모읍니다. 왼쪽에
+    붙였다가 "기준표"가 "표"로 잘린 적이 있습니다.
     """
     ensure_korean_font()
     width, height = 1200, 630
-    # 테마는 이 그림을 3:2로 잘라 보여줍니다 — 좌우 각 10%가 사라집니다. 왼쪽에
-    # 글자를 붙였더니 "기준표"가 "표"로, "SK하이닉스"가 "K하이닉스"로 잘렸습니다.
-    # 그래서 전부 가운데로 모으고 안전 여백을 넉넉히 둡니다.
     image = Image.new("RGB", (width, height), BG)
     draw = ImageDraw.Draw(image)
     draw.rectangle([40, 40, width - 40, height - 40], fill=PANEL, outline=LINE)
@@ -198,25 +196,21 @@ def cover(output_path: Path, kicker: str, headline: str,
         draw.text(((width - draw.textlength(text, font=font)) / 2, y), text,
                   font=font, fill=fill)
 
-    centered(kicker, 104, korean_font(24, bold=True), SUB)
-
-    y = 176
-    for line in headline.split("\n"):
-        centered(line, y, korean_font(50, bold=True), INK)
-        y += 72
+    centered(kicker, 120, korean_font(24, bold=True), SUB)
+    centered(subject, 186, korean_font(58, bold=True), INK)
 
     if left or right:
-        base = height - 208
-        draw.line([230, base - 30, width - 230, base - 30], fill=LINE, width=1)
+        base = 330
+        draw.line([250, base, width - 250, base], fill=LINE, width=1)
         quarter = width // 4
         for i, side in enumerate((left, right)):
             if not side:
                 continue
             cx = quarter + i * (width // 2)
-            label_font, value_font = korean_font(22), korean_font(52, bold=True)
-            draw.text((cx - draw.textlength(side["label"], font=label_font) / 2, base),
+            label_font, value_font = korean_font(24), korean_font(62, bold=True)
+            draw.text((cx - draw.textlength(side["label"], font=label_font) / 2, base + 56),
                       side["label"], font=label_font, fill=SUB)
-            draw.text((cx - draw.textlength(side["value"], font=value_font) / 2, base + 36),
+            draw.text((cx - draw.textlength(side["value"], font=value_font) / 2, base + 100),
                       side["value"], font=value_font,
                       fill=DOWN if side.get("down") else UP)
     output_path.parent.mkdir(parents=True, exist_ok=True)

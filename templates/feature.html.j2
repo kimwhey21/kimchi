@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+{% if meta_description %}
+<meta name="description" content="{{ meta_description }}">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ meta_description }}">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+{% endif %}
+{% include "_styles.html.j2" %}
+<style>
+  .mb-figure { margin: 28px 0; }
+  .mb-figure img { width: 100%; height: auto; border-radius: 6px; display: block; }
+  .mb-figure figcaption { font-size: 13px; color: var(--mb-text-muted); margin-top: 8px; }
+</style>
+</head>
+<body>
+  <div class="mb-eyebrow">{{ kicker }}</div>
+  <h1>{{ title }}</h1>
+
+  {% for section in sections %}
+  <h2>{{ section.heading }}</h2>
+  {% if section.figure %}
+  <figure class="mb-figure">
+    <img src="{{ section.figure.url }}" alt="{{ section.figure.alt }}" loading="lazy">
+    <figcaption>{{ section.figure.alt }}</figcaption>
+  </figure>
+  {% endif %}
+  {% for para in section.paragraphs %}<p>{{ para|safe }}</p>
+  {% endfor %}
+  {% endfor %}
+
+  <div class="mb-closing">
+    <h2>{{ closing.heading }}</h2>
+    {% for para in closing.paragraphs %}<p>{{ para|safe }}</p>
+    {% endfor %}
+  </div>
+
+  <p class="mb-disclaimer"><em>이 글은 정보 제공을 목적으로 하며 특정 종목의
+  매수·매도를 권유하지 않습니다. 목표주가는 확정된 사실이 아니라 애널리스트
+  전망치이며, 투자 판단과 그 결과는 투자자 본인에게 있습니다. 그래픽은 모두
+  기사에 인용한 것과 같은 시세·추정치 데이터로 직접 그렸습니다.</em></p>
+</body>
+</html>
