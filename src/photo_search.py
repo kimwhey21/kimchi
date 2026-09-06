@@ -55,13 +55,21 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
 import requests
+from dotenv import load_dotenv
 from PIL import Image
 
+# 단독 실행 모듈입니다. 이게 빠지면 UNSPLASH_ACCESS_KEY가 .env에 있어도 안 읽혀
+# "키가 없다"는 안내만 찍고 조용히 Openverse로만 도는 실패가 납니다
+# (`src/publish_feature.py`가 이미 같은 이유로 겪은 것과 같은 함정).
+load_dotenv()
+
 API = "https://api.openverse.org/v1/images/"
+UNSPLASH_API = "https://api.unsplash.com/search/photos"
 
 # 위키미디어 원본은 5000px이 넘습니다(KB국민은행 사진이 5328x4000이었습니다).
 # 그대로 올리면 워드프레스가 썸네일을 여러 벌 만들고 원본도 그대로 남습니다.
@@ -115,6 +123,41 @@ def search(query: str, limit: int = 8, commercial_only: bool = True) -> list[dic
     return rows
 
 
+def search_unsplash(query: str, limit: int = 8) -> list[dict]:
+    """Unsplash 검색. Openverse가 세션에 따라 자주 막혀서(2026-09-06 실측,
+    같은 명령 7번 중 6번 타임아웃) 두 번째 출처로 둔다.
+
+    **영어 업종어에만 쓴다.** `docs/feature-style.md`가 이미 경고한 함정은
+    한국어 검색·특정 회사명 검색이다(`korean bank`→삼청빌라, `KB금융`→결과
+    없음). `tractor`·`semiconductor fab` 같은 영어 업종어는 그 함정과 다르다 —
+    Unsplash 자체가 사진작가 중심 스톡 사이트라 화질이 Openverse(플리커 개인
+    업로드 위주)보다 훨씬 낫다. 키가 없으면 빈 리스트를 돌려준다(조용히
+    건너뛰지 않도록 호출부에서 안내한다).
+    """
+    access_key = os.environ.get("UNSPLASH_ACCESS_KEY")
+    if not access_key:
+        return []
+    response = requests.get(
+        UNSPLASH_API,
+        params={"query": query, "per_page": limit, "orientation": "landscape"},
+        headers={"Authorization": f"Client-ID {access_key}"},
+        timeout=TIMEOUT,
+    )
+    response.raise_for_status()
+    rows = []
+    for item in response.json().get("results", [])[:limit]:
+        rows.append({
+            "title": item.get("alt_description") or item.get("description") or "",
+            "license": "Unsplash License",
+            "creator": (item.get("user") or {}).get("name") or "",
+            "source": "unsplash",
+            "url": (item.get("urls") or {}).get("regular"),
+            "page": (item.get("links") or {}).get("html"),
+            "width": item.get("width"), "height": item.get("height"),
+        })
+    return rows
+
+
 def _shrink(path: Path) -> tuple[int, int]:
     """긴 변을 MAX_EDGE로 맞춥니다. 이미 작으면 그대로 둡니다."""
     with Image.open(path) as image:
@@ -162,33 +205,44 @@ def download(rows: list[dict], out_dir: Path) -> list[dict]:
 def credit(row: dict) -> str:
     """캡션에 넣을 출처 문구. CC BY 계열은 저작자 표시가 의무입니다."""
     who = row.get("creator") or "작자 미상"
+    if row.get("source") == "unsplash":
+        # Unsplash는 법적 의무는 아니지만 사진작가 표기를 관례로 남긴다
+        # (publish_wordpress.py의 다른 Unsplash 삽입 경로와 같은 문구).
+        return f"사진: {who} / Unsplash"
     where = {"wikimedia": "위키미디어 공용", "flickr": "플리커"}.get(
         row.get("source", ""), row.get("source", ""))
     return f"사진: {who} / {where} ({row.get('license', '')})".strip()
 
 
 def contact_sheet(name: str, queries: list[str], out_dir: Path,
-                  per_query: int = 3) -> Path:
+                  per_query: int = 3, source: str = "openverse") -> Path:
     """검색어 여러 개를 한 번에 돌려 번호가 붙은 대조표 한 장을 만듭니다.
 
     한 장씩 보여 주고 고르게 하면 왕복이 길어집니다. 열두 장을 한 화면에 펼쳐
     번호로 고르게 하는 편이 훨씬 빠릅니다(2026-09-07에 배운 것).
+
+    `source="unsplash"`는 Openverse가 막혔을 때 쓰는 대안이다(2026-09-06 실측).
+    **영어 업종어에만 쓴다** — 한국어·특정 회사명 검색은 여전히 금지다.
     """
     from PIL import ImageDraw
     from src.data_graphics import ensure_korean_font, korean_font
     ensure_korean_font()
+    searcher = search_unsplash if source == "unsplash" else search
 
     cands: list[dict] = []
     for query in queries:
         try:
-            rows = search(query, limit=per_query)
+            rows = searcher(query, limit=per_query)
         except Exception:
             continue
         for row in download(rows, out_dir / query.replace(" ", "_")):
             row["query"] = query
             cands.append(row)
     if not cands:
-        raise SystemExit("후보를 하나도 받지 못했습니다. 검색어를 영어로 바꿔 보십시오.")
+        hint = ("Unsplash 키(UNSPLASH_ACCESS_KEY)를 확인하거나 검색어를 바꿔 보십시오"
+                if source == "unsplash" else
+                "--source unsplash로 다시 시도하거나 검색어를 영어로 바꿔 보십시오")
+        raise SystemExit(f"후보를 하나도 받지 못했습니다. {hint}.")
 
     cands = cands[:12]
     cols, cell_w, cell_h = 3, 620, 470
@@ -231,17 +285,22 @@ def main() -> int:
     parser.add_argument("--out", default="output/photos")
     parser.add_argument("--all-licenses", action="store_true",
                         help="NC·ND까지 포함(쓰기 전에 조건을 직접 확인하십시오)")
+    parser.add_argument("--source", choices=["openverse", "unsplash"], default="openverse",
+                        help="Openverse가 막히면 unsplash로 (영어 업종어만)")
     args = parser.parse_args()
 
     if args.sheet:
-        contact_sheet(args.sheet, args.query, Path(args.out))
+        contact_sheet(args.sheet, args.query, Path(args.out), source=args.source)
         return 0
 
     query = args.query[0]
-    rows = search(query, args.limit, commercial_only=not args.all_licenses)
+    if args.source == "unsplash":
+        rows = search_unsplash(query, args.limit)
+    else:
+        rows = search(query, args.limit, commercial_only=not args.all_licenses)
     if not rows:
-        print(f"'{query}' 결과가 없습니다. 영어 회사명으로 다시 찾아보십시오 — "
-              f"한국어 검색은 대체로 빈손입니다.")
+        print(f"'{query}' 결과가 없습니다. 영어 업종어로 다시 찾아보거나 "
+              f"--source unsplash를 시도해 보십시오 — 한국어 검색은 대체로 빈손입니다.")
         return 1
     out = Path(args.out) / query.replace(" ", "_")
     saved = download(rows, out)
