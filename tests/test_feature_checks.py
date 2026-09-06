@@ -140,3 +140,26 @@ class RealArticleTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ReversalHookTest(unittest.TestCase):
+    """`반대로`·`오히려`는 접속사가 아니지만 반전입니다.
+
+    코퍼스에 `반대로` 224회, `오히려` 141회로 벤치마크가 가장 자주 쓰는 반전
+    표현인데, 검사가 접속사만 보고 있어 실제 제목을 막았습니다(2026-09-07).
+    """
+
+    def test_bandaero_counts_as_a_hook(self) -> None:
+        issues = feature_checks.collect_issues(
+            _doc("은행·보험만 무너진 금요일, 그날 밤 금리는 반대로 갔다"), graphics=6)
+        self.assertFalse(any("후킹 장치가 없" in i for i in issues), issues)
+
+    def test_ohiryeo_counts_as_a_hook(self) -> None:
+        issues = feature_checks.collect_issues(
+            _doc("반도체가 밀린 날 오히려 오른 업종"), graphics=6)
+        self.assertFalse(any("후킹 장치가 없" in i for i in issues), issues)
+
+    def test_plain_label_still_has_no_hook(self) -> None:
+        """느슨하게 만들었다고 아무 제목이나 통과하면 안 됩니다."""
+        issues = feature_checks.collect_issues(_doc("메모리 반도체 업황 정리"), graphics=6)
+        self.assertTrue(any("후킹 장치가 없" in i for i in issues), issues)
