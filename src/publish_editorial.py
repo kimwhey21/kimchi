@@ -216,7 +216,7 @@ def _previous_price_data(market: str, date_str: str) -> dict | None:
     return json.loads(files[-1].read_text(encoding="utf-8"))
 
 
-def publish(path: Path, publish_live: bool = False) -> None:
+def publish(path: Path, publish_live: bool = False, render_only: bool = False) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     doc = json.loads(path.read_text(encoding="utf-8"))
     # 기준표(feature) 원고는 스키마가 다릅니다 — 그날 시세가 아니라 밸류에이션·
@@ -305,8 +305,19 @@ def publish(path: Path, publish_live: bool = False) -> None:
         print(f"[경고] 대표 이미지 생성 실패, 이미지 없이 계속합니다: {exc!r}")
 
     if not publish_wordpress.is_configured():
-        print("WORDPRESS_* 환경변수가 없어 업로드를 건너뜁니다 (렌더링만 완료).")
-        return
+        # **이 경로는 `editorial_publish.yml`이 자동으로 돌립니다.** 조용히
+        # 돌아가면 워크플로가 초록 체크로 끝나고 사이트에는 아무것도 없습니다 —
+        # 2026-09-03 아침에 실제로 그렇게 됐고, 알아챈 것은 사람이 사이트를
+        # 열어봤기 때문이었습니다. 빨간 X로 끝나야 메일이 옵니다.
+        #
+        # 손으로 렌더만 해 보고 싶을 때는 `--render-only`를 쓰십시오.
+        if render_only:
+            print("WORDPRESS_* 환경변수가 없습니다. 렌더링만 하고 끝냅니다.")
+            return
+        raise publish_wordpress.WordPressPublishError(
+            "WORDPRESS_* 환경변수가 없어 발행하지 못했습니다. 자동 실행이라면 "
+            "저장소 시크릿(WORDPRESS_URL·WORDPRESS_USERNAME·WORDPRESS_APP_PASSWORD)을 "
+            "확인하십시오. 렌더된 HTML은 output/에 있습니다.")
 
     status = "publish" if publish_live else "draft"
     ko_result = publish_wordpress.publish_draft(
@@ -367,6 +378,12 @@ def main() -> None:
         action="store_true",
         help="임시저장이 아니라 바로 공개 상태로 올립니다 (원고 커밋 자동 실행 전용).",
     )
+    parser.add_argument(
+        "--render-only",
+        action="store_true",
+        help="워드프레스 설정이 없어도 HTML만 만들고 조용히 끝냅니다. "
+             "**자동 실행에는 붙이지 마십시오** — 설정 누락이 성공으로 보입니다.",
+    )
     args = parser.parse_args()
 
     if args.paths:
@@ -384,7 +401,7 @@ def main() -> None:
 
     for path in paths:
         print(f"원고: {path}")
-        publish(path, publish_live=args.publish_live)
+        publish(path, publish_live=args.publish_live, render_only=args.render_only)
 
 
 if __name__ == "__main__":

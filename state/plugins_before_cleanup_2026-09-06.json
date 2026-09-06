@@ -1,0 +1,170 @@
+[
+ {
+  "plugin": "accelerated-mobile-pages/accelerated-moblie-pages",
+  "name": "Accelerated Mobile Pages",
+  "status": "inactive",
+  "version": "1.1.16",
+  "uri": "https://wordpress.org/plugins/accelerated-mobile-pages/"
+ },
+ {
+  "plugin": "ad-inserter/ad-inserter",
+  "name": "Ad Inserter",
+  "status": "inactive",
+  "version": "2.8.18",
+  "uri": "https://adinserter.pro/documentation"
+ },
+ {
+  "plugin": "ads-txt/ads-txt",
+  "name": "Ads.txt Manager",
+  "status": "inactive",
+  "version": "1.4.6",
+  "uri": "https://github.com/10up/ads-txt"
+ },
+ {
+  "plugin": "tinymce-advanced/tinymce-advanced",
+  "name": "Advanced Editor Tools",
+  "status": "inactive",
+  "version": "5.10.1",
+  "uri": "https://wordpress.org/plugins/tinymce-advanced/"
+ },
+ {
+  "plugin": "akismet/akismet",
+  "name": "Akismet Anti-spam: 스팸 방지",
+  "status": "inactive",
+  "version": "5.7.2",
+  "uri": "https://akismet.com/"
+ },
+ {
+  "plugin": "all-404-redirect-to-homepage/all-404-redirect-to-homepage",
+  "name": "All 404 Redirect to Homepage",
+  "status": "inactive",
+  "version": "5.7",
+  "uri": "https://www.wp-buy.com"
+ },
+ {
+  "plugin": "classic-editor/classic-editor",
+  "name": "Classic Editor",
+  "status": "inactive",
+  "version": "1.7.0",
+  "uri": "https://wordpress.org/plugins/classic-editor/"
+ },
+ {
+  "plugin": "complianz-terms-conditions/complianz-terms-conditions",
+  "name": "Complianz - Terms and Conditions",
+  "status": "active",
+  "version": "1.4.0",
+  "uri": "https://wordpress.org/plugins/complianz-terms-conditions"
+ },
+ {
+  "plugin": "complianz-gdpr/complianz-gpdr",
+  "name": "Complianz | GDPR/CCPA Cookie Consent",
+  "status": "active",
+  "version": "7.5.4",
+  "uri": "https://www.wordpress.org/plugins/complianz-gdpr"
+ },
+ {
+  "plugin": "disable-xml-rpc-api/disable-xml-rpc-api",
+  "name": "Disable XML-RPC-API",
+  "status": "active",
+  "version": "2.1.7",
+  "uri": "https://neatma.com/dsxmlrpc-plugin/"
+ },
+ {
+  "plugin": "easy-table-of-contents/easy-table-of-contents",
+  "name": "간편한 목차",
+  "status": "inactive",
+  "version": "2.0.87",
+  "uri": "https://tocwp.com/"
+ },
+ {
+  "plugin": "ewww-image-optimizer/ewww-image-optimizer",
+  "name": "EWWW Image Optimizer",
+  "status": "inactive",
+  "version": "8.7.7",
+  "uri": "https://wordpress.org/plugins/ewww-image-optimizer/"
+ },
+ {
+  "plugin": "generateblocks/plugin",
+  "name": "GenerateBlocks",
+  "status": "inactive",
+  "version": "2.4.1",
+  "uri": "https://generateblocks.com"
+ },
+ {
+  "plugin": "head-footer-code/head-footer-code",
+  "name": "Head &amp; Footer Code",
+  "status": "active",
+  "version": "1.5.9",
+  "uri": "https://urosevic.net/wordpress/plugins/head-footer-code/"
+ },
+ {
+  "plugin": "hello",
+  "name": "Hello Dolly",
+  "status": "inactive",
+  "version": "1.7.2",
+  "uri": "http://wordpress.org/plugins/hello-dolly/"
+ },
+ {
+  "plugin": "jetpack/jetpack",
+  "name": "Jetpack",
+  "status": "inactive",
+  "version": "16.1.3",
+  "uri": "https://jetpack.com"
+ },
+ {
+  "plugin": "ninjafirewall/ninjafirewall",
+  "name": "NinjaFirewall (WP Edition)",
+  "status": "active",
+  "version": "4.9",
+  "uri": "https://nintechnet.com/"
+ },
+ {
+  "plugin": "polylang/polylang",
+  "name": "Polylang",
+  "status": "inactive",
+  "version": "3.8.7",
+  "uri": "https://polylang.pro"
+ },
+ {
+  "plugin": "seo-by-rank-math/rank-math",
+  "name": "Rank Math SEO",
+  "status": "active",
+  "version": "1.0.277.2",
+  "uri": "https://rankmath.com/"
+ },
+ {
+  "plugin": "really-simple-ssl/rlrsssl-really-simple-ssl",
+  "name": "Really Simple Security",
+  "status": "active",
+  "version": "9.8.1",
+  "uri": "https://really-simple-ssl.com"
+ },
+ {
+  "plugin": "google-site-kit/google-site-kit",
+  "name": "Site Kit by Google",
+  "status": "active",
+  "version": "1.186.0",
+  "uri": "https://sitekit.withgoogle.com"
+ },
+ {
+  "plugin": "wordpress-importer/wordpress-importer",
+  "name": "워드프레스 가져오기 도구",
+  "status": "active",
+  "version": "0.9.6",
+  "uri": "https://wordpress.org/plugins/wordpress-importer/"
+ },
+ {
+  "plugin": "wp-super-cache/wp-cache",
+  "name": "WP Super Cache",
+  "status": "active",
+  "version": "3.1.3",
+  "uri": "https://wordpress.org/plugins/wp-super-cache/"
+ },
+ {
+  "plugin": "duplicate-post/duplicate-post",
+  "name": "Yoast Duplicate Post",
+  "status": "inactive",
+  "version": "4.7",
+  "uri": "https://yoast.com/wordpress/plugins/duplicate-post/"
+ }
+]

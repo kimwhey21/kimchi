@@ -2,7 +2,13 @@
 __pycache__/
 *.pyc
 output/
-state/
+# 디렉터리째(`state/`) 막으면 git이 안으로 들어가지 않아 아래 예외가 안 먹습니다.
+state/*
+# 플러그인 정리 전 목록만 예외로 추적합니다. AGENTS.md가 "되돌릴 목록"이라고
+# 가리키는 파일인데 state/가 통째로 무시돼 다른 컴퓨터에는 없었습니다 —
+# 규칙이 없는 파일을 가리키고 있었습니다(tests/test_rule_files.py가 잡았습니다).
+# state/의 나머지(history_*.json)는 매일 바뀌는 실행 상태라 계속 무시합니다.
+!state/plugins_before_cleanup_*.json
 .DS_Store
 .claude/
 

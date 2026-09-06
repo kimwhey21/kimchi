@@ -131,8 +131,13 @@ def publish_guide(
     print(f"완료: {out_path}")
 
     if not publish_wordpress.is_configured():
-        print("WORDPRESS_URL/USERNAME/APP_PASSWORD가 없어 업로드는 건너뜁니다.")
-        return {}
+        # 조용히 빈 dict를 돌려주면 **부르는 쪽은 발행에 성공한 줄 압니다.**
+        # 2026-09-06에 같은 모양의 침묵을 세 군데서 찾았습니다(publish_feature의
+        # load_dotenv 누락, 한글 폰트 폴백, DART의 "0건"). 실패는 말합니다.
+        raise publish_wordpress.WordPressPublishError(
+            "워드프레스 설정이 없어 올리지 못했습니다. .env의 WORDPRESS_URL·"
+            "WORDPRESS_USERNAME·WORDPRESS_APP_PASSWORD를 확인하십시오. "
+            f"렌더된 HTML은 {out_path}에 있습니다.")
 
     if post_id:
         result = publish_wordpress.update_draft(
@@ -147,6 +152,9 @@ def publish_guide(
             focus_keyword=focus_keyword,
         )
         print(f"완료(워드프레스 업데이트): id={result.get('id')} {result.get('link', '')}")
+        # status=None이라 공개 상태는 그대로입니다. 무엇으로 남았는지 되읽어
+        # 확인합니다 — 발행됐다고 출력하고 사이트에는 없던 적이 있습니다.
+        publish_wordpress.verify_published(result["id"], title, expected_status=None)
     else:
         result = publish_wordpress.publish_draft(
             title,
@@ -159,4 +167,5 @@ def publish_guide(
             focus_keyword=focus_keyword,
         )
         print(f"완료(워드프레스 임시저장): id={result.get('id')} {result.get('link', '')}")
+        publish_wordpress.verify_published(result["id"], title, expected_status="draft")
     return result

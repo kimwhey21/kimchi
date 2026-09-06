@@ -37,21 +37,29 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 EDITORIAL_DIR = ROOT / "editorial"
 
-# 재테크농부 시황 본문 60편 + 제목 1,089개를 세어 나온 값입니다(2026-09-04~05).
-# 원본은 프리미엄 콘텐츠라 저장소에 담지 않고 결과 수치만 남깁니다.
+# **하드코딩된 기준값을 버렸습니다(2026-09-06).**
 #
-#   (측정값, 허용 하한, 허용 상한, 단위)
-# 허용 범위는 벤치마크의 p25~p75입니다. 그 밖이면 "다르다"고만 말하고,
-# 무엇이 옳은지는 사람이 정합니다.
-BENCHMARK = {
-    "문장 수": (38, 31, 50, "개"),
-    "글자 수": (2835, 2200, 3297, "자"),
-    "문장 길이(중앙값)": (30, 22, 38, "자"),
-    "'습니다'로 끝": (45, 30, 55, "%"),
-    "한 문장짜리 문단": (20, 10, 32, "%"),
-    "소제목 수": (7, 6, 8, "개"),
-    "소제목 길이(중앙값)": (14, 10, 20, "자"),
-}
+# 여기에는 "본문 60편을 세어 나온 값"이 상수로 박혀 있었습니다. 그중
+# `소제목 길이 14자`가 2026-09-06에 `1. 지금 숫자`(5자) 같은 소제목을 만든
+# 직접 원인이었습니다. 그 값은 소제목을 **글자 크기**로 찾아 나온 것이라 애초에
+# 틀렸습니다 — 벤치마크 편집기는 소제목에 큰 글씨를 주지 않습니다.
+#
+# 같은 날 코퍼스 100편으로 다시 세니 일곱 항목이 **전부** 어긋났습니다.
+#
+#     문장 수 38→74 · 글자 수 2835→5971 · 문장 길이 30→58
+#     습니다 45→52 · 한 문장 문단 20→82 · 소제목 수 7→14 · 소제목 길이 14→23
+#
+# 그런데 재측정도 못 믿습니다. `한 문장 문단 82%`는 그쪽 편집기가 여러 문단을
+# 한 블록으로 묶어 내보내서 생긴 허수입니다. 표본 구성도 다릅니다(시황만 vs 전체).
+#
+# **두 숫자가 다 못 믿을 것이면 더 정확한 숫자를 만들 게 아니라, 이 표가 목표로
+# 쓰이지 않게 해야 합니다.** 그래서 상수를 없애고, 코퍼스가 있으면 그 자리에서
+# 다시 세어 나란히 찍고, 없으면 우리 원고 수치만 보여줍니다. 어느 쪽이든
+# **맞춰야 할 기준이 아닙니다.**
+CORPUS = Path.home() / ".market-brief-bench" / "posts"
+
+# 문단 경계는 신뢰할 수 없어 뺐습니다(위 참조).
+_UNTRUSTED = ("한 문장짜리 문단",)
 
 # 문장으로 볼 것 — 종결 어미로 끝나는 줄만. 불릿·표 조각을 문장으로 세면
 # 길이 중앙값이 실제보다 짧게 나옵니다.
@@ -114,26 +122,65 @@ def measure(doc: dict) -> dict[str, float]:
     }
 
 
-def report(path: Path) -> int:
-    data = json.loads(path.read_text(encoding="utf-8"))
-    doc = data.get("ko") or {}
-    got = measure(doc)
-    if not got:
-        print(f"{path.name}: 한국어 본문이 없어 건너뜁니다.")
-        return 0
+def _corpus_stats() -> dict[str, tuple[float, float, float]] | None:
+    """코퍼스가 있으면 그 자리에서 다시 셉니다. 없으면 None."""
+    if not CORPUS.exists():
+        return None
+    samples: dict[str, list[float]] = {}
+    for path in CORPUS.glob("*.json"):
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        blocks = [b for b in doc.get("blocks", []) if b.get("t") == "p"]
+        heads, paras = [], []
+        for block in blocks:
+            text = (block.get("text") or "").strip()
+            if not text or text == "\u200b":
+                continue
+            if "\n" not in text and len(text) <= 45:
+                heads.append(text)
+            else:
+                paras += [x.strip() for x in text.split("\n")
+                          if x.strip() and x.strip() != "\u200b"]
+        measured = measure({"narrative": [{"heading": h, "body": ""} for h in heads]
+                            + [{"heading": "", "body": "\n\n".join(paras)}]})
+        for key, value in measured.items():
+            samples.setdefault(key, []).append(value)
+    if not samples:
+        return None
+    out = {}
+    for key, values in samples.items():
+        values = sorted(values)
+        out[key] = (statistics.median(values),
+                    values[len(values) // 4], values[3 * len(values) // 4])
+    return out
 
-    print(f"\n{path.name}  —  {doc.get('title', '')}")
-    print(f"  {'항목':<20}{'우리':>8}{'벤치마크':>10}{'허용 범위':>14}")
-    off = 0
-    for key, (target, low, high, unit) in BENCHMARK.items():
-        value = got[key]
-        ok = low <= value <= high
-        if not ok:
-            off += 1
-        mark = " " if ok else "  ← 다름"
-        print(f"  {key:<20}{value:>8}{target:>10}{f'{low}~{high}{unit}':>14}{mark}")
-    print(f"  벤치마크 범위 밖: {off} / {len(BENCHMARK)}")
-    return off
+
+def report(path: Path) -> int:
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    ko = doc.get("ko") or doc
+    mine = measure(ko)
+    if not mine:
+        print(f"{path.name} — 잴 문장이 없습니다")
+        return 0
+    print(f"\n{path.name}  —  {ko.get('title', '')}")
+    corpus = _corpus_stats()
+    if corpus:
+        print(f"  {'항목':<20}{'우리':>8}{'벤치마크':>10}   (코퍼스 실측, 목표 아님)")
+    else:
+        print(f"  {'항목':<20}{'우리':>8}   (벤치마크 코퍼스 없음 — 우리 수치만)")
+    for key, value in mine.items():
+        if key in _UNTRUSTED:
+            continue
+        if corpus and key in corpus:
+            median, low, high = corpus[key]
+            print(f"  {key:<20}{value:>8}{median:>10.0f}   p25 {low:.0f} · p75 {high:.0f}")
+        else:
+            print(f"  {key:<20}{value:>8}")
+    print("  이 수치는 **맞춰야 할 기준이 아닙니다.** 범위 밖이라고 고치지 마십시오 —")
+    print("  왜 다른지만 보십시오. 2026-09-06에 이 표를 맞추다 `1. 지금 숫자`가 나왔습니다.")
+    return 0
 
 
 def main(argv: list[str]) -> int:

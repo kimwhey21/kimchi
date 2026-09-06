@@ -22,6 +22,7 @@
 """
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -79,6 +80,12 @@ def korean_font(size: int, bold: bool = False):
                 return ImageFont.truetype(path, size=size, index=index)
             except Exception:
                 continue
+    # 여기까지 왔다면 한글 폰트가 없습니다. 기본 폰트로 그리면 한글이 두부(□)로
+    # 찍히는데 **예외가 안 나서 테스트도 통과합니다.** 2026-09-06에 이 구멍을
+    # 찾았습니다 — `ensure_korean_font()`를 안 부르고 렌더러를 직접 호출하면
+    # 조용히 깨진 그림이 나옵니다. 그래서 여기서 소리를 냅니다.
+    print("[경고] 한글 폰트를 찾지 못했습니다. 이 그림의 한글은 □로 찍힙니다. "
+          "우분투라면 fonts-nanum을 설치하세요.", file=sys.stderr)
     return ImageFont.load_default(size=size)
 
 
@@ -150,6 +157,7 @@ def _sparkline(draw: ImageDraw.ImageDraw, series, box, color: str) -> None:
 
 def index_card(price_data: dict, output_path: Path, title: str = "오늘의 지수") -> Path:
     """지수·환율 3분할 카드."""
+    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
     macro = list((price_data.get("macro") or {}).values())[:3]
     h = 250
     img = Image.new("RGB", (W, h), BG)
@@ -178,6 +186,7 @@ def index_card(price_data: dict, output_path: Path, title: str = "오늘의 지�
 
 def sector_bars(price_data: dict, output_path: Path, title: str = "업종별 등락") -> Path:
     """업종 평균 등락률 가로 막대. sector가 붙은 코어 종목만 씁니다."""
+    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
     groups: dict[str, list[dict]] = {}
     for entry in (price_data.get("watchlist") or {}).values():
         sector = entry.get("sector")
@@ -224,6 +233,7 @@ def sector_bars(price_data: dict, output_path: Path, title: str = "업종별 등
 def flow_chart(price_data: dict, output_path: Path, top_n: int = 5,
                title: str = "외국인 순매매 상·하위") -> Path:
     """외국인 순매수·순매도 상위 종목 막대."""
+    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
     rows = [
         e for e in (price_data.get("watchlist") or {}).values()
         if e.get("foreign_net") is not None
@@ -269,6 +279,7 @@ def two_day_compare(price_data: dict, output_path: Path, previous: dict | None =
     하루 등락률만 보여주면 "그래서 어제와 뭐가 달라졌나"가 안 보입니다.
     업종이 자리를 바꾼 날에는 이 그림 하나가 본문 몇 문단을 대신합니다.
     """
+    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
     prev = (previous or {}).get("watchlist") or {}
     today = price_data.get("watchlist") or {}
     picks = [t for t in (tickers or []) if t in today and t in prev]
@@ -316,6 +327,7 @@ def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
 
     절대 등락률 상위 `top_n`개를 오른 것부터 세웁니다.
     """
+    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
     rows = [
         e for e in (price_data.get("watchlist") or {}).values()
         if e.get("change_pct") is not None
@@ -363,6 +375,7 @@ def flow_compare(price_data: dict, output_path: Path, top_n: int = 5,
     ("같은 종목에서 반대로")과 그림이 어긋났습니다. 2026-09-06에 실제로 상위 다섯
     줄이 전부 양쪽 순매수였습니다. 제목이 사실이 아닌 그림은 틀린 그림입니다.
     """
+    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
     rows = [
         e for e in (price_data.get("watchlist") or {}).values()
         if e.get("foreign_net") is not None and e.get("institution_net") is not None
@@ -420,6 +433,7 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
 
     ticker를 주면 그 종목을, 주지 않으면 그날 절대 등락 폭 1위를 그립니다.
     """
+    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
     rows = [
         e for e in (price_data.get("watchlist") or {}).values()
         if e.get("change_pct") is not None

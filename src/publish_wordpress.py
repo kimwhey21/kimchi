@@ -193,7 +193,7 @@ def _get_or_create_tag_ids(base_url: str, auth: tuple[str, str], names: list[str
     return [i for i in ids if i is not None]
 
 
-def verify_published(post_id: int, expected_title: str, expected_status: str = "publish",
+def verify_published(post_id: int, expected_title: str, expected_status: str | None = "publish",
                      expected_featured_media: int | None = None,
                      expected_category_id: int | None = None) -> None:
     """올린 글이 사이트에 실제로 반영됐는지 되읽어 확인합니다.
@@ -204,6 +204,10 @@ def verify_published(post_id: int, expected_title: str, expected_status: str = "
     자동화에서 가장 나쁜 실패 유형이라, 발행 뒤에는 되읽어서 확인합니다.
 
     확인 실패는 예외로 올립니다 — 워크플로가 빨간 X로 끝나야 알아챕니다.
+
+    `expected_status=None`은 **상태를 바꾸지 않는 갱신**에 씁니다. 이미 공개된
+    글을 고칠 때 "draft여야 한다"고 확인하면 멀쩡한 글에서 실패가 납니다.
+    제목·본문 길이는 그대로 확인하므로 되읽기 자체는 건너뛰지 않습니다.
     """
     base_url = os.environ["WORDPRESS_URL"].rstrip("/")
     auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
@@ -223,7 +227,7 @@ def verify_published(post_id: int, expected_title: str, expected_status: str = "
     title = (post.get("title") or {}).get("raw") or (post.get("title") or {}).get("rendered", "")
     content = (post.get("content") or {}).get("raw") or ""
     problems = []
-    if status != expected_status:
+    if expected_status is not None and status != expected_status:
         problems.append(f"상태가 '{status}'입니다 (기대: '{expected_status}')")
     if _normalize_title(title) != _normalize_title(expected_title):
         problems.append(f"제목이 '{title[:40]}...'로 남아 있습니다")

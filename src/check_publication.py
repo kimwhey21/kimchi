@@ -28,6 +28,11 @@ import sys
 from pathlib import Path
 
 import requests
+from dotenv import load_dotenv
+
+# 단독 실행 모듈입니다. main.py가 대신 불러 주지 않으므로 여기서 .env를 읽습니다 —
+# 없으면 로컬에서 손으로 돌릴 때 설정이 없는 것처럼 동작합니다(2026-09-06 전수 점검).
+load_dotenv()
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"

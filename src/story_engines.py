@@ -129,14 +129,16 @@ def valuation(market: str) -> dict:
     업종은 이익이 정점일 때 예상 이익이 크게 잡혀 PER이 가장 낮아 보입니다.
     그래서 이 엔진은 판단을 내리지 않고 숫자만 나란히 둡니다.
     """
-    rows = []
+    rows, failed = [], 0
     for entry in core_watchlist(market):
         symbol, ticker = _resolve_yahoo(entry, market)
         if ticker is None:
+            failed += 1
             continue
         try:
             info = ticker.info
         except Exception:
+            failed += 1
             continue
         price = info.get("currentPrice") or info.get("regularMarketPrice")
         target = info.get("targetMeanPrice")
@@ -164,6 +166,7 @@ def valuation(market: str) -> dict:
         "no_estimate": [r["name"] for r in rows if not r["forward_pe"]],
         "median_forward_pe": round(statistics.median([r["forward_pe"] for r in priced]), 1)
         if priced else None,
+        "fetch_failed": failed,
     }
 
 
@@ -175,20 +178,23 @@ def ratings(market: str, days: int = 7) -> dict:
     의견이 아니라 **바뀌었다는 사실**이므로, 변경 이력만 봅니다.
     """
     cutoff = dt.datetime.now() - dt.timedelta(days=days)
-    changes = []
+    changes, failed = [], 0
     for entry in core_watchlist(market):
         symbol, ticker = _resolve_yahoo(entry, market)
         if ticker is None:
+            failed += 1
             continue
         try:
             frame = ticker.upgrades_downgrades
         except Exception:
+            failed += 1
             continue
         if frame is None or len(frame) == 0:
-            continue
+            continue                            # 진짜 0건. 실패가 아닙니다.
         try:
             recent = frame[frame.index >= cutoff.strftime("%Y-%m-%d")]
         except Exception:
+            failed += 1
             continue
         for when, row in recent.iterrows():
             changes.append({
@@ -213,6 +219,7 @@ def ratings(market: str, days: int = 7) -> dict:
         "reiterations": len(changes) - len(moved),
         "upgrade_count": len(upgrades), "downgrade_count": len(downgrades),
         "note": "빈 결과도 결과입니다 — 그 주에 의견 변경이 없었다는 뜻입니다.",
+        "fetch_failed": failed,
     }
 
 
@@ -225,14 +232,16 @@ def earnings(market: str, days: int = 21) -> dict:
     """
     today = dt.date.today()
     limit = today + dt.timedelta(days=days)
-    upcoming = []
+    upcoming, failed = [], 0
     for entry in core_watchlist(market):
         symbol, ticker = _resolve_yahoo(entry, market)
         if ticker is None:
+            failed += 1
             continue
         try:
             calendar = ticker.calendar or {}
         except Exception:
+            failed += 1
             continue
         dates = calendar.get("Earnings Date") or []
         if not isinstance(dates, (list, tuple)):
@@ -250,7 +259,7 @@ def earnings(market: str, days: int = 21) -> dict:
                 break
     upcoming.sort(key=lambda r: r["date"])
     return {"engine": "earnings", "market": market, "days": days,
-            "asof": today.isoformat(), "upcoming": upcoming}
+            "asof": today.isoformat(), "upcoming": upcoming, "fetch_failed": failed}
 
 
 # ── 엔진 4. 내부자 매수 (SEC Form 4) ───────────────────────────────────
@@ -274,7 +283,7 @@ def insiders(days: int = 14, limit_per_ticker: int = 10) -> dict:
     그대로는 신호가 되지 않기 때문입니다.
     """
     cutoff = dt.date.today() - dt.timedelta(days=days)
-    found = []
+    found, failed = [], 0
     for entry in core_watchlist("us"):
         symbol = entry["ticker"]
         try:
@@ -289,6 +298,7 @@ def insiders(days: int = 14, limit_per_ticker: int = 10) -> dict:
             listing.raise_for_status()
             root = ET.fromstring(listing.text)
         except Exception:
+            failed += 1
             continue
         ns = {"a": "http://www.w3.org/2005/Atom"}
         for item in root.findall("a:entry", ns):
@@ -310,6 +320,7 @@ def insiders(days: int = 14, limit_per_ticker: int = 10) -> dict:
                 raw = requests.get("https://www.sec.gov" + candidates[0],
                                    headers=SEC_UA, timeout=20).text
             except Exception:
+                failed += 1
                 continue
             if "P" not in _FORM4_TX.findall(raw):
                 continue                       # 공개시장 매수가 아닌 신고서
@@ -333,7 +344,8 @@ def insiders(days: int = 14, limit_per_ticker: int = 10) -> dict:
     return {"engine": "insiders", "days": days, "asof": dt.date.today().isoformat(),
             "buys": found,
             "note": "금액과 직위를 함께 보십시오. 같은 '내부자 매수'라도 4만 달러와 "
-                    "300만 달러는 다른 신호입니다."}
+                    "300만 달러는 다른 신호입니다.",
+            "fetch_failed": failed}
 
 
 # ── 엔진 5. 외국인 vs 기관 반대 매매 ───────────────────────────────────
@@ -526,7 +538,7 @@ def kr_insiders(days: int = 7, scan: int = 40) -> dict:
 
     buys.sort(key=lambda b: b["value_krw"], reverse=True)
     return {"engine": "kr_insiders", "days": days, "scanned": len(rows),
-            "failed": failed, "asof": today.isoformat(), "buys": buys,
+            "failed": failed, "fetch_failed": failed, "asof": today.isoformat(), "buys": buys,
             "core_hits": [b for b in buys if b["is_core"]],
             "note": "장내매수만 담았습니다. 상속·증여·대여주식상환·스톡옵션 행사는 "
                     "본인이 값을 치르고 산 것이 아니라 신호가 되지 않습니다."}
@@ -656,6 +668,7 @@ def institutions(top: int = 12) -> dict:
                      key=lambda m: m["change"])[:top]
     return {"engine": "institutions", "asof": dt.date.today().isoformat(),
             "funds": len(FUNDS) - len(failed), "failed": failed,
+            "fetch_failed": len(failed),
             "added": added, "trimmed": trimmed,
             "note": "13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 "
                     "지금의 포지션이 아닙니다."}
@@ -738,7 +751,7 @@ def fred(days: int = 90) -> dict:
                 "error": "FRED_API_KEY가 없습니다. https://fredaccount.stlouisfed.org/apikeys "
                          "에서 무료 발급 후 .env에 넣으십시오."}
     start = (dt.date.today() - dt.timedelta(days=days)).isoformat()
-    rows = []
+    rows, failed = [], 0
     for series_id, label in FRED_SERIES.items():
         try:
             response = requests.get(
@@ -750,6 +763,7 @@ def fred(days: int = 90) -> dict:
                       for o in response.json().get("observations", [])
                       if o.get("value") not in (".", "", None)]
         except Exception:
+            failed += 1
             continue
         if not points:
             continue
@@ -765,7 +779,7 @@ def fred(days: int = 90) -> dict:
         })
         time.sleep(0.2)
     return {"engine": "fred", "days": days, "asof": dt.date.today().isoformat(),
-            "rows": rows}
+            "rows": rows, "fetch_failed": failed}
 
 
 # ECOS 통계표 코드는 목록 API(StatisticTableList)로 확인한 것만 씁니다.
@@ -843,11 +857,31 @@ def ecos(table: str = "market_rate", months: int | None = None) -> dict:
 
 
 # ── 출력 ───────────────────────────────────────────────────────────────
+def _warn_failures(result: dict) -> None:
+    """받지 못한 건수를 **결과보다 먼저** 보여줍니다.
+
+    2026-09-06에 DART 엔진이 `매수 0건`이라고 보고했습니다. 실제로는 서버가
+    연결을 끊고 있었고(빠르게 두드려 IP가 막혔습니다), 0건은 "그런 일이
+    없었다"가 아니라 "못 봤다"였습니다. 그 둘이 같은 화면으로 나오면 없는
+    사실을 글에 씁니다.
+
+    그래서 엔진은 예외를 삼킬 때마다 `fetch_failed`를 세고, 여기서 결과보다
+    먼저 알립니다 — 숫자를 읽기 전에 이 줄이 눈에 들어와야 합니다.
+    """
+    failed = result.get("fetch_failed") or 0
+    if isinstance(failed, list):
+        failed = len(failed)
+    if failed:
+        print(f"  ⚠ {failed}건을 받지 못했습니다. 아래 결과는 **일부입니다** — "
+              f"`0건`을 '그런 일이 없었다'로 읽지 마십시오.")
+
+
 def _print(result: dict) -> None:
     engine = result.get("engine")
     if result.get("error"):
         print(f"[{engine}] {result['error']}")
         return
+    _warn_failures(result)
     if engine == "valuation":
         print(f"[밸류에이션] {result['market'].upper()} · {result['asof']} · "
               f"FWD PER 중앙값 {result['median_forward_pe']}")

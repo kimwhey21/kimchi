@@ -19,6 +19,11 @@ import os
 import re
 
 import anthropic
+from dotenv import load_dotenv
+
+# 단독 실행 모듈입니다. main.py가 대신 불러 주지 않으므로 여기서 .env를 읽습니다 —
+# 없으면 로컬에서 손으로 돌릴 때 설정이 없는 것처럼 동작합니다(2026-09-06 전수 점검).
+load_dotenv()
 
 SYSTEM_PROMPT = """당신은 매일 두 번(미국장/한국장) 증시 마감 시황을 쓰는 한국어 경제 뉴스 앵커입니다.
 
