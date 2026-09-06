@@ -28,6 +28,16 @@ def collect_spec_issues(kind: str, args: dict, title: str = "") -> list[str]:
         if any(_width(r.get("note", ""), 15) > 820 for r in rows if r.get("note")):
             issues.append("valuation_bars 보조 설명이 캔버스 밖으로 나갑니다.")
     if kind == "gap_bars":
+        # 기본 캡션은 밸류에이션 문구입니다. 다른 자료에 쓰면서 그대로 두면
+        # 그림이 사실과 다른 말을 합니다(2026-09-07: 수급 데이터에 "52주 고점
+        # 대비 하락률"이라고 적힌 그림이 나갔습니다).
+        legend = args.get("legend") or ""
+        unit = args.get("unit", "%")
+        looks_valuation = ("52주" in legend or "목표주가" in legend or not legend)
+        subtitle = str(args.get("subtitle") or "")
+        if looks_valuation and (unit != "%" or "주" in subtitle or "만주" in subtitle):
+            issues.append("gap_bars 캡션이 밸류에이션 문구인데 데이터는 다릅니다 — "
+                          "legend와 unit을 자료에 맞게 넘기세요.")
         if any(_width(r.get("name", ""), 20) > 330 for r in rows):
             issues.append("gap_bars 종목명이 막대 영역과 겹칩니다.")
     if kind == "flow_compare":

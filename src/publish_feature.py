@@ -11,7 +11,14 @@ import os
 import re
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from src import data_graphics, feature_graphics, graphic_checks, publish_wordpress
+
+# 단독 실행 모듈이라 main.py가 대신 불러 주지 않습니다. 이게 빠져 있으면
+# `is_configured()`가 False가 되어 **조용히 "업로드 안 함"으로 끝납니다** —
+# 발행한 줄 알았는데 사이트에 아무것도 없는 상태가 됩니다.
+load_dotenv()
 from src.feature_gate import run as run_gate
 from src.render_feature import render
 
@@ -95,8 +102,15 @@ def publish(path: Path, *, upload: bool = True) -> dict:
                   meta_description=ko.get("excerpt"))
     html_path = output / "article.html"
     html_path.write_text(html, encoding="utf-8")
-    if not upload or not publish_wordpress.is_configured():
+    if not upload:
         return {"html": str(html_path), "uploaded": False}
+    if not publish_wordpress.is_configured():
+        # 설정이 없으면 조용히 넘어가지 않고 말합니다. 발행한 줄 알고 넘어가는
+        # 것이 발행 실패보다 나쁩니다.
+        raise publish_wordpress.WordPressPublishError(
+            "워드프레스 설정이 없어 올리지 못했습니다. .env의 WORDPRESS_URL·"
+            "WORDPRESS_USERNAME·WORDPRESS_APP_PASSWORD를 확인하십시오. "
+            f"렌더된 HTML은 {html_path}에 있습니다.")
 
     base = os.environ["WORDPRESS_URL"].rstrip("/")
     auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])

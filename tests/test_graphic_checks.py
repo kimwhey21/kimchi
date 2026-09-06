@@ -28,3 +28,18 @@ class GraphicSemanticCheckTest(unittest.TestCase):
             {"label": "매우 긴 다섯 번째 일정 이름입니다"},
         ]})
         self.assertTrue(issues)
+
+
+class BuilderNameCollisionTest(unittest.TestCase):
+    """`feature_graphics`와 `data_graphics.BUILDERS`에 같은 이름을 두지 않습니다.
+
+    `publish_feature._build_graphics`가 feature_graphics를 먼저 봅니다. 이름이
+    겹치면 일간 시황이 부르는 그래픽이 조용히 다른 함수로 바뀝니다 — 인자 규약이
+    달라 죽거나, 더 나쁘게는 엉뚱한 그림이 나갑니다. 실제로 `sector_bars`가
+    그랬습니다(2026-09-07).
+    """
+
+    def test_no_shared_builder_names(self) -> None:
+        from src import data_graphics, feature_graphics
+        shared = sorted(set(dir(feature_graphics)) & set(data_graphics.BUILDERS))
+        self.assertEqual(shared, [], f"이름이 겹칩니다: {shared}")

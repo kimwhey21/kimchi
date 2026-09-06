@@ -77,11 +77,14 @@ def valuation_bars(rows: list[dict], output_path: Path,
 
 def gap_bars(rows: list[dict], output_path: Path,
              title: str = "고점 대비 하락률과 목표주가 상승 여력",
-             subtitle: str = "") -> Path:
-    """왼쪽으로 하락률, 오른쪽으로 상승 여력을 그립니다.
+             subtitle: str = "", unit: str = "%",
+             legend: str = "왼쪽 = 52주 고점 대비 하락률 · 오른쪽 = 애널리스트 평균 목표주가까지의 거리(전망)") -> Path:
+    """한 항목의 두 숫자가 반대 방향으로 뻗는 모양을 그립니다.
 
-    한 종목의 두 숫자가 반대 방향으로 뻗어 나가는 모양이라, 이 글이 다루는 긴장
-    (많이 빠졌는데 전망은 높다)이 그림 하나로 보입니다.
+    캡션(`legend`)과 단위(`unit`)를 반드시 데이터에 맞게 넘기십시오. 2026-09-07에
+    이 함수를 수급(만주)에 쓰면서 기본 캡션을 그대로 뒀더니 그림이 "52주 고점 대비
+    하락률"이라고 말했습니다 — **그림이 사실과 다른 말을 한 것입니다.**
+    `graphic_checks`가 이 조합을 막습니다.
     """
     height = 236 + len(rows) * 82
     image, draw, y = _canvas(height, title, subtitle)
@@ -99,15 +102,24 @@ def gap_bars(rows: list[dict], output_path: Path,
         right = int(span * abs(row["upside_pct"]) / scale)
         draw.rectangle([center - left, y + 6, center, y + 38], fill=DOWN)
         draw.rectangle([center, y + 6, center + right, y + 38], fill=UP)
-        draw.text((center - left - 96, y + 10), f"{row['down_pct']:.1f}%",
-                  font=korean_font(18, bold=True), fill=DOWN)
-        draw.text((center + right + 14, y + 10), f"+{row['upside_pct']:.1f}%",
+        left_text = f"{row['down_pct']:.1f}{unit}"
+        right_text = f"+{row['upside_pct']:.1f}{unit}"
+        left_width = draw.textlength(left_text, font=korean_font(18, bold=True))
+        # 왼쪽 값이 이름 칸을 침범하면 막대 안쪽에 씁니다. 밖에 쓰면 이름이
+        # 가려져 어느 줄인지 못 읽습니다(2026-09-07 실측).
+        left_x = center - left - 14 - left_width
+        left_fill = DOWN
+        if left_x < 300:
+            # 막대 안으로 옮길 때는 글자색도 바꿔야 합니다. 같은 색으로 쓰면
+            # 파란 막대에 파란 글씨가 되어 값이 아예 안 보입니다(실측).
+            left_x = center - left + 10
+            left_fill = PANEL
+        draw.text((left_x, y + 10), left_text, font=korean_font(18, bold=True), fill=left_fill)
+        draw.text((center + right + 14, y + 10), right_text,
                   font=korean_font(18, bold=True), fill=UP)
         y += 82
 
-    draw.text((60, height - 64),
-              "왼쪽 = 52주 고점 대비 하락률 · 오른쪽 = 애널리스트 평균 목표주가까지의 거리(전망)",
-              font=korean_font(15), fill=SUB)
+    draw.text((60, height - 64), legend, font=korean_font(15), fill=SUB)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     image.save(output_path)
     return output_path
@@ -213,6 +225,89 @@ def cover(output_path: Path, kicker: str, subject: str,
             draw.text((cx - draw.textlength(side["value"], font=value_font) / 2, base + 100),
                       side["value"], font=value_font,
                       fill=DOWN if side.get("down") else UP)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    image.save(output_path)
+    return output_path
+
+
+def sector_breadth(rows: list[dict], output_path: Path,
+                   title: str = "업종별 등락", subtitle: str = "") -> Path:
+    """업종 등락률과 **그 안에서 몇 종목이 올랐는지**를 함께 그립니다.
+
+    등락률만 그리면 한 종목이 끌어올린 업종과 열 종목이 함께 오른 업종이 같은
+    막대로 보입니다. 실제로 2026-09-04 창업투자는 +3.64%인데 89종목 중 오른 것이
+    27개, 내린 것이 28개였습니다 — 업종이 오른 것이 아니라 몇 종목이 튄 것입니다.
+
+    `rows`: [{"name", "change_pct", "up", "down", "stocks"}]
+
+    이름이 `sector_bars`가 아닌 이유: `data_graphics`에 같은 이름이 이미 있고,
+    `publish_feature._build_graphics`가 `feature_graphics`를 먼저 봅니다. 같은
+    이름을 두면 일간 시황이 부르는 그래픽이 조용히 이 함수로 바뀝니다 —
+    인자 규약이 달라 그 자리에서 죽거나, 더 나쁘게는 다른 그림이 나갑니다.
+    """
+    # 이름 칸을 먼저 확보합니다. 음수 막대가 왼쪽으로 뻗으면서 이름을 덮어
+    # "손해보험"이 "손"으로 보였습니다. 마지막 줄 설명이 캡션과 겹치지 않게
+    # 아래 여백도 늘립니다.
+    height = 250 + len(rows) * 62
+    image, draw, y = _canvas(height, title, subtitle)
+    center = 520
+    span = W - center - 150
+    scale = max(abs(r["change_pct"]) for r in rows) or 1.0
+
+    for row in rows:
+        color = UP if row["change_pct"] > 0 else DOWN
+        draw.text((60, y + 6), row["name"][:12], font=korean_font(19, bold=True), fill=INK)
+        length = int(span * abs(row["change_pct"]) / scale)
+        if row["change_pct"] >= 0:
+            draw.rectangle([center, y + 4, center + length, y + 30], fill=color)
+            label_x = center + length + 12
+        else:
+            draw.rectangle([center - length, y + 4, center, y + 30], fill=color)
+            label_x = center + 12
+        draw.text((label_x, y + 6), f"{row['change_pct']:+.2f}%",
+                  font=korean_font(18, bold=True), fill=color)
+        breadth = f"{row['stocks']}종목 중 상승 {row['up']} · 하락 {row['down']}"
+        draw.text((60, y + 32), breadth, font=korean_font(14), fill=SUB)
+        y += 62
+
+    draw.text((60, height - 62),
+              "막대는 업종 등락률, 아래 줄은 그 안에서 오른 종목 수입니다. "
+              "한 종목이 끌어올린 업종과 여럿이 오른 업종은 다릅니다.",
+              font=korean_font(15), fill=SUB)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    image.save(output_path)
+    return output_path
+
+
+def rate_compare(rows: list[dict], output_path: Path,
+                 title: str = "금리는 어디에 있나", subtitle: str = "") -> Path:
+    """금리 몇 개의 현재값과 기간 안 위치를 한 줄씩 그립니다.
+
+    `rows`: [{"name", "value", "low", "high", "unit"}]
+    막대가 아니라 **구간 위의 점**으로 그립니다. 금리는 절대값보다 "최근 범위에서
+    어디쯤인가"가 이야기가 되기 때문입니다.
+    """
+    height = 200 + len(rows) * 74
+    image, draw, y = _canvas(height, title, subtitle)
+    left, right = 330, W - 150
+
+    for row in rows:
+        draw.text((60, y + 8), row["name"][:14], font=korean_font(19, bold=True), fill=INK)
+        draw.line([left, y + 20, right, y + 20], fill=LINE, width=3)
+        span = (row["high"] - row["low"]) or 1.0
+        x = left + (right - left) * (row["value"] - row["low"]) / span
+        draw.ellipse([x - 8, y + 12, x + 8, y + 28], fill=UP)
+        draw.text((left - 4, y + 32), f"{row['low']:g}", font=korean_font(13), fill=SUB)
+        draw.text((right - 34, y + 32), f"{row['high']:g}", font=korean_font(13), fill=SUB)
+        value = f"{row['value']:g}{row.get('unit', '')}"
+        draw.text((x - draw.textlength(value, font=korean_font(17, bold=True)) / 2, y - 8),
+                  value, font=korean_font(17, bold=True), fill=INK)
+        y += 74
+
+    # 위에 부제를 이미 찍었으면 같은 문구를 아래에 또 쓰지 않습니다.
+    if not subtitle:
+        draw.text((60, height - 62), "선의 양 끝은 최근 90일 최저·최고입니다.",
+                  font=korean_font(15), fill=SUB)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     image.save(output_path)
     return output_path
