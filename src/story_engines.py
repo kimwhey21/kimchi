@@ -53,6 +53,7 @@ import argparse
 import datetime as dt
 import json
 import logging
+import os
 import re
 import statistics
 import sys
@@ -702,6 +703,95 @@ def sectors(top: int = 8) -> dict:
                     "한 종목이 끌어올린 업종과 여럿이 함께 오른 업종은 다릅니다."}
 
 
+
+# ── 엔진 10·11. 키가 필요한 거시 소스 ─────────────────────────────────
+# 무료지만 발급이 필요합니다. 키가 없으면 **조용히 빈손을 돌려주지 않고** 왜
+# 못 가져왔는지 말합니다 — "데이터가 없다"와 "키가 없다"를 섞으면 안 됩니다.
+#
+#   FRED   https://fredaccount.stlouisfed.org/apikeys
+#   ECOS   https://ecos.bok.or.kr/api/  (오픈API > 인증키 신청)
+FRED_SERIES = {
+    "DGS10": "미 10년물 국채금리",
+    "DGS2": "미 2년물 국채금리",
+    "T10Y2Y": "장단기 금리차(10년-2년)",
+    "FEDFUNDS": "연방기금금리",
+    "CPIAUCSL": "미 소비자물가지수",
+}
+
+
+def fred(days: int = 90) -> dict:
+    """미 거시 시계열의 현재값과 기간 내 변화를 가져옵니다.
+
+    벤치마크가 `2년물이 8bp 급등하며 2025년 1월 이후 최고치` 같은 문장에 쓰는
+    자료입니다. 우리 시세 파일에는 그날 값만 있어 "언제 이후 최고"를 말할 수
+    없었습니다.
+    """
+    key = os.environ.get("FRED_API_KEY")
+    if not key:
+        return {"engine": "fred",
+                "error": "FRED_API_KEY가 없습니다. https://fredaccount.stlouisfed.org/apikeys "
+                         "에서 무료 발급 후 .env에 넣으십시오."}
+    start = (dt.date.today() - dt.timedelta(days=days)).isoformat()
+    rows = []
+    for series_id, label in FRED_SERIES.items():
+        try:
+            response = requests.get(
+                "https://api.stlouisfed.org/fred/series/observations", timeout=25,
+                params={"series_id": series_id, "api_key": key, "file_type": "json",
+                        "observation_start": start})
+            response.raise_for_status()
+            points = [(o["date"], float(o["value"]))
+                      for o in response.json().get("observations", [])
+                      if o.get("value") not in (".", "", None)]
+        except Exception:
+            continue
+        if not points:
+            continue
+        latest_date, latest = points[-1]
+        lowest = min(points, key=lambda p: p[1])
+        highest = max(points, key=lambda p: p[1])
+        rows.append({
+            "series": series_id, "name": label,
+            "date": latest_date, "value": latest,
+            "change": round(latest - points[0][1], 3),
+            "period_low": lowest[1], "period_low_date": lowest[0],
+            "period_high": highest[1], "period_high_date": highest[0],
+        })
+        time.sleep(0.2)
+    return {"engine": "fred", "days": days, "asof": dt.date.today().isoformat(),
+            "rows": rows}
+
+
+def ecos(code: str = "722Y001", days: int = 90) -> dict:
+    """한국은행 ECOS 통계를 가져옵니다(기본값은 시장금리).
+
+    통계표 코드는 ECOS 화면에서 확인해 넘기십시오 — **코드를 추측해서 부르지
+    않습니다.** 저장소가 REST 액션 이름을 추측했다가 위험한 엔드포인트를 두드린
+    적이 있습니다(CLAUDE.md).
+    """
+    key = os.environ.get("ECOS_API_KEY")
+    if not key:
+        return {"engine": "ecos",
+                "error": "ECOS_API_KEY가 없습니다. https://ecos.bok.or.kr/api/ 에서 "
+                         "무료 발급 후 .env에 넣으십시오."}
+    end = dt.date.today().strftime("%Y%m%d")
+    start = (dt.date.today() - dt.timedelta(days=days)).strftime("%Y%m%d")
+    url = (f"https://ecos.bok.or.kr/api/StatisticSearch/{key}/json/kr/1/100/"
+           f"{code}/D/{start}/{end}")
+    try:
+        payload = requests.get(url, timeout=25).json()
+    except Exception as exc:
+        return {"engine": "ecos", "error": f"조회 실패: {exc}"}
+    if "RESULT" in payload:                    # 인증 실패 등은 여기로 옵니다
+        return {"engine": "ecos",
+                "error": payload["RESULT"].get("MESSAGE", "알 수 없는 오류")}
+    rows = (payload.get("StatisticSearch") or {}).get("row") or []
+    return {"engine": "ecos", "code": code, "count": len(rows),
+            "rows": [{"date": r.get("TIME"), "name": r.get("ITEM_NAME1"),
+                      "value": r.get("DATA_VALUE"), "unit": r.get("UNIT_NAME")}
+                     for r in rows[-10:]]}
+
+
 # ── 출력 ───────────────────────────────────────────────────────────────
 def _print(result: dict) -> None:
     engine = result.get("engine")
@@ -748,6 +838,16 @@ def _print(result: dict) -> None:
             print(f"  {buy['date']} {buy['name']:<10} ${buy['value_usd']:>12,}  "
                   f"{buy['owner']} ({buy['title'] or '직위 미상'})")
         print("  " + result["note"])
+    elif engine == "fred":
+        print(f"[미 거시] 최근 {result['days']}일")
+        for row in result["rows"]:
+            print(f"  {row['name']:<18}{row['value']:>8.2f}  ({row['change']:+.2f}) "
+                  f"기간 최저 {row['period_low']:.2f}({row['period_low_date']}) "
+                  f"최고 {row['period_high']:.2f}({row['period_high_date']})")
+    elif engine == "ecos":
+        print(f"[한국은행 ECOS] 표 {result['code']} · {result['count']}건")
+        for row in result["rows"]:
+            print(f"  {row['date']}  {row['name']}  {row['value']} {row['unit'] or ''}")
     elif engine == "sectors":
         print(f"[업종 등락] {result['asof']} · 업종 {result['count']}개")
         for label, rows in (("오른 쪽", result["gainers"]), ("내린 쪽", result["losers"])):
@@ -804,7 +904,7 @@ def _print(result: dict) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="글감 엔진 — 재료만 만들고 문장은 쓰지 않습니다.")
     parser.add_argument("engine", choices=["valuation", "ratings", "earnings",
-                                           "insiders", "kr_insiders", "institutions", "flows", "sectors",
+                                           "insiders", "kr_insiders", "institutions", "flows", "sectors", "fred", "ecos",
                                            "seasonality", "all"])
     parser.add_argument("--market", choices=["kr", "us"], default="us")
     parser.add_argument("--days", type=int)
@@ -820,12 +920,14 @@ def main() -> int:
         "kr_insiders": lambda: kr_insiders(args.days or 7),
         "institutions": lambda: institutions(),
         "sectors": lambda: sectors(),
+        "fred": lambda: fred(args.days or 90),
+        "ecos": lambda: ecos(days=args.days or 90),
         "flows": lambda: flows(args.date),
         "seasonality": lambda: seasonality(args.market),
     }
     names = list(runners) if args.engine == "all" else [args.engine]
     if args.engine == "all" and args.market == "us":
-        for name in ("flows", "kr_insiders", "sectors"):
+        for name in ("flows", "kr_insiders", "sectors", "ecos"):
             names.remove(name)                 # 한국장 전용
     elif args.engine == "all":
         for name in ("insiders", "institutions"):

@@ -341,3 +341,52 @@ class SectorsTest(unittest.TestCase):
             result = story_engines.sectors()
         self.assertIn("error", result)
         self.assertIn("구조", result["error"])
+
+
+class KeyedSourceTest(unittest.TestCase):
+    """키가 필요한 소스는 '데이터 없음'과 '키 없음'을 구분해야 합니다.
+
+    조용히 빈손을 돌려주면 그날 아무 일도 없었던 것처럼 보입니다. DART 엔진이
+    실제로 그 실수를 했습니다(2026-09-06).
+    """
+
+    def test_fred_without_key_says_so(self) -> None:
+        with mock.patch.dict(story_engines.os.environ, {}, clear=True):
+            result = story_engines.fred()
+        self.assertIn("FRED_API_KEY", result["error"])
+        self.assertNotIn("rows", result)
+
+    def test_ecos_without_key_says_so(self) -> None:
+        with mock.patch.dict(story_engines.os.environ, {}, clear=True):
+            result = story_engines.ecos()
+        self.assertIn("ECOS_API_KEY", result["error"])
+
+    def test_fred_reports_period_extremes(self) -> None:
+        """`2025년 1월 이후 최고` 같은 문장을 쓰려면 기간 최고·최저가 필요합니다."""
+        payload = {"observations": [
+            {"date": "2026-06-01", "value": "4.20"},
+            {"date": "2026-07-01", "value": "."},          # 결측 표기
+            {"date": "2026-08-01", "value": "4.90"},
+            {"date": "2026-09-01", "value": "4.78"},
+        ]}
+        response = mock.Mock(status_code=200)
+        response.raise_for_status = lambda: None
+        response.json = lambda: payload
+        with mock.patch.dict(story_engines.os.environ, {"FRED_API_KEY": "k"}), \
+             mock.patch.object(story_engines.requests, "get", lambda *a, **k: response), \
+             mock.patch.object(story_engines.time, "sleep", lambda *_: None):
+            result = story_engines.fred(days=90)
+        row = result["rows"][0]
+        self.assertEqual(row["value"], 4.78)
+        self.assertEqual(row["change"], 0.58)
+        self.assertEqual(row["period_high"], 4.90)
+        self.assertEqual(row["period_low"], 4.20)
+
+    def test_ecos_auth_failure_is_surfaced(self) -> None:
+        response = mock.Mock(status_code=200)
+        response.json = lambda: {"RESULT": {"CODE": "INFO-100",
+                                            "MESSAGE": "인증키가 유효하지 않습니다."}}
+        with mock.patch.dict(story_engines.os.environ, {"ECOS_API_KEY": "bad"}), \
+             mock.patch.object(story_engines.requests, "get", lambda *a, **k: response):
+            result = story_engines.ecos()
+        self.assertIn("인증키", result["error"])
