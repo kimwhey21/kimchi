@@ -168,6 +168,7 @@ def render(
     lang: str = "ko",
     market_label: str | None = None,
     subscribe_form_action: str | None = None,
+    related: list[dict] | None = None,
 ) -> str:
     macro_cards = [_to_card(v, lang, date_str) for v in price_data["macro"].values()]
 
@@ -236,4 +237,5 @@ def render(
         foreign_flow_rows=foreign_flow_rows,
         meta_description=meta_description,
         subscribe_form_action=subscribe_form_action,
+        related=related or [],
     )

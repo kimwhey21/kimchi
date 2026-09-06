@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -175,11 +176,17 @@ def _attach_story_images(doc_section: dict | None, price_data: dict) -> dict | N
 
 
 def _attach_section_graphics(doc_section: list, price_data: dict, market: str,
-                             date_str: str, previous: dict | None) -> None:
-    """본문 절에 지정된 데이터 그래픽을 만들어 사이트에 올리고 URL을 채웁니다.
+                             date_str: str, previous: dict | None,
+                             upload: bool = True) -> None:
+    """본문 절에 지정된 데이터 그래픽을 만들고, `upload`면 사이트에 올려 URL을 채웁니다.
 
     사진과 달리 이 그림은 그날 시세에서 그리므로 숫자가 어긋날 수 없습니다.
     업로드에 실패하면 그림 없이 글이 나갑니다 — 그림 하나가 발행을 막으면 안 됩니다.
+
+    `upload=False`(렌더 전용 확인)면 미디어 라이브러리에 쓰지 않고 로컬 파일
+    경로를 그대로 `url`에 넣는다 — `output/`에 결과 HTML과 PNG가 같이 있으므로
+    브라우저로 열어 보면 그대로 뜬다. 2026-09-06에 이 구분이 없어서 렌더
+    확인만 하려다 실제로 미디어 라이브러리에 업로드해버린 적이 있다.
     """
     for index, section in enumerate(doc_section or [], start=1):
         spec = section.get("graphic")
@@ -192,6 +199,10 @@ def _attach_section_graphics(doc_section: list, price_data: dict, market: str,
         try:
             local = OUTPUT_DIR / f"{market}_{date_str}_{index}_{kind}.png"
             data_graphics.build(kind, price_data, local, **options)
+            if not upload:
+                section["graphic"] = {"url": str(local), "alt": spec.get("title", ""), "kind": kind}
+                print(f"[안내] 본문 그래픽(업로드 안 함): {kind} -> {local}")
+                continue
             url = publish_wordpress.upload_image_url(
                 {"local_path": str(local), "alt": spec.get("title", ""),
                  "caption": "이 글의 시세로 만든 데이터 그래픽입니다."}
@@ -214,6 +225,38 @@ def _previous_price_data(market: str, date_str: str) -> dict | None:
     if not files:
         return None
     return json.loads(files[-1].read_text(encoding="utf-8"))
+
+
+def _previous_daily_post(market: str, date_str: str, lang: str) -> dict | None:
+    """전 거래일 같은 시장·같은 언어 시황 글을 찾습니다(내부 링크용, 2026-09-06 추가).
+
+    벤치마크(재테크농부)는 이전 글로 내부 링크를 99% 걸지만 시황 자동 발행
+    경로는 0%였다. 날짜는 이 시장의 실제 전 거래일 시세 파일명에서 가져온다 —
+    주말·공휴일을 건너뛴 진짜 전 거래일이라야 slug가 실제로 존재한다.
+    자동 공개 경로이므로 조회가 실패하거나(네트워크, 설정 없음) 그날 글이
+    없거나(첫 글, 이전 발행 실패) 아직 초안이면 조용히 None을 돌려주고
+    발행을 막지 않는다 — 관련 글 링크는 있으면 좋은 것이지 필수 조건이 아니다.
+    """
+    files = sorted(
+        p for p in (ROOT / "data").glob(f"price_{market}_*.json")
+        if p.stem < f"price_{market}_{date_str}"
+    )
+    if not files:
+        return None
+    prev_date = files[-1].stem.removeprefix(f"price_{market}_")
+    if not publish_wordpress.is_configured():
+        return None
+    try:
+        base = os.environ["WORDPRESS_URL"].rstrip("/")
+        auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
+        slug = f"editorial-{market}-{prev_date}-{lang}"
+        post = publish_wordpress._find_existing_post_by_slug(base, auth, slug)
+        if not post or post.get("status") != "publish":
+            return None
+        return {"title": post["title"]["rendered"], "url": post["link"]}
+    except Exception as exc:  # noqa: BLE001 - 링크 하나 때문에 발행을 막지 않음
+        print(f"[안내] 이전 글 링크 조회 실패, 링크 없이 계속합니다: {exc!r}", file=sys.stderr)
+        return None
 
 
 def publish(path: Path, publish_live: bool = False, render_only: bool = False) -> None:
@@ -253,10 +296,12 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         print("시세 대조 검사 통과 (영어)")
 
     # 본문 데이터 그래픽 (한국어판). 그날 시세로 그리므로 숫자가 어긋날 수 없습니다.
+    # render_only일 때는 로컬 파일만 만들고 미디어 라이브러리에는 올리지 않는다.
     if publish_wordpress.is_configured():
         _attach_section_graphics(
             ko.get("narrative"), price_data, market, date_str,
             _previous_price_data(market, date_str),
+            upload=not render_only,
         )
 
     # 인사이트 스토리 사진. 한국어판에서 찾은 사진을 영어판이 그대로 쓰도록
@@ -273,9 +318,24 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         en["insight_section"] = {**en["insight_section"], "stories": en_stories}
 
     market_label_en = "Korea Market Close" if market == "kr" else "U.S. Market Close"
-    html_ko = render_html.render(market, date_str, price_data, ko)
+    related_ko = _previous_daily_post(market, date_str, "ko")
+    html_ko = render_html.render(
+        market, date_str, price_data, ko,
+        related=[related_ko] if related_ko else None,
+    )
     OUTPUT_DIR.mkdir(exist_ok=True)
     (OUTPUT_DIR / f"{market}_{date_str}_editorial.html").write_text(html_ko, encoding="utf-8")
+
+    html_en = None
+    if en:
+        related_en = _previous_daily_post(market, date_str, "en")
+        html_en = render_html.render(
+            market, date_str, price_data, en, lang="en", market_label=market_label_en,
+            related=[related_en] if related_en else None,
+        )
+        (OUTPUT_DIR / f"{market}_{date_str}_editorial_en.html").write_text(
+            html_en, encoding="utf-8"
+        )
 
     # 대표 이미지는 실제 마감 수치로 생성합니다. 검수되지 않은 사진 검색 결과를
     # 예약 경로에 쓰지 않는다는 AGENTS.md 원칙을 그대로 따릅니다.
@@ -319,6 +379,16 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
             "저장소 시크릿(WORDPRESS_URL·WORDPRESS_USERNAME·WORDPRESS_APP_PASSWORD)을 "
             "확인하십시오. 렌더된 HTML은 output/에 있습니다.")
 
+    if render_only:
+        # 워드프레스 설정이 있어도 여기서 멈춘다 — 위 그래픽은 이미 업로드 없이
+        # 로컬로만 만들었고(upload=not render_only), html_ko/html_en도 이미
+        # output/에 썼다. 아래 publish_draft는 실제 글 발행/미디어 업로드를
+        # 하므로 호출 자체를 건너뛴다. 2026-09-06 전에는 이 분기가 없어서
+        # `--render-only`가 워드프레스 설정이 있으면 이름과 달리 실제로
+        # 그래픽을 올리고, 새 날짜면 글까지 만들었다.
+        print("--render-only: 워드프레스에 쓰지 않고 렌더 결과만 output/에 남깁니다.")
+        return
+
     status = "publish" if publish_live else "draft"
     ko_result = publish_wordpress.publish_draft(
         ko["title"],
@@ -336,12 +406,6 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         publish_wordpress.verify_published(ko_result["id"], ko["title"])
 
     if en:
-        html_en = render_html.render(
-            market, date_str, price_data, en, lang="en", market_label=market_label_en
-        )
-        (OUTPUT_DIR / f"{market}_{date_str}_editorial_en.html").write_text(
-            html_en, encoding="utf-8"
-        )
         en_result = publish_wordpress.publish_draft(
             en["title"],
             html_en,

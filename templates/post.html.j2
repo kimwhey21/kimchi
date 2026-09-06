@@ -196,6 +196,16 @@
   </div>
   {% endif %}
 
+  {% if related %}
+  <div class="mb-related">
+    <p class="mb-related-label">{{ "Previous close" if lang == "en" else "지난 거래일 시황" }}</p>
+    <ul class="mb-related-list">
+      {% for item in related %}<li><a href="{{ item.url }}">{{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
   <footer>{{ "For informational purposes only. Not investment advice." if lang == "en" else "투자 참고용이며 투자 권유가 아닙니다." }}</footer>
 
 {% set has_insight_charts = insight_section and (insight_section.stories|selectattr('chart')|list) %}
