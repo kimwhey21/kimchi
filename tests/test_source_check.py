@@ -41,16 +41,19 @@ class SourceCheckTest(unittest.TestCase):
         self.assertEqual(source_check.collect_issues(_doc(body)), [])
 
     def test_published_article_would_have_been_blocked(self) -> None:
-        """실제로 공개한 글이 이 검사에 걸리는지 확인합니다."""
-        import json
-        from pathlib import Path
-        path = (Path(__file__).resolve().parent.parent
-                / "editorial/features/kr_2026-09-06_hynix_per.json")
-        if not path.exists():
-            self.skipTest("원고 파일이 없습니다")
-        doc = json.loads(path.read_text(encoding="utf-8"))
-        self.assertTrue(source_check.collect_issues(doc),
-                        "출처가 부족한 글이 통과하면 검사가 무의미합니다")
+        """2026-09-06에 실제로 나갔던 원문 발췌(출처 2곳: 실적 일정·밸류에이션)로
+        고정해 둡니다. 이 글(kr_2026-09-06_hynix_per.json)은 그 뒤 출처를 3곳으로
+        보강해 정상적으로 통과하게 됐으므로, 살아있는 파일을 계속 가리키면 원고가
+        나아질 때마다 이 회귀 테스트가 거짓으로 깨집니다. 그래서 그날 나갔던
+        문장을 그대로 박제해 검사기 자체가 여전히 이런 글을 막는지만 봅니다."""
+        body = (
+            "SK하이닉스가 9월 4일 3.20% 올랐습니다. 52주 고점 대비 44.9% 내려온 "
+            "자리입니다. 내년 예상 이익 기준 FWD PER은 3.50배입니다.\n\n"
+            "SK하이닉스는 10월 27일에 3분기 실적을 발표합니다. 삼성전자는 "
+            "10월 28일, 마이크론은 그보다 앞선 10월 1일입니다."
+        )
+        issues = source_check.collect_issues(_doc(body))
+        self.assertTrue(issues, "출처가 부족한 글이 통과하면 검사가 무의미합니다")
 
 
 if __name__ == "__main__":
