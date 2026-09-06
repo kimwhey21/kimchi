@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  벤치마크 채널을 매일 23:10에 한 번 훑습니다.
+
+      cp scripts/kr.it.fermata.benchwatch.plist ~/Library/LaunchAgents/
+      launchctl load ~/Library/LaunchAgents/kr.it.fermata.benchwatch.plist
+
+  끄려면 launchctl unload 같은 경로.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>kr.it.fermata.benchwatch</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/python3</string>
+        <string>-m</string>
+        <string>scripts.bench_watch</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/mac/Downloads/market-brief</string>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>23</integer>
+        <key>Minute</key>
+        <integer>10</integer>
+    </dict>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>StandardOutPath</key>
+    <string>/Users/mac/.market-brief-bench/logs/launchd.out</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/mac/.market-brief-bench/logs/launchd.err</string>
+</dict>
+</plist>

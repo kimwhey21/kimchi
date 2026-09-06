@@ -219,6 +219,14 @@ def _previous_price_data(market: str, date_str: str) -> dict | None:
 def publish(path: Path, publish_live: bool = False) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     doc = json.loads(path.read_text(encoding="utf-8"))
+    # 기준표(feature) 원고는 스키마가 다릅니다 — 그날 시세가 아니라 밸류에이션·
+    # 일정을 다루므로 market·price_data가 없습니다. **`doc["market"]`을 읽기 전에**
+    # 걸러야 KeyError로 죽지 않습니다(워크플로 트리거도 좁혀 뒀지만, 수동 실행에서
+    # 경로를 직접 넘길 수 있어 여기도 막습니다).
+    if doc.get("kind") == "feature" or "price_data" not in doc:
+        print(f"[안내] {path.name}은 기준표 원고입니다 — 이 워크플로가 발행하지 않습니다. "
+              f"docs/feature-style.md 참조.")
+        return
     market = doc["market"]
     date_str = doc["date"]
     price_data = doc["price_data"]
