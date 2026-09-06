@@ -665,10 +665,15 @@ def _print(result: dict) -> None:
               f"FWD PER 중앙값 {result['median_forward_pe']}")
         print(f"  {'종목':<12}{'FWD PER':>9}{'목표가 대비':>11}{'52주고점 대비':>13}{'애널':>6}")
         for row in result["rows"]:
-            print(f"  {row['name'][:11]:<12}{row['forward_pe']:>9.1f}"
-                  f"{(f'{row['upside_pct']:+.1f}%' if row['upside_pct'] is not None else '-'):>11}"
-                  f"{(f'{row['off_52w_high_pct']:+.1f}%' if row['off_52w_high_pct'] is not None else '-'):>13}"
-                  f"{row['analysts'] or '-':>6}")
+            # f-string 안에 같은 따옴표를 중첩하는 것은 파이썬 3.12부터입니다.
+            # 워크플로는 3.11로 돌아서 로컬(3.14)에서만 통과하는 문법이 됩니다.
+            upside = ("-" if row["upside_pct"] is None
+                      else f"{row['upside_pct']:+.1f}%")
+            off_high = ("-" if row["off_52w_high_pct"] is None
+                        else f"{row['off_52w_high_pct']:+.1f}%")
+            name = row["name"][:11]
+            print(f"  {name:<12}{row['forward_pe']:>9.1f}{upside:>11}"
+                  f"{off_high:>13}{row['analysts'] or '-':>6}")
         if result.get("loss_making"):
             print(f"  (내년 적자 예상: {', '.join(result['loss_making'])})")
         if result["no_estimate"]:
