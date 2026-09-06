@@ -117,6 +117,26 @@ def publish(path: Path, *, upload: bool = True) -> dict:
     slug = _slug(doc, path)
     existing = publish_wordpress._find_existing_post_by_slug(base, auth, slug)
     featured_id = None
+    # 사진 표지. 데이터 그래픽 표지가 "그날 시황"처럼 읽힌다는 지적이 있어
+    # 가이드는 사진을 쓸 수 있게 열어 둡니다. 다만 **쓰기 전에 사람이 받아서 눈으로
+    # 확인한 파일만** 원고에 적습니다 — 검색어로 자동으로 붙이지 않습니다.
+    # 2026-09-07에 `korean bank`가 삼청빌라, `bank building seoul`이 용산 전경으로
+    # 나왔습니다. 특정 은행 간판이 찍힌 사진도 쓰지 않습니다(다른 회사로 읽힙니다).
+    photo = doc.get("featured_photo")
+    if photo and featured:
+        raise ValueError("표지는 사진이나 그래픽 중 하나만 지정하십시오.")
+    if photo:
+        local = ROOT / photo["local_path"] if not Path(photo["local_path"]).is_absolute() \
+            else Path(photo["local_path"])
+        if not local.exists():
+            raise ValueError(f"표지 사진이 없습니다: {local}")
+        credit = photo.get("credit", "")
+        featured_id = publish_wordpress.upload_featured_image(base, auth, {
+            "local_path": str(local), "alt": photo.get("alt", ""),
+            "caption": credit, "id": local.stem,
+        })
+        if not featured_id:
+            raise publish_wordpress.WordPressPublishError("표지 사진 업로드 실패")
     if featured:
         featured_id = publish_wordpress.upload_featured_image(base, auth, featured)
         if not featured_id:

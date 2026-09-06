@@ -43,7 +43,6 @@
  "graphics": [
   {
    "kind": "guide_cover",
-   "featured": true,
    "alt": "같은 날 반대 방향 — 미 2년물 +29bp, 9월 4일 은행 업종 -3.21%",
    "args": {
     "kicker": "가이드 · 2026-09-07",
@@ -56,11 +55,12 @@
      "label": "9월 4일 은행 업종",
      "value": "-3.21%"
     }
-   }
+   },
+   "section": 0
   },
   {
    "kind": "sector_breadth",
-   "section": 0,
+   "section": 1,
    "alt": "9월 4일 업종별 등락과 업종 안 상승 종목 수",
    "args": {
     "title": "9월 4일 업종별 등락",
@@ -239,5 +239,11 @@
     ]
    }
   }
- ]
+ ],
+ "featured_photo": {
+  "local_path": "output/features/cover_photo.jpg",
+  "alt": "은행 금고문",
+  "credit": "사진: David Trinks / Unsplash",
+  "credit_url": "https://unsplash.com/photos/a-close-up-of-a-metal-door-with-a-lock-tEP6TI8pXW4"
+ }
 }
