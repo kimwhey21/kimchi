@@ -13,6 +13,7 @@ from __future__ import annotations
 import os
 import re
 import sys
+import hashlib
 from pathlib import Path
 
 import requests
@@ -134,9 +135,16 @@ def _to_wordpress_content(html_content: str) -> str:
     scoped_css = _scope_css(raw_css)
     body = _SCRIPT_TAG_RE.sub("", body)
 
+    # render_feature처럼 이미 발행용 래퍼를 가진 조각을 다시 감싸면 CSS 선택자가
+    # 두 겹이 되고 폭 계산도 달라집니다. 호출자가 완결 문서든 조각이든 한 번만
+    # mb-post를 갖게 하는 것이 이 함수의 계약입니다.
+    if re.search(r'<div\b[^>]*\bclass=["\'][^"\']*\bmb-post\b', body):
+        wrapped_body = body
+    else:
+        wrapped_body = f'<div class="{_SCOPE_CLASS}">{body}</div>'
     fragment = (
         f"{links}<style>{scoped_css}{_EXTRA_CSS}</style>"
-        f'<div class="{_SCOPE_CLASS}">{body}</div>'
+        f"{wrapped_body}"
     )
     return f"<!-- wp:html -->\n{fragment}\n<!-- /wp:html -->"
 
@@ -185,7 +193,9 @@ def _get_or_create_tag_ids(base_url: str, auth: tuple[str, str], names: list[str
     return [i for i in ids if i is not None]
 
 
-def verify_published(post_id: int, expected_title: str, expected_status: str = "publish") -> None:
+def verify_published(post_id: int, expected_title: str, expected_status: str = "publish",
+                     expected_featured_media: int | None = None,
+                     expected_category_id: int | None = None) -> None:
     """올린 글이 사이트에 실제로 반영됐는지 되읽어 확인합니다.
 
     2026-09-03 아침에 워크플로가 초록 체크로 끝났는데 한국장 글은 올라가지
@@ -219,6 +229,10 @@ def verify_published(post_id: int, expected_title: str, expected_status: str = "
         problems.append(f"제목이 '{title[:40]}...'로 남아 있습니다")
     if len(content) < 500:
         problems.append(f"본문이 {len(content)}자뿐입니다")
+    if expected_featured_media is not None and post.get("featured_media") != expected_featured_media:
+        problems.append("대표 이미지 id가 요청한 미디어와 다릅니다")
+    if expected_category_id is not None and expected_category_id not in (post.get("categories") or []):
+        problems.append("카테고리 id가 요청한 언어별 term과 다릅니다")
     if problems:
         raise WordPressPublishError(
             f"발행 확인 실패 (id={post_id}): " + ", ".join(problems) +
@@ -308,6 +322,23 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
             filename = f"{image.get('id') or 'photo'}.jpg"
             content_type = "image/jpeg"
 
+        # 파일명이나 크기는 내용의 식별자가 아닙니다. 같은 파일명으로 그림을
+        # 고치면 옛 그림이 남고, 크기가 같은 서로 다른 PNG도 흔합니다. 해시를
+        # 미디어 설명과 파일명에 함께 남겨 재실행 시 정확히 같은 바이트만 재사용합니다.
+        digest = hashlib.sha256(image_bytes).hexdigest()
+        stem, suffix = os.path.splitext(filename)
+        filename = f"{stem}-{digest[:12]}{suffix or '.png'}"
+        existing = requests.get(
+            f"{base_url}/wp-json/wp/v2/media", auth=auth,
+            params={"search": digest[:12], "per_page": 100, "context": "edit"},
+            timeout=TIMEOUT_SECONDS,
+        )
+        if existing.status_code < 400:
+            for media in existing.json():
+                description = (media.get("description") or {}).get("raw", "")
+                if f"market-brief-sha256:{digest}" in description:
+                    return int(media["id"])
+
         upload = requests.post(
             f"{base_url}/wp-json/wp/v2/media",
             auth=auth,
@@ -337,7 +368,8 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
         requests.post(
             f"{base_url}/wp-json/wp/v2/media/{media_id}",
             auth=auth,
-            json={"alt_text": image.get("alt", ""), "caption": caption},
+            json={"alt_text": image.get("alt", ""), "caption": caption,
+                  "description": f"market-brief-sha256:{digest}"},
             timeout=TIMEOUT_SECONDS,
         )
         return media_id
@@ -414,7 +446,7 @@ def publish_draft(
     lang: str | None = None,
     excerpt: str | None = None,
     tags: list[str] | None = None,
-    category: str | None = None,
+    category: str | int | None = None,
     image: dict | None = None,
     featured_media_id: int | None = None,
     slug: str | None = None,
@@ -446,7 +478,10 @@ def publish_draft(
     tags: 그날 언급된 종목명·테마명 같은 태그 이름 목록. 없는 태그는 자동으로
     새로 만듭니다.
 
-    category: 카테고리 이름 (예: "시황"). 시황 자동생성 글과 나중에 추가할
+    category: 카테고리 이름(예: "시황") 또는 확정된 term id(int).
+        int를 넘기면 검색·생성 없이 그 id를 그대로 씁니다 — Polylang은
+        언어별로 term이 따로라 이름으로 찾으면 다른 언어 짝이 잡힙니다.
+        시황 자동생성 글과 나중에 추가할
     다른 종류의 글을 홈 화면에서 구분해 보여주는 용도입니다. 없는 카테고리는
     자동으로 만듭니다 (lang이 있으면 그 언어로).
 
@@ -541,7 +576,9 @@ def publish_draft(
     if tags:
         payload["tags"] = _get_or_create_tag_ids(base_url, auth, tags)
     if category:
-        cat_id = _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
+        # 가이드 발행기는 이름으로 새 카테고리를 만들지 않고 확정 id만 넘긴다.
+        # 기존 범용 호출의 호환성은 유지하되, 숫자 id는 절대 검색·생성하지 않는다.
+        cat_id = category if isinstance(category, int) else _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
         if cat_id:
             payload["categories"] = [cat_id]
     if featured_media_id:
@@ -594,7 +631,7 @@ def update_draft(
     lang: str | None = None,
     excerpt: str | None = None,
     tags: list[str] | None = None,
-    category: str | None = None,
+    category: str | int | None = None,
     image: dict | None = None,
     featured_media_id: int | None = None,
     focus_keyword: str | None = None,
@@ -623,7 +660,7 @@ def update_draft(
     if tags:
         payload["tags"] = _get_or_create_tag_ids(base_url, auth, tags)
     if category:
-        cat_id = _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
+        cat_id = category if isinstance(category, int) else _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
         if cat_id:
             payload["categories"] = [cat_id]
     if featured_media_id:
