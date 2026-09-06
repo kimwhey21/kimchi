@@ -364,3 +364,108 @@ def guide_cover(output_path: Path, kicker: str, subject: str,
     output_path.parent.mkdir(parents=True, exist_ok=True)
     image.save(output_path)
     return output_path
+
+
+# 사진을 못 구했을 때 쓰는 손그림 아이콘 표지입니다(docs/feature-style.md 3절).
+# Openverse가 세션에 따라 막힐 때가 있어 만들었습니다. 사진처럼 실제 회사를
+# 가리키지 않도록 **브랜드 색(존 디어 초록 등)을 쓰지 않고** 사이트 팔레트
+# 회색·잉크색만 씁니다 — 실루엣이라 어느 회사인지 특정되지 않습니다.
+_ICON_FILL = "#C9CFD6"
+_ICON_LINE = INK
+
+
+def _tractor_icon(draw: ImageDraw.ImageDraw, cx: int, cy: int) -> None:
+    """트랙터 옆모습 실루엣. 큰 뒷바퀴·작은 앞바퀴·캡·보닛만으로 단순화합니다."""
+    ground = cy + 96
+    # 뒷바퀴(큰 것)
+    r_rear = 78
+    rear_cx = cx - 90
+    draw.ellipse([rear_cx - r_rear, ground - r_rear * 2, rear_cx + r_rear, ground],
+                 fill=_ICON_FILL, outline=_ICON_LINE, width=4)
+    draw.ellipse([rear_cx - 26, ground - 26 - 70, rear_cx + 26, ground - 70 + 26],
+                 fill=BG, outline=_ICON_LINE, width=3)
+    # 앞바퀴(작은 것)
+    r_front = 42
+    front_cx = cx + 130
+    draw.ellipse([front_cx - r_front, ground - r_front * 2, front_cx + r_front, ground],
+                 fill=_ICON_FILL, outline=_ICON_LINE, width=4)
+    # 차체: 캡(뒤, 높음) + 보닛(앞, 낮음)을 한 다각형으로
+    body = [
+        (cx - 168, ground - 150), (cx - 168, ground - 230), (cx - 60, ground - 230),
+        (cx - 30, ground - 150), (cx + 70, ground - 150), (cx + front_cx - cx, ground - 90),
+        (cx + front_cx - cx - 10, ground - 60), (cx - 168, ground - 60),
+    ]
+    draw.polygon(body, fill=_ICON_FILL, outline=_ICON_LINE, width=4)
+    # 캡 창문
+    draw.rectangle([cx - 148, ground - 210, cx - 82, ground - 165],
+                   fill=BG, outline=_ICON_LINE, width=3)
+    # 배기관
+    draw.rectangle([cx - 190, ground - 270, cx - 168, ground - 220],
+                   fill=_ICON_FILL, outline=_ICON_LINE, width=3)
+
+
+def _wafer_icon(draw: ImageDraw.ImageDraw, cx: int, cy: int) -> None:
+    """반도체 웨이퍼 실루엣. 원판 + 다이(die) 격자 + 노치로 단순화합니다."""
+    r = 130
+    box = [cx - r, cy - r, cx + r, cy + r]
+    draw.ellipse(box, fill="#D9CBA8", outline=_ICON_LINE, width=4)
+    # 다이 격자(칩 낱개를 나누는 선)
+    step = 34
+    for x in range(cx - r + step, cx + r, step):
+        dy = int((r * r - (x - cx) ** 2) ** 0.5)
+        draw.line([x, cy - dy, x, cy + dy], fill="#B7A67E", width=2)
+    for y in range(cy - r + step, cy + r, step):
+        dx = int((r * r - (y - cy) ** 2) ** 0.5)
+        draw.line([cx - dx, y, cx + dx, y], fill="#B7A67E", width=2)
+    # 정렬 노치(웨이퍼 특유의 잘린 자국)
+    notch = [(cx - 34, cy + r - 6), (cx + 34, cy + r - 6), (cx, cy + r - 34)]
+    draw.polygon(notch, fill=BG, outline=_ICON_LINE, width=3)
+
+
+_ICONS = {"tractor": _tractor_icon, "wafer": _wafer_icon}
+
+
+def icon_cover(output_path: Path, kicker: str, subject: str, icon: str,
+               up: dict | None = None, down: dict | None = None,
+               note: str = "") -> Path:
+    """사진 대신 쓰는 손그림 아이콘 표지. `icon`은 `tractor` 또는 `wafer`.
+
+    사진을 구하지 못했을 때만 씁니다(우선순위는 여전히 실제 사진 →
+    데이터 그래픽 → 이 아이콘 순). `up`/`down`은 `guide_cover`와 같은 모양의
+    대비 숫자를 아이콘 아래에 선택적으로 얹습니다.
+    """
+    draw_icon = _ICONS.get(icon)
+    if draw_icon is None:
+        raise ValueError(f"알 수 없는 아이콘: {icon} (tractor, wafer만 있습니다)")
+    ensure_korean_font()
+    width, height = 1200, 630
+    image = Image.new("RGB", (width, height), BG)
+    draw = ImageDraw.Draw(image)
+    draw.rectangle([40, 40, width - 40, height - 40], fill=PANEL, outline=LINE)
+
+    def centered(text: str, y: int, font, fill) -> None:
+        draw.text(((width - draw.textlength(text, font=font)) / 2, y), text,
+                  font=font, fill=fill)
+
+    centered(kicker, 48, korean_font(22, bold=True), SUB)
+    draw_icon(draw, width // 2, 280)
+    centered(subject, 460, korean_font(38, bold=True), INK)
+
+    if up or down:
+        base_y = 512
+        quarter = width // 4
+        for i, side in enumerate((up, down)):
+            if not side:
+                continue
+            cx_side = quarter + i * (width // 2)
+            label_font, value_font = korean_font(20), korean_font(34, bold=True)
+            draw.text((cx_side - draw.textlength(side["label"], font=label_font) / 2, base_y),
+                      side["label"], font=label_font, fill=SUB)
+            draw.text((cx_side - draw.textlength(side["value"], font=value_font) / 2, base_y + 30),
+                      side["value"], font=value_font,
+                      fill=DOWN if side.get("down") else UP)
+    if note:
+        centered(note, height - 74, korean_font(18), SUB)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    image.save(output_path)
+    return output_path
