@@ -654,6 +654,54 @@ def institutions(top: int = 12) -> dict:
                     "지금의 포지션이 아닙니다."}
 
 
+
+# ── 엔진 9. 업종별 등락 (네이버 금융, 키 불필요) ───────────────────────
+_UPJONG_URL = "https://finance.naver.com/sise/sise_group.naver"
+_UPJONG_ROW = re.compile(
+    r'sise_group_detail\.naver\?type=upjong&no=\d+">([^<]+)</a>.*?'
+    r'<span class="tah p11[^"]*">\s*([+\-]?[\d.]+)%\s*</span>.*?'
+    r'<td class="number">(\d+)</td>\s*<td class="number">(\d+)</td>\s*'
+    r'<td class="number">(\d+)</td>\s*<td class="number">(\d+)</td>',
+    re.S)
+
+
+def sectors(top: int = 8) -> dict:
+    """한국 시장의 업종별 등락과 그 안의 상승·하락 종목 수를 가져옵니다.
+
+    벤치마크가 `섹터별 흐름`으로 쓰는 자료입니다. 우리 워치리스트는 37종목뿐이라
+    "오늘 어느 업종이 움직였나"를 시장 전체로 볼 수 없었습니다. 이 엔진이 그
+    구멍을 메웁니다.
+
+    같은 등락률이라도 **업종 안에서 몇 종목이 올랐는지**가 다릅니다. 한 종목이
+    끌어올린 업종과 열 종목이 함께 오른 업종은 다른 이야기라, 종목 수도 같이
+    돌려줍니다.
+
+    키가 필요 없습니다. 다만 공식 API가 아니라 페이지 파싱이라 네이버가 화면을
+    바꾸면 깨집니다 — `fetch_foreign_flows`와 같은 성격입니다.
+    """
+    try:
+        response = requests.get(_UPJONG_URL, params={"type": "upjong"},
+                                headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
+        response.raise_for_status()
+        html = response.content.decode("euc-kr", errors="replace")
+    except Exception as exc:
+        return {"engine": "sectors", "error": f"업종 시세를 받지 못했습니다: {exc}"}
+
+    rows = []
+    for name, change, total, up, flat, down in _UPJONG_ROW.findall(html):
+        rows.append({"name": name.strip(), "change_pct": float(change),
+                     "stocks": int(total), "up": int(up),
+                     "flat": int(flat), "down": int(down)})
+    if not rows:
+        return {"engine": "sectors",
+                "error": "업종 행을 하나도 읽지 못했습니다 — 페이지 구조가 바뀌었을 수 있습니다."}
+    rows.sort(key=lambda r: -r["change_pct"])
+    return {"engine": "sectors", "asof": dt.date.today().isoformat(),
+            "count": len(rows), "gainers": rows[:top], "losers": rows[-top:][::-1],
+            "note": "업종 등락률만 보지 말고 그 안에서 몇 종목이 올랐는지 함께 보십시오. "
+                    "한 종목이 끌어올린 업종과 여럿이 함께 오른 업종은 다릅니다."}
+
+
 # ── 출력 ───────────────────────────────────────────────────────────────
 def _print(result: dict) -> None:
     engine = result.get("engine")
@@ -699,6 +747,14 @@ def _print(result: dict) -> None:
         for buy in result["buys"]:
             print(f"  {buy['date']} {buy['name']:<10} ${buy['value_usd']:>12,}  "
                   f"{buy['owner']} ({buy['title'] or '직위 미상'})")
+        print("  " + result["note"])
+    elif engine == "sectors":
+        print(f"[업종 등락] {result['asof']} · 업종 {result['count']}개")
+        for label, rows in (("오른 쪽", result["gainers"]), ("내린 쪽", result["losers"])):
+            print(f"  {label}")
+            for row in rows:
+                print(f"    {row['name'][:14]:<15}{row['change_pct']:>+7.2f}%  "
+                      f"{row['stocks']:>3}종목 중 상승 {row['up']:>3} / 하락 {row['down']:>3}")
         print("  " + result["note"])
     elif engine == "institutions":
         print(f"[기관 보유 변동] 펀드 {result['funds']}곳 · 13F "
@@ -748,7 +804,7 @@ def _print(result: dict) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="글감 엔진 — 재료만 만들고 문장은 쓰지 않습니다.")
     parser.add_argument("engine", choices=["valuation", "ratings", "earnings",
-                                           "insiders", "kr_insiders", "institutions", "flows",
+                                           "insiders", "kr_insiders", "institutions", "flows", "sectors",
                                            "seasonality", "all"])
     parser.add_argument("--market", choices=["kr", "us"], default="us")
     parser.add_argument("--days", type=int)
@@ -763,12 +819,13 @@ def main() -> int:
         "insiders": lambda: insiders(args.days or 14),
         "kr_insiders": lambda: kr_insiders(args.days or 7),
         "institutions": lambda: institutions(),
+        "sectors": lambda: sectors(),
         "flows": lambda: flows(args.date),
         "seasonality": lambda: seasonality(args.market),
     }
     names = list(runners) if args.engine == "all" else [args.engine]
     if args.engine == "all" and args.market == "us":
-        for name in ("flows", "kr_insiders"):
+        for name in ("flows", "kr_insiders", "sectors"):
             names.remove(name)                 # 한국장 전용
     elif args.engine == "all":
         for name in ("insiders", "institutions"):

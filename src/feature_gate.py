@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 
 from scripts import check_against_benchmark, compare_to_benchmark
-from src import editorial_quality, editorial_title, feature_checks
+from src import editorial_quality, editorial_title, feature_checks, source_check
 
 
 class FeatureGateError(ValueError):
@@ -23,7 +23,11 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     blocking = []
     blocking.extend(editorial_quality.collect_issues(ko))
     blocking.extend(editorial_title.collect_issues(ko))
-    blocking.extend(feature_checks.collect_issues(doc, graphics=graphics))
+    notes: list[str] = []
+    blocking.extend(feature_checks.collect_issues(doc, graphics=graphics, notes_out=notes))
+    # 오늘 이 글이 막힌 이유는 문장이 아니라 재료였습니다. 재료를 안 뽑고 쓴 글은
+    # 여기서 멈춥니다 — 사람이 엔진 돌리기를 기억하는 데 기대지 않습니다.
+    blocking.extend(source_check.collect_issues(doc))
 
     benchmark_words = []
     if check_against_benchmark.CORPUS.exists():
@@ -34,7 +38,9 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
         benchmark_words = ["벤치마크 코퍼스 없음: 단어 대조는 보고만 건너뜀"]
 
     benchmark_shape = compare_to_benchmark.measure(ko)
-    result = {"blocking": blocking, "benchmark_words": benchmark_words,
+    result = {"blocking": blocking, "notes": notes,
+              "sources": source_check.collect(doc),
+              "benchmark_words": benchmark_words,
               "benchmark_shape": benchmark_shape}
     if blocking:
         raise FeatureGateError("기준표 발행 검사 실패:\n- " + "\n- ".join(blocking))
@@ -48,8 +54,20 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--graphics", required=True, type=int)
     args = parser.parse_args(argv)
     doc = json.loads(Path(args.path).read_text(encoding="utf-8"))
-    result = run(doc, args.graphics, Path(args.path))
+    # 사람이 읽는 화면에 파이썬 스택트레이스를 뱉지 않습니다. 어디가 어긋났는지만
+    # 보여주고 종료 코드로 실패를 알립니다.
+    try:
+        result = run(doc, args.graphics, Path(args.path))
+    except FeatureGateError as error:
+        print(str(error))
+        return 1
+
     print("통합 게이트 통과")
+    sources = result["sources"]
+    print(f"[외부 출처] {sources['distinct']}곳 — " + " · ".join(
+        f"{k}: {', '.join(v)}" for k, v in sources["found"].items()) or "없음")
+    for note in result["notes"]:
+        print("[참고] " + note)
     for issue in result["benchmark_words"]:
         print("[벤치마크 단어 참고] " + issue)
     if result["benchmark_shape"]:

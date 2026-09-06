@@ -299,3 +299,45 @@ class InstitutionsTest(unittest.TestCase):
         self.assertEqual(holdings["02079K305"]["shares"], 300)
         self.assertEqual(holdings["02079K107"]["shares"], 200)
         self.assertEqual(holdings["02079K305"]["klass"], "CAP STK CL A")
+
+
+class SectorsTest(unittest.TestCase):
+    """업종별 등락 파싱. 실제 응답은 2026-09-06에 79개 업종으로 확인했습니다."""
+
+    HTML = ('<tr><td><a href="/sise/sise_group_detail.naver?type=upjong&no=288">건강관리기술</a></td>'
+            '<td class="number"><span class="tah p11 red01">+21.80%</span></td>'
+            '<td class="number">13</td><td class="number">10</td>'
+            '<td class="number">0</td><td class="number">3</td></tr>'
+            '<tr><td><a href="/sise/sise_group_detail.naver?type=upjong&no=305">은행</a></td>'
+            '<td class="number"><span class="tah p11 nv01">-3.21%</span></td>'
+            '<td class="number">11</td><td class="number">2</td>'
+            '<td class="number">1</td><td class="number">8</td></tr>')
+
+    def _response(self, html: str):
+        response = mock.Mock(status_code=200)
+        response.raise_for_status = lambda: None
+        response.content = html.encode("euc-kr")
+        return response
+
+    def test_parses_change_and_breadth(self) -> None:
+        """등락률만이 아니라 업종 안의 상승·하락 종목 수도 읽습니다.
+
+        한 종목이 끌어올린 업종과 여럿이 함께 오른 업종은 다른 이야기입니다.
+        """
+        with mock.patch.object(story_engines.requests, "get",
+                               lambda *a, **k: self._response(self.HTML)):
+            result = story_engines.sectors()
+        self.assertEqual(result["count"], 2)
+        top = result["gainers"][0]
+        self.assertEqual(top["name"], "건강관리기술")
+        self.assertEqual(top["change_pct"], 21.80)
+        self.assertEqual((top["up"], top["down"]), (10, 3))
+        self.assertEqual(result["losers"][0]["name"], "은행")
+
+    def test_layout_change_is_reported_not_silent(self) -> None:
+        """한 행도 못 읽으면 '업종이 없다'가 아니라 구조가 바뀐 것입니다."""
+        with mock.patch.object(story_engines.requests, "get",
+                               lambda *a, **k: self._response("<html></html>")):
+            result = story_engines.sectors()
+        self.assertIn("error", result)
+        self.assertIn("구조", result["error"])
