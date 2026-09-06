@@ -1,0 +1,181 @@
+# 시황 대표 이미지에 쓸 **미리 승인된** 사진 보관함
+#
+# 왜 이런 파일이 있는가
+# ---------------------
+# 시황은 사람 검수 없이 자동 공개됩니다. 발행 시점에 사진을 검색하면
+# `korean bank`가 삼청빌라로, `korean won banknote`가 중국 위안화로 나온 그대로
+# 사이트에 걸립니다(둘 다 실측). 그래서 **검색은 사람이 미리 하고, 자동 실행은
+# 이 목록에서 고르기만 합니다.**
+#
+# 아래 20장은 2026-09-06에 Openverse에서 받아 `Read` 툴로 한 장씩 눈으로 보고
+# 고른 것입니다. `seen`은 검색어가 아니라 **사진에 실제로 보이는 것**을 적은
+# 줄입니다 — 검색어를 믿지 않는다는 이 저장소의 원칙을 파일 형식으로 굳혔습니다.
+#
+# 추가하는 방법
+# -------------
+#   python -m src.photo_search --sheet <이름> <검색어들> --out output/pool
+#   대조표를 `Read`로 열어 보고 → assets/photos/에 넣고 → 여기 항목을 적는다
+#
+# 라이선스: CC BY 계열만 씁니다. 표시 의무가 있어 `credit`을 미디어 캡션에
+# 그대로 싣습니다. NC(비상업)·ND(변형금지)는 photo_search가 애초에 거릅니다.
+photos:
+  - id: semi-wafer-dies
+    file: assets/photos/semi-wafer-dies.jpg
+    sector: "반도체"
+    tickers: ["005930", "000660", "009150", "042700", "NVDA", "MU", "INTC", "SOXX"]
+    seen: "빛을 받아 색이 도는 웨이퍼 위에 다이가 격자로 늘어서 있다"
+    credit: "사진: DrHughManning / 위키미디어 공용 (BY-SA 4.0)"
+    license: "BY-SA 4.0"
+    source_page: "https://commons.wikimedia.org/w/index.php?curid=74892083"
+  - id: semi-chip-board
+    file: assets/photos/semi-chip-board.jpg
+    sector: "반도체"
+    tickers: ["005930", "000660", "009150", "042700", "NVDA", "MU", "INTC", "SOXX"]
+    seen: "기판에 얹힌 칩을 얕은 심도로 당겨 찍었다"
+    credit: "사진: Un ragazzo chiamato Bi / 플리커 (BY-SA 2.0)"
+    license: "BY-SA 2.0"
+    source_page: "https://www.flickr.com/photos/57688343@N00/2497324185"
+  - id: semi-wafer-rainbow
+    file: assets/photos/semi-wafer-rainbow.jpg
+    sector: "반도체"
+    tickers: ["005930", "000660", "009150", "042700", "NVDA", "MU", "INTC", "SOXX"]
+    seen: "웨이퍼 표면이 회절로 무지개빛을 낸다"
+    credit: "사진: naotakem / 플리커 (BY 2.0)"
+    license: "BY 2.0"
+    source_page: "https://www.flickr.com/photos/12832970@N00/148029403"
+  - id: semi-fab-cleanroom
+    file: assets/photos/semi-fab-cleanroom.jpg
+    sector: "반도체"
+    tickers: ["005930", "000660", "009150", "042700", "NVDA", "MU", "INTC", "SOXX"]
+    seen: "방진복을 입은 작업자 둘이 팹 통로를 걸어온다"
+    credit: "사진: STMicroelectronics (original work) Una tantum (screenshot) / 위키미디어 공용 (BY 3.0)"
+    license: "BY 3.0"
+    source_page: "https://commons.wikimedia.org/w/index.php?curid=162984783"
+  - id: fin-trading-floor
+    file: assets/photos/fin-trading-floor.jpg
+    sector: "금융"
+    tickers: ["105560", "055550", "032830", "COIN"]
+    seen: "단말이 줄줄이 놓인 거래소 객장을 위에서 내려다봤다"
+    credit: "사진: S.aderogba / 위키미디어 공용 (BY-SA 4.0)"
+    license: "BY-SA 4.0"
+    source_page: "https://commons.wikimedia.org/w/index.php?curid=82528018"
+  - id: fin-exchange-tickers
+    file: assets/photos/fin-exchange-tickers.jpg
+    sector: "금융"
+    tickers: ["105560", "055550", "032830", "COIN"]
+    seen: "거래소 천장을 두른 시세 전광판에 붉고 푸른 숫자가 흐른다"
+    credit: "사진: ehnmark / 플리커 (BY 2.0)"
+    license: "BY 2.0"
+    source_page: "https://www.flickr.com/photos/48600108001@N01/3970640849"
+  - id: auto-hyundai-line
+    file: assets/photos/auto-hyundai-line.jpg
+    sector: "자동차"
+    tickers: ["005380", "000270"]
+    seen: "현대차 조립 라인에서 차체가 컨베이어에 매달려 있다"
+    credit: "사진: User: Anonyme / 위키미디어 공용 (BY 2.5)"
+    license: "BY 2.5"
+    source_page: "https://commons.wikimedia.org/w/index.php?curid=1987247"
+  - id: auto-assembly-line
+    file: assets/photos/auto-assembly-line.jpg
+    sector: "자동차"
+    tickers: ["005380", "000270", "TSLA"]
+    seen: "완성 직전의 흰색·초록색 차량이 라인에 늘어서 있다"
+    credit: "사진: Marek Ślusarczyk (Tupungato) Photo portfolio / 위키미디어 공용 (BY 3.0)"
+    license: "BY 3.0"
+    source_page: "https://commons.wikimedia.org/w/index.php?curid=116381370"
+  - id: ship-crane-clyde
+    file: assets/photos/ship-crane-clyde.jpg
+    sector: "조선·방산"
+    tickers: ["329180", "012450"]
+    seen: "글래스고 조선소의 대형 캔틸레버 크레인이 하늘을 가른다"
+    credit: "사진: Elsie esq. / 플리커 (BY 2.0)"
+    license: "BY 2.0"
+    source_page: "https://www.flickr.com/photos/61132483@N00/790220139"
+  - id: ship-crane-river
+    file: assets/photos/ship-crane-river.jpg
+    sector: "조선·방산"
+    tickers: ["329180", "012450"]
+    seen: "강가에 선 조선소 크레인과 정박한 범선"
+    credit: "사진: Elsie esq. / 플리커 (BY 2.0)"
+    license: "BY 2.0"
+    source_page: "https://www.flickr.com/photos/61132483@N00/791099770"
+  - id: power-nuclear-river
+    file: assets/photos/power-nuclear-river.jpg
+    sector: "발전·원전"
+    tickers: ["034020"]
+    seen: "강 건너로 원자로 돔 두 개가 보이는 원전 전경"
+    credit: "사진: Tony Fischer Photography / 플리커 (BY 2.0)"
+    license: "BY 2.0"
+    source_page: "https://www.flickr.com/photos/22714323@N06/2755502911"
+  - id: power-cooling-towers
+    file: assets/photos/power-cooling-towers.jpg
+    sector: "발전·원전"
+    tickers: ["034020"]
+    seen: "냉각탑 두 기가 해질녘에 수증기 기둥을 뿜는다"
+    credit: "사진: AmyZZZ1 / 플리커 (BY-SA 2.0)"
+    license: "BY-SA 2.0"
+    source_page: "https://www.flickr.com/photos/42232541@N04/4165048616"
+  - id: batt-ev-charging
+    file: assets/photos/batt-ev-charging.jpg
+    sector: "2차전지"
+    tickers: ["373220", "247540", "TSLA"]
+    seen: "붉은 전기차가 주차장 충전기에 케이블을 물고 서 있다"
+    credit: "사진: Grand Canyon NPS / 플리커 (BY 2.0)"
+    license: "BY 2.0"
+    source_page: "https://www.flickr.com/photos/50693818@N08/48634089611"
+  - id: batt-cells
+    file: assets/photos/batt-cells.jpg
+    sector: "2차전지"
+    tickers: ["373220", "247540"]
+    seen: "손에 쥔 초록색 원통형 배터리 셀 묶음"
+    credit: "사진: toolstop / 플리커 (BY 2.0)"
+    license: "BY 2.0"
+    source_page: "https://www.flickr.com/photos/42408834@N06/4016084009"
+  - id: bio-pipettes
+    file: assets/photos/bio-pipettes.jpg
+    sector: "바이오"
+    tickers: ["207940", "196170", "068270", "MRNA", "MRK"]
+    seen: "실험실 거치대에 피펫이 비스듬히 꽂혀 있다"
+    credit: "사진: J.N. Eskra / 위키미디어 공용 (BY-SA 4.0)"
+    license: "BY-SA 4.0"
+    source_page: "https://commons.wikimedia.org/w/index.php?curid=77326661"
+  - id: bio-tube-tips
+    file: assets/photos/bio-tube-tips.jpg
+    sector: "바이오"
+    tickers: ["207940", "196170", "068270", "MRNA", "MRK"]
+    seen: "파란 바탕에 튜브 팁이 격자로 빽빽하다"
+    credit: "사진: audrey_sel / 플리커 (BY-SA 2.0)"
+    license: "BY-SA 2.0"
+    source_page: "https://www.flickr.com/photos/92126232@N00/178798216"
+  - id: plat-server-racks
+    file: assets/photos/plat-server-racks.jpg
+    sector: "플랫폼"
+    tickers: ["035420", "035720", "MSFT", "AMZN", "META", "GOOGL"]
+    seen: "케이블이 촘촘한 서버 랙이 양쪽으로 늘어서 있다"
+    credit: "사진: torkildr / 플리커 (BY-SA 2.0)"
+    license: "BY-SA 2.0"
+    source_page: "https://www.flickr.com/photos/8718930@N07/3463419826"
+  - id: plat-server-corridor
+    file: assets/photos/plat-server-corridor.jpg
+    sector: "플랫폼"
+    tickers: ["035420", "035720", "MSFT", "AMZN", "META", "GOOGL"]
+    seen: "CERN 서버실의 곧은 통로가 소실점으로 뻗는다"
+    credit: "사진: torkildr / 플리커 (BY-SA 2.0)"
+    license: "BY-SA 2.0"
+    source_page: "https://www.flickr.com/photos/8718930@N07/3462606643"
+  - id: robo-tesla-arms
+    file: assets/photos/robo-tesla-arms.jpg
+    sector: "로봇"
+    tickers: ["277810", "TSLA"]
+    seen: "테슬라 공장에서 붉은 로봇 팔들이 차체를 둘러싸고 있다"
+    credit: "사진: jurvetson / 플리커 (BY 2.0)"
+    license: "BY 2.0"
+    source_page: "https://www.flickr.com/photos/44124348109@N01/7408451314"
+  - id: robo-tesla-line
+    file: assets/photos/robo-tesla-line.jpg
+    sector: "로봇"
+    tickers: ["277810", "TSLA"]
+    seen: "테슬라 조립 라인 전체를 넓은 화각으로 담았다"
+    credit: "사진: jurvetson / 플리커 (BY 2.0)"
+    license: "BY 2.0"
+    source_page: "https://www.flickr.com/photos/44124348109@N01/6858583426"

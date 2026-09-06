@@ -75,6 +75,13 @@ TIMEOUT = 30
 # 워드프레스가 썸네일을 만들며 크기를 바꿉니다.
 _BLOCKED = ("nc", "nd")
 
+# 사진이 아닌 것들. 2026-09-06에 `power plant industrial` 검색 결과 12칸 중 2칸이
+# **지도 마커 아이콘**이었습니다. 표지에 쓸 수 없는데 자리를 차지해, 한 판에
+# 12장을 펼쳐 놓는 이 도구의 효율을 그대로 깎아먹습니다.
+_NOT_PHOTOS = ("icon", "logo", "svg", "clipart", "clip art", "map marker",
+               "coat of arms", "flag of", "diagram", "chart")
+_MIN_EDGE = 500          # 아이콘·썸네일은 대체로 이보다 작습니다
+
 
 def search(query: str, limit: int = 8, commercial_only: bool = True) -> list[dict]:
     params = {"q": query, "page_size": max(limit * 2, 10)}
@@ -87,6 +94,13 @@ def search(query: str, limit: int = 8, commercial_only: bool = True) -> list[dic
         license_code = (item.get("license") or "").lower()
         if commercial_only and any(part in license_code.split("-") for part in _BLOCKED):
             continue
+        title = (item.get("title") or "").lower()
+        url = (item.get("url") or "").lower()
+        if any(word in title for word in _NOT_PHOTOS) or url.endswith(".svg"):
+            continue
+        width, height = item.get("width") or 0, item.get("height") or 0
+        if width and height and min(width, height) < _MIN_EDGE:
+            continue                       # 표지로 쓰기엔 너무 작습니다
         rows.append({
             "title": item.get("title") or "",
             "license": f"{license_code.upper()} {item.get('license_version') or ''}".strip(),
