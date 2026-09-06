@@ -311,3 +311,56 @@ def rate_compare(rows: list[dict], output_path: Path,
     output_path.parent.mkdir(parents=True, exist_ok=True)
     image.save(output_path)
     return output_path
+
+
+def guide_cover(output_path: Path, kicker: str, subject: str,
+                up: dict | None = None, down: dict | None = None,
+                note: str = "") -> Path:
+    """가이드 글 표지. **시황 카드와 다른 어법으로 그립니다.**
+
+    시황의 대표 이미지는 지수 KPI를 상자에 담습니다. 같은 모양을 가이드에 쓰면
+    "그날 시황"처럼 읽힙니다 — 가이드는 그날 숫자가 아니라 관계를 다루는 글입니다.
+    그래서 숫자 상자 대신 **화살표 두 개로 대비 자체를 그립니다.**
+
+    사진을 쓰지 않는 이유도 적어 둡니다. 2026-09-07에 `bank building seoul`로
+    받은 것은 용산 도시 전경이었고 `korean bank`는 계곡에서 밥 먹는 사람들이었습니다.
+    `KB금융`·`신한지주`는 결과가 아예 없습니다. 무관한 사진은 없는 것보다 나쁩니다.
+    """
+    ensure_korean_font()
+    width, height = 1200, 630
+    image = Image.new("RGB", (width, height), BG)
+    draw = ImageDraw.Draw(image)
+    draw.rectangle([40, 40, width - 40, height - 40], fill=PANEL, outline=LINE)
+
+    def centered(text: str, y: int, font, fill) -> None:
+        draw.text(((width - draw.textlength(text, font=font)) / 2, y), text,
+                  font=font, fill=fill)
+
+    centered(kicker, 96, korean_font(23, bold=True), SUB)
+    centered(subject, 148, korean_font(46, bold=True), INK)
+
+    # 화살표 둘. 위로 가는 것과 아래로 가는 것을 나란히 놓아 대비를 만듭니다.
+    base_y, top_y = 430, 268
+    for side, item, color in ((-1, up, UP), (1, down, DOWN)):
+        if not item:
+            continue
+        cx = width // 2 + side * 210
+        rising = color is UP
+        y0, y1 = (base_y, top_y) if rising else (top_y, base_y)
+        draw.line([cx, y0, cx, y1], fill=color, width=7)
+        head = 18
+        tip = y1
+        draw.polygon([(cx - head, tip + (head if rising else -head)),
+                      (cx + head, tip + (head if rising else -head)),
+                      (cx, tip)], fill=color)
+        label_font, value_font = korean_font(22), korean_font(40, bold=True)
+        draw.text((cx - draw.textlength(item["label"], font=label_font) / 2, base_y + 28),
+                  item["label"], font=label_font, fill=SUB)
+        draw.text((cx - draw.textlength(item["value"], font=value_font) / 2, base_y + 60),
+                  item["value"], font=value_font, fill=color)
+
+    if note:
+        centered(note, height - 96, korean_font(20), SUB)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    image.save(output_path)
+    return output_path
