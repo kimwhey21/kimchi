@@ -92,6 +92,16 @@
   .mb-source-name { color: var(--mb-text-muted); font-size: 12px; font-weight: 700; }
   .mb-source-item a { min-width: 0; color: var(--mb-text); font-size: 13px; line-height: 1.55; text-decoration-thickness: 1px; text-underline-offset: 2px; overflow-wrap: break-word; }
   footer { margin-top: 48px; font-size: 12px; color: var(--mb-text-muted); border-top: 1px solid var(--mb-border); padding-top: 16px; }
+  /* 관련 글 박스. 시황(post.html.j2)과 기준표(feature.html.j2)가 같이 쓴다 —
+     2026-09-06에 여기 없이 feature.html.j2에만 있었다가 시황에도 넣으면서
+     공유 파일로 옮겼다(복사해 두면 한쪽만 바뀐다는 원칙, 이 파일 맨 위 참고). */
+  .mb-related { margin-top: 32px; padding: 20px 24px; background: var(--mb-card); border: 1px solid var(--mb-border); border-radius: 14px; }
+  .mb-related-label { font-size: 13px; font-weight: 700; color: var(--mb-text-muted); margin: 0 0 4px; }
+  .mb-related-list { list-style: none; margin: 0; padding: 0; }
+  .mb-related-list li { padding: 12px 0; border-top: 1px solid var(--mb-border); }
+  .mb-related-list li:first-child { border-top: none; }
+  .mb-related-list a { color: var(--mb-text); font-weight: 600; font-size: 15px; text-decoration: none; }
+  .mb-related-list a:hover { text-decoration: underline; }
 
   @media (max-width: 480px) {
     body { padding: 24px 14px 60px; }

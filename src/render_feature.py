@@ -40,4 +40,5 @@ def render(doc: dict, kicker: str, figures: dict[int, dict] | None = None,
         meta_description=meta_description,
         closing={"heading": closing.get("heading", ""),
                  "paragraphs": _paragraphs(closing.get("body", ""))},
+        related=doc.get("related") or [],
     )

@@ -40,9 +40,16 @@
     {% endfor %}
   </div>
 
-  <p class="mb-disclaimer"><em>이 글은 정보 제공을 목적으로 하며 특정 종목의
-  매수·매도를 권유하지 않습니다. 목표주가는 확정된 사실이 아니라 애널리스트
-  전망치이며, 투자 판단과 그 결과는 투자자 본인에게 있습니다. 그래픽은 모두
-  기사에 인용한 것과 같은 시세·추정치 데이터로 직접 그렸습니다.</em></p>
+  {% if related %}
+  <div class="mb-related">
+    <p class="mb-related-label">관련 글</p>
+    <ul class="mb-related-list">
+      {% for item in related %}<li><a href="{{ item.url }}">{{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <footer>이 글은 정보 제공을 목적으로 하며 특정 종목의 매수·매도를 권유하지 않습니다.</footer>
 </body>
 </html>
