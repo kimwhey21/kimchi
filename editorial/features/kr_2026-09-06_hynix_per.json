@@ -41,9 +41,9 @@
  },
  "category_id": 153,
  "featured_photo": {
-  "local_path": "output/features/cover_hynix.jpg",
-  "alt": "SK하이닉스 DDR5 Tall MRDIMM 메모리 모듈",
-  "credit": "사진: 4300streetcar / 위키미디어 공용 (CC BY 4.0)",
-  "credit_url": "https://commons.wikimedia.org/wiki/File:SK_Hynix_DDR5_Tall_MRDIMM.jpg"
+  "local_path": "output/features/cover_semi_new.jpg",
+  "alt": "핀셋으로 반도체 칩을 기판에 놓는 모습",
+  "credit": "사진: Vishnu Mohanan / Unsplash",
+  "credit_url": "https://unsplash.com/photos/tweezers-placing-a-small-black-microchip"
  }
 }

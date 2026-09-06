@@ -241,9 +241,9 @@
   }
  ],
  "featured_photo": {
-  "local_path": "output/features/cover_kb.jpg",
-  "alt": "KB국민은행 옥천지점 외관",
-  "credit": "사진: LandAndTree / 위키미디어 공용 (CC0)",
-  "credit_url": "https://commons.wikimedia.org/wiki/File:Kookmin_Bank_Okcheon_Branch_20240730.jpg"
+  "local_path": "output/features/cover_bank_new.jpg",
+  "alt": "고층 금융가 빌딩을 올려다본 모습",
+  "credit": "사진: Sean Pollock / Unsplash",
+  "credit_url": "https://unsplash.com/photos/low-angle-photo-of-city-high-rise-buildings"
  }
 }

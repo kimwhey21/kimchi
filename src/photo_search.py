@@ -31,10 +31,25 @@
 `BY-NC`(비상업)와 `BY-ND`(변형금지)는 기본으로 거릅니다 — 블로그는 상업적
 이용으로 볼 여지가 있고, 워드프레스가 썸네일을 만들면서 크기를 바꿉니다.
 
+고르는 순서
+-----------
+1. **그 회사 사진을 먼저 찾습니다.** 위키미디어 공용에 실제 사진이 있습니다
+   (`Kookmin Bank Okcheon Branch`, `SK Hynix DDR5`). 있으면 그게 제일 좋습니다.
+2. **없거나 마음에 안 들면 한 단계 넓힙니다.** 은행주 글이면 `bank`·`financial
+   district`, 반도체 글이면 `microchip`·`semiconductor`. 특정 회사가 아니어도
+   업종이 맞으면 표지로 충분합니다. 유니스플래시에 이런 사진은 많습니다.
+3. **후보를 한 장에 모아 놓고 고릅니다.** `--sheet`가 여러 검색어를 한 번에 돌려
+   번호가 붙은 대조표를 만듭니다.
+
+2026-09-07에 이 순서를 안 지켜 시간을 버렸습니다. 그 회사 사진만 고집하다가
+한 장씩 골라 보여 주고 퇴짜맞기를 여섯 번 반복했습니다. **한 장씩 들이밀지
+말고 열두 장을 한 번에 펼치십시오.**
+
 사용법
 ------
-    python -m src.photo_search "SK Hynix" --out output/photos
-    python -m src.photo_search "Kookmin Bank" --all-licenses
+    python -m src.photo_search "SK Hynix"
+    python -m src.photo_search --sheet 반도체 "SK Hynix" microchip semiconductor
+    python -m src.photo_search --sheet 은행 bank "financial district" "bank building"
 """
 from __future__ import annotations
 
@@ -138,23 +153,85 @@ def credit(row: dict) -> str:
     return f"사진: {who} / {where} ({row.get('license', '')})".strip()
 
 
+def contact_sheet(name: str, queries: list[str], out_dir: Path,
+                  per_query: int = 3) -> Path:
+    """검색어 여러 개를 한 번에 돌려 번호가 붙은 대조표 한 장을 만듭니다.
+
+    한 장씩 보여 주고 고르게 하면 왕복이 길어집니다. 열두 장을 한 화면에 펼쳐
+    번호로 고르게 하는 편이 훨씬 빠릅니다(2026-09-07에 배운 것).
+    """
+    from PIL import ImageDraw
+    from src.data_graphics import ensure_korean_font, korean_font
+    ensure_korean_font()
+
+    cands: list[dict] = []
+    for query in queries:
+        try:
+            rows = search(query, limit=per_query)
+        except Exception:
+            continue
+        for row in download(rows, out_dir / query.replace(" ", "_")):
+            row["query"] = query
+            cands.append(row)
+    if not cands:
+        raise SystemExit("후보를 하나도 받지 못했습니다. 검색어를 영어로 바꿔 보십시오.")
+
+    cands = cands[:12]
+    cols, cell_w, cell_h = 3, 620, 470
+    rows_n = (len(cands) + cols - 1) // cols
+    sheet = Image.new("RGB", (cols * cell_w, rows_n * (cell_h + 76)), "#F5F1EA")
+    draw = ImageDraw.Draw(sheet)
+    for index, row in enumerate(cands):
+        x, y = (index % cols) * cell_w, (index // cols) * (cell_h + 76)
+        draw.rectangle([x + 8, y + 8, x + cell_w - 8, y + cell_h + 8],
+                       fill="#FFFFFF", outline="#E3DED5")
+        try:
+            image = Image.open(row["local_path"]).convert("RGB")
+            image.thumbnail((cell_w - 40, cell_h - 40))
+            sheet.paste(image, (x + 20 + (cell_w - 40 - image.width) // 2,
+                                y + 20 + (cell_h - 40 - image.height) // 2))
+        except Exception:
+            pass
+        row["label"] = f"{index + 1:02d}"
+        draw.text((x + 20, y + cell_h + 18), f"{row['label']}   {row['query'][:24]}",
+                  font=korean_font(23, bold=True), fill="#16202C")
+        draw.text((x + 20, y + cell_h + 48), f"{row['license']} · {row['title'][:34]}",
+                  font=korean_font(15), fill="#6B7785")
+    path = out_dir / f"sheet_{name}.png"
+    sheet.save(path)
+    (out_dir / f"sheet_{name}.json").write_text(
+        json.dumps(cands, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"대조표 {len(cands)}장 → {path}\n")
+    for row in cands:
+        print(f"  {row['label']}  {row['query'][:20]:<22} {row['license']:<12} {row['local_path']}")
+    print("\n**번호로 고르십시오.** 한 장씩 들이밀지 마십시오.")
+    return path
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("query")
+    parser.add_argument("--sheet", metavar="이름",
+                        help="검색어 여러 개를 한 번에 돌려 대조표 한 장을 만듭니다")
+    parser.add_argument("query", nargs="+")
     parser.add_argument("--limit", type=int, default=8)
     parser.add_argument("--out", default="output/photos")
     parser.add_argument("--all-licenses", action="store_true",
                         help="NC·ND까지 포함(쓰기 전에 조건을 직접 확인하십시오)")
     args = parser.parse_args()
 
-    rows = search(args.query, args.limit, commercial_only=not args.all_licenses)
+    if args.sheet:
+        contact_sheet(args.sheet, args.query, Path(args.out))
+        return 0
+
+    query = args.query[0]
+    rows = search(query, args.limit, commercial_only=not args.all_licenses)
     if not rows:
-        print(f"'{args.query}' 결과가 없습니다. 영어 회사명으로 다시 찾아보십시오 — "
+        print(f"'{query}' 결과가 없습니다. 영어 회사명으로 다시 찾아보십시오 — "
               f"한국어 검색은 대체로 빈손입니다.")
         return 1
-    out = Path(args.out) / args.query.replace(" ", "_")
+    out = Path(args.out) / query.replace(" ", "_")
     saved = download(rows, out)
-    print(f"'{args.query}' 후보 {len(saved)}장 → {out}\n")
+    print(f"'{query}' 후보 {len(saved)}장 → {out}\n")
     for row in saved:
         w, h = row.get("size", (0, 0))
         before_kb = row.get("bytes_before", 0) // 1024
