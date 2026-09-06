@@ -63,6 +63,12 @@ from pathlib import Path
 
 import requests
 import yaml
+from dotenv import load_dotenv
+
+# 이 모듈은 단독으로 실행됩니다(`python -m src.story_engines fred`). main.py가
+# 대신 불러 주지 않으므로 여기서 .env를 읽습니다 — 키를 넣어 두고도 "키가 없다"는
+# 답을 받는 일이 실제로 있었습니다.
+load_dotenv()
 
 # ETF·선물에는 재무 데이터가 없어 yfinance가 404를 stderr로 찍습니다. 종목별
 # 실패는 이미 건너뛰고 있으므로 로그만 조용히 시킵니다.
