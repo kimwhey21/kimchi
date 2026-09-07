@@ -1,0 +1,67 @@
+name: Story Material
+
+# 주말 기준표 루틴이 읽을 글감 재료를 GitHub Actions가 미리 뽑아 커밋합니다.
+#
+# 왜 여기서 뽑는가: 루틴 샌드박스에서는 야후 파이낸스 연결이 끊겨(2026-09-07 시험
+# 실행, curl_cffi "Connection reset by peer") 밸류에이션·등급변경·실적일정·계절성
+# 엔진이 전부 죽었습니다. Actions 러너는 매일 시세를 야후에서 받고 있으니 여기서는
+# 됩니다. 루틴은 data/engines_<market>_<KST 날짜>.txt가 있으면 그것을 읽고, 없을
+# 때만 직접 엔진을 돌립니다(docs/routine_feature.md).
+#
+# 시각: 토·일 08:10 KST(= 금·토 23:10 UTC). 루틴은 09:00 KST에 뜹니다.
+on:
+  schedule:
+    - cron: "10 23 * * 5,6"
+  workflow_dispatch:
+
+concurrency:
+  group: story-material
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  material:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 글감 재료 뽑기
+        # 엔진 하나가 죽어도 나머지는 남깁니다. 출력에 "⚠ N건을 받지 못했습니다"가
+        # 그대로 들어가므로 루틴이 '못 받았다'와 '0건'을 구분할 수 있습니다.
+        run: |
+          DATE=$(TZ=Asia/Seoul date +%F)
+          for m in us kr; do
+            echo "== $m =="
+            python -m src.story_engines all --market "$m" > "data/engines_${m}_${DATE}.txt" 2>&1 || true
+            wc -l "data/engines_${m}_${DATE}.txt"
+          done
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+
+      - name: 재료 파일 커밋
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/engines_*.txt
+          if git diff --cached --quiet; then
+            echo "커밋할 재료가 없습니다."
+            exit 0
+          fi
+          git commit -m "글감 재료: $(TZ=Asia/Seoul date +%F)"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo "재료 커밋 완료 (시도 $attempt)"; exit 0
+            fi
+            git pull --rebase origin main || exit 1
+          done
+          echo "::error::재료 파일을 push하지 못했습니다."; exit 1

@@ -36,7 +36,12 @@
 ## 절차
 
 1. `pip install -r requirements.txt`
-2. **재료.** `python -m src.story_engines all --market us`(토) 또는 `--market kr`(일).
+2. **재료.** 먼저 `ls data/engines_*_$(TZ=Asia/Seoul date +%F).txt`를 봅니다. GitHub
+   Actions(`story_material.yml`)가 토·일 08:10 KST에 두 시장의 엔진 출력을 이 파일로
+   커밋해 둡니다 — **이 파일을 읽으세요.** 샌드박스에서는 야후 파이낸스 연결이
+   끊겨 밸류에이션·등급변경·실적일정·계절성 엔진이 실패합니다(2026-09-07 실측).
+   파일이 없을 때만 `python -m src.story_engines all --market us`(토) 또는
+   `--market kr`(일)을 직접 돌립니다(DART·ECOS·FRED·수급 엔진은 샌드박스에서도 됩니다).
    결과를 훑어 **하나의 이야기**를 고릅니다. 기준은 셋입니다 — 시세만 봐서는
    모르는 새 사실인가, 숫자가 있는가, 날짜를 박을 확인 지점이 있는가.
    `⚠ N건을 받지 못했습니다`가 찍힌 엔진의 결과는 쓰지 않습니다. 고른 이야기를
