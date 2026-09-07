@@ -167,7 +167,10 @@
 
   {% if closing %}
   <div class="mb-closing">
-    <h2>{{ closing.heading }}</h2>
+    {# 마무리 절의 소제목은 원고가 아니라 여기서 정합니다. 루틴이 날마다 다른 말을
+       붙였고('정리하면'·'남는 것'·'마무리'…), 2026-09-07에 "Fermata's Take"가
+       '마무리'로 바뀐 것을 사용자가 바로 알아챘습니다. 브랜드 표식이라 고정합니다. #}
+    <h2>Fermata's Take</h2>
     {% for para in closing.body.split('\n\n') %}
     <p>{{ para|safe }}</p>
     {% endfor %}
