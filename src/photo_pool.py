@@ -84,15 +84,21 @@ def _candidates(photos: list[dict], entry: dict | None) -> list[dict]:
     return [p for p in photos if sector and p.get("sector") == sector]
 
 
-def pick(entry: dict | None, date_str: str, photos: list[dict] | None = None) -> dict | None:
+def pick(entry: dict | None, date_str: str, photos: list[dict] | None = None,
+         exclude: set[str] | None = None) -> dict | None:
     """그날 쓸 사진 하나. 맞는 것이 없으면 None(= 데이터 그래픽으로 갑니다).
 
     `date_str`로 돌려 쓰기 때문에 같은 종목이 이어져도 표지가 달라집니다.
     무작위가 아니라 날짜 함수라, 같은 날 다시 돌리면 같은 사진이 나옵니다 —
     재실행이 표지를 바꾸면 워드프레스에 미디어가 중복으로 쌓입니다.
+
+    `exclude`는 같은 글 안에서 이미 쓴 사진 id입니다(2026-09-07). 인사이트
+    스토리도 이 풀에서 고르게 되면서, 표지에 쓴 사진이 본문에 또 나오거나
+    같은 업종 스토리 둘이 같은 사진을 받는 것을 막습니다. 후보가 전부
+    제외되면 None — 억지로 다른 업종 사진을 붙이지 않습니다.
     """
     photos = photos if photos is not None else load()
-    hits = _candidates(photos, entry)
+    hits = [p for p in _candidates(photos, entry) if p["id"] not in (exclude or set())]
     if not hits:
         return None
     hits = sorted(hits, key=lambda p: p["id"])

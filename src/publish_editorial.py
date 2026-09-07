@@ -45,7 +45,7 @@ from src import (  # noqa: E402
     editorial_title,
     editorial_quality_en,
     featured_image,
-    fetch_images,
+    photo_pool,
     publish_wordpress,
     render_html,
 )
@@ -152,25 +152,77 @@ def _matched_core_name(query: str | None, price_data: dict) -> str | None:
     return None
 
 
-def _attach_story_images(doc_section: dict | None, price_data: dict) -> dict | None:
-    """인사이트 스토리에 사진을 붙입니다(위 조건을 통과한 것만)."""
+def _watchlist_entry_named(name: str, price_data: dict) -> dict | None:
+    """코어 종목명(한/영)으로 그날 워치리스트 항목을 찾습니다."""
+    for ticker, entry in (price_data.get("watchlist") or {}).items():
+        if entry.get("source") == "dynamic":
+            continue
+        if name in ((entry.get("name") or "").strip(), (entry.get("name_en") or "").strip()):
+            return {**entry, "ticker": entry.get("ticker") or ticker}
+    return None
+
+
+def _pool_image(photo: dict, upload: bool) -> dict:
+    """승인 풀 사진 하나를 템플릿이 읽는 image dict로 바꿉니다."""
+    path = photo_pool.resolve(photo)
+    url = str(path)
+    if upload and publish_wordpress.is_configured():
+        uploaded = publish_wordpress.upload_image_url(
+            {"local_path": str(path), "alt": photo.get("seen", ""),
+             "caption": photo.get("credit", ""), "id": photo["id"]}
+        )
+        if not uploaded:
+            raise publish_wordpress.WordPressPublishError(f"풀 사진 업로드 실패: {photo['id']}")
+        url = uploaded
+    return {"id": photo["id"], "url": url, "alt": photo.get("seen", ""),
+            "credit": photo.get("credit", ""), "credit_url": photo.get("source_page")}
+
+
+def _attach_story_images(doc_section: dict | None, price_data: dict, date_str: str = "",
+                         upload: bool = True, exclude_ids: set[str] | None = None) -> dict | None:
+    """인사이트 스토리 사진. 두 경로뿐이고 **둘 다 사람이 본 사진**입니다(2026-09-07).
+
+    1. 루틴이 `image`를 채워 보냈으면 그대로 씁니다. 루틴 샌드박스 네트워크가
+       열려서(2026-09-07 실측) 루틴이 Unsplash 후보를 직접 내려받아 `Read`로 보고
+       고른 뒤 **URL과 출처만** 원고에 적습니다 — 파일은 커밋하지 않습니다.
+       필수 키 `url`, 선택 `alt`·`photographer`·`photographer_url`·`credit`·
+       `credit_url`·`width`·`height`(템플릿이 그대로 읽습니다).
+    2. 없으면 `image_query`에 든 코어 종목명으로 승인 풀(`config/photo_pool.yaml`)
+       에서 그 종목·업종 사진을 고릅니다. 네트워크를 쓰지 않습니다. 풀에 없으면
+       사진 없이(표·차트만) 갑니다.
+
+    발행 시점의 실시간 검색은 뺐습니다. 아무도 안 보고 붙는 유일한 사진이었고,
+    실제로 'SK Hynix memory chip'에 로고 사진이 나갔습니다(2026-09-07). 사진이
+    없는 것이 틀린 사진보다 낫다는 원칙은 그대로입니다.
+    """
     if not doc_section or not doc_section.get("stories"):
         return doc_section
     stories = []
-    used: set[str] = set()
+    used: set[str] = set(exclude_ids or ())
     for story in doc_section["stories"]:
         story = dict(story)
+        provided = story.get("image")
+        if isinstance(provided, dict) and str(provided.get("url", "")).startswith("http"):
+            # 루틴이 눈으로 보고 고른 사진. 건드리지 않습니다.
+            print(f"[안내] 루틴이 고른 사진 사용: {provided.get('url')}")
+            stories.append(story)
+            continue
+        story["image"] = None
         query = story.get("image_query")
-        entity = _matched_core_name(query, price_data)
-        image = (
-            fetch_images.search_image(query, exclude_ids=used, entity=entity)
-            if entity
-            else None
-        )
-        if image:
-            used.add(image["id"])
-            print(f"[안내] 사진 첨부: '{query}' -> {image['id']} ({image.get('alt', '')[:40]})")
-        story["image"] = image
+        name = _matched_core_name(query, price_data)
+        entry = _watchlist_entry_named(name, price_data) if name else None
+        if entry:
+            try:
+                photo = photo_pool.pick(entry, date_str, exclude=used)
+            except photo_pool.PhotoPoolError as error:
+                print(f"[경고] 사진 풀을 읽지 못해 사진 없이 갑니다: {error}")
+                photo = None
+            if photo:
+                used.add(photo["id"])
+                story["image"] = _pool_image(photo, upload)
+                print(f"[안내] 풀 사진 첨부: '{query}' -> {photo['id']} ({photo.get('seen', '')[:40]})")
+            else:
+                print(f"[안내] 사진 없이 갑니다 — '{entry.get('name')}'({entry.get('sector')})에 맞는 풀 사진이 없습니다.")
         stories.append(story)
     return {**doc_section, "stories": stories}
 
@@ -307,7 +359,13 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
     # 인사이트 스토리 사진. 한국어판에서 찾은 사진을 영어판이 그대로 쓰도록
     # 순서를 맞춰 재사용합니다(같은 소재에 다른 사진이 붙지 않게, 그리고
     # Unsplash 호출을 두 배로 늘리지 않게).
-    ko["insight_section"] = _attach_story_images(ko.get("insight_section"), price_data)
+    # 표지가 풀 사진을 쓰는 날은 그 사진을 본문에서 다시 쓰지 않습니다.
+    cover_photo = featured_image._photo_for(price_data, ko, date_str)
+    ko["insight_section"] = _attach_story_images(
+        ko.get("insight_section"), price_data, date_str,
+        upload=not render_only,
+        exclude_ids={cover_photo["id"]} if cover_photo else None,
+    )
     if en and en.get("insight_section") and ko.get("insight_section"):
         ko_images = [s.get("image") for s in ko["insight_section"].get("stories", [])]
         en_stories = []
