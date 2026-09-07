@@ -52,5 +52,43 @@ class WorkflowsDoNotSilenceFailuresTest(unittest.TestCase):
                                      f"자동 실행에 연결하지 않습니다.")
 
 
+class MarketBriefIsFetchOnlyTest(unittest.TestCase):
+    """예약 시세 수집은 시세만 커밋하고 루틴을 깨웁니다 — 초안을 만들지 않습니다.
+
+    2026-09-07에 단순화한 구조입니다. 그 전에는 같은 워크플로가 규칙 기반 초안을
+    워드프레스 draft로 매일 올렸는데, 규칙상 절대 공개되지 않는 부산물이 관리자
+    화면 맨 위에 쌓여 "데이터만 나열한 글"로 오인됐고, 초안 검사가 죽으면 시세
+    커밋까지 같이 죽었습니다(2026-09-04). 누가 편의상 `--fetch-only`를 빼거나
+    워드프레스 시크릿을 다시 넘기면 여기서 걸립니다.
+    """
+
+    def setUp(self) -> None:
+        root = Path(__file__).resolve().parent.parent / ".github" / "workflows"
+        self.market_brief = (root / "market_brief.yml").read_text(encoding="utf-8")
+        self.publish_check = (root / "publish_check.yml").read_text(encoding="utf-8")
+
+    def test_scheduled_fetch_is_fetch_only(self) -> None:
+        self.assertIn("--fetch-only", self.market_brief)
+
+    def test_fetch_job_has_no_wordpress_secrets(self) -> None:
+        """시세 수집에 워드프레스 비밀번호가 필요 없습니다. 최소 권한."""
+        self.assertNotIn("WORDPRESS_APP_PASSWORD", self.market_brief)
+
+    def test_fetch_job_fires_the_routine(self) -> None:
+        """시세 커밋 직후 루틴을 API 트리거로 깨웁니다 — 예약 지연(2026-09-07,
+        2시간 8분)과 무관하게 글이 나가게 하는 장치입니다."""
+        self.assertIn("ROUTINE_KR_FIRE_TOKEN", self.market_brief)
+        self.assertIn("/fire", self.market_brief)
+        # 호출 실패가 워크플로를 실패시키면 안 됩니다 — 예비 예약이 대신 돕습니다.
+        self.assertIn("루틴 자체 예약이 대신 돕니다", self.market_brief)
+
+    def test_publish_check_runs_after_the_fallback_routine(self) -> None:
+        """검사는 예비 예약(17:40/08:40 KST)까지 끝난 뒤에 돌아야 헛경보가 없습니다.
+        2026-09-07에 17:35 검사가 실패 메일을 보냈는데 글은 19:05에 정상 공개됐습니다."""
+        self.assertIn('cron: "0 10 * * 1-5"', self.publish_check)   # 19:00 KST
+        self.assertIn('cron: "0 1 * * 2-6"', self.publish_check)    # 10:00 KST 다음날
+        self.assertNotIn('cron: "20 8 * * 1-5"', self.publish_check)
+
+
 if __name__ == "__main__":
     unittest.main()

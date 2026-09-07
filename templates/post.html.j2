@@ -33,6 +33,19 @@
   </div>
   {% endif %}
 
+  {% for section in narrative %}
+  <h2>{{ section.heading }}</h2>
+  {% for para in section.body.split('\n\n') %}
+  <p>{{ para|safe }}</p>
+  {% endfor %}
+  {% if section.graphic %}
+  <img class="mb-figure" src="{{ section.graphic.url }}" alt="{{ section.graphic.alt }}" loading="lazy">
+  {% endif %}
+  {% endfor %}
+
+  {# 외국인 매매 표는 본문 **뒤**에 둡니다. 2026-09-07까지는 대표 이미지 → 지수
+     카드 → 이 표 10줄이 먼저 나와 첫 화면이 숫자로만 채워졌고, 본문이 좋은 날에도
+     "데이터만 나열한 글"로 읽혔습니다. 글이 먼저, 표는 근거로 뒤에. #}
   {% if foreign_flow_rows %}
   <h2>{{ "Today's Foreign Investor Flows" if lang == "en" else "오늘의 외국인 매매동향" }}</h2>
   <div class="mb-table-wrap">
@@ -56,16 +69,6 @@
     </table>
   </div>
   {% endif %}
-
-  {% for section in narrative %}
-  <h2>{{ section.heading }}</h2>
-  {% for para in section.body.split('\n\n') %}
-  <p>{{ para|safe }}</p>
-  {% endfor %}
-  {% if section.graphic %}
-  <img class="mb-figure" src="{{ section.graphic.url }}" alt="{{ section.graphic.alt }}" loading="lazy">
-  {% endif %}
-  {% endfor %}
 
   {% if theme_cards %}
   <h2>{{ theme_heading }}</h2>

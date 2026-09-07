@@ -136,8 +136,16 @@ def run(
     with_english: bool = False,
     publish: bool = True,
     publish_live: bool = False,
+    fetch_only: bool = False,
 ) -> Path | None:
     """publish_live는 이 경로에서 쓸 수 없습니다. 값을 켜면 예외로 멈춥니다.
+
+    fetch_only는 시세를 받아 `data/price_<market>_<거래일>.json`으로 떨어뜨린 뒤
+    **바로 끝냅니다.** 초안 생성·렌더·워드프레스 업로드를 전부 건너뜁니다.
+    자동 실행(market_brief.yml)은 2026-09-07부터 이 모드만 씁니다 — 규칙 기반
+    초안은 규칙상 공개되지 않는 부산물인데 매일 워드프레스 draft로 쌓여
+    "데이터만 나열한 글"로 오인됐고, 초안 검사가 죽으면 시세 커밋까지 같이
+    죽었습니다(2026-09-04). 초안이 필요하면 이 플래그 없이 손으로 돌리십시오.
 
     **이 함수가 만드는 원고는 발행물이 아니라 초안입니다.** generate_free.py는
     외부 API 없이 시세 숫자와 RSS 제목을 고정 문장 틀에 끼워 넣습니다. 그래서
@@ -193,6 +201,9 @@ def run(
         json.dumps(price_data, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     print(f"완료(시세 파일): {price_path}")
+    if fetch_only:
+        print("[--fetch-only] 시세 파일까지만 만들고 끝냅니다 (초안·업로드 없음).")
+        return price_path
 
     ko_cache = OUTPUT_DIR / f"{market}_{date_str}_generated_free.json"
     en_cache = OUTPUT_DIR / f"kr_{date_str}_generated_free_en.json"
@@ -337,10 +348,16 @@ if __name__ == "__main__":
         action="store_true",
         help="쓰지 마세요. 이 경로는 검수용 초안까지만 만듭니다 (켜면 예외로 멈춥니다).",
     )
+    parser.add_argument(
+        "--fetch-only",
+        action="store_true",
+        help="시세만 받아 data/에 저장하고 끝냅니다. 자동 실행(market_brief.yml)이 쓰는 모드.",
+    )
     args = parser.parse_args()
     run(
         args.market,
         with_english=args.en,
         publish=not args.dry_run,
         publish_live=args.publish_live,
+        fetch_only=args.fetch_only,
     )
