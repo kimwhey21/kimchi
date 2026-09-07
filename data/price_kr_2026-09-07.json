@@ -59,10 +59,10 @@
       "unit": "원",
       "trading_date": "2026-09-07",
       "quote_type": "reference_rate",
-      "as_of_label": "16:28 하나은행 고시",
-      "as_of_label_en": "16:28 Hana Bank",
-      "reference_label": "2026-09-07 16:28 하나은행 고시",
-      "reference_label_en": "2026-09-07 16:28 Hana Bank notice",
+      "as_of_label": "16:37 하나은행 고시",
+      "as_of_label_en": "16:37 Hana Bank",
+      "reference_label": "2026-09-07 16:37 하나은행 고시",
+      "reference_label_en": "2026-09-07 16:37 Hana Bank notice",
       "data_source": "Naver Finance / Hana Bank notice rate"
     }
   },
