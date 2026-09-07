@@ -38,9 +38,11 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 EDITORIAL_DIR = ROOT / "editorial"
 TIMEOUT_SECONDS = 20
-# 발행이 이 시간 안에 이뤄졌어야 "오늘 것"으로 봅니다. 주말·휴장을 지나 같은
-# 거래일 파일이 며칠 남아 있을 수 있으므로 넉넉하게 둡니다.
-_FRESH_HOURS = 36
+# 글의 신선도는 "거래일 이후에 수정됐는가"로 봅니다. 전에는 "지금부터 36시간
+# 안에 수정됐는가"였는데, 주말·휴장을 지나면 새 거래일이 없어 같은 글이 그대로
+# 최신인데도 헛경보가 났습니다 — 2026-09-07 노동절 다음 아침이 그랬을 것입니다
+# (9/4 글, 9/5 12:53 UTC 수정, 화요일 01:00 UTC 검사 = 60시간). 거래일보다 앞서
+# 수정된 글은 그날 원고를 담을 수 없으므로 그것만 잡습니다.
 
 
 def _latest_trading_date(market: str) -> str | None:
@@ -133,16 +135,17 @@ def check_market(market: str, check_site: bool) -> list[str]:
             )
         modified = post.get("modified_gmt") or ""
         try:
-            age = dt.datetime.now(dt.timezone.utc) - dt.datetime.fromisoformat(
-                modified
-            ).replace(tzinfo=dt.timezone.utc)
-            if age > dt.timedelta(hours=_FRESH_HOURS):
-                problems.append(
-                    f"{market} {trading_date} [{lang}]: 글이 {age.days}일 전에 마지막으로 "
-                    "수정됐습니다. 새 원고가 반영되지 않았을 수 있습니다."
-                )
+            modified_at = dt.datetime.fromisoformat(modified).replace(tzinfo=dt.timezone.utc)
         except ValueError:
             problems.append(f"{market} {trading_date} [{lang}]: 수정 시각을 읽지 못했습니다 ({modified}).")
+            continue
+        day_start = dt.datetime.fromisoformat(trading_date).replace(tzinfo=dt.timezone.utc)
+        if modified_at < day_start:
+            problems.append(
+                f"{market} {trading_date} [{lang}]: 글이 거래일보다 앞선 "
+                f"{modified_at:%Y-%m-%d %H:%M} UTC에 마지막으로 수정됐습니다. "
+                "그날 원고가 반영되지 않은 옛 글입니다."
+            )
         if not problems:
             print(f"{market} {trading_date} [{lang}]: 공개 확인 (id={post.get('id')})")
     return problems
