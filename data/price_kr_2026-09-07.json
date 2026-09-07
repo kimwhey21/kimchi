@@ -44,8 +44,8 @@
       "ticker": "USD/KRW",
       "name": "원/달러 환율",
       "name_en": "USD/KRW",
-      "price": 1342.8,
-      "change_pct": -0.5,
+      "price": 1343.1,
+      "change_pct": -0.47,
       "series": [
         1382.0,
         1381.0,
@@ -54,15 +54,15 @@
         1360.3,
         1358.5,
         1349.5,
-        1342.8
+        1343.1
       ],
       "unit": "원",
       "trading_date": "2026-09-07",
       "quote_type": "reference_rate",
-      "as_of_label": "16:37 하나은행 고시",
-      "as_of_label_en": "16:37 Hana Bank",
-      "reference_label": "2026-09-07 16:37 하나은행 고시",
-      "reference_label_en": "2026-09-07 16:37 Hana Bank notice",
+      "as_of_label": "16:38 하나은행 고시",
+      "as_of_label_en": "16:38 Hana Bank",
+      "reference_label": "2026-09-07 16:38 하나은행 고시",
+      "reference_label_en": "2026-09-07 16:38 Hana Bank notice",
       "data_source": "Naver Finance / Hana Bank notice rate"
     }
   },
