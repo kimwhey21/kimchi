@@ -68,8 +68,8 @@
 
 - **기본 자동 발행은 외부 생성형 AI API를 호출하지 않는다.** `src/generate_free.py`가
   실제 시세와 RSS 헤드라인만으로 정해진 형식의 시황을 작성한다. GitHub Actions에
-  Anthropic·OpenAI 키를 전달하지 않는다. Unsplash 키는 사진 검색 전용 무료 키라
-  `editorial_publish.yml`에만 전달한다 — 없으면 자동 공개 글에 사진이 붙지 않는다.
+  Anthropic·OpenAI 키를 전달하지 않는다. Unsplash 키도 2026-09-07부터 Actions에
+  넘기지 않는다 — 발행 시점 실시간 사진 검색을 뺐기 때문이다(아래 인사이트 사진 항목).
 - 평일 16:20 한국장 예약 실행은 `--en`을 켜 한국어판과 영어판을 모두 만든다.
   영어판은 `src/generate_free_en.py`가 같은 가격 데이터에서 직접 작성하며 유료 번역
   API를 쓰지 않는다. 두 원고의 품질 검사가 끝나기 전에는 워드프레스에 올리지 않는다.
@@ -100,13 +100,19 @@
   2026-09-07에 자체 예약이 2시간 8분 늦게 떠서 글이 19:05에 나간 것이 계기다.
   호출 실패는 워크플로를 실패시키지 않는다. `tests/test_workflows.py`·
   `tests/test_fetch_only.py`가 이 구조를 고정한다.
-- 루틴 샌드박스 네트워크는 2026-09-07에 다시 실측했다: 열린 곳은 `pypi.org`·
-  `api.github.com`뿐이고 네이버·야후·Unsplash·위키미디어·DART·ECOS·FRED·
-  fermata.it.kr 전부 연결 실패다. claude.ai 설정의 "기능 → 네트워크 송신 허용"
-  토글은 채팅 분석 도구용이라 루틴에 적용되지 않는다. 루틴 환경은 루틴 편집 →
-  지시문 아래 구름 아이콘(Default) → 톱니 → Network access에서 바꾼다(문서:
-  code.claude.com/docs/en/routines). 열기 전까지는 루틴이 시세 파일을 읽고 사진은
-  붙이지 않는 구조가 맞다.
+- 루틴 샌드박스 네트워크는 허용 목록(custom allowlist)으로 열려 있다(2026-09-07 저녁,
+  사용자가 직접 설정). 실측(점검 루틴 `trig_017rvrGfkDE55t3f5fGSGQ5N`, 12:06 UTC) —
+  열림: `api.unsplash.com`·`images.unsplash.com`·`finance.naver.com`·
+  `query1.finance.yahoo.com`·`fermata.it.kr`·`commons.wikimedia.org`·
+  `opendart.fss.or.kr`·`ecos.bok.or.kr`·`api.stlouisfed.org`·`pypi.org`·
+  `api.github.com`. 막힘: `m.stock.naver.com`(한국장 편입 종목 수집 — 루틴이 자구책으로
+  시세를 받는 날만 영향)·`api.openverse.org`(그래서 루틴의 사진 검색은 `--source
+  unsplash`). 목록은 루틴 편집 → 지시문 아래 구름 아이콘(Default) → 톱니 → Network
+  access에서 바꾸고(문서: code.claude.com/docs/en/routines), 바꾼 뒤에는 점검 루틴을
+  `RemoteTrigger run`으로 다시 돌려 확인한다. claude.ai 설정의 "기능 → 네트워크 송신
+  허용" 토글은 채팅 분석 도구용이라 루틴과 무관하다. 루틴 지시문은
+  `docs/routine_common.md`·`routine_kr.md`·`routine_us.md`에 있고 루틴 프롬프트는 그
+  파일을 가리키는 몇 줄뿐이다 — 규칙은 파일에서 고친다.
 - `publish_check.yml`은 예비 예약까지 끝난 뒤(19:00/10:00 KST)에 돈다. 루틴보다
   먼저 울리면 정상 발행일에도 실패 메일이 온다(2026-09-07 17:35).
 - 예약 시각을 마감 정각으로 되돌리지 않는다. 16:00/07:00 정각은 시세가 아직 안 채워져
@@ -126,13 +132,16 @@
   - 같은 업종에 여럿이면 날짜로 돌려 쓰되, 같은 날 재실행은 같은 사진을 낸다
     (아니면 워드프레스에 미디어가 중복으로 쌓인다).
   - CC BY 계열은 저작자 표시가 의무라 `credit`을 미디어 캡션에 싣는다. NC·ND는 거른다.
-- 인사이트 스토리 사진은 **검색어에 그날 코어 종목명이 들어 있을 때만** 붙는다
-  (`publish_editorial._concrete_image_query`). 검수 없이 공개되는 경로라 추상 검색어는
-  막는다("korean won banknote" -> 중국 위안화 사례). 이 가드를 넓히지 않는다.
-- 사진 출처는 Unsplash -> 위키미디어 공용 순이다(`src/fetch_images.py`). 두 번째는
-  검색어가 아니라 종목 엔티티로 찾고, 위키데이터 P31이 회사인 항목의 P18만 쓴다.
-  이름 검색만 하면 '카카오'가 카카오 열매로 빠진다(실측). 로고 파일명·배너 비율·
-  NC/ND 라이선스는 거른다.
+- 인사이트 스토리 사진은 **사람이 본 사진에서만** 온다(2026-09-07). 루틴이 샌드박스에서
+  Unsplash 후보를 내려받아 `Read`로 보고 골라 원고 `image.url`에 적은 것, 아니면
+  `image_query`의 코어 종목명으로 승인 풀(`config/photo_pool.yaml`)에서 고른 업종 사진.
+  발행 시점 실시간 검색은 뺐다 — 아무도 안 보고 붙는 유일한 경로였고 실제로 로고가
+  나갔다. 코어 종목명 가드(`_concrete_image_query`)는 그대로다("korean won banknote"
+  -> 중국 위안화 사례). 풀에 업종이 없으면 사진 없이 표·차트만 나간다.
+  `tests/test_insight_photos.py`가 고정한다.
+- `src/fetch_images.py`(Unsplash -> 위키미디어 엔티티 검색)는 이제 자동 발행 경로에서
+  쓰지 않는다. 위키데이터 P18의 함정('카카오'가 카카오 열매, 신한지주가 숭례문)은
+  기록으로 남긴다 — 검색어로 사진을 자동으로 붙이는 경로를 다시 만들지 않는다.
 - 워치리스트는 두 시장 모두 **코어(고정) + 동적(그날 거래대금 상위 편입)** 2단이다.
   코어는 `config/watchlist_kr.yaml`(21종목)·`config/watchlist_us.yaml`(16종목),
   편입은 `src/fetch_movers.py`가 맡고(한국장 네이버 금융, 미국장 나스닥 스크리너)
@@ -195,7 +204,10 @@
   것은 문서의 "소제목 14자"를 맞추려다 생긴 일인데, 그 14자는 폰트 크기로
   소제목을 찾던 옛 코드가 낸 값이라 **애초에 틀린 수였다.**
   `scripts/compare_to_benchmark.py`는 이제 코퍼스를 그 자리에서 다시 재고,
-  결과를 "맞춰야 할 기준이 아니다"라고 못박아 출력한다.
+  결과를 "맞춰야 할 기준이 아니다"라고 못박아 출력한다. 코퍼스는 이 컴퓨터에만
+  있으므로(남의 글을 저장소에 올리지 않는다) 클라우드 루틴은 `--export-stats`로
+  내보낸 집계 파일 `data/benchmark_stats.json`을 읽는다 — 2026-09-07까지는 루틴에서
+  코퍼스를 못 찾아 매일 우리 수치만 찍고 그걸 대조 결과처럼 보고했다.
 
 ### 사진 (`src/photo_search.py`)
 

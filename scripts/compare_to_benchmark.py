@@ -32,6 +32,7 @@ import json
 import re
 import statistics
 import sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -57,6 +58,14 @@ EDITORIAL_DIR = ROOT / "editorial"
 # 다시 세어 나란히 찍고, 없으면 우리 원고 수치만 보여줍니다. 어느 쪽이든
 # **맞춰야 할 기준이 아닙니다.**
 CORPUS = Path.home() / ".market-brief-bench" / "posts"
+
+# 코퍼스는 이 컴퓨터에만 있습니다 — 남의 글 103편을 공개 저장소에 올리지 않습니다.
+# 그래서 클라우드 루틴에서는 이 스크립트가 2026-09-07까지 매일 "코퍼스 없음 —
+# 우리 수치만"을 찍었고, 그것이 대조 결과처럼 보고서에 붙었습니다. 비교는 한 번도
+# 일어나지 않은 것입니다. 이제 코퍼스가 없는 곳은 **집계값만 담은 이 파일**을
+# 읽습니다. `--export-stats`로 이 컴퓨터에서 내보내며, 언제 몇 편을 쟀는지가
+# 함께 적힙니다(본문은 한 글자도 들어가지 않습니다).
+STATS_FILE = ROOT / "data" / "benchmark_stats.json"
 
 # 문단 경계는 신뢰할 수 없어 뺐습니다(위 참조).
 _UNTRUSTED = ("한 문장짜리 문단",)
@@ -122,10 +131,10 @@ def measure(doc: dict) -> dict[str, float]:
     }
 
 
-def _corpus_stats() -> dict[str, tuple[float, float, float]] | None:
-    """코퍼스가 있으면 그 자리에서 다시 셉니다. 없으면 None."""
+def _corpus_samples() -> dict[str, list[float]]:
+    """코퍼스의 글 한 편마다 measure()를 돌린 값. 코퍼스가 없으면 빈 dict."""
     if not CORPUS.exists():
-        return None
+        return {}
     samples: dict[str, list[float]] = {}
     for path in CORPUS.glob("*.json"):
         try:
@@ -147,14 +156,51 @@ def _corpus_stats() -> dict[str, tuple[float, float, float]] | None:
                             + [{"heading": "", "body": "\n\n".join(paras)}]})
         for key, value in measured.items():
             samples.setdefault(key, []).append(value)
-    if not samples:
-        return None
+    return samples
+
+
+def _summarize(samples: dict[str, list[float]]) -> dict[str, tuple[float, float, float]]:
     out = {}
     for key, values in samples.items():
         values = sorted(values)
         out[key] = (statistics.median(values),
                     values[len(values) // 4], values[3 * len(values) // 4])
     return out
+
+
+def _corpus_stats() -> dict[str, tuple[float, float, float]] | None:
+    """코퍼스가 있으면 그 자리에서 다시 셉니다. 없으면 None."""
+    samples = _corpus_samples()
+    return _summarize(samples) if samples else None
+
+
+def export_stats() -> Path:
+    """이 컴퓨터의 코퍼스 집계값을 저장소 파일로 내보냅니다(루틴이 읽습니다)."""
+    samples = _corpus_samples()
+    if not samples:
+        raise SystemExit(f"코퍼스가 없습니다: {CORPUS}")
+    posts = len(next(iter(samples.values())))
+    payload = {
+        "measured_at": date.today().isoformat(),
+        "posts": posts,
+        "note": "재테크농부 벤치마크 집계값(중앙값·p25·p75). 맞춰야 할 기준이 아닙니다.",
+        "stats": {key: list(value) for key, value in _summarize(samples).items()},
+    }
+    STATS_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                          encoding="utf-8")
+    return STATS_FILE
+
+
+def _stats_from_file() -> tuple[dict[str, tuple[float, float, float]], str] | None:
+    """코퍼스가 없는 곳(클라우드 루틴)에서 읽는 집계 파일. 없으면 None."""
+    if not STATS_FILE.exists():
+        return None
+    payload = json.loads(STATS_FILE.read_text(encoding="utf-8"))
+    stats = {key: tuple(value) for key, value in (payload.get("stats") or {}).items()}
+    if not stats:
+        return None
+    label = f"{payload.get('measured_at', '?')} 집계 {payload.get('posts', '?')}편"
+    return stats, label
 
 
 def report(path: Path) -> int:
@@ -166,8 +212,13 @@ def report(path: Path) -> int:
         return 0
     print(f"\n{path.name}  —  {ko.get('title', '')}")
     corpus = _corpus_stats()
+    label = "코퍼스 실측"
+    if not corpus:
+        loaded = _stats_from_file()
+        if loaded:
+            corpus, label = loaded
     if corpus:
-        print(f"  {'항목':<20}{'우리':>8}{'벤치마크':>10}   (코퍼스 실측, 목표 아님)")
+        print(f"  {'항목':<20}{'우리':>8}{'벤치마크':>10}   ({label}, 목표 아님)")
     else:
         print(f"  {'항목':<20}{'우리':>8}   (벤치마크 코퍼스 없음 — 우리 수치만)")
     for key, value in mine.items():
@@ -184,6 +235,9 @@ def report(path: Path) -> int:
 
 
 def main(argv: list[str]) -> int:
+    if argv[1:] == ["--export-stats"]:
+        print(f"집계값을 내보냈습니다: {export_stats()}")
+        return 0
     paths = [Path(a) for a in argv[1:]] or sorted(EDITORIAL_DIR.glob("*.json"))
     for path in paths:
         report(path)

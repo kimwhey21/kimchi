@@ -113,13 +113,19 @@
   예약(cron)은 한 시간 뒤 예비다 — 2026-09-07에 자체 예약이 2시간 8분 늦게 떠서
   글이 19:05에 나간 것이 계기다. 호출 실패는 워크플로를 실패시키지 않는다.
   `tests/test_workflows.py`·`tests/test_fetch_only.py`가 이 구조를 고정한다.
-- **루틴 샌드박스 네트워크는 2026-09-07에 다시 실측했다.** 열린 곳은 `pypi.org`·
-  `api.github.com`뿐이고 네이버·야후·Unsplash·위키미디어·DART·ECOS·FRED·
-  fermata.it.kr 전부 연결 실패다. claude.ai 설정의 "기능 → 네트워크 송신 허용"
-  토글은 채팅 분석 도구용이라 루틴에 적용되지 않는다. 루틴 환경은 **루틴 편집
-  → 지시문 아래 구름 아이콘(Default) → 톱니 → Network access**에서 바꾼다
-  (문서: code.claude.com/docs/en/routines). 열기 전까지는 루틴이 시세 파일을
-  읽고 사진은 붙이지 않는 구조가 맞다.
+- **루틴 샌드박스 네트워크는 허용 목록(custom allowlist)으로 열려 있다**(2026-09-07
+  저녁, 사용자가 직접 설정). 실측(점검 루틴 `trig_017rvrGfkDE55t3f5fGSGQ5N`, 12:06
+  UTC) — 열림: `api.unsplash.com`·`images.unsplash.com`·`finance.naver.com`·
+  `query1.finance.yahoo.com`·`fermata.it.kr`·`commons.wikimedia.org`·
+  `opendart.fss.or.kr`·`ecos.bok.or.kr`·`api.stlouisfed.org`·`pypi.org`·
+  `api.github.com`. 막힘: `m.stock.naver.com`(한국장 편입 종목 수집 — 루틴이
+  자구책으로 시세를 받는 날만 영향)·`api.openverse.org`(그래서 루틴의 사진 검색은
+  `--source unsplash`). 목록은 **루틴 편집 → 지시문 아래 구름 아이콘(Default) →
+  톱니 → Network access**에서 바꾸고(문서: code.claude.com/docs/en/routines), 바꾼
+  뒤에는 점검 루틴을 `RemoteTrigger run`으로 다시 돌려 확인한다. claude.ai 설정의
+  "기능 → 네트워크 송신 허용" 토글은 채팅 분석 도구용이라 루틴과 무관하다.
+  루틴 지시문은 `docs/routine_common.md`·`routine_kr.md`·`routine_us.md`에 있고
+  루틴 프롬프트는 그 파일을 가리키는 몇 줄뿐이다 — **규칙은 파일에서 고친다.**
 - **`publish_check.yml`은 예비 예약까지 끝난 뒤(19:00/10:00 KST)에 돈다.** 루틴
   보다 먼저 울리면 정상 발행일에도 실패 메일이 온다(2026-09-07 17:35).
 - 예약 시각을 마감 정각으로 되돌리지 말 것. 16:00/07:00 정각은 시세가 아직
@@ -145,18 +151,20 @@
     바꾸면 워드프레스에 미디어가 중복으로 쌓인다).
   - CC BY 계열은 **저작자 표시가 의무**라 `credit`을 미디어 캡션에 그대로 싣는다.
     NC·ND는 `photo_search`가 애초에 거른다.
-- **사진 출처는 Unsplash -> 위키미디어 공용 두 곳이다**(`src/fetch_images.py`).
-  두 번째 경로는 검색어가 아니라 **종목 엔티티**로 찾는다 — 위키데이터에서 회사
-  항목(P31이 회사)을 확인한 뒤 P18 사진만 쓴다. 이름으로 검색만 하면 '카카오'가
-  카카오 열매(페루 아마존 사진)로, 위키백과 '신한지주' 대표 이미지가 숭례문으로
-  나온다(둘 다 실측). 로고성 파일명·비사진 형식·배너 비율·NC/ND 라이선스는
-  거른다. 이 경로로 사진이 나오는 한국 코어 종목은 2026-09-03 기준 5개뿐이니,
-  나오지 않으면 사진 없이 나가는 것이 정상이다.
-- **인사이트 스토리 사진은 검색어에 그날 코어 종목명이 들어 있을 때만 붙인다**
-  (`publish_editorial._concrete_image_query`). 이 경로는 검수 없이 공개되므로,
-  추상 검색어는 통과시키지 않는다 — "korean won banknote"에 중국 위안화,
-  "red traffic light"에 초록불이 나온 실제 사례가 근거다. 종목명이 없으면 사진 없이
-  표만 나가고 이유가 로그에 남는다. 이 가드를 넓히지 말 것.
+- **`src/fetch_images.py`(Unsplash -> 위키미디어 엔티티 검색)는 이제 자동 발행 경로에서
+  쓰지 않는다**(2026-09-07). 위키데이터 P18의 함정은 기록으로 남긴다 — 이름으로
+  검색만 하면 '카카오'가 카카오 열매(페루 아마존 사진)로, 위키백과 '신한지주' 대표
+  이미지가 숭례문으로 나온다(둘 다 실측). **검색어로 사진을 자동으로 붙이는 경로를
+  다시 만들지 말 것.**
+- **인사이트 스토리 사진은 사람이 본 사진에서만 온다(2026-09-07).** 경로는 둘뿐이다
+  — 루틴이 샌드박스에서 Unsplash 후보를 직접 내려받아 `Read`로 보고 골라 원고의
+  `image.url`에 적은 것, 아니면 `image_query`의 코어 종목명으로 승인 풀
+  (`config/photo_pool.yaml`)에서 고른 업종 사진. 발행 시점 실시간 검색은 뺐다 —
+  아무도 안 보고 붙는 유일한 경로였고 'SK Hynix memory chip'에 로고가 나갔다.
+  코어 종목명 가드(`_concrete_image_query`)는 그대로다: "korean won banknote"에
+  중국 위안화, "red traffic light"에 초록불이 나온 실제 사례가 근거다. 종목명이
+  없거나 풀에 업종이 없으면 사진 없이 표·차트만 나가고 이유가 로그에 남는다.
+  `tests/test_insight_photos.py`가 이 구조를 고정한다.
 - **워치리스트는 두 시장 모두 코어(고정) + 동적(그날 편입) 2단 구조다.** 코어는
   `config/watchlist_kr.yaml`의 섹터 대표 21종목과 `config/watchlist_us.yaml`의
   16종목이고, 여기에 그날 거래대금 상위 종목이 `source: "dynamic"`으로 붙는다
@@ -173,10 +181,9 @@
   라벨이 사실과 어긋난다.
 - GitHub Actions에는 **Anthropic·OpenAI 키를 전달하지 않는다.** 유료 생성
   경로(`generate_post.py`, `translate_post.py`)를 자동 실행에 다시 연결하지 말 것.
-  반면 **Unsplash 키는 `editorial_publish.yml`에만 전달한다** — 사진 검색만 하는
-  무료 키라 성격이 다르고, 없으면 `fetch_images`가 조용히 None을 돌려줘 자동
-  공개된 글에 사진이 한 장도 붙지 않는다(2026-09-03 확인). 사진이 붙는 범위는
-  키가 아니라 `_concrete_image_query`(코어 종목명)가 정한다.
+  Unsplash 키는 Actions 어디에도 더 이상 넘기지 않는다(2026-09-07) — 발행 워크플로의
+  실시간 사진 검색을 뺐기 때문이다. 사진 검색은 루틴 샌드박스(네트워크가 열린 뒤)
+  에서 사람처럼 보고 고르는 경로로만 한다.
 - **조사·집필은 클라우드 루틴이, 시세 수집은 GitHub Actions가 맡는다.** 루틴
   샌드박스는 네이버·야후·KRX·언론사 RSS가 네트워크 정책에 막혀 있고(2026-09-02
   실측: CONNECT 403) WebSearch만 열려 있다. 그래서 예약 실행이 시세를
@@ -233,7 +240,10 @@
   것은 문서의 "소제목 14자"를 맞추려다 생긴 일인데, 그 14자는 폰트 크기로
   소제목을 찾던 옛 코드가 낸 값이라 **애초에 틀린 수였다.**
   `scripts/compare_to_benchmark.py`는 이제 코퍼스를 그 자리에서 다시 재고,
-  결과를 "맞춰야 할 기준이 아니다"라고 못박아 출력한다.
+  결과를 "맞춰야 할 기준이 아니다"라고 못박아 출력한다. 코퍼스는 이 컴퓨터에만
+  있으므로(남의 글을 저장소에 올리지 않는다) 클라우드 루틴은 `--export-stats`로
+  내보낸 집계 파일 `data/benchmark_stats.json`을 읽는다 — 2026-09-07까지는 루틴에서
+  코퍼스를 못 찾아 매일 우리 수치만 찍고 그걸 대조 결과처럼 보고했다.
 
 ### 사진 (`src/photo_search.py`)
 
