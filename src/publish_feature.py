@@ -65,8 +65,12 @@ def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict
     return generated, figures, cover
 
 
-def publish(path: Path, *, upload: bool = True) -> dict:
-    """검사 → PNG 생성 → 해시 기반 미디어 재사용 → 상태 보존 갱신 → 되읽기."""
+def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
+    """검사 → PNG 생성 → 해시 기반 미디어 재사용 → 상태 보존 갱신 → 되읽기.
+
+    live=False(기본)면 새 글은 임시저장, 기존 글은 상태를 건드리지 않는다.
+    live=True는 사용자가 "발행"이라고 한 뒤에만 쓴다 — 공개 상태로 올린다.
+    """
     doc = json.loads(path.read_text(encoding="utf-8"))
     if doc.get("kind") != "feature":
         raise ValueError("feature 원고(kind: feature)만 받을 수 있습니다.")
@@ -126,15 +130,24 @@ def publish(path: Path, *, upload: bool = True) -> dict:
     if photo and featured:
         raise ValueError("표지는 사진이나 그래픽 중 하나만 지정하십시오.")
     if photo:
-        local = ROOT / photo["local_path"] if not Path(photo["local_path"]).is_absolute() \
-            else Path(photo["local_path"])
-        if not local.exists():
-            raise ValueError(f"표지 사진이 없습니다: {local}")
         credit = photo.get("credit", "")
-        featured_id = publish_wordpress.upload_featured_image(base, auth, {
-            "local_path": str(local), "alt": photo.get("alt", ""),
-            "caption": credit, "id": local.stem,
-        })
+        if photo.get("local_path"):
+            local = ROOT / photo["local_path"] if not Path(photo["local_path"]).is_absolute() \
+                else Path(photo["local_path"])
+            if not local.exists():
+                raise ValueError(f"표지 사진이 없습니다: {local}")
+            image = {"local_path": str(local), "alt": photo.get("alt", ""),
+                     "caption": credit, "id": local.stem}
+        elif photo.get("url"):
+            # 루틴이 샌드박스에서 대조표를 `Read`로 보고 고른 사진. 파일은 저장소에
+            # 없고(output/은 커밋하지 않는다) 발행 러너가 이 URL로 받는다. 여기서
+            # 검색하지 않는다 — URL은 이미 사람(루틴)이 본 것이다(2026-09-08).
+            image = {"url": photo["url"], "alt": photo.get("alt", ""),
+                     "caption": credit, "id": f"{slug}-cover"}
+        else:
+            raise ValueError("featured_photo에는 local_path(로컬 파일)나 url(직접 보고 고른 사진) "
+                             "중 하나가 있어야 합니다.")
+        featured_id = publish_wordpress.upload_featured_image(base, auth, image)
         if not featured_id:
             raise publish_wordpress.WordPressPublishError("표지 사진 업로드 실패")
     if featured:
@@ -148,12 +161,14 @@ def publish(path: Path, *, upload: bool = True) -> dict:
                   tags=doc.get("tags") or [], category=category_id,
                   featured_media_id=featured_id, focus_keyword=doc.get("focus_keyword"))
     if existing:
-        # status=None은 공개·비공개 어느 상태도 바꾸지 않는다.
-        result = publish_wordpress.update_draft(existing["id"], ko["title"], html, status=None, **common)
+        # status=None은 공개·비공개 어느 상태도 바꾸지 않는다. live일 때만 공개로 올린다.
+        result = publish_wordpress.update_draft(existing["id"], ko["title"], html,
+                                                status="publish" if live else None, **common)
     else:
-        # 새 글만 원칙대로 임시저장한다.
-        result = publish_wordpress.publish_draft(ko["title"], html, slug=slug, status="draft", **common)
-    expected = existing.get("status", "draft") if existing else "draft"
+        # 새 글은 원칙대로 임시저장한다. --publish는 사용자가 "발행"이라고 한 뒤에만 쓴다.
+        result = publish_wordpress.publish_draft(ko["title"], html, slug=slug,
+                                                 status="publish" if live else "draft", **common)
+    expected = "publish" if live else (existing.get("status", "draft") if existing else "draft")
     publish_wordpress.verify_published(
         result["id"], ko["title"], expected_status=expected,
         expected_featured_media=featured_id, expected_category_id=category_id,
@@ -165,8 +180,10 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("path", type=Path)
     parser.add_argument("--render-only", action="store_true")
+    parser.add_argument("--publish", action="store_true",
+                        help="공개 상태로 발행. 사용자가 '발행'이라고 한 뒤에만 쓴다(기본은 임시저장).")
     args = parser.parse_args(argv)
-    result = publish(args.path, upload=not args.render_only)
+    result = publish(args.path, upload=not args.render_only, live=args.publish)
     print(result)
     return 0
 
