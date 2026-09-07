@@ -80,8 +80,8 @@
       "ticker": "^VIX",
       "name": "VIX",
       "name_en": "VIX",
-      "price": 15.24,
-      "change_pct": 4.89,
+      "price": 15.3,
+      "change_pct": 5.3,
       "series": [
         14.51,
         14.43,
@@ -90,7 +90,7 @@
         15.2,
         14.32,
         14.53,
-        15.24
+        15.3
       ],
       "unit": "",
       "trading_date": "2026-09-07"
@@ -137,8 +137,8 @@
       "ticker": "GC=F",
       "name": "국제 금",
       "name_en": "Gold",
-      "price": 4476.6,
-      "change_pct": 1.06,
+      "price": 4458.4,
+      "change_pct": 0.65,
       "series": [
         4609.7002,
         4478.1001,
@@ -147,7 +147,7 @@
         4366.2998,
         4491.7002,
         4429.7998,
-        4476.6001
+        4458.3999
       ],
       "unit": "달러",
       "trading_date": "2026-09-07"
@@ -458,8 +458,8 @@
       "ticker": "CL=F",
       "name": "WTI 원유",
       "name_en": "WTI Crude Oil",
-      "price": 91.48,
-      "change_pct": 0.0,
+      "price": 92.66,
+      "change_pct": 1.29,
       "series": [
         83.53,
         83.4,
@@ -468,7 +468,7 @@
         91.01,
         91.3,
         91.48,
-        91.48
+        92.66
       ],
       "unit": "",
       "trading_date": "2026-09-07",
