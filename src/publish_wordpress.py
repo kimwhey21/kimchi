@@ -170,9 +170,19 @@ def _get_or_create_term_id(
             },
             timeout=TIMEOUT_SECONDS,
         )
-        match = next((t for t in search.json() if t.get("name") == name), None)
-        if match:
-            return match["id"]
+        matches = [t for t in search.json() if t.get("name") == name]
+        if len(matches) > 1:
+            # 같은 이름이 둘이면 어느 쪽에 넣을지 정할 수 없다. 2026-09-07에
+            # "Daily"가 둘(Polylang이 켜져 있던 시절 영어용으로 생긴 잔재)이라
+            # 영어 시황이 날마다 다른 카테고리에 들어갔고, 아무도 몰랐다.
+            # 첫 번째를 고르고 넘어가면 그 사고가 조용히 반복된다.
+            ids = ", ".join(str(t["id"]) for t in matches)
+            raise WordPressPublishError(
+                f"'{name}' 이름의 {endpoint}가 {len(matches)}개입니다 (id={ids}). "
+                "어느 것에 넣을지 정할 수 없어 멈춥니다 — 워드프레스에서 하나로 합치세요."
+            )
+        if matches:
+            return matches[0]["id"]
         created = requests.post(
             f"{base_url}/wp-json/wp/v2/{endpoint}",
             auth=auth,
@@ -183,6 +193,8 @@ def _get_or_create_term_id(
         if created.status_code < 400:
             return created.json()["id"]
         print(f"[경고] {endpoint} 생성 실패 ('{name}'): {created.text[:200]}", file=sys.stderr)
+    except WordPressPublishError:
+        raise  # 위의 중복 이름 오류는 삼키지 않는다 — 조용히 넘어가면 글이 미분류로 나간다
     except Exception as e:
         print(f"[경고] {endpoint} 처리 실패 ('{name}'): {e!r}", file=sys.stderr)
     return None

@@ -58,6 +58,9 @@ WebSearch·WebFetch는 별도 경로라 늘 됩니다.
 6. **원고 작성** (`ko` + `en`). 형식은 `src/publish_editorial.py` 상단 주석.
    - `narrative` 4~6절 → `outlook` → `closing`. 순서는 사실 → 해석 → 다음
      거래일 확인 항목.
+   - 제목: 다음 거래일의 쟁점(지표·실적·지수 고비)이 분명한 날은 둘째 절을 그
+     쟁점으로 씁니다(`docs/editorial-style.md` 제목 문법 8번). 지난 장 설명만 있는
+     제목은 다음 날이면 읽을 이유가 없어집니다.
    - `closing.heading`은 두 언어 모두 **`Fermata's Take`**로 씁니다. 브랜드
      표식이라 템플릿이 어차피 그렇게 찍습니다('마무리'·'정리하면' 같은 말로
      바꾸지 마세요).
