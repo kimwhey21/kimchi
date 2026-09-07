@@ -1,0 +1,1154 @@
+{
+  "market": "kr",
+  "date": "2026-09-07",
+  "price_data": {
+    "macro": {
+      "KS11": {
+        "ticker": "KS11",
+        "name": "코스피",
+        "name_en": "KOSPI",
+        "price": 6995.39,
+        "change_pct": 4.61,
+        "series": [
+          6912.37,
+          6788.88,
+          6820.02,
+          6835.8,
+          6562.72,
+          6579.48,
+          6687.21,
+          6995.39
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "data_source": "Naver Finance realtime index"
+      },
+      "KQ11": {
+        "ticker": "KQ11",
+        "name": "코스닥",
+        "name_en": "KOSDAQ",
+        "price": 822.19,
+        "change_pct": 1.07,
+        "series": [
+          837.65,
+          838.41,
+          834.29,
+          821.25,
+          803.98,
+          790.21,
+          813.5,
+          822.19
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "data_source": "Naver Finance realtime index"
+      },
+      "USD/KRW": {
+        "ticker": "USD/KRW",
+        "name": "원/달러 환율",
+        "name_en": "USD/KRW",
+        "price": 1343.1,
+        "change_pct": -0.47,
+        "series": [
+          1382.0,
+          1381.0,
+          1369.5,
+          1375.5,
+          1360.3,
+          1358.5,
+          1349.5,
+          1343.1
+        ],
+        "unit": "원",
+        "trading_date": "2026-09-07",
+        "quote_type": "reference_rate",
+        "as_of_label": "16:38 하나은행 고시",
+        "as_of_label_en": "16:38 Hana Bank",
+        "reference_label": "2026-09-07 16:38 하나은행 고시",
+        "reference_label_en": "2026-09-07 16:38 Hana Bank notice",
+        "data_source": "Naver Finance / Hana Bank notice rate"
+      }
+    },
+    "watchlist": {
+      "005930": {
+        "ticker": "005930",
+        "name": "삼성전자",
+        "name_en": "Samsung Electronics",
+        "price": 270000.0,
+        "change_pct": 5.68,
+        "series": [
+          266000.0,
+          257000.0,
+          260000.0,
+          261000.0,
+          250500.0,
+          250000.0,
+          255500.0,
+          270000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "반도체",
+        "foreign_net": -115377,
+        "institution_net": 2489812,
+        "foreign_ratio": 46.73
+      },
+      "000660": {
+        "ticker": "000660",
+        "name": "SK하이닉스",
+        "name_en": "SK Hynix",
+        "price": 1783000.0,
+        "change_pct": 8.26,
+        "series": [
+          1730000.0,
+          1653000.0,
+          1674000.0,
+          1693000.0,
+          1613000.0,
+          1596000.0,
+          1647000.0,
+          1783000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "반도체",
+        "foreign_net": 308833,
+        "institution_net": 96776,
+        "foreign_ratio": 50.5
+      },
+      "009150": {
+        "ticker": "009150",
+        "name": "삼성전기",
+        "name_en": "Samsung Electro-Mechanics",
+        "price": 1454000.0,
+        "change_pct": 3.78,
+        "series": [
+          1385000.0,
+          1421000.0,
+          1458000.0,
+          1430000.0,
+          1400000.0,
+          1348000.0,
+          1401000.0,
+          1454000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "반도체",
+        "foreign_net": 141281,
+        "institution_net": 61273,
+        "foreign_ratio": 37.89
+      },
+      "042700": {
+        "ticker": "042700",
+        "name": "한미반도체",
+        "name_en": "Hanmi Semiconductor",
+        "price": 240500.0,
+        "change_pct": 4.57,
+        "series": [
+          222000.0,
+          219500.0,
+          220500.0,
+          215000.0,
+          213500.0,
+          210500.0,
+          230000.0,
+          240500.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "반도체",
+        "foreign_net": 353063,
+        "institution_net": 223808,
+        "foreign_ratio": 8.21
+      },
+      "105560": {
+        "ticker": "105560",
+        "name": "KB금융",
+        "name_en": "KB Financial Group",
+        "price": 175900.0,
+        "change_pct": 2.27,
+        "series": [
+          168100.0,
+          171600.0,
+          173300.0,
+          171200.0,
+          169100.0,
+          177900.0,
+          172000.0,
+          175900.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "금융",
+        "foreign_net": -268088,
+        "institution_net": 148680,
+        "foreign_ratio": 79.08
+      },
+      "055550": {
+        "ticker": "055550",
+        "name": "신한지주",
+        "name_en": "Shinhan Financial Group",
+        "price": 113900.0,
+        "change_pct": 3.26,
+        "series": [
+          108800.0,
+          109700.0,
+          108900.0,
+          111100.0,
+          110500.0,
+          114500.0,
+          110300.0,
+          113900.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "금융",
+        "foreign_net": -355054,
+        "institution_net": 279592,
+        "foreign_ratio": 61.92
+      },
+      "032830": {
+        "ticker": "032830",
+        "name": "삼성생명",
+        "name_en": "Samsung Life Insurance",
+        "price": 312000.0,
+        "change_pct": 4.87,
+        "series": [
+          307000.0,
+          310000.0,
+          306000.0,
+          309500.0,
+          294000.0,
+          303000.0,
+          297500.0,
+          312000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "금융",
+        "foreign_net": -34282,
+        "institution_net": 555,
+        "foreign_ratio": 23.16
+      },
+      "005380": {
+        "ticker": "005380",
+        "name": "현대차",
+        "name_en": "Hyundai Motor",
+        "price": 393000.0,
+        "change_pct": 2.48,
+        "series": [
+          398000.0,
+          399500.0,
+          403500.0,
+          400500.0,
+          378000.0,
+          383500.0,
+          383500.0,
+          393000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "자동차",
+        "foreign_net": -60899,
+        "institution_net": -53849,
+        "foreign_ratio": 24.42
+      },
+      "000270": {
+        "ticker": "000270",
+        "name": "기아",
+        "name_en": "Kia",
+        "price": 128400.0,
+        "change_pct": 1.5,
+        "series": [
+          126100.0,
+          128000.0,
+          131000.0,
+          131200.0,
+          124400.0,
+          127400.0,
+          126500.0,
+          128400.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "자동차",
+        "foreign_net": -69915,
+        "institution_net": -34363,
+        "foreign_ratio": 39.23
+      },
+      "329180": {
+        "ticker": "329180",
+        "name": "HD현대중공업",
+        "name_en": "HD Hyundai Heavy Industries",
+        "price": 449000.0,
+        "change_pct": 2.86,
+        "series": [
+          470000.0,
+          457000.0,
+          449500.0,
+          453000.0,
+          422000.0,
+          435000.0,
+          436500.0,
+          449000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "조선·방산",
+        "foreign_net": -28068,
+        "institution_net": 19472,
+        "foreign_ratio": 14.0
+      },
+      "012450": {
+        "ticker": "012450",
+        "name": "한화에어로스페이스",
+        "name_en": "Hanwha Aerospace",
+        "price": 1039000.0,
+        "change_pct": -1.52,
+        "series": [
+          1150000.0,
+          1157000.0,
+          1102000.0,
+          1058000.0,
+          1025000.0,
+          1047000.0,
+          1055000.0,
+          1039000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "조선·방산",
+        "foreign_net": -11430,
+        "institution_net": 10268,
+        "foreign_ratio": 45.42
+      },
+      "034020": {
+        "ticker": "034020",
+        "name": "두산에너빌리티",
+        "name_en": "Doosan Enerbility",
+        "price": 87900.0,
+        "change_pct": 10.98,
+        "series": [
+          85900.0,
+          88200.0,
+          82500.0,
+          81400.0,
+          76600.0,
+          79200.0,
+          79200.0,
+          87900.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "발전·원전",
+        "foreign_net": -413237,
+        "institution_net": 266790,
+        "foreign_ratio": 23.53
+      },
+      "373220": {
+        "ticker": "373220",
+        "name": "LG에너지솔루션",
+        "name_en": "LG Energy Solution",
+        "price": 362500.0,
+        "change_pct": 1.12,
+        "series": [
+          370500.0,
+          370000.0,
+          378000.0,
+          367000.0,
+          347500.0,
+          365500.0,
+          358500.0,
+          362500.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "2차전지",
+        "foreign_net": -37840,
+        "institution_net": 33949,
+        "foreign_ratio": 5.54
+      },
+      "247540": {
+        "ticker": "247540",
+        "name": "에코프로비엠",
+        "name_en": "Ecopro BM",
+        "price": 106700.0,
+        "change_pct": 0.66,
+        "series": [
+          116142.0,
+          116339.0,
+          118898.0,
+          114370.0,
+          106300.0,
+          106500.0,
+          106000.0,
+          106700.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "2차전지",
+        "foreign_net": -37292,
+        "institution_net": -3215,
+        "foreign_ratio": 14.46
+      },
+      "207940": {
+        "ticker": "207940",
+        "name": "삼성바이오로직스",
+        "name_en": "Samsung Biologics",
+        "price": 1466000.0,
+        "change_pct": 1.31,
+        "series": [
+          1594000.0,
+          1486000.0,
+          1518000.0,
+          1520000.0,
+          1501000.0,
+          1477000.0,
+          1447000.0,
+          1466000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "바이오",
+        "foreign_net": -2643,
+        "institution_net": -5671,
+        "foreign_ratio": 13.06
+      },
+      "196170": {
+        "ticker": "196170",
+        "name": "알테오젠",
+        "name_en": "Alteogen",
+        "price": 286000.0,
+        "change_pct": -0.87,
+        "series": [
+          311500.0,
+          320000.0,
+          307500.0,
+          301000.0,
+          298500.0,
+          283000.0,
+          288500.0,
+          286000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "바이오",
+        "foreign_net": 52680,
+        "institution_net": 27042,
+        "foreign_ratio": 14.59
+      },
+      "068270": {
+        "ticker": "068270",
+        "name": "셀트리온",
+        "name_en": "Celltrion",
+        "price": 186300.0,
+        "change_pct": -0.96,
+        "series": [
+          191300.0,
+          190700.0,
+          188900.0,
+          188000.0,
+          186300.0,
+          187100.0,
+          188100.0,
+          186300.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "바이오",
+        "foreign_net": -71886,
+        "institution_net": 57121,
+        "foreign_ratio": 25.39
+      },
+      "035420": {
+        "ticker": "035420",
+        "name": "네이버",
+        "name_en": "Naver",
+        "price": 218000.0,
+        "change_pct": 2.11,
+        "series": [
+          216500.0,
+          220500.0,
+          217000.0,
+          215000.0,
+          209000.0,
+          207500.0,
+          213500.0,
+          218000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "플랫폼",
+        "foreign_net": 71022,
+        "institution_net": 146602,
+        "foreign_ratio": 36.1
+      },
+      "035720": {
+        "ticker": "035720",
+        "name": "카카오",
+        "name_en": "Kakao",
+        "price": 36550.0,
+        "change_pct": 0.97,
+        "series": [
+          36000.0,
+          36850.0,
+          36550.0,
+          36500.0,
+          35100.0,
+          35350.0,
+          36200.0,
+          36550.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "플랫폼",
+        "foreign_net": -26590,
+        "institution_net": 305095,
+        "foreign_ratio": 29.15
+      },
+      "278470": {
+        "ticker": "278470",
+        "name": "에이피알",
+        "name_en": "APR",
+        "price": 384000.0,
+        "change_pct": -2.54,
+        "series": [
+          434500.0,
+          461500.0,
+          464500.0,
+          432500.0,
+          419000.0,
+          406000.0,
+          394000.0,
+          384000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "소비재",
+        "foreign_net": 9902,
+        "institution_net": -58972,
+        "foreign_ratio": 38.14
+      },
+      "277810": {
+        "ticker": "277810",
+        "name": "레인보우로보틱스",
+        "name_en": "Rainbow Robotics",
+        "price": 448000.0,
+        "change_pct": -2.4,
+        "series": [
+          471000.0,
+          456000.0,
+          460500.0,
+          449500.0,
+          436500.0,
+          436500.0,
+          459000.0,
+          448000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "core",
+        "sector": "로봇",
+        "foreign_net": 15641,
+        "institution_net": 24058,
+        "foreign_ratio": 5.88
+      },
+      "402340": {
+        "ticker": "402340",
+        "name": "SK스퀘어",
+        "name_en": "SK Square",
+        "price": 1125000.0,
+        "change_pct": 8.07,
+        "series": [
+          1068000.0,
+          1028000.0,
+          1037000.0,
+          1067000.0,
+          982000.0,
+          981000.0,
+          1041000.0,
+          1125000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "dynamic",
+        "trading_value": 581355000000,
+        "foreign_net": 130191,
+        "institution_net": 81906,
+        "foreign_ratio": 46.33
+      },
+      "066570": {
+        "ticker": "066570",
+        "name": "LG전자",
+        "name_en": "LG Electronics",
+        "price": 214000.0,
+        "change_pct": 6.2,
+        "series": [
+          198300.0,
+          201500.0,
+          216500.0,
+          206500.0,
+          200500.0,
+          199700.0,
+          201500.0,
+          214000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "dynamic",
+        "trading_value": 366263000000,
+        "foreign_net": -89824,
+        "institution_net": 36396,
+        "foreign_ratio": 29.46
+      },
+      "108490": {
+        "ticker": "108490",
+        "name": "로보티즈",
+        "name_en": "ROBOTIS",
+        "price": 301500.0,
+        "change_pct": -0.99,
+        "series": [
+          255000.0,
+          242000.0,
+          257500.0,
+          254000.0,
+          247000.0,
+          248500.0,
+          304500.0,
+          301500.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "dynamic",
+        "trading_value": 243135000000,
+        "foreign_net": 257920,
+        "institution_net": 149698,
+        "foreign_ratio": 7.37
+      },
+      "036930": {
+        "ticker": "036930",
+        "name": "주성엔지니어링",
+        "name_en": "Jusung Engineering",
+        "price": 187200.0,
+        "change_pct": 4.99,
+        "series": [
+          179100.0,
+          176800.0,
+          177000.0,
+          173000.0,
+          173700.0,
+          168000.0,
+          178300.0,
+          187200.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "dynamic",
+        "trading_value": 211926000000,
+        "foreign_net": 271944,
+        "institution_net": 33604,
+        "foreign_ratio": 8.8
+      },
+      "006400": {
+        "ticker": "006400",
+        "name": "삼성SDI",
+        "name_en": "Samsung SDI",
+        "price": 541000.0,
+        "change_pct": -1.28,
+        "series": [
+          569000.0,
+          571000.0,
+          577000.0,
+          569000.0,
+          538000.0,
+          539000.0,
+          548000.0,
+          541000.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "dynamic",
+        "trading_value": 196741000000,
+        "foreign_net": -57443,
+        "institution_net": 74312,
+        "foreign_ratio": 25.62
+      },
+      "047040": {
+        "ticker": "047040",
+        "name": "대우건설",
+        "name_en": "Daewoo E&C",
+        "price": 18410.0,
+        "change_pct": 9.26,
+        "series": [
+          20000.0,
+          19690.0,
+          18190.0,
+          16820.0,
+          16280.0,
+          16750.0,
+          16850.0,
+          18410.0
+        ],
+        "unit": "",
+        "trading_date": "2026-09-07",
+        "source": "dynamic",
+        "trading_value": 164978000000,
+        "foreign_net": -232450,
+        "institution_net": 124898,
+        "foreign_ratio": 10.4
+      }
+    },
+    "trading_date": "2026-09-07",
+    "missing": []
+  },
+  "ko": {
+    "title": "두산에너빌리티 10.98%, SK하이닉스 8.26% 급등! 코스피가 하루 만에 4.61% 오른 이유.",
+    "narrative": [
+      {
+        "heading": "1. 5조원이 들어왔고, 지수는 7,000선을 4.61포인트 남겼습니다",
+        "graphic": {
+          "kind": "movers_list",
+          "title": "오늘 크게 움직인 종목"
+        },
+        "body": "코스피는 308.18포인트(4.61%) 오른 6,995.39로 2026년 9월 7일 거래를 마쳤습니다. 7,000선까지 4.61포인트가 남은 자리입니다.\n\n수급은 한쪽으로 분명했습니다. 외국인과 기관이 나란히 2조원대를 순매수해 둘을 합치면 5조원을 넘겼고, 개인은 6조원대를 순매도했습니다. 사는 쪽이 누구인지가 이렇게 뚜렷한 날은 많지 않습니다.\n\n많이 오른 종목을 늘어놓으면 아래 목록이 됩니다. 발전과 건설이 맨 위에 있고 반도체가 그 뒤를 잇는 배열인데, 이 순서 자체가 이날의 성격입니다. 지수를 만든 것과 가장 크게 오른 것이 서로 다른 업종이었습니다."
+      },
+      {
+        "heading": "2. 지수를 밀어 올린 것은 반도체였습니다",
+        "body": "SK하이닉스가 8.26% 올라 178만3,000원에 마감했습니다. 삼성전자는 5.68% 상승한 27만원입니다. 시가총액 1·2위가 함께 5% 넘게 오르면 지수는 그것만으로 자리를 옮깁니다.\n\n장비와 부품도 같이 올랐습니다. 주성엔지니어링이 4.99%, 한미반도체가 4.57%, 삼성전기가 3.78% 상승했습니다.\n\n출발점은 지난 거래일 미국 시장입니다. 오픈AI가 새 모델을 내놓은 뒤 메모리 쪽으로 매수가 몰렸고, 월요일 아침 서울이 그 흐름을 그대로 받았습니다."
+      },
+      {
+        "heading": "3. 원전이 반도체보다 더 올랐습니다",
+        "graphic": {
+          "kind": "stock_spotlight",
+          "ticker": "034020",
+          "title": "오늘의 주인공"
+        },
+        "body": "두산에너빌리티가 10.98% 오른 87,900원으로 마감했습니다. 우리가 보는 종목 가운데 이날 상승 폭이 가장 컸습니다.\n\n원전 쪽이 혼자 오른 것도 아닙니다. 대우건설이 9.26% 상승해 뒤를 이었는데, 이 회사는 중동 재건 기대와 해외 원전 수주라는 두 가지 재료를 같이 안고 있습니다.\n\n반도체가 지수를 끌어올린 날 원전이 그보다 더 오른 것은 우연이 아니라고 봅니다. 인공지능 데이터센터가 늘어난다는 전망은 칩 수요이면서 동시에 전력 수요입니다. 두 업종은 같은 이야기의 앞뒤입니다."
+      },
+      {
+        "heading": "4. 지난 거래일의 주인공은 이날 팔렸습니다",
+        "body": "로보티즈는 0.99% 하락했습니다. 지난 거래일 22.54% 급등했던 종목입니다. 레인보우로보틱스도 2.40% 하락했습니다.\n\n반대쪽에서는 두산에너빌리티가 지난 거래일 보합으로 멈춰 있다가 이날 두 자릿수로 올랐습니다. 로봇에서 원전으로 하루 만에 돈이 옮겨 간 셈입니다.\n\n그렇다고 로봇 이야기가 식은 것은 아닙니다. 같은 날 LG전자가 6.20% 올랐고, 그 배경도 로봇이었습니다. 무엇이 사들여지고 무엇이 팔렸는지는 업종 이름이 아니라 그 안에 든 재료가 갈랐습니다."
+      },
+      {
+        "heading": "5. 다 오른 날은 아니었습니다",
+        "graphic": {
+          "kind": "sector_bars",
+          "title": "업종별 평균 등락"
+        },
+        "body": "업종 평균으로 보면 발전과 반도체가 앞섰고 소비재와 로봇이 뒤에 처졌습니다.\n\n에이피알은 2.54% 하락해 이날 낙폭이 가장 컸습니다. 다섯 거래일 연속 하락입니다.\n\n방산도 안에서 갈렸습니다. HD현대중공업이 2.86% 올랐고 한화에어로스페이스는 1.52% 하락했습니다. 바이오는 조용했습니다. 삼성바이오로직스가 1.31% 오른 반면 셀트리온과 알테오젠은 1% 안쪽에서 하락했습니다."
+      },
+      {
+        "heading": "6. 코스닥은 코스피와 반대로 움직였습니다",
+        "body": "코스닥은 8.69포인트(1.07%) 오른 822.19로 마감했습니다. 코스피 상승 폭의 4분의 1에도 못 미칩니다.\n\n수급은 아예 반대였습니다. 코스닥에서는 개인이 1,869억원을 순매수했고 외국인과 기관이 나란히 팔았습니다. 코스피에서 벌어진 일과 정확히 반대입니다.\n\n원/달러 환율은 0.47% 하락한 1,343.1원으로 고시됐습니다(16:38 하나은행). 주간거래 종가 기준으로는 1년 11개월 만에 가장 낮은 자리였고, 외환시장에서 배경으로 더 자주 언급된 것은 엔화 강세와 수출업체의 달러 매도였습니다."
+      }
+    ],
+    "outlook": {
+      "heading": "다음 거래일에 확인할 것",
+      "body": "먼저 7,000선입니다. 4.61포인트를 남기고 멈춘 자리라 다음 거래일 개장 몇 분이면 답이 나옵니다. 뚫는 것보다 뚫고 나서 지키는지가 중요합니다.\n\n두 번째는 개인 매물입니다. 이날 나온 6조원대가 지수가 더 오르면 계속 나올 물량인지, 여기서 멈출 물량인지는 아직 알 수 없습니다. 외국인과 기관이 같은 속도로 받아 줄지가 관건입니다.\n\n세 번째는 미국 금리입니다. 반도체가 끌어올린 상승이지만 금리 인상 가능성은 여전히 남아 있고, 이익이 먼 종목일수록 그 전망에 민감하게 반응합니다.\n\n네 번째는 원/달러입니다. 1,340원 부근은 1년 11개월 만의 자리입니다. 원화가 더 강해지면 외국인 매수가 이어지기 쉽고, 되돌아가면 이날 들어온 자금이 얼마나 단단한지가 시험받습니다."
+    },
+    "closing": {
+      "heading": "마무리",
+      "body": "하루에 4.61%가 오르는 날의 문제는 그 숫자가 판단을 대신해 준다는 데 있습니다.\n\n5조원이 들어왔지만 그 돈이 모든 종목에 간 것은 아닙니다. 로봇 대장주 둘과 소비재 대표는 이날도 하락했고, 방산은 한 업종 안에서 방향이 갈렸습니다. 지수 하나로 그날을 다 읽었다고 믿기 쉬운 날일수록, 오르지 않은 목록을 같이 펼쳐 두는 편이 낫습니다."
+    },
+    "insight_section": {
+      "heading": "이날 눈여겨볼 것",
+      "stories": [
+        {
+          "heading": "지난 거래일 미국 지수는 하락했고, 메모리만 올랐습니다",
+          "icon": "chip",
+          "image_query": "SK Hynix memory chip",
+          "body": "이날 서울의 반도체 급등을 두고 미국 증시가 좋았기 때문이라고 설명하면 절반만 맞습니다. 지난 거래일 미국 3대 지수는 모두 하락했습니다. 다우존스 -0.51%, S&P500 -0.38%, 나스닥종합 -0.29%입니다.\n\n그런데 같은 날 메모리 쪽만 따로 올랐습니다. 샌디스크가 11.90%, 마이크론이 6.10% 상승했고 필라델피아 반도체 지수는 3.38% 올랐습니다. 반면 애플은 2.51%, 테슬라는 5.92% 하락했습니다. 한 시장 안에서 방향이 이렇게 갈리는 날은 드뭅니다.\n\n배경에는 오픈AI가 9월 3일 내놓은 GPT-6 애스트라가 있습니다. 샘 올트먼은 이 모델을 새로운 능력 단계라고 표현했고, 시장은 그 말을 학습과 추론에 들어갈 메모리 수요로 옮겨 읽었습니다.\n\n정리하면 한국 증시가 이날 받은 것은 미국 증시 전체가 아니라 그중 메모리 한 줄입니다. 삼성전자와 SK하이닉스가 코스피에서 차지하는 비중을 생각하면, 그 한 줄만으로도 지수가 4% 넘게 움직이는 구조입니다.",
+          "table": [
+            {
+              "label": "다우존스",
+              "value": "-0.51%"
+            },
+            {
+              "label": "S&P500",
+              "value": "-0.38%"
+            },
+            {
+              "label": "나스닥종합",
+              "value": "-0.29%"
+            },
+            {
+              "label": "샌디스크",
+              "value": "+11.90%"
+            },
+            {
+              "label": "마이크론",
+              "value": "+6.10%"
+            },
+            {
+              "label": "필라델피아 반도체 지수",
+              "value": "+3.38%"
+            }
+          ]
+        },
+        {
+          "heading": "원전을 다시 사게 만든 숫자는 158.4GW입니다",
+          "icon": "battery",
+          "image_query": "Doosan Enerbility power plant",
+          "body": "두산에너빌리티가 10.98% 오른 배경에는 하루짜리 재료가 아니라 두 개의 수요 전망이 있습니다.\n\n첫째는 국내입니다. 제12차 전력수급기본계획을 위한 전력수요 재전망에서 2040년 최대 전력수요가 158.4GW로 제시됐습니다. 기존 전망보다 26.6GW가 늘어난 값이고, 늘어난 몫만 따져도 1.4GW급 대형 원전 19기에 해당합니다.\n\n둘째는 미국입니다. 미 에너지부가 6월에 마련한 최대 175억달러 규모의 장납기 기자재 조달 대출 프로그램은, 원자로와 증기발생기 같은 주기기를 만드는 회사에게 발주가 실제로 나온다는 신호로 읽힙니다. 두산에너빌리티가 그 자리에 있는 회사입니다.\n\n전력수요 전망은 주가처럼 하루 만에 바뀌지 않습니다. 그래서 이 종류의 재료는 그날의 등락이 아니라 다음 분기 수주 공시에서 확인하는 편이 낫다고 봅니다.",
+          "table": [
+            {
+              "label": "두산에너빌리티",
+              "value": "87,900원 (+10.98%)"
+            },
+            {
+              "label": "2040년 최대 전력수요 전망",
+              "value": "158.4GW"
+            },
+            {
+              "label": "기존 전망 대비",
+              "value": "+26.6GW"
+            },
+            {
+              "label": "대형 원전으로 환산하면",
+              "value": "1.4GW급 19기"
+            },
+            {
+              "label": "미 에너지부 대출 프로그램",
+              "value": "최대 175억달러"
+            }
+          ]
+        },
+        {
+          "heading": "로봇 대장주가 하락한 날 LG전자가 오른 이유",
+          "icon": "robot",
+          "body": "로봇으로 묶이는 종목들의 성적은 이날 갈렸습니다. 레인보우로보틱스와 로보티즈는 하락했고, LG전자는 6.20% 올랐습니다.\n\n이유는 자회사에 있습니다. LG전자가 인수한 미국 로봇 기업 베어로보틱스가 최대 4,000억원 규모의 프리IPO를 추진하고 있고, 업계에서는 기업가치가 2조원 후반대까지 매겨질 수 있다는 관측이 나옵니다.\n\n여기에 부품 이야기가 붙었습니다. 백승태 LG전자 HS사업본부장은 복수의 글로벌 빅테크와 로봇 액추에이터 수주를 협의하고 있으며 10월에 생산 준비 상황을 확인하는 미팅이 예정돼 있다고 밝혔습니다.\n\n정리하면 이날 시장이 산 것은 로봇 완성품이 아니라 로봇에 들어가는 부품과 그 지분입니다. 순수 로봇주 둘이 같은 날 하락한 것과 앞뒤가 맞습니다.",
+          "table": [
+            {
+              "label": "LG전자",
+              "value": "214,000원 (+6.20%)"
+            },
+            {
+              "label": "레인보우로보틱스",
+              "value": "-2.40%"
+            },
+            {
+              "label": "로보티즈",
+              "value": "-0.99%"
+            },
+            {
+              "label": "베어로보틱스 프리IPO",
+              "value": "최대 4,000억원 추진"
+            },
+            {
+              "label": "거론되는 기업가치",
+              "value": "2조원 후반대"
+            }
+          ]
+        },
+        {
+          "heading": "SK스퀘어가 산 것은 반도체가 아니라 지분입니다",
+          "icon": "coin",
+          "body": "우리가 보는 종목 가운데 이날 거래대금이 가장 컸던 것은 SK스퀘어입니다. 5,813억원이 오갔고 주가는 8.07% 올랐습니다.\n\n이 회사는 반도체를 만들지 않습니다. 가진 것은 SK하이닉스 지분 약 20%이고, 최대주주 자리입니다. SK하이닉스가 8.26% 오르면 SK스퀘어의 순자산가치도 같은 방향으로 다시 계산됩니다.\n\n다만 지주회사 주가가 자회사 주가를 그대로 따라가지는 않습니다. 보통은 할인이 붙고, 그 할인 폭이 얼마나 줄어드는지가 이런 날의 관전 지점입니다. 이날 SK스퀘어의 상승 폭이 자회사보다 작았던 것도 할인이 아직 남아 있다는 뜻으로 읽힙니다.\n\n지분 가치로 움직이는 종목은 자회사 주가가 되돌아갈 때 같은 배율로 되돌아갑니다. 이런 날의 상승만 보고 판단하기 전에 그 대칭을 함께 계산해 두는 편이 안전합니다.",
+          "table": [
+            {
+              "label": "SK스퀘어",
+              "value": "1,125,000원 (+8.07%)"
+            },
+            {
+              "label": "이날 거래대금",
+              "value": "5,813억원"
+            },
+            {
+              "label": "SK하이닉스",
+              "value": "1,783,000원 (+8.26%)"
+            },
+            {
+              "label": "보유 지분",
+              "value": "SK하이닉스 약 20%, 최대주주"
+            }
+          ]
+        }
+      ]
+    },
+    "sources": [
+      {
+        "name": "아시아경제",
+        "title": "코스피, 308.18P 오른 6995.39 마감(4.61%↑)",
+        "url": "https://view.asiae.co.kr/article/2026090715335983665"
+      },
+      {
+        "name": "경인방송",
+        "title": "[오늘의증시] 코스피 7000선 눈앞…외국인·기관 5조원대 순매수에 4.6% 급등",
+        "url": "https://news.ifm.kr/news/articleView.html?idxno=478832"
+      },
+      {
+        "name": "머니투데이",
+        "title": "코스피 7천피 '턱밑'…금리인상 우려에도 외인·기관 '사자'",
+        "url": "https://www.mt.co.kr/stock/2026/09/07/2026090715515881340"
+      },
+      {
+        "name": "머니투데이",
+        "title": "[스팟] 코스닥 8.69포인트(1.07%) 오른 822.19 마감",
+        "url": "https://www.mt.co.kr/stock/2026/09/07/2026090715335292121"
+      },
+      {
+        "name": "이투데이",
+        "title": "[환율마감] 원·달러 장중 1334원 터치 '1년11개월 최저', 엔화강세+달러매도",
+        "url": "https://www.etoday.co.kr/news/view/2622731"
+      },
+      {
+        "name": "이데일리",
+        "title": "\"몸값 2조\" LG전자, 로봇 자회사 프리IPO 소식에 8%대 급등[특징주]",
+        "url": "https://www.edaily.co.kr/News/Read?newsId=02273046645577824"
+      },
+      {
+        "name": "CBC뉴스",
+        "title": "원전 관련주 장 초반 상승 우위…한양이엔지 풍산홀딩스 비에이치아이 두산에너빌리티 강세",
+        "url": "https://www.cbci.co.kr/news/articleView.html?idxno=604430"
+      },
+      {
+        "name": "한국경제 유레카",
+        "title": "대우건설, 중동 지역 재건 사업 기대감과 해외 원전 수주 모멘텀",
+        "url": "https://eureka.hankyung.com/insight/detail/17345"
+      },
+      {
+        "name": "잡포스트",
+        "title": "SK스퀘어 100만원 뚫고 '6% 급등'…SK하이닉스 질주에 지분가치 재부각",
+        "url": "https://www.job-post.co.kr/news/articleView.html?idxno=226231"
+      },
+      {
+        "name": "SBS News",
+        "title": "KOSPI Reclaims 6,900 Mark on OpenAI Tailwinds, KOSDAQ Up 1%",
+        "url": "https://news.sbs.co.kr/english/article.do?news_id=N1008740777"
+      },
+      {
+        "name": "CNBC",
+        "title": "OpenAI announces rollout of GPT-6 Astra model",
+        "url": "https://www.cnbc.com/2026/09/03/open-ai-astra-gpt-6-cyber.html"
+      }
+    ]
+  },
+  "en": {
+    "title": "Doosan Enerbility jumps 10.98%, SK Hynix 8.26% as the KOSPI adds 4.61% in a single session",
+    "narrative": [
+      {
+        "heading": "1. Over 5 trillion won came in, leaving the index 4.61 points short of 7,000",
+        "body": "The KOSPI closed at 6,995.39 on September 7, 2026, up 308.18 points, or 4.61%. That leaves the index 4.61 points below the 7,000 line.\n\nThe flow was one-sided. Foreign investors and institutions each bought more than 2 trillion won on a net basis, more than 5 trillion won between them, while retail investors sold over 6 trillion won. Days with a buyer this clearly identified are rare.\n\nRank the day's gainers and power generation and construction sit at the top, with semiconductors behind them. That order is the character of the session: the stocks that built the index and the stocks that rose most were in different sectors."
+      },
+      {
+        "heading": "2. Semiconductors did the lifting",
+        "body": "SK Hynix rose 8.26% to 1,783,000 won. Samsung Electronics added 5.68% to close at 270,000 won. When the two largest companies in the market both gain more than 5%, the index moves on that alone.\n\nEquipment and components followed. Jusung Engineering gained 4.99%, Hanmi Semiconductor 4.57% and Samsung Electro-Mechanics 3.78%.\n\nThe starting point was the previous U.S. session. After OpenAI put out a new model, buying concentrated in memory names, and Seoul took that flow straight from Monday's open."
+      },
+      {
+        "heading": "3. Nuclear power outran semiconductors",
+        "body": "Doosan Enerbility closed at 87,900 won, up 10.98%. Among the stocks we follow, that was the largest advance of the session.\n\nNuclear-linked names did not move alone. Daewoo E&C gained 9.26%, carrying two stories at once: Middle East reconstruction work and overseas nuclear orders.\n\nThat power names outran chips on a day chips led the index is not a coincidence. A forecast of more AI data centres is a forecast of chip demand and electricity demand at the same time. The two sectors are the front and back of one story."
+      },
+      {
+        "heading": "4. The previous session's winners were sold",
+        "body": "ROBOTIS fell 0.99%, having surged 22.54% in the previous session. Rainbow Robotics fell 2.40%.\n\nOn the other side, Doosan Enerbility had been flat in the previous session and closed with a double-digit gain this time. In one session the money moved from robots to nuclear power.\n\nThat does not mean the robot story cooled. LG Electronics rose 6.20% the same day, and the reason was robots as well. What was bought and what was sold was decided by the specific catalyst, not by the sector label."
+      },
+      {
+        "heading": "5. Not everything went up",
+        "body": "By sector average, power generation and semiconductors led while consumer names and robotics lagged.\n\nAPR fell 2.54%, the steepest decline of the day, its fifth straight losing session.\n\nDefence split internally. HD Hyundai Heavy Industries gained 2.86% while Hanwha Aerospace fell 1.52%. Biotech was quiet: Samsung Biologics rose 1.31%, while Celltrion and Alteogen both slipped less than 1%."
+      },
+      {
+        "heading": "6. The KOSDAQ moved the other way",
+        "body": "The KOSDAQ closed at 822.19, up 8.69 points or 1.07%, less than a quarter of the KOSPI's advance.\n\nThe flow was the mirror image. On the KOSDAQ, retail investors bought a net 186.9 billion won while foreign investors and institutions both sold. Two markets in the same country, on the same day, with opposite hands at work.\n\nThe won closed at 1,343.1 per dollar, 0.47% stronger on the day, quoted at 16:38 by Hana Bank. On a regular-session close basis that is the strongest level in a year and eleven months, and the reasons cited most often in the currency market were yen strength and dollar selling by exporters."
+      }
+    ],
+    "outlook": {
+      "heading": "What to watch next session",
+      "body": "First, the 7,000 line. The index stopped 4.61 points short, so the answer comes within minutes of the next open. Holding it matters more than clearing it.\n\nSecond, retail supply. Whether the more than 6 trillion won sold this session keeps coming as the index rises, or stops here, is not yet knowable. The question is whether foreign and institutional buyers keep absorbing it at the same pace.\n\nThird, U.S. rates. This was a chip-led advance, but the possibility of a rate increase has not gone away, and the further out a company's profits sit, the more it reacts to that.\n\nFourth, the won. Around 1,340 is the strongest level in a year and eleven months. A stronger won makes continued foreign buying easier; a reversal will test how firm this session's inflow really was."
+    },
+    "closing": {
+      "heading": "Closing note",
+      "body": "The trouble with a 4.61% day is that the number does your judging for you.\n\nMore than 5 trillion won came in, but it did not go everywhere. Two of the market's robot leaders and its best-known consumer name fell again, and defence split within a single sector. On the days it is easiest to read the whole session off one index number, it is worth keeping the list of what did not rise open beside it."
+    },
+    "insight_section": {
+      "heading": "Worth a closer look",
+      "stories": [
+        {
+          "heading": "U.S. indices fell last session. Memory rose anyway",
+          "icon": "chip",
+          "body": "Explaining Seoul's chip surge by saying U.S. stocks were strong is only half the story. In the previous U.S. session all three major indices fell: the Dow -0.51%, the S&P 500 -0.38% and the Nasdaq Composite -0.29%.\n\nMemory went its own way on that same day. SanDisk gained 11.90% and Micron 6.10%, and the Philadelphia Semiconductor Index rose 3.38%. Apple fell 2.51% and Tesla 5.92%. A single market rarely splits this cleanly in one session.\n\nBehind it sits GPT-6 Astra, which OpenAI put out on September 3. Sam Altman called the model a new capability level, and the market translated that into memory demand for training and inference.\n\nSo what Korea imported was not the U.S. market but one line of it. Given the weight Samsung Electronics and SK Hynix carry in the index, that one line is enough to move the KOSPI more than 4%.",
+          "table": [
+            {
+              "label": "Dow Jones",
+              "value": "-0.51%"
+            },
+            {
+              "label": "S&P 500",
+              "value": "-0.38%"
+            },
+            {
+              "label": "Nasdaq Composite",
+              "value": "-0.29%"
+            },
+            {
+              "label": "SanDisk",
+              "value": "+11.90%"
+            },
+            {
+              "label": "Micron",
+              "value": "+6.10%"
+            },
+            {
+              "label": "Philadelphia Semiconductor Index",
+              "value": "+3.38%"
+            }
+          ]
+        },
+        {
+          "heading": "The number behind the nuclear bid is 158.4GW",
+          "icon": "battery",
+          "body": "Doosan Enerbility's 10.98% gain rests on two demand forecasts rather than a one-day headline.\n\nThe first is domestic. A revised power demand outlook prepared for Korea's 12th Basic Plan for Long-Term Electricity Supply and Demand puts peak 2040 demand at 158.4GW, 26.6GW above the previous projection. The increase alone is equivalent to nineteen large 1.4GW reactors.\n\nThe second is American. A long-lead equipment procurement loan programme of up to 17.5 billion dollars, set up by the U.S. Department of Energy in June, reads as a signal that orders for reactors, steam generators and similar primary equipment will actually be placed. Doosan Enerbility builds exactly that.\n\nPower demand forecasts do not change in a day the way share prices do. Material of this kind is better checked in the next quarter's order announcements than in one session's price move.",
+          "table": [
+            {
+              "label": "Doosan Enerbility",
+              "value": "87,900 won (+10.98%)"
+            },
+            {
+              "label": "Peak 2040 power demand",
+              "value": "158.4GW"
+            },
+            {
+              "label": "Versus previous projection",
+              "value": "+26.6GW"
+            },
+            {
+              "label": "In large reactors",
+              "value": "nineteen 1.4GW units"
+            },
+            {
+              "label": "U.S. DOE loan programme",
+              "value": "up to $17.5bn"
+            }
+          ]
+        },
+        {
+          "heading": "Why LG Electronics rose on a day robot leaders fell",
+          "icon": "robot",
+          "body": "Stocks grouped under robotics went in different directions. Rainbow Robotics and ROBOTIS both fell, while LG Electronics rose 6.20%.\n\nThe reason is a subsidiary. Bear Robotics, the U.S. robotics company LG Electronics acquired, is pursuing a pre-IPO round of up to 400 billion won, with industry estimates putting its valuation in the high 2 trillion won range.\n\nA component story was added on top. Baek Seung-tae, head of LG Electronics' HS division, said the company is in order discussions with several global technology firms over robot actuators, with a meeting scheduled in October to check production readiness.\n\nWhat the market bought was not finished robots but the parts that go into them and the stake in a company that makes them. That is consistent with two pure-play robot names falling the same day.",
+          "table": [
+            {
+              "label": "LG Electronics",
+              "value": "214,000 won (+6.20%)"
+            },
+            {
+              "label": "Rainbow Robotics",
+              "value": "-2.40%"
+            },
+            {
+              "label": "ROBOTIS",
+              "value": "-0.99%"
+            },
+            {
+              "label": "Bear Robotics pre-IPO",
+              "value": "up to 400bn won"
+            },
+            {
+              "label": "Valuation discussed",
+              "value": "high 2 trillion won range"
+            }
+          ]
+        },
+        {
+          "heading": "What SK Square owns is a stake, not a fab",
+          "icon": "coin",
+          "body": "Among the stocks we follow, SK Square had the largest turnover of the session: 581.3 billion won traded, and the shares rose 8.07%.\n\nThe company does not make chips. What it holds is roughly 20% of SK Hynix, as its largest shareholder. When SK Hynix rises 8.26%, SK Square's net asset value is recalculated in the same direction.\n\nHolding company shares do not track their subsidiaries one for one. A discount is usually applied, and how far that discount narrows is the thing to watch on a day like this. SK Square gaining less than its subsidiary suggests the discount is still there.\n\nA stock that moves on stake value retraces at the same ratio when the subsidiary does. That symmetry belongs in the calculation before a session like this one is read as a verdict.",
+          "table": [
+            {
+              "label": "SK Square",
+              "value": "1,125,000 won (+8.07%)"
+            },
+            {
+              "label": "Turnover",
+              "value": "581.3bn won"
+            },
+            {
+              "label": "SK Hynix",
+              "value": "1,783,000 won (+8.26%)"
+            },
+            {
+              "label": "Stake held",
+              "value": "about 20% of SK Hynix, largest shareholder"
+            }
+          ]
+        }
+      ]
+    },
+    "sources": [
+      {
+        "name": "아시아경제",
+        "title": "코스피, 308.18P 오른 6995.39 마감(4.61%↑)",
+        "url": "https://view.asiae.co.kr/article/2026090715335983665"
+      },
+      {
+        "name": "경인방송",
+        "title": "[오늘의증시] 코스피 7000선 눈앞…외국인·기관 5조원대 순매수에 4.6% 급등",
+        "url": "https://news.ifm.kr/news/articleView.html?idxno=478832"
+      },
+      {
+        "name": "머니투데이",
+        "title": "코스피 7천피 '턱밑'…금리인상 우려에도 외인·기관 '사자'",
+        "url": "https://www.mt.co.kr/stock/2026/09/07/2026090715515881340"
+      },
+      {
+        "name": "머니투데이",
+        "title": "[스팟] 코스닥 8.69포인트(1.07%) 오른 822.19 마감",
+        "url": "https://www.mt.co.kr/stock/2026/09/07/2026090715335292121"
+      },
+      {
+        "name": "이투데이",
+        "title": "[환율마감] 원·달러 장중 1334원 터치 '1년11개월 최저', 엔화강세+달러매도",
+        "url": "https://www.etoday.co.kr/news/view/2622731"
+      },
+      {
+        "name": "이데일리",
+        "title": "\"몸값 2조\" LG전자, 로봇 자회사 프리IPO 소식에 8%대 급등[특징주]",
+        "url": "https://www.edaily.co.kr/News/Read?newsId=02273046645577824"
+      },
+      {
+        "name": "CBC뉴스",
+        "title": "원전 관련주 장 초반 상승 우위…한양이엔지 풍산홀딩스 비에이치아이 두산에너빌리티 강세",
+        "url": "https://www.cbci.co.kr/news/articleView.html?idxno=604430"
+      },
+      {
+        "name": "한국경제 유레카",
+        "title": "대우건설, 중동 지역 재건 사업 기대감과 해외 원전 수주 모멘텀",
+        "url": "https://eureka.hankyung.com/insight/detail/17345"
+      },
+      {
+        "name": "잡포스트",
+        "title": "SK스퀘어 100만원 뚫고 '6% 급등'…SK하이닉스 질주에 지분가치 재부각",
+        "url": "https://www.job-post.co.kr/news/articleView.html?idxno=226231"
+      },
+      {
+        "name": "SBS News",
+        "title": "KOSPI Reclaims 6,900 Mark on OpenAI Tailwinds, KOSDAQ Up 1%",
+        "url": "https://news.sbs.co.kr/english/article.do?news_id=N1008740777"
+      },
+      {
+        "name": "CNBC",
+        "title": "OpenAI announces rollout of GPT-6 Astra model",
+        "url": "https://www.cnbc.com/2026/09/03/open-ai-astra-gpt-6-cyber.html"
+      }
+    ]
+  }
+}
