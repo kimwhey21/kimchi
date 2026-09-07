@@ -113,19 +113,21 @@
   예약(cron)은 한 시간 뒤 예비다 — 2026-09-07에 자체 예약이 2시간 8분 늦게 떠서
   글이 19:05에 나간 것이 계기다. 호출 실패는 워크플로를 실패시키지 않는다.
   `tests/test_workflows.py`·`tests/test_fetch_only.py`가 이 구조를 고정한다.
-- **루틴 샌드박스 네트워크는 허용 목록(custom allowlist)으로 열려 있다**(2026-09-07
-  저녁, 사용자가 직접 설정). 실측(점검 루틴 `trig_017rvrGfkDE55t3f5fGSGQ5N`, 12:06
-  UTC) — 열림: `api.unsplash.com`·`images.unsplash.com`·`finance.naver.com`·
-  `query1.finance.yahoo.com`·`fermata.it.kr`·`commons.wikimedia.org`·
-  `opendart.fss.or.kr`·`ecos.bok.or.kr`·`api.stlouisfed.org`·`pypi.org`·
-  `api.github.com`. 막힘: `m.stock.naver.com`(한국장 편입 종목 수집 — 루틴이
-  자구책으로 시세를 받는 날만 영향)·`api.openverse.org`(그래서 루틴의 사진 검색은
-  `--source unsplash`). 목록은 **루틴 편집 → 지시문 아래 구름 아이콘(Default) →
-  톱니 → Network access**에서 바꾸고(문서: code.claude.com/docs/en/routines), 바꾼
-  뒤에는 점검 루틴을 `RemoteTrigger run`으로 다시 돌려 확인한다. claude.ai 설정의
-  "기능 → 네트워크 송신 허용" 토글은 채팅 분석 도구용이라 루틴과 무관하다.
-  루틴 지시문은 `docs/routine_common.md`·`routine_kr.md`·`routine_us.md`에 있고
-  루틴 프롬프트는 그 파일을 가리키는 몇 줄뿐이다 — **규칙은 파일에서 고친다.**
+- **루틴 샌드박스 네트워크는 전체 열림(Full)이다**(2026-09-07 저녁, 사용자가 직접
+  설정). 실측(점검 루틴 `trig_017rvrGfkDE55t3f5fGSGQ5N`, 12:30 UTC) — 열림:
+  `api.unsplash.com`·`images.unsplash.com`·`finance.naver.com`·
+  `query1.finance.yahoo.com`·`fermata.it.kr`·`api.openverse.org`·
+  `commons.wikimedia.org`·`opendart.fss.or.kr`·`ecos.bok.or.kr`·`api.stlouisfed.org`·
+  `pypi.org`·`api.github.com`. **`m.stock.naver.com`만 전체 열림에서도 000**이다 —
+  네트워크 정책이 아니라 그쪽에서 막는 것으로 보이고(추측), 한국장 편입 종목
+  수집(`fetch_movers`)이라 루틴이 자구책으로 시세를 받는 날만 영향이 있다. 설정은
+  **루틴 편집 → 지시문 아래 구름 아이콘(Default) → 톱니 → Network access**에 있고
+  (문서: code.claude.com/docs/en/routines), 바꾼 뒤에는 점검 루틴을 `RemoteTrigger
+  run`으로 다시 돌려 확인한다. claude.ai 설정의 "기능 → 네트워크 송신 허용" 토글은
+  채팅 분석 도구용이라 루틴과 무관하다. 루틴의 사진 검색은 `--source unsplash`로
+  고정한다(품질 기준 — Openverse가 열렸다고 바꾸지 않는다). 루틴 지시문은
+  `docs/routine_common.md`·`routine_kr.md`·`routine_us.md`에 있고 루틴 프롬프트는
+  그 파일을 가리키는 몇 줄뿐이다 — **규칙은 파일에서 고친다.**
 - **`publish_check.yml`은 예비 예약까지 끝난 뒤(19:00/10:00 KST)에 돈다.** 루틴
   보다 먼저 울리면 정상 발행일에도 실패 메일이 온다(2026-09-07 17:35).
 - 예약 시각을 마감 정각으로 되돌리지 말 것. 16:00/07:00 정각은 시세가 아직

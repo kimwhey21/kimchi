@@ -14,12 +14,12 @@
 
 ## 이 샌드박스에서 할 수 있는 것 (2026-09-07 실측)
 
-네트워크는 환경 설정의 허용 목록만 열려 있습니다(2026-09-07 실측): GitHub, pypi,
-네이버 금융(`finance.naver.com`), 야후 파이낸스, Unsplash(api·images), DART, ECOS,
-FRED, 위키미디어 공용, fermata.it.kr. 막힌 곳 — `m.stock.naver.com`(편입 종목
-수집), `api.openverse.org`(그래서 사진 검색은 반드시 `--source unsplash`). **그
-밖의 도메인은 연결 자체가 안 됩니다** — 막힌 곳을 우회하려 하지 말고 없는 대로
-진행하세요. WebSearch·WebFetch는 별도 경로라 늘 됩니다.
+네트워크는 전체 열림입니다(2026-09-07 12:30 UTC 실측): GitHub, pypi, 네이버
+금융(`finance.naver.com`), 야후 파이낸스, Unsplash(api·images), Openverse, DART,
+ECOS, FRED, 위키미디어 공용, fermata.it.kr 전부 응답. 단 `m.stock.naver.com`
+(편입 종목 수집)은 전체 열림에서도 연결이 안 됩니다 — 우회하려 하지 말고 없는
+대로 진행하세요. 사진 검색은 품질 기준으로 `--source unsplash`를 씁니다.
+WebSearch·WebFetch는 별도 경로라 늘 됩니다.
 
 ## 절차
 
