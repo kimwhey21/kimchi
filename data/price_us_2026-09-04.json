@@ -80,20 +80,20 @@
       "ticker": "^VIX",
       "name": "VIX",
       "name_en": "VIX",
-      "price": 14.53,
-      "change_pct": 1.47,
+      "price": 15.24,
+      "change_pct": 4.89,
       "series": [
-        15.21,
         14.51,
         14.43,
         14.92,
         16.34,
         15.2,
         14.32,
-        14.53
+        14.53,
+        15.24
       ],
       "unit": "",
-      "trading_date": "2026-09-04"
+      "trading_date": "2026-09-07"
     },
     "^TNX": {
       "ticker": "^TNX",
@@ -137,20 +137,20 @@
       "ticker": "GC=F",
       "name": "국제 금",
       "name_en": "Gold",
-      "price": 4429.8,
-      "change_pct": -1.38,
+      "price": 4476.6,
+      "change_pct": 1.06,
       "series": [
-        4598.2002,
         4609.7002,
         4478.1001,
         4431.1001,
         4348.0,
         4366.2998,
         4491.7002,
-        4429.7998
+        4429.7998,
+        4476.6001
       ],
       "unit": "달러",
-      "trading_date": "2026-09-04"
+      "trading_date": "2026-09-07"
     }
   },
   "watchlist": {
@@ -459,19 +459,19 @@
       "name": "WTI 원유",
       "name_en": "WTI Crude Oil",
       "price": 91.48,
-      "change_pct": 0.2,
+      "change_pct": 0.0,
       "series": [
-        82.23,
         83.53,
         83.4,
         85.76,
         90.22,
         91.01,
         91.3,
+        91.48,
         91.48
       ],
       "unit": "",
-      "trading_date": "2026-09-04",
+      "trading_date": "2026-09-07",
       "source": "core"
     },
     "SNDK": {
