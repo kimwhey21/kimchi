@@ -153,7 +153,12 @@ WebSearch·WebFetch는 별도 경로라 늘 됩니다.
    적으세요(비교가 안 된 것입니다).
 10. `git add editorial/ && git commit -m "시황 원고: <거래일> <시장>" && git push origin HEAD:main`
    (세션의 작업 브랜치가 무엇이든 **main으로** push합니다 — 발행 워크플로는
-   main의 `editorial/*.json` 변경에만 붙어 있습니다).
+   main의 `editorial/*.json` 변경에만 붙어 있습니다). **작업 브랜치(`claude/…`)에만
+   push하고 끝내지 않습니다.** 2026-09-09 미국장 루틴이 "브랜치 정책"을 이유로 자기
+   브랜치에만 올리고 멈춰, 원고가 main에 없는 채 사람이 옮겼습니다. main push가
+   거부되면 `git pull --rebase origin main` 뒤 다시 push합니다(다른 세션이 방금
+   올렸을 수 있습니다). 브랜치에만 있으면 아무것도 공개되지 않고, 다음 날 루틴이
+   "어제 글"을 읽지 못해 판정 절이 빠집니다.
 11. push 뒤 **발행 워크플로를 3분 넘게 기다리지 않습니다.** 성공 여부는
     저녁 `publish_check.yml`이 따로 확인하고 실패하면 메일이 갑니다. 완료
     보고에 커밋 해시와 Actions 실행 링크를 적고 끝내세요.
