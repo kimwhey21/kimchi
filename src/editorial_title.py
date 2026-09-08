@@ -227,6 +227,14 @@ def hook_names(title: str) -> list[str]:
     return [name for name, pattern in HOOKS.items() if re.search(pattern, title)]
 
 
+# `초보자 설명: 순매수는 …`처럼 본문 블록의 라벨을 소제목에 올린 것(2026-09-08, 기준표
+# 시험 실행). `라벨: 내용` 꼴 자체는 재테크농부도 쓴다(`실적 성적표: 무엇이 예상을 넘었나`) —
+# 막는 것은 초보자 설명·요약·참고처럼 **문단 첫머리에 다는 라벨**이 소제목이 된 경우다.
+# 그것은 기계가 표에 붙인 제목처럼 읽힌다. 콜론 뒤에 띄어쓰기가 있을 때만 잡는다.
+_BLOCK_LABEL_HEADING = re.compile(
+    r"^(?:초보자(?:용)?(?:\s*설명)?|요약|한\s*줄\s*요약|참고|주의|정리|핵심\s*정리|팁|TIP)\s*[:：]\s+\S", re.I)
+
+
 def collect_heading_issues(sections: list, kind: str | None = None,
                            min_sections: int | None = None,
                            notes_out: list[str] | None = None,
@@ -249,6 +257,10 @@ def collect_heading_issues(sections: list, kind: str | None = None,
                 f"소제목 {index} '{bare}'이(가) {len(bare)}자입니다 — {HEADING_MAX_CHARS}자 이하로 "
                 "줄이세요(벤치마크 중앙값 23자). 절반쯤은 명사구로 끊습니다 — `오늘 투자심리`, "
                 "`움직이는 주요 종목`, `케빈 워시 의장은 무슨 말을 했나`.")
+        if _BLOCK_LABEL_HEADING.match(bare):
+            issues.append(f"소제목 {index} '{bare}': 본문 블록의 라벨('초보자 설명:' 등)을 소제목에 올렸습니다 — "
+                          "기계가 표에 붙인 제목처럼 읽힙니다. 라벨은 본문 문단 첫머리에 두고, 소제목은 "
+                          "그 절이 하는 말로 쓰세요(`순매수는 지수를 이렇게 움직입니다`).")
         if re.search(r"[고,]\s*$", bare):
             issues.append(f"소제목 {index} '{bare}': '…고, …고'로 끝나는 대구(對句)입니다. 벤치마크 "
                           "소제목 462개에 0개 — 한 문장으로 말하세요(`메모리는 올랐고 설계주는 하락했습니다`).")

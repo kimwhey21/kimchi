@@ -27,6 +27,13 @@ on:
         required: false
         default: false
 
+# 발행은 한 번에 하나만 (2026-09-08). 옛 글 재작성 루틴이 두 편을 4분 간격으로 커밋하자
+# 이 워크플로 둘이 같은 사이트에 동시에 그림을 올렸고, 그 사이 미디어 조회가 503을 받아
+# 한 편(us_2026-08-31)의 발행 전체가 죽었다. 앞 실행을 죽이지 않고 뒤 실행이 기다린다.
+concurrency:
+  group: editorial-publish
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest

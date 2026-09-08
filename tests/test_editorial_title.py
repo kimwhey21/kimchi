@@ -176,6 +176,21 @@ class UniversalRulesTest(unittest.TestCase):
         for kind in ("시황", "기준표", "프리뷰", "가이드", None):
             self.assertTrue(any("32자" in i for i in collect_issues(doc, kind=kind)), kind)
 
+    def test_block_label_heading_is_blocked(self) -> None:
+        """`초보자 설명: …`은 본문 문단의 라벨이지 소제목이 아니다(2026-09-08 기준표 시험 실행).
+
+        `라벨: 내용` 꼴 자체는 재테크농부도 쓴다(`실적 성적표: 무엇이 예상을 넘었나`) —
+        막는 것은 초보자 설명·요약·참고 같은 블록 라벨뿐이다.
+        """
+        title = "오늘 밤 미국장, 유가가 반도체를 흔들까?"
+        def doc(heading: str) -> dict:
+            return {"title": title, "narrative": [{"heading": heading, "body": "b"}] * 5}
+        self.assertTrue(any("라벨" in i for i in collect_issues(doc("2. 초보자 설명: 순매수는 지수를 이렇게 움직입니다"), kind="기준표")))
+        self.assertTrue(any("라벨" in i for i in collect_issues(doc("요약: 외국인은 돌아왔습니다"), kind="기준표")))
+        for heading in ("2. 순매수는 지수를 이렇게 움직입니다", "2. 오후 2:30 이후 반등했습니다",
+                        "실적 성적표: 무엇이 예상을 넘었나"):
+            self.assertEqual(collect_issues(doc(heading), kind="기준표"), [], heading)
+
     def test_short_label_is_a_note_not_a_block(self) -> None:
         notes: list[str] = []
         doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?",

@@ -13,12 +13,45 @@ from __future__ import annotations
 import os
 import re
 import sys
+import time
 import hashlib
 from pathlib import Path
 
 import requests
 
 TIMEOUT_SECONDS = 30
+
+# 5xx·연결 오류 재시도 (2026-09-08). 옛 글 재작성 루틴이 두 편을 4분 간격으로 커밋해
+# 발행 워크플로 둘이 같은 사이트에 동시에 그림을 올리던 중, 미디어 조회 하나가 503을
+# 받아 한 편(us_2026-08-31)의 발행 전체가 죽었다. 서버가 잠깐 바쁜 것과 진짜 고장을
+# 구분하는 방법은 몇 초 뒤 한 번 더 물어보는 것뿐이다. 4xx는 다시 묻지 않는다 —
+# 같은 요청은 같은 답을 받는다. 워크플로 쪽은 concurrency로 발행을 한 번에 하나로 묶었다.
+RETRY_STATUS = {502, 503, 504}
+RETRY_BACKOFF_SECONDS: tuple[float, ...] = (3, 8)
+
+
+def _request(method: str, url: str, **kwargs):
+    """`requests.get/post`를 감싸 5xx·연결 오류에 두 번까지 다시 시도합니다."""
+    waits = (0, *RETRY_BACKOFF_SECONDS)
+    response = None
+    for attempt, wait in enumerate(waits):
+        if wait:
+            time.sleep(wait)
+        last = attempt == len(waits) - 1
+        try:
+            response = getattr(requests, method)(url, **kwargs)
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as exc:
+            if last:
+                raise
+            print(f"[안내] {method.upper()} {url}: {exc.__class__.__name__} — "
+                  f"{waits[attempt + 1]}초 뒤 다시 시도", file=sys.stderr)
+            continue
+        if response.status_code in RETRY_STATUS and not last:
+            print(f"[안내] {method.upper()} {url}: HTTP {response.status_code} — "
+                  f"{waits[attempt + 1]}초 뒤 다시 시도", file=sys.stderr)
+            continue
+        return response
+    return response
 
 _SCRIPT_TAG_RE = re.compile(r"<script\b[^>]*>.*?</script>", re.IGNORECASE | re.DOTALL)
 _HEAD_RE = re.compile(r"<head[^>]*>(.*?)</head>", re.IGNORECASE | re.DOTALL)
@@ -160,7 +193,7 @@ def _get_or_create_term_id(
     생성 때와 같은 방식 — publish_draft의 lang 설명 참고).
     """
     try:
-        search = requests.get(
+        search = _request("get", 
             f"{base_url}/wp-json/wp/v2/{endpoint}",
             auth=auth,
             params={
@@ -183,7 +216,7 @@ def _get_or_create_term_id(
             )
         if matches:
             return matches[0]["id"]
-        created = requests.post(
+        created = _request("post", 
             f"{base_url}/wp-json/wp/v2/{endpoint}",
             auth=auth,
             params={"lang": lang} if lang else None,
@@ -223,7 +256,7 @@ def verify_published(post_id: int, expected_title: str, expected_status: str | N
     """
     base_url = os.environ["WORDPRESS_URL"].rstrip("/")
     auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
-    response = requests.get(
+    response = _request("get", 
         f"{base_url}/wp-json/wp/v2/posts/{post_id}",
         auth=auth,
         params={"context": "edit"},
@@ -270,7 +303,7 @@ def _normalize_title(title: str) -> str:
 
 def _get_post_by_id(base_url: str, auth: tuple[str, str], post_id: int) -> dict | None:
     """글 번호로 기존 글을 읽습니다(휴지통은 없는 것으로 봅니다)."""
-    response = requests.get(
+    response = _request("get", 
         f"{base_url}/wp-json/wp/v2/posts/{int(post_id)}", auth=auth,
         params={"context": "edit"}, timeout=TIMEOUT_SECONDS,
     )
@@ -287,7 +320,7 @@ def _find_existing_post_by_slug(
     base_url: str, auth: tuple[str, str], slug: str
 ) -> dict | None:
     """재실행 때 같은 글을 새로 만들지 않도록 고정 slug의 기존 글을 찾습니다."""
-    response = requests.get(
+    response = _request("get", 
         f"{base_url}/wp-json/wp/v2/posts",
         auth=auth,
         params=[
@@ -319,7 +352,7 @@ def upload_image_url(image: dict) -> str | None:
     if not media_id:
         return None
     try:
-        response = requests.get(
+        response = _request("get", 
             f"{base_url}/wp-json/wp/v2/media/{media_id}",
             auth=auth,
             timeout=TIMEOUT_SECONDS,
@@ -347,7 +380,7 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
             filename = path.name
             content_type = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
         else:
-            img_resp = requests.get(image["url"], timeout=TIMEOUT_SECONDS)
+            img_resp = _request("get", image["url"], timeout=TIMEOUT_SECONDS)
             img_resp.raise_for_status()
             image_bytes = img_resp.content
             filename = f"{image.get('id') or 'photo'}.jpg"
@@ -359,7 +392,7 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
         digest = hashlib.sha256(image_bytes).hexdigest()
         stem, suffix = os.path.splitext(filename)
         filename = f"{stem}-{digest[:12]}{suffix or '.png'}"
-        existing = requests.get(
+        existing = _request("get", 
             f"{base_url}/wp-json/wp/v2/media", auth=auth,
             params={"search": digest[:12], "per_page": 100, "context": "edit"},
             timeout=TIMEOUT_SECONDS,
@@ -370,7 +403,7 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
                 if f"market-brief-sha256:{digest}" in description:
                     return int(media["id"])
 
-        upload = requests.post(
+        upload = _request("post", 
             f"{base_url}/wp-json/wp/v2/media",
             auth=auth,
             headers={
@@ -396,7 +429,7 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
             )
         else:
             caption = image.get("caption", "Illustrative image created for this article.")
-        requests.post(
+        _request("post", 
             f"{base_url}/wp-json/wp/v2/media/{media_id}",
             auth=auth,
             json={"alt_text": image.get("alt", ""), "caption": caption,
@@ -424,7 +457,7 @@ def _featured_media_matches(
     새 파일을 올려 미디어 라이브러리 중복을 최소화합니다.
     """
     try:
-        response = requests.get(
+        response = _request("get", 
             f"{base_url}/wp-json/wp/v2/media/{media_id}",
             auth=auth,
             params={"context": "edit"},
@@ -449,7 +482,7 @@ def set_focus_keyword(base_url: str, auth: tuple[str, str], post_id: int, keywor
     안 되기 때문입니다.
     """
     try:
-        response = requests.post(
+        response = _request("post", 
             f"{base_url}/wp-json/rankmath/v1/updateMeta",
             auth=auth,
             json={
@@ -628,7 +661,7 @@ def publish_draft(
             payload["featured_media"] = media_id
 
     endpoint = f"{base_url}/wp-json/wp/v2/posts"
-    response = requests.post(
+    response = _request("post", 
         endpoint,
         auth=auth,
         params={"lang": lang} if lang else None,
@@ -710,7 +743,7 @@ def update_draft(
             payload["featured_media"] = media_id
 
     endpoint = f"{base_url}/wp-json/wp/v2/posts/{post_id}"
-    response = requests.post(endpoint, auth=auth, json=payload, timeout=TIMEOUT_SECONDS)
+    response = _request("post", endpoint, auth=auth, json=payload, timeout=TIMEOUT_SECONDS)
 
     if response.status_code >= 400:
         raise WordPressPublishError(
