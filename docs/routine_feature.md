@@ -35,7 +35,7 @@
 
 ## 절차
 
-1. `pip install -r requirements.txt`
+1. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`(샌드박스에는 한글 폰트가 없어 이걸 빼면 그래픽 렌더가 첫 번에 실패합니다)
 2. **재료.** 먼저 `ls data/engines_*_$(TZ=Asia/Seoul date +%F).txt`를 봅니다. GitHub
    Actions(`story_material.yml`)가 토·일 08:10 KST에 두 시장의 엔진 출력을 이 파일로
    커밋해 둡니다 — **이 파일을 읽으세요.** 샌드박스에서는 야후 파이낸스 연결이

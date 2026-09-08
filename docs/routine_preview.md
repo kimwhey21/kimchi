@@ -19,7 +19,7 @@
 
 - 오늘 밤(미국 동부 시간 오늘)이 미국 증시 휴장일이면 씁니다 대신 보고하고
   종료합니다. WebSearch로 "NYSE holidays 2026"을 확인합니다.
-- `editorial/previews/us_<오늘>.json`이 이미 있으면 종료합니다.
+- `editorial/previews/us_<오늘>.json`이 이미 있으면 **알림 없이 조용히** 종료합니다(정상입니다).
 - 어제 미국장 원고도, 재료 파일도, 확인된 일정도 없으면 보고하고 종료합니다.
   **억지로 채우지 않습니다.**
 
@@ -40,7 +40,7 @@
 
 ## 절차
 
-1. `pip install -r requirements.txt`
+1. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`(샌드박스에는 한글 폰트가 없어 이걸 빼면 그래픽 렌더가 첫 번에 실패합니다)
 2. **오늘 밤 일정.** 실적 발표(어느 회사, 개장 전/마감 후), 경제지표(발표 시각),
    연준 인사 발언·FOMC. WebSearch로 **서로 다른 출처 2곳 이상**에서 확인한 것만
    씁니다. 시각은 한국시간으로 환산해 적습니다(서머타임 중 동부시간 +13시간, 11월
