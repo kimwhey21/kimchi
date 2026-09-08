@@ -75,6 +75,23 @@
       what: "인텔 3분기 실적(미확정) — 증자 자금이 숫자로 나타나는 첫 분기"
       verdict: pending
 
+- title: "외국인이 넉 달 만에 돌아왔습니다, 그런데 파는 종목도 있습니다"
+  url: https://fermata.it.kr/kr-2026-09-08-foreign-buying-reversal/
+  date: 2026-09-08
+  summary: "외국인이 넉 달 연속 107조원 넘게 팔다가 9월 3일부터 순매수로 돌아섰다. 같은 날 원전 테마주에서는 외국인이 팔고 기관이 받았다. 글은 이 전환이 8월처럼 며칠 만에 끝날지를 9월 말까지의 흐름으로 보기로 했다."
+  checks:
+    - due: 2026-09-16
+      due_label: "9/15~16"
+      what: "FOMC 전후 미국 금리 — 10년물이 최근 90일 고점(4.79%) 위로 더 오르면 외국인 순매수가 다시 끊길 위험 신호"
+      verdict: pending
+    - due: 2026-09-30
+      what: "9월 전체 외국인 순매수 지속 여부 — 8월 중순처럼 며칠 만에 매도로 돌아서는지, 아니면 월말까지 이어지는지"
+      verdict: pending
+    - due: 2026-10-05
+      due_label: "10월 초"
+      what: "한국거래소 9월 최종 수급 집계 — 매수가 반도체(삼성전자·SK하이닉스) 밖으로 번졌는지"
+      verdict: pending
+
 - title: "마이크론을 던진 펀드들, 코튜는 정반대로 갔다"
   url: https://fermata.it.kr/us-2026-09-06-micron-funds/
   date: 2026-09-06
