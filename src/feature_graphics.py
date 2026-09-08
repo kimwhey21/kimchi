@@ -186,7 +186,8 @@ def checklist(items: list[dict], output_path: Path,
 
 
 def cover(output_path: Path, kicker: str, subject: str,
-          left: dict | None = None, right: dict | None = None) -> Path:
+          left: dict | None = None, right: dict | None = None,
+          note: str = "") -> Path:
     """가이드 글의 대표 이미지.
 
     **제목을 그리지 않습니다.** 2026-09-06에 표지에 제목을 크게 넣었더니 글을
@@ -198,33 +199,63 @@ def cover(output_path: Path, kicker: str, subject: str,
     1200x630으로 그리되 테마가 3:2로 잘라 보여주므로 가운데로 모읍니다. 왼쪽에
     붙였다가 "기준표"가 "표"로 잘린 적이 있습니다.
     """
+    # 2026-09-08 사용자가 여섯 안 가운데 좌우 분할("C안")을 골라 기준표·프리뷰 표지를
+    # 이것으로 통일했다. 왼쪽 남색 판에 FERMATA·kicker·제목, 오른쪽 크림 바탕에 숫자
+    # 둘을 세로로. 매일 시황 표지(검은 카드·흰 단독 카드)와 같은 계열이라 홈 격자에
+    # 나란히 놓여도 한 매체로 읽힌다(시뮬레이션으로 확인). 이전의 흰 패널 가운데
+    # 정렬 표지는 "서식처럼 보인다"는 지적을 받았다.
     ensure_korean_font()
     width, height = 1200, 630
+    split = 540
     image = Image.new("RGB", (width, height), BG)
     draw = ImageDraw.Draw(image)
-    draw.rectangle([40, 40, width - 40, height - 40], fill=PANEL, outline=LINE)
+    draw.rectangle([0, 0, split, height], fill=INK)
 
-    def centered(text: str, y: int, font, fill) -> None:
-        draw.text(((width - draw.textlength(text, font=font)) / 2, y), text,
-                  font=font, fill=fill)
+    draw.text((70, 70), "FERMATA", font=korean_font(22, bold=True), fill="#FFFFFF")
+    draw.text((70, 110), kicker, font=korean_font(22), fill="#AEB6C2")
 
-    centered(kicker, 120, korean_font(24, bold=True), SUB)
-    centered(subject, 186, korean_font(58, bold=True), INK)
+    # 제목: 판 폭(400px)에 맞춰 줄을 나눈다. 쉼표 뒤를 먼저 끊고, 그래도 길면 낱말
+    # 단위로 끊는다. 세 줄을 넘기면 글자를 한 단계 줄인다.
+    def wrap(text: str, font, max_width: int) -> list[str]:
+        pieces = [p.strip() for p in text.replace(", ", ",\n").split("\n")]
+        lines: list[str] = []
+        for piece in pieces:
+            current = ""
+            for word in piece.split(" "):
+                trial = f"{current} {word}".strip()
+                if current and draw.textlength(trial, font=font) > max_width:
+                    lines.append(current)
+                    current = word
+                else:
+                    current = trial
+            if current:
+                lines.append(current)
+        return lines
 
-    if left or right:
-        base = 330
-        draw.line([250, base, width - 250, base], fill=LINE, width=1)
-        quarter = width // 4
-        for i, side in enumerate((left, right)):
-            if not side:
-                continue
-            cx = quarter + i * (width // 2)
-            label_font, value_font = korean_font(24), korean_font(62, bold=True)
-            draw.text((cx - draw.textlength(side["label"], font=label_font) / 2, base + 56),
-                      side["label"], font=label_font, fill=SUB)
-            draw.text((cx - draw.textlength(side["value"], font=value_font) / 2, base + 100),
-                      side["value"], font=value_font,
-                      fill=DOWN if side.get("down") else UP)
+    for size in (56, 50, 44):
+        title_font = korean_font(size, bold=True)
+        lines = wrap(subject, title_font, split - 140)
+        if len(lines) <= 3:
+            break
+    line_height = int(size * 1.32)
+    block = len(lines) * line_height
+    y = max(180, (height - block) // 2 + 20)
+    for line in lines:
+        draw.text((70, y), line, font=title_font, fill="#FFFFFF")
+        y += line_height
+
+    sides = [s for s in (left, right) if s]
+    x = split + 80
+    top = 120 if len(sides) == 2 else 200
+    for i, side in enumerate(sides):
+        y = top + i * 240
+        draw.text((x, y), side["label"], font=korean_font(26), fill=SUB)
+        colour = DOWN if side.get("down") else (UP if i == 0 else INK)
+        draw.text((x, y + 44), side["value"], font=korean_font(84, bold=True), fill=colour)
+        if i == 0 and len(sides) == 2:
+            draw.line([x, y + 190, width - 70, y + 190], fill=LINE, width=2)
+    if note:
+        draw.text((x, height - 66), note, font=korean_font(20), fill=SUB)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     image.save(output_path)
     return output_path
@@ -326,44 +357,11 @@ def guide_cover(output_path: Path, kicker: str, subject: str,
     받은 것은 용산 도시 전경이었고 `korean bank`는 계곡에서 밥 먹는 사람들이었습니다.
     `KB금융`·`신한지주`는 결과가 아예 없습니다. 무관한 사진은 없는 것보다 나쁩니다.
     """
-    ensure_korean_font()
-    width, height = 1200, 630
-    image = Image.new("RGB", (width, height), BG)
-    draw = ImageDraw.Draw(image)
-    draw.rectangle([40, 40, width - 40, height - 40], fill=PANEL, outline=LINE)
-
-    def centered(text: str, y: int, font, fill) -> None:
-        draw.text(((width - draw.textlength(text, font=font)) / 2, y), text,
-                  font=font, fill=fill)
-
-    centered(kicker, 96, korean_font(23, bold=True), SUB)
-    centered(subject, 148, korean_font(46, bold=True), INK)
-
-    # 화살표 둘. 위로 가는 것과 아래로 가는 것을 나란히 놓아 대비를 만듭니다.
-    base_y, top_y = 430, 268
-    for side, item, color in ((-1, up, UP), (1, down, DOWN)):
-        if not item:
-            continue
-        cx = width // 2 + side * 210
-        rising = color is UP
-        y0, y1 = (base_y, top_y) if rising else (top_y, base_y)
-        draw.line([cx, y0, cx, y1], fill=color, width=7)
-        head = 18
-        tip = y1
-        draw.polygon([(cx - head, tip + (head if rising else -head)),
-                      (cx + head, tip + (head if rising else -head)),
-                      (cx, tip)], fill=color)
-        label_font, value_font = korean_font(22), korean_font(40, bold=True)
-        draw.text((cx - draw.textlength(item["label"], font=label_font) / 2, base_y + 28),
-                  item["label"], font=label_font, fill=SUB)
-        draw.text((cx - draw.textlength(item["value"], font=value_font) / 2, base_y + 60),
-                  item["value"], font=value_font, fill=color)
-
-    if note:
-        centered(note, height - 96, korean_font(20), SUB)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    image.save(output_path)
-    return output_path
+    # 2026-09-08부터 화살표 대비 대신 `cover`와 같은 좌우 분할로 그린다 — 표지 어법을
+    # 하나로 통일했다(사용자 선택). 오르는 쪽(up)은 빨강, 내리는 쪽(down)은 파랑으로
+    # 대비는 색으로 남긴다. 옛 인자 이름(up·down·note)은 원고 호환을 위해 그대로 받는다.
+    return cover(output_path, kicker, subject, left=up,
+                 right=({**down, "down": True} if down else None), note=note)
 
 
 # 사진을 못 구했을 때 쓰는 손그림 아이콘 표지입니다(docs/feature-style.md 3절).
