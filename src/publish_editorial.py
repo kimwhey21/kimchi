@@ -228,12 +228,11 @@ def _attach_story_images(doc_section: dict | None, price_data: dict, date_str: s
 
 
 def _style_warnings(ko: dict, en: dict | None, price_data: dict) -> list[str]:
-    """문체(editorial_quality)·구조(validate_daily)·제목(editorial_title)·영어 문체 검사를
+    """문체(editorial_quality)·제목·소제목(editorial_title, 모든 글 공통)·영어 문체 검사를
     한데 모아 **목록으로** 돌려줍니다. 발행을 막지 않고 로그에 남기기 위한 것입니다."""
     issues: list[str] = []
     issues += editorial_quality.collect_issues(ko)
-    issues += editorial_quality.collect_daily_issues(ko)
-    issues += editorial_title.collect_issues(ko, price_data)
+    issues += editorial_title.collect_issues(ko, price_data, kind="시황")   # 제목·소제목, 모든 글 공통
     if en:
         try:
             editorial_quality_en.validate_generated(en)

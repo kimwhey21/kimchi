@@ -139,3 +139,46 @@ class AllowedTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class UniversalRulesTest(unittest.TestCase):
+    """제목·소제목 규칙은 블로그의 모든 글에 같다(2026-09-08).
+
+    사용자: "따로 나뉘어 있으면 매번 수정을 해야 한다." 후킹 장치·절 수·소제목 길이가
+    feature_checks(기준표)와 editorial_quality(시황)에 따로 있던 것을 여기로 모았다.
+    """
+
+    def test_plain_announcement_has_no_hook(self) -> None:
+        issues = collect_issues({"title": "코스피는 하락했습니다"})
+        self.assertTrue(any("후킹 장치" in i for i in issues), issues)
+
+    def test_our_rewritten_titles_pass(self) -> None:
+        for title in ("대우건설이 이틀째 오른 날, 코스피는 7,000선 앞에서 되밀렸습니다",
+                      "코스피 4.61% 급등, 외국인이 다섯 달 만에 방향을 바꿨습니다",
+                      "고용지표에 지수는 내렸는데 메모리 반도체만 오른 이유",
+                      "오늘 밤 미국장, 유가 6주 최고치가 반도체 랠리를 흔들까?",
+                      "SK하이닉스 지금 사도 될까? 10월 27일에 갈린다"):
+            self.assertEqual(collect_issues({"title": title}), [], title)
+
+    def test_section_floor_depends_only_on_kind(self) -> None:
+        from src import editorial_title
+        sections = [{"heading": f"{i}. 오늘 밤 일정", "body": "b"} for i in range(1, 4)]
+        doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?", "narrative": sections}
+        self.assertEqual(collect_issues(doc, kind="프리뷰"), [])
+        self.assertTrue(any("8개 이상" in i for i in collect_issues(doc, kind="시황")))
+        self.assertTrue(any("5개 이상" in i for i in collect_issues(doc, kind="기준표")))
+        self.assertEqual(editorial_title.SECTION_FLOORS["가이드"], 5)
+
+    def test_heading_length_applies_to_every_kind(self) -> None:
+        long = "1. 오늘 밤 일정 — 예정된 지표보다 이미 벌어진 사건, 그리고 그 뒤에 남은 것"
+        doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?",
+               "narrative": [{"heading": long, "body": "b"}] * 3}
+        for kind in ("시황", "기준표", "프리뷰", "가이드", None):
+            self.assertTrue(any("32자" in i for i in collect_issues(doc, kind=kind)), kind)
+
+    def test_short_label_is_a_note_not_a_block(self) -> None:
+        notes: list[str] = []
+        doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?",
+               "narrative": [{"heading": "1. 지금 숫자", "body": "b"}] * 3}
+        self.assertEqual(collect_issues(doc, kind="프리뷰", notes_out=notes), [])
+        self.assertTrue(any("명사 토막" in n for n in notes), notes)

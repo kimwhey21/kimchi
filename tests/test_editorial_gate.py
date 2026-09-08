@@ -62,8 +62,9 @@ class GateTest(unittest.TestCase):
         issues, _ = self._run(_doc("대우건설 8.47% 급등, 삼성전기 5.78% 급락. 코스피가 0.58% 하락한 이유.",
                                    _sections(6)))
         joined = "\n".join(issues)
-        self.assertIn("제목 —", joined)
-        self.assertIn("구조 —", joined)
+        self.assertIn("제목·소제목 —", joined)
+        self.assertIn("등락률이 둘 이상", joined)
+        self.assertIn("절이 6개", joined)
         self.assertIn("시각자료 —", joined)
 
     def test_good_manuscript_passes_and_renders(self) -> None:
@@ -102,7 +103,7 @@ class PublishWarnsInsteadOfBlockingTest(unittest.TestCase):
               "narrative": _sections(6), "closing": {"body": ""}}
         warnings = publish_editorial._style_warnings(ko, None, PRICE)
         self.assertTrue(any("등락률이 둘 이상" in w for w in warnings))
-        self.assertTrue(any("절 이상" in w for w in warnings))
+        self.assertTrue(any("8개 이상" in w for w in warnings))
 
     def test_section_photo_from_pool_and_dynamic_skip(self) -> None:
         narrative = [{"heading": "1. a", "body": "b", "photo": {"ticker": "005930"}},

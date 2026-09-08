@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src import fetch_images, publish_wordpress, render_html
+from src import editorial_title, fetch_images, publish_wordpress, render_html
 
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "output"
 
@@ -114,6 +114,9 @@ def publish_guide(
                 ]
         insight_section = {**insight_section, "stories": stories}
     generated = build_generated(title, sections, closing, insight_section)
+    # 제목·소제목 규칙은 모든 글 공통(editorial_title). 손으로 올리는 경로라 경고만 찍습니다.
+    for issue in editorial_title.collect_issues(generated, kind="가이드"):
+        print(f"[경고] 제목·소제목: {issue}")
     date_str = dt.date.today().isoformat()
 
     html = render_html.render(

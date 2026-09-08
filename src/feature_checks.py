@@ -26,35 +26,16 @@ import re
 import sys
 from pathlib import Path
 
-from src import editorial_quality
+from src import editorial_title
 
 
-# 제목 후킹 장치. 벤치마크 100편에서 추린 다섯 유형입니다(docs/feature-style.md 1절).
-HOOKS = {
-    # 접속사만 보다가 `반대로 갔다`를 반전으로 못 읽었습니다. 코퍼스에서
-    # `반대로` 224회, `오히려` 141회로 그쪽이 가장 자주 쓰는 반전 표현입니다.
-    "약속+반전": (r"그러나|하지만|그런데|인데도|했는데|지만,|아니다|아닙니다"
-                r"|반대로|정반대|오히려|~?만 무너|만 빠|만 올|만 하락"),
-    "미해결 질문": r"\?|할까|될까|일까|갈린다|갈립니다",
-    # 한글 숫자를 빼면 `확인할 다섯 가지`를 "후킹 없음"으로 잡습니다. 그 제목의
-    # 진짜 문제는 지표 용어와 길이였지, 장치가 없는 것이 아니었습니다.
-    "범위 축소": r"\d\s*가지|[한두세네]\s*가지|다섯 가지|여섯 가지|딱 \d|가지만|하나만|둘만",
-    "시한 압박": r"\d+분 뒤|오늘 밤|내일|이번 ?주|다음 ?주|\d+월 \d+일|지금",
-    "권위+반전": r"증권사|월가|기관|헤지펀드|CEO|내부자|외국인|개미",
-}
-
-# 제목에 쓰면 안 되는 지표 용어. 벤치마크 100편 제목 중 PER이 든 것은 1편뿐이고
-# 그것도 '저평가'라는 쉬운 말을 앞에 뒀습니다.
-JARGON = ("FWD PER", "PER", "EPS", "PBR", "ROE", "밸류에이션", "컨센서스",
-          "가이던스", "CAPEX", "FWD")
-
+# 제목 후킹 장치·지표 용어·소제목·절 수는 editorial_title에 있습니다(2026-09-08, 모든 글 공통).
 MIN_GRAPHICS = 6          # 벤치마크 이미지 p25
-MIN_SECTIONS = 5
 
-# 시리즈별 하한. 기준표는 위 기본값이고, 밤 10시 미국장 프리뷰(2026-09-08)는 600~900자
-# 짜리 짧은 글이라 절 3개·시각자료 2장이면 된다 — 같은 파이프라인(관문·렌더·발행)을
-# 쓰되 문턱만 다르다. 새 시리즈를 만들면 여기에 한 줄 더한다.
-SERIES_LIMITS = {"프리뷰": {"graphics": 3, "sections": 3}}   # 표지 + 본문 둘 (2026-09-08)
+# 시리즈별 시각자료 하한. 기준표는 위 기본값이고, 밤 10시 미국장 프리뷰(2026-09-08)는
+# 짧은 글이라 표지 + 본문 둘이면 된다. 절 수 하한은 editorial_title.SECTION_FLOORS에 있다
+# (모든 글의 소제목 규칙이 그쪽에 모여 있다). 새 시리즈를 만들면 두 곳에 한 줄씩 더한다.
+SERIES_LIMITS = {"프리뷰": {"graphics": 3}}
 
 # 설명 없이 지나가면 초보자가 문장을 못 따라가는 말들. 벤치마크는 이런 말이
 # 나올 때마다 `초보자용 설명` 블록을 따로 답니다(100편 중 30%).
@@ -85,40 +66,13 @@ def collect_issues(doc: dict, graphics: int | None = None,
     title = ko.get("title") or ""
     if not title:
         return ["제목이 없습니다."]
-
-    found = [name for name, pattern in HOOKS.items() if re.search(pattern, title)]
-    if not found:
-        issues.append(
-            f"제목에 후킹 장치가 없습니다: {title!r} — 다섯 유형 중 하나는 써야 합니다"
-            f"({', '.join(HOOKS)}). docs/feature-style.md 1절.")
-
-    # 지표 용어는 **막지 않고 알려만 줍니다.** 벤치마크에도 예외가 있습니다
-    # (`저평가 반도체 주식은? 8개 FWD PER 분석`). 드문 것을 금지로 바꾸면
-    # 쓸 수 있는 제목이 좁아집니다.
-    for word in JARGON:
-        if word in title:
-            notes.append(
-                f"제목에 지표 용어 {word!r}가 있습니다. 벤치마크 100편 중 1편만 "
-                f"이렇게 씁니다 — 누구나 아는 말로 바꿀 수 있는지 한 번 보십시오.")
-            break
+    # 제목 후킹 장치·지표 용어·절 수·소제목 길이는 editorial_title.collect_issues가 봅니다
+    # (feature_gate가 kind=series로 부릅니다). 여기는 기준표 본문에만 있는 것만 봅니다.
 
     limits = SERIES_LIMITS.get(str(doc.get("series") or ""), {})
-    min_sections = limits.get("sections", MIN_SECTIONS)
     min_graphics = limits.get("graphics", MIN_GRAPHICS)
 
     sections = ko.get("narrative") or []
-    if len(sections) < min_sections:
-        issues.append(f"절이 {len(sections)}개입니다 — {min_sections}개 이상 씁니다.")
-    # 소제목 길이는 시황과 같은 기준입니다(2026-09-08, 벤치마크 최근 104편 p75 32자).
-    # 프리뷰·기준표의 소제목도 "1. 오늘 밤 일정 — 예정된 지표보다 이미 벌어진 사건"처럼
-    # 길어지기 쉬워 같은 상한을 둡니다.
-    for index, section in enumerate(sections, start=1):
-        bare = editorial_quality._HEADING_NUMBER.sub("", str(section.get("heading", ""))).strip()
-        if len(bare) > editorial_quality.HEADING_MAX_CHARS:
-            issues.append(
-                f"소제목 {index} '{bare}'이(가) {len(bare)}자입니다 — "
-                f"{editorial_quality.HEADING_MAX_CHARS}자 이하로 줄입니다(벤치마크 중앙값 23자).")
-
     body = " ".join(s.get("body", "") for s in sections) + (
         ko.get("closing", {}).get("body", ""))
 
@@ -180,7 +134,9 @@ def main() -> int:
     notes: list[str] = []
     issues = collect_issues(doc, args.graphics, notes_out=notes)
     title = (doc.get("ko") or doc).get("title", "")
-    hooks = [name for name, pattern in HOOKS.items() if re.search(pattern, title)]
+    series = str(doc.get("series") or "기준표")
+    issues = editorial_title.collect_issues(doc, kind=series, notes_out=notes) + issues
+    hooks = editorial_title.hook_names(title)
     print(f"제목: {title} ({len(title)}자)")
     print(f"후킹 장치: {', '.join(hooks) or '없음'}")
     for note in notes:

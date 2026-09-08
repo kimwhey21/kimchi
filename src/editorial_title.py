@@ -1,4 +1,15 @@
-"""제목이 시황 제목의 문법을 지키는지 봅니다.
+"""제목·소제목 규칙 — **블로그에 올라가는 모든 글**(시황·기준표·프리뷰·가이드)이 같은 것을 씁니다.
+
+한 곳에 두는 이유 (2026-09-08)
+------------------------------
+사용자: "제목과 소제목 규칙은 블로그에 올라가는 모든 글에 적용되어야 한다. 따로
+나뉘어 있으면 매번 수정을 해야 한다." 전에는 후킹 장치·절 수·소제목 길이가
+feature_checks(기준표·프리뷰)와 editorial_quality(시황)에 따로 있었고 문서도 셋이었다.
+이제 이 모듈 하나가 제목과 소제목을 다 보고, 시황(publish_editorial·editorial_gate)·
+기준표·프리뷰(feature_gate)·가이드(publish_guide)가 같은 `collect_issues`를 부른다.
+글 종류에 따라 다른 것은 **절 수 하한(SECTION_FLOORS)뿐**이다. 규칙은 여기와
+docs/editorial-style.md 「제목 문법」·「소제목」 절에서만 고친다.
+
 
 왜 필요한가
 -----------
@@ -121,27 +132,83 @@ def _rounded_from_actual(title: str, price_data: dict) -> list[str]:
     return issues
 
 
-def collect_issues(doc: dict, price_data: dict | None = None) -> list[str]:
-    """한국어 제목에서 어긴 규칙을 모읍니다."""
-    title = str(doc.get("title") or "").strip()
+# ── 후킹 장치 (모든 글) ────────────────────────────────────────────────────────
+# 기준표 검사(2026-09-06)의 다섯 유형에, 시황 제목이 실제로 쓰는 둘(설명 약속·기록/고비)을
+# 더했다. 재테크농부 최근 104편(2026-08-06~09-05)에 돌리면 98편이 걸리고, 빠진 여섯은
+# "SK하이닉스 매도 인증" 같은 계좌 공지다 — 우리가 쓰지 않는 종류다. `코스피는
+# 하락했습니다`처럼 아무 장치도 없는 제목은 안내문이지 제목이 아니다.
+HOOKS = {
+    "설명 약속": r"이유|비결|이렇게 (?:봅니다|합니다|대응|보|하)|이것입니다|정리했",
+    "약속+반전": (r"그러나|하지만|그런데|인데도|했는데|지만,|아니다|아닙니다|아니었다"
+                r"|반대로|정반대|오히려|만 무너|만 빠|만 올|만 하락|만 상승|그래도|여전히"),
+    "미해결 질문": r"\?|할까|될까|일까|갈린다|갈립니다|정한다|정합니다|결정",
+    "범위 축소": r"\d\s*가지|[한두세네]\s*가지|다섯 가지|여섯 가지|딱 \d|가지만|하나만|둘만|만 보세요|만 체크|만 확인",
+    "시한 압박": r"\d+분 뒤|오늘|내일|이번 ?주|다음 ?주|\d+월 \d+일|지금|이제|하반기|앞두고|다가온|시작",
+    "권위+반전": r"증권사|월가|기관|헤지펀드|CEO|내부자|외국인|개미|정부",
+    "기록·고비": (r"사상 최고|최고치|최저치|신고가|저점|만에|급등|급락|폭락|폭등|재돌파|\d+(?:\.\d+)?%"
+                r"|반등|무너|흔들|위험|경고|조심|주의|절대|필수|중요|\d,\d{3}선|선 앞|선을|고비|턱밑|눈앞"
+                r"|\d+(?:일|주|달|년)째|[이사]틀째|사흘째|나흘째|닷새째|연속"),
+}
+
+# 제목의 지표 용어. 벤치마크 100편 제목 중 PER이 든 것은 1편뿐 — 드문 것이지 틀린 것은
+# 아니라서 **알려만 준다**(notes_out).
+JARGON = ("FWD PER", "PER", "EPS", "PBR", "ROE", "밸류에이션", "컨센서스",
+          "가이던스", "CAPEX", "FWD")
+
+# ── 소제목·절 수 (모든 글) ─────────────────────────────────────────────────────
+# 벤치마크 최근 104편의 번호 소제목 556개: 길이 중앙값 23자, p75 32자, 4~8자 명사 토막은
+# 4%뿐. 편당 개수 중앙값 14(p25 12). 우리 9/8 한국장은 6절, 소제목 30~35자였다.
+HEADING_MAX_CHARS = 32
+HEADING_MIN_CHARS = 6      # "1. 지금 숫자"(5자) 같은 슬라이드 라벨 — 드문 것이라 알려만 준다
+SECTION_FLOORS = {"시황": 8, "기준표": 5, "프리뷰": 3, "가이드": 5}
+_HEADING_NUMBER = re.compile(r"^\s*\d{1,2}\.\s*")
+
+
+def hook_names(title: str) -> list[str]:
+    return [name for name, pattern in HOOKS.items() if re.search(pattern, title)]
+
+
+def collect_heading_issues(sections: list, kind: str | None = None,
+                           min_sections: int | None = None,
+                           notes_out: list[str] | None = None) -> list[str]:
+    """절 수와 소제목 길이. 글 종류(kind)는 절 수 하한만 정합니다."""
+    issues: list[str] = []
+    floor = min_sections if min_sections is not None else SECTION_FLOORS.get(str(kind or ""))
+    if floor and len(sections) < floor:
+        hint = (" 긴 절을 쪼개고 지수·업종·수급·주인공 종목·환율·유가·다음 거래일처럼 절마다 "
+                "하나만 말하세요(벤치마크 편당 소제목 중앙값 14개)." if kind == "시황" else "")
+        issues.append(f"절이 {len(sections)}개입니다 — {kind or '이 글'}은 {floor}개 이상 씁니다.{hint}")
+    for index, section in enumerate(sections, start=1):
+        bare = _HEADING_NUMBER.sub("", str(section.get("heading", ""))).strip()
+        if len(bare) > HEADING_MAX_CHARS:
+            issues.append(
+                f"소제목 {index} '{bare}'이(가) {len(bare)}자입니다 — {HEADING_MAX_CHARS}자 이하로 "
+                "줄이세요(벤치마크 중앙값 23자). 절반쯤은 명사구로 끊습니다 — `오늘 투자심리`, "
+                "`움직이는 주요 종목`, `케빈 워시 의장은 무슨 말을 했나`.")
+        elif 0 < len(bare) < HEADING_MIN_CHARS and notes_out is not None:
+            notes_out.append(f"소제목 {index} '{bare}'은(는) {len(bare)}자 명사 토막입니다 — "
+                             "슬라이드 라벨처럼 읽힙니다(벤치마크 4%). 그 절이 무슨 말을 하는지 드러나게 쓰십시오.")
+    return issues
+
+
+def collect_title_issues(title: str, price_data: dict | None = None,
+                         notes_out: list[str] | None = None) -> list[str]:
+    """제목 하나의 규칙 위반 목록."""
+    title = str(title or "").strip()
     if not title:
         return []
-
     issues: list[str] = []
 
     if _TRAILING_TAG.search(title):
         issues.append(
             "제목 끝의 꼬리표를 빼세요. 시장과 날짜는 제목 바로 윗줄과 글 주소에 "
-            "이미 있어, 목록에서도 검색 결과에서도 같은 말이 두 번 보입니다."
-        )
+            "이미 있어, 목록에서도 검색 결과에서도 같은 말이 두 번 보입니다.")
 
     if _PAST_QUIZ.search(title):
         issues.append(
             "'왜 ~했을까?'는 지나간 일을 퀴즈로 냅니다. 벤치마크 시황 제목 199개 중 "
             "1개뿐입니다. '~한 이유'로 끊어 설명해 주겠다고 약속하거나, "
-            "'반등할 수 있을까?'처럼 앞을 보는 질문으로 쓰세요."
-        )
-
+            "'반등할 수 있을까?'처럼 앞을 보는 질문으로 쓰세요.")
 
     if len(_PCT.findall(title)) >= 2:
         issues.append(
@@ -149,23 +216,51 @@ def collect_issues(doc: dict, price_data: dict | None = None) -> list[str]:
             "제목은 0개이고 하나인 제목도 12개뿐입니다. 숫자를 나열하지 말고 그날의 "
             "이야기 하나로 쓰세요 — `반도체 주식 급락, 고점 신호일까?`, "
             "`다시 커지는 이란 위험, 반도체만 상승한 이유`, "
-            "`미국 증시 사상 최고치, 그런데 AMD와 스페이스X는 급락했습니다`."
-        )
+            "`미국 증시 사상 최고치, 그런데 AMD와 스페이스X는 급락했습니다`.")
 
     for word, why in _INVENTED.items():
         if word in title:
             issues.append(f"제목의 '{word}'는 지어낸 말입니다 — {why}")
 
+    if not hook_names(title):
+        issues.append(
+            f"제목에 후킹 장치가 없습니다: {title!r} — 일곱 유형 중 하나는 있어야 합니다"
+            f"({', '.join(HOOKS)}). `코스피는 하락했습니다`는 안내문입니다. "
+            "`~한 이유`, `그런데 ~`, `~일까?`, `N가지`, `오늘 밤`, `외국인`, `사상 최고치` 같은 "
+            "장치 하나로 읽을 이유를 만드세요. docs/editorial-style.md 「제목 문법」.")
+
+    if notes_out is not None:
+        for word in JARGON:
+            if word in title:
+                notes_out.append(
+                    f"제목에 지표 용어 {word!r}가 있습니다. 벤치마크 100편 중 1편만 "
+                    "이렇게 씁니다 — 누구나 아는 말로 바꿀 수 있는지 한 번 보십시오.")
+                break
+
     if price_data:
         issues += _rounded_from_actual(title, price_data)
-
     return issues
 
 
-def validate(doc: dict, price_data: dict | None = None) -> None:
-    """제목 문법에 어긋나면 발행을 중단합니다."""
-    issues = collect_issues(doc, price_data)
+def collect_issues(doc: dict, price_data: dict | None = None, *,
+                   kind: str | None = None, min_sections: int | None = None,
+                   notes_out: list[str] | None = None) -> list[str]:
+    """제목 + 소제목 규칙을 한 번에. 모든 발행 경로가 이 함수를 부릅니다.
+
+    `doc`은 `{"title", "narrative", ...}`(시황의 ko) 또는 `{"ko": {...}}`(기준표·프리뷰)
+    둘 다 받습니다. `kind`는 절 수 하한(SECTION_FLOORS)에만 쓰입니다.
+    """
+    ko = doc.get("ko") if isinstance(doc.get("ko"), dict) else doc
+    issues = collect_title_issues(ko.get("title", ""), price_data, notes_out=notes_out)
+    issues += collect_heading_issues(ko.get("narrative") or [], kind=kind,
+                                     min_sections=min_sections, notes_out=notes_out)
+    return issues
+
+
+def validate(doc: dict, price_data: dict | None = None, **kwargs) -> None:
+    """제목·소제목 규칙에 어긋나면 예외 — 루틴 관문에서 씁니다(발행 단계는 경고만)."""
+    issues = collect_issues(doc, price_data, **kwargs)
     if issues:
+        ko = doc.get("ko") if isinstance(doc.get("ko"), dict) else doc
         raise EditorialTitleError(
-            f"제목 문법 검사 실패 — {doc.get('title')!r}\n- " + "\n- ".join(issues)
-        )
+            f"제목·소제목 검사 실패 — {ko.get('title')!r}\n- " + "\n- ".join(issues))

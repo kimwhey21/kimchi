@@ -14,8 +14,8 @@
 무엇을 보는가
 -------------
 1. 문체 — `editorial_quality.collect_issues` (어색한 표현, 지어낸 말)
-2. 구조 — `editorial_quality.collect_daily_issues` (8절 이상, 소제목 32자 이하)
-3. 제목 — `editorial_title.collect_issues` (등락률 둘 이상 금지 등)
+2. 제목·소제목 — `editorial_title.collect_issues(kind="시황")` (모든 글 공통 규칙: 후킹 장치,
+   등락률 둘 이상 금지, 8절 이상, 소제목 32자 이하)
 4. 숫자 — `editorial_facts` (원고의 등락률이 시세와 맞는지, 1위 종목을 다뤘는지)
 5. 영어판 문체 — `editorial_quality_en`
 6. 시각자료 — 본문 `graphic`을 실제로 그려 보고(틀린 티커·없는 이력은 여기서 드러남),
@@ -62,7 +62,7 @@ def _heading_lines(ko: dict) -> list[str]:
     lines = []
     for index, section in enumerate(ko.get("narrative") or [], start=1):
         heading = str(section.get("heading", "")).strip()
-        bare = editorial_quality._HEADING_NUMBER.sub("", heading)
+        bare = editorial_title._HEADING_NUMBER.sub("", heading)
         lines.append(f"  {index:>2}. {heading}  ({len(bare)}자)")
     return lines
 
@@ -80,8 +80,9 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
     summary: list[str] = []
 
     issues += [f"문체 — {i}" for i in editorial_quality.collect_issues(ko)]
-    issues += [f"구조 — {i}" for i in editorial_quality.collect_daily_issues(ko)]
-    issues += [f"제목 — {i}" for i in editorial_title.collect_issues(ko, price_data)]
+    notes: list[str] = []
+    issues += [f"제목·소제목 — {i}" for i in editorial_title.collect_issues(ko, price_data, kind="시황", notes_out=notes)]
+    summary += [f"(참고) {n}" for n in notes]
     try:
         editorial_facts.validate(ko, price_data, lang="ko")
     except Exception as exc:  # noqa: BLE001 - 종류가 무엇이든 목록에 담는다

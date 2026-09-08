@@ -21,9 +21,10 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     """다섯 검사를 모두 호출하고, 막아야 할 오류와 참고 보고를 분리한다."""
     ko = doc.get("ko") or doc
     blocking = []
-    blocking.extend(editorial_quality.collect_issues(ko))
-    blocking.extend(editorial_title.collect_issues(ko))
     notes: list[str] = []
+    blocking.extend(editorial_quality.collect_issues(ko))
+    blocking.extend(editorial_title.collect_issues(
+        ko, kind=str(doc.get("series") or "기준표"), notes_out=notes))   # 제목·소제목, 모든 글 공통
     blocking.extend(feature_checks.collect_issues(doc, graphics=graphics, notes_out=notes))
     # 오늘 이 글이 막힌 이유는 문장이 아니라 재료였습니다. 재료를 안 뽑고 쓴 글은
     # 여기서 멈춥니다 — 사람이 엔진 돌리기를 기억하는 데 기대지 않습니다.

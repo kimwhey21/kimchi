@@ -9,7 +9,7 @@ import re
 import unittest
 from pathlib import Path
 
-from src import feature_checks, source_check
+from src import editorial_title, feature_checks, source_check
 
 ROOT = Path(__file__).resolve().parent.parent
 WORKFLOW = ROOT / ".github" / "workflows" / "preview_publish.yml"
@@ -30,7 +30,8 @@ class PreviewThresholdsTest(unittest.TestCase):
         self.assertFalse([i for i in issues if "절이" in i or "시각자료" in i], issues)
 
     def test_feature_thresholds_are_unchanged(self) -> None:
-        issues = feature_checks.collect_issues(_doc("기준표"), graphics=2)
+        issues = (editorial_title.collect_issues(_doc("기준표"), kind="기준표")
+                  + feature_checks.collect_issues(_doc("기준표"), graphics=2))
         self.assertTrue(any("절이 3개" in i for i in issues), issues)
         self.assertTrue(any("시각자료가 2장" in i for i in issues), issues)
 

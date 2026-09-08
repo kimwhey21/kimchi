@@ -8,35 +8,35 @@ from __future__ import annotations
 
 import unittest
 
-from src import editorial_quality
+from src import editorial_title
 
 
-def _doc(n: int, heading: str = "업종별 흐름") -> dict:
-    return {"title": "t", "narrative": [{"heading": f"{i}. {heading}", "body": "본문."} for i in range(1, n + 1)]}
+def _doc(n: int, heading: str = "업종별 흐름") -> list:
+    return [{"heading": f"{i}. {heading}", "body": "본문."} for i in range(1, n + 1)]
 
 
 class DailyStructureTest(unittest.TestCase):
     def test_six_sections_is_too_few(self) -> None:
-        issues = editorial_quality.collect_daily_issues(_doc(6))
-        self.assertTrue(any("절 이상" in i for i in issues), issues)
+        issues = editorial_title.collect_heading_issues(_doc(6), kind="시황")
+        self.assertTrue(any("8개 이상" in i for i in issues), issues)
 
     def test_ten_short_sections_pass(self) -> None:
-        self.assertEqual(editorial_quality.collect_daily_issues(_doc(10)), [])
+        self.assertEqual(editorial_title.collect_heading_issues(_doc(10), kind="시황"), [])
 
     def test_long_heading_is_rejected(self) -> None:
         doc = _doc(10)
-        doc["narrative"][0]["heading"] = "1. 대우건설이 오르고 삼성전기가 하락한, 업종 로테이션의 하루였습니다"
-        issues = editorial_quality.collect_daily_issues(doc)
+        doc[0]["heading"] = "1. 대우건설이 오르고 삼성전기가 하락한, 업종 로테이션의 하루였습니다"
+        issues = editorial_title.collect_heading_issues(doc, kind="시황")
         self.assertEqual(len(issues), 1)
         self.assertIn("32자 이하", issues[0])
 
     def test_number_prefix_does_not_count(self) -> None:
         doc = _doc(10, heading="가" * 32)
-        self.assertEqual(editorial_quality.collect_daily_issues(doc), [])
+        self.assertEqual(editorial_title.collect_heading_issues(doc, kind="시황"), [])
 
-    def test_validate_daily_raises(self) -> None:
-        with self.assertRaises(editorial_quality.EditorialQualityError):
-            editorial_quality.validate_daily(_doc(3))
+    def test_validate_raises_for_a_thin_daily(self) -> None:
+        with self.assertRaises(editorial_title.EditorialTitleError):
+            editorial_title.validate({"title": "코스피, 7,000선 앞에서 되밀렸습니다", "narrative": _doc(3)}, kind="시황")
 
 
 if __name__ == "__main__":
