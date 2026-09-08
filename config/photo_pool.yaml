@@ -7,8 +7,8 @@
 # 사이트에 걸립니다(둘 다 실측). 그래서 **검색은 사람이 미리 하고, 자동 실행은
 # 이 목록에서 고르기만 합니다.**
 #
-# 처음 20장은 2026-09-06에 Openverse에서, 그다음 14장은 2026-09-08에 Unsplash에서
-# 받아 `Read` 툴로 한 장씩 눈으로 보고 고른 것입니다. `seen`은 검색어가 아니라 **사진에 실제로 보이는 것**을 적은
+# 처음 20장은 2026-09-06에 Openverse에서, 그다음 14장과 그날 밤의 31장은 2026-09-08에
+# Unsplash에서 받아 `Read` 툴로 한 장씩 눈으로 보고 고른 것입니다(업종당 다섯 장 안팎). `seen`은 검색어가 아니라 **사진에 실제로 보이는 것**을 적은
 # 줄입니다 — 검색어를 믿지 않는다는 이 저장소의 원칙을 파일 형식으로 굳혔습니다.
 #
 # 추가하는 방법
@@ -294,3 +294,254 @@ photos:
     credit: "사진: Robert Wiedemann / Unsplash"
     license: "Unsplash License"
     source_page: "https://unsplash.com/photos/black-farming-harvesting-machine-FJGZFxtQWko"
+  # ── 2026-09-08 밤 추가 31장 (Unsplash, 대조표 9판을 Read로 보고 고름) — 업종당 다섯 장 안팎으로 ──
+  # 같은 업종 사진이 여럿이면 날짜로 돌려 쓰므로, 같은 종목이 사흘 연속 주인공이어도 표지가 다르다.
+  # 빅테크(AAPL)·플랫폼만 다섯 장 미만으로 남겼다 — 후보 대조표에 쓸 만한 것이 더 없었다.
+  - id: fin-vault-door-ornate
+    file: assets/photos/fin-vault-door-ornate.jpg
+    sector: "금융"
+    tickers: ["105560", "055550", "032830"]
+    seen: "장식이 새겨진 옛 은행 금고 문과 놋쇠 다이얼, 'THE MOSLER SAFE CO' 글자가 보인다"
+    credit: "사진: David Trinks / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/a-close-up-of-a-metal-door-with-a-lock-tEP6TI8pXW4"
+  - id: fin-vault-door-round
+    file: assets/photos/fin-vault-door-round.jpg
+    sector: "금융"
+    tickers: ["105560", "055550", "032830"]
+    seen: "둥근 철제 금고 문의 톱니와 빗장 기계장치가 정면으로 보인다"
+    credit: "사진: Alex Duffy / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/gray-vault-1AucbckEJWk"
+  - id: fin-card-terminal
+    file: assets/photos/fin-card-terminal.jpg
+    sector: "금융"
+    tickers: ["105560", "055550", "032830"]
+    seen: "주황 바탕에서 손이 흰 카드를 결제 단말기에 대고 있다"
+    credit: "사진: Towfiqu barbhuiya / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/person-using-credit-card-payment-terminal-HNPrWOH2Z8U"
+  - id: auto-robot-welding
+    file: assets/photos/auto-robot-welding.jpg
+    sector: "자동차"
+    tickers: ["005380", "000270", "TSLA"]
+    seen: "붉은 벽돌 공장 안에서 주황색 로봇 팔이 도장 전 차체를 용접하고 있다"
+    credit: "사진: Lenny Kuhne / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/gray-vehicle-being-fixed-inside-factory-using-robot-machines-jHZ70nRk7Ns"
+  - id: auto-dashboard-sunset
+    file: assets/photos/auto-dashboard-sunset.jpg
+    sector: "자동차"
+    tickers: ["005380", "000270", "TSLA"]
+    seen: "노을 진 도로를 달리는 차 안, 운전대와 계기판이 보인다"
+    credit: "사진: Dennis Eusebio / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/black-car-instrument-panel-cluster-MbiSXN8u8q4"
+  - id: auto-parking-aerial
+    file: assets/photos/auto-parking-aerial.jpg
+    sector: "자동차"
+    tickers: ["005380", "000270", "TSLA"]
+    seen: "주차장에 줄지어 선 색색의 차들을 바로 위에서 내려다봤다"
+    credit: "사진: Lucas Hobbs / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/birds-eye-view-photography-of-car-park-gEHSvDMHnEA"
+  - id: power-lines-sunset
+    file: assets/photos/power-lines-sunset.jpg
+    sector: "발전·원전"
+    tickers: ["034020"]
+    seen: "해 질 무렵 송전탑들이 지평선까지 줄지어 서 있다"
+    credit: "사진: Matthew Henry / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/photo-of-truss-towers-yETqkLnhsUI"
+  - id: power-pylons-sun
+    file: assets/photos/power-pylons-sun.jpg
+    sector: "발전·원전"
+    tickers: ["034020"]
+    seen: "붉은 노을을 등진 송전탑과 전선, 지는 해가 그 사이로 보인다"
+    credit: "사진: Andrey Metelev / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/silhouette-of-electric-post-during-sunset-qpAOxji4dAo"
+  - id: power-wind-turbines
+    file: assets/photos/power-wind-turbines.jpg
+    sector: "발전·원전"
+    tickers: ["034020"]
+    seen: "저녁 빛을 받은 완만한 언덕 위에 풍력 터빈 수십 기가 서 있다"
+    credit: "사진: American Public Power Association / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/windmills-on-green-field-under-white-sky-during-daytime-eIBTh5DXW9w"
+  - id: batt-cells-colorful
+    file: assets/photos/batt-cells-colorful.jpg
+    sector: "2차전지"
+    tickers: ["373220", "247540"]
+    seen: "색색의 원통형 배터리 수십 개를 위에서 당겨 찍었다"
+    credit: "사진: Roberto Sorin / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/brown-green-and-blue-round-buttons-ZZ3qxWFZNRg"
+  - id: batt-chargers-night
+    file: assets/photos/batt-chargers-night.jpg
+    sector: "2차전지"
+    tickers: ["373220", "247540", "TSLA"]
+    seen: "밤에 초록 불빛을 두른 전기차 충전기가 줄지어 서 있다"
+    credit: "사진: Jamie Antoine / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/a-row-of-green-gas-pumps-at-night-tZ6FRpxgKaA"
+  - id: batt-laptop-pack
+    file: assets/photos/batt-laptop-pack.jpg
+    sector: "2차전지"
+    tickers: ["373220", "247540"]
+    seen: "노트북 배터리 팩 내부의 검은 셀들이 나란히 보인다"
+    credit: "사진: Ritupon Baishya / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/laptop-battery-cells-and-copper-components-ycqGBZJi2Bk"
+  - id: bio-microscopes-row
+    file: assets/photos/bio-microscopes-row.jpg
+    sector: "바이오"
+    tickers: ["207940", "196170", "068270", "MRNA", "MRK"]
+    seen: "검은 실험대 위에 흰 현미경 여러 대가 줄지어 놓여 있다"
+    credit: "사진: Ousa Chea / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/white-microscope-on-top-of-black-table-gKUC4TMhOiY"
+  - id: bio-blister-packs
+    file: assets/photos/bio-blister-packs.jpg
+    sector: "바이오"
+    tickers: ["207940", "196170", "068270", "MRNA", "MRK"]
+    seen: "파란 바탕 위에 알약이 든 은색 블리스터 포장 여러 장이 놓여 있다"
+    credit: "사진: Christine Sandu / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/white-and-blue-medication-pill-blister-pack-jwWtZrm67VI"
+  - id: bio-pipette-tray
+    file: assets/photos/bio-pipette-tray.jpg
+    sector: "바이오"
+    tickers: ["207940", "196170", "068270", "MRNA", "MRK"]
+    seen: "분홍색 액체를 피펫으로 시험관 트레이에 채우고 있다"
+    credit: "사진: Louis Reed / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/refill-of-liquid-on-tubes-pwcKF7L4-no"
+  - id: ship-container-cranes
+    file: assets/photos/ship-container-cranes.jpg
+    sector: "조선·방산"
+    tickers: ["329180", "012450"]
+    seen: "항만의 붉은 갠트리 크레인 아래 파란 선체의 컨테이너선이 정박해 있다"
+    credit: "사진: Dominik Lückmann / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/blue-and-red-cargo-ship-4aOhA4ptIY4"
+  - id: ship-warship-sea
+    file: assets/photos/ship-warship-sea.jpg
+    sector: "조선·방산"
+    tickers: ["329180", "012450"]
+    seen: "잔잔한 바다 위에 회색 군함 한 척이 떠 있고 위로 뭉게구름이 걸려 있다"
+    credit: "사진: Abdullah Al Hasan / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/a-large-ship-in-the-middle-of-the-ocean-8dJM0LwzsfU"
+  - id: ship-jet-takeoff
+    file: assets/photos/ship-jet-takeoff.jpg
+    sector: "조선·방산"
+    tickers: ["329180", "012450"]
+    seen: "전투기가 화염을 내뿜으며 풀밭 활주로에서 이륙하고 있다"
+    credit: "사진: Jonathan Ridley / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/black-jet-plane-on-green-grass-field-during-daytime-UgrU3AlHYo8"
+  - id: semi-circuit-board-navy
+    file: assets/photos/semi-circuit-board-navy.jpg
+    sector: "반도체"
+    tickers: ["005930", "000660", "009150", "042700", "NVDA", "MU", "INTC", "SOXX"]
+    seen: "짙은 남색 회로기판의 금색 패드와 배선을 얕은 심도로 당겨 찍었다"
+    credit: "사진: Vishnu Mohanan / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/close-up-of-dark-blue-circuit-board-pfR18JNEMv8"
+  - id: robo-orange-arms
+    file: assets/photos/robo-orange-arms.jpg
+    sector: "로봇"
+    tickers: ["277810", "TSLA"]
+    seen: "주황색 산업용 로봇 팔 여러 대가 공장 컨베이어 위에 늘어서 있다"
+    credit: "사진: Simon Kadula / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/a-factory-filled-with-lots-of-orange-machines-8gr6bObQLOI"
+  - id: robo-blue-arm
+    file: assets/photos/robo-blue-arm.jpg
+    sector: "로봇"
+    tickers: ["277810", "TSLA"]
+    seen: "파란색 산업용 로봇 팔이 공장 설비 사이에서 작업하고 있다"
+    credit: "사진: Homa Appliances / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/blue-industrial-robot-arm-in-factory-sz1CHL7Pky0"
+  - id: robo-white-arm-showroom
+    file: assets/photos/robo-white-arm-showroom.jpg
+    sector: "로봇"
+    tickers: ["277810", "TSLA"]
+    seen: "흰 전시장 한가운데 흰색 로봇 팔이 서 있다"
+    credit: "사진: ZHENYU LUO / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/white-robotic-arm-in-display-showroom-kE0JmtbvXxM"
+  - id: retail-mall-skylight
+    file: assets/photos/retail-mall-skylight.jpg
+    sector: "소비재"
+    tickers: ["278470", "WMT"]
+    seen: "유리 천장 아래 여러 층 에스컬레이터가 교차하는 쇼핑몰 내부"
+    credit: "사진: Declan Sun / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/an-escalator-in-a-large-building-with-a-skylight-gIWsXEl-Nm0"
+  - id: retail-mall-escalators
+    file: assets/photos/retail-mall-escalators.jpg
+    sector: "소비재"
+    tickers: ["278470", "WMT"]
+    seen: "여러 층 매장을 잇는 에스컬레이터를 사람들이 오르내린다, 얼굴은 분간되지 않는다"
+    credit: "사진: Marcus Reubenstein / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/an-escalator-in-a-shopping-mall-with-people-walking-down-it-P5Zbs8sxVM4"
+  - id: crypto-bitcoin-board
+    file: assets/photos/crypto-bitcoin-board.jpg
+    sector: "암호화폐"
+    tickers: ["COIN"]
+    seen: "컴퓨터 메인보드 위에 금색 비트코인 주화 한 닢이 놓여 있다"
+    credit: "사진: Michael Förtsch / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/a-bitcoin-on-top-of-a-computer-motherboard-AA5sf7WTv10"
+  - id: crypto-bitcoins-three
+    file: assets/photos/crypto-bitcoins-three.jpg
+    sector: "암호화폐"
+    tickers: ["COIN"]
+    seen: "메인보드 위에 금색 비트코인 주화 세 닢이 겹쳐 놓여 있다"
+    credit: "사진: Michael Förtsch / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/three-bitcoins-sitting-on-top-of-a-computer-motherboard-JjI1w2okMhQ"
+  - id: farm-tractor-mowing
+    file: assets/photos/farm-tractor-mowing.jpg
+    sector: "농기계"
+    tickers: ["DE"]
+    seen: "해 질 녘 들판에서 트랙터가 예초기를 끌고 있다"
+    credit: "사진: Ethereal Optics / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/red-tractor-on-brown-field-during-daytime-zTY0RQgqb5g"
+  - id: farm-tractor-green
+    file: assets/photos/farm-tractor-green.jpg
+    sector: "농기계"
+    tickers: ["DE"]
+    seen: "초록 몸체에 노란 바퀴를 단 트랙터가 마른 밭 위에 서 있다"
+    credit: "사진: Nathan Lugo / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/green-tractor-sS2Cg2Hz3S8"
+  - id: farm-tractor-dusk
+    file: assets/photos/farm-tractor-dusk.jpg
+    sector: "농기계"
+    tickers: ["DE"]
+    seen: "붉은 노을을 등진 트랙터가 헤드라이트를 켜고 밭에 서 있다"
+    credit: "사진: David Booth / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/a-tractor-in-a-field-_G10bOt74J4"
+  - id: energy-tanker-aerial
+    file: assets/photos/energy-tanker-aerial.jpg
+    sector: "에너지"
+    tickers: ["CL=F"]
+    seen: "짙푸른 바다 위 붉은 유조선을 바로 위에서 내려다봤다"
+    credit: "사진: Shaah Shahidh / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/aerial-photography-of-tanker-ship--subrrYxv8A"
+  - id: energy-tanker-sunset
+    file: assets/photos/energy-tanker-sunset.jpg
+    sector: "에너지"
+    tickers: ["CL=F"]
+    seen: "노을 진 바다에서 붉은 유조선이 뱃머리를 이쪽으로 향하고 있다"
+    credit: "사진: Fredrick F. / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/red-and-white-ship-on-sea-under-cloudy-sky-during-daytime-U9_pRASawlc"
