@@ -36,7 +36,7 @@ class DailyStructureTest(unittest.TestCase):
 
     def test_validate_raises_for_a_thin_daily(self) -> None:
         with self.assertRaises(editorial_title.EditorialTitleError):
-            editorial_title.validate({"title": "코스피, 7,000선 앞에서 되밀렸습니다", "narrative": _doc(3)}, kind="시황")
+            editorial_title.validate({"title": "코스피, 7,000선을 넘지 못했습니다", "narrative": _doc(3)}, kind="시황")
 
 
 if __name__ == "__main__":

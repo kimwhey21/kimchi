@@ -75,7 +75,7 @@ class GateTest(unittest.TestCase):
         sections[3]["graphic"] = {"kind": "investor_flows", "values": {"외국인": 6482, "개인": -13333},
                                   "source": "아시아경제 마감 집계"}
         sections[4]["photo"] = {"ticker": "005930"}
-        issues, summary = self._run(_doc("대우건설이 이틀째 오른 날, 코스피는 7,000선 앞에서 되밀렸습니다", sections))
+        issues, summary = self._run(_doc("대우건설이 이틀째 오른 날, 코스피는 7,000선을 넘지 못했습니다", sections))
         self.assertEqual(issues, [], issues)
         self.assertTrue(any("시각자료 5개" in line for line in summary), summary)
 
@@ -83,7 +83,7 @@ class GateTest(unittest.TestCase):
         sections = _sections(10)
         sections[0]["graphic"] = {"kind": "price_history", "ticker": "999999"}
         sections[1]["photo"] = {"ticker": "047040"}   # 동적 편입 → 풀 사진 없음
-        issues, _ = self._run(_doc("코스피, 7,000선 앞에서 되밀렸습니다", sections))
+        issues, _ = self._run(_doc("코스피, 7,000선을 넘지 못했습니다", sections))
         joined = "\n".join(issues)
         self.assertIn("그래픽(본문 1", joined)
         self.assertIn("사진(본문 2", joined)
@@ -91,7 +91,7 @@ class GateTest(unittest.TestCase):
     def test_investor_flows_needs_a_source(self) -> None:
         sections = _sections(10)
         sections[0]["graphic"] = {"kind": "investor_flows", "values": {"외국인": 1}}
-        issues, _ = self._run(_doc("코스피, 7,000선 앞에서 되밀렸습니다", sections))
+        issues, _ = self._run(_doc("코스피, 7,000선을 넘지 못했습니다", sections))
         self.assertTrue(any("source" in i for i in issues), issues)
 
 

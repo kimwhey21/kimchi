@@ -153,7 +153,7 @@ class UniversalRulesTest(unittest.TestCase):
         self.assertTrue(any("후킹 장치" in i for i in issues), issues)
 
     def test_our_rewritten_titles_pass(self) -> None:
-        for title in ("대우건설이 이틀째 오른 날, 코스피는 7,000선 앞에서 되밀렸습니다",
+        for title in ("대우건설이 이틀째 오른 날, 코스피는 7,000선을 넘지 못했습니다",
                       "코스피 4.61% 급등, 외국인이 다섯 달 만에 방향을 바꿨습니다",
                       "고용지표에 지수는 내렸는데 메모리 반도체만 오른 이유",
                       "오늘 밤 미국장, 유가 6주 최고치가 반도체 랠리를 흔들까?",

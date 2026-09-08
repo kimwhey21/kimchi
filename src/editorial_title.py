@@ -41,7 +41,13 @@ docs/editorial-style.md 「제목 문법」·「소제목」 절에서만 고친
 """
 from __future__ import annotations
 
+import functools
 import re
+from pathlib import Path
+
+import yaml
+
+ROOT = Path(__file__).resolve().parent.parent
 
 
 class EditorialTitleError(ValueError):
@@ -163,6 +169,59 @@ HEADING_MIN_CHARS = 6      # "1. 지금 숫자"(5자) 같은 슬라이드 라벨
 SECTION_FLOORS = {"시황": 8, "기준표": 5, "프리뷰": 3, "가이드": 5}
 _HEADING_NUMBER = re.compile(r"^\s*\d{1,2}\.\s*")
 
+# 소제목의 "꼴" (2026-09-08, 사용자: "재테크농부의 표현 방법과 말투를 잘 보고 배워야 한다.
+# 사람이 쓴 것처럼 보여야 한다. AI 같은 표현은 안 된다.")
+#
+# 재테크농부 소제목 462개를 꼴로 나누면 — 완전한 문장(~습니다) 46% · 짧은 이름표(`오늘
+# 투자심리`, `프리장 주요 종목`) 33% · 질문 8% · 반말 문장 4% · "수식절+명사" 6%(그것도
+# `반도체주가 다시 흔들린 이유`처럼 이유·방법·영향으로 끝남) · "…한 것" 0.6%.
+# 우리 최근 66개는 "수식절+명사"가 24%(`가속으로 답한 스노우플레이크`, `예상을 넘고도
+# 하락한 브로드컴`), "…한 것" 4%(`엔비디아가 산 것`), "…고, …고" 4%(`메모리는 오르고,
+# 설계는 내리고`)였다. 이 셋이 기계가 뽑은 헤드라인처럼 읽히는 지점이다.
+# 회사 이름으로 끝나는 헤드라인 꼴만 **막고**, 보통 명사(`너무 강했던 고용`)는 알려만 준다 —
+# 벤치마크에도 후자는 있다. 회사 이름은 두 시장의 워치리스트 설정(코어·한글 표기표)과
+# 그날 시세(편입 종목)에서 온다.
+_HEADLINE_TAIL = re.compile(
+    r"[가-힣]{1,8}(?:한|된|린|른|난|온|본|친|든|산|던|운|긴|킨|쓴|준|센|낸|깬)\s+([A-Za-z가-힣()·]+)$")
+_SENTENCE_END = re.compile(r"(?:습니다|입니다|합니다|됩니다|다|요|까|나|\?|!)\s*$")
+_NOMINAL_END = re.compile(r"([가-힣]+)\s?것\s*$")
+
+
+@functools.lru_cache(maxsize=1)
+def _configured_names() -> frozenset[str]:
+    names: set[str] = set()
+    for market in ("kr", "us"):
+        path = ROOT / "config" / f"watchlist_{market}.yaml"
+        if not path.exists():
+            continue
+        config = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        for row in config.get("watchlist") or []:
+            for key in ("name", "name_en"):
+                if row.get(key):
+                    names.add(str(row[key]).strip())
+        for value in (config.get("name_ko_map") or {}).values():
+            names.add(str(value).strip())
+    return frozenset(n for n in names if n)
+
+
+def _headline_shape(bare: str, names: frozenset[str] | set[str]) -> tuple[bool, str] | None:
+    """`가속으로 답한 스노우플레이크`처럼 [수식절]+[이름]으로 끝나는 헤드라인 꼴.
+
+    (막는가, 안내문)을 돌려준다. 끝 낱말이 회사 이름이면 막고, 보통 명사면 알려만 준다.
+    """
+    if _SENTENCE_END.search(bare):
+        return None
+    match = _HEADLINE_TAIL.search(bare)
+    if not match:
+        return None
+    tail = match.group(1).strip("()·")
+    company = any(tail == n or tail.endswith(n) for n in names if len(n) >= 2)
+    text = ("수식절로 꾸민 이름으로 끝나는 헤드라인 꼴입니다(우리 24%, 벤치마크 6%뿐이고 그마저 "
+            "`~한 이유`·`~하는 방법`). 사람이 말하듯 문장으로 쓰세요 — "
+            "`예상을 넘고도 하락한 브로드컴` → `브로드컴은 예상을 넘기고도 내렸습니다`, "
+            "짧게 가려면 이름표로 — `브로드컴 실적`.")
+    return company, text
+
 
 def hook_names(title: str) -> list[str]:
     return [name for name, pattern in HOOKS.items() if re.search(pattern, title)]
@@ -170,9 +229,14 @@ def hook_names(title: str) -> list[str]:
 
 def collect_heading_issues(sections: list, kind: str | None = None,
                            min_sections: int | None = None,
-                           notes_out: list[str] | None = None) -> list[str]:
-    """절 수와 소제목 길이. 글 종류(kind)는 절 수 하한만 정합니다."""
+                           notes_out: list[str] | None = None,
+                           names: set[str] | frozenset[str] | None = None) -> list[str]:
+    """절 수·소제목 길이·꼴. 글 종류(kind)는 절 수 하한만 정합니다.
+
+    `names`는 헤드라인 꼴 판정에 쓰는 회사 이름(없으면 워치리스트 설정에서).
+    """
     issues: list[str] = []
+    names = _configured_names() | set(names or ())
     floor = min_sections if min_sections is not None else SECTION_FLOORS.get(str(kind or ""))
     if floor and len(sections) < floor:
         hint = (" 긴 절을 쪼개고 지수·업종·수급·주인공 종목·환율·유가·다음 거래일처럼 절마다 "
@@ -185,7 +249,21 @@ def collect_heading_issues(sections: list, kind: str | None = None,
                 f"소제목 {index} '{bare}'이(가) {len(bare)}자입니다 — {HEADING_MAX_CHARS}자 이하로 "
                 "줄이세요(벤치마크 중앙값 23자). 절반쯤은 명사구로 끊습니다 — `오늘 투자심리`, "
                 "`움직이는 주요 종목`, `케빈 워시 의장은 무슨 말을 했나`.")
-        elif 0 < len(bare) < HEADING_MIN_CHARS and notes_out is not None:
+        if re.search(r"[고,]\s*$", bare):
+            issues.append(f"소제목 {index} '{bare}': '…고, …고'로 끝나는 대구(對句)입니다. 벤치마크 "
+                          "소제목 462개에 0개 — 한 문장으로 말하세요(`메모리는 올랐고 설계주는 내렸습니다`).")
+        nominal = _NOMINAL_END.search(bare)
+        if nominal and not nominal.group(1).endswith(("할", "볼", "일")):
+            issues.append(f"소제목 {index} '{bare}': '…한 것'으로 끝나는 명사절입니다(벤치마크 0.6%). "
+                          "무엇인지 문장으로 말하세요 — `엔비디아가 산 것` → `엔비디아는 전력 회사를 샀습니다`.")
+        shape = _headline_shape(bare, names)
+        if shape:
+            blocking, text = shape
+            if blocking:
+                issues.append(f"소제목 {index} '{bare}': {text}")
+            elif notes_out is not None:
+                notes_out.append(f"소제목 {index} '{bare}': {text}")
+        if 0 < len(bare) < HEADING_MIN_CHARS and notes_out is not None:
             notes_out.append(f"소제목 {index} '{bare}'은(는) {len(bare)}자 명사 토막입니다 — "
                              "슬라이드 라벨처럼 읽힙니다(벤치마크 4%). 그 절이 무슨 말을 하는지 드러나게 쓰십시오.")
     return issues
@@ -252,8 +330,13 @@ def collect_issues(doc: dict, price_data: dict | None = None, *,
     """
     ko = doc.get("ko") if isinstance(doc.get("ko"), dict) else doc
     issues = collect_title_issues(ko.get("title", ""), price_data, notes_out=notes_out)
+    names: set[str] = set()
+    for entry in (price_data or {}).get("watchlist", {}).values():
+        for key in ("name", "name_en"):
+            if entry.get(key):
+                names.add(str(entry[key]).strip())
     issues += collect_heading_issues(ko.get("narrative") or [], kind=kind,
-                                     min_sections=min_sections, notes_out=notes_out)
+                                     min_sections=min_sections, notes_out=notes_out, names=names)
     return issues
 
 
