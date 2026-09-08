@@ -101,3 +101,43 @@ class USPriceFetchTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class LaggingIndexDailyBarTest(unittest.TestCase):
+    """지수 일봉이 종목보다 늦게 나오는 날 — 2026-09-08 한국장 글이 빠진 이유.
+
+    코스피·코스닥 일봉(KRX 집계)은 18:30 KST까지도 전날에 머물렀고, 개별 종목은
+    이미 그날 종가였다. 워크플로 3회와 예비 루틴이 전부 "기준일 불일치"로 멈췄다.
+    네이버 실시간 응답은 그때 이미 ms=CLOSE였으므로, **전일 종가 + 등락폭 = 확정
+    종가** 등식이 맞을 때만 그 값을 오늘 행으로 덧붙인다.
+    """
+
+    def _yesterday_entry(self) -> dict:
+        yesterday = (fetch_kr.dt.date.today() - fetch_kr.dt.timedelta(days=1)).isoformat()
+        return {"ticker": "KS11", "price": 6995.39, "change_pct": 4.61,
+                "series": [6562.72, 6579.48, 6687.21, 6995.39], "trading_date": yesterday}
+
+    def test_appends_todays_close_when_the_daily_bar_lags(self) -> None:
+        quote = {"ms": "CLOSE", "nv": 695452, "cv": -4087, "cr": -0.58, "cd": "KOSPI"}
+        result = fetch_kr._apply_final_index_quote(self._yesterday_entry(), "KS11", quote)
+        self.assertEqual(result["trading_date"], fetch_kr.dt.date.today().isoformat())
+        self.assertEqual(result["price"], 6954.52)
+        self.assertEqual(result["change_pct"], -0.58)
+        self.assertEqual(result["series"], [6579.48, 6687.21, 6995.39, 6954.52])
+        self.assertIn("daily bar", result["data_source"])
+
+    def test_holiday_does_not_get_a_fake_row(self) -> None:
+        """휴장일엔 네이버 확정값이 곧 일봉 마지막 행이라 등식이 안 맞는다 — 그대로 둔다."""
+        entry = self._yesterday_entry()
+        quote = {"ms": "CLOSE", "nv": 699539, "cv": 30818, "cr": 4.61, "cd": "KOSPI"}
+        self.assertEqual(fetch_kr._apply_final_index_quote(entry, "KS11", quote), entry)
+
+    def test_intraday_quote_is_not_appended(self) -> None:
+        entry = self._yesterday_entry()
+        quote = {"ms": "OPEN", "nv": 695452, "cv": -4087, "cr": -0.58, "cd": "KOSPI"}
+        self.assertEqual(fetch_kr._apply_final_index_quote(entry, "KS11", quote), entry)
+
+    def test_mismatched_arithmetic_is_not_appended(self) -> None:
+        entry = self._yesterday_entry()
+        quote = {"ms": "CLOSE", "nv": 695452, "cv": -1000, "cr": -0.14, "cd": "KOSPI"}
+        self.assertEqual(fetch_kr._apply_final_index_quote(entry, "KS11", quote), entry)

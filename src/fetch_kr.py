@@ -81,23 +81,62 @@ def _fetch_naver_index_quotes() -> dict[str, dict]:
 
 
 def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None) -> dict:
-    """오늘 거래일 행을 네이버의 장마감 확정값으로 교체합니다."""
-    if entry.get("trading_date") != dt.date.today().isoformat():
-        return entry
-    code = _NAVER_INDEX_CODES[ticker]
-    if not quote or quote.get("ms") != "CLOSE":
-        raise ValueError(f"{code}: 장마감 확정 지수(ms=CLOSE)를 아직 확인하지 못했습니다.")
+    """오늘 거래일 행을 네이버의 장마감 확정값으로 교체하거나, 아직 없으면 덧붙입니다.
 
+    두 경우가 있습니다.
+
+    1. 일봉에 오늘 행이 **있다** — 장중 값이 남아 있을 수 있으니 확정 종가로 교체.
+       확정(``ms=CLOSE``)이 아니면 예외로 멈춥니다(장중 스냅숏을 종가로 내지 않음).
+    2. 일봉에 오늘 행이 **아직 없다** — 지수 일봉(KRX 집계)은 개별 종목(네이버)보다
+       늦게 나옵니다. 2026-09-08에는 18:30 KST까지도 코스피·코스닥이 전날(09-07)에
+       머물러 종목(09-08)과 기준일이 어긋났고, 16:29·16:37·16:41 워크플로와 17:40
+       예비 루틴이 전부 같은 자리에서 멈춰 그날 한국장 글이 나가지 않았습니다.
+       그날 네이버 실시간 응답은 이미 ``ms=CLOSE``였습니다(6,954.52 / -0.58%).
+
+       덧붙이는 조건은 **전일 종가(일봉 마지막 행) + 등락폭(cv) = 확정 종가(nv)**가
+       정확히 맞아떨어질 때뿐입니다. 이 등식이 맞으면 네이버의 확정값이 일봉
+       마지막 행의 *다음* 거래일 종가라는 뜻입니다. 휴장일에는 성립하지 않습니다 —
+       일봉 마지막 행이 곧 네이버의 확정 종가라 등락폭을 더하면 어긋납니다. 그래서
+       주말·공휴일에 가짜 행이 생기지 않습니다. 등식이 안 맞으면 손대지 않고
+       그대로 돌려줍니다(그러면 기존대로 기준일 불일치로 멈춥니다).
+    """
+    today = dt.date.today().isoformat()
+    last = str(entry.get("trading_date") or "")
+    code = _NAVER_INDEX_CODES[ticker]
+    if last == today:
+        if not quote or quote.get("ms") != "CLOSE":
+            raise ValueError(f"{code}: 장마감 확정 지수(ms=CLOSE)를 아직 확인하지 못했습니다.")
+        price = round(float(quote["nv"]) / 100, 2)
+        series = list(entry.get("series") or [])
+        if series:
+            series[-1] = price
+        return {
+            **entry,
+            "price": price,
+            "change_pct": round(float(quote["cr"]), 2),
+            "series": series,
+            "data_source": "Naver Finance realtime index",
+        }
+
+    if not last or last > today or not quote or quote.get("ms") != "CLOSE":
+        return entry
     price = round(float(quote["nv"]) / 100, 2)
+    change = float(quote.get("cv") or 0) / 100
+    prev_close = float(entry["price"])
+    if change == 0 or abs(round(prev_close + change, 2) - price) > 0.02:
+        # 등식이 안 맞으면 오늘 장이 없었거나(휴장) 응답이 다른 날 것입니다.
+        return entry
     series = list(entry.get("series") or [])
-    if series:
-        series[-1] = price
+    series = (series + [price])[-len(series):] if len(series) >= 2 else [prev_close, price]
+    print(f"[안내] {code}: 일봉에 오늘({today}) 행이 아직 없어 네이버 확정 종가 "
+          f"{price:,.2f}({float(quote['cr']):+.2f}%)를 오늘 행으로 덧붙입니다.")
     return {
         **entry,
         "price": price,
         "change_pct": round(float(quote["cr"]), 2),
         "series": series,
-        "data_source": "Naver Finance realtime index",
+        "trading_date": today,
+        "data_source": "Naver Finance realtime index (daily bar not yet published)",
     }
 
 
