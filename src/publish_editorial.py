@@ -28,6 +28,7 @@ price_data를 함께 저장하는 이유는 재현성입니다. 발행 시점에
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 import os
 import re
@@ -58,11 +59,26 @@ _KO_TAGS = ["코스피", "코스닥", "원달러 환율"]
 _EN_TAGS = ["KOSPI", "KOSDAQ", "Korean won"]
 
 
-def _excerpt(doc: dict, limit: int = 300) -> str:
+def _seo_lead(market: str, date_str: str, lang: str = "ko") -> str:
+    """검색 결과 설명문의 첫 문장 — 날짜와 검색어 (2026-09-08, 사용자 승인).
+
+    제목은 사람 말투 그대로 두고(검색어 접미어는 보기 싫다는 사장님 판단), 검색어는
+    설명문에만 넣는다. 설명문은 글 화면에는 안 보이고 검색 결과와 홈 카드 요약에 보인다.
+    """
+    day = dt.date.fromisoformat(date_str)
+    if lang == "en":
+        label = "KOSPI close" if market == "kr" else "Wall Street close"
+        return f"{label} for {day:%B} {day.day}, {day.year}. "
+    label = "코스피 마감 시황" if market == "kr" else "뉴욕증시 마감 시황"
+    return f"{day.month}월 {day.day}일 {label}입니다. "
+
+
+def _excerpt(doc: dict, limit: int = 300, lead: str = "") -> str:
     body = (doc.get("narrative") or [{}])[0].get("body", "").replace("\n\n", " ")
-    if len(body) <= limit:
-        return body.strip()
-    return body[:limit].rsplit(" ", 1)[0].strip() + "…"
+    room = max(60, limit - len(lead))
+    if len(body) <= room:
+        return (lead + body).strip()
+    return lead + body[:room].rsplit(" ", 1)[0].strip() + "…"
 
 
 _NAME_DATE = re.compile(r"(\d{4}-\d{2}-\d{2})\.json$")
@@ -537,7 +553,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
     ko_result = publish_wordpress.publish_draft(
         ko["title"],
         html_ko,
-        excerpt=_excerpt(ko),
+        excerpt=_excerpt(ko, lead=_seo_lead(market, date_str)),
         tags=_KO_TAGS,
         category="Daily",
         image=image_meta,
@@ -555,7 +571,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
             en["title"],
             html_en,
             lang="en",
-            excerpt=_excerpt(en),
+            excerpt=_excerpt(en, lead=_seo_lead(market, date_str, "en")),
             tags=_EN_TAGS,
             category="Daily",
             image=image_meta_en,
