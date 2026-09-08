@@ -331,6 +331,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
     # 원고는 저장소의 편집 기준을 통과해야 올라갑니다. 자동 공개 경로에서는
     # 이 검사가 유일한 안전장치라 영어판도 같이 검사합니다(main.py와 동일).
     editorial_quality.validate_generated(ko)
+    editorial_quality.validate_daily(ko)
     print("한국어 편집 기준 검사 통과")
     # 형식 검사와 별개로 원고의 숫자를 시세와 대조합니다. 검수 없이 공개되는
     # 경로라 "숫자는 시세에서만 가져온다"를 사람의 성실성에만 맡기지 않습니다.

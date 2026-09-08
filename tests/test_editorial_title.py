@@ -87,7 +87,7 @@ class AllowedTest(unittest.TestCase):
             "인텔 7% 급등! 테슬라가 막판 하락한 이유.",
             "50일선이 깨진 미국 주식. 반등할 수 있을까?",
             "또 하락한 미국 주식 시장. 어떻게 대응해야 할까?",
-            "엔비디아 5% 급등, 아이온큐는 9% 급락. 반도체 과열 신호 발생!",
+            # 2026-09-08: 등락률 둘을 나열한 옛 제목은 이제 막는다 — 최근 104편에는 0개다.
             "AI 시대는 끝나지 않았다. 오라클 27% 급등.",
         ):
             with self.subTest(title=title):
@@ -116,9 +116,22 @@ class AllowedTest(unittest.TestCase):
         self.assertEqual(collect_issues(doc, PRICE_DATA), [])
 
     def test_number_belongs_to_the_next_stock(self) -> None:
-        """'테슬라 -6%, 나스닥 -2%'에서 -2%는 나스닥의 것입니다."""
+        """'테슬라 -6%, 나스닥 -2%'에서 -2%는 나스닥의 것입니다.
+
+        등락률 둘 나열은 별도 규칙이 막지만, 어림수 검사가 남의 숫자를 끌어오지는
+        않아야 합니다.
+        """
         doc = {"title": "원익홀딩스 29.91%, 한미반도체 9.26% 급등"}
-        self.assertEqual(collect_issues(doc, PRICE_DATA), [])
+        issues = collect_issues(doc, PRICE_DATA)
+        self.assertFalse([i for i in issues if "어림수" in i], issues)
+        self.assertTrue(any("등락률이 둘 이상" in i for i in issues))
+
+    def test_two_percentages_in_a_title_are_rejected(self) -> None:
+        """9/7·9/8 이틀 연속 낸 '숫자 나열' 제목. 최근 벤치마크 104편에 0개다."""
+        doc = {"title": "대우건설 8.47% 급등, 삼성전기 5.78% 급락. 코스피가 0.58% 하락한 이유."}
+        self.assertTrue(any("등락률이 둘 이상" in i for i in collect_issues(doc)))
+        self.assertEqual(collect_issues({"title": "반도체 주식 급락, 고점 신호일까?"}), [])
+        self.assertEqual(collect_issues({"title": "반도체가 5% 폭락한 이유, 고금리가 AI 랠리를 흔들었습니다"}), [])
 
     def test_empty_title_is_not_an_error(self) -> None:
         self.assertEqual(collect_issues({}, PRICE_DATA), [])

@@ -182,6 +182,44 @@ def collect_issues(generated: dict) -> list[str]:
     return issues
 
 
+# 시황(일간) 원고에만 적용하는 구조 검사. 벤치마크 최근 104편의 번호 소제목은
+# 편당 중앙값 14개(p25 12 · p75 16), 길이 중앙값 23자(p75 32)다. 우리 9/8 한국장은
+# 6절에 소제목이 30~35자짜리 문장이었고, 사용자가 "재테크농부처럼"이라고 짚었다.
+# 기준표·프리뷰는 절 수가 다르므로(feature_checks) 여기 걸지 않는다.
+DAILY_MIN_SECTIONS = 8
+HEADING_MAX_CHARS = 34
+_HEADING_NUMBER = re.compile(r"^\s*\d{1,2}\.\s*")
+
+
+def collect_daily_issues(generated: dict) -> list[str]:
+    """시황 원고의 절 수와 소제목 길이를 봅니다. 문장 검사와 별개입니다."""
+    issues: list[str] = []
+    sections = generated.get("narrative") or []
+    if len(sections) < DAILY_MIN_SECTIONS:
+        issues.append(
+            f"본문이 {len(sections)}절입니다. 시황은 {DAILY_MIN_SECTIONS}절 이상으로 씁니다 "
+            "(벤치마크 편당 소제목 중앙값 14개). 긴 절을 쪼개고, 지수·업종·수급·주인공 "
+            "종목·환율·유가·다음 거래일처럼 절마다 하나만 말하세요."
+        )
+    for index, section in enumerate(sections, start=1):
+        heading = _HEADING_NUMBER.sub("", str(section.get("heading", ""))).strip()
+        if len(heading) > HEADING_MAX_CHARS:
+            issues.append(
+                f"본문 소제목 {index} '{heading}'이(가) {len(heading)}자입니다. "
+                f"{HEADING_MAX_CHARS}자 이하로 줄이세요(벤치마크 중앙값 23자). 절반쯤은 "
+                "명사구로 끊습니다 — `오늘 투자심리`, `움직이는 주요 종목`, "
+                "`케빈 워시 의장은 무슨 말을 했나`."
+            )
+    return issues
+
+
+def validate_daily(generated: dict) -> None:
+    """시황 원고의 구조가 기준에 못 미치면 발행을 멈춥니다."""
+    issues = collect_daily_issues(generated)
+    if issues:
+        raise EditorialQualityError("시황 구조 검사 실패:\n- " + "\n- ".join(issues))
+
+
 def validate_generated(generated: dict) -> None:
     """편집 기준에 어긋난 문구가 있으면 발행 파이프라인을 중단합니다."""
     issues = collect_issues(generated)
