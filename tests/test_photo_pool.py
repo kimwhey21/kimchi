@@ -102,8 +102,28 @@ class SelectionTest(unittest.TestCase):
 
     def test_unknown_sector_falls_back_to_graphic(self) -> None:
         """맞는 사진이 없으면 억지로 붙이지 않고 None — 그래픽으로 갑니다."""
-        entry = {"ticker": "278470", "name": "에이피알", "sector": "소비재"}
+        entry = {"ticker": "259960", "name": "크래프톤", "sector": "게임"}
         self.assertIsNone(photo_pool.pick(entry, "2026-09-06", self.photos))
+
+    def test_every_core_stock_has_a_cover_photo(self) -> None:
+        """코어 종목은 언젠가 주인공이 된다. 그날 사진이 없으면 보관함이 밀린 것이다.
+
+        2026-09-08까지 미국장 코어 16종목 중 AAPL·WMT·COIN·DE·CL=F는 어느 사진에도
+        티커가 없어 주인공이 돼도 그래픽으로만 나갔고, 아무도 몰랐다. 코어 종목을
+        더하면 사진도 더한다 — `python -m src.photo_search --sheet <이름> --source
+        unsplash <검색어들> --out output/pool`, 대조표를 Read로 보고, 명세에 적는다.
+        """
+        for market in ("kr", "us"):
+            config = yaml.safe_load(
+                (ROOT / "config" / f"watchlist_{market}.yaml").read_text(encoding="utf-8"))
+            for row in config["watchlist"]:
+                entry = {"ticker": row["ticker"], "name": row["name"],
+                         "sector": row.get("sector"), "source": "core"}
+                with self.subTest(market=market, ticker=row["ticker"]):
+                    self.assertIsNotNone(
+                        photo_pool.pick(entry, "2026-09-08", self.photos),
+                        f"{row['name']}({row['ticker']})에 맞는 사진이 보관함에 없습니다. "
+                        "사진을 더하거나 기존 사진의 tickers에 넣으십시오.")
 
     def test_no_entry_means_no_photo(self) -> None:
         self.assertIsNone(photo_pool.pick(None, "2026-09-06", self.photos))

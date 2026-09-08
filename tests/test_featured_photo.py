@@ -97,11 +97,11 @@ class PhotoCoverTest(unittest.TestCase):
     def test_falls_back_to_graphic_without_a_photo(self) -> None:
         """사진이 없는 업종이 주인공인 날은 지금까지처럼 그래픽으로 갑니다."""
         price = json.loads(json.dumps(PRICE))
-        price["watchlist"] = {"278470": {"name": "에이피알", "name_en": "APR", "ticker": "278470",
-                                         "sector": "소비재", "price": 61000, "change_pct": 9.10}}
+        price["watchlist"] = {"259960": {"name": "크래프톤", "name_en": "Krafton", "ticker": "259960",
+                                         "sector": "게임", "price": 310000, "change_pct": 9.10}}
         tmp = Path(tempfile.mkdtemp()) / "cover.png"
         meta = featured_image.create("kr", "2026-09-06", price, tmp,
-                                     doc={"title": "에이피알이 끌어올린 장"})
+                                     doc={"title": "크래프톤이 끌어올린 장"})
         self.assertEqual(meta["layout"], "single")
         self.assertIsNone(meta["photo_id"])
 

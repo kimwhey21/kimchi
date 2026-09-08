@@ -7,8 +7,8 @@
 # 사이트에 걸립니다(둘 다 실측). 그래서 **검색은 사람이 미리 하고, 자동 실행은
 # 이 목록에서 고르기만 합니다.**
 #
-# 아래 20장은 2026-09-06에 Openverse에서 받아 `Read` 툴로 한 장씩 눈으로 보고
-# 고른 것입니다. `seen`은 검색어가 아니라 **사진에 실제로 보이는 것**을 적은
+# 처음 20장은 2026-09-06에 Openverse에서, 그다음 14장은 2026-09-08에 Unsplash에서
+# 받아 `Read` 툴로 한 장씩 눈으로 보고 고른 것입니다. `seen`은 검색어가 아니라 **사진에 실제로 보이는 것**을 적은
 # 줄입니다 — 검색어를 믿지 않는다는 이 저장소의 원칙을 파일 형식으로 굳혔습니다.
 #
 # 추가하는 방법
@@ -54,7 +54,7 @@ photos:
   - id: fin-trading-floor
     file: assets/photos/fin-trading-floor.jpg
     sector: "금융"
-    tickers: ["105560", "055550", "032830", "COIN"]
+    tickers: ["105560", "055550", "032830"]
     seen: "단말이 줄줄이 놓인 거래소 객장을 위에서 내려다봤다"
     credit: "사진: S.aderogba / 위키미디어 공용 (BY-SA 4.0)"
     license: "BY-SA 4.0"
@@ -62,7 +62,7 @@ photos:
   - id: fin-exchange-tickers
     file: assets/photos/fin-exchange-tickers.jpg
     sector: "금융"
-    tickers: ["105560", "055550", "032830", "COIN"]
+    tickers: ["105560", "055550", "032830"]
     seen: "거래소 천장을 두른 시세 전광판에 붉고 푸른 숫자가 흐른다"
     credit: "사진: ehnmark / 플리커 (BY 2.0)"
     license: "BY 2.0"
@@ -179,3 +179,118 @@ photos:
     credit: "사진: jurvetson / 플리커 (BY 2.0)"
     license: "BY 2.0"
     source_page: "https://www.flickr.com/photos/44124348109@N01/6858583426"
+  # ── 2026-09-08 추가 (Unsplash, 대조표를 Read로 보고 고름) ──────────────────
+  # 미국장 코어 16종목 가운데 AAPL·WMT·COIN·DE·CL=F는 어느 사진에도 티커가 없어
+  # 주인공이 돼도 그래픽으로만 나갔다. 한국장은 소비재(에이피알)만 비어 있었다.
+  - id: plat-server-aisle
+    file: assets/photos/plat-server-aisle.jpg
+    sector: "플랫폼"
+    tickers: ["035420", "035720", "MSFT", "AMZN", "META", "GOOGL"]
+    seen: "서버실 통로 양쪽으로 회색 금속 장비 랙이 늘어서 있고 통로 끝에서 빛이 든다"
+    credit: "사진: İsmail Enes Ayhan / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/server-room-aisle-with-metal-equipment-racks-lVZjvw-u9V8"
+  - id: plat-server-rack-orange
+    file: assets/photos/plat-server-rack-orange.jpg
+    sector: "플랫폼"
+    tickers: ["035420", "035720", "MSFT", "AMZN", "META", "GOOGL"]
+    seen: "어두운 서버실 랙에 주황색 케이블 다발과 초록 LED가 켜져 있다"
+    credit: "사진: Kevin Ache / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/a-rack-of-servers-in-a-server-room-2JJ3wBHu4_0"
+  - id: tech-iphone-home
+    file: assets/photos/tech-iphone-home.jpg
+    sector: "빅테크"
+    tickers: ["AAPL"]
+    seen: "탁자 위 스페이스 그레이 아이폰 홈 화면에 메시지·사진·인스타그램·페이스북·유튜브 등 앱 아이콘이 늘어서 있다"
+    credit: "사진: William Hook / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/space-gray-iphone-x-9e9PD9blAto"
+  - id: tech-white-keyboard
+    file: assets/photos/tech-white-keyboard.jpg
+    sector: "빅테크"
+    tickers: ["AAPL"]
+    seen: "흰색 노트북 자판을 얕은 심도로 비스듬히 당겨 찍었다"
+    credit: "사진: Sergi Kabrera / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/white-computer-keyboard-2xU7rYxsTiM"
+  - id: retail-supermarket-aisle
+    file: assets/photos/retail-supermarket-aisle.jpg
+    sector: "소비재"
+    tickers: ["WMT"]
+    seen: "슈퍼마켓 통로 양쪽 선반에 과자·음료가 색색으로 쌓여 있고 머리 위에 16번 통로 표지판이 걸려 있다"
+    credit: "사진: Jack Lee / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/a-grocery-store-aisle-filled-with-lots-of-food-IH65r4HEQWQ"
+  - id: retail-fruit-shelves
+    file: assets/photos/retail-fruit-shelves.jpg
+    sector: "소비재"
+    tickers: ["WMT"]
+    seen: "매장 선반에 오렌지·사과·레몬·라임이 줄지어 진열돼 있다"
+    credit: "사진: Gemma C / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/fresh-fruit-on-grocery-store-shelves-stpjHJGqZyw"
+  - id: consumer-shopping-bags
+    file: assets/photos/consumer-shopping-bags.jpg
+    sector: "소비재"
+    tickers: ["278470", "WMT"]
+    seen: "인도를 걷는 두 사람의 다리와 손에 든 쇼핑백 여러 개, 얼굴은 나오지 않는다"
+    credit: "사진: Vitaly Gariev / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/two-women-with-shopping-bags-on-a-sidewalk-VZK7zlnUVwI"
+  - id: crypto-bitcoin-coin
+    file: assets/photos/crypto-bitcoin-coin.jpg
+    sector: "암호화폐"
+    tickers: ["COIN"]
+    seen: "금색 비트코인 기념주화 한 닢이 탁자 위에 세워져 있다"
+    credit: "사진: Kanchanara / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/a-golden-bitcoin-sitting-on-top-of-a-table-7E3QGntO66M"
+  - id: crypto-bitcoin-screen
+    file: assets/photos/crypto-bitcoin-screen.jpg
+    sector: "암호화폐"
+    tickers: ["COIN"]
+    seen: "흐릿한 시세 화면 앞에 금색 비트코인 주화가 서 있다"
+    credit: "사진: André François McKenzie / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/gold-colored-bitcoin-iGYiBhdNTpE"
+  - id: energy-pump-jack
+    file: assets/photos/energy-pump-jack.jpg
+    sector: "에너지"
+    tickers: ["CL=F"]
+    seen: "해질녘 주황빛 하늘 아래 석유 펌프잭이 실루엣으로 서 있다"
+    credit: "사진: Nils Huenerfuerst / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/oil-pump-jack-silhouetted-against-a-hazy-sunset-RlE1fta2Txg"
+  - id: energy-refinery-dusk
+    file: assets/photos/energy-refinery-dusk.jpg
+    sector: "에너지"
+    tickers: ["CL=F"]
+    seen: "저녁 하늘 아래 정유 공장의 빨강·흰색 줄무늬 굴뚝과 불빛이 늘어서 있다"
+    credit: "사진: Maksym Kaharlytskyi / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/red-and-white-tower-under-blue-sky-during-night-time-u13zBF4r56A"
+  - id: energy-offshore-rig
+    file: assets/photos/energy-offshore-rig.jpg
+    sector: "에너지"
+    tickers: ["CL=F"]
+    seen: "푸른 바다 한가운데 해상 석유 시추 플랫폼이 서 있다"
+    credit: "사진: Zach Theo / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/oil-rig-guADzpF9pDI"
+  - id: farm-combines-wheat
+    file: assets/photos/farm-combines-wheat.jpg
+    sector: "농기계"
+    tickers: ["DE"]
+    seen: "밀밭에서 초록색 콤바인 두 대가 수확하고 있다"
+    credit: "사진: Darla Hueske / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/two-green-combines-in-a-large-wheat-field-fqoq39Jj5us"
+  - id: farm-harvester-dust
+    file: assets/photos/farm-harvester-dust.jpg
+    sector: "농기계"
+    tickers: ["DE"]
+    seen: "해를 등진 콤바인이 먼지를 일으키며 밀을 베고 있다"
+    credit: "사진: Robert Wiedemann / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/black-farming-harvesting-machine-FJGZFxtQWko"
