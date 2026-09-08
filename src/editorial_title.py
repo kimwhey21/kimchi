@@ -218,7 +218,7 @@ def _headline_shape(bare: str, names: frozenset[str] | set[str]) -> tuple[bool, 
     company = any(tail == n or tail.endswith(n) for n in names if len(n) >= 2)
     text = ("수식절로 꾸민 이름으로 끝나는 헤드라인 꼴입니다(우리 24%, 벤치마크 6%뿐이고 그마저 "
             "`~한 이유`·`~하는 방법`). 사람이 말하듯 문장으로 쓰세요 — "
-            "`예상을 넘고도 하락한 브로드컴` → `브로드컴은 예상을 넘기고도 내렸습니다`, "
+            "`예상을 넘고도 하락한 브로드컴` → `브로드컴은 예상을 넘기고도 하락했습니다`, "
             "짧게 가려면 이름표로 — `브로드컴 실적`.")
     return company, text
 
@@ -251,7 +251,7 @@ def collect_heading_issues(sections: list, kind: str | None = None,
                 "`움직이는 주요 종목`, `케빈 워시 의장은 무슨 말을 했나`.")
         if re.search(r"[고,]\s*$", bare):
             issues.append(f"소제목 {index} '{bare}': '…고, …고'로 끝나는 대구(對句)입니다. 벤치마크 "
-                          "소제목 462개에 0개 — 한 문장으로 말하세요(`메모리는 올랐고 설계주는 내렸습니다`).")
+                          "소제목 462개에 0개 — 한 문장으로 말하세요(`메모리는 올랐고 설계주는 하락했습니다`).")
         nominal = _NOMINAL_END.search(bare)
         if nominal and not nominal.group(1).endswith(("할", "볼", "일")):
             issues.append(f"소제목 {index} '{bare}': '…한 것'으로 끝나는 명사절입니다(벤치마크 0.6%). "
@@ -307,6 +307,8 @@ def collect_title_issues(title: str, price_data: dict | None = None,
             "`~한 이유`, `그런데 ~`, `~일까?`, `N가지`, `오늘 밤`, `외국인`, `사상 최고치` 같은 "
             "장치 하나로 읽을 이유를 만드세요. docs/editorial-style.md 「제목 문법」.")
 
+    if notes_out is not None and len(title) > 35:
+        notes_out.append(f"제목이 {len(title)}자입니다 — 벤치마크 최근 104편 중앙값은 25자이고 35자 안쪽이 보통입니다.")
     if notes_out is not None:
         for word in JARGON:
             if word in title:
