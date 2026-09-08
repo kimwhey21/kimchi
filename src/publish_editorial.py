@@ -556,22 +556,10 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         return
 
     status = "publish" if publish_live else "draft"
-    ko_result = publish_wordpress.publish_draft(
-        ko["title"],
-        html_ko,
-        excerpt=_excerpt(ko, lead=_seo_lead(market, date_str)),
-        tags=_KO_TAGS,
-        category="Daily",
-        image=image_meta,
-        slug=f"editorial-{market}-{date_str}-ko",
-        focus_keyword="코스피 마감 시황" if market == "kr" else "뉴욕증시 마감",
-        status=status,
-        post_id=(doc.get("wp_post_ids") or {}).get("ko"),   # 옛 글 재작성: 글 번호로 덮어쓴다
-    )
-    print(f"한국어 {status}: id={ko_result.get('id')} {ko_result.get('link','')}")
-    if publish_live:
-        publish_wordpress.verify_published(ko_result["id"], ko["title"])
-
+    # 영어판을 먼저 올린다 (2026-09-09, 사용자 승인). 홈·전체 목록의 맨 위 큰 자리(히어로)는
+    # 가장 최근 글인데, 한국어판 몇 초 뒤에 나가던 영어판이 그 자리를 차지했다(2026-09-08
+    # 실측: /all/ 히어로가 "Daewoo E&C jumps 8.47%…"). 영어판이 먼저 나가면 한국어판이
+    # 늘 최신 글이 된다. 두 발행은 서로의 결과를 쓰지 않아 순서만 바꿨다.
     if en:
         en_result = publish_wordpress.publish_draft(
             en["title"],
@@ -589,6 +577,22 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         print(f"영어 {status}: id={en_result.get('id')} {en_result.get('link','')}")
         if publish_live:
             publish_wordpress.verify_published(en_result["id"], en["title"])
+
+    ko_result = publish_wordpress.publish_draft(
+        ko["title"],
+        html_ko,
+        excerpt=_excerpt(ko, lead=_seo_lead(market, date_str)),
+        tags=_KO_TAGS,
+        category="Daily",
+        image=image_meta,
+        slug=f"editorial-{market}-{date_str}-ko",
+        focus_keyword="코스피 마감 시황" if market == "kr" else "뉴욕증시 마감",
+        status=status,
+        post_id=(doc.get("wp_post_ids") or {}).get("ko"),   # 옛 글 재작성: 글 번호로 덮어쓴다
+    )
+    print(f"한국어 {status}: id={ko_result.get('id')} {ko_result.get('link','')}")
+    if publish_live:
+        publish_wordpress.verify_published(ko_result["id"], ko["title"])
 
     print(
         f"상태: {status}"
