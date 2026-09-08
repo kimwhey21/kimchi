@@ -49,6 +49,11 @@ JARGON = ("FWD PER", "PER", "EPS", "PBR", "ROE", "밸류에이션", "컨센서�
 MIN_GRAPHICS = 6          # 벤치마크 이미지 p25
 MIN_SECTIONS = 5
 
+# 시리즈별 하한. 기준표는 위 기본값이고, 밤 10시 미국장 프리뷰(2026-09-08)는 600~900자
+# 짜리 짧은 글이라 절 3개·시각자료 2장이면 된다 — 같은 파이프라인(관문·렌더·발행)을
+# 쓰되 문턱만 다르다. 새 시리즈를 만들면 여기에 한 줄 더한다.
+SERIES_LIMITS = {"프리뷰": {"graphics": 2, "sections": 3}}
+
 # 설명 없이 지나가면 초보자가 문장을 못 따라가는 말들. 벤치마크는 이런 말이
 # 나올 때마다 `초보자용 설명` 블록을 따로 답니다(100편 중 30%).
 #
@@ -95,9 +100,13 @@ def collect_issues(doc: dict, graphics: int | None = None,
                 f"이렇게 씁니다 — 누구나 아는 말로 바꿀 수 있는지 한 번 보십시오.")
             break
 
+    limits = SERIES_LIMITS.get(str(doc.get("series") or ""), {})
+    min_sections = limits.get("sections", MIN_SECTIONS)
+    min_graphics = limits.get("graphics", MIN_GRAPHICS)
+
     sections = ko.get("narrative") or []
-    if len(sections) < MIN_SECTIONS:
-        issues.append(f"절이 {len(sections)}개입니다 — {MIN_SECTIONS}개 이상 씁니다.")
+    if len(sections) < min_sections:
+        issues.append(f"절이 {len(sections)}개입니다 — {min_sections}개 이상 씁니다.")
 
     body = " ".join(s.get("body", "") for s in sections) + (
         ko.get("closing", {}).get("body", ""))
@@ -136,8 +145,8 @@ def collect_issues(doc: dict, graphics: int | None = None,
                           f"들고 있지 않습니다. docs/feature-style.md 0절.")
             break
 
-    if graphics is not None and graphics < MIN_GRAPHICS:
-        issues.append(f"시각자료가 {graphics}장입니다 — 최소 {MIN_GRAPHICS}장. "
+    if graphics is not None and graphics < min_graphics:
+        issues.append(f"시각자료가 {graphics}장입니다 — 최소 {min_graphics}장. "
                       f"벤치마크는 편당 중앙값 10장입니다.")
 
     return issues

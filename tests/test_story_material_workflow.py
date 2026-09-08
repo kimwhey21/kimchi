@@ -19,12 +19,14 @@ class StoryMaterialWorkflowTest(unittest.TestCase):
     def setUp(self) -> None:
         self.text = WORKFLOW.read_text(encoding="utf-8")
 
-    def test_runs_before_the_weekend_routine(self) -> None:
-        """루틴은 토·일 00:00 UTC. 재료는 그보다 앞선 금·토 23:10 UTC."""
-        cron = re.search(r'- cron: "([^"]+)"', self.text).group(1)
-        minute, hour, _, _, dow = cron.split()
-        self.assertEqual((hour, dow), ("23", "5,6"))
-        self.assertLess(int(minute), 40, "루틴이 뜨기 전에 커밋이 끝나야 합니다")
+    def test_runs_before_the_routines(self) -> None:
+        """주말 루틴은 토·일 00:00 UTC, 프리뷰 루틴은 평일 12:30 UTC. 재료는 그보다 앞선다."""
+        crons = re.findall(r'- cron: "([^"]+)"', self.text)
+        parsed = {(c.split()[1], c.split()[4]): int(c.split()[0]) for c in crons}
+        self.assertIn(("23", "5,6"), parsed)
+        self.assertIn(("12", "1-5"), parsed)
+        self.assertLess(parsed[("23", "5,6")], 40, "주말 루틴이 뜨기 전에 커밋이 끝나야 합니다")
+        self.assertLess(parsed[("12", "1-5")], 20, "프리뷰 루틴(12:30 UTC)이 뜨기 전에 커밋이 끝나야 합니다")
 
     def test_covers_both_markets_and_keeps_failures_visible(self) -> None:
         self.assertIn("for m in us kr", self.text)

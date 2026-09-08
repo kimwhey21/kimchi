@@ -1,0 +1,66 @@
+name: Preview Publish
+
+# 밤 10시 미국장 프리뷰(editorial/previews/*.json)가 커밋되면 바로 공개합니다.
+# 기준표(임시저장)와 달리 프리뷰는 22시가 지나면 가치가 사라지는 글이라 시황과
+# 같은 정책으로 사람 검수를 기다리지 않습니다(docs/routine_preview.md). 안전장치는
+# 루틴이 커밋 전에 통과시키는 관문(feature_gate)과 발행 뒤 되읽기입니다.
+on:
+  push:
+    paths:
+      - "editorial/previews/*.json"
+  workflow_dispatch:
+    inputs:
+      path:
+        description: "발행할 프리뷰 원고 경로 (공백으로 여러 개)"
+        required: true
+        default: ""
+
+concurrency:
+  group: preview-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 한글 폰트 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 올릴 원고 결정
+        id: pick
+        run: |
+          FILES=""
+          if [ -n "${{ github.event.inputs.path }}" ]; then
+            FILES="${{ github.event.inputs.path }}"
+          elif [ "${{ github.event_name }}" = "push" ] && \
+               [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            FILES=$(git diff --name-only --diff-filter=d \
+                      "${{ github.event.before }}" "${{ github.sha }}" -- editorial/previews \
+                    | grep -E '^editorial/previews/[^/]+\.json$' | tr '\n' ' ' || true)
+          fi
+          echo "올릴 원고: ${FILES:-(없음)}"
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+
+      - name: 바로 공개
+        if: ${{ steps.pick.outputs.files != '' }}
+        run: |
+          for f in ${{ steps.pick.outputs.files }}; do
+            echo "== $f =="
+            python -m src.publish_feature "$f" --publish
+          done
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          SUBSCRIBE_FORM_ACTION: ${{ secrets.SUBSCRIBE_FORM_ACTION }}

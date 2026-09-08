@@ -60,6 +60,8 @@ OUR_ENGINES = (
 # 벤치마크는 편당 약 10회 인용합니다. 서로 다른 출처로는 3곳을 하한으로 둡니다 —
 # 하한을 높이면 억지 인용이 붙고, 없으면 오늘처럼 0곳짜리 글이 나갑니다.
 MIN_DISTINCT_SOURCES = 3
+# 짧은 시리즈는 하한이 낮다. 밤 10시 미국장 프리뷰(600~900자)는 일정 출처 2곳이면 된다.
+SERIES_MIN_SOURCES = {"프리뷰": 2}
 
 
 def _body(doc: dict) -> str:
@@ -89,12 +91,13 @@ def collect(doc: dict) -> dict:
 
 def collect_issues(doc: dict) -> list[str]:
     result = collect(doc)
-    if result["distinct"] >= MIN_DISTINCT_SOURCES:
+    minimum = SERIES_MIN_SOURCES.get(str(doc.get("series") or ""), MIN_DISTINCT_SOURCES)
+    if result["distinct"] >= minimum:
         return []
     have = ", ".join(f"{k}: {', '.join(v)}" for k, v in result["found"].items())
     return [
         f"밖에서 가져온 사실이 {result['distinct']}곳뿐입니다"
-        f"({have or '없음'}). 최소 {MIN_DISTINCT_SOURCES}곳이 필요합니다.\n"
+        f"({have or '없음'}). 최소 {minimum}곳이 필요합니다.\n"
         f"    벤치마크는 한 편에 서로 다른 출처를 7곳 인용합니다. 우리가 그보다"
         f" 못한 것은 문장이 아니라 재료입니다.\n"
         f"    `python -m src.story_engines all --market kr`로 재료부터 뽑으십시오"
