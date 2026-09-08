@@ -1,0 +1,92 @@
+# 기준표 성적표 — 기준표마다 "언제 무엇을 확인할지"와, 날짜가 지난 뒤 실제로 나온 것.
+#
+# 형식 (src/publish_scoreboard.py가 검사한다)
+#   - title / url / date / summary(한 줄) / checks[]
+#   - checks[]: due(YYYY-MM-DD) 또는 due_label, what(보기로 한 것),
+#               verdict: pending | hit | miss | mixed,
+#               result(실제로 나온 것, 숫자와 함께) + checked(확인한 날짜) — pending이 아니면 필수
+#
+# 판정은 글이 가리킨 방향과 실제가 맞았는지만 본다. 투자 성과가 아니다. 틀린 것도 지우지 않는다.
+# 공개되지 않은 글(주소가 404)은 페이지에서 자동으로 빠진다 — 공개되면 나타난다.
+
+- title: "금리는 올랐는데 은행주만 무너진 이유"
+  url: https://fermata.it.kr/kr-2026-09-07-banks-rates/
+  date: 2026-09-07
+  summary: "9월 4일 코스피가 1.64% 오르는 날 은행주만 3% 넘게 빠졌다. 글은 그 이유를 미국 금리 전망(인상 확률)에서 찾았다."
+  checks:
+    - due: 2026-09-07
+      what: "월요일(미국 휴장) 한국장에서 셋을 본다 — 은행주가 금요일 낙폭을 되돌리는가, 외국인이 방향을 바꾸는가, 반도체가 금요일 상승을 지키는가"
+      verdict: hit
+      result: "은행주는 되돌렸다(KB금융 +2.27%, 신한지주 +3.26%; 금요일 -3.32%·-3.67%). 외국인은 두 종목 모두 계속 순매도했으나 규모가 줄었고(신한지주 -11만 주), 기관이 받았다. 반도체는 상승을 지켰다(SK하이닉스 +8.26%, 삼성전자 +5.68%). 금요일 하락이 금리 전망 때문이었다는 글의 읽기와 맞는 방향."
+      checked: 2026-09-08
+    - due: 2026-09-11
+      what: "미국 8월 소비자물가 — 고용에 이어 물가까지 강하면 인상 확률(60%대)이 더 오르고 은행주 이야기가 달라진다"
+      verdict: pending
+    - due: 2026-09-16
+      due_label: "9/15~16"
+      what: "FOMC — 인상 여부와 점도표"
+      verdict: pending
+
+- title: "SK하이닉스 지금 사도 될까? 10월 27일에 갈린다"
+  url: https://fermata.it.kr/feature-hynix-forward-per-2026-09-06/
+  date: 2026-09-06
+  summary: "내년 예상 이익 기준 PER 3.5배, 목표주가는 두 배. 글은 사이클 종목의 승부처를 10월 27일 실적의 다섯 가지 확인 항목으로 두었다."
+  checks:
+    - due: 2026-10-01
+      what: "마이크론 실적 — 메모리 사이클의 다음 분기 전망과 이익률 방향"
+      verdict: pending
+    - due: 2026-10-27
+      what: "SK하이닉스 3분기 실적 — 다음 분기 전망, 이익률 방향(두 분기 연속 하락이면 정점 신호), 2027년 HBM 물량 배정, 그 밖의 두 항목"
+      verdict: pending
+    - due: 2026-10-28
+      what: "삼성전자 실적 — 같은 항목으로 견주기"
+      verdict: pending
+
+- title: "트랙터 회사가 사상 최고가, 바닥을 지났을까?"
+  url: https://fermata.it.kr/us-2026-09-06-deere-upgrade/
+  date: 2026-09-06
+  summary: "기관 두 곳이 사흘 새 목표주가를 올린 근거는 '북미 대형장비 수요 바닥 통과'. 글은 그 판단이 맞는지를 11월 실적의 수주에서 보기로 했다."
+  checks:
+    - due: 2026-09-11
+      what: "미국 8월 소비자물가 — 할부·리스로 팔리는 농기계는 금리에 민감하다"
+      verdict: pending
+    - due: 2026-09-16
+      due_label: "9/15~16"
+      what: "FOMC"
+      verdict: pending
+    - due: 2026-11-25
+      what: "디어 4분기 실적 — '바닥을 지났다'가 맞다면 북미 대형장비 수주가 먼저 움직여야 한다"
+      verdict: pending
+
+- title: "인텔 CEO의 매수, 믿어도 될까? 판단 기준은 이것입니다"
+  url: https://fermata.it.kr/us-2026-09-06-intel-insider/
+  date: 2026-09-06
+  summary: "CEO의 999만 달러 매수 뒤 주가가 매수가를 넘어선 것은 회사가 아니라 그날 고용지표 때문이었다. 글은 결론을 세 지점 뒤로 미뤘다."
+  checks:
+    - due: 2026-09-11
+      what: "미국 8월 소비자물가 — 고용처럼 강하면 금리 인하 기대가 밀리고, 자금이 많이 드는 인텔에는 부담"
+      verdict: pending
+    - due: 2026-09-16
+      due_label: "9/15~16"
+      what: "FOMC — 인상 확률이 이 회의 하나로 갈린다"
+      verdict: pending
+    - due: 2026-10-22
+      due_label: "10/22경"
+      what: "인텔 3분기 실적(미확정) — 증자 자금이 숫자로 나타나는 첫 분기"
+      verdict: pending
+
+- title: "마이크론을 던진 펀드들, 코튜는 정반대로 갔다"
+  url: https://fermata.it.kr/us-2026-09-06-micron-funds/
+  date: 2026-09-06
+  summary: "13F에서 펀드 여덟 곳 중 일곱이 마이크론을 줄였고 코튜만 18.9배 늘렸다. 글은 개별 승부를 9월 30일 실적 가이던스로 두었다."
+  checks:
+    - due: 2026-09-11
+      what: "미국 8월 소비자물가 — 반도체 업종 전체의 방향"
+      verdict: pending
+    - due: 2026-09-16
+      due_label: "9/15~16"
+      what: "FOMC"
+      verdict: pending
+    - due: 2026-09-30
+      what: "마이크론 4분기 실적 — 가이던스를 채우는가. 거시가 흔들려도 실적이 압도적이면 버틸 수 있다는 글의 틀"
+      verdict: pending

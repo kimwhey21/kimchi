@@ -1,0 +1,38 @@
+name: Scoreboard Publish
+
+# data/scoreboard.yaml이 바뀌면 기준표 성적표 페이지를 다시 만들어 올립니다.
+# 페이지의 상태(공개/임시저장)는 건드리지 않고 본문만 갱신합니다. 페이지가
+# 아직 없으면 임시저장으로 만들고, 첫 공개는 사람이 합니다.
+on:
+  push:
+    paths:
+      - "data/scoreboard.yaml"
+      - "templates/scoreboard.html.j2"
+      - "src/publish_scoreboard.py"
+  workflow_dispatch:
+
+concurrency:
+  group: scoreboard-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 성적표 페이지 갱신
+        run: python -m src.publish_scoreboard
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          # 자동화 스위치 — 저장소 변수. true면 페이지를 처음 만들 때부터 공개한다.
+          FERMATA_AUTO_PUBLISH: ${{ vars.FERMATA_AUTO_PUBLISH }}

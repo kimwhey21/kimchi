@@ -49,7 +49,9 @@
    출처 개수를 세어 3곳 미만이면 막습니다).
 3. **제목.** `python -m scripts.title_helper <관계>`(대비·원인·질문·경고·개수·시한)로
    벤치마크 실제 제목을 보고 **그 어법을 그대로 갈아입힙니다.** 결론을 제목에
-   넣지 않습니다(읽기 전에 답을 알면 누를 이유가 없습니다).
+   넣지 않습니다(읽기 전에 답을 알면 누를 이유가 없습니다). 이 도구가 코퍼스가
+   없다며 실패하면(샌드박스에는 코퍼스가 없습니다) `docs/feature-style.md` 1절의
+   후킹 유형표로 짓고, 완료 보고에 "코퍼스 없이 지은 제목"이라고 적습니다.
 4. **원고.** `editorial/features/<market>_<YYYY-MM-DD>_<slug>.json`. 필드는 예시
    파일과 같게: `kind` "feature", `series` "기준표", `date`, `slug`(파일명의
    `<market>-<date>-<slug>`와 같게 영문 소문자·하이픈), `category_id` 153,
@@ -73,20 +75,31 @@
    봐서는 안 보입니다(실제로 두 번 겪었습니다).
 7. **제목·소제목·그래픽 글자(`kicker`·`subject`·`label`)만 따로 모아 다시
    읽습니다.** 본문과 떼어 놓고 읽어야 어색한 것이 보입니다.
-8. `git add editorial/features/<파일>.json && git commit -m "기준표 원고: <제목>" && git push origin HEAD:main`
+8. **성적표.** `data/scoreboard.yaml`(형식은 파일 머리의 주석)에 두 가지를 합니다.
+   - 새 원고의 확인 지점을 `verdict: pending`으로 추가합니다(글 주소는
+     `https://fermata.it.kr/<slug>/`, 공개 전이라도 적습니다 — 페이지는 공개된 글만
+     자동으로 싣습니다).
+   - `due`가 지났는데 `pending`인 항목을 조사해 `result`(숫자와 함께)·`checked`(오늘)·
+     `verdict`를 적습니다. 시세는 `data/price_*.json`, 나머지는 WebSearch로 확인합니다.
+     판정은 글이 가리킨 방향과 실제가 맞았는지만 봅니다. 모르면 `pending`으로 두고
+     보고에 이유를 적습니다. `python -m src.publish_scoreboard --render-only --no-live-check`로
+     형식 검사를 통과해야 합니다.
+9. `git add editorial/features/<파일>.json data/scoreboard.yaml && git commit -m "기준표 원고: <제목>" && git push origin HEAD:main`
    push 뒤 워크플로를 3분 넘게 기다리지 않습니다.
-9. 휴대폰 알림을 한 번 보냅니다: `주말 기준표 초안: <제목> — 워드프레스 임시저장. 보시고 "발행"이라고 답해 주세요.`
+10. 휴대폰 알림을 한 번 보냅니다: `주말 기준표 초안: <제목> — 워드프레스 임시저장. 보시고 "발행"이라고 답해 주세요.`
 
 ## 하지 않는 것
 
 - 공개 발행. `--publish`를 쓰지 않습니다. 워드프레스 REST로 상태를 바꾸지 않습니다.
 - 한 번에 두 편. 한 편만 씁니다.
 - 숫자 지어내기, 못 받은 엔진 결과 쓰기, 검색 결과를 보지 않고 사진 URL 적기.
-- `output/`·`data/` 커밋. 커밋하는 것은 원고 JSON 하나뿐입니다.
+- `output/` 커밋. 커밋하는 것은 원고 JSON과 `data/scoreboard.yaml` 둘뿐입니다.
+  `data/`의 다른 파일(시세·재료)은 건드리지 않습니다.
 
 ## 완료 보고
 
 원고 경로, 제목, 어느 시장 재료였는지와 고른 이유, 출처 개수(`feature_gate`
 출력의 sources), 그래픽 수와 종류, 사진을 골랐는지·왜 그것인지(또는 왜 없이
-갔는지), 관문 출력 전문(benchmark_shape 포함), 커밋 해시. 재료가 없어 쓰지
-않았다면 무엇을 봤고 왜 약했는지.
+갔는지), 관문 출력 전문(benchmark_shape 포함), 성적표에 추가한 확인 지점 수와
+판정을 적은 항목(무엇을 근거로), 커밋 해시. 재료가 없어 쓰지 않았다면 무엇을
+봤고 왜 약했는지.

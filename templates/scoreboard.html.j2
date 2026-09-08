@@ -1,0 +1,63 @@
+<!-- wp:html -->
+<style>
+.fm-page{font-family:Literata,serif;font-weight:300;color:#5f5f5f;font-size:19px;line-height:1.62;letter-spacing:-0.01em;max-width:760px;margin:0 auto;padding:4px 0 56px}
+.fm-page p.fm-kicker{font-family:Beiruti,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:2.4px;font-size:14px;line-height:1.4;color:#5f5f5f;margin:40px 0 8px}
+.fm-page p.fm-kicker.fm-first{margin-top:0}
+.fm-page h1.fm-title{font-family:Literata,serif;font-weight:400;font-size:30px;line-height:1.3;color:#191919;letter-spacing:-0.01em;margin:0 0 20px}
+.fm-page h2.fm-h{font-family:Literata,serif;font-weight:400;font-size:22px;line-height:1.35;color:#191919;letter-spacing:-0.01em;margin:0 0 4px}
+.fm-page p.fm-p{margin:0 0 14px}
+.fm-page p.fm-lead{font-size:20px;margin-bottom:6px}
+.fm-page p.fm-meta{font-size:15px;color:#8a8a8a;margin:0 0 10px}
+.fm-page b{font-weight:700;color:#191919}
+.fm-page a{color:#191919;text-decoration:underline;text-underline-offset:3px}
+.fm-page table.fm-checks{width:100%;border-collapse:collapse;font-size:16.5px;margin:0 0 8px}
+.fm-page table.fm-checks th{font-family:Beiruti,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:1.6px;font-size:12px;color:#8a8a8a;text-align:left;padding:6px 8px 8px 0;border-bottom:1px solid #d9d6cf}
+.fm-page table.fm-checks td{vertical-align:top;padding:11px 8px 11px 0;border-bottom:1px solid #e6e4df}
+.fm-page table.fm-checks td.fm-date{white-space:nowrap;width:82px;color:#191919}
+.fm-page table.fm-checks td.fm-result{width:44%}
+.fm-page span.fm-badge{display:inline-block;font-family:Beiruti,sans-serif;font-weight:600;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;padding:2px 8px 1px;border-radius:3px;margin-right:6px;vertical-align:1px}
+.fm-page span.fm-badge.hit{background:#e8f1ea;color:#2f6b3a}
+.fm-page span.fm-badge.miss{background:#f6e6e4;color:#a33a2f}
+.fm-page span.fm-badge.mixed{background:#f3ecd9;color:#7a5a12}
+.fm-page span.fm-badge.pending{background:#ecebe7;color:#6f6f6f}
+.fm-page .fm-summary{display:flex;gap:28px;flex-wrap:wrap;margin:0 0 6px}
+.fm-page .fm-summary div{min-width:90px}
+.fm-page .fm-summary .n{font-family:Literata,serif;font-weight:400;font-size:30px;color:#191919;line-height:1.1}
+.fm-page .fm-summary .l{font-family:Beiruti,sans-serif;font-weight:600;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:#8a8a8a}
+@media (max-width:600px){.fm-page{font-size:17px}.fm-page table.fm-checks{font-size:15px}.fm-page table.fm-checks td.fm-date{width:64px}}
+</style>
+<div class="fm-page">
+<p class="fm-kicker fm-first">Scoreboard</p>
+<h1 class="fm-title">기준표 성적표</h1>
+<p class="fm-lead">기준표마다 "언제 무엇을 확인할지"를 적어 둡니다. 그 날짜가 지나면 실제로 무엇이 나왔는지를 여기에 적고, 글이 가리킨 방향과 맞았는지를 판정합니다. 틀린 것도 지우지 않습니다.</p>
+<p class="fm-p">판정은 넷입니다. <b>적중</b>은 글이 가리킨 방향대로 갔을 때, <b>빗나감</b>은 반대로 갔을 때, <b>절반</b>은 확인 지점 여럿 중 일부만 맞았을 때, <b>확인 전</b>은 아직 날짜가 오지 않았을 때입니다. 투자 성과가 아니라 글의 판단 틀이 맞았는지만 봅니다.</p>
+<p class="fm-kicker">Tally</p>
+<div class="fm-summary">
+  <div><div class="n">{{ tally.hit }}</div><div class="l">적중</div></div>
+  <div><div class="n">{{ tally.miss }}</div><div class="l">빗나감</div></div>
+  <div><div class="n">{{ tally.mixed }}</div><div class="l">절반</div></div>
+  <div><div class="n">{{ tally.pending }}</div><div class="l">확인 전</div></div>
+</div>
+<p class="fm-meta">마지막 갱신 {{ updated }} · 기준표 {{ articles|length }}편 · 확인 지점 {{ tally.total }}개</p>
+{% for a in articles %}
+<p class="fm-kicker">{{ a.date }}</p>
+<h2 class="fm-h"><a href="{{ a.url }}">{{ a.title }}</a></h2>
+<p class="fm-meta">{{ a.summary }}</p>
+<table class="fm-checks">
+<thead><tr><th>날짜</th><th>보기로 한 것</th><th>실제로 나온 것</th></tr></thead>
+<tbody>
+{% for c in a.checks %}
+<tr>
+  <td class="fm-date">{{ c.due_label }}</td>
+  <td>{{ c.what }}</td>
+  <td class="fm-result"><span class="fm-badge {{ c.verdict }}">{{ c.verdict_label }}</span>{% if c.result %}{{ c.result }}{% if c.checked %} <span style="color:#8a8a8a">({{ c.checked }} 확인)</span>{% endif %}{% endif %}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endfor %}
+<p class="fm-kicker">How this works</p>
+<p class="fm-p">확인 지점과 판정은 <a href="https://github.com/kimwhey21/kimchi/blob/main/data/scoreboard.yaml">공개 저장소의 파일</a> 하나에서 옵니다. 파일이 바뀌면 이 페이지가 다시 만들어집니다. 숫자는 거래소 마감 시세이고, 결과 문장에는 확인한 날짜를 함께 적습니다.</p>
+<p class="fm-p" style="font-size:15px;color:#8a8a8a">이 페이지는 정보 제공을 목적으로 하며 특정 종목의 매수·매도를 권유하지 않습니다.</p>
+</div>
+<!-- /wp:html -->

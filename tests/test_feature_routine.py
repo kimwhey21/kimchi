@@ -24,8 +24,8 @@ class FeatureDraftWorkflowTest(unittest.TestCase):
     def test_publishes_as_draft_by_default(self) -> None:
         self.assertIn("python -m src.publish_feature", self.text)
         self.assertNotIn("--render-only", self.text)
-        # --publish는 workflow_dispatch의 publish_live가 true일 때만 붙는다.
-        self.assertRegex(self.text, r'publish_live }}" = "true" \]; then\s+FLAG="--publish"')
+        # --publish는 수동 실행의 publish_live 또는 자동화 스위치(저장소 변수)가 true일 때만 붙는다.
+        self.assertRegex(self.text, r'publish_live }}" = "true" \] \|\| \\\s+\[ "\$\{\{ vars\.FERMATA_AUTO_PUBLISH }}" = "true" \]; then\s+FLAG="--publish"')
 
     def test_has_wordpress_secrets_and_korean_font(self) -> None:
         for name in ("WORDPRESS_URL", "WORDPRESS_USERNAME", "WORDPRESS_APP_PASSWORD"):

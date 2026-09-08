@@ -64,9 +64,13 @@ jobs:
 
       - name: 임시저장으로 올리기
         if: ${{ steps.pick.outputs.files != '' }}
+        # 자동화 스위치: 저장소 변수 FERMATA_AUTO_PUBLISH=true면 사람 승인 없이 바로
+        # 공개한다(기준표 관문 feature_gate가 안전장치). 지금은 꺼져 있고, 품질이
+        # 안정되면 코드 수정 없이 변수 하나로 켠다. 수동 실행의 publish_live도 같다.
         run: |
           FLAG=""
-          if [ "${{ github.event.inputs.publish_live }}" = "true" ]; then
+          if [ "${{ github.event.inputs.publish_live }}" = "true" ] || \
+             [ "${{ vars.FERMATA_AUTO_PUBLISH }}" = "true" ]; then
             FLAG="--publish"
           fi
           for f in ${{ steps.pick.outputs.files }}; do
