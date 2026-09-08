@@ -25,13 +25,13 @@ class DailyStructureTest(unittest.TestCase):
 
     def test_long_heading_is_rejected(self) -> None:
         doc = _doc(10)
-        doc["narrative"][0]["heading"] = "1. 대우건설이 오르고 삼성전기가 하락한, 로테이션의 하루였습니다"
+        doc["narrative"][0]["heading"] = "1. 대우건설이 오르고 삼성전기가 하락한, 업종 로테이션의 하루였습니다"
         issues = editorial_quality.collect_daily_issues(doc)
         self.assertEqual(len(issues), 1)
-        self.assertIn("34자 이하", issues[0])
+        self.assertIn("32자 이하", issues[0])
 
     def test_number_prefix_does_not_count(self) -> None:
-        doc = _doc(10, heading="가" * 34)
+        doc = _doc(10, heading="가" * 32)
         self.assertEqual(editorial_quality.collect_daily_issues(doc), [])
 
     def test_validate_daily_raises(self) -> None:

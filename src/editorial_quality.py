@@ -183,11 +183,11 @@ def collect_issues(generated: dict) -> list[str]:
 
 
 # 시황(일간) 원고에만 적용하는 구조 검사. 벤치마크 최근 104편의 번호 소제목은
-# 편당 중앙값 14개(p25 12 · p75 16), 길이 중앙값 23자(p75 32)다. 우리 9/8 한국장은
+# 편당 중앙값 14개(p25 12 · p75 16), 길이 중앙값 23자(p75 32)다. 상한은 p75다. 우리 9/8 한국장은
 # 6절에 소제목이 30~35자짜리 문장이었고, 사용자가 "재테크농부처럼"이라고 짚었다.
 # 기준표·프리뷰는 절 수가 다르므로(feature_checks) 여기 걸지 않는다.
 DAILY_MIN_SECTIONS = 8
-HEADING_MAX_CHARS = 34
+HEADING_MAX_CHARS = 32
 _HEADING_NUMBER = re.compile(r"^\s*\d{1,2}\.\s*")
 
 
