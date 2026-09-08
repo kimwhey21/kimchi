@@ -13,7 +13,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from src import data_graphics, editorial_gate, publish_editorial
+from src import data_graphics, editorial_gate, editorial_judgment, publish_editorial
 
 HISTORY = {"dates": [f"2026-08-{d:02d}" for d in range(1, 29)] + ["2026-09-01", "2026-09-02"],
            "close": [6500 + i * 10 for i in range(30)]}
@@ -59,7 +59,12 @@ def _write(doc: dict) -> Path:
 @unittest.skipUnless(data_graphics.has_korean_font(), "한글 폰트가 없어 렌더를 건너뜁니다")
 class GateTest(unittest.TestCase):
     def _run(self, doc: dict):
-        return editorial_gate.run(_write(doc), render_dir=Path(tempfile.mkdtemp()))
+        # 관문은 "어제 원고"(editorial/kr_2026-09-07.json)를 읽어 판정을 요구한다. 그 파일은
+        # 루틴이 다시 쓰면 바뀌므로(2026-09-08 밤 재작성 뒤 이 테스트가 CI에서 빨개졌다)
+        # 여기서는 어제 글이 없는 날로 고정한다 — 판정 규칙은 test_editorial_judgment가 본다.
+        with patch.object(editorial_judgment, "previous_manuscript", return_value=None), \
+             patch.object(editorial_judgment, "previous_manuscripts", return_value=[]):
+            return editorial_gate.run(_write(doc), render_dir=Path(tempfile.mkdtemp()))
 
     def test_numbered_title_and_thin_body_fail(self) -> None:
         issues, _ = self._run(_doc("대우건설 8.47% 급등, 삼성전기 5.78% 급락. 코스피가 0.58% 하락한 이유.",
