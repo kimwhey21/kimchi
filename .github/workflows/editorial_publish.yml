@@ -30,6 +30,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # 성적표(data/scoreboard.yaml) 커밋용 (2026-09-08)
     steps:
       - uses: actions/checkout@v4
         with:
@@ -93,6 +95,31 @@ jobs:
           # 보지 않고 붙는 유일한 사진이었고 실제로 로고가 나갔습니다. 이제 인사이트
           # 사진은 루틴이 직접 보고 고른 것(원고의 image.url) 아니면 사람이 미리
           # 승인한 풀(config/photo_pool.yaml)에서만 옵니다 — 둘 다 키가 필요 없습니다.
+
+      - name: 성적표 갱신
+        # 시황의 확인 지점(closing.check)과 어제 판정(review)을 성적표에 옮기고 커밋합니다
+        # (2026-09-08). 글이 올라간 뒤에 돌아야 성적표 페이지가 그 주소를 살아 있는 글로
+        # 봅니다. 워크플로 토큰의 push는 다른 워크플로를 깨우지 않으므로 페이지도 여기서
+        # 바로 갱신합니다.
+        if: success()
+        run: |
+          python -m src.scoreboard_sync ${{ steps.pick.outputs.files }}
+          if ! git diff --quiet -- data/scoreboard.yaml; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add data/scoreboard.yaml
+            git commit -m "성적표 갱신: $(date -u +%Y-%m-%d) (발행 워크플로)"
+            for attempt in 1 2 3; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              git rebase --abort 2>/dev/null || true; sleep 10
+            done
+          fi
+          python -m src.publish_scoreboard || echo "::warning::성적표 페이지 갱신 실패 — 다음 발행 때 다시 시도합니다"
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          FERMATA_AUTO_PUBLISH: ${{ vars.FERMATA_AUTO_PUBLISH }}
 
       - name: 벤치마크 대조 (보고만)
         # 검사가 통과했다는 것은 "encode한 규칙을 어기지 않았다"는 뜻이지

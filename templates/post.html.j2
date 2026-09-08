@@ -182,6 +182,9 @@
     {% for para in closing.body.split('\n\n') %}
     <p>{{ para|safe }}</p>
     {% endfor %}
+    {% if closing.check and closing.check.what %}
+    <p class="mb-check">{{ "Check" if lang == "en" else "확인 지점" }} · {{ closing.check.due_label or closing.check.due }} — {{ closing.check.what }}</p>
+    {% endif %}
   </div>
   {% endif %}
 

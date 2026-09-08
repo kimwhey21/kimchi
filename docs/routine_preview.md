@@ -70,7 +70,8 @@
      "args": {"ticker": "^GSPC", "title": "S&P500, 사상 최고치 아래 1%", "guide": 7000,
      "guide_label": "7,000선"}, "alt": "..."}` — `ticker`는 그 시세 파일의 지수(`^GSPC`·
      `^IXIC`)나 종목(`NVDA`). 오늘 밤 주인공이 종목이면 그 종목을. `number_cards`
-     (`args`: `tickers` + `items`)도 같은 방식으로 쓸 수 있습니다. 시세 파일에 `history`가
+     (`args`: `tickers` + `items`)도 같은 방식으로 쓸 수 있습니다. `fact_table`(발표값 대 예상값
+     표, `rows`·`source`)은 `price_file` 없이 씁니다. 시세 파일에 `history`가
      없으면(2026-09-08 이전 파일) 관문이 알려줍니다 — 그러면 빼고 갑니다.
    - 예측하지 않습니다. "물가가 예상보다 높게 나오면 X를 본다"처럼 조건으로 씁니다.
 5. **관문.** `python -m src.feature_gate editorial/previews/<파일>.json --graphics <그래픽 수>`

@@ -42,6 +42,7 @@ load_dotenv()
 from src import (  # noqa: E402
     data_graphics,
     editorial_facts,
+    editorial_judgment,
     editorial_quality,
     editorial_title,
     editorial_quality_en,
@@ -243,12 +244,17 @@ def _attach_story_images(doc_section: dict | None, price_data: dict, date_str: s
     return {**doc_section, "stories": stories}
 
 
-def _style_warnings(ko: dict, en: dict | None, price_data: dict) -> list[str]:
+def _style_warnings(ko: dict, en: dict | None, price_data: dict, doc: dict | None = None) -> list[str]:
     """문체(editorial_quality)·제목·소제목(editorial_title, 모든 글 공통)·영어 문체 검사를
     한데 모아 **목록으로** 돌려줍니다. 발행을 막지 않고 로그에 남기기 위한 것입니다."""
     issues: list[str] = []
     issues += editorial_quality.collect_issues(ko)
     issues += editorial_title.collect_issues(ko, price_data, kind="시황")   # 제목·소제목, 모든 글 공통
+    if doc is not None:
+        j_issues, _ = editorial_judgment.collect_issues(
+            doc, editorial_judgment.previous_manuscript(doc.get("market", ""), str(doc.get("date", ""))),
+            editorial_judgment.previous_manuscripts(doc.get("market", ""), str(doc.get("date", ""))))
+        issues += j_issues
     if en:
         try:
             editorial_quality_en.validate_generated(en)
@@ -417,7 +423,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
     # 로그에 남길 뿐 글을 막지 않습니다 — 제목이 아쉬운 글과 그날 글이 없는 것은
     # 무게가 다릅니다. 전에는 여기서 예외로 멈췄고(2026-09-04~09-08), 그러면 루틴이
     # 이미 끝난 뒤라 아무도 고치지 못한 채 그날 글만 빠졌습니다.
-    warnings = _style_warnings(ko, en, price_data)
+    warnings = _style_warnings(ko, en, price_data, doc=doc)
     for line in warnings:
         print(f"[경고] 문체·제목·구조: {line}")
     if warnings:
