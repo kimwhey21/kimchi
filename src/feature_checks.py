@@ -51,6 +51,40 @@ JARGON_IN_BODY = (
 )
 
 
+# 우리는 종목을 들고 있지 않습니다. 1인칭 포지션 화법을 흉내 내면 거짓말이 됩니다.
+POSITION_PHRASES = ("제가 매수", "제가 매도", "저는 매수", "저는 매도", "제 계좌",
+                    "보유 물량", "익절했", "저는 이렇게 대응하겠", "제 포트폴리오")
+
+
+def beginner_issues(body: str) -> tuple[list[str], list[str]]:
+    """(막을 것, 참고) — 초보자 설명: 무조건 요구하지도, 그냥 넘기지도 않습니다.
+
+    **글에 설명이 필요한 말이 실제로 들어 있는지**를 보고 정합니다. 매번 요구하면
+    필요 없는 자리에도 들어가고, 그냥 넘기면 PER·HBM·계약가가 설명 없이 지나갑니다.
+    시황에도 같은 규칙입니다(2026-09-08, 사용자: 재테크농부처럼 초보자 설명 한 토막).
+    """
+    issues, notes = [], []
+    used = [word for word in JARGON_IN_BODY if word in body]
+    if "초보자" not in body:
+        if len(used) >= 3:
+            issues.append(
+                f"초보자 설명이 없는데 설명이 필요한 말이 {len(used)}개 나옵니다: "
+                f"{', '.join(used[:8])}. '초보자 설명:'으로 시작하는 문단 하나로 이 중 이 글의 "
+                f"논지에 꼭 필요한 것 하나는 풀어 쓰십시오. docs/feature-style.md 0절.")
+        elif used:
+            notes.append(f"설명이 필요할 수 있는 말: {', '.join(used)}. "
+                         f"독자가 모르면 논지를 못 따라가는지 보십시오.")
+    return issues, notes
+
+
+def position_issues(body: str) -> list[str]:
+    for phrase in POSITION_PHRASES:
+        if phrase in body:
+            return [f"본문에 포지션 화법 {phrase!r}이 있습니다 — 우리는 종목을 들고 있지 않습니다. "
+                    "판단은 '우리는 이렇게 봅니다'로 씁니다. docs/feature-style.md 0절."]
+    return []
+
+
 def collect_issues(doc: dict, graphics: int | None = None,
                    notes_out: list[str] | None = None) -> list[str]:
     """막을 것만 돌려줍니다.
@@ -88,27 +122,11 @@ def collect_issues(doc: dict, graphics: int | None = None,
             issues.append(f"제목의 {date}이 본문에 없습니다 — 제목이 약속한 것을 "
                           f"본문이 다뤄야 합니다.")
 
-    # 초보자 설명: 무조건 요구하지도, 그냥 넘기지도 않습니다. **글에 설명이 필요한
-    # 말이 실제로 들어 있는지**를 보고 정합니다. 매번 요구하면 필요 없는 자리에도
-    # 들어가고, 그냥 넘기면 PER·HBM·계약가가 설명 없이 지나갑니다.
-    used = [word for word in JARGON_IN_BODY if word in body]
-    if "초보자" not in body:
-        if len(used) >= 3:
-            issues.append(
-                f"초보자 설명이 없는데 설명이 필요한 말이 {len(used)}개 나옵니다: "
-                f"{', '.join(used[:8])}. 이 중 이 글의 논지에 꼭 필요한 것 하나는 "
-                f"풀어 쓰십시오. docs/feature-style.md 0절.")
-        elif used:
-            notes.append(f"설명이 필요할 수 있는 말: {', '.join(used)}. "
-                         f"독자가 모르면 논지를 못 따라가는지 보십시오.")
-
-    # 우리는 종목을 들고 있지 않습니다. 1인칭 포지션 화법을 흉내 내면 거짓말이 됩니다.
-    for phrase in ("제가 매수", "제가 매도", "저는 매수", "저는 매도", "제 계좌",
-                   "보유 물량", "익절했"):
-        if phrase in body:
-            issues.append(f"본문에 포지션 화법 {phrase!r}이 있습니다 — 우리는 종목을 "
-                          f"들고 있지 않습니다. docs/feature-style.md 0절.")
-            break
+    # 초보자 설명과 포지션 화법은 시황과 같은 함수를 씁니다(2026-09-08, 모든 글 공통).
+    body_issues, body_notes = beginner_issues(body)
+    issues += body_issues
+    notes += body_notes
+    issues += position_issues(body)
 
     if graphics is not None and graphics < min_graphics:
         issues.append(f"시각자료가 {graphics}장입니다 — 최소 {min_graphics}장. "

@@ -49,8 +49,11 @@
   - `investor_flows`는 원래 본문에 투자자별 순매수 금액과 출처가 있을 때만(`source` 필수).
   - 주인공이 코어 종목이면 그 절에 `"photo": {"ticker": "<코드>"}`.
   - 그림만 붙이고 본문이 설명하지 않으면 장식입니다 — 그 절 본문이 그 그림을 말해야 합니다.
-- `insight_section`·`outlook`·`closing`은 있으면 그대로 두되, 소제목·낱말 규칙에 걸리는 것은
-  고칩니다. `closing.heading`은 `Fermata's Take`.
+- `insight_section`·`outlook`은 있으면 그대로 두되, 소제목·낱말 규칙에 걸리는 것은 고칩니다.
+- **`closing`(Fermata's Take)은 새 규칙대로 다시 씁니다**(routine_common 6번): 세 문장 이상의
+  판단·근거·확인 지점, `closing.check`는 그 글의 다음 거래일 기준으로. 전 원고(같은 시장,
+  바로 전 날짜)에 `closing.check`가 있으면 "어제 본 것" 절과 `review`도 넣습니다 — 결과는
+  이미 알려진 사실이니 실제 숫자로 판정합니다. 초보자 설명 규칙도 같습니다.
 - **영어판(`en`)은 손대지 않습니다.** 사용자가 영어판을 뺐습니다. 있으면 그대로 둡니다.
 - 큐 원고(옛 글 5편)는 `ko.narrative`가 옛 HTML에서 옮겨 온 것이라 문체가 다를 수 있습니다.
   `docs/editorial-style.md` 문체(존댓말, 한 문장짜리 문단, `하락했습니다`)로 다듬습니다.

@@ -44,7 +44,9 @@ def _sections(n: int) -> list[dict]:
 def _doc(title: str, sections: list[dict]) -> dict:
     return {"market": "kr", "date": "2026-09-08", "price_data": PRICE,
             "ko": {"title": title, "narrative": sections,
-                   "closing": {"heading": "Fermata's Take", "body": "대우건설이 8.47% 올랐습니다."}}}
+                   "closing": {"heading": "Fermata's Take",
+                               "body": "우리는 이번 하락을 숨 고르기로 봅니다. 외국인이 닷새째 순매수인데 지수가 밀린 것은 개인의 차익 실현 때문이었습니다. 9월 10일 종가가 7,000선을 넘는지로 확인하겠습니다.",
+                               "check": {"due": "2026-09-10", "what": "코스피 종가가 7,000선을 넘는지, 외국인 순매수가 이어지는지"}}}}
 
 
 def _write(doc: dict) -> Path:
