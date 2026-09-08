@@ -206,16 +206,22 @@ def cover(output_path: Path, kicker: str, subject: str,
     # 정렬 표지는 "서식처럼 보인다"는 지적을 받았다.
     ensure_korean_font()
     width, height = 1200, 630
-    split = 540
+    # 목록 카드는 4:3, 홈 히어로는 16:10으로 가운데를 잘라 보여준다. 4:3이면 좌우
+    # 180px씩 사라지므로 **글자는 x 180~1020 안에만** 둔다. 2026-09-08 첫 적용 때
+    # 왼쪽 70px에 글자를 놓았다가 홈 히어로에서 "FERMATA"가 "RMATA"로 잘렸다.
+    split = 600
+    text_left = 200          # 왼쪽 판 글자 시작
+    text_right = 620         # 오른쪽 숫자 시작
+    right_limit = 1000       # 오른쪽 글자 끝
     image = Image.new("RGB", (width, height), BG)
     draw = ImageDraw.Draw(image)
     draw.rectangle([0, 0, split, height], fill=INK)
 
-    draw.text((70, 70), "FERMATA", font=korean_font(22, bold=True), fill="#FFFFFF")
-    draw.text((70, 110), kicker, font=korean_font(22), fill="#AEB6C2")
+    draw.text((text_left, 70), "FERMATA", font=korean_font(22, bold=True), fill="#FFFFFF")
+    draw.text((text_left, 110), kicker, font=korean_font(22), fill="#AEB6C2")
 
-    # 제목: 판 폭(400px)에 맞춰 줄을 나눈다. 쉼표 뒤를 먼저 끊고, 그래도 길면 낱말
-    # 단위로 끊는다. 세 줄을 넘기면 글자를 한 단계 줄인다.
+    # 제목: 판 안 글자 폭(370px)에 맞춰 줄을 나눈다. 쉼표 뒤를 먼저 끊고, 그래도
+    # 길면 낱말 단위로 끊는다. 세 줄을 넘기면 글자를 한 단계 줄인다.
     def wrap(text: str, font, max_width: int) -> list[str]:
         pieces = [p.strip() for p in text.replace(", ", ",\n").split("\n")]
         lines: list[str] = []
@@ -232,30 +238,33 @@ def cover(output_path: Path, kicker: str, subject: str,
                 lines.append(current)
         return lines
 
-    for size in (56, 50, 44):
+    for size in (50, 44, 40):
         title_font = korean_font(size, bold=True)
-        lines = wrap(subject, title_font, split - 140)
+        lines = wrap(subject, title_font, split - text_left - 30)
         if len(lines) <= 3:
             break
     line_height = int(size * 1.32)
     block = len(lines) * line_height
     y = max(180, (height - block) // 2 + 20)
     for line in lines:
-        draw.text((70, y), line, font=title_font, fill="#FFFFFF")
+        draw.text((text_left, y), line, font=title_font, fill="#FFFFFF")
         y += line_height
 
     sides = [s for s in (left, right) if s]
-    x = split + 80
+    x = text_right
     top = 120 if len(sides) == 2 else 200
     for i, side in enumerate(sides):
         y = top + i * 240
-        draw.text((x, y), side["label"], font=korean_font(26), fill=SUB)
+        draw.text((x, y), side["label"], font=korean_font(24), fill=SUB)
         colour = DOWN if side.get("down") else (UP if i == 0 else INK)
-        draw.text((x, y + 44), side["value"], font=korean_font(84, bold=True), fill=colour)
+        value_font = korean_font(72, bold=True)
+        if draw.textlength(side["value"], font=value_font) > right_limit - x:
+            value_font = korean_font(60, bold=True)
+        draw.text((x, y + 44), side["value"], font=value_font, fill=colour)
         if i == 0 and len(sides) == 2:
-            draw.line([x, y + 190, width - 70, y + 190], fill=LINE, width=2)
+            draw.line([x, y + 190, right_limit, y + 190], fill=LINE, width=2)
     if note:
-        draw.text((x, height - 66), note, font=korean_font(20), fill=SUB)
+        draw.text((x, height - 66), note, font=korean_font(18), fill=SUB)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     image.save(output_path)
     return output_path
