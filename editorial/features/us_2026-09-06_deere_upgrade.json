@@ -2,7 +2,8 @@
   "kind": "feature",
   "series": "기준표",
   "date": "2026-09-06",
-  "category_id": 153,
+  "deadline": "2026-11-25",
+  "category_id": 432,
   "featured_photo": {
     "local_path": "assets/features/us_2026-09-06_deere_upgrade-cover.jpg",
     "alt": "존 디어 트랙터 실물, 차고 안",
@@ -57,7 +58,7 @@
       "kind": "cover",
       "alt": "베어드·에버코어ISI, 디어 목표주가 나란히 상향",
       "args": {
-        "kicker": "가이드 · 2026-09-06",
+        "kicker": "Checkpoint · 2026-09-06",
         "subject": "목표주가, 사흘 새 두 번 상향",
         "left": {
           "label": "베어드 새 목표주가",

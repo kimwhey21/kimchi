@@ -2,7 +2,8 @@
   "kind": "feature",
   "series": "기준표",
   "date": "2026-09-06",
-  "category_id": 153,
+  "deadline": "2026-09-30",
+  "category_id": 432,
   "featured_photo": {
     "local_path": "assets/features/us_2026-09-06_micron_funds-cover.jpg",
     "alt": "실리콘 웨이퍼 다이 격자를 근접 촬영한 모습",
@@ -61,7 +62,7 @@
       "kind": "guide_cover",
       "alt": "코튜 마이크론 지분 +1,794%, 어팔루사 -41%",
       "args": {
-        "kicker": "가이드 · 2026-09-06",
+        "kicker": "Checkpoint · 2026-09-06",
         "subject": "같은 분기, 반대 결론",
         "up": {
           "label": "코튜, 마이크론 지분(1분기)",

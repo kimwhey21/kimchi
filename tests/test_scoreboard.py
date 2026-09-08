@@ -1,4 +1,4 @@
-"""기준표 성적표(data/scoreboard.yaml → 페이지)를 외부 호출 없이 고정한다."""
+"""Checkpoint 성적표(data/scoreboard.yaml → 페이지)를 외부 호출 없이 고정한다."""
 from __future__ import annotations
 
 import datetime as dt
@@ -60,7 +60,7 @@ class LoadTest(unittest.TestCase):
 class BuildTest(unittest.TestCase):
     def test_tally_and_labels(self) -> None:
         html = sb.build(sb.load(_write(GOOD)), today=dt.date(2026, 9, 8))
-        self.assertIn("기준표 성적표", html)
+        self.assertIn("Checkpoint 성적표", html)
         self.assertIn("적중", html)
         self.assertIn("확인 전", html)
         self.assertIn("9/7", html)
@@ -96,15 +96,15 @@ class PublishTest(unittest.TestCase):
     def test_existing_page_is_updated_without_touching_status(self) -> None:
         with patch.object(sb, "_find_page", return_value={"id": 9, "status": "publish"}), \
                 patch.object(sb.requests, "post", return_value=self._response({"id": 9, "link": "x"})) as post, \
-                patch.object(sb.requests, "get", return_value=self._response({"content": {"raw": "기준표 성적표"}})):
-            sb.publish("<p>기준표 성적표</p>")
-        self.assertEqual(post.call_args.kwargs["json"], {"content": "<p>기준표 성적표</p>"})
+                patch.object(sb.requests, "get", return_value=self._response({"content": {"raw": "Checkpoint 성적표"}})):
+            sb.publish("<p>Checkpoint 성적표</p>")
+        self.assertEqual(post.call_args.kwargs["json"], {"content": "<p>Checkpoint 성적표</p>"})
 
     def test_missing_page_is_created_as_draft(self) -> None:
         with patch.object(sb, "_find_page", return_value=None), \
                 patch.object(sb.requests, "post", return_value=self._response({"id": 10, "link": "x"})) as post, \
-                patch.object(sb.requests, "get", return_value=self._response({"content": {"raw": "기준표 성적표"}})):
-            sb.publish("<p>기준표 성적표</p>")
+                patch.object(sb.requests, "get", return_value=self._response({"content": {"raw": "Checkpoint 성적표"}})):
+            sb.publish("<p>Checkpoint 성적표</p>")
         body = post.call_args.kwargs["json"]
         self.assertEqual(body["status"], "draft")
         self.assertEqual(body["slug"], "scoreboard")
@@ -115,8 +115,8 @@ class PublishTest(unittest.TestCase):
         with patch.dict(os.environ, {"FERMATA_AUTO_PUBLISH": "true"}), \
                 patch.object(sb, "_find_page", return_value=None), \
                 patch.object(sb.requests, "post", return_value=self._response({"id": 11, "link": "x"})) as post, \
-                patch.object(sb.requests, "get", return_value=self._response({"content": {"raw": "기준표 성적표"}})):
-            sb.publish("<p>기준표 성적표</p>")
+                patch.object(sb.requests, "get", return_value=self._response({"content": {"raw": "Checkpoint 성적표"}})):
+            sb.publish("<p>Checkpoint 성적표</p>")
         self.assertEqual(post.call_args.kwargs["json"]["status"], "publish")
 
     def test_missing_settings_fail_loudly(self) -> None:

@@ -68,10 +68,15 @@
    벤치마크 실제 제목을 보고 **그 어법을 그대로 갈아입힙니다.** 이 도구가 코퍼스가
    없다며 실패하면(샌드박스에는 코퍼스가 없습니다) 그 절의 실제 제목 목록으로 짓고,
    완료 보고에 "코퍼스 없이 지은 제목"이라고 적습니다. 소제목도 같은 절(「소제목」)
-   — 32자 이하, 기준표는 5절 이상.
+   — 32자 이하, 기준표는 5절 이상. **제목에는 확인 날짜를 넣는 것이 기본입니다**(`…, 9월 30일에
+   갈립니다`, `10월 27일까지 볼 것은 하나입니다`) — 라벨 대신 날짜가 이 글의 성격을 드러냅니다.
+   제목 글자에 `Checkpoint`·`[기준표]` 같은 라벨을 넣지 않습니다(관문이 꼬리표를 막습니다).
 4. **원고.** `editorial/features/<market>_<YYYY-MM-DD>_<slug>.json`. 필드는 예시
    파일과 같게: `kind` "feature", `series` "기준표", `date`, `slug`(파일명의
-   `<market>-<date>-<slug>`와 같게 영문 소문자·하이픈), `category_id` 153,
+   `<market>-<date>-<slug>`와 같게 영문 소문자·하이픈), `category_id` 432(Checkpoint —
+   독자에게 보이는 이름, 2026-09-09), `deadline`(YYYY-MM-DD — 성적표에 적는 확인 지점 중
+   마지막 날짜. 글 머리말 `Checkpoint · N월 N일까지 확인할 것`이 이 값으로 그려지고 관문이
+   확인합니다), 표지 `cover`의 `kicker`는 `Checkpoint · <날짜>`,
    `related`(기존 글 2~3편, `https://fermata.it.kr/wp-json/wp/v2/posts?search=<낱말>&_fields=title,link`로
    찾은 실제 주소만), `ko.title`, `ko.narrative` 6~7절(절 골격은 feature-style 4절,
    본문에 **확인 날짜**를 박습니다), `ko.closing`(heading은 `Fermata's Take`),

@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import datetime as dt
 import re
 import sys
 from pathlib import Path
@@ -85,6 +86,26 @@ def position_issues(body: str) -> list[str]:
     return []
 
 
+def deadline_issue(doc: dict) -> str | None:
+    """기준표의 마감일(최상위 `deadline`, YYYY-MM-DD) — 글 머리말 'Checkpoint · N월 N일까지 확인할 것'이
+    이 값으로 그려진다(2026-09-09). 성적표에 적은 확인 지점 중 마지막 날짜와 같아야 한다."""
+    deadline = doc.get("deadline")
+    if not deadline:
+        return ("최상위 `deadline`(YYYY-MM-DD)이 없습니다 — 성적표에 적은 확인 지점 중 마지막 날짜를 "
+                "적으십시오. 글 머리말 'Checkpoint · N월 N일까지 확인할 것'이 이 값으로 그려집니다.")
+    try:
+        day = dt.date.fromisoformat(str(deadline))
+    except ValueError:
+        return f"`deadline` {deadline!r}은(는) YYYY-MM-DD가 아닙니다."
+    try:
+        posted = dt.date.fromisoformat(str(doc.get("date")))
+    except (TypeError, ValueError):
+        return None
+    if day <= posted:
+        return f"`deadline` {deadline}이(가) 글 날짜 {posted} 이전입니다 — 확인 지점은 앞날이어야 합니다."
+    return None
+
+
 def collect_issues(doc: dict, graphics: int | None = None,
                    notes_out: list[str] | None = None) -> list[str]:
     """막을 것만 돌려줍니다.
@@ -114,6 +135,12 @@ def collect_issues(doc: dict, graphics: int | None = None,
     if not re.search(r"\d+월 \d+일", body):
         issues.append("본문에 확인 날짜(`N월 N일`)가 없습니다 — 기준표 글은 날짜를 "
                       "박아야 글의 수명이 그날까지 갑니다. docs/feature-style.md 4절.")
+
+    # 머리말에 쓰는 마감일 (2026-09-09). 시리즈가 명시된 기준표만 — 프리뷰는 그날 밤으로 끝난다.
+    if doc.get("series") == "기준표":
+        problem = deadline_issue(doc)
+        if problem:
+            issues.append(problem)
 
     # 제목이 약속한 것을 본문이 답하는지 (제목 원칙 7)
     dates_in_title = re.findall(r"\d+월 \d+일", title)

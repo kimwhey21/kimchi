@@ -2,7 +2,8 @@
  "kind": "feature",
  "series": "기준표",
  "date": "2026-09-07",
- "category_id": 153,
+ "deadline": "2026-10-29",
+ "category_id": 432,
  "featured_photo": {
   "url": "https://images.unsplash.com/photo-1630142895963-6996ae6b3a5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8bnVjbGVhciUyMHBvd2VyJTIwcGxhbnQlMjBjb29saW5nJTIwdG93ZXJzfGVufDB8MHx8fDE3ODg4MjMzMzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
   "alt": "맑은 하늘 아래 회색 콘크리트 냉각탑 다섯 기",
@@ -55,7 +56,7 @@
    "kind": "cover",
    "alt": "두산에너빌리티, 기관 순매수와 외국인 순매도가 엇갈린 하루",
    "args": {
-    "kicker": "가이드 · 2026-09-07",
+    "kicker": "Checkpoint · 2026-09-07",
     "subject": "하루 10.98%, 사간 건 기관뿐",
     "left": {"label": "기관 순매수(주)", "value": "+105만"},
     "right": {"label": "외국인 순매도(주)", "value": "-1.9만", "down": true}

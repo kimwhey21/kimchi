@@ -2,8 +2,9 @@
   "kind": "feature",
   "series": "기준표",
   "date": "2026-09-08",
+  "deadline": "2026-10-05",
   "slug": "kr-2026-09-08-foreign-buying-reversal",
-  "category_id": 153,
+  "category_id": 432,
   "featured_photo": {
     "url": "https://images.unsplash.com/photo-1587845323226-bad89242c735?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8c2VtaWNvbmR1Y3RvciUyMHdhZmVyJTIwY2hpcHxlbnwwfDB8fHwxNzg4ODc3MzQ5fDA&ixlib=rb-4.1.0&q=80&w=1080",
     "alt": "무지갯빛 회로 패턴이 비치는 실리콘 웨이퍼 클로즈업",
@@ -66,7 +67,7 @@
       "kind": "cover",
       "alt": "외국인 순매수, 5~8월 순매도에서 9월 순매수로 전환",
       "args": {
-        "kicker": "기준표 · 2026-09-08",
+        "kicker": "Checkpoint · 2026-09-08",
         "subject": "외국인, 넉 달 순매도를 멈췄다",
         "left": {
           "label": "9월 순매수 전환(현물)",

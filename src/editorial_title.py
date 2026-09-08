@@ -334,6 +334,12 @@ def collect_title_issues(title: str, price_data: dict | None = None,
     return issues
 
 
+# 기준표(Checkpoint) 제목은 확인 날짜를 넣는 것이 기본이다(2026-09-09, 사용자 결정). 라벨을 제목에
+# 넣는 대신 날짜가 "확인 지점이 있는 글"이라는 성격을 드러낸다. 재테크농부도 "이번주"로 시작하는
+# 제목을 8편 쓴다. 막지는 않고 알려만 준다 — 날짜 없이도 좋은 제목이 있다.
+_DATE_HOOK = re.compile(r"\d{1,2}월|\d{1,2}일|이번\s*주|다음\s*주|까지|월말|분기")
+
+
 def collect_issues(doc: dict, price_data: dict | None = None, *,
                    kind: str | None = None, min_sections: int | None = None,
                    notes_out: list[str] | None = None) -> list[str]:
@@ -351,6 +357,10 @@ def collect_issues(doc: dict, price_data: dict | None = None, *,
                 names.add(str(entry[key]).strip())
     issues += collect_heading_issues(ko.get("narrative") or [], kind=kind,
                                      min_sections=min_sections, notes_out=notes_out, names=names)
+    if kind == "기준표" and notes_out is not None and not _DATE_HOOK.search(str(ko.get("title", ""))):
+        notes_out.append("제목에 확인 날짜가 없습니다 — Checkpoint(기준표)는 제목에 날짜를 넣는 것이 "
+                         "기본입니다: `…, 9월 30일에 갈립니다`, `10월 27일까지 볼 것은 하나입니다`. "
+                         "라벨 대신 날짜가 이 글의 성격을 드러냅니다.")
     return issues
 
 

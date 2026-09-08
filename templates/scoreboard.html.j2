@@ -28,8 +28,8 @@
 </style>
 <div class="fm-page">
 <p class="fm-kicker fm-first">Scoreboard</p>
-<h1 class="fm-title">기준표 성적표</h1>
-<p class="fm-lead">기준표마다 "언제 무엇을 확인할지"를 적어 둡니다. 그 날짜가 지나면 실제로 무엇이 나왔는지를 여기에 적고, 글이 가리킨 방향과 맞았는지를 판정합니다. 틀린 것도 지우지 않습니다.</p>
+<h1 class="fm-title">Checkpoint 성적표</h1>
+<p class="fm-lead">Checkpoint 글마다 "언제 무엇을 확인할지"를 적어 둡니다. 그 날짜가 지나면 실제로 무엇이 나왔는지를 여기에 적고, 글이 가리킨 방향과 맞았는지를 판정합니다. 틀린 것도 지우지 않습니다.</p>
 <p class="fm-p">판정은 넷입니다. <b>적중</b>은 글이 가리킨 방향대로 갔을 때, <b>빗나감</b>은 반대로 갔을 때, <b>절반</b>은 확인 지점 여럿 중 일부만 맞았을 때, <b>확인 전</b>은 아직 날짜가 오지 않았을 때입니다. 투자 성과가 아니라 글의 판단 틀이 맞았는지만 봅니다.</p>
 <p class="fm-kicker">Tally</p>
 <div class="fm-summary">
@@ -38,7 +38,7 @@
   <div><div class="n">{{ tally.mixed }}</div><div class="l">절반</div></div>
   <div><div class="n">{{ tally.pending }}</div><div class="l">확인 전</div></div>
 </div>
-<p class="fm-meta">마지막 갱신 {{ updated }} · 기준표 {{ articles|length }}편 · 확인 지점 {{ tally.total }}개</p>
+<p class="fm-meta">마지막 갱신 {{ updated }} · 글 {{ articles|length }}편 · 확인 지점 {{ tally.total }}개</p>
 {% for a in articles %}
 <p class="fm-kicker">{{ a.date }}</p>
 <h2 class="fm-h"><a href="{{ a.url }}">{{ a.title }}</a></h2>

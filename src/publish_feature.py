@@ -6,6 +6,7 @@ mock하여 렌더·해시·상태 보존 계약만 검증한다.
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 import os
 import re
@@ -24,6 +25,23 @@ from src.render_feature import render
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "output" / "features"
+
+
+# 독자에게 보이는 시리즈 이름 (2026-09-09, 사용자 결정: "이름은 체크포인트로, 영어로 표기").
+# 내부 키(`series: 기준표`, 문서·검사·성적표 코드)는 그대로 두고, 화면에 나가는 곳 — 워드프레스
+# 분류(Checkpoint, id 432)·홈 탭·글 머리말·표지 kicker — 만 이 표를 거친다. 제목 글자에는
+# 라벨을 넣지 않는다(제목은 검색에서 서른 자 안팎만 보인다). 대신 확인 날짜를 제목에 넣는다.
+SERIES_LABEL = {"기준표": "Checkpoint"}
+
+
+def _kicker(doc: dict) -> str:
+    """글 맨 위 머리말. 기준표는 `Checkpoint · 9월 30일까지 확인할 것`(원고 최상위 `deadline`)."""
+    series = str(doc.get("series") or "기준표")
+    label = SERIES_LABEL.get(series, series)
+    if series == "기준표" and doc.get("deadline"):
+        day = dt.date.fromisoformat(str(doc["deadline"]))
+        return f"{label} · {day.month}월 {day.day}일까지 확인할 것"
+    return label
 
 
 def _slug(doc: dict, path: Path) -> str:
@@ -144,7 +162,7 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
                    for k, v in section_images.items()}
 
     ko = doc.get("ko") or doc
-    html = render(doc, doc.get("series", "기준표"), figures=figures,
+    html = render(doc, _kicker(doc), figures=figures,
                   meta_description=_excerpt(ko, lead=_seo_lead(doc)))
     html_path = output / "article.html"
     html_path.write_text(html, encoding="utf-8")

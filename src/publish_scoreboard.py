@@ -1,4 +1,4 @@
-"""기준표 성적표 페이지를 `data/scoreboard.yaml`에서 만들어 워드프레스에 올립니다.
+"""Checkpoint(기준표) 성적표 페이지를 `data/scoreboard.yaml`에서 만들어 워드프레스에 올립니다.
 
 왜 있는가
 ---------
@@ -167,7 +167,7 @@ def publish(html: str) -> dict:
         # 자동화 스위치(FERMATA_AUTO_PUBLISH=true)가 켜져 있으면 바로 공개, 아니면 임시저장.
         auto = os.environ.get("FERMATA_AUTO_PUBLISH", "").strip().lower() == "true"
         response = requests.post(f"{base}/wp-json/wp/v2/pages", auth=auth, timeout=TIMEOUT,
-                                 json={"title": "기준표 성적표", "slug": SLUG,
+                                 json={"title": "Checkpoint 성적표", "slug": SLUG,
                                        "status": "publish" if auto else "draft",
                                        "template": "page-no-title", "content": html})
         action = "새로 만듦 (바로 공개)" if auto else "새로 만듦 (임시저장 — 공개는 사람이 '발행'이라고 한 뒤)"
@@ -178,14 +178,14 @@ def publish(html: str) -> dict:
     check = requests.get(f"{base}/wp-json/wp/v2/pages/{result['id']}", auth=auth,
                          params={"context": "edit"}, timeout=TIMEOUT)
     check.raise_for_status()
-    if "기준표 성적표" not in check.json()["content"]["raw"]:
+    if "Checkpoint 성적표" not in check.json()["content"]["raw"]:
         raise ScoreboardError("저장 뒤 되읽었더니 본문이 다릅니다.")
     print(f"성적표 페이지 {action}: id={result['id']} {result.get('link', '')}")
     return result
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="기준표 성적표 페이지를 만들어 올립니다")
+    parser = argparse.ArgumentParser(description="Checkpoint 성적표 페이지를 만들어 올립니다")
     parser.add_argument("--render-only", action="store_true", help="output/scoreboard.html만 만든다")
     parser.add_argument("--no-live-check", action="store_true",
                         help="주소가 살아 있는지 확인하지 않는다(오프라인 렌더 확인용)")

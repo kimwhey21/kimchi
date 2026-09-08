@@ -1,8 +1,9 @@
 {
   "kind": "feature",
-  "series": "가이드",
+  "series": "기준표",
   "date": "2026-09-07",
-  "category_id": 153,
+  "deadline": "2026-09-16",
+  "category_id": 432,
   "ko": {
     "title": "금리는 올랐는데 은행주만 무너진 이유",
     "narrative": [
@@ -45,7 +46,7 @@
       "kind": "guide_cover",
       "alt": "같은 날 반대 방향 — 미 2년물 +29bp, 9월 4일 은행 업종 -3.21%",
       "args": {
-        "kicker": "가이드 · 2026-09-07",
+        "kicker": "Checkpoint · 2026-09-07",
         "subject": "같은 날, 반대 방향",
         "up": {
           "label": "미 2년물 국채금리",
