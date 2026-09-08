@@ -2,7 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
   벤치마크 채널을 매일 23:10에 한 번 훑고, 집계표(data/benchmark_stats.json)를 새로
-  내보내 저장소에 올립니다(scripts/bench_nightly.sh, 2026-09-08).
+  내보내 저장소에 올립니다(scripts/bench_nightly.py, 2026-09-08). /bin/bash는 폴더 보호(TCC)에
+  막혀 python3로 부릅니다.
 
       cp scripts/kr.it.fermata.benchwatch.plist ~/Library/LaunchAgents/
       launchctl load ~/Library/LaunchAgents/kr.it.fermata.benchwatch.plist
@@ -15,8 +16,9 @@
     <string>kr.it.fermata.benchwatch</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/bin/bash</string>
-        <string>/Users/mac/Downloads/market-brief/scripts/bench_nightly.sh</string>
+        <string>/usr/local/bin/python3</string>
+        <string>-m</string>
+        <string>scripts.bench_nightly</string>
     </array>
     <key>WorkingDirectory</key>
     <string>/Users/mac/Downloads/market-brief</string>
