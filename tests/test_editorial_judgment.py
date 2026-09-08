@@ -18,7 +18,8 @@ GOOD_CLOSING = {"heading": "Fermata's Take",
 def _doc(closing=None, review=None, headings=("1. 오늘 시장", "2. 어제 본 것, 오늘은 어땠나", "3. 업종")):
     doc = {"market": "kr", "date": "2026-09-08",
            "ko": {"title": "코스피, 7,000선을 넘지 못했습니다",
-                  "narrative": [{"heading": h, "body": "본문입니다."} for h in headings],
+                  "narrative": [{"heading": h, "body": ("NH투자증권은 목표주가를 올렸습니다. " if i == 0 else "") + "본문입니다."}
+                                for i, h in enumerate(headings)],
                   "closing": closing if closing is not None else GOOD_CLOSING}}
     if review:
         doc["review"] = review
@@ -57,6 +58,22 @@ class JudgmentTest(unittest.TestCase):
         previous = {"market": "kr", "date": "2026-09-07", "ko": {"closing": {"body": "옛 형식."}}}
         issues, notes = editorial_judgment.collect_issues(_doc(), previous=previous)
         self.assertEqual(issues, []); self.assertTrue(notes)
+
+    def test_institution_view_and_repeats(self) -> None:
+        base = _doc()
+        for s in base["ko"]["narrative"]:
+            s["body"] = "코스피는 0.58% 하락했습니다. 외국인은 닷새째 순매수했습니다."
+        issues, notes = editorial_judgment.collect_issues(base)
+        self.assertTrue(any("증권사·기관" in i for i in issues), issues)
+        cited = _doc(); cited["ko"]["narrative"][0]["body"] = "NH투자증권은 목표주가를 8,000으로 올렸습니다. 근거는 반도체 이익입니다."
+        issues, _ = editorial_judgment.collect_issues(cited)
+        self.assertFalse(any("증권사·기관" in i for i in issues), issues)
+        rewrite = dict(base, rewritten="2026-09-08")
+        issues, notes = editorial_judgment.collect_issues(rewrite)
+        self.assertFalse(any("증권사·기관" in i for i in issues)); self.assertTrue(any("증권사·기관" in n for n in notes))
+        prev = {"date": "2026-09-07", "ko": {"narrative": [{"body": "코스피는 0.58% 하락했습니다. 외국인은 닷새째 순매수했습니다."}]}}
+        issues, _ = editorial_judgment.collect_issues(cited if False else base, previous_docs=[prev])
+        self.assertTrue(any("같은 문장" in i for i in issues), issues)
 
     def test_position_talk_is_blocked(self) -> None:
         doc = _doc(); doc["ko"]["narrative"][0]["body"] = "저는 매수했습니다."

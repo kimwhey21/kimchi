@@ -38,7 +38,8 @@ PRICE = {
 
 
 def _sections(n: int) -> list[dict]:
-    return [{"heading": f"{i}. 절 {i}", "body": "본문입니다."} for i in range(1, n + 1)]
+    return [{"heading": f"{i}. 절 {i}", "body": ("골드만삭스는 유가 전망을 올렸습니다. " if i == 1 else "") + f"본문 {i}입니다."}
+            for i in range(1, n + 1)]
 
 
 def _doc(title: str, sections: list[dict]) -> dict:

@@ -17,7 +17,7 @@
 2. 제목·소제목 — `editorial_title.collect_issues(kind="시황")` (모든 글 공통 규칙: 후킹 장치,
    등락률 둘 이상 금지, 8절 이상, 소제목 32자 이하)
 3. 판단·어제·초보자 — `editorial_judgment` (Fermata's Take 세 문장 + 확인 지점, 어제 판정,
-   초보자 설명, 포지션 화법 금지)
+   초보자 설명, 포지션 화법 금지, 증권사·기관 견해 한 건, 최근 다섯 편과 같은 문장 금지)
 4. 숫자 — `editorial_facts` (원고의 등락률이 시세와 맞는지, 1위 종목을 다뤘는지)
 5. 영어판 문체 — `editorial_quality_en`
 6. 시각자료 — 본문 `graphic`을 실제로 그려 보고(틀린 티커·없는 이력은 여기서 드러남),
@@ -87,7 +87,8 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
     issues += [f"제목·소제목 — {i}" for i in editorial_title.collect_issues(ko, price_data, kind="시황", notes_out=notes)]
     summary += [f"(참고) {n}" for n in notes]
     j_issues, j_notes = editorial_judgment.collect_issues(
-        doc, editorial_judgment.previous_manuscript(market, date_str))
+        doc, editorial_judgment.previous_manuscript(market, date_str),
+        editorial_judgment.previous_manuscripts(market, date_str))
     issues += [f"판단·어제·초보자 — {i}" for i in j_issues]
     summary += [f"(참고) {n}" for n in j_notes]
     try:

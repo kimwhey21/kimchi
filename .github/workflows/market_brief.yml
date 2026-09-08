@@ -103,6 +103,27 @@ jobs:
         # 워드프레스 시크릿을 넘기지 않습니다.
         run: python -m src.main --market ${{ steps.market.outputs.market }} --fetch-only
 
+      - name: 재료(이야기 엔진) 뽑기
+        # 시황 루틴이 시세와 함께 읽는 재료(2026-09-08, 사용자 승인 — 제안 4번 "시황에도
+        # 재료 파일을"). 루틴 샌드박스는 야후가 막혀 밸류에이션·등급변경·실적일정·계절성
+        # 엔진이 실패하므로(2026-09-07 실측) 러너가 대신 뽑아 시세와 같은 커밋에 넣는다.
+        # 파일명은 시세 파일과 같은 거래일. 오늘 처음 생긴 시세 파일이 있을 때만 돌린다 —
+        # 재시도 실행(:27/:34)이 같은 재료를 다시 뽑아 커밋을 쌓지 않게. 실패해도 시세
+        # 커밋은 막지 않는다(|| true) — 재료 없는 날은 루틴이 파일이 없는 것을 보고 판단한다.
+        if: success()
+        run: |
+          M=${{ steps.market.outputs.market }}
+          if ! git status --porcelain data/ | grep -qE '^\?\? data/price_'"$M"'_'; then
+            echo "오늘 처음 생긴 시세 파일이 없어 재료를 다시 뽑지 않습니다."
+            exit 0
+          fi
+          D=$(ls data/price_${M}_*.json | sort | tail -1 | sed -E 's/.*_([0-9-]+)\.json/\1/')
+          python -m src.story_engines all --market "$M" > "data/engines_${M}_${D}.txt" 2>&1 || true
+          echo "재료 파일: data/engines_${M}_${D}.txt ($(wc -l < "data/engines_${M}_${D}.txt") 줄)"
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+
       - name: 시세 파일 커밋
         id: commit
         # 조사·집필을 맡는 클라우드 루틴은 샌드박스 네트워크 정책 때문에

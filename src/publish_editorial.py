@@ -252,7 +252,8 @@ def _style_warnings(ko: dict, en: dict | None, price_data: dict, doc: dict | Non
     issues += editorial_title.collect_issues(ko, price_data, kind="시황")   # 제목·소제목, 모든 글 공통
     if doc is not None:
         j_issues, _ = editorial_judgment.collect_issues(
-            doc, editorial_judgment.previous_manuscript(doc.get("market", ""), str(doc.get("date", ""))))
+            doc, editorial_judgment.previous_manuscript(doc.get("market", ""), str(doc.get("date", ""))),
+            editorial_judgment.previous_manuscripts(doc.get("market", ""), str(doc.get("date", ""))))
         issues += j_issues
     if en:
         try:

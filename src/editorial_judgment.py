@@ -25,6 +25,11 @@ VERDICTS = {"hit", "miss", "mixed"}
 _SENTENCE_END = re.compile(r"[.!?。]|다\s|까\s|요\s")
 _REVIEW_HEADING = re.compile(r"어제|지난 거래일|지난 장|전날")
 MIN_TAKE_SENTENCES = 3
+# 증권사·기관 견해(2026-09-08, 제안 5번). 재테크농부 근거 문장의 절반이 이것이다.
+_INSTITUTION = re.compile(
+    r"증권|리포트|목표주가|투자의견|애널리스트|골드만|JP모건|모건스탠리|씨티|UBS|뱅크오브아메리카"
+    r"|노무라|맥쿼리|HSBC|CLSA|바클레이즈|도이치|웰스파고|제프리스|베어드|번스타인|에버코어")
+MIN_REPEAT_CHARS = 15
 
 
 def previous_manuscript(market: str, date_str: str) -> dict | None:
@@ -35,17 +40,57 @@ def previous_manuscript(market: str, date_str: str) -> dict | None:
     return json.loads(files[-1].read_text(encoding="utf-8"))
 
 
+def previous_manuscripts(market: str, date_str: str, count: int = 5) -> list[dict]:
+    """같은 시장의 최근 원고들(오늘 이전, 최신순) — 반복 문장 검사용."""
+    files = sorted(p for p in EDITORIAL.glob(f"{market}_*.json") if p.stem < f"{market}_{date_str}")
+    return [json.loads(p.read_text(encoding="utf-8")) for p in files[-count:]]
+
+
+def _all_text(ko: dict) -> str:
+    parts = [str(s.get("body", "")) for s in ko.get("narrative") or []]
+    parts += [str(s.get("body", "")) for s in (ko.get("insight_section") or {}).get("stories") or []]
+    parts += [str((ko.get("outlook") or {}).get("body", "")), str((ko.get("closing") or {}).get("body", ""))]
+    return "\n\n".join(parts)
+
+
+def _sentence_set(ko: dict) -> set[str]:
+    text = re.sub(r"<[^>]+>", "", _all_text(ko))
+    out: set[str] = set()
+    for raw in re.split(r"(?<=[.!?])\s+|\n+", text):
+        s = re.sub(r"\s+", " ", raw).strip()
+        if len(s) >= MIN_REPEAT_CHARS and not s.startswith("초보자 설명") and re.search(r"[가-힣]", s):
+            out.add(s)
+    return out
+
+
+def repeat_issues(ko: dict, previous_docs: list[dict]) -> list[str]:
+    """최근 원고와 글자까지 같은 문장(2026-09-08, 제안 6번). 2026-09-02에 마무리 문단이 다른
+    날과 한 글자도 다르지 않았다. 사람 냄새는 반복이 없는 데서 난다."""
+    mine = _sentence_set(ko)
+    issues: list[str] = []
+    for prev in previous_docs:
+        same = sorted(mine & _sentence_set(prev.get("ko") or {}))
+        for s in same[:3]:
+            issues.append(f"{prev.get('date')} 글과 같은 문장입니다 — '{s[:60]}'. 오늘 말로 다시 쓰세요.")
+    return issues
+
+
 def _sentences(text: str) -> int:
     text = re.sub(r"<[^>]+>", "", text or "")
     return len([s for s in re.split(r"(?<=[.!?])\s+|\n\n", text.strip()) if s.strip()])
 
 
-def collect_issues(doc: dict, previous: dict | None = None) -> tuple[list[str], list[str]]:
-    """(막을 것, 참고). `doc`은 시황 원고 전체(market·date·ko·review)."""
+def collect_issues(doc: dict, previous: dict | None = None,
+                   previous_docs: list[dict] | None = None) -> tuple[list[str], list[str]]:
+    """(막을 것, 참고). `doc`은 시황 원고 전체(market·date·ko·review).
+
+    `previous`는 바로 전 원고(어제 판정용), `previous_docs`는 최근 원고들(반복 문장용).
+    """
     issues: list[str] = []
     notes: list[str] = []
     ko = doc.get("ko") or {}
     market, date_str = doc.get("market", ""), str(doc.get("date", ""))
+    is_rewrite = bool(doc.get("rewritten") or doc.get("rewrite_from"))
 
     # 1. 판단 + 확인 지점
     closing = ko.get("closing") or {}
@@ -103,4 +148,14 @@ def collect_issues(doc: dict, previous: dict | None = None) -> tuple[list[str], 
     issues += b_issues
     notes += b_notes
     issues += feature_checks.position_issues(text)
+
+    # 4. 증권사·기관 견해 한 건 (옛 글 재작성은 새 조사가 없을 수 있어 참고만)
+    if not _INSTITUTION.search(text):
+        line = ("증권사·기관의 견해가 한 건도 없습니다 — 목표주가·투자의견 변경, 리포트 요지, 외국계 IB "
+                "전망 중 하나를 매체와 함께 인용하세요('JP모건은 …라고 판단했습니다').")
+        (notes if is_rewrite else issues).append(line)
+
+    # 5. 최근 원고와 같은 문장
+    if previous_docs:
+        issues += repeat_issues(ko, previous_docs)
     return issues, notes
