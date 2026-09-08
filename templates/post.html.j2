@@ -41,6 +41,14 @@
   {% if section.graphic %}
   <img class="mb-figure" src="{{ section.graphic.url }}" alt="{{ section.graphic.alt }}" loading="lazy">
   {% endif %}
+  {% if section.photo %}
+  <img class="mb-story-photo" src="{{ section.photo.url }}" alt="{{ section.photo.alt or section.heading }}" loading="lazy">
+  {% if section.photo.credit %}
+  <p class="mb-photo-credit">{% if section.photo.credit_url %}<a href="{{ section.photo.credit_url }}" target="_blank" rel="noopener">{{ section.photo.credit }}</a>{% else %}{{ section.photo.credit }}{% endif %}</p>
+  {% elif section.photo.photographer and section.photo.photographer_url %}
+  <p class="mb-photo-credit">{{ "Photo" if lang == "en" else "사진" }}: <a href="{{ section.photo.photographer_url }}" target="_blank" rel="noopener">{{ section.photo.photographer }}</a> / Unsplash</p>
+  {% endif %}
+  {% endif %}
   {% endfor %}
 
   {# 외국인 매매 표는 본문 **뒤**에 둡니다. 2026-09-07까지는 대표 이미지 → 지수

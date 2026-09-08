@@ -18,7 +18,7 @@ from pathlib import Path
 import yaml
 import yfinance as yf
 
-from src import fetch_movers
+from src import fetch_movers, price_history
 
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "watchlist_us.yaml"
 
@@ -41,7 +41,9 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
     except Exception:  # noqa: BLE001 - 메타데이터 실패 시 일봉으로 폴백
         quote_metadata = {}
     for attempt in range(1, _NAN_RETRY_ATTEMPTS + 1):
-        hist = ticker_client.history(period=f"{lookback + 2}d")
+        # 최근 3개월 이력(history)까지 한 번에 받습니다 — 본문 기간 차트용(2026-09-08).
+        # 등락률·스파크라인은 여전히 마지막 lookback+1개만 씁니다.
+        hist = ticker_client.history(period="4mo")
         if hist.empty or len(hist) < 2:
             raise ValueError(f"{ticker}: 시세 데이터를 가져오지 못했습니다.")
 
@@ -104,6 +106,7 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
         "price": round(last_close, 2),
         "change_pct": round(change_pct, 2),
         "series": [round(c, 4) for c in closes],
+        "history": price_history.from_frame(hist),
         "unit": unit,
         "trading_date": last_trading_date,
     }

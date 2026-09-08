@@ -227,6 +227,74 @@ def _attach_story_images(doc_section: dict | None, price_data: dict, date_str: s
     return {**doc_section, "stories": stories}
 
 
+def _style_warnings(ko: dict, en: dict | None, price_data: dict) -> list[str]:
+    """문체(editorial_quality)·구조(validate_daily)·제목(editorial_title)·영어 문체 검사를
+    한데 모아 **목록으로** 돌려줍니다. 발행을 막지 않고 로그에 남기기 위한 것입니다."""
+    issues: list[str] = []
+    issues += editorial_quality.collect_issues(ko)
+    issues += editorial_quality.collect_daily_issues(ko)
+    issues += editorial_title.collect_issues(ko, price_data)
+    if en:
+        try:
+            editorial_quality_en.validate_generated(en)
+        except Exception as exc:  # noqa: BLE001 - 영어 문체 검사도 경고로만
+            issues.append(f"영어판: {exc}")
+    return issues
+
+
+def _attach_section_photos(narrative: list | None, price_data: dict, date_str: str,
+                           upload: bool = True, exclude_ids: set[str] | None = None) -> set[str]:
+    """본문 절의 `photo` 지정을 사진으로 바꿉니다(2026-09-08). 두 경로뿐이고 둘 다
+    **사람이 본 사진**입니다 — 인사이트 스토리와 같은 규칙입니다.
+
+    1. `{"url": "https://images.unsplash.com/...", "alt": "...", "photographer": "...",
+       "photographer_url": "..."}` — 루틴이 샌드박스에서 대조표를 `Read`로 보고 고른
+       사진. 그대로 씁니다.
+    2. `{"ticker": "005930"}` — 코어 종목이면 승인 풀(`config/photo_pool.yaml`)에서 그
+       종목·업종 사진을 날짜로 돌려 고릅니다. 동적 편입 종목에는 붙이지 않습니다
+       (풀 규칙). 맞는 사진이 없으면 사진 없이 가고 이유를 찍습니다.
+
+    돌려주는 값은 이 글에서 이미 쓴 풀 사진 id — 인사이트 스토리가 같은 사진을
+    다시 쓰지 않게 합니다.
+    """
+    used: set[str] = set(exclude_ids or ())
+    for index, section in enumerate(narrative or [], start=1):
+        spec = section.get("photo")
+        if not isinstance(spec, dict):
+            continue
+        if str(spec.get("url", "")).startswith("http"):
+            print(f"[안내] 본문 {index} 사진: 루틴이 고른 {spec['url']}")
+            continue
+        section["photo"] = None
+        ticker = str(spec.get("ticker") or "")
+        entry = (price_data.get("watchlist") or {}).get(ticker)
+        if not entry:
+            print(f"[안내] 본문 {index} 사진 없이 갑니다 — {ticker!r}는 그날 시세에 없습니다.")
+            continue
+        entry = {**entry, "ticker": entry.get("ticker") or ticker}
+        try:
+            photo = photo_pool.pick(entry, date_str, exclude=used)
+        except photo_pool.PhotoPoolError as error:
+            print(f"[경고] 사진 풀을 읽지 못해 사진 없이 갑니다: {error}")
+            photo = None
+        if photo:
+            used.add(photo["id"])
+            section["photo"] = _pool_image(photo, upload)
+            print(f"[안내] 본문 {index} 사진: 풀 {photo['id']} ({photo.get('seen', '')[:40]})")
+        else:
+            print(f"[안내] 본문 {index} 사진 없이 갑니다 — '{entry.get('name')}'에 맞는 풀 사진이 "
+                  "없습니다(동적 편입 종목에는 붙이지 않습니다).")
+    return used
+
+
+def _count_visuals(ko: dict) -> tuple[int, int, int]:
+    graphics = sum(1 for s in ko.get("narrative") or [] if (s.get("graphic") or {}).get("url"))
+    photos = sum(1 for s in ko.get("narrative") or [] if (s.get("photo") or {}).get("url"))
+    stories = sum(1 for s in (ko.get("insight_section") or {}).get("stories") or []
+                  if (s.get("image") or {}).get("url"))
+    return graphics, photos, stories
+
+
 def _attach_section_graphics(doc_section: list, price_data: dict, market: str,
                              date_str: str, previous: dict | None,
                              upload: bool = True) -> None:
@@ -328,23 +396,25 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
     ko = doc["ko"]
     en = doc.get("en")
 
-    # 원고는 저장소의 편집 기준을 통과해야 올라갑니다. 자동 공개 경로에서는
-    # 이 검사가 유일한 안전장치라 영어판도 같이 검사합니다(main.py와 동일).
-    editorial_quality.validate_generated(ko)
-    editorial_quality.validate_daily(ko)
-    print("한국어 편집 기준 검사 통과")
-    # 형식 검사와 별개로 원고의 숫자를 시세와 대조합니다. 검수 없이 공개되는
-    # 경로라 "숫자는 시세에서만 가져온다"를 사람의 성실성에만 맡기지 않습니다.
+    # 문체·제목·구조 검사는 여기서 **경고**로만 남깁니다(2026-09-08, 사용자: "발행을
+    # 멈추게 하지 말고 제목을 제대로 쓰게 해"). 이 검사들은 루틴이 커밋 전에
+    # `python -m src.editorial_gate <원고>`로 통과시키는 것이고, 발행 단계는 놓친 것을
+    # 로그에 남길 뿐 글을 막지 않습니다 — 제목이 아쉬운 글과 그날 글이 없는 것은
+    # 무게가 다릅니다. 전에는 여기서 예외로 멈췄고(2026-09-04~09-08), 그러면 루틴이
+    # 이미 끝난 뒤라 아무도 고치지 못한 채 그날 글만 빠졌습니다.
+    warnings = _style_warnings(ko, en, price_data)
+    for line in warnings:
+        print(f"[경고] 문체·제목·구조: {line}")
+    if warnings:
+        print(f"[경고] 위 {len(warnings)}건은 루틴이 editorial_gate를 통과시키지 않고 커밋한 것입니다. "
+              "발행은 계속합니다.")
+    else:
+        print("한국어 편집 기준·제목·구조 검사 통과")
+    # 원고의 숫자를 시세와 대조합니다. 이것은 그대로 막습니다 — 검수 없이 공개되는
+    # 경로에서 틀린 숫자는 글이 없는 것보다 나쁩니다.
     editorial_facts.validate(ko, price_data, lang="ko")
     print("시세 대조 검사 통과 (한국어)")
-    # 제목 문법은 문서에만 적혀 있었고, 규칙을 전부 어긴 제목이 위 두 검사를
-    # 그대로 통과했습니다(2026-09-04 실측). 검수 없이 공개되는 경로라 기계적으로
-    # 잡을 수 있는 것은 여기서 막습니다. 영어판 제목은 이 문법의 대상이 아닙니다.
-    editorial_title.validate(ko, price_data)
-    print("제목 문법 검사 통과 (한국어)")
     if en:
-        editorial_quality_en.validate_generated(en)
-        print("영어 편집 기준 검사 통과")
         editorial_facts.validate(en, price_data, lang="en")
         print("시세 대조 검사 통과 (영어)")
 
@@ -362,11 +432,27 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
     # Unsplash 호출을 두 배로 늘리지 않게).
     # 표지가 풀 사진을 쓰는 날은 그 사진을 본문에서 다시 쓰지 않습니다.
     cover_photo = featured_image._photo_for(price_data, ko, date_str)
-    ko["insight_section"] = _attach_story_images(
-        ko.get("insight_section"), price_data, date_str,
+    used_photos = _attach_section_photos(
+        ko.get("narrative"), price_data, date_str,
         upload=not render_only,
         exclude_ids={cover_photo["id"]} if cover_photo else None,
     )
+    if en and en.get("narrative") and len(en["narrative"]) == len(ko.get("narrative") or []):
+        # 영어판은 같은 절에 같은 사진·그래픽을 씁니다(같은 날 같은 이야기).
+        for ko_section, en_section in zip(ko["narrative"], en["narrative"]):
+            if ko_section.get("photo"):
+                en_section["photo"] = ko_section["photo"]
+    ko["insight_section"] = _attach_story_images(
+        ko.get("insight_section"), price_data, date_str,
+        upload=not render_only,
+        exclude_ids=used_photos or None,
+    )
+    graphics_n, photos_n, stories_n = _count_visuals(ko)
+    visuals = graphics_n + photos_n + stories_n
+    print(f"[안내] 시각자료 {visuals}개 — 본문 그래픽 {graphics_n}, 본문 사진 {photos_n}, "
+          f"인사이트 사진 {stories_n} (표지 제외). 벤치마크 중앙값은 10개입니다.")
+    if visuals < 5:
+        print("[경고] 시각자료가 5개 미만입니다. 루틴이 editorial_gate를 통과시키지 않았습니다.")
     if en and en.get("insight_section") and ko.get("insight_section"):
         ko_images = [s.get("image") for s in ko["insight_section"].get("stories", [])]
         en_stories = []

@@ -12,10 +12,13 @@
 `featured_image.py`가 대표 이미지에 쓰는 원칙(데이터에서 텍스트를 그린다)을 본문
 그래픽으로 넓힌 것입니다.
 
-만드는 것은 셋입니다.
+만드는 것 (2026-09-08에 넷을 더했습니다 — 사용자가 시안 A~D를 고름).
 - index_card:   지수·환율 3분할 카드 + 최근 흐름 스파크라인
 - sector_bars:  업종별 평균 등락률 가로 막대
 - flow_chart:   외국인 순매수·순매도 상위 종목 막대
+- price_history: 지수·종목 최근 3개월 종가 흐름(시세 파일 history)
+- investor_flows: 외국인·기관·개인 순매수 큰 숫자(조사 값 + 출처)
+- number_cards:  지수·환율·유가 숫자 카드 2~4개
 
 사진과 달리 이 그림들은 "틀린 그림이 붙을 위험"이 없어 사람 검수 없이 나가는
 경로에서도 안전합니다.
@@ -472,10 +475,202 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
     return output_path
 
 
+def _entry_for(price_data: dict, ticker: str) -> dict:
+    """macro → watchlist 순서로 지수·종목 항목을 찾습니다. 없으면 예외(다른 것을 그리지 않음)."""
+    for group in ("macro", "watchlist"):
+        for key, entry in (price_data.get(group) or {}).items():
+            if str(key) == str(ticker) or str(entry.get("ticker")) == str(ticker):
+                return {**entry, "ticker": entry.get("ticker") or key, "_group": group}
+    raise ValueError(f"{ticker}는 그날 시세에 없습니다")
+
+
+def _unit_for(entry: dict) -> str:
+    return _stock_unit(entry) if entry.get("_group") == "watchlist" else str(entry.get("unit") or "")
+
+
+def _footer(d: ImageDraw.ImageDraw, h: int, text: str) -> None:
+    d.text((32, h - 34), text, font=_font(14), fill=SUB)
+
+
+def price_history(price_data: dict, output_path: Path, ticker: str, title: str = "",
+                  subtitle: str = "", guide: float | None = None, guide_label: str = "") -> Path:
+    """한 지수·종목의 최근 3개월 종가 흐름 (2026-09-08, 사용자가 고른 시안 A·B).
+
+    벤치마크(재테크농부) 이미지의 큰 몫이 이런 기간 차트 스크린샷입니다. 우리는
+    시세 파일의 `history`(최근 70거래일, `src/price_history.py`)로 직접 그립니다 —
+    8거래일 스파크라인은 "흐름"을 못 보여준다는 지적이 있었습니다.
+    `guide`는 7,000선 같은 기준선, `title`은 그 그림이 하는 말입니다
+    ("코스피, 7,000선 앞에서 되밀렸습니다"). 이력이 없는 시세 파일(2026-09-08 이전)
+    에서는 예외를 올립니다 — 조용히 스파크라인으로 바꾸지 않습니다.
+    """
+    ensure_korean_font()
+    entry = _entry_for(price_data, ticker)
+    history = entry.get("history") or {}
+    dates = [str(v) for v in (history.get("dates") or [])]
+    closes = [float(v) for v in (history.get("close") or [])]
+    if len(closes) < 10 or len(dates) != len(closes):
+        raise ValueError(
+            f"price_history: {ticker}의 종가 이력이 부족합니다({len(closes)}개). "
+            "시세 파일에 history가 없으면(2026-09-08 이전 수집기) 이 그래픽은 쓸 수 없습니다.")
+    change = float(entry.get("change_pct") or 0)
+    color = _color(change)
+    unit = _unit_for(entry)
+    fmt = "{:,.0f}" if abs(closes[-1]) >= 10000 else "{:,.2f}"
+    name = str(entry.get("name"))
+    title = title or f"{name}, 최근 3개월"
+    subtitle = subtitle or f"{dates[-1]} 종가 {fmt.format(closes[-1])}{unit} ({change:+.2f}%)"
+
+    h = 600
+    img = Image.new("RGB", (W, h), BG)
+    d = ImageDraw.Draw(img)
+    d.text((32, 26), title, font=_font(26, True), fill=INK)
+    d.text((32, 66), subtitle, font=_font(16), fill=SUB)
+    x0, y0, x1, y1 = 118, 112, W - 48, h - 82
+    lo, hi = min(closes), max(closes)
+    if guide is not None:
+        lo, hi = min(lo, float(guide)), max(hi, float(guide))
+    pad = (hi - lo) * 0.12 or 1.0
+    lo, hi = lo - pad, hi + pad
+    def X(i: int) -> float:
+        return x0 + (x1 - x0) * i / (len(closes) - 1)
+    def Y(v: float) -> float:
+        return y1 - (y1 - y0) * (v - lo) / (hi - lo)
+    for k in range(5):
+        v = lo + (hi - lo) * k / 4
+        d.line([(x0, Y(v)), (x1, Y(v))], fill=LINE, width=1)
+        d.text((x0 - 12, Y(v)), fmt.format(v), font=_font(13), fill=SUB, anchor="rm")
+    pts = [(X(i), Y(v)) for i, v in enumerate(closes)]
+    overlay = Image.new("RGBA", (W, h), (0, 0, 0, 0))
+    ImageDraw.Draw(overlay).polygon([(x0, y1)] + pts + [(x1, y1)], fill=color + "22")
+    img = Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
+    d = ImageDraw.Draw(img)
+    d.line(pts, fill=color, width=4, joint="curve")
+    if guide is not None:
+        gy = Y(float(guide))
+        for x in range(int(x0), int(x1), 14):
+            d.line([(x, gy), (x + 7, gy)], fill=INK, width=2)
+        d.text((x0 + 8, gy - 6), guide_label or fmt.format(float(guide)), font=_font(15, True),
+               fill=INK, anchor="ld")
+    seen: set[str] = set()
+    for i, day in enumerate(dates):
+        month = day[:7]
+        if month not in seen and i > 0 and dates[i - 1][:7] != month:
+            seen.add(month)
+            d.text((X(i), y1 + 10), f"{int(day[5:7])}월", font=_font(14), fill=SUB, anchor="ma")
+    lx, ly = pts[-1]
+    d.ellipse([lx - 7, ly - 7, lx + 7, ly + 7], fill=color, outline=BG, width=3)
+    d.text((lx - 12, ly - 10), fmt.format(closes[-1]) + unit, font=_font(20, True),
+           fill=color, anchor="rd")
+    _footer(d, h, f"자료: 마감 종가 {dates[0]}~{dates[-1]} · Fermata 작성")
+    img.save(output_path, format="PNG", optimize=True)
+    return output_path
+
+
+def investor_flows(price_data: dict, output_path: Path, values: dict, source: str,
+                   title: str = "투자자별 순매수", subtitle: str = "", unit: str = "억원") -> Path:
+    """외국인·기관·개인 순매수를 큰 숫자 셋으로 (2026-09-08, 시안 C).
+
+    이 숫자는 시세 파일이 아니라 **조사에서** 옵니다(마감 집계 기사). 그래서
+    `source`(어느 매체의 집계인지)를 반드시 받아 그림 바닥에 찍습니다 — 출처 없는
+    수급 그림은 쓰지 않습니다. 본문 문장의 숫자와 같은 값을 넣으십시오.
+    """
+    ensure_korean_font()
+    if not values or not isinstance(values, dict):
+        raise ValueError("investor_flows: values에 {'외국인': 6482, '기관': 6428, '개인': -13333}처럼 순매수를 주십시오")
+    if not str(source or "").strip():
+        raise ValueError("investor_flows: source(집계 출처)를 적으십시오 — 이 숫자는 시세 파일에 없습니다")
+    rows = [(str(k), float(v)) for k, v in values.items()]
+    row_h, top = 96, 120
+    h = top + row_h * len(rows) + 70
+    img = Image.new("RGB", (W, h), BG)
+    d = ImageDraw.Draw(img)
+    d.text((32, 26), title, font=_font(26, True), fill=INK)
+    d.text((32, 66), subtitle or f"순매수 ({unit})", font=_font(16), fill=SUB)
+    span = max(abs(v) for _, v in rows) or 1.0
+    cx, half = 560, 330
+    d.line([(cx, top - 10), (cx, h - 60)], fill=LINE, width=2)
+    for i, (name, v) in enumerate(rows):
+        y = top + i * row_h
+        d.text((48, y + 22), name, font=_font(24, True), fill=INK, anchor="lm")
+        width = max(6, abs(v) / span * half)
+        color = UP if v > 0 else (DOWN if v < 0 else FLAT)
+        label = f"{v:+,.0f}{unit if unit != '억원' else '억'}"
+        lf = _font(26, True)
+        if v >= 0:
+            d.rounded_rectangle([cx, y, cx + width, y + 44], 8, fill=color)
+            d.text((cx + width + 14, y + 22), label, font=lf, fill=color, anchor="lm")
+        else:
+            d.rounded_rectangle([cx - width, y, cx, y + 44], 8, fill=color)
+            if width > d.textlength(label, font=lf) + 24:
+                d.text((cx - 12, y + 22), label, font=lf, fill=PANEL, anchor="rm")
+            else:
+                d.text((cx - width - 14, y + 22), label, font=lf, fill=color, anchor="rm")
+    _footer(d, h, f"자료: {source} · Fermata 작성")
+    img.save(output_path, format="PNG", optimize=True)
+    return output_path
+
+
+def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None = None,
+                 items: list[dict] | None = None, title: str = "오늘 시장을 정한 숫자",
+                 subtitle: str = "", note: str = "") -> Path:
+    """지수·환율·유가 같은 숫자 2~4개를 카드로 (2026-09-08, 시안 D).
+
+    `tickers`는 시세 파일의 지수·종목(값이 시세에서 나옵니다), `items`는 시세 파일에
+    없는 숫자(WTI·금리 등)를 `{"label": "WTI", "value": "93.10달러", "change": "+1.8%"}`
+    로 직접 적는 것입니다. 직접 적은 숫자는 본문에서 출처와 함께 설명해야 합니다.
+    `note`는 카드 아래 한 줄 — "장중 7,171까지 올랐다가 되밀렸습니다".
+    """
+    ensure_korean_font()
+    cards: list[tuple[str, str, str, str]] = []
+    for ticker in tickers or []:
+        entry = _entry_for(price_data, ticker)
+        change = float(entry.get("change_pct") or 0)
+        price = float(entry["price"])
+        # 지수는 소수점 둘째 자리까지가 관행(6,954.52)이고, 주가·환율은 정수로 읽는다.
+        value = (f"{price:,.2f}" if entry.get("_group") == "macro" and not entry.get("unit")
+                 else _fmt(price, _unit_for(entry)))
+        cards.append((str(entry.get("name")), value, f"{change:+.2f}%", _color(change)))
+    for item in items or []:
+        change_text = str(item.get("change", "")).strip()
+        color = UP if change_text.startswith("+") else (DOWN if change_text.startswith("-") else FLAT)
+        cards.append((str(item.get("label", "")), str(item.get("value", "")), change_text, color))
+    if not cards:
+        macro = list((price_data.get("macro") or {}).values())[:3]
+        cards = [(str(e.get("name")), _fmt(float(e["price"]), str(e.get("unit") or "")),
+                  f"{float(e.get('change_pct') or 0):+.2f}%", _color(float(e.get("change_pct") or 0)))
+                 for e in macro if e.get("price") is not None]
+    if not 2 <= len(cards) <= 4:
+        raise ValueError(f"number_cards: 카드는 2~4개입니다 (지금 {len(cards)}개)")
+    h = 400 + (56 if note else 0)
+    img = Image.new("RGB", (W, h), BG)
+    d = ImageDraw.Draw(img)
+    d.text((32, 26), title, font=_font(26, True), fill=INK)
+    if subtitle:
+        d.text((32, 66), subtitle, font=_font(16), fill=SUB)
+    gap, left, top, bottom = 18, 32, 104, 300
+    cw = (W - left * 2 - gap * (len(cards) - 1)) / len(cards)
+    for i, (label, value, change, color) in enumerate(cards):
+        x = left + i * (cw + gap)
+        d.rounded_rectangle([x, top, x + cw, bottom], 14, fill=PANEL, outline=LINE)
+        d.text((x + 22, top + 22), label[:14], font=_font(16), fill=SUB)
+        vf = _font(30, True)
+        while d.textlength(value, font=vf) > cw - 44 and vf.size > 18:
+            vf = _font(vf.size - 2, True)
+        d.text((x + 22, top + 74), value, font=vf, fill=INK)
+        d.text((x + 22, top + 140), change, font=_font(24, True), fill=color)
+    if note:
+        d.text((32, bottom + 26), note, font=_font(19), fill=INK)
+    _footer(d, h, "자료: 마감 시세 · 직접 적은 숫자는 본문 출처 참조 · Fermata 작성")
+    img.save(output_path, format="PNG", optimize=True)
+    return output_path
+
+
 BUILDERS = {"index_card": index_card, "sector_bars": sector_bars,
             "flow_chart": flow_chart, "two_day_compare": two_day_compare,
             "movers_list": movers_list, "flow_compare": flow_compare,
-            "stock_spotlight": stock_spotlight}
+            "stock_spotlight": stock_spotlight,
+            "price_history": price_history, "investor_flows": investor_flows,
+            "number_cards": number_cards}
 
 
 def build(kind: str, price_data: dict, output_path: Path, **kwargs) -> dict:

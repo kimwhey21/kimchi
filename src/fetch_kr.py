@@ -20,7 +20,7 @@ import FinanceDataReader as fdr
 import requests
 import yaml
 
-from src import fetch_foreign_flows, fetch_movers
+from src import fetch_foreign_flows, price_history, fetch_movers
 
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "watchlist_kr.yaml"
 
@@ -115,6 +115,7 @@ def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None) -> di
             "price": price,
             "change_pct": round(float(quote["cr"]), 2),
             "series": series,
+            "history": price_history.replace_last(entry.get("history"), price),
             "data_source": "Naver Finance realtime index",
         }
 
@@ -135,6 +136,7 @@ def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None) -> di
         "price": price,
         "change_pct": round(float(quote["cr"]), 2),
         "series": series,
+        "history": price_history.append(entry.get("history"), today, price),
         "trading_date": today,
         "data_source": "Naver Finance realtime index (daily bar not yet published)",
     }
@@ -205,7 +207,8 @@ def _fetch_one(
 ) -> dict:
     """종목/지수 하나의 최근 시세를 가져와 카드에 필요한 형태로 정리합니다."""
     end = dt.date.today()
-    start = end - dt.timedelta(days=lookback * 3)  # 주말·공휴일 감안 여유있게 조회
+    # 최근 3개월 이력(history)까지 한 번에 받습니다 — 본문 기간 차트용(2026-09-08).
+    start = end - dt.timedelta(days=price_history.CALENDAR_DAYS)
 
     closes: list[float] | None = None
     for attempt in range(1, _NAN_RETRY_ATTEMPTS + 1):
@@ -249,6 +252,7 @@ def _fetch_one(
         "price": round(last_close, 2),
         "change_pct": round(change_pct, 2),
         "series": [round(c, 4) for c in closes],
+        "history": price_history.from_frame(df),
         "unit": unit,
         "trading_date": last_trading_date,
     }
