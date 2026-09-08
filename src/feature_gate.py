@@ -12,9 +12,33 @@ from pathlib import Path
 from scripts import check_against_benchmark, compare_to_benchmark
 from src import editorial_quality, editorial_title, feature_checks, source_check
 
+ROOT = Path(__file__).resolve().parent.parent
+
 
 class FeatureGateError(ValueError):
     pass
+
+
+def recent_titles(doc: dict, path: Path | None = None, count: int = 5) -> list[str]:
+    """같은 목록에 나란히 보이는 최근 제목들 — 기준표는 Checkpoint 목록(editorial/features),
+    프리뷰는 editorial/previews. 이 원고 자신(같은 파일·같은 slug)은 뺀다(2026-09-09)."""
+    import json
+    folder = ROOT / "editorial" / ("previews" if doc.get("series") == "프리뷰" else "features")
+    rows: list[tuple[str, str]] = []
+    for candidate in sorted(folder.glob("*.json")):
+        if path is not None and candidate.resolve() == Path(path).resolve():
+            continue
+        try:
+            other = json.loads(candidate.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if doc.get("slug") and other.get("slug") == doc.get("slug"):
+            continue
+        title = str((other.get("ko") or {}).get("title", ""))
+        if title:
+            rows.append((str(other.get("date", "")), title))
+    rows.sort()
+    return [title for _, title in rows[-count:]]
 
 
 def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
@@ -24,7 +48,8 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     notes: list[str] = []
     blocking.extend(editorial_quality.collect_issues(ko))
     blocking.extend(editorial_title.collect_issues(
-        ko, kind=str(doc.get("series") or "기준표"), notes_out=notes))   # 제목·소제목, 모든 글 공통
+        ko, kind=str(doc.get("series") or "기준표"), notes_out=notes,
+        recent_titles=recent_titles(doc, path)))   # 제목·소제목, 모든 글 공통 (같은 목록의 최근 제목과 뼈대 대조)
     blocking.extend(feature_checks.collect_issues(doc, graphics=graphics, notes_out=notes))
     # 오늘 이 글이 막힌 이유는 문장이 아니라 재료였습니다. 재료를 안 뽑고 쓴 글은
     # 여기서 멈춥니다 — 사람이 엔진 돌리기를 기억하는 데 기대지 않습니다.

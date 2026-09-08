@@ -36,7 +36,8 @@ class DeadlineTest(unittest.TestCase):
 
 class TitleDateNoteTest(unittest.TestCase):
     def _doc(self, title: str) -> dict:
-        return {"title": title, "narrative": [{"heading": f"{i}. 절 {i}입니다", "body": "b"} for i in range(1, 6)]}
+        heads = ["오늘의 숫자", "무엇이 달라졌습니다", "누가 샀나", "확인 지점 셋", "그때까지 볼 지표"]
+        return {"title": title, "narrative": [{"heading": f"{i}. {h}", "body": "b"} for i, h in enumerate(heads, 1)]}
 
     def test_checkpoint_title_without_a_date_gets_a_note_not_a_block(self) -> None:
         notes: list[str] = []

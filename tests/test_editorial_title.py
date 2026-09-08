@@ -184,7 +184,8 @@ class UniversalRulesTest(unittest.TestCase):
         """
         title = "오늘 밤 미국장, 유가가 반도체를 흔들까?"
         def doc(heading: str) -> dict:
-            return {"title": title, "narrative": [{"heading": heading, "body": "b"}] * 5}
+            others = ["2. 오늘 투자심리", "3. 외국인 수급", "4. 다음 확인 지점", "5. 남은 질문은 하나"]
+            return {"title": title, "narrative": [{"heading": h, "body": "b"} for h in [heading] + others]}
         self.assertTrue(any("라벨" in i for i in collect_issues(doc("2. 초보자 설명: 순매수는 지수를 이렇게 움직입니다"), kind="기준표")))
         self.assertTrue(any("라벨" in i for i in collect_issues(doc("요약: 외국인은 돌아왔습니다"), kind="기준표")))
         for heading in ("2. 순매수는 지수를 이렇게 움직입니다", "2. 오후 2:30 이후 반등했습니다",

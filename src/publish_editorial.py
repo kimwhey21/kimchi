@@ -249,11 +249,15 @@ def _style_warnings(ko: dict, en: dict | None, price_data: dict, doc: dict | Non
     한데 모아 **목록으로** 돌려줍니다. 발행을 막지 않고 로그에 남기기 위한 것입니다."""
     issues: list[str] = []
     issues += editorial_quality.collect_issues(ko)
-    issues += editorial_title.collect_issues(ko, price_data, kind="시황")   # 제목·소제목, 모든 글 공통
+    previous_docs = (editorial_judgment.previous_manuscripts(doc.get("market", ""), str(doc.get("date", "")))
+                     if doc is not None else [])
+    issues += editorial_title.collect_issues(   # 제목·소제목, 모든 글 공통 (최근 다섯 편과 뼈대 대조)
+        ko, price_data, kind="시황",
+        recent_titles=[str((d.get("ko") or {}).get("title", "")) for d in previous_docs])
     if doc is not None:
         j_issues, _ = editorial_judgment.collect_issues(
             doc, editorial_judgment.previous_manuscript(doc.get("market", ""), str(doc.get("date", ""))),
-            editorial_judgment.previous_manuscripts(doc.get("market", ""), str(doc.get("date", ""))))
+            previous_docs)
         issues += j_issues
     if en:
         try:

@@ -84,11 +84,13 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
 
     issues += [f"문체 — {i}" for i in editorial_quality.collect_issues(ko)]
     notes: list[str] = []
-    issues += [f"제목·소제목 — {i}" for i in editorial_title.collect_issues(ko, price_data, kind="시황", notes_out=notes)]
+    previous_docs = editorial_judgment.previous_manuscripts(market, date_str)
+    recent_titles = [str((d.get("ko") or {}).get("title", "")) for d in previous_docs]
+    issues += [f"제목·소제목 — {i}" for i in editorial_title.collect_issues(
+        ko, price_data, kind="시황", notes_out=notes, recent_titles=recent_titles)]
     summary += [f"(참고) {n}" for n in notes]
     j_issues, j_notes = editorial_judgment.collect_issues(
-        doc, editorial_judgment.previous_manuscript(market, date_str),
-        editorial_judgment.previous_manuscripts(market, date_str))
+        doc, editorial_judgment.previous_manuscript(market, date_str), previous_docs)
     issues += [f"판단·어제·초보자 — {i}" for i in j_issues]
     summary += [f"(참고) {n}" for n in j_notes]
     try:

@@ -235,6 +235,71 @@ _BLOCK_LABEL_HEADING = re.compile(
     r"^(?:초보자(?:용)?(?:\s*설명)?|요약|한\s*줄\s*요약|참고|주의|정리|핵심\s*정리|팁|TIP)\s*[:：]\s+\S", re.I)
 
 
+# 기준표(Checkpoint) 제목은 확인 날짜를 넣는 것이 기본이다(2026-09-09, 사용자 결정). 라벨을 제목에
+# 넣는 대신 날짜가 "확인 지점이 있는 글"이라는 성격을 드러낸다. 재테크농부도 "이번주"로 시작하는
+# 제목을 8편 쓴다. 막지는 않고 알려만 준다 — 날짜 없이도 좋은 제목이 있다.
+_DATE_HOOK = re.compile(r"\d{1,2}월|\d{1,2}일|이번\s*주|다음\s*주|까지|월말|분기")
+
+
+# ── 같은 틀 반복 (2026-09-09, 사용자 네 번째 지적: "여전히 제목과 소제목은 똑같구나") ──
+# 낱개 규칙(길이·후킹·꼬리표)은 다 지키면서도 매일 같은 틀이 나왔다. 제목은 "A는 …했는데
+# B는 오히려 …"(대비) 아니면 "…, N월 N일에 갈린다"였고 — Checkpoint 목록 일곱 편 중 다섯이
+# '갈린다'로 끝났다(사람이 그렇게 지었다) — 소제목은 열에 아홉이 '~습니다' 문장이었다.
+# 벤치마크: 대비형 제목 104편 중 4편, 소제목은 절반 안팎이 문장이고 나머지는 짧은 이름표와
+# 질문. 규칙이 "틀을 바꿔라"고만 적혀 있으면 사람도 기계도 안 바꾼다 — 그래서 최근 글과
+# 대조해 관문이 막는다.
+_CONTRAST = re.compile(r"는데|지만|그런데|오히려|반대로|홀로|정반대|만 [가-힣]{1,6}(?:했|올|내|무너|뛰|빠|오른|내린)")
+_LAST_WORD_SYNONYMS = {
+    "갈린다": "갈린다", "가른다": "갈린다", "갈립니다": "갈린다", "갈릴까": "갈린다", "정한다": "갈린다",
+    "결정한다": "갈린다", "판가름": "갈린다", "있다": "있다", "있습니다": "있다",
+}
+_NAME_COMMA = re.compile(r"^[A-Za-z가-힣·&]{2,12},\s")
+
+
+def last_word(text: str) -> str:
+    """제목·소제목의 마지막 낱말(문장부호 제외). 비슷한 말은 하나로 본다(갈린다=가른다=정한다)."""
+    words = re.sub(r"[?!.,\s]+$", "", str(text or "")).split()
+    word = words[-1] if words else ""
+    return _LAST_WORD_SYNONYMS.get(word, word)
+
+
+def title_frame(title: str) -> dict:
+    return {"contrast": bool(_CONTRAST.search(title)), "date": bool(_DATE_HOOK.search(title)),
+            "ending": heading_shape(title), "last": last_word(title)}
+
+
+def heading_shape(text: str) -> str:
+    """소제목의 꼴 — 질문·존댓말 문장·반말 문장·이름표(명사구)."""
+    bare = _HEADING_NUMBER.sub("", str(text or "")).strip()
+    if bare.endswith("?") or re.search(r"(까|나|일까요|을까요)$", bare):
+        return "질문"
+    if re.search(r"(습니다|니다)$", bare):
+        return "존댓말 문장"
+    if re.search(r"(다|었다|였다|했다|린다|른다|졌다)$", bare):
+        return "반말 문장"
+    return "이름표"
+
+
+def frame_issues(title: str, recent_titles: list[str] | None) -> list[str]:
+    """최근 글(같은 목록: 같은 시장 시황 다섯 편, 또는 Checkpoint 목록)과 뼈대가 겹치면 막는다."""
+    recent = [str(r) for r in (recent_titles or []) if str(r).strip()][-5:]
+    if not title or not recent:
+        return []
+    issues: list[str] = []
+    mine = title_frame(title)
+    if mine["contrast"]:
+        twins = [r for r in recent if _CONTRAST.search(r)]
+        if twins:
+            issues.append(f"'A는 …했는데 B는 오히려 …' 대비 꼴이 최근 글과 겹칩니다: '{twins[-1]}'. 벤치마크 104편 중 "
+                          "대비형은 4편뿐입니다 — 다섯 편에 한 번만. 이유형·질문형·이름표형·기록형 중 다른 틀로 쓰세요.")
+    if mine["last"] and last_word(recent[-1]) == mine["last"]:
+        issues.append(f"바로 앞 글과 같은 말('{mine['last']}')로 끝납니다: '{recent[-1]}'. 목록에서 나란히 보이면 같은 글로 읽힙니다.")
+    same = [r for r in recent if last_word(r) == mine["last"]]
+    if mine["last"] and len(same) >= 2 and not (last_word(recent[-1]) == mine["last"]):
+        issues.append(f"최근 다섯 편 중 {len(same)}편이 같은 말('{mine['last']}')로 끝납니다 — 이 글까지 셋입니다. 다른 어미로 쓰세요.")
+    return issues
+
+
 def collect_heading_issues(sections: list, kind: str | None = None,
                            min_sections: int | None = None,
                            notes_out: list[str] | None = None,
@@ -278,16 +343,51 @@ def collect_heading_issues(sections: list, kind: str | None = None,
         if 0 < len(bare) < HEADING_MIN_CHARS and notes_out is not None:
             notes_out.append(f"소제목 {index} '{bare}'은(는) {len(bare)}자 명사 토막입니다 — "
                              "슬라이드 라벨처럼 읽힙니다(벤치마크 4%). 그 절이 무슨 말을 하는지 드러나게 쓰십시오.")
+    issues += heading_mix_issues(sections)
+    return issues
+
+
+def heading_mix_issues(sections: list) -> list[str]:
+    """한 글 안에서 소제목이 한 가지 꼴로만 나오면 막는다(2026-09-09). 절 다섯 개 이상일 때."""
+    bares = [_HEADING_NUMBER.sub("", str(s.get("heading", ""))).strip() for s in sections]
+    bares = [b for b in bares if b]
+    if len(bares) < 5:
+        return []
+    issues: list[str] = []
+    shapes = [heading_shape(b) for b in bares]
+    sentences = sum(1 for s in shapes if s.endswith("문장"))
+    labels = shapes.count("이름표")
+    if sentences > 0.6 * len(bares):
+        issues.append(f"소제목 {len(bares)}개 중 {sentences}개가 '~습니다/~다' 문장입니다 — 한 가지 꼴로만 이어지면 "
+                      "기계가 쓴 글로 읽힙니다. 벤치마크는 절반 안팎이 문장이고 나머지는 짧은 이름표(`오늘 투자심리`, "
+                      "`프리장 주요 종목`)와 질문(`시장은 어떻게 받아들였나`)입니다. 문장은 열에 여섯까지.")
+    if labels < 2:
+        issues.append(f"이름표 꼴 소제목이 {labels}개입니다 — 둘 이상 두세요(벤치마크 소제목의 3분의 1). "
+                      "`숫자로 본 오늘`, `오늘 크게 움직인 종목`처럼 그 절의 내용을 이름으로.")
+    named = [b for b in bares if _NAME_COMMA.match(b)]
+    if len(named) >= 3:
+        issues.append(f"'이름, …' 꼴 소제목이 {len(named)}개입니다({' / '.join(named[:3])}) — 같은 틀의 반복입니다. "
+                      "둘까지만. 나머지는 문장·이름표·질문으로 바꾸세요.")
+    ends = {}
+    for b in bares:
+        w = last_word(b)
+        if w and heading_shape(b).endswith("문장"):   # `…올랐습니다` ×3 — 이름표가 같은 명사로 끝나는 건 틀이 아니다
+            ends.setdefault(w, []).append(b)
+    for word, group in ends.items():
+        if len(group) >= 3:
+            issues.append(f"같은 말('{word}')로 끝나는 소제목이 {len(group)}개입니다 — 셋부터는 운율이 아니라 틀입니다. "
+                          "둘까지만.")
     return issues
 
 
 def collect_title_issues(title: str, price_data: dict | None = None,
-                         notes_out: list[str] | None = None) -> list[str]:
-    """제목 하나의 규칙 위반 목록."""
+                         notes_out: list[str] | None = None,
+                         recent_titles: list[str] | None = None) -> list[str]:
+    """제목 하나의 규칙 위반 목록. `recent_titles`는 같은 목록의 최근 제목(뼈대 반복 검사)."""
     title = str(title or "").strip()
     if not title:
         return []
-    issues: list[str] = []
+    issues: list[str] = frame_issues(title, recent_titles)
 
     if _TRAILING_TAG.search(title):
         issues.append(
@@ -334,22 +434,20 @@ def collect_title_issues(title: str, price_data: dict | None = None,
     return issues
 
 
-# 기준표(Checkpoint) 제목은 확인 날짜를 넣는 것이 기본이다(2026-09-09, 사용자 결정). 라벨을 제목에
-# 넣는 대신 날짜가 "확인 지점이 있는 글"이라는 성격을 드러낸다. 재테크농부도 "이번주"로 시작하는
-# 제목을 8편 쓴다. 막지는 않고 알려만 준다 — 날짜 없이도 좋은 제목이 있다.
-_DATE_HOOK = re.compile(r"\d{1,2}월|\d{1,2}일|이번\s*주|다음\s*주|까지|월말|분기")
 
 
 def collect_issues(doc: dict, price_data: dict | None = None, *,
                    kind: str | None = None, min_sections: int | None = None,
-                   notes_out: list[str] | None = None) -> list[str]:
+                   notes_out: list[str] | None = None,
+                   recent_titles: list[str] | None = None) -> list[str]:
     """제목 + 소제목 규칙을 한 번에. 모든 발행 경로가 이 함수를 부릅니다.
 
     `doc`은 `{"title", "narrative", ...}`(시황의 ko) 또는 `{"ko": {...}}`(기준표·프리뷰)
     둘 다 받습니다. `kind`는 절 수 하한(SECTION_FLOORS)에만 쓰입니다.
     """
     ko = doc.get("ko") if isinstance(doc.get("ko"), dict) else doc
-    issues = collect_title_issues(ko.get("title", ""), price_data, notes_out=notes_out)
+    issues = collect_title_issues(ko.get("title", ""), price_data, notes_out=notes_out,
+                                  recent_titles=recent_titles)
     names: set[str] = set()
     for entry in (price_data or {}).get("watchlist", {}).values():
         for key in ("name", "name_en"):
