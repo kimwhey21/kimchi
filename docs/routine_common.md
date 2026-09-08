@@ -179,7 +179,7 @@ WebSearch·WebFetch는 별도 경로라 늘 됩니다.
 - `sector_bars` — 업종 평균 등락률. `flow_compare` — 외국인·기관이 반대로 간 종목.
 - 시장별로 더 있는 것은 시장별 파일에.
 
-예시 — 지수가 되밀린 날: 1절 `number_cards`, 2절 `price_history`(코스피, guide 7000),
+예시 — 지수가 고비에서 밀린 날: 1절 `number_cards`, 2절 `price_history`(코스피, guide 7000),
 3절 `price_history`(주인공 종목), 4절 `sector_bars`, 5절 `investor_flows`, 6절
 `movers_list`, 주인공이 코어 종목이면 그 절에 `photo`. 그러면 6~7개입니다.
 

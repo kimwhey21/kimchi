@@ -500,7 +500,7 @@ def price_history(price_data: dict, output_path: Path, ticker: str, title: str =
     시세 파일의 `history`(최근 70거래일, `src/price_history.py`)로 직접 그립니다 —
     8거래일 스파크라인은 "흐름"을 못 보여준다는 지적이 있었습니다.
     `guide`는 7,000선 같은 기준선, `title`은 그 그림이 하는 말입니다
-    ("코스피, 7,000선 앞에서 되밀렸습니다"). 이력이 없는 시세 파일(2026-09-08 이전)
+    ("코스피, 7,000선을 넘지 못했습니다"). 이력이 없는 시세 파일(2026-09-08 이전)
     에서는 예외를 올립니다 — 조용히 스파크라인으로 바꾸지 않습니다.
     """
     ensure_korean_font()
@@ -618,7 +618,7 @@ def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None 
     `tickers`는 시세 파일의 지수·종목(값이 시세에서 나옵니다), `items`는 시세 파일에
     없는 숫자(WTI·금리 등)를 `{"label": "WTI", "value": "93.10달러", "change": "+1.8%"}`
     로 직접 적는 것입니다. 직접 적은 숫자는 본문에서 출처와 함께 설명해야 합니다.
-    `note`는 카드 아래 한 줄 — "장중 7,171까지 올랐다가 되밀렸습니다".
+    `note`는 카드 아래 한 줄 — "장중 7,171까지 올랐다가 밀렸습니다".
     """
     ensure_korean_font()
     cards: list[tuple[str, str, str, str]] = []

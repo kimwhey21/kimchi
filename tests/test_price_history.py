@@ -100,7 +100,7 @@ class NewBuildersTest(unittest.TestCase):
         out = self._out()
         data_graphics.number_cards(self.PRICE, out, tickers=["KS11", "USD/KRW"],
                                    items=[{"label": "WTI", "value": "93.10달러", "change": "+1.8%"}],
-                                   note="장중 7,171까지 올랐다가 되밀렸습니다.")
+                                   note="장중 7,171까지 올랐다가 밀렸습니다.")
         self.assertTrue(out.exists())
         with self.assertRaises(ValueError):
             data_graphics.number_cards(self.PRICE, self._out(), tickers=["KS11"])   # 카드 하나는 안 됨
