@@ -665,12 +665,69 @@ def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None 
     return output_path
 
 
+def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
+               title: str = "발표값과 예상값", subtitle: str = "", columns: list | None = None,
+               note: str = "") -> Path:
+    """지표 발표값 대 예상값, 실적 대 컨센서스 같은 "실제 표"를 그림으로 (2026-09-08, 제안 9번).
+
+    재테크농부 이미지의 상당수가 이런 표다. `rows`는 `[["8월 비농업 고용", "16.2만", "5.3만",
+    "+10.9만"], ...]`처럼 문자열 행이고, 마지막 열이 '+'로 시작하면 빨강, '-'면 파랑으로
+    칠한다. 숫자는 시세 파일이 아니라 조사에서 오므로 `source`(매체)가 필수다.
+    """
+    ensure_korean_font()
+    if not rows or not all(isinstance(r, (list, tuple)) and len(r) >= 2 for r in rows):
+        raise ValueError("fact_table: rows는 문자열 행(2칸 이상)의 목록이어야 합니다")
+    if not str(source or "").strip():
+        raise ValueError("fact_table: source(출처 매체)를 적으십시오 — 이 숫자는 시세 파일에 없습니다")
+    ncol = max(len(r) for r in rows)
+    columns = list(columns or (["항목", "발표", "예상", "차이"][:ncol] + [""] * max(0, ncol - 4)))
+    row_h, top = 54, 120
+    h = top + row_h * (len(rows) + 1) + 40 + (40 if note else 0)
+    img = Image.new("RGB", (W, h), BG)
+    d = ImageDraw.Draw(img)
+    d.text((32, 26), title, font=_font(26, True), fill=INK)
+    if subtitle:
+        d.text((32, 66), subtitle, font=_font(16), fill=SUB)
+    first_w = 380
+    other_w = (W - 64 - first_w) / max(1, ncol - 1)
+    def x_of(j: int) -> float:
+        return 32 + (0 if j == 0 else first_w + (j - 1) * other_w)
+    y = top
+    for j, name in enumerate(columns[:ncol]):
+        d.text((x_of(j) + (12 if j == 0 else other_w - 12), y + 14), str(name), font=_font(15), fill=SUB,
+               anchor="lm" if j == 0 else "rm")
+    y += 40
+    d.line([(32, y), (W - 32, y)], fill=INK, width=2)
+    for i, row in enumerate(rows):
+        y_top = y + i * row_h
+        if i % 2 == 1:
+            d.rectangle([32, y_top, W - 32, y_top + row_h], fill=PANEL)
+        for j in range(ncol):
+            cell = str(row[j]) if j < len(row) else ""
+            color = INK
+            if j == ncol - 1 and cell.startswith("+"):
+                color = UP
+            elif j == ncol - 1 and cell.startswith(("-", "−")):
+                color = DOWN
+            d.text((x_of(j) + (12 if j == 0 else other_w - 12), y_top + row_h / 2), cell,
+                   font=_font(19, j != 0), fill=color, anchor="lm" if j == 0 else "rm")
+        d.line([(32, y_top + row_h), (W - 32, y_top + row_h)], fill=LINE, width=1)
+    if note:
+        d.text((32, y + len(rows) * row_h + 18), note, font=_font(17), fill=INK)
+    _footer(d, h, f"자료: {source} · Fermata 작성")
+    img.save(output_path, format="PNG", optimize=True)
+    return output_path
+
+
+# 시세 파일이 필요 없는 그래픽 — 기준표·프리뷰에서 price_file 없이 쓸 수 있다.
+PRICELESS_KINDS = {"fact_table", "investor_flows"}
+
 BUILDERS = {"index_card": index_card, "sector_bars": sector_bars,
             "flow_chart": flow_chart, "two_day_compare": two_day_compare,
             "movers_list": movers_list, "flow_compare": flow_compare,
             "stock_spotlight": stock_spotlight,
             "price_history": price_history, "investor_flows": investor_flows,
-            "number_cards": number_cards}
+            "number_cards": number_cards, "fact_table": fact_table}
 
 
 def build(kind: str, price_data: dict, output_path: Path, **kwargs) -> dict:

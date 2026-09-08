@@ -74,13 +74,16 @@ def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict
             # 프리뷰에서도 씁니다(2026-09-08). 원고에는 시세가 없으므로 `price_file`로
             # 시세 파일을 가리킵니다 — "price_file": "data/price_us_2026-09-04.json".
             price_file = spec.get("price_file")
-            if not price_file:
-                raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 필요합니다 — "
-                                 "\"price_file\": \"data/price_<market>_<날짜>.json\"을 적으십시오.")
-            price_path = ROOT / price_file
-            if not price_path.exists():
-                raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 없습니다: {price_file}")
-            price_data = json.loads(price_path.read_text(encoding="utf-8"))
+            if kind in data_graphics.PRICELESS_KINDS and not price_file:
+                price_data = {}   # 표·수급 그림은 조사 값으로만 그린다(출처 필수)
+            else:
+                if not price_file:
+                    raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 필요합니다 — "
+                                     "\"price_file\": \"data/price_<market>_<날짜>.json\"을 적으십시오.")
+                price_path = ROOT / price_file
+                if not price_path.exists():
+                    raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 없습니다: {price_file}")
+                price_data = json.loads(price_path.read_text(encoding="utf-8"))
             data_graphics.build(kind, price_data, path, **args)
         else:
             raise ValueError(f"알 수 없는 그래픽 종류: {kind}")
