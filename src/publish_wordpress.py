@@ -268,6 +268,21 @@ def _normalize_title(title: str) -> str:
     return re.sub(r"\s+", " ", replaced).strip()
 
 
+def _get_post_by_id(base_url: str, auth: tuple[str, str], post_id: int) -> dict | None:
+    """글 번호로 기존 글을 읽습니다(휴지통은 없는 것으로 봅니다)."""
+    response = requests.get(
+        f"{base_url}/wp-json/wp/v2/posts/{int(post_id)}", auth=auth,
+        params={"context": "edit"}, timeout=TIMEOUT_SECONDS,
+    )
+    if response.status_code == 404:
+        return None
+    if response.status_code >= 400:
+        raise WordPressPublishError(
+            f"글 {post_id} 확인 실패 (HTTP {response.status_code}): {response.text[:300]}")
+    post = response.json()
+    return None if post.get("status") == "trash" else post
+
+
 def _find_existing_post_by_slug(
     base_url: str, auth: tuple[str, str], slug: str
 ) -> dict | None:
@@ -468,8 +483,13 @@ def publish_draft(
     slug: str | None = None,
     focus_keyword: str | None = None,
     status: str = "draft",
+    post_id: int | None = None,
 ) -> dict:
     """워드프레스에 글을 만들고 응답 JSON(dict)을 돌려줍니다.
+
+    post_id: 주면 slug로 찾지 않고 **그 글 번호**를 갱신합니다(2026-09-08). 시황 이전
+    옛 글(주소가 한글 slug)을 새 원고로 다시 쓸 때 주소와 글 번호를 그대로 두기 위한
+    것입니다. 원고의 `wp_post_ids: {"ko": 33}`에서 옵니다.
 
     status: 기본값은 "draft"입니다. 사람이 검수한 뒤 공개로 바꾸는 것이 이
     저장소의 기본 원칙이라, 손으로 실행할 때는 그대로 두세요. 평일 자동
@@ -510,8 +530,11 @@ def publish_draft(
     app_password = os.environ["WORDPRESS_APP_PASSWORD"]
     auth = (username, app_password)
 
-    if slug:
-        existing = _find_existing_post_by_slug(base_url, auth, slug)
+    if slug or post_id:
+        existing = (_get_post_by_id(base_url, auth, post_id) if post_id
+                    else _find_existing_post_by_slug(base_url, auth, slug))
+        if post_id and not existing:
+            raise WordPressPublishError(f"wp_post_ids가 가리키는 글 {post_id}이 없습니다.")
         if existing:
             if existing.get("status") == "draft":
                 print(

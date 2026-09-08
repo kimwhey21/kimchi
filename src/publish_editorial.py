@@ -544,6 +544,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         slug=f"editorial-{market}-{date_str}-ko",
         focus_keyword="코스피 마감 시황" if market == "kr" else "뉴욕증시 마감",
         status=status,
+        post_id=(doc.get("wp_post_ids") or {}).get("ko"),   # 옛 글 재작성: 글 번호로 덮어쓴다
     )
     print(f"한국어 {status}: id={ko_result.get('id')} {ko_result.get('link','')}")
     if publish_live:
@@ -561,6 +562,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
             slug=f"editorial-{market}-{date_str}-en",
             focus_keyword="Kospi close" if market == "kr" else "US stocks close",
             status=status,
+            post_id=(doc.get("wp_post_ids") or {}).get("en"),
         )
         print(f"영어 {status}: id={en_result.get('id')} {en_result.get('link','')}")
         if publish_live:
