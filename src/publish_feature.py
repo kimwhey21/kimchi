@@ -56,11 +56,25 @@ def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict
         issues = graphic_checks.collect_spec_issues(kind, args, title)
         if issues:
             raise ValueError("그래픽 데이터 검사 실패:\n- " + "\n- ".join(issues))
-        builder = getattr(feature_graphics, kind, None) or data_graphics.BUILDERS.get(kind)
-        if builder is None:
-            raise ValueError(f"알 수 없는 그래픽 종류: {kind}")
+        feature_builder = getattr(feature_graphics, kind, None)
         path = output / f"{index + 1:02d}-{kind}.png"
-        builder(output_path=path, **args)
+        if feature_builder is not None:
+            feature_builder(output_path=path, **args)
+        elif kind in data_graphics.BUILDERS:
+            # 시황용 데이터 그래픽(price_history·number_cards·movers_list 등)을 기준표·
+            # 프리뷰에서도 씁니다(2026-09-08). 원고에는 시세가 없으므로 `price_file`로
+            # 시세 파일을 가리킵니다 — "price_file": "data/price_us_2026-09-04.json".
+            price_file = spec.get("price_file")
+            if not price_file:
+                raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 필요합니다 — "
+                                 "\"price_file\": \"data/price_<market>_<날짜>.json\"을 적으십시오.")
+            price_path = ROOT / price_file
+            if not price_path.exists():
+                raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 없습니다: {price_file}")
+            price_data = json.loads(price_path.read_text(encoding="utf-8"))
+            data_graphics.build(kind, price_data, path, **args)
+        else:
+            raise ValueError(f"알 수 없는 그래픽 종류: {kind}")
         image_issues = graphic_checks.verify_image(path)
         if image_issues:
             raise ValueError("그래픽 렌더 검사 실패:\n- " + "\n- ".join(image_issues))

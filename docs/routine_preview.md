@@ -51,19 +51,30 @@
    - `kind` "feature", `series` "프리뷰", `date` KST 오늘, `slug` `us-<date>-preview`,
      `category_id` 121(Daily), `related` 2개(어제 미국장 글 + 관련 기준표. 주소는
      `https://fermata.it.kr/wp-json/wp/v2/posts?search=<낱말>&_fields=title,link`로 확인)
-   - `ko.title`: **앞을 보는 제목** — 오늘 밤 무엇이 무엇을 정하는지. 존댓말 종결·꼬리표
+   - `ko.title`: **앞을 보는 제목** — 오늘 밤 무엇이 무엇을 정하는지. 규칙은
+     `docs/editorial-style.md` 「제목 문법」 하나뿐입니다(2026-09-08 개정): 이야기 하나,
+     등락률은 많아야 하나(없어도 됨), 종목 둘을 나란히 세우지 않음, 20~35자, 꼬리표
      금지, `왜 ~했을까?` 금지. 후킹 장치(개수·시한·대비·질문·경고) 하나는 넣습니다.
      예: `오늘 밤 미국장, 8월 물가가 반도체 랠리의 두 번째 근거를 정한다`,
-     `오늘 밤 확인할 세 가지 — 마이크론 실적과 국채금리 4.8%`
+     `오늘 밤 미국장, 유가 6주 최고치가 반도체 랠리를 흔들까?`
    - `ko.narrative` 3절: **1. 오늘 밤 일정**(회사·지표·시각 KST) **2. 어제에서 이어지는
      쟁점과 가격대** **3. 확인할 것 셋**(무엇이 나오면 무엇을 본다). 본문에 날짜
-     (`N월 N일`)를 씁니다.
+     (`N월 N일`)를 씁니다. 소제목은 **32자 이하**, 절반쯤은 명사구(`오늘 밤 일정`,
+     `금요일에서 이어지는 것`) — 관문이 32자를 넘으면 막습니다.
    - `ko.closing`: heading `Fermata's Take`, 두 문장.
-   - `graphics` 3장: `{"kind": "cover", "featured": true, ...}`(표지 — 오늘 밤 핵심
+   - `graphics` **3~4장**: `{"kind": "cover", "featured": true, ...}`(표지 — 오늘 밤 핵심
      하나), `calendar_strip`(`section` 0, 오늘 밤 일정 KST), `checklist`(`section` 2,
      확인할 것 셋). 인자 형식은 예시 원고와 `src/feature_graphics.py`.
+   - **가격대 절(2절)에는 3개월 흐름을 붙입니다**(2026-09-08, 사용자가 고른 시안):
+     `{"kind": "price_history", "section": 1, "price_file": "data/price_us_<가장 최근>.json",
+     "args": {"ticker": "^GSPC", "title": "S&P500, 사상 최고치 아래 1%", "guide": 7000,
+     "guide_label": "7,000선"}, "alt": "..."}` — `ticker`는 그 시세 파일의 지수(`^GSPC`·
+     `^IXIC`)나 종목(`NVDA`). 오늘 밤 주인공이 종목이면 그 종목을. `number_cards`
+     (`args`: `tickers` + `items`)도 같은 방식으로 쓸 수 있습니다. 시세 파일에 `history`가
+     없으면(2026-09-08 이전 파일) 관문이 알려줍니다 — 그러면 빼고 갑니다.
    - 예측하지 않습니다. "물가가 예상보다 높게 나오면 X를 본다"처럼 조건으로 씁니다.
-5. **검사.** `python -m src.feature_gate editorial/previews/<파일>.json --graphics 3`
+5. **관문.** `python -m src.feature_gate editorial/previews/<파일>.json --graphics <그래픽 수>`
+   — 통과 전에는 커밋하지 않습니다(제목·소제목·문체·시각자료·출처를 한 번에 봅니다).
    → 통과하면 `WORDPRESS_URL= WORDPRESS_USERNAME= WORDPRESS_APP_PASSWORD= python -m src.publish_feature editorial/previews/<파일>.json --render-only`
    → `output/features/<slug>/`의 그래픽 3장을 `Read`로 봅니다 → 제목·소제목·그래픽
    글자만 따로 읽습니다.

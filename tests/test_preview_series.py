@@ -26,7 +26,7 @@ def _doc(series: str) -> dict:
 
 class PreviewThresholdsTest(unittest.TestCase):
     def test_preview_accepts_three_sections_and_two_graphics(self) -> None:
-        issues = feature_checks.collect_issues(_doc("프리뷰"), graphics=2)
+        issues = feature_checks.collect_issues(_doc("프리뷰"), graphics=3)   # 표지 + 본문 둘 (2026-09-08)
         self.assertFalse([i for i in issues if "절이" in i or "시각자료" in i], issues)
 
     def test_feature_thresholds_are_unchanged(self) -> None:
@@ -66,7 +66,7 @@ class PreviewDocTest(unittest.TestCase):
 
     def test_doc_names_the_series_and_skip_rules(self) -> None:
         text = re.sub(r"\s+", " ", DOC.read_text(encoding="utf-8"))
-        for needle in ('"프리뷰"', "휴장", "--graphics 3", "category_id` 121", "바로 공개", "예측하지 않습니다"):
+        for needle in ('"프리뷰"', "휴장", "--graphics", "category_id` 121", "바로 공개", "예측하지 않습니다"):
             self.assertIn(needle, text, needle)
 
 

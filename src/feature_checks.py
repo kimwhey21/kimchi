@@ -26,6 +26,8 @@ import re
 import sys
 from pathlib import Path
 
+from src import editorial_quality
+
 
 # 제목 후킹 장치. 벤치마크 100편에서 추린 다섯 유형입니다(docs/feature-style.md 1절).
 HOOKS = {
@@ -52,7 +54,7 @@ MIN_SECTIONS = 5
 # 시리즈별 하한. 기준표는 위 기본값이고, 밤 10시 미국장 프리뷰(2026-09-08)는 600~900자
 # 짜리 짧은 글이라 절 3개·시각자료 2장이면 된다 — 같은 파이프라인(관문·렌더·발행)을
 # 쓰되 문턱만 다르다. 새 시리즈를 만들면 여기에 한 줄 더한다.
-SERIES_LIMITS = {"프리뷰": {"graphics": 2, "sections": 3}}
+SERIES_LIMITS = {"프리뷰": {"graphics": 3, "sections": 3}}   # 표지 + 본문 둘 (2026-09-08)
 
 # 설명 없이 지나가면 초보자가 문장을 못 따라가는 말들. 벤치마크는 이런 말이
 # 나올 때마다 `초보자용 설명` 블록을 따로 답니다(100편 중 30%).
@@ -107,6 +109,15 @@ def collect_issues(doc: dict, graphics: int | None = None,
     sections = ko.get("narrative") or []
     if len(sections) < min_sections:
         issues.append(f"절이 {len(sections)}개입니다 — {min_sections}개 이상 씁니다.")
+    # 소제목 길이는 시황과 같은 기준입니다(2026-09-08, 벤치마크 최근 104편 p75 32자).
+    # 프리뷰·기준표의 소제목도 "1. 오늘 밤 일정 — 예정된 지표보다 이미 벌어진 사건"처럼
+    # 길어지기 쉬워 같은 상한을 둡니다.
+    for index, section in enumerate(sections, start=1):
+        bare = editorial_quality._HEADING_NUMBER.sub("", str(section.get("heading", ""))).strip()
+        if len(bare) > editorial_quality.HEADING_MAX_CHARS:
+            issues.append(
+                f"소제목 {index} '{bare}'이(가) {len(bare)}자입니다 — "
+                f"{editorial_quality.HEADING_MAX_CHARS}자 이하로 줄입니다(벤치마크 중앙값 23자).")
 
     body = " ".join(s.get("body", "") for s in sections) + (
         ko.get("closing", {}).get("body", ""))
