@@ -86,6 +86,15 @@ class FeaturePublishLiveTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self._run(_doc({"alt": "x"}), existing=None, live=False)
 
+    def test_excerpt_is_the_first_paragraph_without_tags(self) -> None:
+        """excerpt를 안 적으면 첫 절 첫 문단이 요약이 된다 — 표식·제목·소제목이 아니라."""
+        ko = {"title": "t", "narrative": [{"heading": "1. 절", "body": "첫 <b>문단</b>입니다.\n\n둘째 문단."}]}
+        self.assertEqual(publish_feature._excerpt(ko), "첫 문단입니다.")
+        self.assertEqual(publish_feature._excerpt({"excerpt": "손으로 쓴 요약", **ko}), "손으로 쓴 요약")
+        long = {"narrative": [{"body": "가 " * 200}]}
+        self.assertTrue(publish_feature._excerpt(long).endswith("…"))
+        self.assertLessEqual(len(publish_feature._excerpt(long)), 202)
+
     def test_cli_has_a_publish_flag(self) -> None:
         with patch.object(publish_feature, "publish", return_value={}) as pub:
             publish_feature.main([str(self.path), "--publish"])

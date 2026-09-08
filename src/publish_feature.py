@@ -31,6 +31,22 @@ def _slug(doc: dict, path: Path) -> str:
     return re.sub(r"[^a-z0-9-]+", "-", str(value).lower()).strip("-")
 
 
+def _excerpt(ko: dict, limit: int = 200) -> str:
+    """홈 카드·검색 결과·SNS 미리보기에 보이는 요약.
+
+    원고에 `excerpt`가 없으면 워드프레스가 본문 앞부분을 잘라 쓰는데, 우리 본문은
+    표식(기준표/프리뷰)·제목·첫 소제목이 먼저 나와 홈 카드에 "프리뷰 오늘 밤 미국장,
+    … 1. 오늘 밤 일정 —"처럼 찍혔다(2026-09-08). 첫 절의 첫 문단을 쓴다.
+    """
+    if ko.get("excerpt"):
+        return str(ko["excerpt"])
+    first = ((ko.get("narrative") or [{}])[0].get("body", "")).split("\n\n")[0]
+    text = re.sub(r"<[^>]+>", "", first).strip()
+    if len(text) <= limit:
+        return text
+    return text[:limit].rsplit(" ", 1)[0].strip() + "…"
+
+
 def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict], dict | None]:
     """JSON의 graphics 선언을 실제 PNG와 절 번호별 figure로 바꾼다."""
     generated, figures, cover = [], {}, None
@@ -103,7 +119,7 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
 
     ko = doc.get("ko") or doc
     html = render(doc, doc.get("series", "기준표"), figures=figures,
-                  meta_description=ko.get("excerpt"))
+                  meta_description=_excerpt(ko))
     html_path = output / "article.html"
     html_path.write_text(html, encoding="utf-8")
     if not upload:
@@ -157,7 +173,7 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
     category_id = doc.get("category_id")
     if not isinstance(category_id, int):
         raise ValueError("category_id(언어별 WordPress 숫자 id)가 필요합니다. 이름 생성은 금지합니다.")
-    common = dict(lang=doc.get("lang", "ko"), excerpt=ko.get("excerpt"),
+    common = dict(lang=doc.get("lang", "ko"), excerpt=_excerpt(ko),
                   tags=doc.get("tags") or [], category=category_id,
                   featured_media_id=featured_id, focus_keyword=doc.get("focus_keyword"))
     if existing:
