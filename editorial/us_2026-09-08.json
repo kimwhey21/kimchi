@@ -5005,7 +5005,7 @@
         "graphic": {
           "kind": "price_history",
           "ticker": "CL=F",
-          "title": "WTI 원유, 최근 석 달 흐름"
+          "title": "WTI 원유, 최근 3개월 흐름"
         }
       },
       {
@@ -5055,7 +5055,7 @@
         "graphic": {
           "kind": "price_history",
           "ticker": "MU",
-          "title": "마이크론, 최근 석 달 흐름"
+          "title": "마이크론, 최근 3개월 흐름"
         },
         "photo": {
           "ticker": "MU"

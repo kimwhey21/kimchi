@@ -60,6 +60,14 @@ class HeadlineShapeTest(unittest.TestCase):
         self.assertTrue(any("갈리지" in i for i in issues), issues)
         self.assertTrue(any("눌리다" in i for i in issues), issues)
 
+    def test_old_fashioned_counting_words_are_blocked(self) -> None:
+        """2026-09-09 사용자: '넉 달 만에'는 올드한 표현, 금지. 벤치마크는 숫자로 쓴다."""
+        doc = {"title": "넉 달 만에 돌아온 외국인, 9월 30일까지 이어질까?",
+               "narrative": [{"heading": "1. 코스피, 최근 석 달 흐름", "body": "닷새 만에 810선을 되찾았습니다."}]}
+        issues = editorial_quality.collect_issues(doc)
+        for word in ("넉 달", "석 달", "닷새"):
+            self.assertTrue(any(word in i for i in issues), word)
+
     @unittest.skipUnless(CORPUS.exists(), "벤치마크 코퍼스는 이 컴퓨터에만 있습니다")
     def test_false_positive_rate_on_benchmark_headings(self) -> None:
         heads = []
