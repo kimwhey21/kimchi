@@ -413,28 +413,23 @@ def collect_heading_issues(sections: list, kind: str | None = None,
         if 0 < len(bare) < HEADING_MIN_CHARS and notes_out is not None:
             notes_out.append(f"소제목 {index} '{bare}'은(는) {len(bare)}자 명사 토막입니다 — "
                              "슬라이드 라벨처럼 읽힙니다(벤치마크 4%). 그 절이 무슨 말을 하는지 드러나게 쓰십시오.")
-    if kind == "시황":   # 사장님이 시황은 섞은 어법(S-A6), Checkpoint는 문장 흐름(S-C1)을 골랐다(2026-09-09)
-        issues += heading_mix_issues(sections)
+    issues += heading_mix_issues(sections)   # 시황·Checkpoint 공통(2026-09-09 통합)
     return issues
 
 
 def heading_mix_issues(sections: list) -> list[str]:
-    """한 글 안에서 소제목이 한 가지 꼴로만 나오면 막는다(2026-09-09). 절 다섯 개 이상일 때."""
+    """한 글 안에서 같은 틀이 되풀이되면 막는다 — 시황·Checkpoint 공통(2026-09-09 통합).
+
+    사장님이 시황에는 이름표와 짧은 문장을 섞은 세트(S-A6)를, Checkpoint에는 문장이 흐르는
+    세트(S-C1)를 골랐다. 둘 다 "어느 글에서든" 쓸 수 있는 어법이므로 문장·이름표 비율은
+    강요하지 않는다. 막는 것은 되풀이뿐 — 같은 말로 끝나는 문장 셋 이상, `이름, …` 꼴 셋 이상.
+    (문장만으로 이어져도 어미가 다르면 된다: 고르신 Checkpoint 세트가 그렇다.)
+    """
     bares = [_HEADING_NUMBER.sub("", str(s.get("heading", ""))).strip() for s in sections]
     bares = [b for b in bares if b]
     if len(bares) < 5:
         return []
     issues: list[str] = []
-    shapes = [heading_shape(b) for b in bares]
-    sentences = sum(1 for s in shapes if s.endswith("문장"))
-    labels = shapes.count("이름표")
-    if sentences > 0.6 * len(bares):
-        issues.append(f"소제목 {len(bares)}개 중 {sentences}개가 '~습니다/~다' 문장입니다 — 한 가지 꼴로만 이어지면 "
-                      "기계가 쓴 글로 읽힙니다. 벤치마크는 절반 안팎이 문장이고 나머지는 짧은 이름표(`오늘 투자심리`, "
-                      "`프리장 주요 종목`)와 질문(`시장은 어떻게 받아들였나`)입니다. 문장은 열에 여섯까지.")
-    if labels < 2:
-        issues.append(f"이름표 꼴 소제목이 {labels}개입니다 — 둘 이상 두세요(벤치마크 소제목의 3분의 1). "
-                      "`숫자로 본 오늘`, `오늘 크게 움직인 종목`처럼 그 절의 내용을 이름으로.")
     named = [b for b in bares if _NAME_COMMA.match(b)]
     if len(named) >= 3:
         issues.append(f"'이름, …' 꼴 소제목이 {len(named)}개입니다({' / '.join(named[:3])}) — 같은 틀의 반복입니다. "

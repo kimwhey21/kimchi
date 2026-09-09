@@ -60,11 +60,24 @@ class HeadingMixTest(unittest.TestCase):
     def test_all_polite_sentences_are_blocked(self) -> None:
         heads = [f"코스피는 {i}포인트 올랐습니다" for i in range(10)]
         issues = heading_mix_issues(self._sections(heads))
-        self.assertTrue(any("문장입니다" in i for i in issues), issues)
+        self.assertTrue(any("올랐습니다" in i for i in issues), issues)
 
     def test_todays_us_post_is_caught(self) -> None:
         issues = heading_mix_issues(self._sections(self.US_0908))
-        self.assertTrue(any("문장입니다" in i for i in issues) and any("이름, …" in i for i in issues), issues)
+        self.assertTrue(any("이름, …" in i for i in issues), issues)
+
+    def test_owner_checkpoint_set_of_flowing_sentences_passes(self) -> None:
+        heads = ["9월 3일부터 외국인이 다시 사기 시작했습니다", "순매수는 지수를 이렇게 움직입니다",
+                 "그런데 두산에너빌리티는 외국인이 팔았습니다", "8월에도 비슷한 반등이 있었지만 오래가지 못했습니다",
+                 "코스피는 9월 2일 급락 뒤 이렇게 반등했습니다", "그래서 9월 30일까지 무엇을 확인해야 할까요",
+                 "그때까지 지켜볼 지표는 미국 금리입니다"]
+        self.assertEqual(heading_mix_issues(self._sections(heads)), [])
+
+    def test_owner_daily_set_of_labels_and_short_sentences_passes(self) -> None:
+        heads = ["오늘 투자심리", "코스피는 7,000선을 넘지 못했습니다", "어제 확인 지점, 오늘은 어땠나",
+                 "외국인·기관은 3일째 사고 있습니다", "오늘 주요 종목: 대우건설", "건설주가 전부 오른 것은 아닙니다",
+                 "반도체 부품과 2차전지가 밀린 이유", "외국인이 팔고 기관이 받은 종목", "유가가 다시 부담입니다", "코스닥과 환율"]
+        self.assertEqual(heading_mix_issues(self._sections(heads)), [])
 
     def test_benchmark_like_mix_passes(self) -> None:
         heads = ["오늘 투자심리", "프리장 주요 종목", "호르무즈 협상이 다시 교착 상태에 빠졌습니다",
