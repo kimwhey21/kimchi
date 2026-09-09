@@ -121,6 +121,12 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
             options = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt")}
             if kind == "two_day_compare":
                 options["previous"] = _previous_price_data(market, date_str)
+            allowed = {"movers_list": data_graphics.MOVERS_STYLES,
+                       "stock_spotlight": data_graphics.SPOTLIGHT_STYLES}.get(kind)
+            if allowed and options.get("style") and options["style"] not in allowed:
+                # 발행 단계는 상황에 맞는 모양으로 대신 그리지만, 루틴은 여기서 고친다.
+                issues.append(f"그래픽(본문 {index}, {kind}) — style {options['style']!r}은 없습니다. "
+                              f"{', '.join(allowed)} 중 하나로 쓰세요(2026-09-09 사용자가 고른 모양).")
             try:
                 out = render_dir / f"{index:02d}-{kind}.png"
                 data_graphics.build(kind, price_data, out, **options)

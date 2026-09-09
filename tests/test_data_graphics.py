@@ -131,11 +131,19 @@ class StyleTest(unittest.TestCase):
         for style in data_graphics.MOVERS_STYLES:
             self.assertTrue(data_graphics.movers_list(PRICE_DATA, tmp / f"m_{style}.png", style=style).exists())
 
-    def test_unknown_style_is_an_error(self) -> None:
+    def test_unknown_style_falls_back_instead_of_failing_publish(self) -> None:
+        """틀린 style 이름으로 발행이 죽거나 그림이 빠지지 않는다 — 상황에 맞는 모양으로 그린다."""
+        import tempfile
+        from pathlib import Path
+        out = Path(tempfile.mkdtemp()) / "x.png"
+        self.assertTrue(data_graphics.movers_list(PRICE_DATA, out, style="sparkline").exists())
+        self.assertTrue(data_graphics.stock_spotlight(PRICE_DATA, out, style="sparkline").exists())
+
+    def test_unknown_kind_is_a_clear_error(self) -> None:
         import tempfile
         from pathlib import Path
         with self.assertRaises(ValueError):
-            data_graphics.movers_list(PRICE_DATA, Path(tempfile.mkdtemp()) / "x.png", style="sparkline")
+            data_graphics.build("sparkline_list", PRICE_DATA, Path(tempfile.mkdtemp()) / "x.png")
 
     def test_mixed_directions_pick_bars_and_one_direction_alternates(self) -> None:
         mixed = [{"change_pct": 3.0}, {"change_pct": -2.0}]

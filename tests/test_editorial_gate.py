@@ -96,6 +96,13 @@ class GateTest(unittest.TestCase):
         self.assertIn("그래픽(본문 1", joined)
         self.assertIn("사진(본문 2", joined)
 
+    def test_unknown_graphic_style_is_caught_before_commit(self) -> None:
+        """루틴이 없는 모양 이름을 쓰면 관문이 막는다 — 발행 단계까지 가지 않게(2026-09-09)."""
+        sections = _sections(10)
+        sections[0]["graphic"] = {"kind": "movers_list", "style": "sparkline"}
+        issues, _ = self._run(_doc("코스피, 7,000선을 넘지 못했습니다", sections))
+        self.assertTrue(any("style" in i and "sparkline" in i for i in issues), issues)
+
     def test_investor_flows_needs_a_source(self) -> None:
         sections = _sections(10)
         sections[0]["graphic"] = {"kind": "investor_flows", "values": {"외국인": 1}}

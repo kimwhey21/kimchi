@@ -367,9 +367,13 @@ def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
         raise ValueError("movers_list: 등락률이 있는 종목이 없습니다")
     rows.sort(key=lambda e: abs(float(e["change_pct"])), reverse=True)
     picked = sorted(rows[:top_n], key=lambda e: float(e["change_pct"]), reverse=True)
+    if style and style not in MOVERS_STYLES:
+        # 틀린 이름으로 발행이 죽거나 그림이 빠지지 않게 — 상황으로 고른 모양으로 그리고 알린다
+        # (2026-09-09, 사용자: "루틴이 잘못된 그림을 그리지 않게 해서 발행 실패를 막아라").
+        # 관문(editorial_gate)은 같은 경우를 막아서 커밋 전에 고치게 한다.
+        print(f"[안내] movers_list: 모르는 style {style!r} — {MOVERS_STYLES} 중 상황에 맞는 것으로 그립니다.", file=sys.stderr)
+        style = None
     style = style or _movers_style(picked, price_data)
-    if style not in MOVERS_STYLES:
-        raise ValueError(f"movers_list: style은 {MOVERS_STYLES} 중 하나입니다: {style!r}")
     if style == "bars":
         return _movers_bars(picked, output_path, title)
     if style == "tiles":
@@ -543,9 +547,10 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
             raise ValueError(f"stock_spotlight: {ticker}는 그날 시세에 없습니다")
     else:
         picked = max(rows, key=lambda e: abs(float(e["change_pct"])))
+    if style and style not in SPOTLIGHT_STYLES:
+        print(f"[안내] stock_spotlight: 모르는 style {style!r} — {SPOTLIGHT_STYLES} 중 상황에 맞는 것으로 그립니다.", file=sys.stderr)
+        style = None
     style = style or _spotlight_style(picked, price_data)
-    if style not in SPOTLIGHT_STYLES:
-        raise ValueError(f"stock_spotlight: style은 {SPOTLIGHT_STYLES} 중 하나입니다: {style!r}")
 
     change = float(picked["change_pct"]); color = _color(change)
     h = 300
@@ -859,6 +864,8 @@ def build(kind: str, price_data: dict, output_path: Path, **kwargs) -> dict:
     # 2026-09-04 첫 실행이 이 디렉터리가 없어 FileNotFoundError로 끝났습니다.
     ensure_korean_font()
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    if kind not in BUILDERS:
+        raise ValueError(f"모르는 그래픽 종류 {kind!r} — 쓸 수 있는 것: {', '.join(sorted(BUILDERS))}")
     builder = BUILDERS[kind]
     builder(price_data, output_path, **kwargs)
     return {"local_path": str(output_path), "kind": kind}
