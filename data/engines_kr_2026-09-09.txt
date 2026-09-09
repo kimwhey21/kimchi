@@ -1,0 +1,165 @@
+  ⚠ 21건을 받지 못했습니다. 아래 결과는 **일부입니다** — `0건`을 '그런 일이 없었다'로 읽지 마십시오.
+[밸류에이션] KR · 2026-09-09 · FWD PER 중앙값 None
+  종목            FWD PER     목표가 대비     52주고점 대비    애널
+
+  ⚠ 21건을 받지 못했습니다. 아래 결과는 **일부입니다** — `0건`을 '그런 일이 없었다'로 읽지 마십시오.
+[의견 변경] KR · 최근 7일 · 상향 0 하향 0 (의견 유지 0건은 뺐습니다)
+  빈 결과도 결과입니다 — 그 주에 의견 변경이 없었다는 뜻입니다.
+
+  ⚠ 21건을 받지 못했습니다. 아래 결과는 **일부입니다** — `0건`을 '그런 일이 없었다'로 읽지 마십시오.
+[실적 일정] KR · 앞으로 21일
+  해당 기간에 예정된 코어 종목 실적이 없습니다.
+
+[한국 내부자 매수] 최근 7일 · 공시 15건을 열어 장내매수 45건
+  2026-09-09 세종텔레콤           109,224,000원  세종 (12,000주 @ 9,102)
+  2026-09-04 세종텔레콤            93,841,000원  세종 (11,000주 @ 8,531)
+  2026-09-11 세종텔레콤            90,765,000원  세종 (9,000주 @ 10,085)
+  2026-09-10 세종텔레콤            83,007,000원  세종 (9,000주 @ 9,223)
+  2026-09-07 세종텔레콤            61,912,000원  세종 (7,100주 @ 8,720)
+  2026-09-09 에스엠씨지            42,895,205원  최승호 (14,645주 @ 2,929)
+  2026-09-02 육일씨엔에쓰           37,500,000원  구자옥 (20,000주 @ 1,875)
+  2026-09-03 육일씨엔에쓰           36,700,000원  구자옥 (20,000주 @ 1,835)
+  2026-09-07 육일씨엔에쓰           36,540,000원  구자옥 (20,000주 @ 1,827)
+  2026-09-04 육일씨엔에쓰           36,240,000원  구자옥 (20,000주 @ 1,812)
+  2026-09-08 육일씨엔에쓰           36,240,000원  구자옥 (20,000주 @ 1,812)
+  2026-09-07 바이오스마트           27,757,600원  윤호권 (10,400주 @ 2,669)
+  2026-09-09 육일씨엔에쓰           27,375,000원  구자옥 (15,000주 @ 1,825)
+  2026-09-08 세종텔레콤            25,992,700원  세종 (2,900주 @ 8,963)
+  2026-07-28 에스엠씨지            21,702,106원  최승호 (7,499주 @ 2,894)
+  ★ = 우리 코어 워치리스트 종목
+  장내매수만 담았습니다. 상속·증여·대여주식상환·스톡옵션 행사는 본인이 값을 치르고 산 것이 아니라 신호가 되지 않습니다.
+
+[업종 등락] 2026-09-09 · 업종 79개
+  오른 쪽
+    전기제품             +7.16%   70종목 중 상승  55 / 하락  10
+    컴퓨터와주변기기         +6.43%   21종목 중 상승   8 / 하락   9
+    전기장비             +5.59%   35종목 중 상승  30 / 하락   3
+    화학               +5.22%  123종목 중 상승  82 / 하락  29
+    에너지장비및서비스        +5.13%   34종목 중 상승  24 / 하락   7
+    무역회사와판매업체        +5.08%    8종목 중 상승   6 / 하락   1
+    통신장비             +4.18%   55종목 중 상승  38 / 하락  11
+    건축제품             +3.60%   11종목 중 상승   5 / 하락   5
+  내린 쪽
+    인터넷과카탈로그소매       -3.20%    6종목 중 상승   2 / 하락   4
+    방송과엔터테인먼트        -2.64%   57종목 중 상승  13 / 하락  34
+    백화점과일반상점         -2.34%   14종목 중 상승   2 / 하락  12
+    다각화된통신서비스        -2.04%    3종목 중 상승   1 / 하락   2
+    항공사              -1.97%    9종목 중 상승   0 / 하락   8
+    복합유틸리티           -1.71%    1종목 중 상승   0 / 하락   1
+    생명보험             -1.58%    3종목 중 상승   0 / 하락   3
+    은행               -1.54%   11종목 중 상승   0 / 하락  10
+  업종 등락률만 보지 말고 그 안에서 몇 종목이 올랐는지 함께 보십시오. 한 종목이 끌어올린 업종과 여럿이 함께 오른 업종은 다릅니다.
+
+[미 거시] 최근 90일
+  미 10년물 국채금리           4.78  (+0.33) 기간 최저 4.38(2026-06-26) 최고 4.79(2026-09-01)
+  미 2년물 국채금리            4.37  (+0.32) 기간 최저 4.05(2026-06-11) 최고 4.39(2026-09-01)
+  장단기 금리차(10년-2년)       0.41  (+0.01) 기간 최저 0.27(2026-06-18) 최고 0.53(2026-08-17)
+  연방기금금리                3.63  (+0.00) 기간 최저 3.63(2026-06-01) 최고 3.63(2026-06-01)
+  미 소비자물가지수           332.81  (+0.24) 기간 최저 332.57(2026-06-01) 최고 332.81(2026-07-01)
+
+[한국은행 ECOS] 시장금리(일별) (817Y002, 주기 D)
+  20260909  CD(91일)                          3.12 연%  (+0.0)
+  20260908  CMA(수시형)                         2.45 연%  (+0.0)
+  20260909  CP(91일)                          3.26 연%  (+0.01)
+  20260908  KOFR(공시RFR)                     3.083 연%  (+0.092)
+  20260909  KORIBOR(12개월)                    3.81 연%  (+0.01)
+  20260909  KORIBOR(3개월)                     3.24 연%  (+0.01)
+  20260909  KORIBOR(6개월)                     3.52 연%  (+0.01)
+  20260908  MMF(7일)                          3.05 연%  (+0.0)
+  20260909  국고채(10년)                        4.401 연%  (+0.0)
+  20260909  국고채(1년)                         3.486 연%  (+0.007)
+  20260909  국고채(20년)                        4.551 연%  (-0.009)
+  20260909  국고채(2년)                         3.733 연%  (+0.012)
+  20260909  국고채(30년)                        4.641 연%  (+0.006)
+  20260909  국고채(3년)                          3.91 연%  (+0.009)
+
+[수급 엇갈림] 2026-09-09 · 반대 12종목 / 같은 방향 15종목
+  삼성전자          +0.00%  외국인   -2,884,161  기관   +1,740,154
+  신한지주          -2.30%  외국인     -212,253  기관     +175,074
+  기아            +1.12%  외국인     +129,788  기관      -69,693
+  HD현대중공업       +4.27%  외국인      -39,729  기관      +64,087
+  한미반도체         +2.45%  외국인      -57,452  기관      +29,228
+  현대차           +0.78%  외국인      +36,894  기관      -22,294
+  레인보우로보틱스      +2.89%  외국인      +42,721  기관      -18,487
+  KB금융          -0.98%  외국인      +36,882  기관      -17,486
+  알테오젠          +0.90%  외국인     +101,069  기관      -13,550
+  SK스퀘어         +0.62%  외국인      -27,733  기관      +12,851
+  삼성바이오로직스      +0.83%  외국인       +5,096  기관       -5,602
+  에이피알          -2.25%  외국인       +2,924  기관      -94,028
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/curl_cffi/requests/session.py", line 827, in _request_once
+    c.perform()
+  File "/usr/local/lib/python3.11/dist-packages/curl_cffi/curl.py", line 594, in perform
+    self._check_error(ret, "perform")
+  File "/usr/local/lib/python3.11/dist-packages/curl_cffi/curl.py", line 320, in _check_error
+    raise error
+curl_cffi.curl.CurlError: Failed to perform, curl: (35) Recv failure: Connection reset by peer. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/kimchi/src/story_engines.py", line 1034, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/user/kimchi/src/story_engines.py", line 1024, in main
+    result = runners[name]()
+             ^^^^^^^^^^^^^^^
+  File "/home/user/kimchi/src/story_engines.py", line 1013, in <lambda>
+    "seasonality": lambda: seasonality(args.market),
+                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/kimchi/src/story_engines.py", line 398, in seasonality
+    frame = yf.Ticker(index).history(period=f"{years}y", interval="1mo")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/utils.py", line 124, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/base.py", line 129, in history
+    return self._lazy_load_price_history().history(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/base.py", line 135, in _lazy_load_price_history
+    self._price_history = PriceHistory(self._data, self.ticker, self._get_ticker_tz(timeout=10))
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/base.py", line 160, in _get_ticker_tz
+    if k in self.info:
+            ^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/ticker.py", line 159, in info
+    return self.get_info()
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/base.py", line 282, in get_info
+    data = self._quote.info
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/scrapers/quote.py", line 526, in info
+    self._fetch_info()
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/scrapers/quote.py", line 684, in _fetch_info
+    result = self._fetch(modules=modules)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/scrapers/quote.py", line 660, in _fetch
+    result = self._data.get_raw_json(_QUOTE_SUMMARY_URL_ + f"/{self._symbol}", params=params_dict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/data.py", line 517, in get_raw_json
+    response = self.get(url, params=params, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/utils.py", line 124, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/data.py", line 404, in get
+    response = self._make_request(url, request_method = self._session.get, params=params, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/utils.py", line 124, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/yfinance/data.py", line 475, in _make_request
+    response = request_method(**request_args)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/curl_cffi/requests/session.py", line 949, in get
+    return self.request(method="GET", url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/curl_cffi/requests/session.py", line 900, in request
+    return self._request_once(
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/curl_cffi/requests/session.py", line 834, in _request_once
+    raise error(str(e), e.code, rsp) from e
+curl_cffi.requests.exceptions.SSLError: Failed to perform, curl: (35) Recv failure: Connection reset by peer. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
