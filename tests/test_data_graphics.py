@@ -117,3 +117,32 @@ class FlowCompareOpposedTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(ValueError):
                 data_graphics.flow_compare(price, Path(tmp) / "x.png")
+
+
+class StyleTest(unittest.TestCase):
+    """2026-09-09 사용자: 옛 추이선 대신 고른 세 모양씩을 상황에 맞게 번갈아 쓴다."""
+
+    def test_every_chosen_style_renders(self) -> None:
+        import tempfile
+        from pathlib import Path
+        tmp = Path(tempfile.mkdtemp())
+        for style in data_graphics.SPOTLIGHT_STYLES:
+            self.assertTrue(data_graphics.stock_spotlight(PRICE_DATA, tmp / f"s_{style}.png", style=style).exists())
+        for style in data_graphics.MOVERS_STYLES:
+            self.assertTrue(data_graphics.movers_list(PRICE_DATA, tmp / f"m_{style}.png", style=style).exists())
+
+    def test_unknown_style_is_an_error(self) -> None:
+        import tempfile
+        from pathlib import Path
+        with self.assertRaises(ValueError):
+            data_graphics.movers_list(PRICE_DATA, Path(tempfile.mkdtemp()) / "x.png", style="sparkline")
+
+    def test_mixed_directions_pick_bars_and_one_direction_alternates(self) -> None:
+        mixed = [{"change_pct": 3.0}, {"change_pct": -2.0}]
+        self.assertEqual(data_graphics._movers_style(mixed, {"trading_date": "2026-09-08"}), "bars")
+        ups = [{"change_pct": 3.0}, {"change_pct": 2.0}]
+        a = data_graphics._movers_style(ups, {"trading_date": "2026-09-08"})
+        b = data_graphics._movers_style(ups, {"trading_date": "2026-09-09"})
+        self.assertNotEqual(a, b)
+        self.assertEqual(a, data_graphics._movers_style(ups, {"trading_date": "2026-09-08"}))  # 같은 날은 같은 그림
+

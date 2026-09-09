@@ -25,6 +25,7 @@
 """
 from __future__ import annotations
 
+import datetime as dt
 import sys
 from pathlib import Path
 
@@ -318,48 +319,130 @@ def two_day_compare(price_data: dict, output_path: Path, previous: dict | None =
     return output_path
 
 
+def _closes(entry: dict) -> list[float]:
+    """3개월 종가(history)가 있으면 그것, 없으면 8거래일 series."""
+    closes = list(((entry.get("history") or {}).get("close")) or [])
+    return closes if len(closes) >= 2 else [float(v) for v in (entry.get("series") or []) if v is not None]
+
+
+def _pct_over(entry: dict, days: int) -> float | None:
+    closes = _closes(entry)
+    if len(closes) <= days:
+        return None
+    return (closes[-1] / closes[-1 - days] - 1) * 100
+
+
+def _date_ordinal(price_data: dict) -> int:
+    try:
+        return dt.date.fromisoformat(str(price_data.get("trading_date"))).toordinal()
+    except (TypeError, ValueError):
+        return 0
+
+
+MOVERS_STYLES = ("bars", "tiles", "table")
+
+
+def _movers_style(picked: list[dict], price_data: dict) -> str:
+    """상황에 맞게 고른다(2026-09-09, 사용자: "다채롭게 상황에 맞게 번갈아").
+    오르고 내린 종목이 섞인 날은 막대(방향이 보인다), 한쪽으로만 움직인 날은 타일과 표를
+    날짜로 번갈아 쓴다. 같은 날 다시 그리면 같은 그림이 나온다."""
+    ups = sum(1 for e in picked if float(e["change_pct"]) > 0)
+    if 0 < ups < len(picked):
+        return "bars"
+    return "tiles" if _date_ordinal(price_data) % 2 == 0 else "table"
+
+
 def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
-                title: str = "오늘 많이 움직인 종목") -> Path:
-    """종목명 · 최근 주가 흐름 · 등락률을 한 줄씩 세운 목록입니다.
+                title: str = "오늘 많이 움직인 종목", style: str | None = None) -> Path:
+    """등락 폭 상위 종목 목록 — 세 가지 모양(막대·타일·표) 중 하나.
 
-    벤치마크(재테크농부) 시황 본문의 이미지 349장을 받아 보니 대부분이 사진이
-    아니라 이런 모양의 표·차트였습니다 — 종목 옆에 작은 추이선과 등락률이 붙은
-    목록. 우리 글은 이미지가 5장인데 그쪽은 중앙값 14장이라, 차이를 사진이 아니라
-    데이터 그래픽으로 메웁니다. 사진과 달리 여기 그리는 것은 전부 시세 파일에서
-    나오므로 틀린 그림이 붙을 수 없습니다.
-
-    절대 등락률 상위 `top_n`개를 오른 것부터 세웁니다.
+    2026-09-09 사용자가 작은 추이선이 붙은 옛 목록을 "마음에 안 든다"고 해 네 안을 그려
+    보였고, 이 셋을 골랐다("상황에 맞게 능동적으로 번갈아 쓰면 좋겠다"). `style`을 주면
+    그 모양, 주지 않으면 `_movers_style`이 그날 상황으로 고른다. 그리는 것은 전부 시세
+    파일에서 나오므로 틀린 그림이 붙을 수 없다.
     """
     ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
-    rows = [
-        e for e in (price_data.get("watchlist") or {}).values()
-        if e.get("change_pct") is not None
-    ]
+    rows = [e for e in (price_data.get("watchlist") or {}).values() if e.get("change_pct") is not None]
     if not rows:
         raise ValueError("movers_list: 등락률이 있는 종목이 없습니다")
     rows.sort(key=lambda e: abs(float(e["change_pct"])), reverse=True)
     picked = sorted(rows[:top_n], key=lambda e: float(e["change_pct"]), reverse=True)
+    style = style or _movers_style(picked, price_data)
+    if style not in MOVERS_STYLES:
+        raise ValueError(f"movers_list: style은 {MOVERS_STYLES} 중 하나입니다: {style!r}")
+    if style == "bars":
+        return _movers_bars(picked, output_path, title)
+    if style == "tiles":
+        return _movers_tiles(picked, output_path, title)
+    return _movers_table(picked, output_path, title)
 
-    row_h, top = 62, 78
-    h = top + row_h * len(picked) + 24
+
+def _movers_bars(picked: list[dict], output_path: Path, title: str) -> Path:
+    row_h, top = 52, 90
+    h = top + row_h * len(picked) + 30
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(21, True), fill=SUB)
-
-    # 대표 이미지의 타일과 같은 모양입니다 — 왼쪽 색 막대가 방향, 이름은 크게,
-    # 등락률은 오른쪽 끝에. 대문과 본문이 한 벌로 보이게 맞춘 것입니다.
+    d.text((48, 36), title, font=_font(22, True), fill=INK)
+    mx = max(abs(float(e["change_pct"])) for e in picked) or 1.0
+    has_down = any(float(e["change_pct"]) < 0 for e in picked)
+    zx = 330 if not has_down else 520
+    span = (W - 110 - zx) if not has_down else (W - 110 - zx)
+    left_span = zx - 340 if has_down else 0
+    d.line([(zx, top - 10), (zx, h - 24)], fill=LINE, width=1)
     for i, e in enumerate(picked):
         y = top + i * row_h
-        color = _color(float(e["change_pct"]))
-        d.rounded_rectangle([32, y, W - 32, y + row_h - 10], 12, fill=PANEL, outline=LINE)
-        d.rounded_rectangle([32, y, 38, y + row_h - 10], 3, fill=color)
-        d.text((58, y + 9), str(e["name"])[:14], font=_font(23, True), fill=INK)
-        price = _fmt(float(e["price"]), _stock_unit(e))
-        d.text((58, y + 36), price, font=_font(15), fill=SUB)
-        _sparkline(d, e.get("series"), (W - 320, y + 14, W - 200, y + 38), color)
-        pct = f"{float(e['change_pct']):+.2f}%"
-        pf = _font(26, True)
-        d.text((W - 58 - d.textlength(pct, font=pf), y + 13), pct, font=pf, fill=color)
+        v = float(e["change_pct"]); c = _color(v)
+        d.text((48, y + 6), str(e["name"])[:14], font=_font(20, True), fill=INK)
+        label = f"{v:+.2f}%"; lf = _font(20, True)
+        if v >= 0:
+            bl = span * v / mx
+            d.rounded_rectangle([zx, y, zx + max(bl, 4), y + 34], 6, fill=c)
+            d.text((zx + bl + 10, y + 6), label, font=lf, fill=c)
+        else:
+            bl = (left_span or span) * abs(v) / mx
+            d.rounded_rectangle([zx - max(bl, 4), y, zx, y + 34], 6, fill=c)
+            d.text((zx - bl - 10 - d.textlength(label, font=lf), y + 6), label, font=lf, fill=c)
+    img.save(output_path, format="PNG", optimize=True)
+    return output_path
+
+
+def _movers_tiles(picked: list[dict], output_path: Path, title: str) -> Path:
+    cols = 3
+    rows_n = (len(picked) + cols - 1) // cols
+    h = 84 + rows_n * 160 + 20
+    img = Image.new("RGB", (W, h), BG)
+    d = ImageDraw.Draw(img)
+    d.text((48, 36), title, font=_font(22, True), fill=INK)
+    for i, e in enumerate(picked):
+        x = 48 + (i % cols) * 308; y = 84 + (i // cols) * 160
+        v = float(e["change_pct"]); c = _color(v)
+        d.rounded_rectangle([x, y, x + 290, y + 140], 14, fill=PANEL, outline=LINE)
+        d.text((x + 20, y + 18), str(e["name"])[:14], font=_font(20, True), fill=INK)
+        d.text((x + 20, y + 52), f"{v:+.2f}%", font=_font(40, True), fill=c)
+        d.text((x + 20, y + 106), _fmt(float(e["price"]), _stock_unit(e)), font=_font(15), fill=SUB)
+    img.save(output_path, format="PNG", optimize=True)
+    return output_path
+
+
+def _movers_table(picked: list[dict], output_path: Path, title: str) -> Path:
+    h = 122 + 46 * len(picked) + 30
+    img = Image.new("RGB", (W, h), BG)
+    d = ImageDraw.Draw(img)
+    d.text((48, 36), title, font=_font(22, True), fill=INK)
+    for key, x in (("종목", 48), ("종가", 420), ("오늘", 600), ("5거래일", 760)):
+        d.text((x, 84), key, font=_font(15), fill=SUB)
+    d.line([(48, 108), (W - 48, 108)], fill=LINE, width=1)
+    for i, e in enumerate(picked):
+        y = 122 + i * 46
+        v = float(e["change_pct"]); p5 = _pct_over(e, 5)
+        d.text((48, y), str(e["name"])[:14], font=_font(20, True), fill=INK)
+        d.text((420, y), _fmt(float(e["price"]), _stock_unit(e)), font=_font(19), fill=INK)
+        d.text((600, y), f"{v:+.2f}%", font=_font(20, True), fill=_color(v))
+        if p5 is None:
+            d.text((760, y), "—", font=_font(19), fill=SUB)
+        else:
+            d.text((760, y), f"{p5:+.1f}%", font=_font(19), fill=_color(p5))
+        d.line([(48, y + 38), (W - 48, y + 38)], fill=LINE, width=1)
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
@@ -425,22 +508,33 @@ def flow_compare(price_data: dict, output_path: Path, top_n: int = 5,
     return output_path
 
 
+SPOTLIGHT_STYLES = ("numbers", "history", "daily_bars")
+
+
+def _spotlight_style(picked: dict, price_data: dict) -> str:
+    """오늘 움직임이 최근 8거래일 중 가장 크면 일별 막대(오늘이 예외임이 보인다), 아니면
+    3개월 선과 숫자 넷을 날짜로 번갈아. 3개월 이력이 없으면 일별 막대."""
+    closes = _closes(picked)
+    if len(closes) < 6:
+        return "daily_bars"
+    daily = [abs(closes[i] / closes[i - 1] - 1) for i in range(max(1, len(closes) - 8), len(closes))]
+    if daily and daily[-1] >= max(daily):
+        return "daily_bars"
+    if len(closes) < 20:
+        return "daily_bars"
+    return "history" if _date_ordinal(price_data) % 2 == 0 else "numbers"
+
+
 def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = None,
-                    title: str = "") -> Path:
-    """한 종목만 크게 세웁니다 — 이름, 등락률, 최근 흐름.
+                    title: str = "", style: str | None = None) -> Path:
+    """한 종목만 크게 세웁니다 — 이름·등락률에 오른쪽은 세 가지 모양 중 하나.
 
-    대표 이미지의 single 레이아웃과 같은 모양입니다. 그날 이야기가 종목 하나로
-    설명되는 날(2026-09-02 델 테크놀로지스, 09-04 원익홀딩스)에는 그 종목을
-    다루는 문단 옆에 표 대신 이 그림을 붙입니다. 목록형 그림(movers_list)은
-    "여럿이 함께 움직였다"를 말하고, 이 그림은 "오늘은 이 종목이다"를 말합니다.
-
-    ticker를 주면 그 종목을, 주지 않으면 그날 절대 등락 폭 1위를 그립니다.
+    numbers(종가·5거래일·3개월 최고·최저 대비), history(3개월 선), daily_bars(최근 8거래일
+    일별 막대, 오늘 진하게). 2026-09-09 사용자가 옛 8거래일 꺾은선을 "마음에 안 든다"고
+    해 바꿨고, `style`이 없으면 `_spotlight_style`이 상황으로 고른다.
     """
-    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
-    rows = [
-        e for e in (price_data.get("watchlist") or {}).values()
-        if e.get("change_pct") is not None
-    ]
+    ensure_korean_font()
+    rows = [e for e in (price_data.get("watchlist") or {}).values() if e.get("change_pct") is not None]
     if not rows:
         raise ValueError("stock_spotlight: 등락률이 있는 종목이 없습니다")
     if ticker:
@@ -449,28 +543,57 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
             raise ValueError(f"stock_spotlight: {ticker}는 그날 시세에 없습니다")
     else:
         picked = max(rows, key=lambda e: abs(float(e["change_pct"])))
+    style = style or _spotlight_style(picked, price_data)
+    if style not in SPOTLIGHT_STYLES:
+        raise ValueError(f"stock_spotlight: style은 {SPOTLIGHT_STYLES} 중 하나입니다: {style!r}")
 
-    change = float(picked["change_pct"])
-    color = _color(change)
+    change = float(picked["change_pct"]); color = _color(change)
     h = 300
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
     d.rounded_rectangle([32, 24, W - 32, h - 24], 16, fill=PANEL, outline=LINE)
     if title:
         d.text((60, 48), title, font=_font(19, True), fill=SUB)
-
-    name = str(picked["name"])
-    nf = _font(52, True)
-    while d.textlength(name, font=nf) > 470 and nf.size > 26:
+    name = str(picked["name"]); nf = _font(48, True)
+    while d.textlength(name, font=nf) > 420 and nf.size > 26:
         nf = _font(nf.size - 4, True)
     d.text((60, 88), name, font=nf, fill=INK)
-    d.text((60, 168), f"{change:+.2f}%", font=_font(76, True), fill=color)
+    d.text((60, 158), f"{change:+.2f}%", font=_font(68, True), fill=color)
     price = _fmt(float(picked["price"]), _stock_unit(picked))
-    d.text((60, 254), price, font=_font(20), fill=SUB)
+    d.text((60, 240), price, font=_font(20), fill=SUB)
 
-    # 오른쪽에 최근 흐름. 대표 이미지와 달리 본문은 폭이 넓어 크게 들어갑니다.
-    _sparkline(d, picked.get("series"), (W - 400, 96, W - 60, 236), color)
-    d.text((W - 400, 254), "최근 8거래일", font=_font(16), fill=SUB)
+    closes = _closes(picked)
+    x0, y0, x1, y1 = 520, 92, W - 60, 236
+    if style == "numbers":
+        p5 = _pct_over(picked, 5); hi, lo, cur = max(closes), min(closes), closes[-1]
+        stats = [("종가", price, INK), ("5거래일", p5, None),
+                 ("3개월 최고 대비", (cur / hi - 1) * 100, None), ("3개월 최저 대비", (cur / lo - 1) * 100, None)]
+        for i, (key, value, fixed) in enumerate(stats):
+            x = x0 + (i % 2) * 210; y = 92 + (i // 2) * 84
+            d.text((x, y), key, font=_font(15), fill=SUB)
+            if value is None:
+                d.text((x, y + 24), "—", font=_font(28, True), fill=SUB)
+            elif fixed:
+                d.text((x, y + 24), str(value), font=_font(28, True), fill=fixed)
+            else:
+                d.text((x, y + 24), f"{value:+.1f}%", font=_font(28, True), fill=_color(float(value)))
+    elif style == "history":
+        lo, hi = min(closes), max(closes)
+        pts = [(x0 + (x1 - x0) * i / (len(closes) - 1), y1 - (y1 - y0) * (c - lo) / (hi - lo or 1))
+               for i, c in enumerate(closes)]
+        d.polygon(pts + [(x1, y1), (x0, y1)], fill="#F6E4E0" if change >= 0 else "#E0EAF6")
+        d.line(pts, fill=color, width=3)
+        d.ellipse([pts[-1][0] - 5, pts[-1][1] - 5, pts[-1][0] + 5, pts[-1][1] + 5], fill=color)
+        d.text((x0, y1 + 8), f"최근 3개월 · 최저 {lo:,.2f} · 최고 {hi:,.2f}", font=_font(15), fill=SUB)
+    else:
+        daily = [(closes[i] / closes[i - 1] - 1) * 100 for i in range(max(1, len(closes) - 8), len(closes))]
+        mid = (y0 + y1) // 2; mx = max(abs(v) for v in daily) or 1.0; bw = (x1 - x0) / len(daily)
+        d.line([(x0, mid), (x1, mid)], fill=LINE, width=1)
+        for i, v in enumerate(daily):
+            bx = x0 + i * bw + 6; bh = (mid - y0 - 10) * abs(v) / mx
+            c = _color(v) if i == len(daily) - 1 else ("#E9B3AA" if v >= 0 else "#B3C8E6")
+            d.rectangle([bx, mid - bh if v >= 0 else mid, bx + bw - 12, mid if v >= 0 else mid + bh], fill=c)
+        d.text((x0, y1 + 8), f"최근 {len(daily)}거래일 일별 등락률 (오늘 진하게)", font=_font(15), fill=SUB)
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
