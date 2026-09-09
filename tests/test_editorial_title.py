@@ -39,11 +39,9 @@ class BlockedTest(unittest.TestCase):
         issues = collect_issues({"title": "브로드컴 9% 폭등. 하지만 시장은 웃지 못한 이유. [시황]"})
         self.assertTrue(any("꼬리표" in i for i in issues))
 
-    def test_past_quiz_question_is_blocked(self) -> None:
-        """사용자가 두 번 지적한 형태입니다 — 지나간 일을 퀴즈로 냅니다."""
-        issues = collect_issues({"title": "원익홀딩스 29.91% 급등! 어제 오른 은행은 왜 내렸을까?"})
-        self.assertEqual(len(issues), 1)
-        self.assertIn("퀴즈", issues[0])
+    def test_past_why_question_is_allowed_now(self) -> None:
+        """2026-09-09 사장님이 `코스피는 왜 오늘 300포인트나 올랐을까`를 골랐다 — 옛 '과거형 퀴즈 금지'는 없앴다."""
+        self.assertEqual(collect_issues({"title": "코스피는 왜 오늘 300포인트나 올랐을까"}), [])
 
     def test_polite_ending_is_allowed(self) -> None:
         """존댓말 제목을 막지 않습니다.
@@ -78,7 +76,7 @@ class AllowedTest(unittest.TestCase):
     """벤치마크의 실제 제목과 우리가 쓴 제목이 걸리면 검사가 쓸모없어집니다."""
 
     def test_our_published_title_passes(self) -> None:
-        doc = {"title": "원익홀딩스 29.91% 급등! 금리 전망 하나가 업종을 통째로 뒤집었다"}
+        doc = {"title": "원익홀딩스 29.91% 급등, 금리 전망 하나가 바꾼 하루"}
         self.assertEqual(collect_issues(doc, PRICE_DATA), [])
 
     def test_benchmark_titles_pass(self) -> None:
@@ -108,7 +106,7 @@ class AllowedTest(unittest.TestCase):
         self.assertEqual(collect_issues(doc, PRICE_DATA), [])
 
     def test_explicit_approximation_is_allowed(self) -> None:
-        doc = {"title": "원익홀딩스 30%대 급등, 반도체 장비가 이끌었다"}
+        doc = {"title": "원익홀딩스 30%대 급등, 이유는 반도체 장비"}
         self.assertEqual(collect_issues(doc, PRICE_DATA), [])
 
     def test_exact_figure_passes(self) -> None:
@@ -148,16 +146,24 @@ class UniversalRulesTest(unittest.TestCase):
     feature_checks(기준표)와 editorial_quality(시황)에 따로 있던 것을 여기로 모았다.
     """
 
-    def test_plain_announcement_has_no_hook(self) -> None:
-        issues = collect_issues({"title": "코스피는 하락했습니다"})
-        self.assertTrue(any("후킹 장치" in i for i in issues), issues)
+    def test_plain_announcement_is_not_in_the_example_book(self) -> None:
+        issues = collect_issues({"title": "코스피는 오늘 하락했고 반도체 업종도 함께 하락했습니다"})
+        self.assertTrue(any("예문집" in i or "버린 꼴" in i for i in issues), issues)
+
+    def test_every_owner_pick_passes_and_every_reject_fails(self) -> None:
+        """2026-09-09 사장님이 고른 35개는 전부 통과, 버린 꼴 예문은 전부 막힌다."""
+        from src import editorial_title
+        for title in editorial_title.OWNER_PICKS:
+            self.assertEqual(collect_issues({"title": title}), [], title)
+        for title in editorial_title.OWNER_REJECTS:
+            self.assertTrue(collect_issues({"title": title}), title)
 
     def test_our_rewritten_titles_pass(self) -> None:
-        for title in ("대우건설이 이틀째 오른 날, 코스피는 7,000선을 넘지 못했습니다",
-                      "코스피 4.61% 급등, 외국인이 다섯 달 만에 방향을 바꿨습니다",
+        for title in ("코스피는 왜 7,000선을 넘지 못했을까",
+                      "외국인 5조 매수: 7,000선을 앞두고 알아야 할 것",
                       "고용지표에 지수는 내렸는데 메모리 반도체만 오른 이유",
                       "오늘 밤 미국장, 유가 6주 최고치가 반도체 랠리를 흔들까?",
-                      "SK하이닉스 지금 사도 될까? 10월 27일에 갈린다"):
+                      "SK하이닉스 밸류에이션 점검: 10월 27일 실적 전에 볼 다섯 가지"):
             self.assertEqual(collect_issues({"title": title}), [], title)
 
     def test_section_floor_depends_only_on_kind(self) -> None:

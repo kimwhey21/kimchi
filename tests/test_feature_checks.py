@@ -27,22 +27,15 @@ def _doc(title: str, sections: int = 7, body_extra: str = "") -> dict:
 
 
 class TitleTest(unittest.TestCase):
-    GOOD = "SK하이닉스 지금 사도 될까? 10월 27일에 갈린다"
+    GOOD = "SK하이닉스 밸류에이션 점검: 10월 27일 실적 전에 볼 다섯 가지"
 
     def test_good_title_passes(self) -> None:
         self.assertEqual(_check(_doc(self.GOOD), graphics=6), [])
 
-    def test_indicator_jargon_is_a_note_not_a_block(self) -> None:
-        """지표 용어는 알려만 줍니다.
-
-        벤치마크에도 예외가 있습니다(`저평가 반도체 주식은? 8개 FWD PER 분석`).
-        드문 것을 금지로 바꾸면 쓸 수 있는 제목이 좁아집니다.
-        """
-        notes: list[str] = []
-        issues = _check(
-            _doc("SK하이닉스 FWD PER 3.5배. 확인할 다섯 가지"), graphics=6, notes_out=notes)
-        self.assertFalse(any("지표 용어" in i for i in issues), issues)
-        self.assertTrue(any("지표 용어" in n for n in notes), notes)
+    def test_indicator_jargon_is_fine(self) -> None:
+        """2026-09-09 사장님이 `PER 3.5배 SK하이닉스, 싼 데는 이유가 있습니다`를 골랐다 — 지표 용어 주의는 없앴다."""
+        issues = _check(_doc("PER 3.5배 SK하이닉스, 싼 데는 이유가 있습니다"), graphics=6)
+        self.assertEqual(issues, [])
 
     def test_korean_numeral_counts_as_a_hook(self) -> None:
         """`확인할 다섯 가지`는 범위 축소 장치입니다.
@@ -52,17 +45,17 @@ class TitleTest(unittest.TestCase):
         """
         issues = _check(
             _doc("반도체 지금 사도 되나. 확인할 다섯 가지"), graphics=6)
-        self.assertFalse(any("후킹 장치가 없" in i for i in issues), issues)
+        self.assertFalse(any("예문집" in i for i in issues), issues)
 
     def test_title_without_any_hook_is_caught(self) -> None:
         issues = _check(
-            _doc("메모리 반도체 업황 정리"), graphics=6)
-        self.assertTrue(any("후킹 장치가 없" in i for i in issues), issues)
+            _doc("메모리 반도체 업황과 수급 정리 보고서입니다"), graphics=6)
+        self.assertTrue(any("예문집" in i for i in issues), issues)
 
     def test_polite_ending_is_allowed(self) -> None:
         """벤치마크 시황 제목의 15%가 존댓말로 끝납니다. 막지 않습니다."""
         self.assertEqual(_check(
-            _doc("SK하이닉스 지금 사도 될까? 10월 27일에 갈립니다"), graphics=6), [])
+            _doc("인텔 CEO의 매수, 믿어도 될까? 판단 기준은 이것입니다"), graphics=6), [])
 
 
 class BodyTest(unittest.TestCase):
@@ -158,14 +151,14 @@ class ReversalHookTest(unittest.TestCase):
     def test_bandaero_counts_as_a_hook(self) -> None:
         issues = _check(
             _doc("은행·보험만 무너진 금요일, 그날 밤 금리는 반대로 갔다"), graphics=6)
-        self.assertFalse(any("후킹 장치가 없" in i for i in issues), issues)
+        self.assertFalse(any("예문집" in i for i in issues), issues)
 
     def test_ohiryeo_counts_as_a_hook(self) -> None:
         issues = _check(
             _doc("반도체가 밀린 날 오히려 오른 업종"), graphics=6)
-        self.assertFalse(any("후킹 장치가 없" in i for i in issues), issues)
+        self.assertFalse(any("예문집" in i for i in issues), issues)
 
     def test_plain_label_still_has_no_hook(self) -> None:
         """느슨하게 만들었다고 아무 제목이나 통과하면 안 됩니다."""
-        issues = _check(_doc("메모리 반도체 업황 정리"), graphics=6)
-        self.assertTrue(any("후킹 장치가 없" in i for i in issues), issues)
+        issues = _check(_doc("메모리 반도체 업황과 수급 정리 보고서입니다"), graphics=6)
+        self.assertTrue(any("예문집" in i for i in issues), issues)

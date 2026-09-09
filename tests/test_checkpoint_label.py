@@ -34,29 +34,5 @@ class DeadlineTest(unittest.TestCase):
         self.assertIn("YYYY-MM-DD", feature_checks.deadline_issue({"date": "2026-09-08", "deadline": "9월 30일"}) or "")
 
 
-class TitleDateNoteTest(unittest.TestCase):
-    def _doc(self, title: str) -> dict:
-        heads = ["오늘의 숫자", "무엇이 달라졌습니다", "누가 샀나", "확인 지점 셋", "그때까지 볼 지표"]
-        return {"title": title, "narrative": [{"heading": f"{i}. {h}", "body": "b"} for i, h in enumerate(heads, 1)]}
-
-    def test_checkpoint_title_without_a_date_gets_a_note_not_a_block(self) -> None:
-        notes: list[str] = []
-        issues = editorial_title.collect_issues(self._doc("외국인이 넉 달 만에 돌아왔습니다, 그런데 파는 종목도 있습니다"),
-                                                kind="기준표", notes_out=notes)
-        self.assertEqual(issues, [])
-        self.assertTrue(any("확인 날짜" in n for n in notes), notes)
-
-    def test_dated_title_has_no_note(self) -> None:
-        notes: list[str] = []
-        editorial_title.collect_issues(self._doc("SK하이닉스 지금 사도 될까? 10월 27일에 갈린다"), kind="기준표", notes_out=notes)
-        self.assertFalse(any("확인 날짜" in n for n in notes), notes)
-
-    def test_daily_titles_are_not_nagged(self) -> None:
-        notes: list[str] = []
-        editorial_title.collect_issues(self._doc("외국인이 넉 달 만에 돌아왔습니다, 그런데 파는 종목도 있습니다"),
-                                       kind="시황", min_sections=1, notes_out=notes)
-        self.assertFalse(any("확인 날짜" in n for n in notes), notes)
-
-
 if __name__ == "__main__":
     unittest.main()

@@ -83,7 +83,7 @@ class GateTest(unittest.TestCase):
         sections[3]["graphic"] = {"kind": "investor_flows", "values": {"외국인": 6482, "개인": -13333},
                                   "source": "아시아경제 마감 집계"}
         sections[4]["photo"] = {"ticker": "005930"}
-        issues, summary = self._run(_doc("대우건설이 이틀째 오른 날, 코스피는 7,000선을 넘지 못했습니다", sections))
+        issues, summary = self._run(_doc("대우건설 8.47% 급등, 코스피는 왜 7,000선을 넘지 못했을까", sections))
         self.assertEqual(issues, [], issues)
         self.assertTrue(any("시각자료 5개" in line for line in summary), summary)
 
