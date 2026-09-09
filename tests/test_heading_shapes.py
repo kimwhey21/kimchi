@@ -52,6 +52,14 @@ class HeadlineShapeTest(unittest.TestCase):
         for word in ("되밀", "갈린 반응", "물러나자", "돈이 간 곳"):
             self.assertTrue(any(word in i for i in issues), word)
 
+    def test_pressed_and_split_ratio_wording_is_blocked(self) -> None:
+        """2026-09-09 사용자: '등락률이 세 배 갈렸습니다', '반대로 눌렸습니다'는 다신 안 쓴다."""
+        doc = {"title": "유가 급등에 다우가 밀린 날, 반도체는 승자가 바뀌었습니다",
+               "narrative": [{"heading": "1. 다우와 나스닥, 등락률이 세 배 갈렸습니다", "body": "마이크론은 반대로 눌렸습니다."}]}
+        issues = editorial_quality.collect_issues(doc)
+        self.assertTrue(any("갈리지" in i for i in issues), issues)
+        self.assertTrue(any("눌리다" in i for i in issues), issues)
+
     @unittest.skipUnless(CORPUS.exists(), "벤치마크 코퍼스는 이 컴퓨터에만 있습니다")
     def test_false_positive_rate_on_benchmark_headings(self) -> None:
         heads = []
