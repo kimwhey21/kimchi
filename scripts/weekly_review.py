@@ -26,6 +26,8 @@ from pathlib import Path
 
 import yaml
 
+from src import editorial_title
+
 ROOT = Path(__file__).resolve().parent.parent
 REPORTS = ROOT / "reports"
 _PCT = re.compile(r"\d+(?:\.\d+)?\s*%")
@@ -71,6 +73,11 @@ def _post_stats(doc: dict) -> dict:
         "has_check": bool(((ko.get("closing") or {}).get("check") or {}).get("due")),
         "has_review": bool(doc.get("review")),
         "beginner": "초보자" in plain, "institution": bool(_INSTITUTION.search(plain)),
+        # 같은 틀 반복(2026-09-09, 네 번째 지적) — 제목의 끝말·대비 꼴, 소제목의 문장 비율
+        "title_last": editorial_title.last_word(title),
+        "title_contrast": editorial_title.title_frame(title)["contrast"],
+        "sentence_pct": round(100 * sum(1 for h in headings if editorial_title.heading_shape(h).endswith("문장"))
+                              / len(headings)) if headings else 0,
     }
 
 
@@ -141,6 +148,16 @@ def render(data: dict) -> tuple[str, str]:
                   f"- 어제 판정 있음: {pct('has_review')}%",
                   f"- 초보자 설명 있음: {pct('beginner')}%",
                   f"- 증권사·기관 인용 있음: {pct('institution')}%", ""]
+    if d:
+        by_market: dict[str, list[dict]] = {}
+        for r in sorted(d, key=lambda r: r["date"]):
+            by_market.setdefault(str(r["market"]), []).append(r)
+        repeats = sum(1 for rows in by_market.values() for a, b in zip(rows, rows[1:]) if a["title_last"] == b["title_last"])
+        contrast = sum(1 for r in d if r["title_contrast"])
+        lines += ["## 같은 틀 반복 (2026-09-09부터 잰다)", "",
+                  f"- 바로 앞 글과 같은 말로 끝난 제목: {repeats}건 (0이어야 한다)",
+                  f"- 대비 꼴(`…했는데 …는 오히려`) 제목: {contrast}편 / {len(d)}편 (재테크농부 104편 중 4편)",
+                  f"- 소제목 중 문장(`~습니다`·`~다`) 비율 중앙값: {_med(d, 'sentence_pct')}% (재테크농부 절반 안팎, 관문은 60%까지)", ""]
     judged = data["judged"]
     if judged:
         hit = judged.count("hit"); mixed = judged.count("mixed"); miss = judged.count("miss")

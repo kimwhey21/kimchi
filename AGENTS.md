@@ -73,6 +73,10 @@
     `POST /wp-json/wp-super-cache/v1/cache {"delete_cache": true}`로
     캐시를 지워야 변경사항이 바로 보인다.
 
+- **같은 틀 반복이 진짜 원인이었다(2026-09-09, 네 번째 지적).** 낱개 규칙을 다 지켜도 제목은 대비형·이유형뿐,
+  소제목은 열에 아홉이 `~습니다`였다. 관문이 최근 글과 뼈대를 대조해 막는다(`editorial_title.frame_issues`·
+  `heading_mix_issues`). 쓰기 전에 `python -m scripts.recent_titles <kr|us|checkpoint|preview>`를 돌려 읽는다.
+
 ## 비용/자동 발행 원칙
 
 - **기본 자동 발행은 외부 생성형 AI API를 호출하지 않는다.** `src/generate_free.py`가

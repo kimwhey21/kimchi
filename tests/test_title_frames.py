@@ -84,3 +84,44 @@ class HeadingMixTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GateWiringTest(unittest.TestCase):
+    """관문이 실제로 최근 글을 넘기는지 — 이 배선이 빠지면 규칙은 있어도 아무것도 막지 않는다."""
+
+    def test_feature_gate_recent_titles_excludes_itself(self) -> None:
+        import json
+        from pathlib import Path
+        from src import feature_gate
+        path = Path("editorial/features/kr_2026-09-06_hynix_per.json")
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        titles = feature_gate.recent_titles(doc, path)
+        self.assertTrue(titles)
+        self.assertNotIn(doc["ko"]["title"], titles)
+        self.assertLessEqual(len(titles), 5)
+
+    def test_daily_gate_passes_previous_titles(self) -> None:
+        from unittest.mock import patch
+        from src import editorial_gate, editorial_judgment
+        seen: dict = {}
+        real = editorial_title.collect_issues
+
+        def spy(doc, price_data=None, **kwargs):
+            seen["recent"] = kwargs.get("recent_titles")
+            return real(doc, price_data, **kwargs)
+
+        previous = [{"ko": {"title": "고용지표에 지수는 하락했는데 메모리 반도체만 오른 이유"}}]
+        with patch.object(editorial_judgment, "previous_manuscripts", return_value=previous), \
+             patch.object(editorial_judgment, "previous_manuscript", return_value=None), \
+             patch.object(editorial_gate.editorial_title, "collect_issues", side_effect=spy):
+            try:
+                editorial_gate.run(__import__("pathlib").Path("editorial/kr_2026-09-08.json"))
+            except Exception:  # noqa: BLE001 - 렌더 실패 여부는 이 테스트의 관심이 아니다
+                pass
+        self.assertEqual(seen.get("recent"), ["고용지표에 지수는 하락했는데 메모리 반도체만 오른 이유"])
+
+    def test_recent_titles_script_lists_what_to_avoid(self) -> None:
+        from scripts import recent_titles
+        out = recent_titles.render("checkpoint")
+        self.assertIn("피할 것", out)
+        self.assertIn("끝내지 않기", out)

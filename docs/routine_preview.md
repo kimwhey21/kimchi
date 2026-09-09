@@ -51,6 +51,8 @@
    - `kind` "feature", `series` "프리뷰", `date` KST 오늘, `slug` `us-<date>-preview`,
      `category_id` 121(Daily), `related` 2개(어제 미국장 글 + 관련 기준표. 주소는
      `https://fermata.it.kr/wp-json/wp/v2/posts?search=<낱말>&_fields=title,link`로 확인)
+   - 제목을 짓기 전에 `python -m scripts.recent_titles preview`로 최근 프리뷰 제목을 읽습니다 —
+     끝말·꼴이 겹치면 관문이 막습니다(2026-09-09, 같은 틀 반복 금지).
    - `ko.title`: **앞을 보는 제목** — 오늘 밤 무엇이 무엇을 정하는지. 규칙은
      `docs/editorial-style.md` 「제목 문법」 하나뿐입니다(2026-09-08 개정, 모든 글 공통): 이야기 하나,
      등락률은 많아야 하나(없어도 됨), 종목 둘을 나란히 세우지 않음, 20~35자, 꼬리표
