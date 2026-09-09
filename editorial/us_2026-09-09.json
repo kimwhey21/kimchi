@@ -1162,8 +1162,8 @@
         "ticker": "GC=F",
         "name": "국제 금",
         "name_en": "Gold",
-        "price": 4446.4,
-        "change_pct": 1.19,
+        "price": 4446.6,
+        "change_pct": 1.2,
         "series": [
           4478.1001,
           4431.1001,
@@ -1172,7 +1172,7 @@
           4491.7002,
           4429.7998,
           4393.8999,
-          4446.3999
+          4446.6001
         ],
         "history": {
           "dates": [
@@ -1317,7 +1317,7 @@
             4491.7002,
             4429.7998,
             4393.8999,
-            4446.3999
+            4446.6001
           ]
         },
         "unit": "달러",
@@ -3819,8 +3819,8 @@
         "ticker": "CL=F",
         "name": "WTI 원유",
         "name_en": "WTI Crude Oil",
-        "price": 97.15,
-        "change_pct": 4.43,
+        "price": 97.05,
+        "change_pct": 4.32,
         "series": [
           83.4,
           85.76,
@@ -3829,7 +3829,7 @@
           91.3,
           91.48,
           93.03,
-          97.15
+          97.05
         ],
         "history": {
           "dates": [
@@ -3974,7 +3974,7 @@
             91.3,
             91.48,
             93.03,
-            97.15
+            97.05
           ]
         },
         "unit": "",
@@ -4128,7 +4128,7 @@
         "unit": "",
         "trading_date": "2026-09-09",
         "source": "dynamic",
-        "trading_value": 17764296119.7,
+        "trading_value": 17766291881.0,
         "sector": "Technology"
       },
       "SNDK": {
@@ -4296,7 +4296,7 @@
         "unit": "",
         "trading_date": "2026-09-09",
         "source": "dynamic",
-        "trading_value": 16836042372.74,
+        "trading_value": 16846636213.59,
         "sector": "Technology"
       },
       "AMD": {
@@ -4464,7 +4464,7 @@
         "unit": "",
         "trading_date": "2026-09-09",
         "source": "dynamic",
-        "trading_value": 11517497026.550001,
+        "trading_value": 11518321919.935001,
         "sector": "Technology"
       },
       "AVGO": {
@@ -4632,7 +4632,7 @@
         "unit": "",
         "trading_date": "2026-09-09",
         "source": "dynamic",
-        "trading_value": 9426243509.46,
+        "trading_value": 9426589306.08,
         "sector": "Technology"
       },
       "GOOG": {
@@ -4800,7 +4800,7 @@
         "unit": "",
         "trading_date": "2026-09-09",
         "source": "dynamic",
-        "trading_value": 6333995722.08,
+        "trading_value": 6334490262.36,
         "sector": "Technology"
       },
       "MRVL": {
@@ -4968,7 +4968,7 @@
         "unit": "",
         "trading_date": "2026-09-09",
         "source": "dynamic",
-        "trading_value": 4802198100.16,
+        "trading_value": 4802516773.72,
         "sector": "Technology"
       }
     },
@@ -4976,7 +4976,7 @@
     "missing": []
   },
   "ko": {
-    "title": "WTI 원유 4.43% 급등, 뉴욕증시 사흘째 하락",
+    "title": "WTI 원유 4.32% 급등, 뉴욕증시 사흘째 하락",
     "narrative": [
       {
         "heading": "오늘 투자심리",
@@ -4998,7 +4998,7 @@
       },
       {
         "heading": "숫자로 본 오늘",
-        "body": "WTI 원유는 4.43% 오른 배럴당 97.15달러로 마감했습니다. 국제 지표인 브렌트유는 장중 배럴당 100달러를 넘어섰다고 CNBC가 전했습니다. 10년물 국채금리는 0.65% 오른 4.84%, 30년물은 0.42% 오른 5.29%를 기록했습니다.\n\nVIX는 4.71% 오른 16.46으로, 헤지 수요가 늘었다는 신호입니다. 국제 금값은 1.19% 오른 온스당 4,446.40달러로 안전자산 선호도 함께 나타났습니다.",
+        "body": "WTI 원유는 4.32% 오른 배럴당 97.05달러로 마감했습니다. 국제 지표인 브렌트유는 장중 배럴당 100달러를 넘어섰다고 CNBC가 전했습니다. 10년물 국채금리는 0.65% 오른 4.84%, 30년물은 0.42% 오른 5.29%를 기록했습니다.\n\nVIX는 4.71% 오른 16.46으로, 헤지 수요가 늘었다는 신호입니다. 국제 금값은 1.20% 오른 온스당 4,446.60달러로 안전자산 선호도 함께 나타났습니다.",
         "graphic": {
           "kind": "number_cards",
           "title": "9월 9일, 유가·금리·변동성",
@@ -5008,12 +5008,12 @@
             "^VIX",
             "GC=F"
           ],
-          "note": "10년물 금리 4.84% · VIX 16.46 · 국제 금 4,446.40달러"
+          "note": "10년물 금리 4.84% · VIX 16.46 · 국제 금 4,446.60달러"
         }
       },
       {
         "heading": "호르무즈 충돌이 유가를 다시 밀어 올렸습니다",
-        "body": "이란은 미국이 이란 유조선 다섯 척을 파괴한 데 대한 보복으로 호르무즈 해협에서 선박 10척을 공격했다고 밝혔습니다. 미국과 이란의 충돌은 이제 일곱 달째 이어지고 있습니다.\n\n골드만삭스는 걸프 지역 원유 생산이 전쟁 전보다 하루 400만 배럴 부족한 상태가 계속되고 호르무즈 해협 공격이 더 잦아지면 2027년 브렌트유가 배럴당 120달러를 넘어설 수 있다고 경고했습니다. 저희가 보는 WTI(CL=F)는 오늘 4.43% 올라 97.15달러를 기록했습니다.",
+        "body": "이란은 미국이 이란 유조선 다섯 척을 파괴한 데 대한 보복으로 호르무즈 해협에서 선박 10척을 공격했다고 밝혔습니다. 미국과 이란의 충돌은 이제 일곱 달째 이어지고 있습니다.\n\n골드만삭스는 걸프 지역 원유 생산이 전쟁 전보다 하루 400만 배럴 부족한 상태가 계속되고 호르무즈 해협 공격이 더 잦아지면 2027년 브렌트유가 배럴당 120달러를 넘어설 수 있다고 경고했습니다. 저희가 보는 WTI(CL=F)는 오늘 4.32% 올라 97.05달러를 기록했습니다.",
         "graphic": {
           "kind": "price_history",
           "ticker": "CL=F",
@@ -5109,7 +5109,7 @@
       },
       {
         "heading": "다음 한국장으로 넘어갈 연결고리",
-        "body": "오늘 미국 시장이 남긴 연결고리는 두 갈래입니다. 하나는 메모리 반도체 강세가 이어지는지 — 마이크론이 오르고 DB금융투자가 SK하이닉스 목표주가를 올린 것이 같은 방향입니다. 다른 하나는 유가입니다. WTI가 4.43% 오른 채로 마감했고, 브렌트유는 100달러를 넘어섰다는 소식이 있어 원화·수입물가에 부담이 될 수 있습니다.\n\n메타·알파벳처럼 개별 기업 재료로 갈린 종목들은 한국 시장에 직접적인 연결고리는 약하지만, AI 소비자 서비스 경쟁이 다음 라운드로 넘어갔다는 신호로는 참고할 만합니다."
+        "body": "오늘 미국 시장이 남긴 연결고리는 두 갈래입니다. 하나는 메모리 반도체 강세가 이어지는지 — 마이크론이 오르고 DB금융투자가 SK하이닉스 목표주가를 올린 것이 같은 방향입니다. 다른 하나는 유가입니다. WTI가 4.32% 오른 채로 마감했고, 브렌트유는 100달러를 넘어섰다는 소식이 있어 원화·수입물가에 부담이 될 수 있습니다.\n\n메타·알파벳처럼 개별 기업 재료로 갈린 종목들은 한국 시장에 직접적인 연결고리는 약하지만, AI 소비자 서비스 경쟁이 다음 라운드로 넘어갔다는 신호로는 참고할 만합니다."
       }
     ],
     "outlook": {
@@ -5226,7 +5226,7 @@
     ]
   },
   "en": {
-    "title": "WTI Crude Jumps 4.4%, Wall Street Falls for a Third Day",
+    "title": "WTI Crude Jumps 4.3%, Wall Street Falls for a Third Day",
     "narrative": [
       {
         "heading": "Today's mood",
@@ -5248,7 +5248,7 @@
       },
       {
         "heading": "Today by the numbers",
-        "body": "WTI crude closed up 4.43% at $97.15 a barrel. Brent, the international benchmark, crossed $100 a barrel intraday, CNBC reported. The 10-year Treasury yield rose 0.65% to 4.84%, and the 30-year rose 0.42% to 5.29%.\n\nThe VIX jumped 4.71% to 16.46, a sign hedging demand picked up. Gold rose 1.19% to $4,446.40 an ounce, another safe-haven signal.",
+        "body": "WTI crude closed up 4.32% at $97.05 a barrel. Brent, the international benchmark, crossed $100 a barrel intraday, CNBC reported. The 10-year Treasury yield rose 0.65% to 4.84%, and the 30-year rose 0.42% to 5.29%.\n\nThe VIX jumped 4.71% to 16.46, a sign hedging demand picked up. Gold rose 1.20% to $4,446.60 an ounce, another safe-haven signal.",
         "graphic": {
           "kind": "number_cards",
           "title": "Sept. 9: oil, rates, volatility",
@@ -5258,12 +5258,12 @@
             "^VIX",
             "GC=F"
           ],
-          "note": "10-year yield 4.84% · VIX 16.46 · gold $4,446.40"
+          "note": "10-year yield 4.84% · VIX 16.46 · gold $4,446.60"
         }
       },
       {
         "heading": "The Strait of Hormuz pushed oil higher again",
-        "body": "Iran said it struck 10 ships in the Strait of Hormuz in retaliation for the US destroying five Iranian oil tankers. The US-Iran conflict is now in its seventh month.\n\nGoldman Sachs warned that if Gulf oil output stays about 4 million barrels a day below pre-war levels and attacks on shipping keep intensifying, Brent could top $120 a barrel in 2027. WTI, the benchmark we track, rose 4.43% to $97.15 today.",
+        "body": "Iran said it struck 10 ships in the Strait of Hormuz in retaliation for the US destroying five Iranian oil tankers. The US-Iran conflict is now in its seventh month.\n\nGoldman Sachs warned that if Gulf oil output stays about 4 million barrels a day below pre-war levels and attacks on shipping keep intensifying, Brent could top $120 a barrel in 2027. WTI, the benchmark we track, rose 4.32% to $97.05 today.",
         "graphic": {
           "kind": "price_history",
           "ticker": "CL=F",
@@ -5359,7 +5359,7 @@
       },
       {
         "heading": "What carries into the next KOSPI session",
-        "body": "Today's US session leaves two threads. One is whether memory-chip strength continues — Micron's gain and DB Financial Investment's SK Hynix target hike point the same way. The other is oil: WTI closed up 4.43%, and reports that Brent topped $100 could pressure the won and import costs.\n\nThe Meta-Alphabet divergence was driven by company-specific news rather than anything with a direct Korea link, but it's a signal that the next round of AI consumer-product competition has begun."
+        "body": "Today's US session leaves two threads. One is whether memory-chip strength continues — Micron's gain and DB Financial Investment's SK Hynix target hike point the same way. The other is oil: WTI closed up 4.32%, and reports that Brent topped $100 could pressure the won and import costs.\n\nThe Meta-Alphabet divergence was driven by company-specific news rather than anything with a direct Korea link, but it's a signal that the next round of AI consumer-product competition has begun."
       }
     ],
     "outlook": {
