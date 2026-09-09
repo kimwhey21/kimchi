@@ -61,13 +61,13 @@
      예: `오늘 밤 미국장, 8월 물가가 반도체 랠리의 두 번째 근거를 정한다`,
      `오늘 밤 미국장, 유가 6주 최고치가 반도체 랠리를 흔들까?`
    - `ko.narrative` 3절: **1. 오늘 밤 일정**(회사·지표·시각 KST) **2. 어제에서 이어지는
-     쟁점과 가격대** **3. 확인할 것 셋**(무엇이 나오면 무엇을 본다). 본문에 날짜
+     쟁점과 가격대** **3. 확인할 것 세 가지**(무엇이 나오면 무엇을 본다). 본문에 날짜
      (`N월 N일`)를 씁니다. 소제목은 **32자 이하**, 절반쯤은 명사구(`오늘 밤 일정`,
      `금요일에서 이어지는 것`) — 관문이 32자를 넘으면 막습니다.
    - `ko.closing`: heading `Fermata's Take`, 두 문장.
    - `graphics` **3~4장**: `{"kind": "cover", "featured": true, ...}`(표지 — 오늘 밤 핵심
      하나), `calendar_strip`(`section` 0, 오늘 밤 일정 KST), `checklist`(`section` 2,
-     확인할 것 셋). 인자 형식은 예시 원고와 `src/feature_graphics.py`.
+     확인할 것 세 가지). 인자 형식은 예시 원고와 `src/feature_graphics.py`.
    - **가격대 절(2절)에는 3개월 흐름을 붙입니다**(2026-09-08, 사용자가 고른 시안):
      `{"kind": "price_history", "section": 1, "price_file": "data/price_us_<가장 최근>.json",
      "args": {"ticker": "^GSPC", "title": "S&P500, 사상 최고치 아래 1%", "guide": 7000,
