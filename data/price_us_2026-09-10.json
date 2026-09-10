@@ -1159,8 +1159,8 @@
       "ticker": "GC=F",
       "name": "국제 금",
       "name_en": "Gold",
-      "price": 4362.0,
-      "change_pct": -1.22,
+      "price": 4361.4,
+      "change_pct": -1.24,
       "series": [
         4431.1001,
         4348.0,
@@ -1169,7 +1169,7 @@
         4429.7998,
         4393.8999,
         4416.0,
-        4362.0
+        4361.3999
       ],
       "history": {
         "dates": [
@@ -1314,7 +1314,7 @@
           4429.7998,
           4393.8999,
           4416.0,
-          4362.0
+          4361.3999
         ]
       },
       "unit": "달러",
@@ -3816,8 +3816,8 @@
       "ticker": "CL=F",
       "name": "WTI 원유",
       "name_en": "WTI Crude Oil",
-      "price": 104.04,
-      "change_pct": 8.32,
+      "price": 104.0,
+      "change_pct": 8.28,
       "series": [
         85.76,
         90.22,
@@ -3826,7 +3826,7 @@
         91.48,
         93.03,
         96.05,
-        104.04
+        104.0
       ],
       "history": {
         "dates": [
@@ -3971,7 +3971,7 @@
           91.48,
           93.03,
           96.05,
-          104.04
+          104.0
         ]
       },
       "unit": "",
@@ -4127,7 +4127,7 @@
       "unit": "",
       "trading_date": "2026-09-10",
       "source": "dynamic",
-      "trading_value": 17538000970.8,
+      "trading_value": 17544222011.74,
       "sector": "Technology"
     },
     "SNDK": {
@@ -4295,7 +4295,7 @@
       "unit": "",
       "trading_date": "2026-09-10",
       "source": "dynamic",
-      "trading_value": 14679575796.32,
+      "trading_value": 14694033900.099998,
       "sector": "Technology"
     },
     "AVGO": {
@@ -4463,7 +4463,7 @@
       "unit": "",
       "trading_date": "2026-09-10",
       "source": "dynamic",
-      "trading_value": 8641555196.32,
+      "trading_value": 8642827482.9,
       "sector": "Technology"
     },
     "ORCL": {
@@ -4631,7 +4631,7 @@
       "unit": "",
       "trading_date": "2026-09-10",
       "source": "dynamic",
-      "trading_value": 8445402317.22,
+      "trading_value": 8484170313.12,
       "sector": "Technology"
     },
     "AMD": {
@@ -4799,7 +4799,7 @@
       "unit": "",
       "trading_date": "2026-09-10",
       "source": "dynamic",
-      "trading_value": 8035771458.0,
+      "trading_value": 8036925709.200001,
       "sector": "Technology"
     },
     "GOOG": {
@@ -4967,7 +4967,7 @@
       "unit": "",
       "trading_date": "2026-09-10",
       "source": "dynamic",
-      "trading_value": 5414915010.96,
+      "trading_value": 5415738673.23,
       "sector": "Technology"
     }
   },
