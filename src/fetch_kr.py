@@ -80,7 +80,34 @@ def _fetch_naver_index_quotes() -> dict[str, dict]:
     return {item.get("cd"): item for item in datas if item.get("cd")}
 
 
-def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None) -> dict:
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+
+
+def _latest_committed_index(ticker: str, before: str, data_dir: Path | None = None) -> dict | None:
+    """우리가 이미 커밋한 가장 최근 시세 파일(오늘 이전)의 지수 항목.
+
+    2026-09-10: FinanceDataReader의 코스피·코스닥 일봉이 09-07에서 사흘째 멈춰 있었다(개별
+    종목은 09-10까지 정상). 하루 지연만 메우던 등식 보정은 전일 종가를 일봉 마지막 행에서
+    가져오므로 사흘 공백을 못 메웠고, 워크플로 3회와 예비 루틴이 전부 "기준일 불일치"로
+    멈춰 그날 한국장 글이 빠졌다. 그런데 우리 파일에는 09-08·09-09 종가가 이미 있다 —
+    그날그날 네이버 확정값으로 덧붙인 것이다. 그러니 일봉이 우리 파일보다 뒤처지면 우리
+    파일의 이력을 밑바탕으로 쓰고, 등식은 그 마지막 종가와 맞춘다.
+    """
+    folder = data_dir or DATA_DIR
+    files = sorted(p for p in folder.glob("price_kr_*.json") if p.stem.split("_")[-1] < before)
+    for path in reversed(files):
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        entry = (doc.get("macro") or {}).get(ticker)
+        if entry and entry.get("trading_date") and (entry.get("history") or {}).get("close"):
+            return entry
+    return None
+
+
+def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None,
+                             prior: dict | None = None) -> dict:
     """오늘 거래일 행을 네이버의 장마감 확정값으로 교체하거나, 아직 없으면 덧붙입니다.
 
     두 경우가 있습니다.
@@ -103,6 +130,13 @@ def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None) -> di
     today = dt.date.today().isoformat()
     last = str(entry.get("trading_date") or "")
     code = _NAVER_INDEX_CODES[ticker]
+    if prior and str(prior.get("trading_date") or "") > last and str(prior["trading_date"]) < today:
+        # 일봉이 우리가 이미 커밋한 파일보다 뒤처졌다(2026-09-10, 사흘). 우리 파일의
+        # 이력·종가를 밑바탕으로 쓰고 아래 등식은 그 마지막 종가와 맞춘다.
+        print(f"[안내] {code}: 일봉이 {last}에 머물러 있어 우리 파일({prior['trading_date']})의 이력을 밑바탕으로 씁니다.")
+        entry = {**entry, "price": float(prior["price"]), "series": list(prior.get("series") or entry.get("series") or []),
+                 "history": prior.get("history"), "trading_date": str(prior["trading_date"])}
+        last = str(prior["trading_date"])
     if last == today:
         if not quote or quote.get("ms") != "CLOSE":
             raise ValueError(f"{code}: 장마감 확정 지수(ms=CLOSE)를 아직 확인하지 못했습니다.")
@@ -300,7 +334,8 @@ def fetch_all() -> dict:
             entry = _fetch_one(**row)
             if ticker in _NAVER_INDEX_CODES:
                 entry = _apply_final_index_quote(
-                    entry, ticker, index_quotes.get(_NAVER_INDEX_CODES[ticker])
+                    entry, ticker, index_quotes.get(_NAVER_INDEX_CODES[ticker]),
+                    prior=_latest_committed_index(ticker, dt.date.today().isoformat()),
                 )
             macro[ticker] = entry
         except Exception as exc:  # noqa: BLE001

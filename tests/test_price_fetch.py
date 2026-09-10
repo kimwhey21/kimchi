@@ -137,6 +137,28 @@ class LaggingIndexDailyBarTest(unittest.TestCase):
         quote = {"ms": "OPEN", "nv": 695452, "cv": -4087, "cr": -0.58, "cd": "KOSPI"}
         self.assertEqual(fetch_kr._apply_final_index_quote(entry, "KS11", quote), entry)
 
+    def test_three_day_lag_is_bridged_by_our_own_file(self) -> None:
+        """2026-09-10: 일봉은 09-07에 멈췄는데 우리 파일에는 09-09 종가가 있다 — 그 이력으로 메운다."""
+        today = fetch_kr.dt.date.today()
+        d = lambda n: (today - fetch_kr.dt.timedelta(days=n)).isoformat()
+        stale = {"ticker": "KS11", "price": 6995.39, "change_pct": 4.61, "series": [6687.21, 6995.39],
+                 "trading_date": d(3), "history": {"dates": [d(4), d(3)], "close": [6687.21, 6995.39]}}
+        prior = {"ticker": "KS11", "price": 7051.64, "change_pct": 1.4, "series": [6995.39, 6954.52, 7051.64],
+                 "trading_date": d(1), "history": {"dates": [d(3), d(2), d(1)], "close": [6995.39, 6954.52, 7051.64]}}
+        quote = {"ms": "CLOSE", "nv": 703392, "cv": -1772, "cr": -0.25, "cd": "KOSPI"}
+        result = fetch_kr._apply_final_index_quote(stale, "KS11", quote, prior=prior)
+        self.assertEqual(result["trading_date"], today.isoformat())
+        self.assertEqual(result["price"], 7033.92)
+        self.assertEqual(result["history"]["dates"][-2:], [d(1), today.isoformat()])
+        self.assertEqual(result["history"]["close"][-1], 7033.92)
+
+    def test_prior_file_older_than_the_bar_is_ignored(self) -> None:
+        entry = self._yesterday_entry()
+        prior = {**entry, "trading_date": (fetch_kr.dt.date.today() - fetch_kr.dt.timedelta(days=5)).isoformat(),
+                 "history": {"dates": ["x"], "close": [1.0]}}
+        quote = {"ms": "CLOSE", "nv": 695452, "cv": -4087, "cr": -0.58, "cd": "KOSPI"}
+        self.assertEqual(fetch_kr._apply_final_index_quote(entry, "KS11", quote, prior=prior)["price"], 6954.52)
+
     def test_mismatched_arithmetic_is_not_appended(self) -> None:
         entry = self._yesterday_entry()
         quote = {"ms": "CLOSE", "nv": 695452, "cv": -1000, "cr": -0.14, "cd": "KOSPI"}
