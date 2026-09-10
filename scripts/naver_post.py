@@ -92,7 +92,12 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         category = "Checkpoint"
         tags = list(FIXED_TAGS["feature"])
     base_title = str(ko.get("title", ""))
-    title = f"{prefix} | {base_title}" if ":" in base_title else f"{prefix}: {base_title}"   # 콜론이 겹치지 않게
+    if not is_daily and "체크포인트" in base_title:
+        title = base_title                                   # 제목에 이미 '체크포인트'가 있으면 머리를 안 붙인다
+    elif ":" in base_title:
+        title = f"{prefix} | {base_title}"                   # 콜론이 겹치지 않게
+    else:
+        title = f"{prefix}: {base_title}"
     blocks: list[tuple[str, str]] = []
     take = _plain((ko.get("closing") or {}).get("body", ""))
     if take:

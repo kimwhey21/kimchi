@@ -22,7 +22,8 @@ class BuildTest(unittest.TestCase):
     def test_checkpoint_post_goes_to_checkpoint_category(self) -> None:
         post = naver_post.build(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json"))
         self.assertEqual(post["category"], "Checkpoint")
-        self.assertTrue(post["title"].startswith("투자 체크포인트"))
+        self.assertIn("체크포인트", post["title"])
+        self.assertEqual(post["title"].count("체크포인트"), 1)
         self.assertEqual(post["blocks"][-1][1], "https://fermata.it.kr/kr-2026-09-08-foreign-buying-reversal/")
 
 
