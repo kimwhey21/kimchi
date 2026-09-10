@@ -27,5 +27,12 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(post["blocks"][-1][1], "https://fermata.it.kr/kr-2026-09-08-foreign-buying-reversal/")
 
 
+    def test_preview_goes_to_daily_with_a_dated_prefix(self) -> None:
+        post = naver_post.build(Path("editorial/previews/us_2026-09-10.json"))
+        self.assertEqual(post["category"], "시황")
+        self.assertIn("9월 10일", post["title"].split("|")[0] if "|" in post["title"] else post["title"].split(":")[0])
+        self.assertTrue(post["blocks"][-1][1].endswith("-preview/"))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -85,6 +85,13 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         url = f"https://fermata.it.kr/editorial-{market}-{date_str}-ko/"
         category = "시황"
         tags = list(FIXED_TAGS[market])
+    elif doc.get("series") == "프리뷰":
+        # 2026-09-10 사용자: "켜라, 카테고리는 시황에 넣고 날짜 붙여" — 지난 글이 검색에 걸려도 날짜가 보이게
+        prefix = "오늘 밤 미국장 프리뷰 " + _kdate(date_str)
+        slug = doc.get("slug") or f"us-{date_str}-preview"
+        url = f"https://fermata.it.kr/{slug}/"
+        category = "시황"
+        tags = ["미국증시", "미국장프리뷰", "주식시황", "페르마타"]
     else:
         prefix = "투자 체크포인트"
         slug = doc.get("slug") or Path(path).stem.replace("_", "-", 1).replace("_", "-")
@@ -92,7 +99,9 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         category = "Checkpoint"
         tags = list(FIXED_TAGS["feature"])
     base_title = str(ko.get("title", ""))
-    if not is_daily and "체크포인트" in base_title:
+    if doc.get("series") == "프리뷰" and base_title.startswith("오늘 밤 미국장"):
+        title = f"미국장 프리뷰 {_kdate(date_str)} | {base_title}"
+    elif not is_daily and "체크포인트" in base_title:
         title = base_title                                   # 제목에 이미 '체크포인트'가 있으면 머리를 안 붙인다
     elif ":" in base_title:
         title = f"{prefix} | {base_title}"                   # 콜론이 겹치지 않게
