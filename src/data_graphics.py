@@ -726,7 +726,16 @@ def investor_flows(price_data: dict, output_path: Path, values: dict, source: st
         lf = _font(26, True)
         if v >= 0:
             d.rounded_rectangle([cx, y, cx + width, y + 44], 8, fill=color)
-            d.text((cx + width + 14, y + 22), label, font=lf, fill=color, anchor="lm")
+            # 막대가 캔버스 오른쪽 끝에 가까우면 라벨을 막대 안쪽으로 넣습니다 — 그렇지
+            # 않으면 순매수 값이 span(최댓값)에 가까운 날 라벨이 캔버스 밖으로 잘립니다
+            # (2026-09-11 실측: "+24,259억"의 "억"이 잘려 나갔습니다).
+            if cx + width + 14 + d.textlength(label, font=lf) > W - 12:
+                if width > d.textlength(label, font=lf) + 24:
+                    d.text((cx + width - 12, y + 22), label, font=lf, fill=PANEL, anchor="rm")
+                else:
+                    d.text((W - 12, y + 22), label, font=lf, fill=color, anchor="rm")
+            else:
+                d.text((cx + width + 14, y + 22), label, font=lf, fill=color, anchor="lm")
         else:
             d.rounded_rectangle([cx - width, y, cx, y + 44], 8, fill=color)
             if width > d.textlength(label, font=lf) + 24:
