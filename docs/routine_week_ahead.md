@@ -55,7 +55,8 @@
    어제 주간 결산과 금요일 시황이 남긴 질문에 날짜를 붙입니다.
 4. **원고.** `editorial/weekly/ahead_<오늘>.json`. 기준표와 같은 스키마에 다음 필드:
    - `kind` "feature", `series` "다음 주 일정", `date` KST 오늘(일요일), `slug` `week-ahead-<오늘>`,
-     `category_id` 433(Weekly — 2026-09-12 사용자 결정, 홈 탭 Weekly), `period` `{"start": "<다음 주 월요일>", "end": "<다음 주 금요일>"}`
+     `category_id` 433(Weekly — 2026-09-12 사용자 결정, 홈 탭 Weekly), `tags`(검색어 2~4개 — 다음 주 주인공
+     회사·지표 이름; 나머지는 `src/post_tags.py`가 글에서 뽑습니다), `period` `{"start": "<다음 주 월요일>", "end": "<다음 주 금요일>"}`
      (글 머리말 `다음 주 일정 · 9월 14일~18일`이 이 값으로 그려집니다), `related` 2~3개(어제 주간 결산
      `https://fermata.it.kr/weekly-review-<어제>/`, 금요일 시황 — 주소는
      `https://fermata.it.kr/wp-json/wp/v2/posts?search=<낱말>&_fields=title,link`로 확인).

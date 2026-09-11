@@ -77,7 +77,8 @@
    마지막 날짜. 글 머리말 `Checkpoint · N월 N일까지 확인할 것`이 이 값으로 그려지고 관문이
    확인합니다), 표지 `cover`의 `kicker`는 `Checkpoint · <날짜>`,
    `related`(기존 글 2~3편, `https://fermata.it.kr/wp-json/wp/v2/posts?search=<낱말>&_fields=title,link`로
-   찾은 실제 주소만), `ko.title`, `ko.narrative` 6~7절(절 골격은 feature-style 4절,
+   찾은 실제 주소만), `tags`(검색어 2~4개 — 이 글의 회사 이름과 주제어, 예: `["인텔", "내부자매수", "실적발표"]`.
+   나머지 태그는 `src/post_tags.py`가 글에서 뽑아 12~15개로 채웁니다, 2026-09-12), `ko.title`, `ko.narrative` 6~7절(절 골격은 feature-style 4절,
    본문에 **확인 날짜**를 박습니다), `ko.closing`(heading은 `Fermata's Take`),
    `graphics` 6장 이상(각각 `section` 번호, 두 소제목마다 하나 이상).
 5. **표지 사진.** `python -m src.photo_search --sheet cover --source unsplash "<회사 영어명 + 제품·현장>" "<업종 영어명>"`

@@ -51,6 +51,7 @@ from src import (  # noqa: E402
     publish_wordpress,
     render_html,
 )
+from src import post_tags  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 EDITORIAL_DIR = ROOT / "editorial"
@@ -586,7 +587,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         ko["title"],
         html_ko,
         excerpt=_excerpt(ko, lead=_seo_lead(market, date_str)),
-        tags=_KO_TAGS,
+        tags=post_tags.build_tags(doc),   # 글에서 뽑은 태그(src/post_tags.py, 2026-09-12) — 전에는 셋이 매일 같았다
         category="Daily",
         image=image_meta,
         slug=f"editorial-{market}-{date_str}-ko",

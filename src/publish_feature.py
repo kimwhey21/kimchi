@@ -14,7 +14,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from src import data_graphics, feature_graphics, graphic_checks, publish_wordpress
+from src import data_graphics, feature_graphics, graphic_checks, post_tags, publish_wordpress
 
 # 단독 실행 모듈이라 main.py가 대신 불러 주지 않습니다. 이게 빠져 있으면
 # `is_configured()`가 False가 되어 **조용히 "업로드 안 함"으로 끝납니다** —
@@ -239,7 +239,7 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
     if not isinstance(category_id, int):
         raise ValueError("category_id(언어별 WordPress 숫자 id)가 필요합니다. 이름 생성은 금지합니다.")
     common = dict(lang=doc.get("lang", "ko"), excerpt=_excerpt(ko, lead=_seo_lead(doc)),
-                  tags=doc.get("tags") or [], category=category_id,
+                  tags=post_tags.build_tags(doc), category=category_id,   # 원고의 tags + 글에서 뽑은 태그(2026-09-12)
                   featured_media_id=featured_id, focus_keyword=doc.get("focus_keyword"))
     if existing:
         # status=None은 공개·비공개 어느 상태도 바꾸지 않는다. live일 때만 공개로 올린다.

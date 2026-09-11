@@ -22,6 +22,8 @@ import re
 import sys
 from pathlib import Path
 
+from src import post_tags
+
 ROOT = Path(__file__).resolve().parent.parent
 FIXED_TAGS = {"kr": ["코스피", "주식시황", "코스피마감", "페르마타"],
               "us": ["미국증시", "주식시황", "뉴욕증시마감", "페르마타"],
@@ -151,12 +153,8 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks.append(("p", str(check)))
     blocks.append(("p", "업종별 등락, 외국인·기관 수급, 금리·환율 표까지 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
     blocks.append(("p", url))
-    # 그날 태그: 주인공 종목명·워치리스트 이름 몇 개
-    names = []
-    for entry in ((doc.get("price_data") or {}).get("watchlist") or {}).values():
-        if entry.get("source") == "core" and abs(float(entry.get("change_pct") or 0)) >= 3:
-            names.append(str(entry.get("name")).replace(" ", ""))
-    tags += names[:3]
+    # 태그는 글에서 뽑는다(src/post_tags.py, 2026-09-12): 고정어 + 종목 이름 + 주제어 + 달. 12개까지.
+    tags = post_tags.build_tags(doc)
     return {"title": title, "category": category, "tags": tags, "url": url, "blocks": blocks,
             "source": str(path), "chars": sum(len(b[1]) for b in blocks if b[0] == "p")}
 

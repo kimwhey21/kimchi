@@ -49,7 +49,8 @@
    어제 종가 기준 가격대(지수·주인공 종목)를 적습니다.
 4. **원고.** 기준표와 같은 스키마입니다.
    - `kind` "feature", `series` "프리뷰", `date` KST 오늘, `slug` `us-<date>-preview`,
-     `category_id` 121(Daily), `related` 2개(어제 미국장 글 + 관련 기준표. 주소는
+     `category_id` 121(Daily), `tags`(검색어 2~3개 — 오늘 밤 주인공 회사·지표 이름, 예: `["오라클", "CPI"]`;
+     나머지는 `src/post_tags.py`가 글에서 뽑습니다), `related` 2개(어제 미국장 글 + 관련 기준표. 주소는
      `https://fermata.it.kr/wp-json/wp/v2/posts?search=<낱말>&_fields=title,link`로 확인)
    - 제목을 짓기 전에 `python -m scripts.recent_titles preview`로 최근 프리뷰 제목을 읽습니다 —
      끝말·꼴이 겹치면 관문이 막습니다(2026-09-09, 같은 틀 반복 금지).

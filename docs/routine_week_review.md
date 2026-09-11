@@ -60,7 +60,8 @@
    WebSearch로 매체 2곳이 같은 숫자를 말할 때만 씁니다 — 아니면 쓰지 않습니다.
 4. **원고.** `editorial/weekly/review_<오늘>.json`. 기준표와 같은 스키마에 다음 필드:
    - `kind` "feature", `series` "주간 결산", `date` KST 오늘(토요일), `slug` `weekly-review-<오늘>`,
-     `category_id` 433(Weekly — 2026-09-12 사용자 결정, 홈 탭 Weekly), `period` `{"start": "<월요일>", "end": "<마지막 거래일>"}`
+     `category_id` 433(Weekly — 2026-09-12 사용자 결정, 홈 탭 Weekly), `tags`(검색어 2~4개 — 이 주의 주인공
+     종목·주제어; 나머지는 `src/post_tags.py`가 글에서 뽑습니다), `period` `{"start": "<월요일>", "end": "<마지막 거래일>"}`
      (`weekly_stats` 출력의 `week`와 같게 — 글 머리말 `주간 결산 · 9월 7일~11일`이 이 값으로 그려집니다),
      `related` 2~3개(이번 주 금요일 한국장·미국장 시황: 주소는
      `https://fermata.it.kr/editorial-kr-<날짜>-ko/`·`https://fermata.it.kr/editorial-us-<날짜>-ko/`,
