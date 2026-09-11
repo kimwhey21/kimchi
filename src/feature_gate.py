@@ -13,6 +13,9 @@ from scripts import check_against_benchmark, compare_to_benchmark
 from src import editorial_quality, editorial_title, feature_checks, source_check
 
 ROOT = Path(__file__).resolve().parent.parent
+# 시리즈가 사는 폴더. 같은 목록에 나란히 보이는 최근 제목과 뼈대를 대조할 때 쓴다.
+SERIES_FOLDER = {"기준표": "features", "프리뷰": "previews",
+                 "주간 결산": "weekly", "다음 주 일정": "weekly"}   # 주말 편성(2026-09-12)
 
 
 class FeatureGateError(ValueError):
@@ -23,7 +26,8 @@ def recent_titles(doc: dict, path: Path | None = None, count: int = 5) -> list[s
     """같은 목록에 나란히 보이는 최근 제목들 — 기준표는 Checkpoint 목록(editorial/features),
     프리뷰는 editorial/previews. 이 원고 자신(같은 파일·같은 slug)은 뺀다(2026-09-09)."""
     import json
-    folder = ROOT / "editorial" / ("previews" if doc.get("series") == "프리뷰" else "features")
+    series = str(doc.get("series") or "기준표")
+    folder = ROOT / "editorial" / SERIES_FOLDER.get(series, "features")
     rows: list[tuple[str, str]] = []
     for candidate in sorted(folder.glob("*.json")):
         if path is not None and candidate.resolve() == Path(path).resolve():
@@ -34,6 +38,8 @@ def recent_titles(doc: dict, path: Path | None = None, count: int = 5) -> list[s
             continue
         if doc.get("slug") and other.get("slug") == doc.get("slug"):
             continue
+        if folder.name == "weekly" and str(other.get("series") or "") != series:
+            continue   # 주간 결산과 다음 주 일정은 같은 폴더를 쓰지만 목록(틀 대조)은 시리즈별이다
         title = str((other.get("ko") or {}).get("title", ""))
         if title:
             rows.append((str(other.get("date", "")), title))

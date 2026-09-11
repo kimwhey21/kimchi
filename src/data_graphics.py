@@ -352,17 +352,43 @@ def _movers_style(picked: list[dict], price_data: dict) -> str:
     return "tiles" if _date_ordinal(price_data) % 2 == 0 else "table"
 
 
+def _period_rows(price_data: dict, period_days: int) -> list[dict]:
+    """종목마다 `change_pct`를 하루가 아니라 `period_days` 거래일 등락으로 바꾼 사본.
+
+    주간 결산(2026-09-12)이 쓴다 — 시세 파일의 3개월 이력(`history`)에서 계산하므로 숫자는
+    여전히 전부 시세에서 나온다. 이력이 짧은 종목(그날 편입된 동적 종목 등)은 뺀다.
+    """
+    rows = []
+    for entry in (price_data.get("watchlist") or {}).values():
+        pct = _pct_over(entry, period_days)
+        if pct is None:
+            continue
+        copy = dict(entry)
+        copy["change_pct"] = round(pct, 2)
+        rows.append(copy)
+    return rows
+
+
 def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
-                title: str = "오늘 많이 움직인 종목", style: str | None = None) -> Path:
+                title: str = "오늘 많이 움직인 종목", style: str | None = None,
+                period_days: int | None = None) -> Path:
     """등락 폭 상위 종목 목록 — 세 가지 모양(막대·타일·표) 중 하나.
 
     2026-09-09 사용자가 작은 추이선이 붙은 옛 목록을 "마음에 안 든다"고 해 네 안을 그려
     보였고, 이 셋을 골랐다("상황에 맞게 능동적으로 번갈아 쓰면 좋겠다"). `style`을 주면
     그 모양, 주지 않으면 `_movers_style`이 그날 상황으로 고른다. 그리는 것은 전부 시세
     파일에서 나오므로 틀린 그림이 붙을 수 없다.
+
+    `period_days`(주간 결산은 5)를 주면 하루 등락 대신 그 기간 등락으로 고르고 그린다.
+    이때 표 모양은 열 이름("오늘")이 거짓말이 되므로 쓰지 않는다 — 막대나 타일로 간다.
     """
     ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
-    rows = [e for e in (price_data.get("watchlist") or {}).values() if e.get("change_pct") is not None]
+    if period_days:
+        rows = _period_rows(price_data, int(period_days))
+        if title == "오늘 많이 움직인 종목":
+            title = "이번 주 많이 움직인 종목" if int(period_days) == 5 else f"{period_days}거래일 등락 상위"
+    else:
+        rows = [e for e in (price_data.get("watchlist") or {}).values() if e.get("change_pct") is not None]
     if not rows:
         raise ValueError("movers_list: 등락률이 있는 종목이 없습니다")
     rows.sort(key=lambda e: abs(float(e["change_pct"])), reverse=True)
@@ -374,6 +400,8 @@ def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
         print(f"[안내] movers_list: 모르는 style {style!r} — {MOVERS_STYLES} 중 상황에 맞는 것으로 그립니다.", file=sys.stderr)
         style = None
     style = style or _movers_style(picked, price_data)
+    if period_days and style == "table":
+        style = "bars" if _movers_style(picked, price_data) == "bars" else "tiles"
     if style == "bars":
         return _movers_bars(picked, output_path, title)
     if style == "tiles":
@@ -749,24 +777,35 @@ def investor_flows(price_data: dict, output_path: Path, values: dict, source: st
 
 def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None = None,
                  items: list[dict] | None = None, title: str = "오늘 시장을 정한 숫자",
-                 subtitle: str = "", note: str = "") -> Path:
+                 subtitle: str = "", note: str = "", period_days: int | None = None) -> Path:
     """지수·환율·유가 같은 숫자 2~4개를 카드로 (2026-09-08, 시안 D).
 
     `tickers`는 시세 파일의 지수·종목(값이 시세에서 나옵니다), `items`는 시세 파일에
     없는 숫자(WTI·금리 등)를 `{"label": "WTI", "value": "93.10달러", "change": "+1.8%"}`
     로 직접 적는 것입니다. 직접 적은 숫자는 본문에서 출처와 함께 설명해야 합니다.
     `note`는 카드 아래 한 줄 — "장중 7,171까지 올랐다가 밀렸습니다".
+    `period_days`(주간 결산은 5)를 주면 하루 등락 대신 그 기간 등락을 "주간 +1.2%"로 적습니다
+    (시세 파일의 3개월 이력에서 계산). 이력이 모자라면 예외로 멈춥니다 — 하루 등락을 주간처럼
+    보이게 두지 않습니다.
     """
     ensure_korean_font()
     cards: list[tuple[str, str, str, str]] = []
     for ticker in tickers or []:
         entry = _entry_for(price_data, ticker)
-        change = float(entry.get("change_pct") or 0)
+        if period_days:
+            over = _pct_over(entry, int(period_days))
+            if over is None:
+                raise ValueError(f"number_cards: {ticker}의 이력이 {period_days}거래일보다 짧습니다")
+            change = float(over)
+            change_text = ("주간 " if int(period_days) == 5 else f"{period_days}일 ") + f"{change:+.2f}%"
+        else:
+            change = float(entry.get("change_pct") or 0)
+            change_text = f"{change:+.2f}%"
         price = float(entry["price"])
         # 지수는 소수점 둘째 자리까지가 관행(6,954.52)이고, 주가·환율은 정수로 읽는다.
         value = (f"{price:,.2f}" if entry.get("_group") == "macro" and not entry.get("unit")
                  else _fmt(price, _unit_for(entry)))
-        cards.append((str(entry.get("name")), value, f"{change:+.2f}%", _color(change)))
+        cards.append((str(entry.get("name")), value, change_text, _color(change)))
     for item in items or []:
         change_text = str(item.get("change", "")).strip()
         color = UP if change_text.startswith("+") else (DOWN if change_text.startswith("-") else FLAT)

@@ -329,10 +329,12 @@
   글을 초안으로 되돌리고, 이미지를 `-2.png`·`-3.png`로 쌓고, 카테고리를 새로
   만들었다.
 - **주말 기준표는 루틴이 쓴다**(2026-09-08, `docs/routine_feature.md`). 토·일 09:00
-  KST에 재료를 뽑아 원고를 커밋하면 `feature_draft.yml`이 **임시저장**으로 올린다.
-  공개는 사람이 "발행"이라고 한 뒤 `python -m src.publish_feature <원고> --publish`
-  한 번이다. 루틴이 고른 표지 사진은 `featured_photo.url`(대조표를 눈으로 보고 고른
-  Unsplash 주소)로 적고 러너가 받는다 — `output/`은 커밋하지 않는다.
+  KST에 재료를 뽑아 원고를 커밋하면 `feature_draft.yml`이 올린다. **2026-09-12부터
+  자동화 스위치가 켜져 있어 커밋 즉시 공개된다**(사용자: "체크포인트는 자동발행으로 바꿔주고
+  바로 오늘부터"). 스위치를 끄면 임시저장으로 돌아가고, 그때 공개는 사람이 "발행"이라고 한 뒤
+  `python -m src.publish_feature <원고> --publish` 한 번이다. 루틴이 고른 표지 사진은
+  `featured_photo.url`(대조표를 눈으로 보고 고른 Unsplash 주소)로 적고 러너가 받는다 —
+  `output/`은 커밋하지 않는다.
 - **기준표 성적표**(`data/scoreboard.yaml` → `src/publish_scoreboard.py` → /scoreboard/ 페이지,
   2026-09-08). 기준표마다 "언제 무엇을 확인할지"를 적고, 날짜가 지나면 실제 결과와
   판정(적중·빗나감·절반·확인 전)을 적는다. 틀린 것도 지우지 않는다 — 계좌인증 대신
@@ -344,9 +346,11 @@
   갱신한다. 관문(`editorial_gate`)이 세 문장 이상의 판단·확인 지점·어제 판정·초보자 설명을
   본다(`src/editorial_judgment.py`). 발행은 막지 않고 경고만 남긴다.
 - **자동화 스위치는 GitHub 저장소 변수 `FERMATA_AUTO_PUBLISH` 하나다.** `true`면 기준표
-  초안이 커밋 즉시 공개되고 성적표 페이지도 처음부터 공개된다. 지금은 꺼져 있어 사람이
-  "발행"이라고 한 뒤 `--publish`로 공개한다. 끝까지 자동화하는 것이 목표이므로 새 발행
-  경로를 만들 때는 이 변수를 같은 뜻으로 읽게 만든다 — 스위치를 여럿 두지 않는다.
+  초안이 커밋 즉시 공개되고 성적표 페이지도 **처음 만들 때부터** 공개된다. **2026-09-12부터
+  `true`다.** 성적표 페이지(724)는 그전에 임시저장으로 만들어져 있어 스위치와 무관하게 보류
+  상태다(`publish_scoreboard`는 있는 페이지의 상태를 건드리지 않는다) — 공개는 사람이 "발행"이라고
+  한 뒤. 끝까지 자동화하는 것이 목표이므로 새 발행 경로를 만들 때는 이 변수를 같은 뜻으로
+  읽게 만든다 — 스위치를 여럿 두지 않는다.
 - **밤 10시 미국장 프리뷰는 시리즈 "프리뷰"로 기준표 파이프라인을 그대로 쓴다**(2026-09-08,
   `docs/routine_preview.md`). 평일 21:30 KST 루틴이 `editorial/previews/us_<날짜>.json`을
   커밋하면 `preview_publish.yml`이 **바로 공개**한다 — 22시가 지나면 가치가 없는 글이라
@@ -354,6 +358,19 @@
   (`feature_checks.SERIES_LIMITS`, `source_check.SERIES_MIN_SOURCES`). 재료는
   `story_material.yml`이 평일 21:10 KST에도 커밋한다. 새 시리즈는 새 파이프라인이 아니라
   이 두 표에 한 줄 더하는 것으로 만든다.
+- **주말 편성**(2026-09-12, 사용자 결정 "1번 2번 해주고 … 바로 오늘부터"): 토 10:00 KST
+  「주간 결산」(`docs/routine_week_review.md`, `editorial/weekly/review_<토요일>.json`, 시리즈
+  "주간 결산")과 일 20:00 KST 「다음 주 일정」(`docs/routine_week_ahead.md`,
+  `editorial/weekly/ahead_<일요일>.json`, 시리즈 "다음 주 일정")은 기준표 파이프라인을 그대로 쓰고
+  `weekly_publish.yml`이 **바로 공개**한다. 지수·종목·환율·금리 숫자는 `python -m scripts.weekly_stats`
+  (시세 파일의 3개월 이력으로 한 주를 센다)에서만 온다 — 검색 결과의 등락률을 옮겨 적지 않는다.
+  그래픽은 `number_cards`·`movers_list`에 `period_days: 5`를 넣어 주간 등락으로 그린다. 문턱은
+  주간 결산 절 5·시각자료 4·출처 2, 다음 주 일정 절 4·시각자료 3·출처 2
+  (`feature_checks.SERIES_LIMITS`·`editorial_title.SECTION_FLOORS`·`source_check.SERIES_MIN_SOURCES`).
+  머리말은 최상위 `period`로 `주간 결산 · 9월 7일~11일`. 거래일 3일 미만인 주는 결산을 쓰지 않는다.
+  근거: 벤치마크(재테크농부)가 다섯 주말 24편 중 토요일 아침 미국장 주간 결산과 일요일 밤
+  "이번주 투자 전략"을 5주 내내 같은 자리에 올렸다. 지난주 판정(맞음·빗나감)은 이 글에 넣지
+  않는다 — 사용자가 아직 정하지 않았다.
 - 그림을 그린 뒤에는 **`Read` 툴로 직접 본다.** 축을 한 종목이 독차지하거나
   이름이 막대와 어긋나는 것은 코드만 봐서는 안 보인다(둘 다 실제로 겪었다).
   `src/graphic_checks.py`가 그림의 데이터와 제목이 어긋나는 것을 잡지만,

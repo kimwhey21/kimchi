@@ -45,7 +45,8 @@ class FeatureRoutineDocTest(unittest.TestCase):
     def test_doc_forbids_publishing_and_names_the_gate(self) -> None:
         text = re.sub(r"\s+", " ", DOC.read_text(encoding="utf-8"))
         self.assertIn("--publish", text)
-        self.assertIn("공개는 사람이 합니다", text)
+        # 2026-09-12부터 자동화 스위치가 켜져 있다 — 루틴은 그 사실을 알고 관문 통과분만 커밋한다.
+        self.assertIn("커밋 즉시 공개", text)
         self.assertIn("src.feature_gate", text)
         self.assertIn("--source unsplash", text)
         self.assertIn("featured_photo", text)

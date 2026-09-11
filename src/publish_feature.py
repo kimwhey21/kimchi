@@ -34,13 +34,29 @@ OUTPUT = ROOT / "output" / "features"
 SERIES_LABEL = {"기준표": "Checkpoint"}
 
 
+def _period_text(doc: dict) -> str:
+    """주말 시리즈의 대상 기간(원고 최상위 `period`: {"start", "end"}) — `9월 7일~11일`."""
+    period = doc.get("period") or {}
+    try:
+        start = dt.date.fromisoformat(str(period.get("start")))
+        end = dt.date.fromisoformat(str(period.get("end")))
+    except (TypeError, ValueError):
+        return ""
+    if start.month == end.month:
+        return f"{start.month}월 {start.day}일~{end.day}일"
+    return f"{start.month}월 {start.day}일~{end.month}월 {end.day}일"
+
+
 def _kicker(doc: dict) -> str:
-    """글 맨 위 머리말. 기준표는 `Checkpoint · 9월 30일까지 확인할 것`(원고 최상위 `deadline`)."""
+    """글 맨 위 머리말. 기준표는 `Checkpoint · 9월 30일까지 확인할 것`(원고 최상위 `deadline`),
+    주말 시리즈는 `주간 결산 · 9월 7일~11일` / `다음 주 일정 · 9월 14일~18일`(최상위 `period`)."""
     series = str(doc.get("series") or "기준표")
     label = SERIES_LABEL.get(series, series)
     if series == "기준표" and doc.get("deadline"):
         day = dt.date.fromisoformat(str(doc["deadline"]))
         return f"{label} · {day.month}월 {day.day}일까지 확인할 것"
+    if series in ("주간 결산", "다음 주 일정") and _period_text(doc):
+        return f"{label} · {_period_text(doc)}"
     return label
 
 
@@ -50,8 +66,13 @@ def _slug(doc: dict, path: Path) -> str:
 
 
 def _seo_lead(doc: dict) -> str:
-    """프리뷰 설명문 첫 문장(2026-09-08). 기준표는 상시 글이라 날짜를 앞세우지 않는다."""
-    if doc.get("series") != "프리뷰" or not doc.get("date"):
+    """프리뷰 설명문 첫 문장(2026-09-08). 기준표는 상시 글이라 날짜를 앞세우지 않는다.
+    주말 시리즈(2026-09-12)는 기간을 앞세운다 — 검색 결과에서 어느 주의 글인지 보이게."""
+    series = doc.get("series")
+    if series in ("주간 결산", "다음 주 일정") and _period_text(doc):
+        noun = "주간 증시 결산" if series == "주간 결산" else "다음 주 증시 일정"
+        return f"{_period_text(doc)} {noun}입니다. "
+    if series != "프리뷰" or not doc.get("date"):
         return ""
     year, month, day = (int(x) for x in str(doc["date"]).split("-"))
     return f"{month}월 {day}일 밤 미국장 프리뷰입니다. "

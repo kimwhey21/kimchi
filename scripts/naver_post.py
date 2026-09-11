@@ -25,7 +25,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 FIXED_TAGS = {"kr": ["코스피", "주식시황", "코스피마감", "페르마타"],
               "us": ["미국증시", "주식시황", "뉴욕증시마감", "페르마타"],
-              "feature": ["주식", "투자체크포인트", "페르마타"]}
+              "feature": ["주식", "투자체크포인트", "페르마타"],
+              "주간 결산": ["주간증시", "코스피", "미국증시", "주식시황", "페르마타"],      # 주말 편성(2026-09-12)
+              "다음 주 일정": ["다음주증시", "증시일정", "실적발표", "주식시황", "페르마타"]}
 GRAPHIC_PREFERENCE = ["number_cards", "movers_list", "stock_spotlight", "price_history", "flow_compare",
                       "investor_flows", "sector_bars", "rate_compare", "fact_table", "checklist", "calendar_strip"]
 _TAG = re.compile(r"<[^>]+>")
@@ -38,6 +40,19 @@ def _plain(text: str) -> list[str]:
 def _kdate(date_str: str) -> str:
     d = dt.date.fromisoformat(date_str)
     return f"{d.month}월 {d.day}일"
+
+
+def _period(doc: dict) -> str:
+    """주말 시리즈의 대상 기간(최상위 `period`) — `9월 7일~11일`. 없으면 글 날짜."""
+    period = doc.get("period") or {}
+    try:
+        start = dt.date.fromisoformat(str(period.get("start")))
+        end = dt.date.fromisoformat(str(period.get("end")))
+    except (TypeError, ValueError):
+        return _kdate(str(doc.get("date")))
+    if start.month == end.month:
+        return f"{start.month}월 {start.day}일~{end.day}일"
+    return f"{start.month}월 {start.day}일~{end.month}월 {end.day}일"
 
 
 def _pick_sections(doc: dict) -> list[dict]:
@@ -92,6 +107,13 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         url = f"https://fermata.it.kr/{slug}/"
         category = "시황"
         tags = ["미국증시", "미국장프리뷰", "주식시황", "페르마타"]
+    elif doc.get("series") in ("주간 결산", "다음 주 일정"):
+        # 주말 편성(2026-09-12): 검색어 머리에 기간을 붙인다 — "주간 증시 결산 9월 7일~11일: …"
+        prefix = ("주간 증시 결산 " if doc["series"] == "주간 결산" else "다음 주 증시 일정 ") + _period(doc)
+        slug = doc.get("slug") or Path(path).stem.replace("_", "-")
+        url = f"https://fermata.it.kr/{slug}/"
+        category = "시황"
+        tags = list(FIXED_TAGS[doc["series"]])
     else:
         prefix = "투자 체크포인트"
         slug = doc.get("slug") or Path(path).stem.replace("_", "-", 1).replace("_", "-")

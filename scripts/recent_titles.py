@@ -7,6 +7,8 @@
     python -m scripts.recent_titles us          # 미국장 시황 최근 5편
     python -m scripts.recent_titles checkpoint  # Checkpoint 목록(기준표) 최근 5편
     python -m scripts.recent_titles preview     # 프리뷰 최근 5편
+    python -m scripts.recent_titles weekly      # 토요일 주간 결산 최근 5편
+    python -m scripts.recent_titles weekahead   # 일요일 다음 주 일정 최근 5편
 """
 from __future__ import annotations
 
@@ -22,6 +24,8 @@ ROOT = Path(__file__).resolve().parent.parent
 LISTS = {
     "kr": "editorial/kr_*.json", "us": "editorial/us_*.json",
     "checkpoint": "editorial/features/*.json", "preview": "editorial/previews/*.json",
+    "weekly": "editorial/weekly/review_*.json",      # 토요일 주간 결산 (2026-09-12)
+    "weekahead": "editorial/weekly/ahead_*.json",    # 일요일 다음 주 일정 (2026-09-12)
 }
 
 
