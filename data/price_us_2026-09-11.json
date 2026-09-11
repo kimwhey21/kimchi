@@ -4143,7 +4143,7 @@
       "unit": "",
       "trading_date": "2026-09-11",
       "source": "dynamic",
-      "trading_value": 15257806723.65,
+      "trading_value": 15258484563.9,
       "sector": "Technology"
     },
     "SPCX": {
@@ -4297,7 +4297,7 @@
       "unit": "",
       "trading_date": "2026-09-11",
       "source": "dynamic",
-      "trading_value": 11927943641.79,
+      "trading_value": 11928656143.310001,
       "sector": "Technology"
     },
     "ORCL": {
@@ -4465,7 +4465,7 @@
       "unit": "",
       "trading_date": "2026-09-11",
       "source": "dynamic",
-      "trading_value": 11897960796.28,
+      "trading_value": 11902500604.8,
       "sector": "Technology"
     },
     "AMD": {
@@ -4633,7 +4633,7 @@
       "unit": "",
       "trading_date": "2026-09-11",
       "source": "dynamic",
-      "trading_value": 9806161354.26,
+      "trading_value": 9806764710.23,
       "sector": "Technology"
     },
     "DELL": {
@@ -4801,7 +4801,7 @@
       "unit": "",
       "trading_date": "2026-09-11",
       "source": "dynamic",
-      "trading_value": 8161216040.089999,
+      "trading_value": 8161897355.379999,
       "sector": "Technology"
     },
     "AVGO": {
@@ -4969,7 +4969,7 @@
       "unit": "",
       "trading_date": "2026-09-11",
       "source": "dynamic",
-      "trading_value": 7652803078.76,
+      "trading_value": 7653557465.92,
       "sector": "Technology"
     }
   },
