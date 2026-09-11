@@ -352,15 +352,48 @@ def _movers_style(picked: list[dict], price_data: dict) -> str:
     return "tiles" if _date_ordinal(price_data) % 2 == 0 else "table"
 
 
-def _period_rows(price_data: dict, period_days: int) -> list[dict]:
-    """종목마다 `change_pct`를 하루가 아니라 `period_days` 거래일 등락으로 바꾼 사본.
+def _pct_week(entry: dict, trading_date: str) -> float | None:
+    """달력 기준 주간 등락 — 그 주 월요일 전 마지막 종가 대비 마지막 종가.
+
+    `_pct_over(entry, 5)`는 '5거래일 전' 대비라 휴장이 낀 주(2026-09-07 노동절 → 미국장 4거래일)에는
+    전주 목요일과 비교하게 된다. 첫 주간 결산(2026-09-12)에서 루틴이 이것을 알아채고 미국 지수는
+    숫자를 손으로 적었다. 주간은 날짜로 센다 — `scripts/weekly_stats`와 같은 정의다.
+    """
+    history = entry.get("history") or {}
+    dates = [str(d) for d in (history.get("dates") or [])]
+    closes = history.get("close") or []
+    if len(dates) != len(closes) or not dates:
+        return None
+    try:
+        day = dt.date.fromisoformat(str(trading_date))
+    except (TypeError, ValueError):
+        return None
+    monday = (day - dt.timedelta(days=day.weekday())).isoformat()
+    before = [float(c) for d, c in zip(dates, closes) if d < monday and c is not None]
+    inside = [float(c) for d, c in zip(dates, closes) if monday <= d <= day.isoformat() and c is not None]
+    if not before or not inside or not before[-1]:
+        return None
+    return (inside[-1] / before[-1] - 1) * 100
+
+
+def _period_pct(entry: dict, price_data: dict, period_days: int | None, period: str | None) -> float | None:
+    if period == "week":
+        return _pct_week(entry, str(price_data.get("trading_date") or ""))
+    if period_days:
+        return _pct_over(entry, int(period_days))
+    return None
+
+
+def _period_rows(price_data: dict, period_days: int | None = None, period: str | None = None) -> list[dict]:
+    """종목마다 `change_pct`를 하루가 아니라 기간 등락으로 바꾼 사본 — `period="week"`(달력 주간, 권장)
+    또는 `period_days`(N거래일).
 
     주간 결산(2026-09-12)이 쓴다 — 시세 파일의 3개월 이력(`history`)에서 계산하므로 숫자는
     여전히 전부 시세에서 나온다. 이력이 짧은 종목(그날 편입된 동적 종목 등)은 뺀다.
     """
     rows = []
     for entry in (price_data.get("watchlist") or {}).values():
-        pct = _pct_over(entry, period_days)
+        pct = _period_pct(entry, price_data, period_days, period)
         if pct is None:
             continue
         copy = dict(entry)
@@ -371,7 +404,7 @@ def _period_rows(price_data: dict, period_days: int) -> list[dict]:
 
 def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
                 title: str = "오늘 많이 움직인 종목", style: str | None = None,
-                period_days: int | None = None) -> Path:
+                period_days: int | None = None, period: str | None = None) -> Path:
     """등락 폭 상위 종목 목록 — 세 가지 모양(막대·타일·표) 중 하나.
 
     2026-09-09 사용자가 작은 추이선이 붙은 옛 목록을 "마음에 안 든다"고 해 네 안을 그려
@@ -379,14 +412,16 @@ def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
     그 모양, 주지 않으면 `_movers_style`이 그날 상황으로 고른다. 그리는 것은 전부 시세
     파일에서 나오므로 틀린 그림이 붙을 수 없다.
 
-    `period_days`(주간 결산은 5)를 주면 하루 등락 대신 그 기간 등락으로 고르고 그린다.
-    이때 표 모양은 열 이름("오늘")이 거짓말이 되므로 쓰지 않는다 — 막대나 타일로 간다.
+    `period="week"`(달력 주간 — 휴장 주에도 전주 마지막 종가 대비, 권장)나 `period_days`(N거래일)를
+    주면 하루 등락 대신 그 기간 등락으로 고르고 그린다. 이때 표 모양은 열 이름("오늘")이 거짓말이
+    되므로 쓰지 않는다 — 막대나 타일로 간다.
     """
     ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
-    if period_days:
-        rows = _period_rows(price_data, int(period_days))
+    if period == "week" or period_days:
+        rows = _period_rows(price_data, period_days, period)
         if title == "오늘 많이 움직인 종목":
-            title = "이번 주 많이 움직인 종목" if int(period_days) == 5 else f"{period_days}거래일 등락 상위"
+            title = ("이번 주 많이 움직인 종목" if period == "week" or int(period_days or 0) == 5
+                     else f"{period_days}거래일 등락 상위")
     else:
         rows = [e for e in (price_data.get("watchlist") or {}).values() if e.get("change_pct") is not None]
     if not rows:
@@ -400,7 +435,7 @@ def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
         print(f"[안내] movers_list: 모르는 style {style!r} — {MOVERS_STYLES} 중 상황에 맞는 것으로 그립니다.", file=sys.stderr)
         style = None
     style = style or _movers_style(picked, price_data)
-    if period_days and style == "table":
+    if (period_days or period == "week") and style == "table":
         style = "bars" if _movers_style(picked, price_data) == "bars" else "tiles"
     if style == "bars":
         return _movers_bars(picked, output_path, title)
@@ -777,27 +812,28 @@ def investor_flows(price_data: dict, output_path: Path, values: dict, source: st
 
 def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None = None,
                  items: list[dict] | None = None, title: str = "오늘 시장을 정한 숫자",
-                 subtitle: str = "", note: str = "", period_days: int | None = None) -> Path:
+                 subtitle: str = "", note: str = "", period_days: int | None = None,
+                 period: str | None = None) -> Path:
     """지수·환율·유가 같은 숫자 2~4개를 카드로 (2026-09-08, 시안 D).
 
     `tickers`는 시세 파일의 지수·종목(값이 시세에서 나옵니다), `items`는 시세 파일에
     없는 숫자(WTI·금리 등)를 `{"label": "WTI", "value": "93.10달러", "change": "+1.8%"}`
     로 직접 적는 것입니다. 직접 적은 숫자는 본문에서 출처와 함께 설명해야 합니다.
     `note`는 카드 아래 한 줄 — "장중 7,171까지 올랐다가 밀렸습니다".
-    `period_days`(주간 결산은 5)를 주면 하루 등락 대신 그 기간 등락을 "주간 +1.2%"로 적습니다
-    (시세 파일의 3개월 이력에서 계산). 이력이 모자라면 예외로 멈춥니다 — 하루 등락을 주간처럼
-    보이게 두지 않습니다.
+    `period="week"`(달력 주간 — 휴장이 낀 주에도 전주 마지막 종가 대비, 권장)나 `period_days`(N거래일)를
+    주면 하루 등락 대신 그 기간 등락을 "주간 +1.2%"로 적습니다(시세 파일의 3개월 이력에서 계산).
+    이력이 모자라면 예외로 멈춥니다 — 하루 등락을 주간처럼 보이게 두지 않습니다.
     """
     ensure_korean_font()
     cards: list[tuple[str, str, str, str]] = []
     for ticker in tickers or []:
         entry = _entry_for(price_data, ticker)
-        if period_days:
-            over = _pct_over(entry, int(period_days))
+        if period == "week" or period_days:
+            over = _period_pct(entry, price_data, period_days, period)
             if over is None:
-                raise ValueError(f"number_cards: {ticker}의 이력이 {period_days}거래일보다 짧습니다")
+                raise ValueError(f"number_cards: {ticker}의 이력이 짧아 주간(기간) 등락을 셀 수 없습니다")
             change = float(over)
-            change_text = ("주간 " if int(period_days) == 5 else f"{period_days}일 ") + f"{change:+.2f}%"
+            change_text = ("주간 " if period == "week" or int(period_days or 0) == 5 else f"{period_days}일 ") + f"{change:+.2f}%"
         else:
             change = float(entry.get("change_pct") or 0)
             change_text = f"{change:+.2f}%"

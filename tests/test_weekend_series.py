@@ -171,6 +171,26 @@ class PeriodGraphicsTest(unittest.TestCase):
         self.assertAlmostEqual(by_name["두산에너빌리티"], round((90800 / 79200 - 1) * 100, 2))
         self.assertNotIn("신규편입", by_name)
 
+    def test_calendar_week_ignores_a_holiday_gap(self) -> None:
+        """노동절(9/7)로 4거래일뿐인 주: '5거래일 전'은 전주 목요일이라 틀리고, 달력 주간은 전주 금요일 대비다."""
+        dates = ["2026-08-31", "2026-09-01", "2026-09-02", "2026-09-03", "2026-09-04",
+                 "2026-09-08", "2026-09-09", "2026-09-10", "2026-09-11"]
+        closes = [7600, 7620, 7650, 7700, 7718.60, 7674, 7637, 7591.70, 7656.98]
+        data = {"trading_date": "2026-09-11",
+                "macro": {"^GSPC": {"ticker": "^GSPC", "name": "S&P500", "price": 7656.98, "change_pct": 0.86,
+                                    "history": {"dates": dates, "close": closes}, "unit": ""}},
+                "watchlist": {"NVDA": {"ticker": "NVDA", "name": "엔비디아", "price": 218.29, "change_pct": -0.03,
+                                       "history": {"dates": dates, "close": [230, 231, 232, 233, 230.1, 225, 222, 218.36, 218.29]}}}}
+        week = data_graphics._pct_week(data["macro"]["^GSPC"], "2026-09-11")
+        self.assertAlmostEqual(week, (7656.98 / 7718.60 - 1) * 100, places=4)
+        five = data_graphics._pct_over(data["macro"]["^GSPC"], 5)
+        self.assertNotAlmostEqual(week, five, places=2)
+        rows = data_graphics._period_rows(data, period="week")
+        self.assertAlmostEqual(rows[0]["change_pct"], round((218.29 / 230.1 - 1) * 100, 2))
+        out = Path(tempfile.mkdtemp()) / "w.png"
+        self.assertTrue(data_graphics.number_cards(data, out, tickers=["^GSPC", "NVDA"], period="week").exists())
+        self.assertTrue(data_graphics.movers_list(data, out, period="week").exists())
+
     def test_number_cards_label_the_period(self) -> None:
         out = Path(tempfile.mkdtemp()) / "n.png"
         self.assertTrue(data_graphics.number_cards(PRICE, out, tickers=["KS11", "005930"], period_days=5).exists())

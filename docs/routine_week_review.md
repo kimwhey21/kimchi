@@ -81,10 +81,11 @@
      이렇게 봅니다"). 포지션 화법("저는 샀다")은 관문이 막습니다.
    - `graphics` 4~6장 — 숫자는 시세 파일에서만 나옵니다(`price_file`은 그 시장의 금요일 파일):
      - `{"kind": "cover", "featured": true, "args": {"kicker": "주간 결산 · <기간>", "subject": "<한 주의 핵심 한 문장>", "left": {"label": "코스피 주간", "value": "+3.33%"}, "right": {"label": "S&P500 주간", "value": "-0.80%"}}, "alt": "..."}`
-     - `{"kind": "number_cards", "section": 0, "price_file": "data/price_kr_<금요일>.json", "args": {"tickers": ["KS11", "KQ11", "USD/KRW"], "period_days": 5, "title": "이번 주 한국장을 정한 숫자"}, "alt": "..."}`
-       — `period_days: 5`가 하루가 아니라 **주간** 등락을 적습니다("주간 +3.33%"). 잊으면 하루 등락이
-       주간처럼 나가므로 반드시 넣습니다. 미국장은 `["^GSPC", "^IXIC", "^TNX"]`처럼.
-     - `{"kind": "movers_list", "section": 1, "price_file": "data/price_kr_<금요일>.json", "args": {"top_n": 6, "period_days": 5, "title": "이번 주 많이 움직인 종목"}, "alt": "..."}` — 미국장도 같은 식으로 2절에.
+     - `{"kind": "number_cards", "section": 0, "price_file": "data/price_kr_<금요일>.json", "args": {"tickers": ["KS11", "KQ11", "USD/KRW"], "period": "week", "title": "이번 주 한국장을 정한 숫자"}, "alt": "..."}`
+       — `"period": "week"`가 하루가 아니라 **달력 주간** 등락을 적습니다("주간 +3.33%"; 휴장이 낀 주에도
+       전주 마지막 종가 대비). 잊으면 하루 등락이 주간처럼 나가므로 반드시 넣습니다. `period_days: 5`는
+       5거래일 전 대비라 휴장 주에 틀립니다 — 쓰지 않습니다. 미국장은 `["^GSPC", "^IXIC", "^TNX"]`처럼.
+     - `{"kind": "movers_list", "section": 1, "price_file": "data/price_kr_<금요일>.json", "args": {"top_n": 6, "period": "week", "title": "이번 주 많이 움직인 종목"}, "alt": "..."}` — 미국장도 같은 식으로 2절에.
      - `{"kind": "price_history", "section": 3, "price_file": "data/price_us_<금요일>.json", "args": {"ticker": "^TNX", "title": "美 10년물, 5% 앞", "guide": 5.0, "guide_label": "5%"}, "alt": "..."}` —
        4절에는 금리나 환율의 3개월 흐름을, 또는 지수(`KS11`·`^GSPC`)의 흐름을 붙입니다.
      - 절마다 그림은 한 장까지(`section` 번호가 겹치면 발행이 멈춥니다).

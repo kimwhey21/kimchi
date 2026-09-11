@@ -365,7 +365,7 @@
   `weekly_publish.yml`이 **바로 공개**한다. 분류는 Weekly(id 433, 목록 페이지 `/weekly/`, 홈 탭 —
   2026-09-12 사용자 "진행, 이름은 Weekly로"; 네이버에도 같은 이름). 지수·종목·환율·금리 숫자는 `python -m scripts.weekly_stats`
   (시세 파일의 3개월 이력으로 한 주를 센다)에서만 온다 — 검색 결과의 등락률을 옮겨 적지 않는다.
-  그래픽은 `number_cards`·`movers_list`에 `period_days: 5`를 넣어 주간 등락으로 그린다. 문턱은
+  그래픽은 `number_cards`·`movers_list`에 `"period": "week"`를 넣어 달력 주간 등락으로 그린다(휴장 주에도 전주 마지막 종가 대비). 문턱은
   주간 결산 절 5·시각자료 4·출처 2, 다음 주 일정 절 4·시각자료 3·출처 2
   (`feature_checks.SERIES_LIMITS`·`editorial_title.SECTION_FLOORS`·`source_check.SERIES_MIN_SOURCES`).
   머리말은 최상위 `period`로 `주간 결산 · 9월 7일~11일`. 거래일 3일 미만인 주는 결산을 쓰지 않는다.
