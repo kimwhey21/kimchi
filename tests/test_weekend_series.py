@@ -85,6 +85,22 @@ class WeeklyStatsTest(unittest.TestCase):
         self.assertEqual(found.name, "price_kr_2026-09-11.json")
         self.assertIsNone(weekly_stats.latest_price_file("us", dt.date(2026, 9, 12), tmp))
 
+    def test_entries_without_history_get_one_from_the_daily_files(self) -> None:
+        """원/달러 환율은 실시간 호가라 3개월 이력이 없다 — 날마다 커밋한 파일의 값을 이어 붙인다."""
+        tmp = Path(tempfile.mkdtemp())
+        for day, fx in (("2026-09-04", 1351.3), ("2026-09-07", 1347.7), ("2026-09-11", 1344.4)):
+            (tmp / f"price_kr_{day}.json").write_text(json.dumps(
+                {"trading_date": day, "macro": {"USD/KRW": {"ticker": "USD/KRW", "name": "원/달러 환율",
+                                                            "price": fx, "unit": "원", "trading_date": day}},
+                 "watchlist": {}}), encoding="utf-8")
+        latest = json.loads((tmp / "price_kr_2026-09-11.json").read_text(encoding="utf-8"))
+        added = weekly_stats.augment_from_daily_files(latest, "kr", tmp)
+        self.assertEqual(added, ["원/달러 환율"])
+        result = weekly_stats.compute(latest, "kr")
+        fx = next(m for m in result["macro"] if m["ticker"] == "USD/KRW")
+        self.assertEqual(fx["prev_close"], 1351.3)
+        self.assertEqual(fx["last_close"], 1344.4)
+
     def test_text_rendering_names_the_week_and_trading_days(self) -> None:
         text = weekly_stats.render_text(weekly_stats.compute(PRICE, "kr"))
         self.assertIn("9월 7일~9월 11일", text)

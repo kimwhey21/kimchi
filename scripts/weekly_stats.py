@@ -184,6 +184,40 @@ def render_text(result: dict) -> str:
     return "\n".join(lines)
 
 
+def augment_from_daily_files(price_data: dict, market: str, data_dir: Path | None = None) -> list[str]:
+    """3개월 이력(`history`)이 없는 항목(원/달러 환율처럼 실시간 호가로 받는 것)에, 우리가 날마다 커밋한
+    시세 파일들의 종가를 이력으로 붙인다. 첫 실행(2026-09-12)에서 루틴이 환율 주간 변화를 못 받아
+    날짜별 파일을 손으로 뒤졌다 — 같은 자료를 여기서 미리 이어 붙인다. 붙인 항목 이름을 돌려준다."""
+    folder = data_dir or DATA
+    files = []
+    for path in folder.glob(f"price_{market}_*.json"):
+        m = re.search(r"_(\d{4}-\d{2}-\d{2})\.json$", path.name)
+        if m and m.group(1) <= str(price_data.get("trading_date", "")):
+            files.append((m.group(1), path))
+    files.sort()
+    targets = [(g, k, e) for g in ("macro", "watchlist") for k, e in (price_data.get(g) or {}).items()
+               if not _history(e) and e.get("price") is not None]
+    if not targets or not files:
+        return []
+    daily: dict[str, dict] = {}
+    for day, path in files:
+        try:
+            daily[day] = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+    added = []
+    for group, key, entry in targets:
+        dates, closes = [], []
+        for day in sorted(daily):
+            other = (daily[day].get(group) or {}).get(key)
+            if other and other.get("price") is not None:
+                dates.append(str(other.get("trading_date") or day)); closes.append(float(other["price"]))
+        if len(closes) >= 2:
+            entry["history"] = {"dates": dates, "close": closes, "source": "daily_files"}
+            added.append(str(entry.get("name") or key))
+    return added
+
+
 def run(markets: list[str], on_or_before: dt.date, data_dir: Path | None = None) -> dict[str, dict]:
     results = {}
     for market in markets:
@@ -191,7 +225,9 @@ def run(markets: list[str], on_or_before: dt.date, data_dir: Path | None = None)
         if path is None:
             raise FileNotFoundError(f"{market}: {on_or_before}까지의 시세 파일이 없습니다.")
         price_data = json.loads(path.read_text(encoding="utf-8"))
+        augmented = augment_from_daily_files(price_data, market, data_dir)
         result = compute(price_data, market)
+        result["history_from_daily_files"] = augmented
         result["price_file"] = str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else str(path)
         results[market] = result
     return results
