@@ -362,7 +362,8 @@
   「주간 결산」(`docs/routine_week_review.md`, `editorial/weekly/review_<토요일>.json`, 시리즈
   "주간 결산")과 일 20:00 KST 「다음 주 일정」(`docs/routine_week_ahead.md`,
   `editorial/weekly/ahead_<일요일>.json`, 시리즈 "다음 주 일정")은 기준표 파이프라인을 그대로 쓰고
-  `weekly_publish.yml`이 **바로 공개**한다. 지수·종목·환율·금리 숫자는 `python -m scripts.weekly_stats`
+  `weekly_publish.yml`이 **바로 공개**한다. 분류는 Weekly(id 433, 목록 페이지 `/weekly/`, 홈 탭 —
+  2026-09-12 사용자 "진행, 이름은 Weekly로"; 네이버에도 같은 이름). 지수·종목·환율·금리 숫자는 `python -m scripts.weekly_stats`
   (시세 파일의 3개월 이력으로 한 주를 센다)에서만 온다 — 검색 결과의 등락률을 옮겨 적지 않는다.
   그래픽은 `number_cards`·`movers_list`에 `period_days: 5`를 넣어 주간 등락으로 그린다. 문턱은
   주간 결산 절 5·시각자료 4·출처 2, 다음 주 일정 절 4·시각자료 3·출처 2

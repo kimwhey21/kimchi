@@ -112,7 +112,7 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         prefix = ("주간 증시 결산 " if doc["series"] == "주간 결산" else "다음 주 증시 일정 ") + _period(doc)
         slug = doc.get("slug") or Path(path).stem.replace("_", "-")
         url = f"https://fermata.it.kr/{slug}/"
-        category = "시황"
+        category = "Weekly"      # 네이버에도 같은 이름의 카테고리(2026-09-12)
         tags = list(FIXED_TAGS[doc["series"]])
     else:
         prefix = "투자 체크포인트"

@@ -176,7 +176,7 @@ class NaverPostTest(unittest.TestCase):
     def test_weekly_review_gets_a_period_prefix_and_daily_category(self) -> None:
         post = naver_post.build(self._manuscript("주간 결산", "weekly-review-2026-09-12"))
         self.assertTrue(post["title"].startswith("주간 증시 결산 9월 7일~11일: "))
-        self.assertEqual(post["category"], "시황")
+        self.assertEqual(post["category"], "Weekly")
         self.assertEqual(post["blocks"][-1][1], "https://fermata.it.kr/weekly-review-2026-09-12/")
         self.assertIn("주간증시", post["tags"])
 
