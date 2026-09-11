@@ -60,6 +60,10 @@ def _pick_sections(doc: dict) -> list[dict]:
     sections = list((doc.get("ko") or {}).get("narrative") or [])
     if not sections:
         return []
+    if len(sections) <= 5:
+        # 다섯 절 이하면 고를 것이 없다 — 원래 순서 그대로. 첫 주간 결산(2026-09-12)에서 '다음 주에 확인할 것'이
+        # "다음|확인" 규칙에 잡혀 두 번째로 올라가 한국장·미국장 절보다 먼저 나갔다.
+        return sections
     chosen: list[dict] = [sections[0]]
     def first(pred):
         for s in sections:

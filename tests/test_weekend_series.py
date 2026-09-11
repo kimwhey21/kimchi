@@ -216,6 +216,16 @@ class NaverPostTest(unittest.TestCase):
         self.assertEqual(post["blocks"][-1][1], "https://fermata.it.kr/weekly-review-2026-09-12/")
         self.assertIn("주간증시", post["tags"])
 
+    def test_five_or_fewer_sections_keep_their_order(self) -> None:
+        """'다음 주에 확인할 것'이 규칙에 잡혀 둘째로 올라가면 한국장·미국장보다 먼저 나간다(2026-09-12 실제)."""
+        path = self._manuscript("주간 결산", "weekly-review-order")
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        doc["ko"]["narrative"] = [{"heading": h, "body": "본문."} for h in
+                                  ("한 주를 숫자로", "한국장", "미국장", "금리·환율·유가", "다음 주에 확인할 것")]
+        path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+        heads = [b[1] for b in naver_post.build(path)["blocks"] if b[0] == "h"]
+        self.assertEqual(heads[1:6], ["한 주를 숫자로", "한국장", "미국장", "금리·환율·유가", "다음 주에 확인할 것"])
+
     def test_week_ahead_prefix(self) -> None:
         post = naver_post.build(self._manuscript("다음 주 일정", "week-ahead-2026-09-13"))
         self.assertTrue(post["title"].startswith("다음 주 증시 일정 9월 7일~11일: "))
