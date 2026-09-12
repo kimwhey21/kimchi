@@ -310,6 +310,17 @@
   근거: 벤치마크(재테크농부)가 다섯 주말 24편 중 토요일 아침 미국장 주간 결산과 일요일 밤
   "이번주 투자 전략"을 5주 내내 같은 자리에 올렸다. 지난주 판정(맞음·빗나감)은 이 글에 넣지
   않는다 — 사용자가 아직 정하지 않았다.
+- **유입 편성**(2026-09-12, 사용자 승인 "1번 2번 4번 진행, 3번 5번도 승인"; 근거는 서치콘솔 실측 — 구글 노출
+  710건 중 700건이 영어 가이드 9편, 한국어 시황 43편은 0건): 새 시리즈 셋을 기준표 파이프라인에 표 한 줄씩으로
+  등록했다 — **가이드**(한국어 상시, 화·목 09:00 KST, `docs/routine_guide_ko.md`, `editorial/guides/ko_<slug>.json`,
+  분류 Guides 153, 머리말은 최상위 `checked` 날짜), **Guide**(영어, 수 09:00 KST, `docs/routine_guide_en.md`,
+  `editorial/guides/en_<slug>.json`, `lang: "en"` — 관문이 한국어 검사 대신 영어 검사(`feature_checks.collect_issues_en`)와
+  영어 출처 목록(`source_check.EN_SOURCES`)을 쓴다), **이벤트**(일요일 다음 주 일정 루틴이 그 주의 큰 이벤트 하나를
+  `editorial/events/<날짜>_<slug>.json`으로 더 쓴다, 분류 Weekly, 머리말은 `event_date`). `guide_publish.yml`·
+  `weekly_publish.yml`이 자동화 스위치대로 공개한다. 문턱은 가이드 절 5·시각자료 2·출처 2, Guide 절 5·2·2, 이벤트 절 4·2·2.
+  **종목 허브 페이지** `/stocks/<slug>/` 37개(`config/stock_pages.yaml`, `src/stock_pages.py`, `stock_pages.yml` 토 11:30 KST):
+  숫자는 시세 파일에서만, 「최근 흐름」은 매월 1일 루틴의 `editorial/stocks/notes_<YYYY-MM>.json`(`docs/routine_stock_notes.md`,
+  `--check-notes` 통과 후 커밋). 홈·목록 탭에 Stocks. 네이버에는 한국어 가이드·이벤트 요약본이 간다(가이드 분류 공개).
 - 그림을 그린 뒤에는 **`Read` 툴로 직접 본다.** 축을 한 종목이 독차지하거나
   이름이 막대와 어긋나는 것은 코드만 봐서는 안 보인다(둘 다 실제로 겪었다).
   `src/graphic_checks.py`가 그림의 데이터와 제목이 어긋나는 것을 잡지만,

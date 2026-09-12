@@ -343,7 +343,8 @@ def build(markets: list[str], *, upload: bool, live: bool, data_dir: Path | None
         (OUTPUT / f"{item['slug']}.html").write_text(html, encoding="utf-8")
         if upload:
             if not parent_id:
-                parent_id = upsert_page(base, auth, PARENT_SLUG, PARENT_TITLE, "<p>준비 중</p>", live=live)["id"]
+                # 자리만 잡는다 — 되읽기 검사가 제목을 찾으므로 본문에 제목을 넣는다(2026-09-12 첫 실행이 여기서 죽었다)
+                parent_id = upsert_page(base, auth, PARENT_SLUG, PARENT_TITLE, f"<p>{PARENT_TITLE} — 준비 중</p>", live=live)["id"]
             upsert_page(base, auth, item["slug"], page_title(item), html, parent=parent_id,
                         excerpt_text=excerpt(item, s, trading_dates[market]), live=live)
         index_rows.append({"market": market, "name": item["name"], "ticker": item["ticker"], "sector": item["sector"],
