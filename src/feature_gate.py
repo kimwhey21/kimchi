@@ -15,7 +15,8 @@ from src import editorial_quality, editorial_title, feature_checks, source_check
 ROOT = Path(__file__).resolve().parent.parent
 # 시리즈가 사는 폴더. 같은 목록에 나란히 보이는 최근 제목과 뼈대를 대조할 때 쓴다.
 SERIES_FOLDER = {"기준표": "features", "프리뷰": "previews",
-                 "주간 결산": "weekly", "다음 주 일정": "weekly"}   # 주말 편성(2026-09-12)
+                 "주간 결산": "weekly", "다음 주 일정": "weekly",   # 주말 편성(2026-09-12)
+                 "가이드": "guides", "Guide": "guides", "이벤트": "events"}   # 유입 편성(2026-09-12)
 
 
 class FeatureGateError(ValueError):
@@ -38,8 +39,8 @@ def recent_titles(doc: dict, path: Path | None = None, count: int = 5) -> list[s
             continue
         if doc.get("slug") and other.get("slug") == doc.get("slug"):
             continue
-        if folder.name == "weekly" and str(other.get("series") or "") != series:
-            continue   # 주간 결산과 다음 주 일정은 같은 폴더를 쓰지만 목록(틀 대조)은 시리즈별이다
+        if str(other.get("series") or "기준표") != series:
+            continue   # 한 폴더에 시리즈가 둘일 수 있다(주간 결산·다음 주 일정, 한국어·영어 가이드) — 틀 대조는 시리즈별
         title = str((other.get("ko") or {}).get("title", ""))
         if title:
             rows.append((str(other.get("date", "")), title))
@@ -52,6 +53,14 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     ko = doc.get("ko") or doc
     blocking = []
     notes: list[str] = []
+    if str(doc.get("lang") or "ko") == "en":
+        # 영어 가이드(2026-09-12): 한국어 문체·제목 문법 검사는 맞지 않는다. 영어 전용 검사 + 출처 수만 막는다.
+        blocking.extend(feature_checks.collect_issues_en(doc, graphics=graphics))
+        blocking.extend(source_check.collect_issues(doc))
+        if blocking:
+            raise FeatureGateError("English guide gate failed:\n- " + "\n- ".join(blocking))
+        return {"blocking": [], "notes": notes, "sources": source_check.collect(doc),
+                "benchmark_words": [], "benchmark_shape": None}
     blocking.extend(editorial_quality.collect_issues(ko))
     blocking.extend(editorial_title.collect_issues(
         ko, kind=str(doc.get("series") or "기준표"), notes_out=notes,

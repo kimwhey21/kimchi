@@ -29,7 +29,9 @@ FIXED_TAGS = {"kr": ["코스피", "주식시황", "코스피마감", "페르마�
               "us": ["미국증시", "주식시황", "뉴욕증시마감", "페르마타"],
               "feature": ["주식", "투자체크포인트", "페르마타"],
               "주간 결산": ["주간증시", "코스피", "미국증시", "주식시황", "페르마타"],      # 주말 편성(2026-09-12)
-              "다음 주 일정": ["다음주증시", "증시일정", "실적발표", "주식시황", "페르마타"]}
+              "다음 주 일정": ["다음주증시", "증시일정", "실적발표", "주식시황", "페르마타"],
+              "가이드": ["주식", "주식공부", "주식초보", "페르마타"],                    # 유입 편성(2026-09-12)
+              "이벤트": ["증시일정", "주식시황", "페르마타"]}
 GRAPHIC_PREFERENCE = ["number_cards", "movers_list", "stock_spotlight", "price_history", "flow_compare",
                       "investor_flows", "sector_bars", "rate_compare", "fact_table", "checklist", "calendar_strip"]
 _TAG = re.compile(r"<[^>]+>")
@@ -150,6 +152,19 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         url = f"https://fermata.it.kr/{slug}/"
         category = "Weekly"      # 네이버에도 같은 이름의 카테고리(2026-09-12)
         tags = list(FIXED_TAGS[doc["series"]])
+    elif doc.get("series") == "가이드":
+        # 유입 편성(2026-09-12, 사용자 승인 5번): 네이버에도 가이드를 싣는다. 제목이 곧 검색 질문이라 머리를 붙이지 않는다.
+        prefix = ""
+        slug = doc.get("slug") or Path(path).stem.replace("_", "-")
+        url = f"https://fermata.it.kr/{slug}/"
+        category = "가이드"
+        tags = list(FIXED_TAGS["가이드"])
+    elif doc.get("series") == "이벤트":
+        prefix = "증시 이벤트 " + _kdate(str(doc.get("event_date") or date_str))
+        slug = doc.get("slug") or Path(path).stem.replace("_", "-")
+        url = f"https://fermata.it.kr/{slug}/"
+        category = "Weekly"
+        tags = list(FIXED_TAGS["이벤트"])
     else:
         prefix = "투자 체크포인트"
         slug = doc.get("slug") or Path(path).stem.replace("_", "-", 1).replace("_", "-")
@@ -161,6 +176,8 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         title = f"미국장 프리뷰 {_kdate(date_str)} | {base_title}"
     elif not is_daily and "체크포인트" in base_title:
         title = base_title                                   # 제목에 이미 '체크포인트'가 있으면 머리를 안 붙인다
+    elif not prefix:
+        title = base_title                                   # 가이드: 제목 그대로
     elif ":" in base_title:
         title = f"{prefix} | {base_title}"                   # 콜론이 겹치지 않게
     else:

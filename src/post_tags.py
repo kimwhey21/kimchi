@@ -43,8 +43,11 @@ FIXED_TAGS = {
     "프리뷰": ["미국증시", "미국장프리뷰", "주식시황", "페르마타"],
     "주간 결산": ["주간증시", "코스피", "미국증시", "주식시황", "페르마타"],
     "다음 주 일정": ["다음주증시", "증시일정", "실적발표", "주식시황", "페르마타"],
-    "가이드": ["주식", "주식공부", "페르마타"],
+    "가이드": ["주식", "주식공부", "주식초보", "페르마타"],
+    "이벤트": ["증시일정", "주식시황", "페르마타"],          # 유입 편성(2026-09-12)
 }
+# 영어 가이드(series "Guide", lang "en"): 한국어 고정어·주제어 사전은 맞지 않는다. 고정어 + 원고 tags + 영어 종목명.
+EN_FIXED_TAGS = ["Korean stocks", "KOSPI", "foreign investors"]
 
 # (정규식, 태그). 앞에 있는 것부터 찾고, 제목 → 소제목 → 본문 순으로 먼저 나온 것을 앞에 둔다.
 THEMES: tuple[tuple[str, str], ...] = (
@@ -196,8 +199,27 @@ def month_tag(doc: dict) -> str:
     return f"{day.month}월증시"
 
 
+def build_tags_en(doc: dict, limit: int = LIMIT) -> list[str]:
+    """영어 가이드(2026-09-12): 고정어 + 원고 tags + 본문에 나오는 영어 종목명. 한국어 주제어 사전은 쓰지 않는다."""
+    title, headings, body = _texts(doc)
+    candidates = list(EN_FIXED_TAGS) + [str(t) for t in (doc.get("tags") or [])]
+    for name in sorted(known_names()):
+        if re.search(r"[가-힣]", name):
+            continue
+        if _rank(name, title, headings, body) is not None:
+            candidates.append(name)
+    out: list[str] = []
+    for tag in candidates:
+        tag = str(tag).strip()
+        if tag and tag.lower() not in {t.lower() for t in out}:
+            out.append(tag)
+    return out[:limit]
+
+
 def build_tags(doc: dict, limit: int = LIMIT) -> list[str]:
     """고정어 → 원고의 tags → 종목 → 주제어 → 달. 겹치는 것은 빼고 `limit`개까지."""
+    if str(doc.get("lang") or "ko") == "en":
+        return build_tags_en(doc, limit)
     kind = kind_of(doc)
     title, headings, body = _texts(doc)
     candidates: list[str] = list(FIXED_TAGS.get(kind, FIXED_TAGS["기준표"]))

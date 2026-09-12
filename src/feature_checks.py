@@ -38,7 +38,16 @@ MIN_GRAPHICS = 6          # 벤치마크 이미지 p25
 # (모든 글의 소제목 규칙이 그쪽에 모여 있다). 새 시리즈를 만들면 두 곳에 한 줄씩 더한다.
 # 주말 편성(2026-09-12, 사용자 결정): 토요일 「주간 결산」은 숫자 글이라 표지 + 지수 카드 + 종목
 # 막대 + 흐름 넷, 일요일 「다음 주 일정」은 프리뷰처럼 셋이면 된다.
-SERIES_LIMITS = {"프리뷰": {"graphics": 3}, "주간 결산": {"graphics": 4}, "다음 주 일정": {"graphics": 3}}
+SERIES_LIMITS = {"프리뷰": {"graphics": 3}, "주간 결산": {"graphics": 4}, "다음 주 일정": {"graphics": 3},
+                 # 유입 편성(2026-09-12, 사용자 승인 "1번 2번 4번 진행"): 상시 가이드는 표·차트 둘이면 되고
+                 # 글의 힘은 질문에 바로 답하는 본문에 있다. 이벤트 글은 일정표 + 차트.
+                 "가이드": {"graphics": 2}, "Guide": {"graphics": 2}, "이벤트": {"graphics": 2}}
+
+# 영어 가이드(series "Guide", lang "en")는 한국어 제목 문법·문체 검사를 받지 않는다. 대신 아래 셋을 본다 —
+# 제목 길이(구글 결과에 잘리지 않는 70자), 절 수(SECTION_FLOORS), 본문에 확인 연도. 2026-09-12 실측:
+# 구글 노출 710건 중 700건이 영어 가이드 9편에서 나왔다("kospi vs kosdaq", "kospi trading hours").
+EN_TITLE_MAX = 70
+EN_TITLE_MIN = 30
 
 # 설명 없이 지나가면 초보자가 문장을 못 따라가는 말들. 벤치마크는 이런 말이
 # 나올 때마다 `초보자용 설명` 블록을 따로 답니다(100편 중 30%).
@@ -161,6 +170,39 @@ def collect_issues(doc: dict, graphics: int | None = None,
         issues.append(f"시각자료가 {graphics}장입니다 — 최소 {min_graphics}장. "
                       f"벤치마크는 편당 중앙값 10장입니다.")
 
+    return issues
+
+
+def collect_issues_en(doc: dict, graphics: int | None = None) -> list[str]:
+    """영어 가이드 전용 검사. 한국어 검사(제목 문법·문체·초보자 설명)는 영어에 맞지 않아 건너뛴다."""
+    ko = doc.get("ko") or doc
+    issues: list[str] = []
+    title = str(ko.get("title") or "")
+    if not title:
+        return ["Title is missing."]
+    if not (EN_TITLE_MIN <= len(title) <= EN_TITLE_MAX):
+        issues.append(f"Title is {len(title)} characters — keep it between {EN_TITLE_MIN} and {EN_TITLE_MAX} "
+                      f"so Google shows the whole thing.")
+    sections = ko.get("narrative") or []
+    floor = editorial_title.SECTION_FLOORS.get(str(doc.get("series") or "Guide"), 5)
+    if len(sections) < floor:
+        issues.append(f"{len(sections)} sections — an English guide needs at least {floor}.")
+    for index, section in enumerate(sections, start=1):
+        heading = str(section.get("heading") or "")
+        if len(heading) > 80:
+            issues.append(f"Heading {index} is {len(heading)} characters — keep headings under 80.")
+        if len(str(section.get("body") or "")) < 300:
+            issues.append(f"Section {index} is under 300 characters — answer the question, do not list it.")
+    body = " ".join(str(s.get("body", "")) for s in sections) + str((ko.get("closing") or {}).get("body", ""))
+    if not re.search(r"\b20\d\d\b", body):
+        issues.append("The body never states a year — evergreen guides must say when the rules were checked "
+                      "(for example 'as of September 2026').")
+    if re.search(r"[가-힣]", title + body):
+        issues.append("Hangul found in an English guide — translate or transliterate it.")
+    limits = SERIES_LIMITS.get(str(doc.get("series") or ""), {})
+    min_graphics = limits.get("graphics", MIN_GRAPHICS)
+    if graphics is not None and graphics < min_graphics:
+        issues.append(f"{graphics} graphics — at least {min_graphics} are required.")
     return issues
 
 

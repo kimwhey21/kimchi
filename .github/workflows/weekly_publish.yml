@@ -3,6 +3,8 @@ name: Weekly Publish
 # 주말 편성(2026-09-12, 사용자 결정 "1번 2번 해주고 … 바로 오늘부터"):
 #   토 10:00 KST 「주간 결산」  editorial/weekly/review_<토요일>.json  (docs/routine_week_review.md)
 #   일 20:00 KST 「다음 주 일정」 editorial/weekly/ahead_<일요일>.json   (docs/routine_week_ahead.md)
+#   같은 루틴이 그 주의 큰 이벤트 하나를 골라 「이벤트」 글도 씁니다 — editorial/events/<날짜>_<slug>.json
+#   (유입 편성 2026-09-12: FOMC 결과·CPI 발표 시간·옵션 만기처럼 매달 되풀이되는 검색어).
 # 두 원고가 main에 커밋되면 바로 공개합니다 — 시황·프리뷰와 같은 정책입니다. 숫자는 우리 시세
 # 파일에서만 나오고, 안전장치는 루틴이 커밋 전에 통과시키는 관문(feature_gate)과 발행 뒤 되읽기입니다.
 on:
@@ -11,6 +13,7 @@ on:
     branches: [main]
     paths:
       - "editorial/weekly/*.json"
+      - "editorial/events/*.json"
   workflow_dispatch:
     inputs:
       path:
@@ -49,8 +52,8 @@ jobs:
           elif [ "${{ github.event_name }}" = "push" ] && \
                [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
             FILES=$(git diff --name-only --diff-filter=d \
-                      "${{ github.event.before }}" "${{ github.sha }}" -- editorial/weekly \
-                    | grep -E '^editorial/weekly/[^/]+\.json$' | tr '\n' ' ' || true)
+                      "${{ github.event.before }}" "${{ github.sha }}" -- editorial/weekly editorial/events \
+                    | grep -E '^editorial/(weekly|events)/[^/]+\.json$' | tr '\n' ' ' || true)
           fi
           echo "올릴 원고: ${FILES:-(없음)}"
           echo "files=$FILES" >> "$GITHUB_OUTPUT"

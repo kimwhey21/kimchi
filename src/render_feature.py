@@ -19,8 +19,17 @@ def _paragraphs(body: str) -> list[str]:
     return [chunk.strip() for chunk in body.split("\n\n") if chunk.strip()]
 
 
+# 영어 가이드(2026-09-12)는 같은 템플릿을 영어 문구로 렌더한다 — 템플릿을 둘로 나누면 스타일이 갈라진다.
+STRINGS = {
+    "ko": {"lang": "ko", "locale": "ko_KR", "related": "관련 글",
+           "footer": "이 글은 정보 제공을 목적으로 하며 특정 종목의 매수·매도를 권유하지 않습니다."},
+    "en": {"lang": "en", "locale": "en_US", "related": "Related",
+           "footer": "This article is for information only and is not a recommendation to buy or sell any security."},
+}
+
+
 def render(doc: dict, kicker: str, figures: dict[int, dict] | None = None,
-           meta_description: str | None = None) -> str:
+           meta_description: str | None = None, lang: str = "ko") -> str:
     """`figures`는 {절 번호(0부터): {"url", "alt"}} 입니다."""
     ko = doc.get("ko") or doc
     figures = figures or {}
@@ -41,4 +50,5 @@ def render(doc: dict, kicker: str, figures: dict[int, dict] | None = None,
         closing={"heading": closing.get("heading", ""),
                  "paragraphs": _paragraphs(closing.get("body", ""))},
         related=doc.get("related") or [],
+        strings=STRINGS.get(lang, STRINGS["ko"]),
     )

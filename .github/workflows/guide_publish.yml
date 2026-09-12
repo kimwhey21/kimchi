@@ -1,0 +1,80 @@
+name: Guide Publish
+
+# 유입 편성(2026-09-12, 사용자 승인 "1번 2번 4번 진행"): 검색 유입을 만드는 상시 가이드.
+#   화·목 09:00 KST 한국어 가이드  editorial/guides/ko_<slug>.json  (docs/routine_guide_ko.md, series "가이드")
+#   수    09:00 KST 영어 가이드    editorial/guides/en_<slug>.json  (docs/routine_guide_en.md, series "Guide", lang "en")
+# 근거: 2026-09-12 서치콘솔 실측 — 구글 노출 710건 중 700건이 영어 가이드 9편에서 나왔고 한국어 시황 43편은 0건.
+# 원고가 main에 커밋되면 올린다. 저장소 변수 FERMATA_AUTO_PUBLISH가 true면(2026-09-12부터) 바로 공개하고,
+# 아니면 임시저장으로 두어 사람이 "발행"이라고 한 뒤 `python -m src.publish_feature <원고> --publish`로 공개한다.
+# 안전장치는 루틴이 커밋 전에 통과시키는 관문(feature_gate: 한국어는 다섯 검사, 영어는 영어 검사 + 출처)과 발행 뒤 되읽기.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "editorial/guides/*.json"
+  workflow_dispatch:
+    inputs:
+      path:
+        description: "발행할 가이드 원고 경로 (공백으로 여러 개)"
+        required: true
+        default: ""
+      publish_live:
+        description: "공개 상태로 발행 (사용자가 '발행'이라고 한 뒤에만)"
+        type: boolean
+        required: false
+        default: false
+
+concurrency:
+  group: guide-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 한글 폰트 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 올릴 원고 결정
+        id: pick
+        run: |
+          FILES=""
+          if [ -n "${{ github.event.inputs.path }}" ]; then
+            FILES="${{ github.event.inputs.path }}"
+          elif [ "${{ github.event_name }}" = "push" ] && \
+               [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            FILES=$(git diff --name-only --diff-filter=d \
+                      "${{ github.event.before }}" "${{ github.sha }}" -- editorial/guides \
+                    | grep -E '^editorial/guides/[^/]+\.json$' | tr '\n' ' ' || true)
+          fi
+          echo "올릴 원고: ${FILES:-(없음)}"
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+
+      - name: 올리기
+        if: ${{ steps.pick.outputs.files != '' }}
+        run: |
+          FLAG=""
+          if [ "${{ github.event.inputs.publish_live }}" = "true" ] || \
+             [ "${{ vars.FERMATA_AUTO_PUBLISH }}" = "true" ]; then
+            FLAG="--publish"
+          fi
+          for f in ${{ steps.pick.outputs.files }}; do
+            echo "== $f =="
+            python -m src.publish_feature "$f" $FLAG
+          done
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          SUBSCRIBE_FORM_ACTION: ${{ secrets.SUBSCRIBE_FORM_ACTION }}

@@ -26,6 +26,9 @@ LISTS = {
     "checkpoint": "editorial/features/*.json", "preview": "editorial/previews/*.json",
     "weekly": "editorial/weekly/review_*.json",      # 토요일 주간 결산 (2026-09-12)
     "weekahead": "editorial/weekly/ahead_*.json",    # 일요일 다음 주 일정 (2026-09-12)
+    "guide": "editorial/guides/ko_*.json",           # 한국어 상시 가이드 (2026-09-12, 유입 편성)
+    "guide_en": "editorial/guides/en_*.json",        # 영어 가이드
+    "event": "editorial/events/*.json",              # 정기 이벤트 글
 }
 
 

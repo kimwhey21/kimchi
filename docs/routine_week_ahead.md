@@ -85,6 +85,32 @@
    `다음 주 일정 커밋: <제목> — 몇 분 안에 https://fermata.it.kr/<slug>/ 로 공개되고, 네이버에는 20분 안에 요약본이 올라갑니다.`
    건너뛰었거나 실패했을 때도 한 번, 이유와 함께.
 
+## 이벤트 글 (2026-09-12, 유입 편성 — 사용자 승인 "4번 진행")
+
+다음 주 일정을 커밋한 뒤, **그 주의 가장 큰 이벤트 하나**를 골라 「이벤트」 글을 한 편 더 씁니다.
+"FOMC 결과 발표 시간 한국시간", "CPI 발표 시간", "네 마녀의 날", "옵션 만기일"은 매달 되풀이되는 검색어라
+시황보다 수명이 깁니다(2026-09-12 서치콘솔 실측: 한국어 시황 43편의 구글 노출 0건).
+
+- **고르는 순서**(위에 있을수록 먼저): FOMC 결과 → 미국 CPI → 미국 고용보고서 → 한국 금통위 → 선물옵션
+  동시만기(네 마녀의 날) → 삼성전자 잠정실적 → 엔비디아 실적 → 한국 수출입 통계(1~10일). 이 목록에 없는 주는
+  쓰지 않습니다. 같은 이벤트의 글이 이미 있으면(`ls editorial/events/`, `event_name`과 `event_date`가 같음) 쓰지 않습니다.
+- **원고.** `editorial/events/<KST 오늘>_<slug>.json`(예: `2026-09-13_fomc.json`). 기준표 스키마에:
+  `kind` "feature", `series` "이벤트", `date` KST 오늘, `event_date` 이벤트 날짜(한국시간 기준 날짜),
+  `event_name`(예: `9월 FOMC`), `slug`(예: `fomc-2026-09`), `category_id` 433, `tags` 3~5개(예: `FOMC`, `금리결정`,
+  `9월FOMC`), `period` 없음, `related` 2개(방금 쓴 다음 주 일정 `https://fermata.it.kr/week-ahead-<오늘>/` + 관련 시황).
+  - `ko.title`: 이벤트 이름과 **날짜·한국시간**이 들어간 「제목 문법」 꼴 하나, 20~35자.
+    예(꼴만): `9월 FOMC, 17일 새벽 3시에 확인할 것 세 가지` / `8월 CPI 발표 밤 9시 30분, 무엇을 보나`.
+  - `ko.narrative` 4~5절: **1. 언제 나오나**(한국시간, 어디서 보나) **2. 무엇이 나오나**(예상값·지난번 값 — 출처 2곳)
+    **3. 시장은 어떻게 반응했나**(지난 발표 때 지수·금리·환율 — 시세 파일 이력에서만) **4. 이번에 볼 것**(조건문으로)
+    (5. 초보자 설명 — 필요할 때). 본문에 `N월 N일`.
+  - `ko.closing`: heading `Fermata's Take`, 두세 문장.
+  - `graphics` 2~3장: `cover`(featured, kicker `이벤트 · <N월 N일>`) + `fact_table`(section 1: 지난 값·예상값,
+    `source` 필수) 또는 `calendar_strip`(section 0) + 있으면 `price_history`(section 2, `price_file`).
+- **관문.** `python -m src.feature_gate editorial/events/<파일>.json --graphics <수>` → 통과하면 렌더 확인 →
+  `git add editorial/events/<파일>.json && git commit -m "이벤트: <제목>" && git push origin HEAD:main`.
+  `weekly_publish.yml`이 다음 주 일정과 같은 정책으로 **바로 공개**하고, 네이버에는 20분 안에 요약본이 갑니다.
+- 다음 주 일정을 못 쓴 날(재료 부족)에는 이벤트 글도 쓰지 않습니다. 알림은 두 글을 한 번에 보냅니다.
+
 ## 절대 규칙
 
 - 일정은 출처 2곳이 맞을 때만. 가격대 숫자는 시세 파일에서만.

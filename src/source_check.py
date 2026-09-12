@@ -61,7 +61,21 @@ OUR_ENGINES = (
 # 하한을 높이면 억지 인용이 붙고, 없으면 오늘처럼 0곳짜리 글이 나갑니다.
 MIN_DISTINCT_SOURCES = 3
 # 짧은 시리즈는 하한이 낮다. 밤 10시 미국장 프리뷰(600~900자)는 일정 출처 2곳이면 된다.
-SERIES_MIN_SOURCES = {"프리뷰": 2, "주간 결산": 2, "다음 주 일정": 2}   # 주말 편성(2026-09-12): 숫자는 우리 시세에서, 밖의 사실은 둘이면 된다
+SERIES_MIN_SOURCES = {"프리뷰": 2, "주간 결산": 2, "다음 주 일정": 2,   # 주말 편성(2026-09-12): 숫자는 우리 시세에서, 밖의 사실은 둘이면 된다
+                      "가이드": 2, "Guide": 2, "이벤트": 2}            # 유입 편성(2026-09-12): 규정·일정은 공식 출처 둘이면 된다
+
+# 영어 가이드가 인용하는 이름. 한국어 목록과 따로 두는 이유는 같은 기관이 영어 글에서는 영어 이름으로 나오기 때문이다
+# (금융감독원 → FSS, 한국거래소 → KRX/Korea Exchange). 2026-09-01 영어 가이드 9편이 실제로 인용한 이름에서 골랐다.
+EN_SOURCES = (
+    "Korea Exchange", "KRX", "Financial Services Commission", "FSC", "Financial Supervisory Service", "FSS",
+    "Bank of Korea", "Ministry of Economy and Finance", "National Tax Service", "NTS", "DART", "KIND",
+    "MSCI", "FTSE Russell", "PwC", "KPMG", "Deloitte", "EY", "Reuters", "Bloomberg", "Korea Herald",
+    "Yonhap", "Korea JoongAng Daily", "Korea Times", "Nikkei", "Wall Street Journal", "WSJ",
+    "Financial Times", "CNBC", "Goldman Sachs", "Morgan Stanley", "JPMorgan", "Citi", "Nomura",
+    "Macquarie", "Interactive Brokers", "Charles Schwab", "Fidelity", "Samsung Securities",
+    "Mirae Asset", "Korea Investment", "KB Securities", "NH Investment", "Kiwoom", "Toss Securities",
+    "IRS", "OECD", "IMF", "Korea Securities Depository", "KSD", "KOFIA",
+)
 
 
 def _body(doc: dict) -> str:
@@ -76,6 +90,12 @@ def collect(doc: dict) -> dict:
     """원고에서 찾은 외부 출처를 종류별로 돌려줍니다."""
     text = _body(doc)
     found: dict[str, list[str]] = {}
+    if str(doc.get("lang") or "ko") == "en":
+        hits = sorted({name for name in EN_SOURCES
+                       if re.search(r"(?<![A-Za-z])" + re.escape(name) + r"(?![A-Za-z])", text)})
+        if hits:
+            found["sources"] = hits
+        return {"found": found, "distinct": len(hits)}
     for label, names in (("증권사", INSTITUTIONS), ("리서치", RESEARCH),
                          ("언론", MEDIA), ("공공·시장", OFFICIAL)):
         hits = sorted({name for name in names if name in text})

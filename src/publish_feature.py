@@ -31,7 +31,20 @@ OUTPUT = ROOT / "output" / "features"
 # 내부 키(`series: 기준표`, 문서·검사·성적표 코드)는 그대로 두고, 화면에 나가는 곳 — 워드프레스
 # 분류(Checkpoint, id 432)·홈 탭·글 머리말·표지 kicker — 만 이 표를 거친다. 제목 글자에는
 # 라벨을 넣지 않는다(제목은 검색에서 서른 자 안팎만 보인다). 대신 확인 날짜를 제목에 넣는다.
-SERIES_LABEL = {"기준표": "Checkpoint"}
+SERIES_LABEL = {"기준표": "Checkpoint", "Guide": "Investor Guide"}
+
+# 유입 편성(2026-09-12, 사용자 승인): 상시 가이드(한국어 "가이드"·영어 "Guide")와 정기 이벤트 글("이벤트").
+# 가이드 머리말은 확인 날짜(최상위 `checked`, YYYY-MM-DD)를 보인다 — 상시 글은 "언제 기준인지"가 검색 결과의
+# 신뢰다. 이벤트 글은 행사 날짜(최상위 `event_date`)를 보인다.
+_MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August",
+              "September", "October", "November", "December"]
+
+
+def _date_or_none(value) -> dt.date | None:
+    try:
+        return dt.date.fromisoformat(str(value))
+    except (TypeError, ValueError):
+        return None
 
 
 def _period_text(doc: dict) -> str:
@@ -57,6 +70,15 @@ def _kicker(doc: dict) -> str:
         return f"{label} · {day.month}월 {day.day}일까지 확인할 것"
     if series in ("주간 결산", "다음 주 일정") and _period_text(doc):
         return f"{label} · {_period_text(doc)}"
+    if series == "가이드" and _date_or_none(doc.get("checked")):
+        day = _date_or_none(doc.get("checked"))
+        return f"가이드 · {day.year}년 {day.month}월 {day.day}일 확인"
+    if series == "Guide" and _date_or_none(doc.get("checked")):
+        day = _date_or_none(doc.get("checked"))
+        return f"{label} · Checked {_MONTHS_EN[day.month - 1]} {day.day}, {day.year}"
+    if series == "이벤트" and _date_or_none(doc.get("event_date")):
+        day = _date_or_none(doc.get("event_date"))
+        return f"이벤트 · {day.month}월 {day.day}일"
     return label
 
 
@@ -72,6 +94,9 @@ def _seo_lead(doc: dict) -> str:
     if series in ("주간 결산", "다음 주 일정") and _period_text(doc):
         noun = "주간 증시 결산" if series == "주간 결산" else "다음 주 증시 일정"
         return f"{_period_text(doc)} {noun}입니다. "
+    if series == "이벤트" and _date_or_none(doc.get("event_date")):
+        day = _date_or_none(doc.get("event_date"))
+        return f"{day.month}월 {day.day}일 {doc.get('event_name') or '증시 이벤트'} 정리입니다. "
     if series != "프리뷰" or not doc.get("date"):
         return ""
     year, month, day = (int(x) for x in str(doc["date"]).split("-"))
@@ -184,7 +209,8 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
 
     ko = doc.get("ko") or doc
     html = render(doc, _kicker(doc), figures=figures,
-                  meta_description=_excerpt(ko, lead=_seo_lead(doc)))
+                  meta_description=_excerpt(ko, lead=_seo_lead(doc)),
+                  lang=str(doc.get("lang") or "ko"))
     html_path = output / "article.html"
     html_path.write_text(html, encoding="utf-8")
     if not upload:
