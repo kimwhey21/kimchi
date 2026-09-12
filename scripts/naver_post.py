@@ -39,6 +39,25 @@ def _plain(text: str) -> list[str]:
     return [p.strip() for p in _TAG.sub("", str(text or "")).split("\n") if p.strip()]
 
 
+_SENTENCE = re.compile(r"(?<=[.!?])\s+")
+
+
+def _chunks(paragraphs: list[str], max_sentences: int = 3, max_chars: int = 260) -> list[str]:
+    """문단을 2~3문장, 260자 안팎으로 자른다 (2026-09-12, 사용자: 모바일에서 문단이 벽처럼 읽힘).
+    원문 문단 하나가 5~6줄이 되던 것을 나눈다. 문장 경계는 마침표 뒤 공백."""
+    out: list[str] = []
+    for para in paragraphs:
+        sentences = [x.strip() for x in _SENTENCE.split(para) if x.strip()]
+        cur: list[str] = []
+        for sent in sentences:
+            if cur and (len(cur) >= max_sentences or len(" ".join(cur)) + len(sent) > max_chars):
+                out.append(" ".join(cur)); cur = []
+            cur.append(sent)
+        if cur:
+            out.append(" ".join(cur))
+    return out
+
+
 def _kdate(date_str: str) -> str:
     d = dt.date.fromisoformat(date_str)
     return f"{d.month}월 {d.day}일"
@@ -95,6 +114,17 @@ def _graphics(graphics_dir: Path | None, limit: int = 3) -> list[str]:
     return ranked[:limit]
 
 
+def _cover(graphics_dir: Path | None) -> str | None:
+    """표지 그림 — 기준표·프리뷰·주간은 `01-cover.png`, 시황은 `cover_editorial.png`(naver_post cover가 만든다).
+    첫 그림이 곧 네이버 목록의 섬네일이라 표지를 맨 앞에 둔다(2026-09-12)."""
+    if not graphics_dir or not graphics_dir.exists():
+        return None
+    for f in sorted(glob.glob(str(graphics_dir / "*.png"))):
+        if "cover" in Path(f).name:
+            return f
+    return None
+
+
 def build(path: Path, graphics_dir: Path | None = None) -> dict:
     doc = json.loads(Path(path).read_text(encoding="utf-8"))
     ko = doc.get("ko") or {}
@@ -135,16 +165,20 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         title = f"{prefix} | {base_title}"                   # 콜론이 겹치지 않게
     else:
         title = f"{prefix}: {base_title}"
+    # 블록 종류: img(그림) · h(소제목) · q(인용구 — Fermata's Take) · p(문단, 2~3문장). 표지가 맨 앞(2026-09-12).
     blocks: list[tuple[str, str]] = []
+    cover = _cover(graphics_dir)
+    if cover:
+        blocks.append(("img", cover))
     take = _plain((ko.get("closing") or {}).get("body", ""))
     if take:
         blocks.append(("h", "Fermata's Take"))
-        blocks += [("p", p) for p in take[:2]]
+        blocks.append(("q", "\n".join(take[:2])))
     pics = _graphics(graphics_dir)
     for i, section in enumerate(_pick_sections(doc)):
         heading = re.sub(r"^\s*\d{1,2}\.\s*", "", str(section.get("heading", "")))
         blocks.append(("h", heading))
-        blocks += [("p", p) for p in _plain(section.get("body", ""))[:2]]
+        blocks += [("p", p) for p in _chunks(_plain(section.get("body", ""))[:2])]
         if i < len(pics):
             blocks.append(("img", pics[i]))
     check = ((ko.get("closing") or {}).get("check") or {}).get("what")
@@ -156,7 +190,18 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     # 태그는 글에서 뽑는다(src/post_tags.py, 2026-09-12): 고정어 + 종목 이름 + 주제어 + 달. 12개까지.
     tags = post_tags.build_tags(doc)
     return {"title": title, "category": category, "tags": tags, "url": url, "blocks": blocks,
-            "source": str(path), "chars": sum(len(b[1]) for b in blocks if b[0] == "p")}
+            "source": str(path), "chars": sum(len(b[1]) for b in blocks if b[0] in ("p", "q"))}
+
+
+def make_cover(path: Path, out: Path) -> Path | None:
+    """시황 원고의 대표 이미지(표지)를 만든다 — 발행 워크플로가 만드는 것과 같은 그림(featured_image.create)."""
+    doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    if doc.get("market") not in ("kr", "us") or not doc.get("price_data"):
+        return None
+    from src import featured_image
+    out.parent.mkdir(parents=True, exist_ok=True)
+    featured_image.create(doc["market"], str(doc["date"]), doc["price_data"], out, doc.get("ko"))
+    return out
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -164,7 +209,12 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("build"); b.add_argument("manuscript", type=Path)
     b.add_argument("--graphics", type=Path); b.add_argument("--out", type=Path)
+    c = sub.add_parser("cover"); c.add_argument("manuscript", type=Path); c.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
+    if args.cmd == "cover":
+        made = make_cover(args.manuscript, args.out)
+        print(f"cover: {made or '(시황 원고가 아니라 건너뜀)'}")
+        return 0
     post = build(args.manuscript, args.graphics)
     text = json.dumps(post, ensure_ascii=False, indent=1)
     if args.out:

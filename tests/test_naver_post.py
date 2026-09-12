@@ -19,6 +19,26 @@ class BuildTest(unittest.TestCase):
         self.assertIn("코스피", post["tags"])
         self.assertLess(post["chars"], 2600)
 
+    def test_paragraphs_are_short_and_take_is_a_quotation(self) -> None:
+        """2026-09-12: 모바일에서 문단이 벽처럼 읽혀 2~3문장으로 자르고, Fermata's Take는 인용구(q)로, 표지는 맨 앞."""
+        post = naver_post.build(Path("editorial/kr_2026-09-10.json"), Path("output/gate/kr_2026-09-10"))
+        kinds = [b[0] for b in post["blocks"]]
+        self.assertIn("q", kinds)
+        self.assertLess(kinds.index("h"), kinds.index("q"))
+        for kind, text in post["blocks"]:
+            if kind == "p":
+                self.assertLessEqual(len(naver_post._SENTENCE.split(text)), 3, text)
+                self.assertLessEqual(len(text), 300, text)
+        self.assertEqual(naver_post._chunks(["하나입니다. 둘입니다. 셋입니다. 넷입니다."]), ["하나입니다. 둘입니다. 셋입니다.", "넷입니다."])
+
+    def test_cover_comes_first_when_present(self) -> None:
+        import tempfile
+        tmp = Path(tempfile.mkdtemp())
+        for name in ("01-cover.png", "02-number_cards.png"):
+            (tmp / name).write_bytes(b"png")
+        post = naver_post.build(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json"), tmp)
+        self.assertEqual(post["blocks"][0], ("img", str(tmp / "01-cover.png")))
+
     def test_checkpoint_post_goes_to_checkpoint_category(self) -> None:
         post = naver_post.build(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json"))
         self.assertEqual(post["category"], "Checkpoint")
