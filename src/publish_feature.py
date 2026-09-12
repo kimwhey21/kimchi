@@ -14,7 +14,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from src import data_graphics, feature_graphics, graphic_checks, post_tags, publish_wordpress
+from src import data_graphics, feature_graphics, graphic_checks, notify_telegram, post_tags, publish_wordpress
 
 # 단독 실행 모듈이라 main.py가 대신 불러 주지 않습니다. 이게 빠져 있으면
 # `is_configured()`가 False가 되어 **조용히 "업로드 안 함"으로 끝납니다** —
@@ -280,6 +280,9 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
         result["id"], ko["title"], expected_status=expected,
         expected_featured_media=featured_id, expected_category_id=category_id,
     )
+    if live:
+        # 텔레그램 채널 알림(2026-09-12, 홍보 1번). 다시 올린 글은 notify_post가 스스로 거른다. 실패해도 발행은 성공이다.
+        notify_telegram.notify_post(base, result["id"], ko["title"], doc)
     return result
 
 

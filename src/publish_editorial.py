@@ -598,6 +598,9 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
     print(f"한국어 {status}: id={ko_result.get('id')} {ko_result.get('link','')}")
     if publish_live:
         publish_wordpress.verify_published(ko_result["id"], ko["title"])
+        # 텔레그램 채널 알림(2026-09-12, 홍보 1번) — 한국어 글만, 다시 올린 글은 notify_post가 거른다.
+        from src import notify_telegram
+        notify_telegram.notify_post(os.environ["WORDPRESS_URL"].rstrip("/"), ko_result["id"], ko["title"], doc)
 
     print(
         f"상태: {status}"
