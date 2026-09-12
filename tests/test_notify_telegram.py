@@ -68,3 +68,12 @@ class WorkflowTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FailureAlertTest(unittest.TestCase):
+    def test_every_workflow_alerts_on_failure(self) -> None:
+        for path in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+            text = path.read_text(encoding="utf-8")
+            with self.subTest(workflow=path.name):
+                self.assertIn("if: failure()", text)
+                self.assertIn("TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}", text)

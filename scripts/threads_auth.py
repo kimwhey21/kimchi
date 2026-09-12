@@ -78,11 +78,14 @@ def cmd_refresh() -> None:
     token = os.environ["THREADS_ACCESS_TOKEN"]
     result = requests.get("https://graph.threads.net/refresh_access_token", timeout=TIMEOUT,
                           params={"grant_type": "th_refresh_token", "access_token": token}).json()
+    from src import alert
     if "access_token" not in result:
+        alert.send(f"스레드 토큰 갱신 실패: {str(result)[:200]} — 다시 승인이 필요할 수 있습니다(scripts/threads_auth.py url)", "fail")
         raise SystemExit(f"갱신 실패: {result}")
     _env_set("THREADS_ACCESS_TOKEN", result["access_token"])
     _gh_secret("THREADS_ACCESS_TOKEN", result["access_token"])
     print(f"갱신 완료 — 유효 {result.get('expires_in', 0) // 86400}일")
+    alert.send(f"스레드 토큰 갱신 완료 — 유효 {result.get('expires_in', 0) // 86400}일", "ok")
 
 
 def cmd_me() -> None:
