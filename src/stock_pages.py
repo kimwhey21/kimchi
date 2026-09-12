@@ -138,7 +138,8 @@ def stats(entry: dict, trading_date: str) -> dict:
         position = (f"3개월 고점({dates[high_i][5:].replace('-', '/')}, {_fmt_price(high, unit)})보다 {abs(from_high):.1f}% 아래, "
                     f"3개월 저점({_fmt_price(low, unit)})보다 {abs(_pct(close, low) or 0):.1f}% 위에 있습니다.")
     trend = "올랐고" if (pct_1m or 0) > 0 else "내렸고"
-    position += f" 최근 한 달 {abs(pct_1m or 0):.1f}% {trend}, 이번 주는 {_pct_text(pct_1w)}입니다."
+    # 등락 부호는 sans 서체로 — Literata 300에서는 '+'가 세로줄처럼 보였다(2026-09-12 첫 화면 확인)
+    position += f" 최근 한 달 {abs(pct_1m or 0):.1f}% {trend}, 이번 주는 <span class=\"pct\">{_pct_text(pct_1w)}</span>입니다."
     return {"close": _fmt_price(close, unit), "close_raw": close, "unit": unit,
             "pct_1d": _pct_text(pct_1d), "pct_1w": _pct_text(pct_1w), "pct_1m": _pct_text(pct_1m), "pct_3m": _pct_text(pct_3m),
             "pct_1w_raw": pct_1w, "pct_1m_raw": pct_1m,
@@ -211,11 +212,23 @@ def related_posts(name: str, editorial_dir: Path | None = None, limit: int = REL
             continue
         ko = doc.get("ko") or {}
         title = str(ko.get("title") or "")
-        headings = " ".join(str(s.get("heading", "")) for s in (ko.get("narrative") or []))
-        if title and (post_tags.mentioned(name, title) or post_tags.mentioned(name, headings)):
-            rows.append((str(doc.get("date") or ""), title, _doc_url(doc, p)))
-    rows.sort(reverse=True)
-    return [{"date": d, "title": t, "url": u} for d, t, u in rows[:limit]]
+        sections = ko.get("narrative") or []
+        headings = " ".join(str(s.get("heading", "")) for s in sections)
+        body = " ".join(str(s.get("body", "")) for s in sections)
+        if not title:
+            continue
+        # 제목·소제목에 나온 글이 먼저, 본문에만 나온 글은 그다음(2026-09-12: 제목만 보니 삼성전자도 두 편뿐이었다)
+        if post_tags.mentioned(name, title) or post_tags.mentioned(name, headings):
+            rank = 0
+        elif post_tags.mentioned(name, body):
+            rank = 1
+        else:
+            continue
+        rows.append((rank, str(doc.get("date") or ""), title, _doc_url(doc, p)))
+    rows.sort(key=lambda r: (r[0], r[1]), reverse=False)
+    rows = sorted(rows, key=lambda r: r[1], reverse=True)
+    rows = sorted(rows, key=lambda r: r[0])
+    return [{"date": d, "title": t, "url": u} for _, d, t, u in rows[:limit]]
 
 
 # ── 렌더 ─────────────────────────────────────────────────────────────────────
@@ -243,7 +256,8 @@ def render_index(rows: list[dict], trading_dates: dict[str, str]) -> str:
         part = [r for r in rows if r["market"] == market]
         if part:
             groups.append({"label": f"{MARKET_LABEL[market]} · {_label(trading_dates[market])} 마감", "rows": part})
-    label = " / ".join(_label(trading_dates[m]) for m in ("kr", "us") if m in trading_dates)
+    labels = [_label(trading_dates[m]) for m in ("kr", "us") if m in trading_dates]
+    label = " / ".join(dict.fromkeys(labels))   # 두 시장의 기준일이 같으면 한 번만
     return _env().get_template("stock.html.j2").render(mode="index", rows=rows, groups=groups, trading_label=label)
 
 

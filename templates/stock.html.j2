@@ -26,6 +26,7 @@
 .fm-page table.fm-idx td{vertical-align:top;padding:10px 8px 10px 0;border-bottom:1px solid #e6e4df}
 .fm-page table.fm-idx td.num{text-align:right;white-space:nowrap}
 .fm-page td.up{color:#c0392b}.fm-page td.down{color:#2a78d6}
+.fm-page td.num,.fm-page .fm-kpi .n,.fm-page span.pct{font-family:Pretendard,-apple-system,BlinkMacSystemFont,sans-serif;font-weight:500}
 .fm-page p.fm-foot{font-size:14px;color:#8a8a8a;border-top:1px solid #e6e4df;padding-top:12px;margin-top:28px}
 @media (max-width:600px){.fm-page{font-size:17px}.fm-page .fm-kpi .n{font-size:20px}}
 </style>
@@ -59,7 +60,7 @@
 <figure class="fm-fig"><img src="{{ chart_url }}" alt="{{ name }} 최근 3개월 종가 차트" loading="lazy"><figcaption>{{ name }} 최근 3개월 종가. 3개월 고점 {{ s.high_3m }}, 저점 {{ s.low_3m }}. 출처: 페르마타 시세 파일.</figcaption></figure>
 {% endif %}
 <p class="fm-kicker">지금 자리</p>
-<p class="fm-p">{{ s.position_text }}</p>
+<p class="fm-p">{{ s.position_text|safe }}</p>
 <p class="fm-kicker">어떤 회사인가</p>
 <p class="fm-p">{{ blurb }}</p>
 {% if note %}

@@ -81,6 +81,16 @@ class RelatedPostsTest(unittest.TestCase):
                 "ko": {"title": "Samsung Electronics 삼성전자", "narrative": []}}), encoding="utf-8")
             rows = stock_pages.related_posts("삼성전자", editorial_dir=base)
         self.assertEqual([r["date"] for r in rows], ["2026-09-10", "2026-09-06"])   # 삼성전기 ≠ 삼성전자, 영어 제외
+
+    def test_body_mentions_come_after_title_mentions(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            (base / "kr_2026-09-11.json").write_text(json.dumps({"market": "kr", "date": "2026-09-11",
+                "ko": {"title": "코스피 하락", "narrative": [{"heading": "반도체", "body": "삼성전자가 3.53% 내렸습니다."}]}}), encoding="utf-8")
+            (base / "kr_2026-09-01.json").write_text(json.dumps({"market": "kr", "date": "2026-09-01",
+                "ko": {"title": "삼성전자 급등", "narrative": []}}), encoding="utf-8")
+            rows = stock_pages.related_posts("삼성전자", editorial_dir=base)
+        self.assertEqual([r["date"] for r in rows], ["2026-09-01", "2026-09-11"])
         self.assertEqual(rows[0]["url"], "https://fermata.it.kr/editorial-kr-2026-09-10-ko/")
         self.assertEqual(rows[1]["url"], "https://fermata.it.kr/samsung-per/")
 
