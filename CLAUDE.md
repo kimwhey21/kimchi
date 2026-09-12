@@ -434,8 +434,10 @@
   기본 사이트맵으로 바꿨다 — robots.txt의 Sitemap 줄도 바뀌었고 옛 `/sitemap_index.xml`은 404다. **다시 켜지 말 것.**
   네이버 서치어드바이저에는 새 주소를 제출했고, 구글 서치콘솔은 사용자 계정으로 제출한다. 새 사이트는 네이버가
   스스로 오지 않으므로 `~/.market-brief-naver/nsa_request.py`가 새 글마다 수집 요청을 넣는다(20분 동기화에 붙어 있음).
-- **공개된 한국어 글은 텔레그램 채널 `@fermata_kr`에 자동으로 알린다**(2026-09-12, 홍보 1번 — `src/notify_telegram.py`,
-  `publish_feature`·`publish_editorial`이 공개 직후 부른다). 표지 + 제목 + Take 두 문장 + 링크. 다시 올린 글(최초 공개와
-  수정이 10분 넘게 벌어진 글)과 영어 글은 보내지 않는다. 토큰은 GitHub 시크릿 `TELEGRAM_BOT_TOKEN`과 로컬 `.env`에만 —
-  저장소에 적지 않는다. 알림 실패는 발행을 실패시키지 않고 `[텔레그램 실패]`로만 찍는다.
+- **공개된 한국어 글은 텔레그램 채널 `@fermata_kr`과 스레드 `@fermata.it.kr`에 자동으로 올린다**(2026-09-12, 홍보 1·2번 —
+  `src/notify_telegram.py`·`src/notify_threads.py`, `publish_feature`·`publish_editorial`이 공개 직후 부른다). 표지 + 제목 +
+  Take 두 문장 + 링크. 다시 올린 글(최초 공개와 수정이 10분 넘게 벌어진 글)과 영어 글은 보내지 않는다. 토큰은 GitHub 시크릿
+  (`TELEGRAM_BOT_TOKEN`, `THREADS_ACCESS_TOKEN`, `THREADS_USER_ID`)과 로컬 `.env`에만 — 저장소에 적지 않는다. 스레드 토큰은
+  60일짜리라 이 맥의 launchd(`kr.it.fermata.threadsrefresh`, 일 21:30)가 `scripts/threads_auth.py refresh`로 갱신한다.
+  알림 실패는 발행을 실패시키지 않고 `[텔레그램 실패]`·`[스레드 실패]`로만 찍는다.
 - git 커밋은 사용자가 명시적으로 요청할 때만 한다.
