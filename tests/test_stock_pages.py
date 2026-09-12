@@ -81,6 +81,8 @@ class RelatedPostsTest(unittest.TestCase):
                 "ko": {"title": "Samsung Electronics 삼성전자", "narrative": []}}), encoding="utf-8")
             rows = stock_pages.related_posts("삼성전자", editorial_dir=base)
         self.assertEqual([r["date"] for r in rows], ["2026-09-10", "2026-09-06"])   # 삼성전기 ≠ 삼성전자, 영어 제외
+        self.assertEqual(rows[0]["url"], "https://fermata.it.kr/editorial-kr-2026-09-10-ko/")
+        self.assertEqual(rows[1]["url"], "https://fermata.it.kr/samsung-per/")
 
     def test_body_mentions_come_after_title_mentions(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -91,8 +93,6 @@ class RelatedPostsTest(unittest.TestCase):
                 "ko": {"title": "삼성전자 급등", "narrative": []}}), encoding="utf-8")
             rows = stock_pages.related_posts("삼성전자", editorial_dir=base)
         self.assertEqual([r["date"] for r in rows], ["2026-09-01", "2026-09-11"])
-        self.assertEqual(rows[0]["url"], "https://fermata.it.kr/editorial-kr-2026-09-10-ko/")
-        self.assertEqual(rows[1]["url"], "https://fermata.it.kr/samsung-per/")
 
 
 class RenderTest(unittest.TestCase):
