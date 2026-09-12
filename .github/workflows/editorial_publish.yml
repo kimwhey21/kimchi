@@ -104,6 +104,8 @@ jobs:
           SUBSCRIBE_FORM_ACTION: ${{ secrets.SUBSCRIBE_FORM_ACTION }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ vars.TELEGRAM_CHAT_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           # Unsplash 키는 2026-09-07에 뺐습니다. 발행 시점 실시간 검색은 아무도
           # 보지 않고 붙는 유일한 사진이었고 실제로 로고가 나갔습니다. 이제 인사이트
           # 사진은 루틴이 직접 보고 고른 것(원고의 image.url) 아니면 사람이 미리
