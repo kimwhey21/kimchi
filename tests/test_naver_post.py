@@ -15,7 +15,7 @@ class BuildTest(unittest.TestCase):
         heads = [b[1] for b in post["blocks"] if b[0] == "h"]
         self.assertEqual(heads[0], "Fermata's Take")
         self.assertLessEqual(len([h for h in heads if h not in ("Fermata's Take", "다음 확인 지점")]), 5)
-        self.assertEqual(post["blocks"][-1][1], "https://fermata.it.kr/editorial-kr-2026-09-10-ko/")
+        self.assertEqual(post["blocks"][-3][1], "https://fermata.it.kr/editorial-kr-2026-09-10-ko/")   # 마지막 둘은 텔레그램 안내(2026-09-12)
         self.assertIn("코스피", post["tags"])
         self.assertLess(post["chars"], 2600)
 
@@ -44,15 +44,30 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(post["category"], "Checkpoint")
         self.assertIn("체크포인트", post["title"])
         self.assertEqual(post["title"].count("체크포인트"), 1)
-        self.assertEqual(post["blocks"][-1][1], "https://fermata.it.kr/kr-2026-09-08-foreign-buying-reversal/")
+        self.assertEqual(post["blocks"][-3][1], "https://fermata.it.kr/kr-2026-09-08-foreign-buying-reversal/")   # 마지막 둘은 텔레그램 안내(2026-09-12)
 
 
     def test_preview_goes_to_daily_with_a_dated_prefix(self) -> None:
         post = naver_post.build(Path("editorial/previews/us_2026-09-10.json"))
         self.assertEqual(post["category"], "시황")
         self.assertIn("9월 10일", post["title"].split("|")[0] if "|" in post["title"] else post["title"].split(":")[0])
-        self.assertTrue(post["blocks"][-1][1].endswith("-preview/"))
+        self.assertTrue(post["blocks"][-3][1].endswith("-preview/"))
 
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TelegramFooterTest(unittest.TestCase):
+    def test_every_summary_ends_with_the_channel_link(self) -> None:
+        import json
+        import tempfile
+        doc = {"market": "kr", "date": "2026-09-11", "ko": {"title": "제목", "narrative": [{"heading": "1. 절", "body": "본문."}],
+                                                        "closing": {"heading": "Fermata's Take", "body": "판단."}}}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "kr_2026-09-11.json"
+            path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+            post = naver_post.build(path)
+        self.assertEqual(post["blocks"][-1], ("p", "https://t.me/fermata_kr"))
+        self.assertIn("텔레그램", post["blocks"][-2][1])
+

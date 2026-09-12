@@ -34,6 +34,7 @@ FIXED_TAGS = {"kr": ["코스피", "주식시황", "코스피마감", "페르마�
               "이벤트": ["증시일정", "주식시황", "페르마타"]}
 GRAPHIC_PREFERENCE = ["number_cards", "movers_list", "stock_spotlight", "price_history", "flow_compare",
                       "investor_flows", "sector_bars", "rate_compare", "fact_table", "checklist", "calendar_strip"]
+TELEGRAM_URL = "https://t.me/fermata_kr"
 _TAG = re.compile(r"<[^>]+>")
 
 
@@ -225,6 +226,9 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     else:
         blocks.append(("p", "업종별 등락, 외국인·기관 수급, 금리·환율 표까지 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
     blocks.append(("p", url))
+    # 텔레그램 채널(2026-09-12, 홍보 1번 → "진행해"): 글을 끝까지 읽은 사람에게 구독할 곳을 보여 준다.
+    blocks.append(("p", "매일 저녁 마감 시황을 텔레그램으로도 받아 볼 수 있습니다."))
+    blocks.append(("p", TELEGRAM_URL))
     # 태그는 글에서 뽑는다(src/post_tags.py, 2026-09-12): 고정어 + 종목 이름 + 주제어 + 달. 12개까지.
     tags = post_tags.build_tags(doc)
     return {"title": title, "category": category, "tags": tags, "url": url, "blocks": blocks,
