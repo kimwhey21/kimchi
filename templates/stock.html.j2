@@ -1,0 +1,80 @@
+<!-- wp:html -->
+<style>
+.fm-page{font-family:Literata,serif;font-weight:300;color:#5f5f5f;font-size:19px;line-height:1.62;letter-spacing:-0.01em;max-width:760px;margin:0 auto;padding:4px 0 56px}
+.fm-page p.fm-kicker{font-family:Beiruti,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:2.4px;font-size:14px;line-height:1.4;color:#5f5f5f;margin:40px 0 8px}
+.fm-page p.fm-kicker.fm-first{margin-top:0}
+.fm-page h1.fm-title{font-family:Literata,serif;font-weight:400;font-size:30px;line-height:1.3;color:#191919;letter-spacing:-0.01em;margin:0 0 20px}
+.fm-page h2.fm-h{font-family:Literata,serif;font-weight:400;font-size:22px;line-height:1.35;color:#191919;letter-spacing:-0.01em;margin:0 0 4px}
+.fm-page p.fm-p{margin:0 0 14px}
+.fm-page p.fm-meta{font-size:15px;color:#8a8a8a;margin:0 0 10px}
+.fm-page b{font-weight:700;color:#191919}
+.fm-page a{color:#191919;text-decoration:underline;text-underline-offset:3px}
+.fm-page .fm-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:0 0 18px}
+.fm-page .fm-kpi div{background:#fff;border:1px solid #e6e4df;border-radius:10px;padding:12px 14px}
+.fm-page .fm-kpi .n{font-family:Literata,serif;font-weight:400;font-size:24px;color:#191919;line-height:1.15}
+.fm-page .fm-kpi .n.up{color:#c0392b}
+.fm-page .fm-kpi .n.down{color:#2a78d6}
+.fm-page .fm-kpi .l{font-family:Beiruti,sans-serif;font-weight:600;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:#8a8a8a;margin-top:2px}
+.fm-page figure.fm-fig{margin:6px 0 18px}
+.fm-page figure.fm-fig img{width:100%;height:auto;border-radius:10px;border:1px solid #e6e4df;display:block}
+.fm-page figure.fm-fig figcaption{font-size:14px;color:#8a8a8a;margin-top:6px}
+.fm-page ul.fm-list{list-style:none;margin:0 0 10px;padding:0}
+.fm-page ul.fm-list li{padding:10px 0;border-bottom:1px solid #e6e4df;font-size:17px}
+.fm-page ul.fm-list li span.d{font-size:14px;color:#8a8a8a;margin-right:10px;white-space:nowrap}
+.fm-page table.fm-idx{width:100%;border-collapse:collapse;font-size:16.5px;margin:0 0 8px}
+.fm-page table.fm-idx th{font-family:Beiruti,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:1.6px;font-size:12px;color:#8a8a8a;text-align:left;padding:6px 8px 8px 0;border-bottom:1px solid #d9d6cf}
+.fm-page table.fm-idx td{vertical-align:top;padding:10px 8px 10px 0;border-bottom:1px solid #e6e4df}
+.fm-page table.fm-idx td.num{text-align:right;white-space:nowrap}
+.fm-page td.up{color:#c0392b}.fm-page td.down{color:#2a78d6}
+.fm-page p.fm-foot{font-size:14px;color:#8a8a8a;border-top:1px solid #e6e4df;padding-top:12px;margin-top:28px}
+@media (max-width:600px){.fm-page{font-size:17px}.fm-page .fm-kpi .n{font-size:20px}}
+</style>
+<div class="fm-page">
+{% if mode == "index" %}
+<p class="fm-kicker fm-first">Stocks</p>
+<h1 class="fm-title">종목별 주가 페이지</h1>
+<p class="fm-p">우리가 매일 시세를 받는 {{ rows|length }}개 종목의 최근 종가와 주간·월간 등락, 3개월 차트, 그 종목이 나온 시황·Checkpoint를 한 곳에 모았습니다. 숫자는 시세 파일에서만 오고 매주 새로 씁니다. <b>{{ trading_label }}</b> 마감 기준입니다.</p>
+{% for group in groups %}
+<p class="fm-kicker">{{ group.label }}</p>
+<table class="fm-idx">
+<thead><tr><th>종목</th><th>업종</th><th style="text-align:right">종가</th><th style="text-align:right">1주</th><th style="text-align:right">1개월</th></tr></thead>
+<tbody>
+{% for r in group.rows %}<tr><td><a href="{{ r.url }}">{{ r.name }}</a> <span style="font-size:13px;color:#8a8a8a">{{ r.ticker }}</span></td><td>{{ r.sector }}</td><td class="num">{{ r.close }}</td><td class="num {{ r.w_class }}">{{ r.pct_1w }}</td><td class="num {{ r.m_class }}">{{ r.pct_1m }}</td></tr>
+{% endfor %}
+</tbody></table>
+{% endfor %}
+<p class="fm-foot">이 페이지는 정보 제공을 목적으로 하며 특정 종목의 매수·매도를 권유하지 않습니다. 등락률은 각 시장의 마지막 거래일 종가 기준입니다.</p>
+{% else %}
+<p class="fm-kicker fm-first">{{ market_label }} · {{ trading_label }} 마감 기준</p>
+<h1 class="fm-title">{{ name }} 주가 ({{ ticker }}): 최근 3개월 흐름과 관련 글</h1>
+<p class="fm-meta">{{ name_en }}{% if sector %} · {{ sector }}{% endif %} · 매주 토요일 갱신</p>
+<div class="fm-kpi">
+  <div><div class="n">{{ s.close }}</div><div class="l">종가{% if s.unit %} ({{ s.unit }}){% endif %}</div></div>
+  <div><div class="n {{ s.d_class }}">{{ s.pct_1d }}</div><div class="l">하루</div></div>
+  <div><div class="n {{ s.w_class }}">{{ s.pct_1w }}</div><div class="l">1주</div></div>
+  <div><div class="n {{ s.m_class }}">{{ s.pct_1m }}</div><div class="l">1개월</div></div>
+  <div><div class="n {{ s.q_class }}">{{ s.pct_3m }}</div><div class="l">3개월</div></div>
+</div>
+{% if chart_url %}
+<figure class="fm-fig"><img src="{{ chart_url }}" alt="{{ name }} 최근 3개월 종가 차트" loading="lazy"><figcaption>{{ name }} 최근 3개월 종가. 3개월 고점 {{ s.high_3m }}, 저점 {{ s.low_3m }}. 출처: 페르마타 시세 파일.</figcaption></figure>
+{% endif %}
+<p class="fm-kicker">지금 자리</p>
+<p class="fm-p">{{ s.position_text }}</p>
+<p class="fm-kicker">어떤 회사인가</p>
+<p class="fm-p">{{ blurb }}</p>
+{% if note %}
+<p class="fm-kicker">최근 흐름 · {{ note_label }}</p>
+<p class="fm-p">{{ note }}</p>
+{% endif %}
+{% if related %}
+<p class="fm-kicker">이 종목이 나온 글</p>
+<ul class="fm-list">
+{% for r in related %}<li><span class="d">{{ r.date }}</span><a href="{{ r.url }}">{{ r.title }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+<p class="fm-p"><a href="/stocks/">다른 종목 보기</a> · <a href="/daily/">오늘 시황</a></p>
+<p class="fm-foot">이 페이지는 정보 제공을 목적으로 하며 특정 종목의 매수·매도를 권유하지 않습니다. 숫자는 페르마타가 매일 받는 시세 파일에서 계산했고, 마지막 거래일은 {{ trading_label }}입니다.</p>
+{% endif %}
+</div>
+<!-- /wp:html -->

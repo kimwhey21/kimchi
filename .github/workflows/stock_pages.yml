@@ -1,0 +1,45 @@
+name: Stock Pages
+
+# 종목 허브 페이지 /stocks/<slug>/ 37개 + 목록 /stocks/ (2026-09-12, 유입 편성 3번, 사용자 승인).
+# 숫자는 저장소에 매일 커밋되는 시세 파일에서만 오고 LLM을 부르지 않는다. 매주 토요일 11:30 KST(주간 결산 뒤)에
+# 새로 쓰고, 매달 1일 루틴이 editorial/stocks/notes_<YYYY-MM>.json(종목별 '최근 흐름')을 커밋하면 그때도 돈다.
+# 새 페이지는 저장소 변수 FERMATA_AUTO_PUBLISH가 true면 공개, 아니면 임시저장(있는 페이지는 상태를 건드리지 않는다).
+on:
+  schedule:
+    - cron: "30 2 * * 6"   # 토 11:30 KST
+  push:
+    branches: [main]
+    paths:
+      - "editorial/stocks/*.json"
+      - "config/stock_pages.yaml"
+      - "src/stock_pages.py"
+      - "templates/stock.html.j2"
+  workflow_dispatch:
+
+concurrency:
+  group: stock-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 한글 폰트 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 종목 페이지 갱신
+        run: python -m src.stock_pages --market all
+        env:
+          WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+          WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+          FERMATA_AUTO_PUBLISH: ${{ vars.FERMATA_AUTO_PUBLISH }}
