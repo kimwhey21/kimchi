@@ -49,6 +49,24 @@ class CheckPublicationTest(unittest.TestCase):
         problems = self._check("2026-09-08", post)
         self.assertTrue(any("시세 수집이 실패" in p for p in problems), problems)
 
+    def test_post_missing_from_sitemap_is_reported(self) -> None:
+        """사이트맵이 멈추면(2026-09-08·09-12) 공개된 글이 사이트맵에 없다 — 발행 확인이 그날 잡는다."""
+        post = {"id": 1, "status": "publish", "modified_gmt": "2026-09-05T12:53:52",
+                "link": "https://fermata.it.kr/editorial-us-2026-09-04-ko/"}
+        with tempfile.TemporaryDirectory() as tmp:
+            data = Path(tmp) / "data"; editorial = Path(tmp) / "editorial"; data.mkdir(); editorial.mkdir()
+            (data / "price_us_2026-09-04.json").write_text("{}", encoding="utf-8")
+            (editorial / "us_2026-09-04.json").write_text(json.dumps({"ko": {"title": "제목"}}), encoding="utf-8")
+            with mock.patch.object(cp, "DATA_DIR", data), mock.patch.object(cp, "EDITORIAL_DIR", editorial), \
+                    mock.patch.object(cp, "_actual_trading_date", return_value="2026-09-04"), \
+                    mock.patch.object(cp, "_wordpress_post", return_value=post):
+                stale = cp.check_market("us", check_site=True, sitemap_urls={"https://fermata.it.kr/other/"})
+                fresh = cp.check_market("us", check_site=True, sitemap_urls={"https://fermata.it.kr/editorial-us-2026-09-04-ko"})
+                skipped = cp.check_market("us", check_site=True, sitemap_urls=None)
+        self.assertTrue(any("사이트맵" in p for p in stale), stale)
+        self.assertEqual(fresh, [])
+        self.assertEqual(skipped, [])
+
     def test_missing_post_is_reported(self) -> None:
         problems = self._check("2026-09-04", None)
         self.assertTrue(any("사이트에 글이 없습니다" in p for p in problems), problems)

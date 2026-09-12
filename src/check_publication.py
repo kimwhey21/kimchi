@@ -69,6 +69,32 @@ def _wordpress_post(slug: str) -> dict | None:
     return posts[0] if posts else None
 
 
+def _sitemap_post_urls() -> set[str] | None:
+    """사이트맵(/wp-sitemap.xml)에 실린 글 주소 전부. 못 읽으면 None.
+
+    2026-09-12 검색 유입 전수조사에서 Rank Math 사이트맵이 9/8부터 멈춰 새 글 20편이 사이트맵에 없었던 것을
+    나흘 뒤에야 알았다(두 번째 재발). 이제 워드프레스 기본 사이트맵을 쓰지만, 어느 쪽이든 "그날 글이 사이트맵에
+    있는가"를 발행 확인이 함께 본다 — 멈추면 그날 저녁 메일로 안다.
+    """
+    base_url = os.environ["WORDPRESS_URL"].rstrip("/")
+    headers = {"User-Agent": "Mozilla/5.0 (fermata publish-check)"}
+    try:
+        index = requests.get(f"{base_url}/wp-sitemap.xml", headers=headers, timeout=TIMEOUT_SECONDS)
+        if index.status_code != 200:
+            return None
+        urls: set[str] = set()
+        for loc in re.findall(r"<loc>([^<]+)</loc>", index.text):
+            if "wp-sitemap-posts-post" not in loc:
+                continue
+            part = requests.get(loc, headers=headers, timeout=TIMEOUT_SECONDS)
+            if part.status_code != 200:
+                return None
+            urls.update(re.findall(r"<loc>([^<]+)</loc>", part.text))
+        return urls
+    except requests.RequestException:
+        return None
+
+
 def _actual_trading_date(market: str) -> str | None:
     """지금 시점에서 마지막으로 장이 열린 날을 데이터 소스에 물어봅니다.
 
@@ -94,7 +120,8 @@ def _actual_trading_date(market: str) -> str | None:
         return None
 
 
-def check_market(market: str, check_site: bool) -> list[str]:
+def check_market(market: str, check_site: bool, sitemap_urls: set[str] | None = None) -> list[str]:
+    """`sitemap_urls`가 주어지면 공개된 글이 사이트맵에 실려 있는지도 본다(None이면 건너뜀)."""
     problems: list[str] = []
     trading_date = _latest_trading_date(market)
     if not trading_date:
@@ -146,6 +173,12 @@ def check_market(market: str, check_site: bool) -> list[str]:
                 f"{modified_at:%Y-%m-%d %H:%M} UTC에 마지막으로 수정됐습니다. "
                 "그날 원고가 반영되지 않은 옛 글입니다."
             )
+        link = str(post.get("link") or "")
+        if sitemap_urls is not None and link and link.rstrip("/") not in {u.rstrip("/") for u in sitemap_urls}:
+            problems.append(
+                f"{market} {trading_date} [{lang}]: 글은 공개됐는데 사이트맵(/wp-sitemap.xml)에 없습니다 ({link}). "
+                "사이트맵이 멈췄습니다 — 검색엔진이 새 글을 못 찾습니다(2026-09-08·09-12에 겪은 일)."
+            )
         if not problems:
             print(f"{market} {trading_date} [{lang}]: 공개 확인 (id={post.get('id')})")
     return problems
@@ -164,8 +197,15 @@ def main() -> None:
         print("[안내] WORDPRESS_* 환경변수가 없어 저장소 파일만 확인합니다.")
 
     problems: list[str] = []
+    sitemap_urls: set[str] | None = None
+    if check_site:
+        sitemap_urls = _sitemap_post_urls()
+        if sitemap_urls is None:
+            problems.append("사이트맵(/wp-sitemap.xml)을 읽지 못했습니다 — 검색엔진도 못 읽습니다.")
+        else:
+            print(f"사이트맵: 글 {len(sitemap_urls)}개")
     for market in args.markets or ["kr", "us"]:
-        problems.extend(check_market(market, check_site))
+        problems.extend(check_market(market, check_site, sitemap_urls))
 
     if problems:
         print("\n확인 실패:", file=sys.stderr)
