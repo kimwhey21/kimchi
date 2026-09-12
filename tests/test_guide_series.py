@@ -157,7 +157,7 @@ class RoutineDocsTest(unittest.TestCase):
             self.assertIn("feature_gate", text)
             self.assertIn("category_id", text)
             self.assertIn("153", text)
-        self.assertIn('"lang" "en"', en)
+        self.assertIn('`lang` "en"', en)
 
     def test_week_ahead_doc_describes_the_event_post(self) -> None:
         text = (ROOT / "docs" / "routine_week_ahead.md").read_text(encoding="utf-8")
