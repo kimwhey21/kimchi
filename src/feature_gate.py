@@ -66,6 +66,7 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
         ko, kind=str(doc.get("series") or "기준표"), notes_out=notes,
         recent_titles=recent_titles(doc, path)))   # 제목·소제목, 모든 글 공통 (같은 목록의 최근 제목과 뼈대 대조)
     blocking.extend(feature_checks.collect_issues(doc, graphics=graphics, notes_out=notes))
+    blocking.extend(feature_checks.naver_issues(doc))   # 네이버용 본문(2026-09-12): 오래 읽히는 시리즈는 완전한 글로
     # 오늘 이 글이 막힌 이유는 문장이 아니라 재료였습니다. 재료를 안 뽑고 쓴 글은
     # 여기서 멈춥니다 — 사람이 엔진 돌리기를 기억하는 데 기대지 않습니다.
     blocking.extend(source_check.collect_issues(doc))

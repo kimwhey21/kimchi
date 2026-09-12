@@ -195,8 +195,20 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     if take:
         blocks.append(("h", "Fermata's Take"))
         blocks.append(("q", "\n".join(take[:2])))
-    pics = _graphics(graphics_dir)
-    for i, section in enumerate(_pick_sections(doc)):
+    full = (doc.get("naver") or {}).get("narrative") or []
+    if full:
+        # 네이버용 본문(2026-09-12, 사용자 "네이버도 본진만큼 중요"): 루틴이 본진과 다른 문장으로 쓴 완전한 글. 절을 다 싣고
+        # 문단도 자르지 않는다(길이만 2~3문장으로 나눈다). 그림은 절마다 하나씩, 네 장까지.
+        pics = _graphics(graphics_dir, limit=4)
+        for i, section in enumerate(full):
+            heading = re.sub(r"^\s*\d{1,2}\.\s*", "", str(section.get("heading", "")))
+            blocks.append(("h", heading))
+            blocks += [("p", p) for p in _chunks(_plain(section.get("body", "")))]
+            if i < len(pics):
+                blocks.append(("img", pics[i]))
+    else:
+        pics = _graphics(graphics_dir)
+    for i, section in enumerate([] if full else _pick_sections(doc)):
         heading = re.sub(r"^\s*\d{1,2}\.\s*", "", str(section.get("heading", "")))
         blocks.append(("h", heading))
         blocks += [("p", p) for p in _chunks(_plain(section.get("body", ""))[:2])]
@@ -206,7 +218,9 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     if check:
         blocks.append(("h", "다음 확인 지점"))
         blocks.append(("p", str(check)))
-    if doc.get("series") in ("가이드", "이벤트"):
+    if full:
+        blocks.append(("p", "같은 주제를 표와 그래픽으로 정리한 글은 페르마타 블로그에도 있습니다."))
+    elif doc.get("series") in ("가이드", "이벤트"):
         blocks.append(("p", "표와 확인 목록까지 담은 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
     else:
         blocks.append(("p", "업종별 등락, 외국인·기관 수급, 금리·환율 표까지 전체 글은 페르마타 블로그에서 볼 수 있습니다."))

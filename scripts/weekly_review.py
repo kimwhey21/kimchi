@@ -143,10 +143,36 @@ def latest_search_report(reports_dir: Path | None = None) -> list[str]:
         try:
             a = json.loads(previous[-2].read_text(encoding="utf-8")); b = json.loads(previous[-1].read_text(encoding="utf-8"))
             note = [f"- 지난 기록({a.get('date')}) 대비: 구글 색인 {a.get('google_indexed')} → {b.get('google_indexed')}, "
-                    f"네이버 색인 {a.get('naver_indexed')} → {b.get('naver_indexed')}"]
+                    f"네이버 색인 {a.get('naver_indexed')} → {b.get('naver_indexed')}, "
+                    f"네이버 블로그 이웃 {a.get('naver_blog_neighbors')} → {b.get('naver_blog_neighbors')}"]
         except (OSError, ValueError):
             note = []
+    note += naver_milestones(previous[-1] if previous else None)
     return [f"기록일 {files[-1].stem.replace('search_', '')}", ""] + rows + [""] + note
+
+
+def naver_milestones(latest_json: Path | None) -> list[str]:
+    """네이버 블로그 성장 조건(2026-09-12, 사용자 "네이버도 애드포스트, 본진만큼 중요"): 글 50편이 되면 인플루언서 신청,
+    개설 90일(2026-12-09)이 지나면 애드포스트 신청 — 사람이 할 일이라 보고서가 시점을 알려 준다."""
+    if not latest_json:
+        return []
+    try:
+        b = json.loads(latest_json.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    posts = b.get("naver_blog_posts")
+    lines = []
+    if isinstance(posts, int):
+        if posts >= 50:
+            lines.append(f"- 네이버 블로그 글 {posts}편 — 50편 조건을 넘었습니다. **네이버 인플루언서(경제) 신청**을 사장님 계정으로 할 때입니다.")
+        else:
+            lines.append(f"- 네이버 블로그 글 {posts}편 — 인플루언서·애드포스트 조건(50편)까지 {50 - posts}편.")
+    try:
+        d_day = (dt.date(2026, 12, 9) - dt.date.fromisoformat(str(b.get("date")))).days
+        lines.append("- 애드포스트 신청 가능일 2026-12-09" + (f" (D-{d_day})" if d_day > 0 else " — **지났습니다. 신청하십시오.**"))
+    except (TypeError, ValueError):
+        pass
+    return lines
 
 
 def render(data: dict) -> tuple[str, str]:

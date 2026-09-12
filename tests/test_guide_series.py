@@ -180,3 +180,47 @@ class RoutineDocsTest(unittest.TestCase):
         self.assertIn('"이벤트"', text)
         self.assertIn("event_date", text)
         self.assertIn("event_name", text)
+
+
+class NaverFullVersionTest(unittest.TestCase):
+    """네이버용 본문(2026-09-12, 사용자 "네이버도 본진만큼 중요") — 오래 읽히는 시리즈는 다른 문장으로 쓴 완전한 글로 간다."""
+
+    def _doc(self, naver=None, date="2026-09-15"):
+        body = "코스피는 큰 회사가 모인 시장이고 코스닥은 성장 회사가 모인 시장입니다. " * 4
+        doc = {"kind": "feature", "series": "가이드", "date": date, "slug": "x", "category_id": 153,
+               "ko": {"title": "코스피와 코스닥, 같은 주식이 아닙니다",
+                      "narrative": [{"heading": f"{i}. 절", "body": body} for i in range(1, 6)],
+                      "closing": {"heading": "Fermata's Take", "body": "둘 다 봅니다."}}}
+        if naver is not None:
+            doc["naver"] = naver
+        return doc
+
+    def test_required_for_long_lived_series_after_cutoff(self) -> None:
+        self.assertTrue(feature_checks.naver_issues(self._doc()))                       # 없으면 막는다
+        self.assertEqual(feature_checks.naver_issues(self._doc(date="2026-09-12")), []) # 그전 원고는 요약본
+        self.assertEqual(feature_checks.naver_issues({"series": "프리뷰", "date": "2026-09-20", "ko": {}}), [])
+
+    def test_length_sections_and_duplicate_sentences(self) -> None:
+        good = {"narrative": [{"heading": f"검색어 {i}", "body": ("네이버 독자에게 다시 쓴 문장입니다, 숫자는 같고 말만 다릅니다. " * 10)} for i in range(4)]}
+        self.assertEqual(feature_checks.naver_issues(self._doc(good)), [])
+        dup = {"narrative": [{"heading": "a", "body": "코스피는 큰 회사가 모인 시장이고 코스닥은 성장 회사가 모인 시장입니다. " + "다른 말입니다 정말로 다른 말입니다 그렇습니다. " * 8} for _ in range(4)]}
+        issues = feature_checks.naver_issues(self._doc(dup))
+        self.assertTrue(any("같은 문장" in i for i in issues), issues)
+        short = {"narrative": [{"heading": "a", "body": "짧다."} for _ in range(2)]}
+        joined = "\n".join(feature_checks.naver_issues(self._doc(short)))
+        self.assertIn("절", joined)
+        self.assertIn("자입니다", joined)
+
+    def test_naver_post_uses_the_full_version_and_all_sections(self) -> None:
+        import json
+        import tempfile
+        naver = {"narrative": [{"heading": f"네이버 절 {i}", "body": "첫 문장입니다. 둘째 문장입니다. 셋째 문장입니다. 넷째 문장입니다."} for i in range(1, 6)]}
+        doc = self._doc(naver)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "ko_x.json"
+            path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+            post = naver_post.build(path)
+        headings = [b[1] for b in post["blocks"] if b[0] == "h" and b[1] != "Fermata's Take"]
+        self.assertEqual(headings, [f"네이버 절 {i}" for i in range(1, 6)])
+        self.assertFalse(any("1. 절" in b[1] for b in post["blocks"]))       # 본진 절은 안 쓴다
+        self.assertTrue(any("페르마타 블로그에도" in b[1] for b in post["blocks"] if b[0] == "p"))

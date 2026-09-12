@@ -173,6 +173,52 @@ def collect_issues(doc: dict, graphics: int | None = None,
     return issues
 
 
+# 네이버용 본문(2026-09-12, 사용자: "네이버도 애드포스트가 있고 본진만큼 중요하다" → "2번 제외 진행").
+# 오래 읽히는 시리즈는 네이버에 요약본이 아니라 **다른 문장으로 쓴 완전한 글**을 싣는다 — 애드포스트 수익과 네이버 검색은
+# 그 글 자체가 끝까지 읽히는지를 본다. 본진과 같은 문장이 있으면 유사문서로 잡히므로 25자 이상 같은 문장을 막는다.
+NAVER_FULL_SERIES = {"가이드", "주간 결산", "다음 주 일정", "이벤트"}
+NAVER_FULL_SINCE = "2026-09-13"          # 이 날짜 이후 원고부터 요구한다(그전 원고는 요약본으로 나갔다)
+NAVER_SECTIONS = (4, 6)
+NAVER_CHARS = (1200, 3000)
+NAVER_DUP_MIN_CHARS = 25
+
+
+def _sentences(text: str) -> set[str]:
+    plain = re.sub(r"<[^>]+>", "", str(text or ""))
+    return {x.strip() for x in re.split(r"(?<=[.!?다요])\s+", plain) if len(x.strip()) >= NAVER_DUP_MIN_CHARS}
+
+
+def naver_issues(doc: dict) -> list[str]:
+    """`naver.narrative`(네이버용 본문) — 있어야 하는 시리즈에 없거나, 길이·절 수가 어긋나거나, 본진 문장을 그대로 썼으면 막는다."""
+    series = str(doc.get("series") or "")
+    if series not in NAVER_FULL_SERIES or str(doc.get("date") or "") < NAVER_FULL_SINCE:
+        return []
+    naver = doc.get("naver") or {}
+    sections = naver.get("narrative") or []
+    if not sections:
+        return [f"네이버용 본문(최상위 `naver.narrative`)이 없습니다 — {series}은(는) 네이버에 요약본이 아니라 완전한 글로 갑니다. "
+                f"절 {NAVER_SECTIONS[0]}~{NAVER_SECTIONS[1]}개, {NAVER_CHARS[0]:,}~{NAVER_CHARS[1]:,}자, 본진과 다른 문장으로."]
+    issues: list[str] = []
+    if not NAVER_SECTIONS[0] <= len(sections) <= NAVER_SECTIONS[1]:
+        issues.append(f"네이버용 본문이 {len(sections)}절입니다 — {NAVER_SECTIONS[0]}~{NAVER_SECTIONS[1]}절.")
+    body = " ".join(str(s.get("body", "")) for s in sections)
+    length = len(re.sub(r"<[^>]+>", "", body))
+    if not NAVER_CHARS[0] <= length <= NAVER_CHARS[1]:
+        issues.append(f"네이버용 본문이 {length:,}자입니다 — {NAVER_CHARS[0]:,}~{NAVER_CHARS[1]:,}자.")
+    for index, section in enumerate(sections, start=1):
+        if not str(section.get("heading") or "").strip():
+            issues.append(f"네이버용 본문 {index}절에 소제목이 없습니다.")
+    ko = doc.get("ko") or doc
+    main_text = " ".join(str(s.get("body", "")) for s in (ko.get("narrative") or [])) + str((ko.get("closing") or {}).get("body", ""))
+    shared = sorted(_sentences(body) & _sentences(main_text))
+    if shared:
+        issues.append(f"네이버용 본문에 본진과 같은 문장이 {len(shared)}개 있습니다(유사문서) — 예: {shared[0][:40]}… 다른 문장으로 다시 쓰십시오.")
+    if "**" in body:
+        issues.append("네이버용 본문에 마크다운 볼드(**)가 있습니다 — 네이버 편집기는 그대로 찍습니다.")
+    issues += position_issues(body)
+    return issues
+
+
 def collect_issues_en(doc: dict, graphics: int | None = None) -> list[str]:
     """영어 가이드 전용 검사. 한국어 검사(제목 문법·문체·초보자 설명)는 영어에 맞지 않아 건너뛴다."""
     ko = doc.get("ko") or doc
