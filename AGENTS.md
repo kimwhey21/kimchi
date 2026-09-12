@@ -356,6 +356,11 @@
   (`publish_editorial`·`publish_feature`)이 같은 목록을 쓴다. 그전에는 시황이 매일 같은 셋, Checkpoint는 0개였다.
   이름은 낱말 경계로 찾는다 — '소비자물가'에서 '비자'가 잡힌 적이 있다. 이미 올라간 글은
   `python -m scripts.retag_wordpress --apply`(워드프레스)와 `~/.market-brief-naver/retag_post.py`(네이버)로 고쳤다.
+- **사이트맵은 워드프레스 기본(`/wp-sitemap.xml`)이다**(2026-09-12, 사용자 승인). Rank Math 사이트맵 모듈은
+  새 글에 반응하지 않아 두 번 멈췄다(9/6→9/8, 9/8→9/12: 새 글 20편이 사이트맵에 없었다). 그래서 모듈을 끄고
+  기본 사이트맵으로 바꿨다 — robots.txt의 Sitemap 줄도 바뀌었고 옛 `/sitemap_index.xml`은 404다. **다시 켜지 말 것.**
+  네이버 서치어드바이저에는 새 주소를 제출했고, 구글 서치콘솔은 사용자 계정으로 제출한다. 새 사이트는 네이버가
+  스스로 오지 않으므로 `~/.market-brief-naver/nsa_request.py`가 새 글마다 수집 요청을 넣는다(20분 동기화에 붙어 있음).
 - git 커밋은 사용자가 명시적으로 요청할 때만 한다.
 
 ## 워드프레스 연동 시 주의할 것 (`src/publish_wordpress.py`)
