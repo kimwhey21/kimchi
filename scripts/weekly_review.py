@@ -124,6 +124,31 @@ def _med(rows: list[dict], key: str):
     return round(statistics.median(values), 1) if values else None
 
 
+def latest_search_report(reports_dir: Path | None = None) -> list[str]:
+    """가장 최근 `reports/search_<날짜>.md`의 표 (2026-09-12, 사용자 승인 "주간 검색 성적 기록").
+
+    구글·네이버 색인 수와 노출·클릭은 관리자 화면에서만 읽히므로, 이 맥의 일요일 22:00 작업
+    (`~/.market-brief-google/search_snapshot.py`)이 읽어 저장소에 남기고 여기서는 그 파일을 싣는다.
+    기준선 2026-09-12: 구글 색인 11, 네이버 색인 1 — 늘지 않으면 검색엔진이 새 글을 못 찾는 것이다.
+    """
+    folder = reports_dir or REPORTS
+    files = sorted(folder.glob("search_*.md"))
+    if not files:
+        return []
+    body = files[-1].read_text(encoding="utf-8").splitlines()
+    rows = [l for l in body if l.startswith("|")]
+    previous = sorted(folder.glob("search_*.json"))
+    note = []
+    if len(previous) >= 2:
+        try:
+            a = json.loads(previous[-2].read_text(encoding="utf-8")); b = json.loads(previous[-1].read_text(encoding="utf-8"))
+            note = [f"- 지난 기록({a.get('date')}) 대비: 구글 색인 {a.get('google_indexed')} → {b.get('google_indexed')}, "
+                    f"네이버 색인 {a.get('naver_indexed')} → {b.get('naver_indexed')}"]
+        except (OSError, ValueError):
+            note = []
+    return [f"기록일 {files[-1].stem.replace('search_', '')}", ""] + rows + [""] + note
+
+
 def render(data: dict) -> tuple[str, str]:
     """(보고서 markdown, 알림용 요약 8줄 안팎)."""
     d, f = data["daily"], data["features"]
@@ -169,7 +194,7 @@ def render(data: dict) -> tuple[str, str]:
     lines += ["", "## 글 목록", "", "| 날짜 | 시장 | 제목 | 절 | 시각자료 | 확인 지점 |", "|---|---|---|---:|---:|:---:|"]
     for r in sorted(d + f, key=lambda r: r["date"]):
         lines.append(f"| {r['date']} | {r['market']} | {r['title'][:40]} | {r['sections']} | {r['visuals']} | {'○' if r['has_check'] else '—'} |")
-    lines += ["", "## 검색 수치", "", "- 노출·클릭은 Site Kit 관리자 화면에서만 읽힌다. Claude 세션이 덧붙인다.", ""]
+    lines += ["", "## 검색 성적", ""] + (latest_search_report() or ["- 아직 기록 없음 (이 맥의 일요일 22:00 작업 `search_snapshot.py`가 reports/search_<날짜>.md를 만든다)"]) + [""]
     lines += ["## 사장님께", "", "이번 주 가장 좋았던 글 하나와 가장 아쉬웠던 글 하나를 짚어 주세요. 그 판단을 규칙에 넣습니다.", ""]
     summary = [f"지난 한 주({data['start']}~{data['end']}): 시황 {len(d)}편, 기준표·프리뷰 {len(f)}편, 빠진 거래일 {len(data['missed'])}일.",
                f"절 수 {_med(d, 'sections')}(재테크농부 {b('소제목 수')}), 시각자료 {_med(d, 'visuals')}(10), 제목 등락률 {_med(d, 'title_pct')}개(0).",
