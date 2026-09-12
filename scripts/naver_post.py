@@ -83,6 +83,10 @@ def _pick_sections(doc: dict) -> list[dict]:
     sections = list((doc.get("ko") or {}).get("narrative") or [])
     if not sections:
         return []
+    if len(sections) <= 5 or doc.get("series") in ("가이드", "이벤트"):
+        # 가이드·이벤트(2026-09-12)는 답 → 원리 → 예 → 할 것 순서가 글이라 앞 다섯 절을 순서대로 싣는다 —
+        # 시황용 고르기 규칙("확인" 절 앞당김)이 첫 가이드에서 6절을 두 번째로 올렸다.
+        return sections[:5]
     if len(sections) <= 5:
         # 다섯 절 이하면 고를 것이 없다 — 원래 순서 그대로. 첫 주간 결산(2026-09-12)에서 '다음 주에 확인할 것'이
         # "다음|확인" 규칙에 잡혀 두 번째로 올라가 한국장·미국장 절보다 먼저 나갔다.
@@ -202,7 +206,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     if check:
         blocks.append(("h", "다음 확인 지점"))
         blocks.append(("p", str(check)))
-    blocks.append(("p", "업종별 등락, 외국인·기관 수급, 금리·환율 표까지 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
+    if doc.get("series") in ("가이드", "이벤트"):
+        blocks.append(("p", "표와 확인 목록까지 담은 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
+    else:
+        blocks.append(("p", "업종별 등락, 외국인·기관 수급, 금리·환율 표까지 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
     blocks.append(("p", url))
     # 태그는 글에서 뽑는다(src/post_tags.py, 2026-09-12): 고정어 + 종목 이름 + 주제어 + 달. 12개까지.
     tags = post_tags.build_tags(doc)

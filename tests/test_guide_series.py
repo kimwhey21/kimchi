@@ -126,6 +126,21 @@ class NaverSummaryTest(unittest.TestCase):
         self.assertEqual(post["url"], "https://fermata.it.kr/kospi-kosdaq-difference/")
         self.assertIn("주식초보", post["tags"])
 
+    def test_guide_summary_keeps_section_order(self) -> None:
+        import json
+        import tempfile
+        doc = {"kind": "feature", "series": "가이드", "date": "2026-09-15", "slug": "x", "category_id": 153,
+               "ko": {"title": "제목", "narrative": [{"heading": f"{i}. 절 {i}", "body": f"본문 {i}입니다."} for i in range(1, 7)],
+                      "closing": {"heading": "Fermata's Take", "body": "판단."}}}
+        doc["ko"]["narrative"][5]["heading"] = "6. 사기 전에 확인하세요"   # 시황 규칙이면 앞당겨질 절
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "ko_x.json"
+            path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+            post = naver_post.build(path)
+        headings = [b[1] for b in post["blocks"] if b[0] == "h" and b[1] != "Fermata's Take"]
+        self.assertEqual(headings, ["절 1", "절 2", "절 3", "절 4", "절 5"])
+        self.assertTrue(any("전체 글은 페르마타" in b[1] and "수급" not in b[1] for b in post["blocks"] if b[0] == "p"))
+
     def test_event_summary_carries_the_event_date(self) -> None:
         import json
         import tempfile
