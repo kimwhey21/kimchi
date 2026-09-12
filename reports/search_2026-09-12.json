@@ -9,5 +9,12 @@
  "naver_excluded": 0,
  "naver_seo_issues": 0,
  "naver_clicks_30d": 0,
- "naver_impressions_30d": 1
+ "naver_impressions_30d": 1,
+ "naver_blog_views_today": 4,
+ "naver_blog_likes_today": null,
+ "naver_blog_comments_today": 0,
+ "naver_blog_neighbor_delta_today": 0,
+ "naver_blog_neighbors": 0,
+ "naver_blog_mutual": 0,
+ "naver_blog_posts": 15
 }
