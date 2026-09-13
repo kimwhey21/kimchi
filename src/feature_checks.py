@@ -255,7 +255,9 @@ MAGAZINE_BRIEF = (3, 5)
 MAGAZINE_BRIEF_MAX_CHARS = 140
 MAGAZINE_SECTIONS = (4, 7)
 MAGAZINE_CHARS = (2000, 4500)
-MAGAZINE_GROUPS = ("시장의 역사", "투자 심리", "기업과 기술", "과학", "돈의 상식", "만약에")
+# 2026-09-13 참고 블로그 210편 실측: 투자·시장 37%, AI·기술 15%, 기업·경영 13%, 심리 6%, 거시 5%, 과학 2%. "다양한 분야"의
+# 실체는 금융 잡지에 과학·심리를 곁들인 것이다. 그래서 가장 큰 덩어리(해외 칼럼·리서치를 종합한 시장 이야기)를 코너로 둔다.
+MAGAZINE_GROUPS = ("시장 읽기", "시장의 역사", "투자 심리", "기업과 기술", "과학", "돈의 상식", "만약에")
 
 
 def magazine_issues(doc: dict) -> list[str]:
