@@ -126,8 +126,8 @@ def _cover(graphics_dir: Path | None) -> str | None:
     첫 그림이 곧 네이버 목록의 섬네일이라 표지를 맨 앞에 둔다(2026-09-12)."""
     if not graphics_dir or not graphics_dir.exists():
         return None
-    for f in sorted(glob.glob(str(graphics_dir / "*.png"))):
-        if "cover" in Path(f).name:
+    for f in sorted(glob.glob(str(graphics_dir / "*.png")) + glob.glob(str(graphics_dir / "*.jpg"))):
+        if "cover" in Path(f).name:   # 잡지 표지는 Unsplash JPG(2026-09-13)
             return f
     return None
 
@@ -197,6 +197,14 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         url = f"https://fermata.it.kr/{slug}/"
         category = "Weekly"
         tags = list(FIXED_TAGS["이벤트"])
+    elif doc.get("series") == "매거진":
+        # 두 번째 네이버 블로그(2026-09-13, 사용자: "jeunkim처럼 다양한 분야의 글을 잡지처럼"). 본진에는 안 가므로 링크가 없고,
+        # 카테고리는 코너 이름(시장의 역사·투자 심리·기업과 기술·과학·돈의 상식·만약에)이다. 제목은 그대로 — 코너 이름을 앞에 붙이지 않는다.
+        prefix = ""
+        slug = doc.get("slug") or Path(path).stem
+        url = ""
+        category = str(doc.get("group") or "매거진")
+        tags = [str(t) for t in (doc.get("tags") or [])][:10] + ["페르마타매거진"]
     else:
         prefix = "투자 체크포인트"
         slug = doc.get("slug") or Path(path).stem.replace("_", "-", 1).replace("_", "-")
@@ -211,10 +219,17 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     if cover:
         blocks.append(("img", cover))
     take = _plain((ko.get("closing") or {}).get("body", ""))
-    if take:
+    magazine = doc.get("series") == "매거진"
+    if take and not magazine:   # 잡지는 판단이 본문 뒤에 온다(참고 블로그 꼴: 브리핑 → 본문 → 출처). 시황·가이드는 판단이 맨 앞.
         blocks.append(("h", "Fermata's Take"))
         blocks.append(("q", "\n".join(take[:2])))
     full = (doc.get("naver") or {}).get("narrative") or []
+    if magazine:
+        # 참고 블로그(피우스의 책도둑 & 매거진) 실측 꼴: 제목 → 📌 간단 브리핑(요약 3~5줄) → 본문 전문 → 자료 출처.
+        # 본문은 `ko.narrative` 그대로가 네이버 본문이다(본진 쌍둥이가 없으니 naver.narrative를 따로 두지 않는다).
+        full = list(ko.get("narrative") or [])
+        blocks.append(("h", "📌 간단 브리핑"))
+        blocks += [("p", str(line)) for line in (doc.get("brief") or [])]
     if full:
         # 네이버용 본문(2026-09-12, 사용자 "네이버도 본진만큼 중요"): 루틴이 본진과 다른 문장으로 쓴 완전한 글. 절을 다 싣고
         # 문단도 자르지 않는다(길이만 2~3문장으로 나눈다). 그림은 절마다 하나씩, 네 장까지.
@@ -237,18 +252,28 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     if check:
         blocks.append(("h", "다음 확인 지점"))
         blocks.append(("p", str(check)))
-    if full:
+    if magazine:
+        if take:
+            blocks.append(("h", "Fermata's Take"))
+            blocks.append(("q", "\n".join(take[:2])))
+        srcs = [x for x in (doc.get("sources") or []) if isinstance(x, dict) and x.get("name")]
+        if srcs:
+            blocks.append(("h", "자료 출처"))
+            blocks += [("p", f"{x['name']}, {x['title']}" if x.get("title") else str(x["name"])) for x in srcs]
+    elif full:
         blocks.append(("p", "같은 주제를 표와 그래픽으로 정리한 글은 페르마타 블로그에도 있습니다."))
     elif doc.get("series") in ("가이드", "이벤트"):
         blocks.append(("p", "표와 확인 목록까지 담은 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
     else:
         blocks.append(("p", "업종별 등락, 외국인·기관 수급, 금리·환율 표까지 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
-    blocks.append(("p", url))
-    # 텔레그램 채널(2026-09-12, 홍보 1번 → "진행해"): 글을 끝까지 읽은 사람에게 구독할 곳을 보여 준다.
-    blocks.append(("p", "매일 저녁 마감 시황을 텔레그램으로도 받아 볼 수 있습니다."))
-    blocks.append(("p", TELEGRAM_URL))
-    # 태그는 글에서 뽑는다(src/post_tags.py, 2026-09-12): 고정어 + 종목 이름 + 주제어 + 달. 12개까지.
-    tags = post_tags.build_tags(doc)
+    if url:
+        blocks.append(("p", url))
+        # 텔레그램 채널(2026-09-12, 홍보 1번 → "진행해"): 글을 끝까지 읽은 사람에게 구독할 곳을 보여 준다.
+        blocks.append(("p", "매일 저녁 마감 시황을 텔레그램으로도 받아 볼 수 있습니다."))
+        blocks.append(("p", TELEGRAM_URL))
+    # 태그는 글에서 뽑는다(src/post_tags.py, 2026-09-12): 고정어 + 종목 이름 + 주제어 + 달. 12개까지. 잡지는 원고의 tags 그대로.
+    if not magazine:
+        tags = post_tags.build_tags(doc)
     return {"title": title, "category": category, "tags": tags, "url": url, "blocks": blocks,
             "source": str(path), "chars": sum(len(b[1]) for b in blocks if b[0] in ("p", "q"))}
 

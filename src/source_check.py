@@ -62,7 +62,8 @@ OUR_ENGINES = (
 MIN_DISTINCT_SOURCES = 3
 # 짧은 시리즈는 하한이 낮다. 밤 10시 미국장 프리뷰(600~900자)는 일정 출처 2곳이면 된다.
 SERIES_MIN_SOURCES = {"프리뷰": 2, "주간 결산": 2, "다음 주 일정": 2,   # 주말 편성(2026-09-12): 숫자는 우리 시세에서, 밖의 사실은 둘이면 된다
-                      "가이드": 2, "Guide": 2, "이벤트": 2}            # 유입 편성(2026-09-12): 규정·일정은 공식 출처 둘이면 된다
+                      "가이드": 2, "Guide": 2, "이벤트": 2,            # 유입 편성(2026-09-12): 규정·일정은 공식 출처 둘이면 된다
+                      "매거진": 2}                            # 두 번째 블로그(2026-09-13): 번역이 아니라 종합이라는 증거가 출처 둘
 
 # 영어 가이드가 인용하는 이름. 한국어 목록과 따로 두는 이유는 같은 기관이 영어 글에서는 영어 이름으로 나오기 때문이다
 # (금융감독원 → FSS, 한국거래소 → KRX/Korea Exchange). 2026-09-01 영어 가이드 9편이 실제로 인용한 이름에서 골랐다.
@@ -86,10 +87,28 @@ def _body(doc: dict) -> str:
     return re.sub(r"<[^>]+>", " ", "\n".join(p for p in parts if p))
 
 
+def _name_in(name: str, text: str) -> bool:
+    """'미국 지질조사국(USGS)'처럼 괄호 약칭이 붙은 이름은 어느 한쪽만 본문에 있어도 인정한다."""
+    parts = [name] + [x.strip() for x in re.split(r"[()（）]", name) if x.strip()]
+    return any(part and part in text for part in parts)
+
+
 def collect(doc: dict) -> dict:
     """원고에서 찾은 외부 출처를 종류별로 돌려줍니다."""
     text = _body(doc)
     found: dict[str, list[str]] = {}
+    if str(doc.get("series") or "") == "매거진":
+        # 잡지(2026-09-13, 두 번째 네이버 블로그)는 주제가 금융 밖(과학·역사·기술)이라 아래 금융 이름 목록으로는 출처를 못 찾는다.
+        # 대신 원고 최상위 `sources`(name·title)를 세되, **이름이 본문에 실제로 나오는 것만** 센다 — 목록만 붙이고 본문은
+        # 한 매체를 옮겨 쓴 글을 막기 위해서다(참고 블로그의 전문 번역 방식을 따라 하지 않는다는 증거가 이 검사다).
+        declared = [str(x.get("name") or "").strip() for x in (doc.get("sources") or []) if isinstance(x, dict)]
+        hits = sorted({name for name in declared if name and _name_in(name, text)})
+        if hits:
+            found["출처(본문에 이름이 나온 것)"] = hits
+        missing = [n for n in declared if n and n not in hits]
+        if missing:
+            found["목록에만 있고 본문에 없는 출처"] = missing
+        return {"found": found, "distinct": len(hits)}
     if str(doc.get("lang") or "ko") == "en":
         hits = sorted({name for name in EN_SOURCES
                        if re.search(r"(?<![A-Za-z])" + re.escape(name) + r"(?![A-Za-z])", text)})

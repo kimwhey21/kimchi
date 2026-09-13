@@ -29,6 +29,7 @@ LISTS = {
     "guide": "editorial/guides/ko_*.json",           # 한국어 상시 가이드 (2026-09-12, 유입 편성)
     "guide_en": "editorial/guides/en_*.json",        # 영어 가이드
     "event": "editorial/events/*.json",              # 정기 이벤트 글
+    "magazine": "editorial/magazine/*.json",         # 두 번째 네이버 블로그 잡지 글 (2026-09-13)
 }
 
 

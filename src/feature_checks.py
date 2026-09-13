@@ -41,7 +41,8 @@ MIN_GRAPHICS = 6          # 벤치마크 이미지 p25
 SERIES_LIMITS = {"프리뷰": {"graphics": 3}, "주간 결산": {"graphics": 4}, "다음 주 일정": {"graphics": 3},
                  # 유입 편성(2026-09-12, 사용자 승인 "1번 2번 4번 진행"): 상시 가이드는 표·차트 둘이면 되고
                  # 글의 힘은 질문에 바로 답하는 본문에 있다. 이벤트 글은 일정표 + 차트.
-                 "가이드": {"graphics": 2}, "Guide": {"graphics": 2}, "이벤트": {"graphics": 2}}
+                 "가이드": {"graphics": 2}, "Guide": {"graphics": 2}, "이벤트": {"graphics": 2},
+                 "매거진": {"graphics": 0}}   # 두 번째 네이버 블로그(2026-09-13): 데이터 그래픽 없이 사진 한 장
 
 # 영어 가이드(series "Guide", lang "en")는 한국어 제목 문법·문체 검사를 받지 않는다. 대신 아래 셋을 본다 —
 # 제목 길이(구글 결과에 잘리지 않는 70자), 절 수(SECTION_FLOORS), 본문에 확인 연도. 2026-09-12 실측:
@@ -143,7 +144,8 @@ def collect_issues(doc: dict, graphics: int | None = None,
         ko.get("closing", {}).get("body", ""))
 
     # 6절(확인 지점)이 이 글 형식의 존재 이유입니다. 날짜가 없으면 그냥 시황입니다.
-    if not re.search(r"\d+월 \d+일", body):
+    # 잡지(2026-09-13)는 예외 — 소금의 역사에 확인 날짜가 있을 리 없다. 잡지 꼴은 magazine_issues가 따로 본다.
+    if str(doc.get("series") or "") != "매거진" and not re.search(r"\d+월 \d+일", body):
         issues.append("본문에 확인 날짜(`N월 N일`)가 없습니다 — 기준표 글은 날짜를 "
                       "박아야 글의 수명이 그날까지 갑니다. docs/feature-style.md 4절.")
 
@@ -198,6 +200,8 @@ def naver_spec(doc: dict) -> tuple[str, tuple[int, int], tuple[int, int]] | None
     series = str(doc.get("series") or "")
     if series in NAVER_FULL_SERIES:
         return (series, NAVER_SECTIONS, NAVER_CHARS) if date >= NAVER_FULL_SINCE else None
+    if series == "매거진":
+        return None            # 본진 쌍둥이가 없다 — 이 원고의 본문이 곧 네이버 본문이다(magazine_issues가 따로 본다)
     if not series and str(doc.get("market") or "") in NAVER_DAILY_MARKETS:
         return ("시황", NAVER_DAILY_SECTIONS, NAVER_DAILY_CHARS) if date >= NAVER_DAILY_SINCE else None
     return None
@@ -239,6 +243,49 @@ def naver_issues(doc: dict) -> list[str]:
         issues.append(f"네이버용 본문에 본진과 같은 문장이 {len(shared)}개 있습니다(유사문서) — 예: {shared[0][:40]}… 다른 문장으로 다시 쓰십시오.")
     if "**" in body:
         issues.append("네이버용 본문에 마크다운 볼드(**)가 있습니다 — 네이버 편집기는 그대로 찍습니다.")
+    issues += position_issues(body)
+    return issues
+
+
+# 매거진(2026-09-13, 사용자: "두 번째 블로그는 blog.naver.com/jeunkim처럼 다양한 분야의 글을 잡지처럼").
+# 참고 블로그 실측: 글마다 제목 → "📌 간단 브리핑"(요약 3~5줄) → 본문 3,700자 안팎 → "자료 출처". 하루 14편, 이웃 11만.
+# 그쪽 엔진은 외국 기사 전문 번역인데 그건 저작권 문제라 따라 하지 않는다 — 독자가 보는 모양만 가져오고,
+# 본문은 출처 둘 이상을 종합해 우리 문장으로 쓴다(가이드와 같은 원칙, source_check가 본다).
+MAGAZINE_BRIEF = (3, 5)
+MAGAZINE_BRIEF_MAX_CHARS = 140
+MAGAZINE_SECTIONS = (4, 7)
+MAGAZINE_CHARS = (2000, 4500)
+MAGAZINE_GROUPS = ("시장의 역사", "투자 심리", "기업과 기술", "과학", "돈의 상식", "만약에")
+
+
+def magazine_issues(doc: dict) -> list[str]:
+    """브리핑 줄 수·본문 길이·절 수·출처 표기·코너 — 잡지 한 편의 꼴. 본진에 안 가는 글이라 여기서만 본다."""
+    issues: list[str] = []
+    brief = doc.get("brief") or []
+    if not MAGAZINE_BRIEF[0] <= len(brief) <= MAGAZINE_BRIEF[1]:
+        issues.append(f"간단 브리핑이 {len(brief)}줄입니다 — 최상위 `brief`에 {MAGAZINE_BRIEF[0]}~{MAGAZINE_BRIEF[1]}줄. "
+                      "각 줄은 '핵심어 : 한 문장' 꼴(참고 블로그 실측).")
+    for i, line in enumerate(brief, start=1):
+        if len(str(line)) > MAGAZINE_BRIEF_MAX_CHARS:
+            issues.append(f"브리핑 {i}줄이 {len(str(line))}자입니다 — {MAGAZINE_BRIEF_MAX_CHARS}자 안에.")
+        if " : " not in str(line):
+            issues.append(f"브리핑 {i}줄에 ' : '가 없습니다 — '핵심어 : 설명' 꼴로 씁니다.")
+    if str(doc.get("group") or "") not in MAGAZINE_GROUPS:
+        issues.append(f"코너(`group`)가 없거나 목록 밖입니다 — {', '.join(MAGAZINE_GROUPS)} 중 하나.")
+    ko = doc.get("ko") or doc
+    sections = ko.get("narrative") or []
+    if not MAGAZINE_SECTIONS[0] <= len(sections) <= MAGAZINE_SECTIONS[1]:
+        issues.append(f"본문이 {len(sections)}절입니다 — {MAGAZINE_SECTIONS[0]}~{MAGAZINE_SECTIONS[1]}절.")
+    body = " ".join(str(s.get("body", "")) for s in sections)
+    length = len(re.sub(r"<[^>]+>", "", body))
+    if not MAGAZINE_CHARS[0] <= length <= MAGAZINE_CHARS[1]:
+        issues.append(f"본문이 {length:,}자입니다 — {MAGAZINE_CHARS[0]:,}~{MAGAZINE_CHARS[1]:,}자.")
+    if "**" in body:
+        issues.append("본문에 마크다운 볼드(**)가 있습니다 — 네이버 편집기는 그대로 찍습니다.")
+    if "번역" in body[:400]:
+        issues.append("첫머리에 '번역'이 있습니다 — 이 글은 번역이 아니라 출처를 종합해 쓴 글입니다. 그렇게 쓰지 않았다면 다시 씁니다.")
+    if not (doc.get("featured_photo") or {}).get("url"):
+        issues.append("표지 사진(`featured_photo.url`)이 없습니다 — 참고 블로그는 글마다 사진 한 장. 대조표를 눈으로 보고 고른 Unsplash 주소.")
     issues += position_issues(body)
     return issues
 
