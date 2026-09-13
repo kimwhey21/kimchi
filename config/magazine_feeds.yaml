@@ -1,0 +1,59 @@
+# 잡지 루틴의 아침 레이더 — 참고 블로그(피우스)가 실제로 가져오는 매체와 투자 블로거의 RSS (2026-09-13 실측: 전부 열림).
+# 여기서 **주제**를 고른다. 글 하나를 옮기는 것이 아니라, 오늘 무엇이 화제인지 보고 출처 둘 이상을 종합해 쓴다.
+# column: 그 매체가 주로 먹여 주는 코너(참고용). paid: true면 제목만 레이더로 쓰고 본문 재료는 무료 매체에서.
+feeds:
+  - name: Yahoo Finance
+    url: https://finance.yahoo.com/news/rssindex
+    column: 시장 읽기
+  - name: MarketWatch
+    url: https://feeds.content.dowjones.io/public/rss/mw_topstories
+    column: 시장 읽기
+  - name: MarketWatch MarketPulse
+    url: https://feeds.content.dowjones.io/public/rss/mw_marketpulse
+    column: 시장 읽기
+  - name: The Wall Street Journal Markets
+    url: https://feeds.a.dj.com/rss/RSSMarketsMain.xml
+    column: 시장 읽기
+    paid: true
+  - name: The Motley Fool
+    url: https://www.fool.com/feeds/index.aspx
+    column: 시장 읽기
+  - name: 24/7 Wall St.
+    url: https://247wallst.com/feed/
+    column: 돈의 상식
+  - name: Visual Capitalist
+    url: https://www.visualcapitalist.com/feed/
+    column: 기업과 기술
+  - name: Fortune
+    url: https://fortune.com/feed/
+    column: 기업과 기술
+  - name: Big Think
+    url: https://bigthink.com/feed/
+    column: 만약에
+  - name: Phys.org
+    url: https://phys.org/rss-feed/
+    column: 과학
+  - name: The Conversation
+    url: https://theconversation.com/us/articles.atom
+    column: 과학
+  - name: A Wealth of Common Sense (벤 칼슨)
+    url: https://awealthofcommonsense.com/feed/
+    column: 투자 심리
+  - name: Klement on Investing (요아힘 클레멘트)
+    url: https://klementoninvesting.substack.com/feed
+    column: 투자 심리
+  - name: The Big Picture (배리 리트홀츠)
+    url: https://ritholtz.com/feed/
+    column: 시장의 역사
+  - name: Farnam Street
+    url: https://fs.blog/feed/
+    column: 투자 심리
+  - name: Behavioural Investment (조 위긴스)
+    url: https://behaviouralinvestment.com/feed/
+    column: 투자 심리
+  - name: Novel Investor
+    url: https://novelinvestor.com/feed/
+    column: 시장의 역사
+  - name: Reuters (구글뉴스 경유)
+    url: https://news.google.com/rss/search?q=site:reuters.com+markets&hl=en-US&gl=US&ceid=US:en
+    column: 시장 읽기
