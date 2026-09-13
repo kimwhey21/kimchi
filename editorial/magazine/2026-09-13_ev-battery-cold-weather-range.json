@@ -10,17 +10,24 @@
     "credit": "사진: go-e / Unsplash",
     "credit_url": "https://unsplash.com/photos/someone-is-plugging-in-an-electric-car-to-charge-4uIHG_JKbmY"
   },
-  "brief": [
-    "실측 수치 : 미국자동차협회의 2026년 시험에서 전기차는 화씨 20도(약 영하 6.7도)에서 주행거리가 39%, 효율이 35.6% 줄었습니다.",
-    "하이브리드와 차이 : 같은 조건에서 하이브리드의 연비 손실은 22.8%로, 엔진열을 난방에 쓸 수 없는 전기차보다 적었습니다.",
-    "화학적 이유 : 저온에서 전해질이 걸쭉해지고 리튬 이온의 이동이 느려져 배터리가 낼 수 있는 전력이 줄어듭니다.",
-    "충전 주의 : 추운 상태에서 급속충전하면 리튬이 전극에 그대로 쌓이는 '리튬 도금'이 생겨 단락 위험이 커집니다."
-  ],
   "sources": [
-    {"name": "미국자동차협회", "title": "AAA Study Reveals Temperature Impacts on EV and Hybrid Efficiencies and Costs", "url": "https://newsroom.aaa.com/2026/05/aaa-study-reveals-temperature-impacts-on-ev-and-hybrid-performance-efficiency-and-costs/"},
-    {"name": "더 컨버세이션", "title": "Lithium-ion batteries don't work well in the cold — a battery researcher explains the chemistry at low temperatures", "url": "https://theconversation.com/lithium-ion-batteries-dont-work-well-in-the-cold-a-battery-researcher-explains-the-chemistry-at-low-temperatures-222571"}
+    {
+      "name": "미국자동차협회",
+      "title": "AAA Study Reveals Temperature Impacts on EV and Hybrid Efficiencies and Costs",
+      "url": "https://newsroom.aaa.com/2026/05/aaa-study-reveals-temperature-impacts-on-ev-and-hybrid-performance-efficiency-and-costs/"
+    },
+    {
+      "name": "더 컨버세이션",
+      "title": "Lithium-ion batteries don't work well in the cold — a battery researcher explains the chemistry at low temperatures",
+      "url": "https://theconversation.com/lithium-ion-batteries-dont-work-well-in-the-cold-a-battery-researcher-explains-the-chemistry-at-low-temperatures-222571"
+    }
   ],
-  "tags": ["전기차배터리", "리튬이온배터리", "겨울철전기차", "배터리화학"],
+  "tags": [
+    "전기차배터리",
+    "리튬이온배터리",
+    "겨울철전기차",
+    "배터리화학"
+  ],
   "ko": {
     "title": "전기차 배터리는 왜 겨울에 더 빨리 닳을까",
     "narrative": [
@@ -44,10 +51,6 @@
         "heading": "그래도 배터리가 고장 난 것은 아닙니다",
         "body": "여기서 중요한 것은 저온 성능 저하가 배터리의 결함이 아니라 화학의 한계라는 점입니다. 기온이 오르면 전해질은 다시 묽어지고 이온은 원래 속도로 움직이며, 잃었던 주행거리와 효율은 대부분 되돌아옵니다. 미국자동차협회도 이번 시험에서 온도가 오르자 성능이 회복되는 것을 함께 확인했습니다. 실제로 같은 시험에서 화씨 95도의 더운 조건은 20도만큼 극단적인 손실을 보이지 않았고, 전기차가 가장 효율적으로 달리는 온도대는 그 중간 어딘가였습니다. 겨울철 짧아진 주행거리는 고장의 신호가 아니라 화학이 늘 그렇게 작동한다는 증거입니다. 그래서 겨울철 전기차를 다루는 요령도 결국 화학을 거스르지 않는 쪽으로 모입니다 — 가능하면 실내나 지붕 아래 주차해 배터리 온도를 지키고, 장거리를 앞두고는 출발 전에 미리 충전기에 연결해 배터리를 데워 두는 식입니다. 배터리를 이해하고 다루면 겨울철 손실의 상당 부분은 줄일 수 있습니다."
       }
-    ],
-    "closing": {
-      "heading": "Fermata's Take",
-      "body": "전기차 배터리의 겨울철 약점은 기술의 결함이 아니라 리튬이온 화학 자체의 성질입니다. 그 성질을 아는 것과 모르는 것의 차이가, 겨울철 충전 계획을 얼마나 여유 있게 짜느냐를 가릅니다."
-    }
+    ]
   }
 }

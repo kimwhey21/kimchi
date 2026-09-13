@@ -10,18 +10,29 @@
     "credit": "사진: Egor Myznik / Unsplash",
     "credit_url": "https://unsplash.com/photos/black-and-white-printed-textile-of_azYsANQY"
   },
-  "brief": [
-    "이자의 기원 : 화폐가 생기기 전 비옥한 초승달 지대 농경 마을에서 씨앗을 빌리고 더 얹어 갚는 관행이 이미 있었습니다.",
-    "함무라비 법전 : 기원전 1750년경 바빌로니아는 은 대출 이자를 20%, 곡식 대출은 33.3%로 못박고 흉년에는 이자를 면제했습니다.",
-    "그리스·로마 : 아리스토텔레스는 돈이 스스로 불어나는 이자를 부자연스럽다고 봤고, 이 생각은 중세까지 그대로 이어졌습니다.",
-    "교회의 금지 : 325년부터 1312년까지 여러 공의회가 이자 받는 행위를 성사 거부, 나아가 이단으로까지 규정했습니다."
-  ],
   "sources": [
-    {"name": "브리태니커 백과사전", "title": "Usury", "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Usury"},
-    {"name": "성서고고학회", "title": "How Did Ancient Bureaucrats Set Their Interest Rates?", "url": "https://www.biblicalarchaeology.org/daily/ancient-cultures/daily-life-and-practice/ancient-interest-rates/"},
-    {"name": "히스토리 콜렉션", "title": "Ancient Sumer Had Interest Rates and Loan Sharks 4,000 Years Before Wall Street", "url": "https://historycollection.com/mesopotamia-economics-first-financial-system-loans-debt-interest/"}
+    {
+      "name": "브리태니커 백과사전",
+      "title": "Usury",
+      "url": "https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Usury"
+    },
+    {
+      "name": "성서고고학회",
+      "title": "How Did Ancient Bureaucrats Set Their Interest Rates?",
+      "url": "https://www.biblicalarchaeology.org/daily/ancient-cultures/daily-life-and-practice/ancient-interest-rates/"
+    },
+    {
+      "name": "히스토리 콜렉션",
+      "title": "Ancient Sumer Had Interest Rates and Loan Sharks 4,000 Years Before Wall Street",
+      "url": "https://historycollection.com/mesopotamia-economics-first-financial-system-loans-debt-interest/"
+    }
   ],
-  "tags": ["이자의역사", "함무라비법전", "고대경제", "금리"],
+  "tags": [
+    "이자의역사",
+    "함무라비법전",
+    "고대경제",
+    "금리"
+  ],
   "ko": {
     "title": "이자의 역사: 4천 년 전 법전이 정한 이자율",
     "narrative": [
@@ -45,10 +56,6 @@
         "heading": "금지해도 대출은 사라지지 않았습니다",
         "body": "종교와 법이 아무리 이자를 막아도 빌리고 빌려주는 일 자체는 사라지지 않았습니다. 함무라비 법전의 상한선도, 교회의 파문 위협도 결국은 이자를 없애는 데가 아니라 조건을 정하는 데 쓰였습니다. 오늘날 은행 예금과 대출에 붙는 이자율은 그 먼 옛날 곡식과 씨앗을 빌리던 계산법의 후손입니다. 함무라비가 법전에 숫자로 새긴 상한도, 교회가 설교로 선포한 금지도 결국은 이자 자체를 없애지 못했고, 시간이 흐를수록 논쟁은 '받아도 되는가'에서 '얼마가 적정한가'로 옮겨갔습니다. 4,000년 동안 바뀐 것은 이자를 받아도 되는지가 아니라, 얼마나 받아야 공정한지를 둘러싼 기준이었습니다."
       }
-    ],
-    "closing": {
-      "heading": "Fermata's Take",
-      "body": "이자는 돈의 시간값입니다. 그 값을 두고 법과 종교와 시장이 4,000년째 다투고 있다는 사실이, 지금 우리가 보는 금리 논쟁에도 그대로 이어집니다."
-    }
+    ]
   }
 }
