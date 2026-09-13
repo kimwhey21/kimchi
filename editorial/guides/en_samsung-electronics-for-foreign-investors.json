@@ -1,0 +1,116 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-13",
+  "checked": "2026-09-13",
+  "slug": "samsung-electronics-for-foreign-investors",
+  "category_id": 153,
+  "tags": ["Samsung Electronics stock", "Samsung Electronics", "Device Solutions", "Samsung Q2 2026 earnings", "HBM"],
+  "related": [
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "DART in English: How to Read Korean Company Filings",
+      "url": "https://fermata.it.kr/how-to-research-a-korean-company-in-english-dart-kind-and-what-the-translation-leaves-out/"
+    },
+    {
+      "title": "Can Foreigners Buy Korean Stocks? What Changed in 2026",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    }
+  ],
+  "ko": {
+    "title": "Samsung Electronics Stock: What Actually Makes the Company Money",
+    "narrative": [
+      {
+        "heading": "The short answer: memory chips are almost the entire profit, not phones or TVs",
+        "body": "If you own Samsung Electronics stock, or are thinking about buying it, the business you are actually exposed to is not the one on the box in your pocket. In the quarter ended June 30, 2026, Samsung's chip business — officially the Device Solutions (DS) division — posted ₩127.5 trillion in revenue and ₩89.2 trillion in operating profit. Company-wide operating profit for the same quarter was ₩89.5 trillion. Do the arithmetic and the chip division accounted for essentially all of it. Everything else Samsung makes — Galaxy phones, TVs, refrigerators, Harman car audio — combined to move the needle by less than half a percentage point.\n\nThat is not a one-quarter fluke. It was the third straight quarter in which Samsung posted a record operating profit, and each record has been driven by the same thing: soaring prices for the memory chips — DRAM, NAND and high-bandwidth memory (HBM) — that go into the servers powering the AI buildout. This guide breaks down where the ₩89.5 trillion actually came from, why Samsung's own phone business swung to a loss in the same quarter, and what that split means for anyone evaluating the stock rather than the products."
+      },
+      {
+        "heading": "What \"Samsung Electronics\" actually is: four businesses under one ticker",
+        "body": "The single ticker (KRX: 005930) that trades as Samsung Electronics is really a holding structure for four distinct businesses that report separately every quarter. <b>Device Solutions (DS)</b> is the chip business, split further into Memory (DRAM, NAND, HBM), System LSI (chip design, including Samsung's own Exynos processors) and Foundry (manufacturing chips designed by other companies, competing directly with Taiwan's TSMC). <b>Device eXperience (DX)</b> covers Mobile eXperience and Networks (MX) — Galaxy phones, tablets and 5G network equipment — plus Visual Display and Digital Appliances, meaning TVs, monitors, refrigerators and washing machines. <b>Samsung Display</b> makes OLED and LCD panels, both for Samsung's own devices and, notably, as a supplier to other phone makers. <b>Harman</b> is the Connecticut-based automotive and audio company Samsung bought in 2017, making car infotainment systems, JBL speakers and portable audio.\n\nThese four businesses do not move together. A weak year for Galaxy phones can coincide with a record year for memory chips, and in 2026 it has, because the two respond to completely different demand cycles. Reading Samsung as a single number — the stock price, or headline net profit — hides which of the four businesses is actually driving that number in any given quarter."
+      },
+      {
+        "heading": "The AI memory boom that is doing all the work",
+        "body": "The reason Device Solutions posted ₩89.2 trillion in operating profit in a single quarter is a global shortage of the memory chips needed to build AI servers. Demand for HBM — the specialized, stacked memory that sits next to AI processors — has outrun supply for more than a year, and that scarcity has pulled up prices for ordinary server DRAM and enterprise SSDs alongside it. Samsung's own Memory business set an all-time high for both quarterly revenue and operating profit in the second quarter of 2026, with the server share of its memory sales mix also hitting an all-time high, according to the company's Q2 2026 earnings release.\n\n<b>CNBC</b> reported that Samsung's second-quarter operating profit beat analyst estimates, citing the same AI-driven chip demand. Ahead of the release, a <b>Yonhap</b> Infomax survey of analysts had put the consensus operating profit forecast at ₩84.16 trillion — itself a forecast increase of roughly 1,700% year on year — and the actual ₩89.5 trillion came in above even that already-inflated number. When global demand for DRAM and HBM outruns supply, a small number of manufacturers — Samsung and Korean rival SK Hynix chief among them — capture an outsized share of the resulting profit pool."
+      },
+      {
+        "heading": "The twist: Samsung's own phone business lost money in the same quarter",
+        "body": "Here is the part that surprises people who assume a good quarter for Samsung means a good quarter across the board. The MX and Networks business — Galaxy phones, tablets and network gear — posted ₩33.2 trillion in revenue in the second quarter of 2026, helped by solid sales of the Galaxy S26 series, and still recorded an operating loss of roughly ₩0.7 trillion. Multiple outlets covering the release reported it as the first quarterly operating loss the mobile business has ever posted.\n\nThe mechanism is almost poetic. MX does not sell memory chips — it buys them, by the truckload, to put inside every Galaxy phone and tablet Samsung ships. The same DRAM and NAND price surge that handed Device Solutions a record ₩89.2 trillion in the quarter raised MX's own component costs faster than it could raise phone prices or cut costs elsewhere. The two divisions sit inside the same company and the same earnings release, pulling in opposite directions because of the identical memory cycle. A Samsung Electronics shareholder in 2026 is, in effect, long the price of memory chips and short the cost of making phones — and on this quarter's numbers, the first exposure dwarfed the second, outweighing it by more than 120 times in profit terms."
+      },
+      {
+        "heading": "Even inside the chip division, one product line is carrying the rest",
+        "body": "Device Solutions itself is not one uniform chip business either. Beneath the ₩89.2 trillion headline sit three product lines with very different fortunes: Memory (DRAM, NAND, HBM), System LSI (chip design, including Samsung's own Exynos mobile processors) and Foundry (manufacturing chips that other companies design, where Samsung competes with TSMC for the same customers). Memory is the business generating the record profit described above.\n\nFoundry and System LSI have told the opposite story for years. Korean trade press covering the chip industry has reported that the combined Foundry and System LSI operating loss ran as high as ₩4.96 trillion in the first half of 2025, and that even with signs of improvement — Samsung's foundry business reportedly turned profitable on a monthly basis for the first time in three years in June 2026 — analysts still expected the two businesses combined to post a full-year 2026 operating loss in the ₩2 trillion to ₩3 trillion range. In other words, the record profit sitting inside Device Solutions belongs almost entirely to Memory; the division's other two product lines are still a net drag on it, not a second engine alongside it."
+      },
+      {
+        "heading": "Display and Harman: the two businesses most investors forget Samsung owns",
+        "body": "Two more businesses sit inside Samsung Electronics and rarely make headlines because neither one swings the total by much in either direction. <b>Samsung Display</b> makes OLED and LCD screens — not only for Samsung's own Galaxy phones, but as a supplier to other phone makers. <b>Harman International</b>, the Connecticut-based automotive and audio company Samsung acquired in 2017, makes car infotainment systems and JBL-branded speakers, and has been growing through automotive contracts and portable audio sales.\n\nBoth are real, profitable businesses — and both are a rounding error next to Device Solutions in the quarter covered here. Neither has driven a headline swing in Samsung's results since the memory cycle turned in Samsung's favor, and as of September 2026 neither looks likely to. If you are buying Samsung Electronics stock for exposure to displays or car audio specifically, a narrower, pure-play alternative in each of those markets will give you more direct exposure than a stock whose results are set almost entirely by DRAM and HBM pricing."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Samsung Electronics trades as a single stock, but in 2026 it behaves like a memory chip company with a phone business, a display maker and a car-audio company attached — diversification that has not, in practice, diversified the profit. In the quarter ended June 30, 2026, the Device Solutions chip division produced essentially the entire ₩89.5 trillion in company-wide operating profit, while the mobile business that makes the products most people associate with the Samsung name posted its first-ever quarterly operating loss, because it has to buy the very chips that made the rest of the company's quarter.\n\nFor anyone deciding whether to hold or buy the stock, that means the more useful question is not \"how are Galaxy sales doing\" but \"where are DRAM, NAND and HBM prices headed, and is Foundry closing its own separate loss.\" Both of those move on a cycle that has little to do with smartphone launches.\n\nThis guide describes results as reported for the quarter ended June 30, 2026, cross-checked against Samsung's own Q2 2026 earnings release alongside CNBC and Yonhap coverage published in July and August 2026. Segment results change every quarter — confirm the current figures on the company's own earnings release before acting on them. This is not investment advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Samsung Electronics Q2 2026: chip division operating profit versus mobile division operating loss",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Where Samsung Electronics Actually Makes Its Money",
+        "left": {"label": "DS chip division, Q2 2026 operating profit", "value": "₩89.2T"},
+        "right": {"label": "Mobile business (MX), Q2 2026", "value": "₩0.7T loss", "down": true}
+      }
+    },
+    {
+      "kind": "checklist",
+      "alt": "Samsung Electronics revenue and operating profit by division, quarter ended June 30, 2026",
+      "args": {
+        "title": "Samsung Electronics, quarter ended June 30, 2026",
+        "subtitle": "Revenue and operating profit by division, in trillions of Korean won",
+        "items": [
+          {
+            "label": "Device Solutions (chips): ₩127.5T revenue, ₩89.2T operating profit",
+            "why": "Nearly all of Samsung's Q2 2026 profit came from this one division alone."
+          },
+          {
+            "label": "MX and Networks (mobile): ₩33.2T revenue, ₩0.7T operating loss",
+            "why": "The first quarterly operating loss the mobile business has ever posted."
+          },
+          {
+            "label": "Company total: ₩171.5T revenue, ₩89.5T operating profit",
+            "why": "A record quarter, driven almost entirely by the chip division above."
+          }
+        ]
+      },
+      "section": 3
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before treating Samsung Electronics as a pure chip stock",
+      "args": {
+        "title": "Before you treat this as a chip stock",
+        "subtitle": "What the quarterly headline number hides",
+        "items": [
+          {
+            "label": "Confirm which quarter's numbers you are looking at",
+            "why": "Memory prices swing fast — a Q2 2026 figure will look dated within two quarters."
+          },
+          {
+            "label": "Track Foundry and System LSI separately from Memory",
+            "why": "These non-memory chip lines ran an operating loss even as Memory posted a record profit."
+          },
+          {
+            "label": "Watch memory prices, not Galaxy sales, for the real read on this stock",
+            "why": "Mobile's own profit moves opposite to memory prices — it buys the same chips the chip division sells."
+          }
+        ]
+      },
+      "section": 6
+    }
+  ]
+}
