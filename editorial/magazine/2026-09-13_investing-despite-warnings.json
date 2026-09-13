@@ -1,0 +1,68 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "투자 심리",
+  "date": "2026-09-13",
+  "slug": "investing-despite-warnings",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1687997080696-e26811153e15",
+    "credit": "Unsplash / Paulina Bargielska"
+  },
+  "sources": [
+    {
+      "name": "포천",
+      "title": "Anthropic CEO Dario Amodei and AI whistleblower Jacob Coxon agree: Something terrifying could be coming",
+      "url": "https://fortune.com/2026/09/13/anthropic-dario-amodei-ai-whistleblower-jacob-coxon-openai-sam-altman-recursive-self-improvement/"
+    },
+    {
+      "name": "CNBC",
+      "title": "Anthropic's Amodei proposes plan to slow the pace of advancing AI capabilities",
+      "url": "https://www.cnbc.com/2026/09/12/anthropics-amodei-proposes-plan-to-slow-the-pace-of-advancing-ai-capabilities.html"
+    },
+    {
+      "name": "더 모틀리 풀",
+      "title": "The Stock Market Is Triggering a Warning That Warren Buffett Made in 1999",
+      "url": "https://www.fool.com/investing/2026/09/10/the-stock-market-is-triggering-a-warning-that-warr/"
+    },
+    {
+      "name": "KPMG",
+      "title": "Global VC investment surges to record $330.9 billion in Q1'26",
+      "url": "https://kpmg.com/xx/en/media/press-releases/2026/04/global-vc-investment-surges-to-record-330-9-billion-dollar-in-q1-26.html"
+    },
+    {
+      "name": "로버트 실러",
+      "title": "비이성적 과열(Irrational Exuberance)",
+      "url": "https://press.princeton.edu/books/paperback/9780691173122/irrational-exuberance"
+    }
+  ],
+  "tags": ["투자심리", "군중심리", "AI버블", "행동경제학"],
+  "ko": {
+    "title": "위험하다는 경고를 들으면서도 사람들은 계속 삽니다",
+    "narrative": [
+      {
+        "heading": "같은 주에 경고가 두 번 나왔습니다",
+        "body": "9월 12일, AI 기업 앤트로픽의 최고경영자 다리오 아모데이는 자신의 홈페이지에 AI 기업들이 스스로 속도를 늦춰야 한다는 글을 올렸습니다. 통제를 벗어난 AI가 6~12개월 안에 인터넷 전반을 장악할 수 있다고 경고하며, 독립적인 안전성 평가와 국제적인 속도 제한을 제안했습니다. CNBC에 따르면 평소 경쟁 관계인 일론 머스크와 오픈AI의 샘 올트먼도 이 제안에 공개적으로 동의를 표했습니다. 포천은 같은 날 오픈AI와 앤트로픽에서 일했던 연구자 제이컵 콕슨이 두 회사 모두 책임 있게 행동하고 있지 않다며 사직 사실을 공개하고, 6~12개월 안에 AI 능력이 '꽤 두려운' 수준에 이를 것이라 전망했다고 전했습니다. 같은 주에 업계 안팎에서 같은 우려가 겹쳐 나온 셈입니다."
+      },
+      {
+        "heading": "그런데 돈은 계속 들어옵니다",
+        "body": "이런 경고와 별개로 AI에 들어가는 돈은 오히려 늘고 있습니다. 회계·컨설팅 회사 KPMG의 집계를 보면 올해 1분기 전 세계 벤처투자액은 3,309억 달러로 역대 최대치를 기록했고, 이 가운데 약 80%인 2,420억 달러가 AI 기업에 몰렸습니다. 오픈AI·앤트로픽·xAI·웨이모 네 곳이 같은 분기에 유치한 투자금만 1,880억 달러에 달합니다. 흥미로운 것은 이 투자 열기가 확실한 성과 위에 서 있지 않다는 점입니다. 같은 조사에서 최고경영자의 약 56%가 지금까지 AI 투자에서 측정 가능한 재무 성과를 아직 보지 못했다고 답했습니다. 위험을 경고하는 목소리와 성과를 확인하지 못했다는 응답이 함께 나오는데도, 돈은 계속 그 방향으로 흐르고 있습니다."
+      },
+      {
+        "heading": "경고를 무시하는 것이 아니라 못 듣는 것에 가깝습니다",
+        "body": "행동경제학은 이 현상을 개인의 어리석음이 아니라 사람이라면 대부분 겪는 인지 습관으로 설명합니다. 노벨경제학상을 받은 대니얼 카너먼과 아모스 트버스키가 정리한 '가용성 휴리스틱'에 따르면, 사람은 추상적인 확률보다 머릿속에 쉽게 떠오르는 생생한 이야기에 더 크게 반응합니다. 'AI가 세상을 바꾼다'는 이야기는 눈앞의 주가 상승으로 매일 확인되지만, '6~12개월 안에 위험할 수 있다'는 경고는 아직 일어나지 않은 일이라 상대적으로 흐릿하게 느껴집니다. 또한 이미 투자를 결정한 사람은 그 결정과 어긋나는 정보를 만나면 정보 쪽을 가볍게 여기고 기존 판단을 지키려는 경향을 보이는데, 이를 심리학에서는 인지 부조화라 부릅니다. 위험 경고를 몰라서 안 사는 것이 아니라, 이미 산 사람일수록 그 경고를 마음에 오래 두지 않는다는 뜻입니다."
+      },
+      {
+        "heading": "군중이 움직이는 이유",
+        "body": "노벨경제학상을 받은 예일대 교수 로버트 실러는 저서 '비이성적 과열'에서 자산 가격을 실제로 움직이는 것은 정보가 아니라 군중의 충동과 이야기, 그리고 언론의 반복 보도라고 정리했습니다. 그의 설명에 따르면 이런 쏠림은 몇 달이 아니라 몇 년 동안 이어질 수 있고, 그동안 가격은 실제 가치에서 계속 멀어질 수 있습니다. 실러 본인이 2000년 닷컴 버블과 2008년 주택 버블을 미리 경고한 것으로도 유명한데, 두 번 모두 그의 경고가 나온 뒤에도 시장은 한동안 계속 올랐습니다. 경고가 틀려서가 아니라, 군중이 움직이는 속도와 경고가 힘을 발휘하는 속도가 다르기 때문입니다."
+      },
+      {
+        "heading": "1999년에도 같은 일이 있었습니다",
+        "body": "더 모틀리 풀이 짚은 사례가 있습니다. 1999년 나스닥이 그해에만 85% 오르는 동안 워런 버핏은 닷컴 기업들의 밸류에이션(주가가 실적에 비해 적정한지를 따지는 잣대)이 지속 가능하지 않다고 공개적으로 경고했습니다. 그해 버크셔 해서웨이 주가는 23% 떨어졌고, 같은 기간 S&P500은 18% 올랐습니다. 배런스는 '워런, 대체 뭐가 문제인가'라는 제목의 기사로 그를 조롱했습니다. 버핏은 2001년 쓴 글에서 시가총액이 국내총생산의 200%에 가까워진 상황을 '불장난'이라 표현했는데, 나스닥은 2002년까지 고점 대비 약 77% 떨어지고 나서야 그 표현이 과장이 아니었음이 드러났습니다. 경고가 있었는데도 자금이 계속 몰린 것도, 그 경고가 결국 맞았던 것도 실제 있었던 일입니다."
+      },
+      {
+        "heading": "경고를 무시하라는 뜻은 아닙니다",
+        "body": "이 심리를 안다고 해서 위험 경고가 전부 맞거나 전부 틀린다는 답이 나오지는 않습니다. 다만 '전문가도 경고했는데 가격이 계속 오른다'는 사실 자체가 그 경고가 틀렸다는 증거는 아니라는 것은 분명해집니다. 1999년의 버핏도, 2000년의 실러도 한동안은 틀린 것처럼 보였습니다. 경고와 가격이 함께 움직이지 않는 시기가 있다는 것을 받아들이는 것이, 군중 속에서 스스로의 판단 기준을 잃지 않는 첫걸음이라고 행동경제학은 말합니다."
+      }
+    ]
+  }
+}
