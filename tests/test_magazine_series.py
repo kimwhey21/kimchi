@@ -38,11 +38,10 @@ class MagazineIssuesTest(unittest.TestCase):
     def test_the_fixture_passes(self) -> None:
         self.assertEqual(feature_checks.magazine_issues(_doc()), [])
 
-    def test_brief_lines_must_be_three_to_five_in_keyword_colon_form(self) -> None:
-        doc = _doc(); doc["brief"] = ["핵심어 : 하나", "둘째 줄에 구분자가 없다"]
-        joined = "\n".join(feature_checks.magazine_issues(doc))
-        self.assertIn("2줄", joined)
-        self.assertIn("' : '", joined)
+    def test_a_brief_is_neither_required_nor_checked(self) -> None:
+        # 간단 브리핑은 2026-09-13 저녁 사용자 결정으로 뺐다 — 있어도 없어도 검사에 걸리지 않는다.
+        doc = _doc(); doc.pop("brief", None)
+        self.assertEqual(feature_checks.magazine_issues(doc), [])
 
     def test_group_must_be_one_of_the_six_columns(self) -> None:
         doc = _doc(); doc["group"] = "연예"
@@ -78,13 +77,13 @@ class SourceTest(unittest.TestCase):
 
 
 class PosterTest(unittest.TestCase):
-    def test_the_naver_post_has_brief_body_sources_and_no_take_or_main_site_link(self) -> None:
+    def test_the_naver_post_has_body_and_sources_only(self) -> None:
         post = naver_post.build(FIXTURE)
         kinds = [k for k, _ in post["blocks"]]
         heads = [t for k, t in post["blocks"] if k == "h"]
-        self.assertEqual(heads[0], "📌 간단 브리핑")
-        self.assertNotIn("Fermata's Take", heads)   # 잡지에는 Take가 없다(2026-09-13 사용자 결정)
-        self.assertLess(heads.index("📌 간단 브리핑"), heads.index("자료 출처"))
+        self.assertNotIn("📌 간단 브리핑", heads)   # 브리핑도 Take도 없다(2026-09-13 사용자 결정) — 본문 절 → 자료 출처
+        self.assertNotIn("Fermata's Take", heads)
+        self.assertEqual(heads[-1], "자료 출처")
         self.assertEqual(post["category"], "시장의 역사")
         self.assertEqual(post["url"], "")
         joined = "\n".join(t for _, t in post["blocks"])
@@ -92,7 +91,7 @@ class PosterTest(unittest.TestCase):
         self.assertNotIn("t.me/", joined)
         self.assertIn("페르마타매거진", post["tags"])
         self.assertIn("브리태니커 백과사전, Salt", joined)
-        self.assertEqual(kinds.count("h"), len(_doc()["ko"]["narrative"]) + 2)   # 브리핑·출처 + 절
+        self.assertEqual(kinds.count("h"), len(_doc()["ko"]["narrative"]) + 1)   # 절 + 출처
 
     def test_the_title_is_left_as_written(self) -> None:
         post = naver_post.build(FIXTURE)

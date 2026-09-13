@@ -249,10 +249,9 @@ def naver_issues(doc: dict) -> list[str]:
 
 # 매거진(2026-09-13, 사용자: "두 번째 블로그는 blog.naver.com/jeunkim처럼 다양한 분야의 글을 잡지처럼").
 # 참고 블로그 실측: 글마다 제목 → "📌 간단 브리핑"(요약 3~5줄) → 본문 3,700자 안팎 → "자료 출처". 하루 14편, 이웃 11만.
+# 우리는 브리핑과 Fermata's Take 없이 표지 → 본문 → 자료 출처만 싣는다(사용자 결정, 2026-09-13 저녁).
 # 그쪽 엔진은 외국 기사 전문 번역인데 그건 저작권 문제라 따라 하지 않는다 — 독자가 보는 모양만 가져오고,
 # 본문은 출처 둘 이상을 종합해 우리 문장으로 쓴다(가이드와 같은 원칙, source_check가 본다).
-MAGAZINE_BRIEF = (3, 5)
-MAGAZINE_BRIEF_MAX_CHARS = 140
 MAGAZINE_SECTIONS = (4, 7)
 MAGAZINE_CHARS = (2000, 4500)
 # 2026-09-13 참고 블로그 210편 실측: 투자·시장 37%, AI·기술 15%, 기업·경영 13%, 심리 6%, 거시 5%, 과학 2%. "다양한 분야"의
@@ -263,15 +262,7 @@ MAGAZINE_GROUPS = ("시장 읽기", "시장의 역사", "투자 심리", "기업
 def magazine_issues(doc: dict) -> list[str]:
     """브리핑 줄 수·본문 길이·절 수·출처 표기·코너 — 잡지 한 편의 꼴. 본진에 안 가는 글이라 여기서만 본다."""
     issues: list[str] = []
-    brief = doc.get("brief") or []
-    if not MAGAZINE_BRIEF[0] <= len(brief) <= MAGAZINE_BRIEF[1]:
-        issues.append(f"간단 브리핑이 {len(brief)}줄입니다 — 최상위 `brief`에 {MAGAZINE_BRIEF[0]}~{MAGAZINE_BRIEF[1]}줄. "
-                      "각 줄은 '핵심어 : 한 문장' 꼴(참고 블로그 실측).")
-    for i, line in enumerate(brief, start=1):
-        if len(str(line)) > MAGAZINE_BRIEF_MAX_CHARS:
-            issues.append(f"브리핑 {i}줄이 {len(str(line))}자입니다 — {MAGAZINE_BRIEF_MAX_CHARS}자 안에.")
-        if " : " not in str(line):
-            issues.append(f"브리핑 {i}줄에 ' : '가 없습니다 — '핵심어 : 설명' 꼴로 씁니다.")
+    # 간단 브리핑(`brief`)은 2026-09-13 저녁 사용자 결정으로 싣지 않는다 — 있어도 검사하지 않고 올리는 쪽도 무시한다.
     if str(doc.get("group") or "") not in MAGAZINE_GROUPS:
         issues.append(f"코너(`group`)가 없거나 목록 밖입니다 — {', '.join(MAGAZINE_GROUPS)} 중 하나.")
     ko = doc.get("ko") or doc

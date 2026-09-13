@@ -225,11 +225,11 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks.append(("q", "\n".join(take[:2])))
     full = (doc.get("naver") or {}).get("narrative") or []
     if magazine:
-        # 참고 블로그(피우스의 책도둑 & 매거진) 실측 꼴: 제목 → 📌 간단 브리핑(요약 3~5줄) → 본문 전문 → 자료 출처.
+        # 참고 블로그(피우스의 책도둑 & 매거진) 실측 꼴은 제목 → 📌 간단 브리핑 → 본문 → 자료 출처인데, 브리핑과 Take는 사용자 결정으로 뺐다.
         # 본문은 `ko.narrative` 그대로가 네이버 본문이다(본진 쌍둥이가 없으니 naver.narrative를 따로 두지 않는다).
         full = list(ko.get("narrative") or [])
-        blocks.append(("h", "📌 간단 브리핑"))
-        blocks += [("p", str(line)) for line in (doc.get("brief") or [])]
+        # 간단 브리핑은 싣지 않는다(2026-09-13, 사용자: "잡지블로그에서 간단 브리핑쪽은 빼줘"). 참고 블로그 꼴 중 남기는 것은
+        # 표지 → 본문 → 자료 출처뿐이다.
     if full:
         # 네이버용 본문(2026-09-12, 사용자 "네이버도 본진만큼 중요"): 루틴이 본진과 다른 문장으로 쓴 완전한 글. 절을 다 싣고
         # 문단도 자르지 않는다(길이만 2~3문장으로 나눈다). 그림은 절마다 하나씩, 네 장까지.
