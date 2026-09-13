@@ -40,6 +40,7 @@ from src import (
     editorial_quality,
     editorial_quality_en,
     editorial_title,
+    feature_checks,
     photo_pool,
 )
 
@@ -93,6 +94,9 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
         doc, editorial_judgment.previous_manuscript(market, date_str), previous_docs)
     issues += [f"판단·어제·초보자 — {i}" for i in j_issues]
     summary += [f"(참고) {n}" for n in j_notes]
+    # 네이버 전용 본문(2026-09-14부터). 시황이 본진 문장을 그대로 옮겨 21.9~40.9% 겹치고 있었다 —
+    # 유사문서로 걸리면 네이버 통로가 통째로 막힌다. 여기서 막아 처음부터 다른 문장으로 쓰게 한다.
+    issues += [f"네이버 — {i}" for i in feature_checks.naver_issues(doc)]
     try:
         editorial_facts.validate(ko, price_data, lang="ko")
     except Exception as exc:  # noqa: BLE001 - 종류가 무엇이든 목록에 담는다

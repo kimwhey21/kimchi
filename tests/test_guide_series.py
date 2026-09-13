@@ -152,7 +152,10 @@ class NaverSummaryTest(unittest.TestCase):
             path = Path(tmp) / "2026-09-13_fomc.json"
             path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
             post = naver_post.build(path)
-        self.assertTrue(post["title"].startswith("증시 이벤트 9월 17일"))
+        # 2026-09-13부터 "증시 이벤트"는 꼬리로 간다 — 아무도 검색하지 않는 우리 갈래 이름이 앞자리를
+        # 차지하면 모바일 검색에서 잘려 나가는 것이 정작 'FOMC'다(tests/test_naver_title.py).
+        self.assertTrue(post["title"].startswith("9월 FOMC"), post["title"])
+        self.assertTrue(post["title"].endswith("증시 이벤트 9월 17일"), post["title"])
         self.assertEqual(post["category"], "Weekly")
 
 

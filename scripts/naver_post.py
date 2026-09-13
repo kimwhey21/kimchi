@@ -132,6 +132,33 @@ def _cover(graphics_dir: Path | None) -> str | None:
     return None
 
 
+# 네이버 제목은 **앞자리가 곧 검색 매칭 자리**다(2026-09-13, 사장님 "왜 네이버에서 검색해도 안 나오냐" 조사).
+# 실측: 네이버에 올린 18편 중 여덟 편이 "투자 체크포인트:"로 시작했는데 아무도 그 말로 검색하지 않는다.
+# 게다가 모바일 검색 결과는 제목을 30자 안팎에서 자르므로, 종목·지수 이름이 뒤로 밀리면 검색어와 겹칠 기회 자체가 없다.
+# 그래서 **사람이 실제로 검색하는 말이 앞에 오게 하고, 갈래 이름은 꼬리로 보낸다.**
+# 시황·주간 결산의 머리말은 그대로 둔다 — "코스피 마감 시황", "주간 증시 결산"은 실제로 검색되는 말이다.
+# 반대로 "투자 체크포인트"·"증시 이벤트"는 우리가 지어낸 이름이라 앞자리를 줄 이유가 없다.
+TAIL_PREFIXES = ("투자 체크포인트", "증시 이벤트")
+NAVER_TITLE_MAX = 78          # 네이버 제목 상한은 100자 — 꼬리표를 붙여도 잘리지 않게 여유를 둔다
+
+
+def naver_title(base: str, prefix: str, series: str | None, kdate: str) -> str:
+    base = (base or "").strip()
+    if series == "프리뷰":
+        # "오늘 밤 미국장 프리뷰 9월 11일: 오늘 밤 8월 CPI…"처럼 '오늘 밤'이 두 번 나오지 않게 한다(실측).
+        body = re.sub(r"^오늘 밤\s*(미국장\s*)?", "", base).strip() or base
+        return f"오늘 밤 미국장 프리뷰 {kdate} | {body}"
+    if not prefix:
+        return base                                          # 가이드: 제목이 곧 검색 질문이라 그대로 둔다
+    if prefix.startswith(TAIL_PREFIXES):
+        if "체크포인트" in base or "이벤트" in base:
+            return base                                      # 이미 제목 안에 있으면 두 번 쓰지 않는다
+        tail = f" | {prefix.strip()}"
+        return base + tail if len(base) + len(tail) <= NAVER_TITLE_MAX else base
+    joiner = " | " if ":" in base else ": "                  # 콜론이 겹치지 않게
+    return f"{prefix}{joiner}{base}"
+
+
 def build(path: Path, graphics_dir: Path | None = None) -> dict:
     doc = json.loads(Path(path).read_text(encoding="utf-8"))
     ko = doc.get("ko") or {}
@@ -177,16 +204,7 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         category = "Checkpoint"
         tags = list(FIXED_TAGS["feature"])
     base_title = str(ko.get("title", ""))
-    if doc.get("series") == "프리뷰" and base_title.startswith("오늘 밤 미국장"):
-        title = f"미국장 프리뷰 {_kdate(date_str)} | {base_title}"
-    elif not is_daily and "체크포인트" in base_title:
-        title = base_title                                   # 제목에 이미 '체크포인트'가 있으면 머리를 안 붙인다
-    elif not prefix:
-        title = base_title                                   # 가이드: 제목 그대로
-    elif ":" in base_title:
-        title = f"{prefix} | {base_title}"                   # 콜론이 겹치지 않게
-    else:
-        title = f"{prefix}: {base_title}"
+    title = naver_title(base_title, prefix, doc.get("series"), _kdate(date_str))
     # 블록 종류: img(그림) · h(소제목) · q(인용구 — Fermata's Take) · p(문단, 2~3문장). 표지가 맨 앞(2026-09-12).
     blocks: list[tuple[str, str]] = []
     cover = _cover(graphics_dir)

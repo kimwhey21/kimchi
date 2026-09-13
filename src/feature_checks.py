@@ -182,6 +182,26 @@ NAVER_SECTIONS = (4, 6)
 NAVER_CHARS = (1200, 3000)
 NAVER_DUP_MIN_CHARS = 25
 
+# 시황도 네이버 전용 본문을 쓴다(2026-09-14부터). 2026-09-13 실측: 네이버에 올라간 시황이 본진 글과
+# 21.9~40.9% 겹쳤다(가이드 2.1%, 프리뷰 0.5%). 시황만 이 규칙에서 빠져 있어 본진 문장을 그대로 옮기고 있었고,
+# 하필 하루 두 번으로 가장 자주 올리는 종류다 — 유사문서로 걸리면 네이버 통로가 통째로 막힌다.
+# 문턱은 가이드보다 낮다. 목적은 분량을 늘리는 것이 아니라 겹침을 없애는 것이다.
+NAVER_DAILY_SINCE = "2026-09-14"
+NAVER_DAILY_MARKETS = {"kr", "us"}
+NAVER_DAILY_SECTIONS = (3, 5)
+NAVER_DAILY_CHARS = (900, 2200)
+
+
+def naver_spec(doc: dict) -> tuple[str, tuple[int, int], tuple[int, int]] | None:
+    """(무엇이라 부를지, 절 범위, 글자 범위) — 네이버 전용 본문을 요구하지 않는 원고면 None."""
+    date = str(doc.get("date") or "")
+    series = str(doc.get("series") or "")
+    if series in NAVER_FULL_SERIES:
+        return (series, NAVER_SECTIONS, NAVER_CHARS) if date >= NAVER_FULL_SINCE else None
+    if not series and str(doc.get("market") or "") in NAVER_DAILY_MARKETS:
+        return ("시황", NAVER_DAILY_SECTIONS, NAVER_DAILY_CHARS) if date >= NAVER_DAILY_SINCE else None
+    return None
+
 
 def _sentences(text: str) -> set[str]:
     plain = re.sub(r"<[^>]+>", "", str(text or ""))
@@ -190,26 +210,30 @@ def _sentences(text: str) -> set[str]:
 
 def naver_issues(doc: dict) -> list[str]:
     """`naver.narrative`(네이버용 본문) — 있어야 하는 시리즈에 없거나, 길이·절 수가 어긋나거나, 본진 문장을 그대로 썼으면 막는다."""
-    series = str(doc.get("series") or "")
-    if series not in NAVER_FULL_SERIES or str(doc.get("date") or "") < NAVER_FULL_SINCE:
+    spec = naver_spec(doc)
+    if spec is None:
         return []
+    what, section_range, char_range = spec
     naver = doc.get("naver") or {}
     sections = naver.get("narrative") or []
     if not sections:
-        return [f"네이버용 본문(최상위 `naver.narrative`)이 없습니다 — {series}은(는) 네이버에 요약본이 아니라 완전한 글로 갑니다. "
-                f"절 {NAVER_SECTIONS[0]}~{NAVER_SECTIONS[1]}개, {NAVER_CHARS[0]:,}~{NAVER_CHARS[1]:,}자, 본진과 다른 문장으로."]
+        return [f"네이버용 본문(최상위 `naver.narrative`)이 없습니다 — {what}은(는) 네이버에 요약본이 아니라 완전한 글로 갑니다. "
+                f"절 {section_range[0]}~{section_range[1]}개, {char_range[0]:,}~{char_range[1]:,}자, 본진과 다른 문장으로."]
     issues: list[str] = []
-    if not NAVER_SECTIONS[0] <= len(sections) <= NAVER_SECTIONS[1]:
-        issues.append(f"네이버용 본문이 {len(sections)}절입니다 — {NAVER_SECTIONS[0]}~{NAVER_SECTIONS[1]}절.")
+    if not section_range[0] <= len(sections) <= section_range[1]:
+        issues.append(f"네이버용 본문이 {len(sections)}절입니다 — {section_range[0]}~{section_range[1]}절.")
     body = " ".join(str(s.get("body", "")) for s in sections)
     length = len(re.sub(r"<[^>]+>", "", body))
-    if not NAVER_CHARS[0] <= length <= NAVER_CHARS[1]:
-        issues.append(f"네이버용 본문이 {length:,}자입니다 — {NAVER_CHARS[0]:,}~{NAVER_CHARS[1]:,}자.")
+    if not char_range[0] <= length <= char_range[1]:
+        issues.append(f"네이버용 본문이 {length:,}자입니다 — {char_range[0]:,}~{char_range[1]:,}자.")
     for index, section in enumerate(sections, start=1):
         if not str(section.get("heading") or "").strip():
             issues.append(f"네이버용 본문 {index}절에 소제목이 없습니다.")
     ko = doc.get("ko") or doc
-    main_text = " ".join(str(s.get("body", "")) for s in (ko.get("narrative") or [])) + str((ko.get("closing") or {}).get("body", ""))
+    # 마무리 문단을 사이 공백 없이 붙이면 본문 마지막 문장과 마무리 첫 문장이 한 덩어리가 되어
+    # 그 두 문장만 중복 검사에서 빠진다(2026-09-13, 시황으로 규칙을 넓히다 테스트가 잡았다).
+    main_text = " ".join([str(s.get("body", "")) for s in (ko.get("narrative") or [])]
+                         + [str((ko.get("closing") or {}).get("body", ""))])
     shared = sorted(_sentences(body) & _sentences(main_text))
     if shared:
         issues.append(f"네이버용 본문에 본진과 같은 문장이 {len(shared)}개 있습니다(유사문서) — 예: {shared[0][:40]}… 다른 문장으로 다시 쓰십시오.")
