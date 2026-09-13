@@ -204,7 +204,9 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         slug = doc.get("slug") or Path(path).stem
         url = ""
         category = str(doc.get("group") or "매거진")
-        tags = [str(t) for t in (doc.get("tags") or [])][:10] + ["페르마타매거진"]
+        # 고정 태그는 브랜드 이름이다. 두 번째 블로그는 퍼플썸이지 페르마타가 아니다(2026-09-13 저녁, 사용자: "태그도 페르마타가
+        # 들어가는 거 같은데") — 잡지 글 어디에도 페르마타가 나가면 안 된다.
+        tags = [str(t) for t in (doc.get("tags") or []) if "페르마타" not in str(t) and "fermata" not in str(t).lower()][:10] + ["퍼플썸매거진"]
     else:
         prefix = "투자 체크포인트"
         slug = doc.get("slug") or Path(path).stem.replace("_", "-", 1).replace("_", "-")

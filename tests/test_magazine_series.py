@@ -89,7 +89,10 @@ class PosterTest(unittest.TestCase):
         joined = "\n".join(t for _, t in post["blocks"])
         self.assertNotIn("fermata.it.kr", joined)
         self.assertNotIn("t.me/", joined)
-        self.assertIn("페르마타매거진", post["tags"])
+        self.assertIn("퍼플썸매거진", post["tags"])
+        self.assertFalse(any("페르마타" in x or "fermata" in x.lower() for x in post["tags"]))   # 퍼플썸은 별개 브랜드
+        self.assertNotIn("페르마타", joined)
+        self.assertNotIn("Fermata", joined)
         self.assertIn("브리태니커 백과사전, Salt", joined)
         self.assertEqual(kinds.count("h"), len(_doc()["ko"]["narrative"]) + 1)   # 절 + 출처
 
