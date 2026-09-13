@@ -78,13 +78,13 @@ class SourceTest(unittest.TestCase):
 
 
 class PosterTest(unittest.TestCase):
-    def test_the_naver_post_has_brief_body_take_sources_and_no_main_site_link(self) -> None:
+    def test_the_naver_post_has_brief_body_sources_and_no_take_or_main_site_link(self) -> None:
         post = naver_post.build(FIXTURE)
         kinds = [k for k, _ in post["blocks"]]
         heads = [t for k, t in post["blocks"] if k == "h"]
         self.assertEqual(heads[0], "📌 간단 브리핑")
-        self.assertLess(heads.index("📌 간단 브리핑"), heads.index("Fermata's Take"))
-        self.assertLess(heads.index("Fermata's Take"), heads.index("자료 출처"))
+        self.assertNotIn("Fermata's Take", heads)   # 잡지에는 Take가 없다(2026-09-13 사용자 결정)
+        self.assertLess(heads.index("📌 간단 브리핑"), heads.index("자료 출처"))
         self.assertEqual(post["category"], "시장의 역사")
         self.assertEqual(post["url"], "")
         joined = "\n".join(t for _, t in post["blocks"])
@@ -92,7 +92,7 @@ class PosterTest(unittest.TestCase):
         self.assertNotIn("t.me/", joined)
         self.assertIn("페르마타매거진", post["tags"])
         self.assertIn("브리태니커 백과사전, Salt", joined)
-        self.assertEqual(kinds.count("h"), len(_doc()["ko"]["narrative"]) + 3)   # 브리핑·Take·출처 + 절
+        self.assertEqual(kinds.count("h"), len(_doc()["ko"]["narrative"]) + 2)   # 브리핑·출처 + 절
 
     def test_the_title_is_left_as_written(self) -> None:
         post = naver_post.build(FIXTURE)

@@ -220,7 +220,7 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks.append(("img", cover))
     take = _plain((ko.get("closing") or {}).get("body", ""))
     magazine = doc.get("series") == "매거진"
-    if take and not magazine:   # 잡지는 판단이 본문 뒤에 온다(참고 블로그 꼴: 브리핑 → 본문 → 출처). 시황·가이드는 판단이 맨 앞.
+    if take and not magazine:   # 잡지에는 Take가 없다(2026-09-13 사용자 결정). 시황·가이드는 판단이 맨 앞.
         blocks.append(("h", "Fermata's Take"))
         blocks.append(("q", "\n".join(take[:2])))
     full = (doc.get("naver") or {}).get("narrative") or []
@@ -253,9 +253,8 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks.append(("h", "다음 확인 지점"))
         blocks.append(("p", str(check)))
     if magazine:
-        if take:
-            blocks.append(("h", "Fermata's Take"))
-            blocks.append(("q", "\n".join(take[:2])))
+        # 잡지에는 Fermata's Take가 없다(2026-09-13, 사용자: "잡지에서는 페르마타 테이크가 없어야 하는데"). 배경을 읽는 글이지
+        # 우리 판단을 덧붙이는 글이 아니다. 원고에 closing이 있어도 싣지 않는다.
         srcs = [x for x in (doc.get("sources") or []) if isinstance(x, dict) and x.get("name")]
         if srcs:
             blocks.append(("h", "자료 출처"))
