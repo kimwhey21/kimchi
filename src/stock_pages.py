@@ -33,6 +33,7 @@ import glob
 import json
 import os
 import re
+import time
 from pathlib import Path
 
 import requests
@@ -272,10 +273,37 @@ def page_title(item: dict) -> str:
 
 # ── 워드프레스 ───────────────────────────────────────────────────────────────
 
+# 카페24 공유 호스팅은 PHP 처리 여력이 적어, 37개 페이지를 연달아 쓰면 중간에 502를 낸다
+# (2026-09-14 실측: microsoft에서 502로 워크플로 실패. 같은 날 아침 사장님이 사이트 접속 장애를 겪은 것과 같은 원인).
+# 그래서 5xx·연결 오류는 점점 길게 기다렸다 다시 하고, 쓰기 사이에는 한 박자 쉰다. 4xx는 우리 잘못이라 바로 올린다.
+RETRY_WAITS = (8, 20, 45, 90)
+WRITE_PAUSE = 1.5
+
+
+def _request(method: str, url: str, **kwargs) -> requests.Response:
+    last = None
+    for wait in (*RETRY_WAITS, None):
+        try:
+            response = requests.request(method, url, timeout=TIMEOUT, **kwargs)
+            if response.status_code < 500:
+                return response
+            last = f"HTTP {response.status_code}"
+        except requests.RequestException as error:
+            last = type(error).__name__
+            response = None
+        if wait is None:
+            break
+        print(f"    {url.rsplit('/', 1)[-1]}: {last} — {wait}초 쉬고 다시")
+        time.sleep(wait)
+    if response is not None:
+        return response
+    raise StockPagesError(f"{url} 요청 실패: {last}")
+
+
 def _find_page(base: str, auth: tuple[str, str], slug: str) -> dict | None:
-    response = requests.get(f"{base}/wp-json/wp/v2/pages", auth=auth, timeout=TIMEOUT,
-                            params=[("slug", slug), ("context", "edit"), ("per_page", "5"),
-                                    *(("status[]", s) for s in ("publish", "draft", "pending", "private"))])
+    response = _request("GET", f"{base}/wp-json/wp/v2/pages", auth=auth,
+                        params=[("slug", slug), ("context", "edit"), ("per_page", "5"),
+                                *(("status[]", s) for s in ("publish", "draft", "pending", "private"))])
     response.raise_for_status()
     pages = response.json()
     return pages[0] if pages else None
@@ -287,16 +315,17 @@ def upsert_page(base: str, auth: tuple[str, str], slug: str, title: str, html: s
     page = _find_page(base, auth, slug)
     body = {"title": title, "content": html, "excerpt": excerpt_text, "parent": parent, "template": "page-no-title"}
     if page:
-        response = requests.post(f"{base}/wp-json/wp/v2/pages/{page['id']}", auth=auth, json=body, timeout=TIMEOUT)
+        response = _request("POST", f"{base}/wp-json/wp/v2/pages/{page['id']}", auth=auth, json=body)
         action = f"갱신 (상태 {page.get('status')})"
     else:
         body.update({"slug": slug, "status": "publish" if live else "draft"})
-        response = requests.post(f"{base}/wp-json/wp/v2/pages", auth=auth, json=body, timeout=TIMEOUT)
+        response = _request("POST", f"{base}/wp-json/wp/v2/pages", auth=auth, json=body)
         action = "새로 만듦 (공개)" if live else "새로 만듦 (임시저장)"
     if response.status_code >= 400:
         raise StockPagesError(f"{slug} 저장 실패 (HTTP {response.status_code}): {response.text[:300]}")
     result = response.json()
-    check = requests.get(f"{base}/wp-json/wp/v2/pages/{result['id']}", auth=auth, params={"context": "edit"}, timeout=TIMEOUT)
+    time.sleep(WRITE_PAUSE)   # 쓰기 직후 바로 되읽으면 카페24가 자주 502를 낸다
+    check = _request("GET", f"{base}/wp-json/wp/v2/pages/{result['id']}", auth=auth, params={"context": "edit"})
     check.raise_for_status()
     raw = check.json()["content"]["raw"]
     if title.split(" (")[0] not in raw and PARENT_TITLE not in raw:
@@ -310,7 +339,7 @@ def _upload_chart(base: str, auth: tuple[str, str], path: Path, alt: str) -> str
                                                                     "caption": "페르마타 시세 파일로 그린 3개월 종가.", "id": path.stem})
     if not media_id:
         raise StockPagesError(f"차트 업로드 실패: {path}")
-    response = requests.get(f"{base}/wp-json/wp/v2/media/{media_id}", auth=auth, timeout=TIMEOUT)
+    response = _request("GET", f"{base}/wp-json/wp/v2/media/{media_id}", auth=auth)
     response.raise_for_status()
     return response.json()["source_url"]
 
@@ -361,6 +390,7 @@ def build(markets: list[str], *, upload: bool, live: bool, data_dir: Path | None
                 parent_id = upsert_page(base, auth, PARENT_SLUG, PARENT_TITLE, f"<p>{PARENT_TITLE} — 준비 중</p>", live=live)["id"]
             upsert_page(base, auth, item["slug"], page_title(item), html, parent=parent_id,
                         excerpt_text=excerpt(item, s, trading_dates[market]), live=live)
+            time.sleep(WRITE_PAUSE)   # 종목 사이 한 박자 — 37개를 몰아치면 카페24가 막는다
         index_rows.append({"market": market, "name": item["name"], "ticker": item["ticker"], "sector": item["sector"],
                            "url": f"/{PARENT_SLUG}/{item['slug']}/", "close": s["close"], "pct_1w": s["pct_1w"], "pct_1m": s["pct_1m"],
                            "w_class": s["w_class"], "m_class": s["m_class"]})
@@ -369,7 +399,7 @@ def build(markets: list[str], *, upload: bool, live: bool, data_dir: Path | None
     (OUTPUT / "index.html").write_text(index_html, encoding="utf-8")
     if upload and index_rows:
         upsert_page(base, auth, PARENT_SLUG, PARENT_TITLE, index_html, live=live)
-        requests.post(f"{base}/wp-json/wp-super-cache/v1/cache", auth=auth, json={"delete_cache": True}, timeout=TIMEOUT)
+        _request("POST", f"{base}/wp-json/wp-super-cache/v1/cache", auth=auth, json={"delete_cache": True})
     if missing:
         # 몇 종목이 빠진 채 "성공"으로 끝나지 않게 한다 — 다만 만든 페이지는 그대로 둔다.
         raise StockPagesError("일부 종목을 만들지 못했습니다:\n- " + "\n- ".join(missing))
