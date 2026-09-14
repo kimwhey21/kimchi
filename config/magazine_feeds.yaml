@@ -131,6 +131,38 @@ sets:
       url: https://news.google.com/rss/search?q=%28%EA%B8%B0%EC%A4%80%EA%B8%88%EB%A6%AC%20OR%20%EA%B8%88%ED%86%B5%EC%9C%84%20OR%20%22%EC%9B%90%C2%B7%EB%8B%AC%EB%9F%AC%20%ED%99%98%EC%9C%A8%22%20OR%20%EC%88%98%EC%B6%9C%20%EC%A7%80%ED%91%9C%20OR%20%EC%86%8C%EB%B9%84%EC%9E%90%EB%AC%BC%EA%B0%80%20OR%20%EA%B5%AD%EA%B3%A0%EC%B1%84%20%EA%B8%88%EB%A6%AC%29&hl=ko&gl=KR&ceid=KR:ko
       column: 금리·환율
 
+  # 영어로 한국 시장을 다루는 매체 — **영어 가이드 전용**(2026-09-14, 사용자 승인 "진행해").
+  #
+  # 왜 따로 두나: 영어 가이드의 주제 52개는 전부 한국 시장 이야기인데, 잡지 묶음은 미국 일반 매체다.
+  # 같은 날 실측으로 잡지 묶음 78줄 가운데 한국 기사가 **0줄**이었다(`won't`가 `won`에 걸린 오탐 하나뿐).
+  # 겹칠 수 없는 조합이라 레이더가 아무것도 못 해 준다. 영어 노출 710건 중 700건이 영어 가이드에서
+  # 나오는 만큼 효과를 기대할 곳도 여기다.
+  #
+  # 질의는 실제 출력을 읽어 두 번 고쳤다.
+  #   버린 질의: `(kospi OR "korean stocks") (stocks OR shares OR investors)` — 12줄 중 11줄이 지수 시세였다.
+  #   버린 질의: `site:reuters.com korea …` — 처음엔 절반이 북한 미사일이었고, `-"North Korea" -missile`로
+  #             좁힌 뒤에도 36시간 창에서 일곱 줄 중 한 줄만 한국 기사였다(오바마·찰스 국왕·중국 AI가 올라왔다).
+  #             구글뉴스에서 `site:` + OR 묶음은 매체만 고정할 뿐 주제를 좁혀 주지 않는다. 「한국 거시」가 대신한다.
+  #   버린 매체: BusinessKorea(영문 RSS에 한글 기사가 섞여 나온다), Korea Herald(교육·스포츠),
+  #             KED Global(item에 날짜가 없어 옛 기사가 계속 올라온다), JoongAng Daily·Pulse·
+  #             Chosun English·Yonhap English(404).
+  en_kr:
+    - name: Samsung·SK Hynix·한국은행 (구글뉴스 경유)
+      url: https://news.google.com/rss/search?q=%28%22Samsung%20Electronics%22%20OR%20%22SK%20Hynix%22%20OR%20%22Korean%20won%22%20OR%20%22Bank%20of%20Korea%22%29&hl=en-US&gl=US&ceid=US:en
+      column: 종목·기업
+    - name: 한국 업종 (구글뉴스 경유)
+      url: https://news.google.com/rss/search?q=%28%22Hanwha%20Aerospace%22%20OR%20%22HD%20Hyundai%22%20OR%20%22Doosan%20Enerbility%22%20OR%20%22LG%20Energy%20Solution%22%20OR%20%22Samsung%20Biologics%22%20OR%20%22Korean%20shipbuilder%22%20OR%20%22Korean%20defense%20stocks%22%20OR%20%22Korean%20battery%22%29&hl=en-US&gl=US&ceid=US:en
+      column: 종목·기업
+    - name: The Korea Times (기업·산업)
+      url: https://www.koreatimes.co.kr/www/rss/biz.xml
+      column: 종목·기업
+    - name: 한국 증시 제도 (구글뉴스 경유)
+      url: https://news.google.com/rss/search?q=%28%22Korea%20Exchange%22%20OR%20KOSPI%20OR%20%22Korean%20market%22%29%20%28rule%20OR%20reform%20OR%20%22short%20selling%22%20OR%20%22trading%20hours%22%20OR%20MSCI%20OR%20FTSE%20OR%20%22value-up%22%20OR%20dividend%20OR%20tax%20OR%20%22foreign%20investors%22%29%20-%22North%20Korea%22&hl=en-US&gl=US&ceid=US:en
+      column: 제도·정책
+    - name: 한국 거시 (구글뉴스 경유)
+      url: https://news.google.com/rss/search?q=%22South%20Korea%22%20%28economy%20OR%20exports%20OR%20won%20OR%20chipmakers%20OR%20%22central%20bank%22%29%20-%22North%20Korea%22%20-missile%20-Kim&hl=en-US&gl=US&ceid=US:en
+      column: 거시·경제
+
 # 시황 루틴이 조사할 매체 — 이름만. 레이더를 돌리지 않습니다.
 # 목록을 고친다는 것은 시황 글의 근거가 달라진다는 뜻입니다(2026-09-14에 옮길 때는 글자 그대로 옮겼습니다).
 market_media:
@@ -150,3 +182,7 @@ market_media:
     - Investing.com
     - Barron's
     - WSJ
+
+# 지수 시세 보도("오늘 코스피가 몇 % 움직였다")를 접을 묶음. 주제를 고르는 자리에서는 잡음이고,
+# 그 이야기는 우리 시황 글이 쓴다. **잡지 묶음은 넣지 않는다** — 「시장 읽기」 코너가 바로 그 기사로 글을 쓴다.
+fold_index_tape: [ko, en_kr]

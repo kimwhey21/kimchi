@@ -100,6 +100,9 @@ def fetch(feed: dict) -> list[dict]:
     rows = parse(body(r))
     for row in rows:
         row["source"] = feed["name"]; row["column"] = feed.get("column", ""); row["paid"] = bool(feed.get("paid"))
+        row["fold_tape"] = bool(feed.get("fold_tape"))
+        # 구글뉴스 피드는 **한 피드가 여러 매체**다 — 같은 기사가 여덟 줄로 들어온다(KEPCO 실측).
+        row["aggregator"] = "news.google.com" in feed["url"]
     return rows
 
 
@@ -108,13 +111,19 @@ def config() -> dict:
 
 
 def feeds_for(names: str) -> list[dict]:
-    """`--set`의 이름들(`magazine`, `ko`, `ko,magazine`, `all`)을 피드 목록 하나로 편다."""
-    sets = config()["sets"]
+    """`--set`의 이름들(`magazine`, `ko`, `en_kr`, `ko,magazine`, `all`)을 피드 목록 하나로 편다.
+
+    "지수 시세를 접을 묶음인가"를 **피드마다** 달아 준다. 묶음을 섞어 부를 수 있으므로(Checkpoint는
+    `ko,magazine`) 접기를 전체에 켜고 끄면 한쪽이 틀린다 — 한국 기사는 접고 잡지 기사는 남겨야 한다.
+    """
+    conf = config()
+    sets = conf["sets"]
+    folding = set(conf.get("fold_index_tape") or [])
     wanted = list(sets) if names.strip() == "all" else [n.strip() for n in names.split(",") if n.strip()]
     unknown = [n for n in wanted if n not in sets]
     if unknown:  # 이름을 잘못 적으면 "오늘 화제가 없다"가 아니라 여기서 멈춘다
         raise SystemExit(f"모르는 묶음: {', '.join(unknown)} (있는 것: {', '.join(sets)})")
-    return [feed for name in wanted for feed in sets[name]]
+    return [{**feed, "fold_tape": name in folding} for name in wanted for feed in sets[name]]
 
 
 def radar(hours: int, feeds: list[dict] | None = None) -> tuple[list[dict], list[str]]:
@@ -145,13 +154,25 @@ _DROP = re.compile(r"[0-9.,%↑↓▲▼·…\"'“”‘’()\[\]〈〉<>·:;!?
 _INDEX = ("코스피", "코스닥", "지수")
 _MOVE = ("마감", "출발", "급락", "급등", "하락", "상승", "약세", "강세", "반등", "후퇴",
          "내린", "오른", "출렁", "반납", "회복", "포인트", "장중")
+# 영어 한국 시장 기사에도 같은 것이 있다(2026-09-14 실측: `Korean stocks sink…`, `KOSPI falls below 6,700`,
+# `[Closing Market] KOSPI Slides 3.26%`). 낱말은 여기서 늘리되 **어느 묶음에서 접을지는 설정이 정한다**
+# (`fold_index_tape`) — 잡지 묶음에서는 접으면 안 된다.
+_INDEX_EN = re.compile(r"\b(kospi|kosdaq|korean stocks?|korea stocks?|seoul (stocks?|shares)|"
+                       r"south korean (stocks?|shares))\b", re.I)
+_MOVE_EN = re.compile(r"\b(sinks?|slid|slides?|plunges?|drops?|falls?|slips?|tumbles?|rallies|rally|"
+                      r"rebounds?|climbs?|gains?|rises?|jumps?|soars?|closes?|closed|opens?|opened|"
+                      r"ends?|ended|higher|lower|leads? asia)\b", re.I)
 
 
 def is_tape(title: str) -> bool:
-    """한국어 지수 시세 보도만 접는다. 영어 제목은 접지 않는다 — 잡지의 「시장 읽기」 코너가
-    그 기사(S&P 500이 왜 빠졌나)로 글을 쓰기 때문이다. 접는 이유가 한국 쪽에만 있다."""
-    return (any(w in title for w in _INDEX) and any(w in title for w in _MOVE)
-            and bool(re.search(r"\d", title)))
+    """지수 시세 보도인가 — "오늘 지수가 몇 % 움직였다". 한국어·영어 둘 다 본다.
+
+    접는 자리는 **묶음이 정한다**(`fold_index_tape`). 잡지 묶음에서는 접지 않는다 —
+    「시장 읽기」 코너가 바로 그 기사(S&P 500이 왜 빠졌나)로 글을 쓰기 때문이다.
+    """
+    if any(w in title for w in _INDEX) and any(w in title for w in _MOVE) and re.search(r"\d", title):
+        return True
+    return bool(_INDEX_EN.search(title) and _MOVE_EN.search(title))
 
 
 def is_noise(title: str) -> bool:
@@ -171,6 +192,9 @@ def _shingles(title: str) -> frozenset[str]:
     return pairs or frozenset({bare})
 
 
+AGGREGATOR_OVERLAP = 0.30
+
+
 def group(rows: list[dict], overlap: float = 0.40) -> tuple[list[dict], dict[str, int]]:
     """주제를 고를 수 있는 화면으로 줄인다. 돌려주는 것은 (남은 줄, 센 것).
 
@@ -187,18 +211,23 @@ def group(rows: list[dict], overlap: float = 0.40) -> tuple[list[dict], dict[str
         if is_noise(row["title"]):
             counts["noise"] += 1
             continue
-        if is_tape(row["title"]):
+        if row.get("fold_tape") and is_tape(row["title"]):
             counts["tape"] += 1
             continue
         keys = _shingles(row["title"])
         for head in kept:
             other = head["_keys"]
-            # **다른 피드에서 온 것만 묶는다.** 같은 피드의 닮은 제목은 대개 같은 기사가 아니라
-            # 같은 틀의 다른 공시다(`링크솔루션 300억 전환사채` / `HLB글로벌 50억 전환사채`).
-            # 그것을 묶으면 `+N곳`이 거짓말이 된다 — 라벨은 사실이어야 한다.
-            if head["source"] == row["source"]:
+            # 같은 피드의 닮은 제목은 대개 같은 기사가 아니라 **같은 틀의 다른 공시**다
+            # (`링크솔루션 300억 전환사채` / `HLB글로벌 50억 전환사채`). 묶으면 `+N곳`이 거짓말이 된다.
+            # 예외는 구글뉴스처럼 **한 피드가 여러 매체인** 경우다 — 거기서는 같은 피드 안의 닮은
+            # 제목이 곧 여러 매체가 같은 기사를 쓴 것이다(2026-09-14 실측: KEPCO 거절 기사 여덟 줄이
+            # 한 피드에서 왔다). 그런 피드끼리는 문턱도 낮춘다 — 질의가 이미 좁아 주제가 한 가지라
+            # 0.30만 겹쳐도 같은 기사였다(그날 0.28~0.55 쌍 스물여덟 개가 전부 진짜 중복이었다).
+            both_feed_is_many_outlets = head.get("aggregator") and row.get("aggregator")
+            if head["source"] == row["source"] and not both_feed_is_many_outlets:
                 continue
-            if len(keys & other) / len(keys | other) >= overlap:
+            limit = AGGREGATOR_OVERLAP if both_feed_is_many_outlets else overlap
+            if len(keys & other) / len(keys | other) >= limit:
                 head["also"].append(row["source"])
                 break
         else:

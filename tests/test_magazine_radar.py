@@ -87,11 +87,20 @@ class FeedSetTest(unittest.TestCase):
 
     def test_named_sets_flatten_and_unknown_names_stop_the_run(self) -> None:
         sets = mr.config()["sets"]
-        self.assertEqual(mr.feeds_for("magazine"), sets["magazine"])
+        self.assertEqual([f["name"] for f in mr.feeds_for("magazine")], [f["name"] for f in sets["magazine"]])
         self.assertEqual(len(mr.feeds_for("ko,magazine")), len(sets["ko"]) + len(sets["magazine"]))
         self.assertEqual(len(mr.feeds_for("all")), sum(len(v) for v in sets.values()))
         with self.assertRaises(SystemExit):
             mr.feeds_for("korean")          # 있는 것은 ko다 — 빈 목록으로 넘어가면 "화제 없음"으로 보인다
+
+    def test_the_fold_flag_rides_on_each_feed_so_mixed_sets_stay_right(self) -> None:
+        """묶음을 섞어 부를 수 있다(Checkpoint는 `ko,magazine`). 접기를 전체에 켜고 끄면 한쪽이 틀린다 —
+        한국 기사는 접고 잡지 기사는 남겨야 한다. 그래서 피드마다 표를 달아 둔다."""
+        mixed = {f["name"]: f["fold_tape"] for f in mr.feeds_for("ko,magazine")}
+        self.assertTrue(any(v for v in mixed.values()))
+        self.assertTrue(any(not v for v in mixed.values()))
+        self.assertTrue(all(f["fold_tape"] for f in mr.feeds_for("en_kr")))
+        self.assertTrue(all(not f["fold_tape"] for f in mr.feeds_for("magazine")))
 
     def test_every_feed_has_a_name_url_and_column(self) -> None:
         for name, feeds in mr.config()["sets"].items():
@@ -143,8 +152,8 @@ class RoutinesUseTheRadarTest(unittest.TestCase):
 
     _EXPECTED = {
         "routine_feature.md": "--set ko,magazine",       # 주말 Checkpoint: 한국·해외 함께
-        "routine_guide_ko.md": "--set ko",               # 한국어 가이드: 한국 매체
-        "routine_guide_en.md": "--set magazine",         # 영어 가이드: 잡지 묶음 그대로
+        "routine_guide_ko.md": "--set ko",               # 한국어 가이드: 한국 매체로 주제 순서를 바꾼다
+        "routine_guide_en.md": "--set en_kr",            # 영어 가이드: **주제가 아니라 상시 글이 낡았는지** 본다
     }
 
     def test_each_doc_calls_the_radar_with_its_set(self) -> None:
@@ -161,16 +170,27 @@ class RoutinesUseTheRadarTest(unittest.TestCase):
             with self.subTest(doc=doc):
                 self.assertIn("radar_origin", text)
 
-    def test_guides_keep_the_variety_rule_above_the_radar(self) -> None:
+    def test_the_korean_guide_keeps_the_variety_rule_above_the_radar(self) -> None:
         """레이더는 주제를 만들지 않는다 — 갈래 안에서 순서만 바꾼다.
 
         이 단서가 빠지면 뉴스가 몰린 갈래로 한 주가 쏠리고, 콘텐츠 농장처럼 보인다.
         """
-        for doc in ("routine_guide_ko.md", "routine_guide_en.md"):
-            text = (ROOT / "docs" / doc).read_text(encoding="utf-8")
-            with self.subTest(doc=doc):
-                self.assertIn("어제와 다른 갈래", text)
-                self.assertIn("갈래", text.split("--set")[1][:400])
+        text = (ROOT / "docs" / "routine_guide_ko.md").read_text(encoding="utf-8")
+        self.assertIn("어제와 다른 갈래", text)
+        self.assertIn("갈래", text.split("--set")[1][:400])
+
+    def test_the_english_guide_uses_the_radar_for_staleness_not_for_topics(self) -> None:
+        """2026-09-14에 전제를 바꿨다 — 영어 가이드는 상시 검색 글이라 뉴스 시의성이 거의 안 듣는다.
+
+        같은 날 실측: 잡지 묶음 78줄에 한국 기사가 0줄. 주제는 서치콘솔 검색어 큐가 정하고,
+        레이더는 **이미 올라간 상시 글이 낡았는지** 보는 자리로만 남긴다. 이 구분이 문서에서
+        사라지면 다음 세션이 다시 뉴스로 주제를 고르게 만든다.
+        """
+        text = (ROOT / "docs" / "routine_guide_en.md").read_text(encoding="utf-8")
+        self.assertIn("src.search_queue", text)
+        self.assertNotIn("--set magazine", text)
+        head = text.split("--set en_kr")[0][-600:]
+        self.assertIn("낡", head)              # "규칙이 바뀌었는가"를 보는 자리라고 적혀 있어야 한다
 
 
 class ScreenQualityTest(unittest.TestCase):
@@ -224,10 +244,10 @@ class ScreenQualityTest(unittest.TestCase):
 
     def test_every_fold_is_counted(self) -> None:
         """센 수를 찍지 않으면 접는 것이 곧 조용한 실패다 — 없는 날과 접은 날이 같아 보인다."""
-        rows = [
-            {"title": "코스피 3.26% 급락해 6,600선 마감", "source": "A", "column": "증시", "at": None, "paid": False},
-            {"title": "[부고] 아무개씨 부친상", "source": "A", "column": "증시", "at": None, "paid": False},
-            {"title": "대신증권, 자사주 627억원 소각", "source": "A", "column": "증시", "at": None, "paid": False},
+        rows = [   # fold_tape는 묶음이 정한다(ko·en_kr만 켜짐) — 잡지 묶음에서는 지수 기사가 재료다
+            {"title": "코스피 3.26% 급락해 6,600선 마감", "source": "A", "column": "증시", "at": None, "paid": False, "fold_tape": True},
+            {"title": "[부고] 아무개씨 부친상", "source": "A", "column": "증시", "at": None, "paid": False, "fold_tape": True},
+            {"title": "대신증권, 자사주 627억원 소각", "source": "A", "column": "증시", "at": None, "paid": False, "fold_tape": True},
         ]
         kept, counts = mr.group(rows)
         self.assertEqual(len(kept), 1)
@@ -256,7 +276,9 @@ class BlockedFeedsTest(unittest.TestCase):
                 self.assertIn(site, __import__("urllib.parse", fromlist=["unquote"]).unquote(row[0][1]))
 
     def test_the_docs_tell_the_routine_to_search_when_a_feed_is_down(self) -> None:
-        for doc in ("routine_guide_ko.md", "routine_guide_en.md", "routine_feature.md"):
+        # 영어 가이드는 빠졌다 — 거기서 레이더는 주제를 고르는 도구가 아니라 상시 글이 낡았는지 보는
+        # 도구라, 피드가 조용한 날 WebSearch로 메울 것이 없다(주제는 검색어 큐에서 온다).
+        for doc in ("routine_guide_ko.md", "routine_feature.md"):
             text = (ROOT / "docs" / doc).read_text(encoding="utf-8")
             with self.subTest(doc=doc):
                 self.assertIn("WebSearch", text)
