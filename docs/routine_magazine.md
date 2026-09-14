@@ -28,6 +28,7 @@
 ```json
 {
   "kind": "feature", "series": "매거진", "group": "시장의 역사", "date": "2026-09-14", "slug": "salt-history",
+  "radar_origin": "Why Salt Was Once Worth Its Weight in Gold - Big Think",
   "featured_photo": {"url": "https://images.unsplash.com/photo-…", "credit": "Unsplash / 작가"},
   "sources": [{"name": "브리태니커 백과사전", "title": "Salt", "url": "…"}, {"name": "미국 지질조사국(USGS)", "title": "…", "url": "…"}],
   "tags": ["소금의역사", "경제사"],
@@ -35,6 +36,9 @@
 }
 ```
 
+- `radar_origin`: 레이더에서 고른 **그 제목 그대로**(세 편 각각). 예시 목록에서 골랐으면 `목록 순서`,
+  레이더가 비었으면 `레이더 실패`. 관문이 막습니다(2026-09-14부터) — 완료 보고에만 적으면 원고에는
+  남지 않아 몇 주 뒤에 셀 수 없습니다.
 - `group`(코너)은 일곱 중 하나: **시장 읽기 · 시장의 역사 · 투자 심리 · 기업과 기술 · 과학 · 돈의 상식 · 만약에**. 네이버 카테고리 이름이 됩니다.
   **시장 읽기가 가장 큰 코너입니다** — 참고 블로그 210편 중 77편(37%)이 이 갈래였습니다. 하루 세 편 중 한 편은 여기서 씁니다.
   하루 세 편은 **서로 다른 코너**에서 고릅니다. 어제 무엇을 썼는지는 `python -m scripts.recent_titles magazine`.

@@ -19,6 +19,7 @@ def _en_doc(**over) -> dict:
     body = ("The Korea Exchange runs two boards. " * 12).strip()
     doc = {
         "kind": "feature", "series": "Guide", "lang": "en", "date": "2026-09-16", "checked": "2026-09-16",
+        "radar_origin": "list order",
         "slug": "kospi-etf-for-us-investors", "category_id": 153, "tags": ["KOSPI ETF"],
         "ko": {
             "title": "KOSPI ETFs for US Investors: EWY vs FLKR Compared (2026)",

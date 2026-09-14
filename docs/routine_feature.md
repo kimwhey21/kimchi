@@ -98,6 +98,8 @@
    독자에게 보이는 이름, 2026-09-09), `deadline`(YYYY-MM-DD — 성적표에 적는 확인 지점 중
    마지막 날짜. 글 머리말 `Checkpoint · N월 N일까지 확인할 것`이 이 값으로 그려지고 관문이
    확인합니다), 표지 `cover`의 `kicker`는 `Checkpoint · <날짜>`,
+   `radar_origin`(토요일이면 레이더에서 고른 **그 제목 그대로**, 재료 파일만 보고 골랐거나 일요일
+   검색형 질문 글이면 `목록 순서`, 레이더가 비었으면 `레이더 실패` — 관문이 막습니다, 2026-09-14부터),
    `related`(기존 글 2~3편, `https://fermata.it.kr/wp-json/wp/v2/posts?search=<낱말>&_fields=title,link`로
    찾은 실제 주소만), `tags`(검색어 2~4개 — 이 글의 회사 이름과 주제어, 예: `["인텔", "내부자매수", "실적발표"]`.
    나머지 태그는 `src/post_tags.py`가 글에서 뽑아 12~15개로 채웁니다, 2026-09-12), `ko.title`, `ko.narrative` 6~7절(절 골격은 feature-style 4절,

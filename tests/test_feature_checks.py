@@ -137,6 +137,43 @@ class RealArticleTest(unittest.TestCase):
         self.assertEqual(_check(doc, graphics=6), [])
 
 
+class RadarOriginTest(unittest.TestCase):
+    """원고에 "레이더에서 골랐는지"를 남긴다(2026-09-14, 사용자 "넣어라").
+
+    이 한 줄이 없으면 몇 주 뒤에 **레이더로 고른 글이 더 읽혔는지 셀 수 없다.** 붙인 장치의
+    효과를 못 재면 지울지 늘릴지도 근거 없이 정하게 된다.
+    """
+
+    def _doc(self, **over):
+        doc = {"kind": "feature", "series": "가이드", "date": "2026-09-20",
+               "radar_origin": "[단독] 정부 ISA 개편안 오락가락 행보에… 계좌 해지 3배 늘었다"}
+        doc.update(over)
+        return doc
+
+    def test_missing_or_stub_values_are_blocked(self) -> None:
+        self.assertIsNone(feature_checks.radar_origin_issue(self._doc()))
+        self.assertIn("radar_origin", feature_checks.radar_origin_issue(self._doc(radar_origin=None)) or "")
+        self.assertIn("radar_origin", feature_checks.radar_origin_issue(self._doc(radar_origin="  ")) or "")
+        self.assertIn("radar_origin", feature_checks.radar_origin_issue(self._doc(radar_origin="네")) or "")
+
+    def test_saying_it_was_not_used_is_a_valid_answer(self) -> None:
+        """레이더를 안 쓴 날도 기록이다 — 비워 두면 "안 썼다"와 "잊었다"가 같아 보인다."""
+        for value in ("목록 순서", "레이더 실패", "list order", "radar failed"):
+            self.assertIsNone(feature_checks.radar_origin_issue(self._doc(radar_origin=value)), value)
+
+    def test_series_without_the_radar_are_not_asked(self) -> None:
+        """시황·프리뷰·주간에는 레이더를 붙이지 않았다 — 붙이지 않은 곳에 기록을 요구하지 않는다."""
+        for series in ("프리뷰", "주간 결산", "다음 주 일정", "이벤트"):
+            self.assertIsNone(feature_checks.radar_origin_issue(self._doc(series=series, radar_origin=None)))
+
+    def test_manuscripts_written_before_the_field_existed_still_pass(self) -> None:
+        """이미 공개된 글을 뒤늦게 막으면 관문이 틀리게 우는 검사가 된다."""
+        self.assertIsNone(feature_checks.radar_origin_issue(
+            {"series": "기준표", "date": "2026-09-06"}))
+        self.assertIsNotNone(feature_checks.radar_origin_issue(
+            {"series": "기준표", "date": feature_checks.RADAR_FROM}))
+
+
 if __name__ == "__main__":
     unittest.main()
 

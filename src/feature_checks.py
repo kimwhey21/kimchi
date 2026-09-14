@@ -118,6 +118,42 @@ def deadline_issue(doc: dict) -> str | None:
     return None
 
 
+# 레이더에서 골랐는지 원고에 남긴다(2026-09-14, 사용자 "넣어라").
+#
+# 왜 필요한가: 아침 레이더를 Checkpoint·가이드에 붙였는데, 원고에 그 기록이 없으면 몇 주 뒤에
+# **"레이더로 고른 글이 더 읽혔나"를 셀 수 없다.** 붙인 장치의 효과를 못 재면 그 장치를 지울지
+# 늘릴지도 근거 없이 정하게 된다. 한 줄로 남긴다 — 어느 제목에서 출발했는지, 아니면 안 썼는지.
+RADAR_SERIES = {"기준표", "가이드", "Guide", "매거진"}
+RADAR_NONE = {"목록 순서", "레이더 실패", "list order", "radar failed"}
+# 이 날짜부터 쓴 원고에만 요구한다. 그 전 글에는 이 필드가 없었고, 이미 공개된 글을 뒤늦게
+# 막으면 관문이 "틀리게 우는 검사"가 된다 — 그런 검사는 곧 무시당한다(tests/test_rule_files.py 머리말).
+RADAR_FROM = "2026-09-15"
+
+
+def radar_origin_issue(doc: dict) -> str | None:
+    """최상위 `radar_origin` — 레이더 제목 그대로, 또는 안 썼으면 `목록 순서`(영어 글은 `list order`).
+
+    레이더가 비거나 피드가 다 막힌 날은 `레이더 실패`. **빈 값으로 두지 않는다** — 비어 있으면
+    "안 썼다"와 "적기를 잊었다"가 같아 보이고, 그것이 곧 셀 수 없는 기록이다.
+    """
+    if str(doc.get("series") or "") not in RADAR_SERIES:
+        return None
+    if str(doc.get("date") or "") < RADAR_FROM:
+        return None
+    origin = doc.get("radar_origin")
+    if not isinstance(origin, str) or not origin.strip():
+        return ("최상위 `radar_origin`이 없습니다 — 아침 레이더에서 고른 주제면 **그 제목 그대로**, "
+                "레이더를 안 썼으면 `목록 순서`(영어 글은 `list order`), 레이더가 비었거나 피드가 "
+                "다 막혔으면 `레이더 실패`를 적으십시오. 몇 주 뒤에 레이더의 효과를 세려면 이 한 줄이 필요합니다.")
+    origin = origin.strip()
+    if origin in RADAR_NONE:
+        return None
+    if len(origin) < 10:
+        return (f"`radar_origin`이 {origin!r}입니다 — 레이더 제목을 그대로 적거나, 안 썼으면 "
+                f"`목록 순서`/`list order`, 실패했으면 `레이더 실패`라고 적으십시오.")
+    return None
+
+
 def collect_issues(doc: dict, graphics: int | None = None,
                    notes_out: list[str] | None = None) -> list[str]:
     """막을 것만 돌려줍니다.
@@ -148,6 +184,10 @@ def collect_issues(doc: dict, graphics: int | None = None,
     if str(doc.get("series") or "") != "매거진" and not re.search(r"\d+월 \d+일", body):
         issues.append("본문에 확인 날짜(`N월 N일`)가 없습니다 — 기준표 글은 날짜를 "
                       "박아야 글의 수명이 그날까지 갑니다. docs/feature-style.md 4절.")
+
+    problem = radar_origin_issue(doc)
+    if problem:
+        issues.append(problem)
 
     # 머리말에 쓰는 마감일 (2026-09-09). 시리즈가 명시된 기준표만 — 프리뷰는 그날 밤으로 끝난다.
     if doc.get("series") == "기준표":
@@ -309,6 +349,9 @@ def collect_issues_en(doc: dict, graphics: int | None = None) -> list[str]:
                       "(for example 'as of September 2026').")
     if re.search(r"[가-힣]", title + body):
         issues.append("Hangul found in an English guide — translate or transliterate it.")
+    problem = radar_origin_issue(doc)
+    if problem:                         # 본문이 아니라 기록용 필드라 한글 검사에 걸리지 않는다
+        issues.append(problem)
     limits = SERIES_LIMITS.get(str(doc.get("series") or ""), {})
     min_graphics = limits.get("graphics", MIN_GRAPHICS)
     if graphics is not None and graphics < min_graphics:

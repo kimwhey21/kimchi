@@ -154,6 +154,13 @@ class RoutinesUseTheRadarTest(unittest.TestCase):
                 self.assertIn("scripts.magazine_radar", text)
                 self.assertIn(flag, text)
 
+    def test_every_radar_doc_asks_for_the_origin_line(self) -> None:
+        """레이더를 붙인 네 시리즈는 원고에 출처를 남긴다 — 없으면 효과를 셀 수 없다(2026-09-14)."""
+        for doc in ("routine_feature.md", "routine_guide_ko.md", "routine_guide_en.md", "routine_magazine.md"):
+            text = (ROOT / "docs" / doc).read_text(encoding="utf-8")
+            with self.subTest(doc=doc):
+                self.assertIn("radar_origin", text)
+
     def test_guides_keep_the_variety_rule_above_the_radar(self) -> None:
         """레이더는 주제를 만들지 않는다 — 갈래 안에서 순서만 바꾼다.
 

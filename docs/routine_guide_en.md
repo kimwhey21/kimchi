@@ -160,6 +160,9 @@ Visual Capitalist 등 18곳, `config/magazine_feeds.yaml`). **고른 갈래 안�
 4. **원고.** `editorial/guides/en_<slug>.json`:
    - `kind` "feature", `series` "Guide", `lang` "en", `date` KST 오늘, `checked` KST 오늘(머리말 `Investor Guide ·
      Checked September 16, 2026`), `slug`, `category_id` 153, `tags`(영어 검색어 3~5개), `related` 2~3개(기존 영어 가이드).
+   - `radar_origin`: 아침 레이더에서 고른 주제면 **그 제목 그대로**, 목록 순서대로 갔으면 `list order`,
+     레이더가 비었거나 피드가 다 막혔으면 `radar failed`. 관문이 막습니다(2026-09-14부터) — 이 한 줄이
+     있어야 몇 주 뒤에 레이더의 효과를 셀 수 있습니다.
    - `ko.title`(필드 이름은 `ko`지만 영어로 씁니다): 30~70자, **검색어가 앞에**, 연도 표기가 자연스러우면 `(2026)`.
      예: `KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)`.
    - `ko.narrative` 5~7절, 절마다 300자 이상. 1절이 답. 소제목 80자 이하, 문장형 소제목 환영
