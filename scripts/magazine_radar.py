@@ -4,6 +4,7 @@
     python -m scripts.magazine_radar --set ko              # 한국 매체 묶음 (한국어 가이드)
     python -m scripts.magazine_radar --set ko,magazine --hours 48   # 주말 Checkpoint
     python -m scripts.magazine_radar --media kr            # 시황 루틴이 조사할 매체 이름만 (피드를 읽지 않는다)
+    python -m scripts.magazine_radar --set ko --raw        # 같은 기사 묶기를 끄고 받은 그대로
     python -m scripts.magazine_radar --hours 48 --json radar.json
 
 왜 필요한가: 사용자가 물었다 — "피우스 블로그처럼 다양한 곳에서 자료를 가져오는 거 맞냐?" 첫 실행은 지시문의 주제 예시에서
@@ -33,16 +34,27 @@ UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit
 TIMEOUT = 15
 
 
+def unescape(text: str) -> str:
+    """이스케이프가 두 번 걸린 제목이 있다(`&amp;quot;` → `&quot;` → `"`). 더 안 바뀔 때까지 푼다.
+    2026-09-14 실측: 연합인포맥스 제목이 화면에 `&quot;채권자 협의&quot;`로 그대로 찍혔다."""
+    for _ in range(3):
+        once = html.unescape(text)
+        if once == text:
+            break
+        text = once
+    return text
+
+
 def _text(block: str, tag: str) -> str:
     m = re.search(rf"<{tag}[^>]*>(.*?)</{tag}>", block, re.S)
     if not m:
         return ""
-    return html.unescape(re.sub(r"<!\[CDATA\[|\]\]>", "", m.group(1))).strip()
+    return unescape(re.sub(r"<!\[CDATA\[|\]\]>", "", m.group(1))).strip()
 
 
 def _link(block: str) -> str:
     m = re.search(r'<link[^>]*href="([^"]+)"', block) or re.search(r"<link[^>]*>(.*?)</link>", block, re.S)
-    return html.unescape(re.sub(r"<!\[CDATA\[|\]\]>", "", m.group(1))).strip() if m else ""
+    return unescape(re.sub(r"<!\[CDATA\[|\]\]>", "", m.group(1))).strip() if m else ""
 
 
 def _when(block: str) -> dt.datetime | None:
@@ -121,11 +133,88 @@ def radar(hours: int, feeds: list[dict] | None = None) -> tuple[list[dict], list
     return rows, failed
 
 
+# 제목 앞의 꼬리표만 보고 버리는 것 — 기사가 아니라 게시물이다. 버린 수는 반드시 센다.
+NOISE_TAGS = {"부고", "인사", "포토", "표", "사진", "알림", "공고", "부고·인사", "인사·부고", "신간"}
+_TAG = re.compile(r"^\[([^\]]{1,20})\]\s*")
+_TAIL = re.compile(r"\s+[-–]\s+[^-–]{1,40}$")          # 구글뉴스가 붙이는 " - 매체" 꼬리
+_DROP = re.compile(r"[0-9.,%↑↓▲▼·…\"'“”‘’()\[\]〈〉<>·:;!?~/]+")
+
+
+# 지수 시세 보도 — 오늘 코스피가 몇 % 움직였다는 기사. 매체 열 곳이 개장·마감마다 쓴다.
+# 주제를 고르는 화면에서는 접는다: **그 이야기는 이미 우리 시황 글이 쓴다.** 접은 수는 찍는다.
+_INDEX = ("코스피", "코스닥", "지수")
+_MOVE = ("마감", "출발", "급락", "급등", "하락", "상승", "약세", "강세", "반등", "후퇴",
+         "내린", "오른", "출렁", "반납", "회복", "포인트", "장중")
+
+
+def is_tape(title: str) -> bool:
+    """한국어 지수 시세 보도만 접는다. 영어 제목은 접지 않는다 — 잡지의 「시장 읽기」 코너가
+    그 기사(S&P 500이 왜 빠졌나)로 글을 쓰기 때문이다. 접는 이유가 한국 쪽에만 있다."""
+    return (any(w in title for w in _INDEX) and any(w in title for w in _MOVE)
+            and bool(re.search(r"\d", title)))
+
+
+def is_noise(title: str) -> bool:
+    tag = _TAG.match(title)
+    return bool(tag) and tag.group(1).strip() in NOISE_TAGS
+
+
+def _shingles(title: str) -> frozenset[str]:
+    """제목을 **글자 두 쌍** 자루로 만든다.
+
+    낱말로 세면 한국어가 안 맞는다 — `전 사학연금`과 `前사학연금`, `기금이사에`와 `투자사령탑에`가
+    다른 낱말이라 같은 인사 기사 셋이 따로 남았다(2026-09-14 실측). 글자 두 쌍은 조사·접두사가
+    달라도 겹친다.
+    """
+    bare = re.sub(r"[^0-9A-Za-z가-힣]+", "", _TAIL.sub("", _TAG.sub("", title)))
+    pairs = frozenset(bare[i:i + 2] for i in range(len(bare) - 1))
+    return pairs or frozenset({bare})
+
+
+def group(rows: list[dict], overlap: float = 0.40) -> tuple[list[dict], dict[str, int]]:
+    """주제를 고를 수 있는 화면으로 줄인다. 돌려주는 것은 (남은 줄, 센 것).
+
+    왜 필요한가(2026-09-14): 한국 매체를 열두 곳까지 넣으니 증시 갈래가 14시간에 96줄이 됐는데
+    그 대부분이 **같은 이야기**였다 — 개장·마감마다 매체 열 곳이 쓰는 지수 시세 보도. 주제를
+    고르는 화면에서 그것은 잡음이다(그 이야기는 우리 시황 글이 이미 쓴다). 셋을 한다.
+      tape   지수 시세 보도는 접는다 — 갈래마다 몇 건을 접었는지 찍는다
+      merged 같은 기사를 글자 두 쌍으로 묶어 `+N곳`으로 — 열 곳이 함께 쓴 기사는 그 주의 화제다
+      noise  [부고]·[인사]·[포토]처럼 기사가 아닌 게시물은 뺀다
+    센 수를 전부 찍는 것이 규칙이다. 접은 것을 보려면 `--raw`.
+    """
+    kept, counts = [], {"tape": 0, "noise": 0, "merged": 0}
+    for row in rows:
+        if is_noise(row["title"]):
+            counts["noise"] += 1
+            continue
+        if is_tape(row["title"]):
+            counts["tape"] += 1
+            continue
+        keys = _shingles(row["title"])
+        for head in kept:
+            other = head["_keys"]
+            # **다른 피드에서 온 것만 묶는다.** 같은 피드의 닮은 제목은 대개 같은 기사가 아니라
+            # 같은 틀의 다른 공시다(`링크솔루션 300억 전환사채` / `HLB글로벌 50억 전환사채`).
+            # 그것을 묶으면 `+N곳`이 거짓말이 된다 — 라벨은 사실이어야 한다.
+            if head["source"] == row["source"]:
+                continue
+            if len(keys & other) / len(keys | other) >= overlap:
+                head["also"].append(row["source"])
+                break
+        else:
+            kept.append({**row, "_keys": keys, "also": []})
+    counts["merged"] = sum(len(k["also"]) for k in kept)
+    for head in kept:
+        head.pop("_keys")
+    return kept, counts
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--set", dest="feed_set", default="magazine", help="피드 묶음: magazine·ko·all, 쉼표로 여럿")
     ap.add_argument("--media", choices=("kr", "us"), help="시황 루틴이 조사할 매체 이름만 찍고 끝낸다(피드를 읽지 않음)")
     ap.add_argument("--hours", type=int, default=36)
+    ap.add_argument("--raw", action="store_true", help="묶지 않고 받은 그대로 (묶음이 의심스러울 때)")
     ap.add_argument("--json", type=Path)
     a = ap.parse_args(argv)
     if a.media:
@@ -133,17 +222,23 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{a.media} 시황 조사 매체 {len(names)}곳 — 이 가운데 3곳 이상:")
         print("  " + " · ".join(names))
         return 0
-    rows, failed = radar(a.hours, feeds_for(a.feed_set))
+    raw, failed = radar(a.hours, feeds_for(a.feed_set))
+    rows, counts = (raw, {"tape": 0, "noise": 0, "merged": 0}) if a.raw else group(raw)
     by_col: dict[str, list[dict]] = {}
     for r in rows:
         by_col.setdefault(r["column"] or "(기타)", []).append(r)
-    print(f"아침 레이더({a.feed_set}) — 최근 {a.hours}시간, {len(rows)}건, 피드 실패 {len(failed)}개")
+    print(f"아침 레이더({a.feed_set}) — 최근 {a.hours}시간 · 기사 {len(rows)}건 · "
+          f"지수 시세 보도 {counts['tape']}건 접음 · 같은 기사 {counts['merged']}줄 묶음 · "
+          f"게시물 {counts['noise']}건 제외 · 받은 것 {len(raw)}건 · 피드 실패 {len(failed)}개")
+    if counts["tape"]:
+        print("  (접은 것은 오늘 지수가 몇 % 움직였다는 기사입니다 — 그 이야기는 시황 글이 씁니다. 보려면 --raw)")
     for col, items in by_col.items():
         print(f"\n## {col} ({len(items)})")
         for r in items:
             when = r["at"].astimezone(dt.timezone(dt.timedelta(hours=9))).strftime("%m/%d %H:%M") if r["at"] else "     --    "
             paid = " [유료·제목만]" if r["paid"] else ""
-            print(f"  {when}  {r['source']}{paid}: {r['title'][:90]}")
+            same = f" +{len(r['also'])}곳" if r.get("also") else ""
+            print(f"  {when}  {r['source']}{paid}{same}: {r['title'][:90]}")
     if failed:
         print("\n못 읽은 피드:", ", ".join(failed))
     if a.json:

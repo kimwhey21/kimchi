@@ -166,5 +166,95 @@ class RoutinesUseTheRadarTest(unittest.TestCase):
                 self.assertIn("갈래", text.split("--set")[1][:400])
 
 
+class ScreenQualityTest(unittest.TestCase):
+    """주제를 고를 수 있는 화면인지 본다(2026-09-14, 사용자: "일 대충하지 마").
+
+    한국 매체를 열두 곳까지 넣은 첫 판은 14시간에 118줄이었고, 증시 갈래 96줄 가운데 서른 줄
+    넘게가 같은 지수 마감 기사였다. 줄 수가 아니라 **고를 수 있는지**가 이 도구의 품질이다.
+    """
+
+    def test_korean_index_tape_is_folded_but_real_stories_survive(self) -> None:
+        for tape in ("[속보]코스피, 3.14% 내린 6692.61…코스닥은 806.27",
+                     "코스피 하락 마감, 6,684.37P (-3.26%)",
+                     "[개장시황] 코스피, FOMC 앞두고 3%대 급락…6600선 후퇴"):
+            self.assertTrue(mr.is_tape(tape), tape)
+        for story in ("[단독] 정부 ISA 개편안 오락가락 행보에… 계좌 해지 3배 늘었다",
+                      "대신증권, 29일 자사주 627억원 소각…“주주환원 본격화”",
+                      "코스피 7,000 시대에 PER은 어떻게 읽나",          # 지수 이름 + 숫자지만 시세가 아니다
+                      "KRX, 애프터마켓 개장 첫날부터 ‘널뛰기 장세’"):
+            self.assertFalse(mr.is_tape(story), story)
+
+    def test_english_headlines_are_never_folded(self) -> None:
+        """잡지의 「시장 읽기」는 이 기사로 글을 쓴다 — 접으면 그 코너의 재료가 사라진다."""
+        self.assertFalse(mr.is_tape("Dow Jones Futures: Techs Tumble As Anthropic Leads Call For AI Slowdown"))
+        self.assertFalse(mr.is_tape("S&P 500 closes 1.2% lower as yields climb"))
+
+    def test_only_bulletin_board_tags_count_as_noise(self) -> None:
+        self.assertTrue(mr.is_noise("[부고] 이동훈(미래에셋자산운용 홍보 팀장)씨 형제상"))
+        self.assertTrue(mr.is_noise("[인사] 신한투자증권"))
+        self.assertFalse(mr.is_noise("[단독] 정부 ISA 개편안 오락가락 행보에… 계좌 해지 3배"))
+        self.assertFalse(mr.is_noise("인사 개편이 증권가에 남긴 것"))     # 꼬리표가 아니면 기사다
+
+    def test_the_same_story_merges_across_feeds_and_never_within_one(self) -> None:
+        """`+N곳`은 **다른 피드가 같은 기사를 썼다**는 뜻이다. 라벨은 사실이어야 한다.
+
+        같은 피드의 닮은 제목은 대개 같은 기사가 아니라 같은 틀의 다른 공시다 — 회사만 다른
+        전환사채 발행 넷을 묶으면 `+3곳`이 거짓말이 된다(2026-09-14 실측).
+        """
+        rows = [
+            {"title": "국민연금, 신임 기금이사에 이규홍 전 사학연금 CIO", "source": "연합인포맥스", "column": "증시", "at": None, "paid": False},
+            {"title": "국민연금 투자사령탑에 이규홍 前사학연금 CIO", "source": "매일경제", "column": "증시", "at": None, "paid": False},
+            {"title": "링크솔루션, 300억 원 규모 전환사채 발행", "source": "매일경제", "column": "증시", "at": None, "paid": False},
+            {"title": "HLB글로벌, 50억 원 규모 전환사채 발행", "source": "매일경제", "column": "증시", "at": None, "paid": False},
+        ]
+        kept, counts = mr.group(rows)
+        self.assertEqual([k["title"] for k in kept],
+                         ["국민연금, 신임 기금이사에 이규홍 전 사학연금 CIO",
+                          "링크솔루션, 300억 원 규모 전환사채 발행",
+                          "HLB글로벌, 50억 원 규모 전환사채 발행"])
+        self.assertEqual(kept[0]["also"], ["매일경제"])
+        self.assertEqual(counts["merged"], 1)
+
+    def test_every_fold_is_counted(self) -> None:
+        """센 수를 찍지 않으면 접는 것이 곧 조용한 실패다 — 없는 날과 접은 날이 같아 보인다."""
+        rows = [
+            {"title": "코스피 3.26% 급락해 6,600선 마감", "source": "A", "column": "증시", "at": None, "paid": False},
+            {"title": "[부고] 아무개씨 부친상", "source": "A", "column": "증시", "at": None, "paid": False},
+            {"title": "대신증권, 자사주 627억원 소각", "source": "A", "column": "증시", "at": None, "paid": False},
+        ]
+        kept, counts = mr.group(rows)
+        self.assertEqual(len(kept), 1)
+        self.assertEqual((counts["tape"], counts["noise"], counts["merged"]), (1, 1, 0))
+
+    def test_double_escaped_titles_are_unescaped(self) -> None:
+        """실측: 연합인포맥스 제목이 화면에 `&quot;채권자 협의&quot;`로 그대로 찍혔다."""
+        xml = "<rss><channel><item><title>제이알리츠, &amp;quot;협의 구체화&amp;quot;</title></item></channel></rss>"
+        self.assertEqual(mr.parse(xml)[0]["title"], '제이알리츠, "협의 구체화"')
+
+
+class BlockedFeedsTest(unittest.TestCase):
+    """RSS가 막힌 매체를 버리지 않는다(2026-09-14, 사용자: "rss가 안되면 직접 찾아보고 조사하면 안되니?").
+
+    한국경제(403)·이데일리(연결 거부)·서울경제(404)는 구글뉴스 `site:` 우회로 되살렸다. 같은 날 실측으로
+    셋 다 100건·날짜 전부 읽힘. 이 셋이 목록에서 사라지면 "RSS가 죽었으니 어쩔 수 없다"로 되돌아간 것이다.
+    """
+
+    def test_the_three_blocked_majors_are_in_the_korean_set_via_proxy(self) -> None:
+        feeds = {f["name"]: f["url"] for f in mr.config()["sets"]["ko"]}
+        for outlet, site in (("한국경제", "hankyung.com"), ("이데일리", "edaily.co.kr"), ("서울경제", "sedaily.com")):
+            row = [(n, u) for n, u in feeds.items() if n.startswith(outlet)]
+            with self.subTest(outlet=outlet):
+                self.assertEqual(len(row), 1, f"{outlet}이 ko 묶음에 없습니다")
+                self.assertIn("news.google.com", row[0][1])
+                self.assertIn(site, __import__("urllib.parse", fromlist=["unquote"]).unquote(row[0][1]))
+
+    def test_the_docs_tell_the_routine_to_search_when_a_feed_is_down(self) -> None:
+        for doc in ("routine_guide_ko.md", "routine_guide_en.md", "routine_feature.md"):
+            text = (ROOT / "docs" / doc).read_text(encoding="utf-8")
+            with self.subTest(doc=doc):
+                self.assertIn("WebSearch", text)
+                self.assertIn("못 읽은 피드", text)
+
+
 if __name__ == "__main__":
     unittest.main()
