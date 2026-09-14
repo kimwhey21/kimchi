@@ -5130,6 +5130,12 @@
           "heading": "반도체가 팔릴수록 마이크론은 더 싸 보입니다",
           "icon": "chip",
           "image_query": "",
+          "image": {
+            "url": "https://images.unsplash.com/photo-1781444456351-d1356e535ce9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8TWljcm9uJTIwbWVtb3J5JTIwY2hpcCUyMHNlbWljb25kdWN0b3J8ZW58MHwwfHx8MTc4OTQyNjA3NHww&ixlib=rb-4.1.0&q=80&w=1080",
+            "alt": "옅은 파란색 배경에 비친 마이크론(Micron) 로고",
+            "photographer": "Brecht Corbeel",
+            "photographer_url": "https://unsplash.com/photos/partial-micron-logo-on-light-blue-background-with-abstract-swirls-qjVfXg_sZQM"
+          },
           "body": "오늘 5.25% 하락한 마이크론의 내년 예상 실적 기준 주가수익비율(FWD PER)은 5.9배로 낮아졌습니다. 지난주 6.3배였던 것이 이번 하락으로 한 단계 더 내려갔습니다.\n\n같은 기준으로 엔비디아는 13.5배, 인텔은 47.5배입니다. 마이크론은 애널리스트 평균 목표주가보다 63.8% 낮고, 52주 고점 대비로도 26.4% 낮은 채로 오늘을 마쳤습니다.\n\nFWD PER이 낮다는 것은 앞으로 예상되는 이익에 비해 주가가 싸다는 뜻입니다. 다만 그 이익 전망 자체가 오늘 같은 하락에 함께 흔들릴 수 있다는 것이, 싸 보이는 종목이 계속 싸 보이기만 하는 이유이기도 합니다.",
           "table": [
             {
