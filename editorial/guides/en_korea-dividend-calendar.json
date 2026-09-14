@@ -1,0 +1,116 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-14",
+  "checked": "2026-09-14",
+  "slug": "korea-dividend-calendar",
+  "category_id": 153,
+  "tags": ["Korea dividend record date", "Korean dividend calendar", "KRX dividend reform", "Korea Value-Up Program", "Korean dividend stocks"],
+  "related": [
+    {
+      "title": "Taxes on Korean Stocks for Foreign Investors (2026)",
+      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
+    },
+    {
+      "title": "MSCI Korea 2026: Why Korea Is Still an Emerging Market",
+      "url": "https://fermata.it.kr/korea-is-still-an-emerging-market-what-mscis-2026-decision-means-for-foreign-investors/"
+    },
+    {
+      "title": "Can Foreigners Buy Korean Stocks? What Changed in 2026",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    }
+  ],
+  "ko": {
+    "title": "Korea Dividend Record Date: What Changed in 2026, and What Hasn't",
+    "narrative": [
+      {
+        "heading": "The short answer: the record date is no longer always December 31",
+        "body": "For most developed markets, the mechanics of qualifying for a dividend are stable: you own the stock before the ex-dividend date, and that's that. Korea used to work the same way, with one specific quirk — nearly every listed company set the record date on the last day of the fiscal year, December 31. That is no longer a safe assumption.\n\nSince a 2023 legal reform, Korean companies have been allowed to move their dividend record date later in the calendar, and a growing number have done so. Whether a specific company you hold still uses the old December 31 date or a newer one depends entirely on that company's own articles of incorporation. As of September 2026, there is no single rule that applies to every ticker on the KOSPI or KOSDAQ — you have to check company by company, and this guide explains why the split exists and how to check it."
+      },
+      {
+        "heading": "How the old system worked, and why it frustrated investors",
+        "body": "Until recently, the standard practice for Korean listed companies was to designate the shareholders eligible for a dividend as of the last day of the fiscal year — December 31 for the vast majority of companies, which run a calendar fiscal year. The catch was timing: the actual dividend amount per share was not decided until the annual general meeting, typically held in March of the following year.\n\nThe result was what Korea's own Financial Services Commission (FSC) described as an information gap built into the calendar. An investor had to be a shareholder of record on December 31 to be entitled to whatever dividend the board and shareholders later approved, three months on. You were locked in before you knew the number — the opposite of how dividend investing works almost everywhere else, where the amount is announced before or at the same time as the date that determines who qualifies for it."
+      },
+      {
+        "heading": "The 2023 reform: record date after the amount, not before",
+        "body": "On January 31, 2023, the FSC and the Ministry of Justice jointly announced a fix. Under an authoritative interpretation of Article 354 of Korea's Commercial Act, companies were confirmed to be free to set a dividend record date that is separate from — and later than — the record date used for voting rights at the shareholders' meeting. In practice, that means a company's board can announce the dividend amount first, and only then fix the date that determines who receives it.\n\nMaking the switch is not automatic. A company has to amend its own articles of incorporation to adopt the new sequence, which is why the FSC's rollout included a revised model charter for listed companies to adapt at their own shareholder meetings, starting in 2023. The companies that made the change were expected to apply the new, later record date to dividends for fiscal year 2023, paid out in 2024, onward. Companies that never amended their charter simply kept the old December 31 default."
+      },
+      {
+        "heading": "KRX is still pushing adoption in 2026, because it isn't universal",
+        "body": "Three years after the reform was announced, adoption remains a company-by-company decision rather than a market-wide standard. That is visible in what Korea Exchange (KRX) itself did most recently: on April 6, 2026, KRX revised its Guidelines for Corporate Value-up Plan — the framework behind Korea's Value-Up Program, aimed at closing the valuation gap between Korean and global peers — specifically to add \"dividend procedures improvement\" as a factor companies can report on, and to award extra points toward Value-Up Best Practice Company status to firms that amend their charter to adopt the new sequence.\n\nA regulator does not spend a second round of guideline revisions incentivizing something that every company has already done. The plain reading is that as of September 2026, a meaningful share of listed companies, particularly smaller and mid-cap names, have not made the switch, and KRX is using the Value-Up scorecard — the same program covered in our guide to Korea's MSCI classification — to keep nudging them toward it rather than mandating it outright."
+      },
+      {
+        "heading": "How to check whether a specific company has switched",
+        "body": "Because the rule is set at the company level, the only reliable way to know which system applies to a stock you hold or plan to buy is to check that company directly, not to assume based on what other Korean companies do or what the stock did last year. Three places to look. First, the company's own investor relations page or dividend notice — many large caps, including Samsung Electronics, publish a dedicated dividend page stating the current record date policy. Second, the filing on DART, Korea's official corporate disclosure system, where a board resolution declaring a dividend will state the record date it applies to. Third, KRX's own data system at data.krx.co.kr, which carries dividend history by ticker and lets you see whether a company's record date has moved in recent years.\n\nA company that adopted the new sequence this year did not necessarily use it last year, and one that has not adopted it could still do so at a future shareholder meeting. Treat the record date as something to confirm fresh each dividend cycle, not something you already know from having owned the stock before."
+      },
+      {
+        "heading": "Once the record date passes, when does the money actually arrive",
+        "body": "Being the shareholder of record is only the first date that matters — the second is when the dividend is actually paid, and Korean law puts a ceiling on that gap. Under the Commercial Act, a company must pay a declared dividend within one month of the resolution that approves it, whether that resolution comes from the annual general meeting or, for interim and quarterly dividends, the board of directors.\n\nFor the large group of Korean companies still on the old calendar — record date December 31, dividend amount approved at a March annual general meeting — that one-month rule means payment typically lands in April, roughly four months after the date that determined who qualified. For a company that has adopted the new sequence, the gap between record date and payment can be much shorter, since the amount is already known when the record date is set. Either way, don't expect the cash to hit your account on the record date itself, and remember that whatever your broker withholds happens at the payment date, not before."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Korea's dividend record date used to be a trap by design: every investor was locked in on December 31 without knowing what the dividend would actually be. A 2023 reform gave companies a legal path to fix that, by letting them announce the amount first and set the record date afterward, and Korea Exchange has kept applying pressure through its Value-Up Program as recently as April 2026 to get more companies to adopt it.\n\nWhat hasn't changed is that the switch is still voluntary and company-specific. Until it becomes universal, the only safe approach is to check the record date policy of each Korean stock you hold, rather than assuming December 31 or assuming a company that changed once will keep doing so.\n\nThis guide describes the rules and reforms as of September 2026, based on FSC and Korea Exchange announcements. Company-level adoption changes every shareholder-meeting season — confirm the current record date on the company's own investor relations page or DART filing before you trade around a dividend. This is not investment or tax advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea dividend record date reform: since 2023 companies can set the record date after declaring the dividend, and must pay within one month of that decision",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea's Dividend Record Date Rules",
+        "left": {"label": "Reform letting companies set the record date after the amount", "value": "Since 2023"},
+        "right": {"label": "Deadline to pay a dividend after it's declared", "value": "1 month"}
+      }
+    },
+    {
+      "kind": "checklist",
+      "alt": "Korea now has two dividend record-date systems running side by side",
+      "args": {
+        "title": "Two dividend record-date systems now coexist",
+        "subtitle": "Which one applies depends on the company, not the market",
+        "items": [
+          {
+            "label": "Old system: record date fixed at fiscal year-end",
+            "why": "Shareholders are locked in on December 31, though the dividend amount isn't set until the March AGM."
+          },
+          {
+            "label": "New system: record date set after the amount is declared",
+            "why": "Since 2023, companies can amend their bylaws to announce the dividend, then fix a later record date."
+          },
+          {
+            "label": "Adoption is still company by company",
+            "why": "KRX revised its Value-Up guidelines again in April 2026 to push more firms to switch — the shift isn't done."
+          }
+        ]
+      },
+      "section": 3
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before assuming you qualify for a Korean dividend",
+      "args": {
+        "title": "Before you assume you're getting a Korean dividend",
+        "subtitle": "Check per company, per year — the rule isn't uniform",
+        "items": [
+          {
+            "label": "Check the company's own dividend notice or DART filing",
+            "why": "It states which record date applies this year — don't assume it matches last year's."
+          },
+          {
+            "label": "Look up dividend history on KRX's data system",
+            "why": "data.krx.co.kr shows past record dates and amounts by ticker."
+          },
+          {
+            "label": "Expect payment weeks after the record date, not on it",
+            "why": "Companies have up to one month from the resolution to pay — for March AGMs, that's typically April."
+          }
+        ]
+      },
+      "section": 6
+    }
+  ]
+}
