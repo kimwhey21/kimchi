@@ -48,6 +48,19 @@
 같은 갈래를 이틀 연속 쓰지 않습니다 — 한 주가 한 주제로 쏠리면 콘텐츠 농장처럼 보입니다.
 `ls editorial/guides/en_*.json`과 위 REST 조회로 이미 쓴 것을 먼저 빼십시오.
 
+**그다음 아침 레이더로 순서를 바꿉니다**(2026-09-14):
+
+    python -m scripts.magazine_radar --set magazine
+
+잡지 루틴이 쓰는 영어 매체 묶음 그대로입니다(Yahoo Finance·MarketWatch·WSJ·Motley Fool·Reuters·
+Visual Capitalist 등 18곳, `config/magazine_feeds.yaml`). **고른 갈래 안에** 오늘 뉴스에 걸린 주제가
+있으면 그것을 위에 있는 것보다 **먼저** 씁니다. 없으면 원래 순서대로 갑니다. 갈래는 바꾸지 않습니다.
+
+한국 종목·제도 기사는 이 묶음에 자주 뜨지 않습니다. 그래서 레이더에 한국 관련 제목이 없는 날이
+보통이고, 그런 날은 목록 순서대로 쓰면 됩니다 — **억지로 끼워 맞추지 않습니다.** 반대로 반도체
+사이클·관세·연준처럼 한국 종목과 직접 이어지는 제목이 떴다면 E(종목·업종)나 F(거시)에서 그 주제를
+먼저 씁니다. **레이더의 기사를 근거로 쓰지 않습니다** — 주제만 얻고, 사실은 출처 2곳에서 다시 확인합니다.
+
 **A. 사는 법·계좌 (access)**
 - `how-to-buy-samsung-electronics-abroad` — GDR, OTC, ETF로 삼성전자 사기 (buy samsung stock from us)
 - `korean-adrs-for-us-investors` — 미국에 상장된 한국 기업 ADR 목록과 한계 (korean adr list)
@@ -131,8 +144,9 @@
 ## 절차
 
 1. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`
-2. **주제.** 「주제 목록」의 고르는 법대로 — 어제와 다른 갈래에서, 그 갈래의 위에서부터. 이미 쓴 것과
-   겹치면 다음 것으로. 어제 무엇을 썼는지는 `ls -t editorial/guides/en_*.json | head -3`으로 봅니다.
+2. **주제.** 「주제 목록」의 고르는 법대로 — 어제와 다른 갈래에서, 그 갈래의 위에서부터
+   (`python -m scripts.magazine_radar --set magazine`으로 오늘 뉴스에 걸린 것이 있으면 그것을 먼저).
+   이미 쓴 것과 겹치면 다음 것으로. 어제 무엇을 썼는지는 `ls -t editorial/guides/en_*.json | head -3`으로 봅니다.
 3. **조사.** WebSearch·WebFetch로 **서로 다른 출처 2곳 이상**. 출처 이름을 본문에 영어로 그대로 적습니다
    (Korea Exchange, FSC, FSS, National Tax Service, PwC, MSCI, Reuters …) — 관문이 `source_check.EN_SOURCES`로 셉니다.
    바뀌는 숫자에는 "as of September 2026"을 본문에 박습니다(관문이 연도를 요구합니다).
