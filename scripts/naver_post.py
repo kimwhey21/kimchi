@@ -176,8 +176,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     elif doc.get("series") == "프리뷰":
         # 2026-09-10 사용자: "켜라, 카테고리는 시황에 넣고 날짜 붙여" — 지난 글이 검색에 걸려도 날짜가 보이게
         prefix = "오늘 밤 미국장 프리뷰 " + _kdate(date_str)
-        slug = doc.get("slug") or f"us-{date_str}-preview"
-        url = f"https://fermata.it.kr/{slug}/"
+        # 네이버에는 본문 전문을 싣고 본진 링크를 빼 준다(2026-09-15, 사용자 지시).
+        # 시황과 같은 처리다 — 네이버는 밖으로 나가는 링크가 붙은 글을 좋게 보지 않고,
+        # 요약본 뒤에 링크를 다는 것보다 글 하나로 끝나는 편이 끝까지 읽힌다.
+        url = ""
         category = "시황"
         tags = ["미국증시", "미국장프리뷰", "주식시황", "페르마타"]
     elif doc.get("series") in ("주간 결산", "다음 주 일정"):
@@ -229,7 +231,8 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks.append(("h", "Fermata's Take"))
         blocks.append(("q", "\n".join(take[:2])))
     full = (doc.get("naver") or {}).get("narrative") or []
-    if is_daily:
+    preview = doc.get("series") == "프리뷰"
+    if is_daily or preview:
         # 시황은 네이버가 유일한 공개처다(2026-09-15). 축약본이 아니라 본문을 그대로 싣는다 —
         # 그전에는 900~2,200자 요약본이 갔고, 본진과 겹치지 않게 매일 다시 쓰는 일이 딸려 있었다.
         full = list(ko.get("narrative") or [])
@@ -268,9 +271,9 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         if srcs:
             blocks.append(("h", "자료 출처"))
             blocks += [("p", f"{x['name']}, {x['title']}" if x.get("title") else str(x["name"])) for x in srcs]
-    elif is_daily:
-        # 시황은 본진에 쌍둥이가 없다(2026-09-15) — 가리킬 글이 없으므로 안내를 넣지 않는다.
-        # 넣어 두면 "블로그에도 있습니다"가 거짓말이 된다.
+    elif is_daily or preview:
+        # 시황은 본진에 쌍둥이가 없고(2026-09-15), 프리뷰는 링크를 빼기로 했다(같은 날 사용자 지시).
+        # 링크가 없는데 "블로그에도 있습니다"만 남기면 갈 곳 없는 안내가 된다.
         pass
     elif full:
         blocks.append(("p", "같은 주제를 표와 그래픽으로 정리한 글은 페르마타 블로그에도 있습니다."))

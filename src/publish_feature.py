@@ -31,9 +31,7 @@ OUTPUT = ROOT / "output" / "features"
 # 내부 키(`series: 기준표`, 문서·검사·성적표 코드)는 그대로 두고, 화면에 나가는 곳 — 워드프레스
 # 분류(Checkpoint, id 432)·홈 탭·글 머리말·표지 kicker — 만 이 표를 거친다. 제목 글자에는
 # 라벨을 넣지 않는다(제목은 검색에서 서른 자 안팎만 보인다). 대신 확인 날짜를 제목에 넣는다.
-# 내부 키는 그대로 두고 화면에 나가는 이름만 바꾼다(2026-09-09 Checkpoint와 같은 방식).
-# 프리뷰는 2026-09-16부터 어젯밤 마감까지 담으므로 "프리뷰"만으로는 내용을 못 담는다.
-SERIES_LABEL = {"기준표": "Checkpoint", "Guide": "Investor Guide", "프리뷰": "미국장 브리핑"}
+SERIES_LABEL = {"기준표": "Checkpoint", "Guide": "Investor Guide"}
 
 # 유입 편성(2026-09-12, 사용자 승인): 상시 가이드(한국어 "가이드"·영어 "Guide")와 정기 이벤트 글("이벤트").
 # 가이드 머리말은 확인 날짜(최상위 `checked`, YYYY-MM-DD)를 보인다 — 상시 글은 "언제 기준인지"가 검색 결과의
@@ -102,9 +100,7 @@ def _seo_lead(doc: dict) -> str:
     if series != "프리뷰" or not doc.get("date"):
         return ""
     year, month, day = (int(x) for x in str(doc["date"]).split("-"))
-    # 어젯밤 마감과 오늘 밤 일정을 한 편에 담는다(2026-09-16부터) — 설명문도 둘 다 말해야
-    # 검색 결과에서 "지난 장 정리"를 찾는 사람과 "오늘 밤 일정"을 찾는 사람이 함께 걸린다.
-    return f"{month}월 {day}일 미국장 브리핑 — 어젯밤 뉴욕 마감과 오늘 밤 볼 것입니다. "
+    return f"{month}월 {day}일 밤 미국장 프리뷰입니다. "
 
 
 def _excerpt(ko: dict, limit: int = 200, lead: str = "") -> str:

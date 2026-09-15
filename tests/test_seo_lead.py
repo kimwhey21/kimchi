@@ -24,10 +24,7 @@ class SeoLeadTest(unittest.TestCase):
         self.assertLessEqual(len(text), 302)
 
     def test_preview_lead_only_for_the_preview_series(self) -> None:
-        # 2026-09-16: 어젯밤 마감까지 담게 되면서 설명문도 둘 다 말한다 — 검색 결과에서
-        # "지난 장 정리"를 찾는 사람과 "오늘 밤 일정"을 찾는 사람이 함께 걸리도록.
-        self.assertEqual(publish_feature._seo_lead({"series": "프리뷰", "date": "2026-09-08"}),
-                         "9월 8일 미국장 브리핑 — 어젯밤 뉴욕 마감과 오늘 밤 볼 것입니다. ")
+        self.assertEqual(publish_feature._seo_lead({"series": "프리뷰", "date": "2026-09-08"}), "9월 8일 밤 미국장 프리뷰입니다. ")
         self.assertEqual(publish_feature._seo_lead({"series": "기준표", "date": "2026-09-06"}), "")
         ko = {"narrative": [{"body": "오늘 밤은 유가입니다."}]}
         self.assertEqual(publish_feature._excerpt(ko, lead="9월 8일 밤 미국장 프리뷰입니다. "), "9월 8일 밤 미국장 프리뷰입니다. 오늘 밤은 유가입니다.")

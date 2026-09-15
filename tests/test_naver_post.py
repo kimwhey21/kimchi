@@ -63,7 +63,47 @@ class BuildTest(unittest.TestCase):
         post = naver_post.build(Path("editorial/previews/us_2026-09-10.json"))
         self.assertEqual(post["category"], "시황")
         self.assertIn("9월 10일", post["title"].split("|")[0] if "|" in post["title"] else post["title"].split(":")[0])
-        self.assertTrue(post["blocks"][-3][1].endswith("-preview/"))
+        # 2026-09-15부터 프리뷰도 링크 없이 본문 전문으로 나간다(사용자 지시) — 옛 규칙은
+        # 마지막에서 세 번째 블록이 본진 주소였다. 지금은 텔레그램 안내 둘로 끝난다.
+        self.assertEqual(post["url"], "")
+        self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]))
+
+
+class PreviewFullBodyTest(unittest.TestCase):
+    """프리뷰도 네이버에는 본문 전문을 싣고 본진 링크를 빼 준다(2026-09-15, 사용자 지시).
+
+    시황과 같은 처리다. 다만 프리뷰는 본진에도 그대로 올라가므로 **같은 글이 두 곳에 남는다** —
+    네이버가 유사문서로 걸러 낼 위험이 시황 때와 같은 자리에 생긴다. 그 판단은 사용자 몫이고,
+    여기서는 지시대로 링크가 빠지고 전문이 실리는 것만 고정한다.
+    """
+
+    def _post(self):
+        import json
+        import tempfile
+        doc = {"kind": "feature", "series": "프리뷰", "date": "2026-09-11",
+               "slug": "us-2026-09-11-preview",
+               "ko": {"title": "오늘 밤 확인할 세 가지",
+                      "narrative": [{"heading": f"{i}. 절", "body": "본문입니다."} for i in range(1, 6)],
+                      "closing": {"heading": "Fermata's Take", "body": "판단입니다."}}}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "us_2026-09-11.json"
+            path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+            return naver_post.build(path)
+
+    def test_no_link_and_no_dangling_pointer_to_the_main_site(self) -> None:
+        post = self._post()
+        self.assertEqual(post["url"], "")
+        self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]), post["blocks"][-4:])
+        self.assertFalse(any("페르마타 블로그" in b[1] for b in post["blocks"]))
+
+    def test_the_whole_body_goes_out_not_a_summary(self) -> None:
+        heads = [b[1] for b in self._post()["blocks"] if b[0] == "h"]
+        self.assertGreaterEqual(len([h for h in heads if h.endswith("절")]), 5)
+
+    def test_the_telegram_invite_survives_the_missing_link(self) -> None:
+        """링크를 뺄 때 텔레그램 안내까지 같이 사라진 적이 있다(2026-09-15) — 우리 채널은 남긴다."""
+        post = self._post()
+        self.assertEqual(post["blocks"][-1], ("p", "https://t.me/fermata_kr"))
 
 
 if __name__ == "__main__":
