@@ -1,0 +1,111 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-15",
+  "checked": "2026-09-15",
+  "slug": "kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you",
+  "category_id": 153,
+  "tags": ["KOSPI vs KOSDAQ", "KOSPI", "KOSDAQ", "Korea Exchange", "Korean stock market"],
+  "radar_origin": "search queue: kospi vs kosdaq",
+  "related": [
+    {
+      "title": "Can Foreigners Buy Korean Stocks? What Changed in 2026",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    },
+    {
+      "title": "Taxes on Korean Stocks for Foreign Investors (2026)",
+      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
+    },
+    {
+      "title": "Korea Stock Market Hours 2026: Sessions, Price Limits, Halts",
+      "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know/"
+    }
+  ],
+  "ko": {
+    "title": "KOSPI vs KOSDAQ: What Each Korean Stock Board Tells You",
+    "narrative": [
+      {
+        "heading": "Two exchanges, one country",
+        "body": "Every Korean stock trades on one of two boards run by the Korea Exchange (KRX): KOSPI or KOSDAQ, and the KOSPI vs KOSDAQ distinction is one of the fastest ways to size up a Korean company before you've read a single financial statement. They aren't separate markets the way, say, the NYSE and Nasdaq are sometimes loosely described — they're both operated by the same exchange group — but the companies listed on each, and what that listing tells you about the company, are genuinely different.\n\nIf you're researching a Korean stock for the first time, knowing which board it's on tells you roughly how old the company is, how large it is, and how much volatility to expect, before you look at a single number on the income statement."
+      },
+      {
+        "heading": "What KOSPI is",
+        "body": "KOSPI (Korea Composite Stock Price Index) is Korea's main board, launched in 1956, and functions the way the NYSE does in the U.S. — home to large, established companies with long track records. Samsung Electronics, SK Hynix, and most of the names foreign investors already recognize trade here.\n\nTo list on KOSPI, a company generally needs at least three years of operating history plus minimum size, profitability, and governance standards — the bar is built for maturity, not early growth."
+      },
+      {
+        "heading": "What KOSDAQ is",
+        "body": "KOSDAQ launched in 1996, modeled in part on the U.S. Nasdaq, to give smaller, high-growth companies — concentrated in technology, biotech, and entertainment — access to public capital without meeting KOSPI's maturity bar.\n\nNotably, KOSDAQ doesn't require the three-year operating history KOSPI does, which is exactly why earlier-stage and currently-unprofitable companies list there. It's a smaller market overall, and a more volatile one — that's the direct consequence of listing companies earlier in their life cycle."
+      },
+      {
+        "heading": "Side by side",
+        "body": "The practical differences are easiest to see side by side, in the table below. KOSPI listings launched in 1956 and lean toward large, established, already-profitable companies; KOSDAQ listings launched in 1996 and lean toward smaller, growth-stage companies, often in technology, biotech, and entertainment.\n\nThe listing bar reflects that split — KOSPI generally requires at least three years of operating history plus size and profitability thresholds, while KOSDAQ requires no minimum operating history at all. What that means for you as an investor: a KOSPI listing leans toward blue-chip stability, and a KOSDAQ listing leans toward more volatility, and more room for a growth story to work or fail."
+      },
+      {
+        "heading": "The market-cap gap",
+        "body": "The size difference between the two boards is not subtle, and 2026 has only underlined it. According to Korea Exchange data, KOSPI's total market capitalization stood at approximately ₩5,567.1 trillion (roughly $4.14 trillion) as of September 14, 2026, while KOSDAQ's stood at approximately ₩455.1 trillion (roughly $338 billion) — KOSDAQ runs at under a tenth the size of KOSPI despite listing thousands of companies.\n\nThat gap held through a volatile year for both boards. Korea Times reported that the combined value of Korea's exchanges first crossed ₩6,000 trillion (about $4.07 trillion) in April 2026; the combined figure went on to top ₩8,000 trillion in intraday trading in June before falling back to roughly ₩6,000 trillion by mid-September as heavyweight chip stocks pulled back. Through that whole swing, KOSDAQ stayed under a tenth of KOSPI's size — a useful sanity check when you're evaluating a single KOSDAQ name: the board itself is built for smaller, less-established companies, so size and volatility that would be unusual on KOSPI are closer to normal here."
+      },
+      {
+        "heading": "How to tell which board a stock is on",
+        "body": "Korean tickers are six-digit numeric codes (for example, Samsung Electronics is 005930), and the code format itself doesn't tell you which board a company trades on — unlike some markets where a suffix gives it away instantly.\n\nYour broker's instrument detail page will label the listing venue directly, and that's the most reliable place to check before you assume you're looking at a blue-chip when it's actually a small, early-stage KOSDAQ name, or vice versa. The Korea Exchange's own market data and most financial data providers will also show the listing board directly next to the ticker."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Which board a Korean stock trades on isn't a technicality — it's a quick proxy for company maturity, size, and the kind of volatility you should expect. A KOSPI listing leans toward stability; a KOSDAQ listing leans toward growth and risk in both directions. Neither is automatically the better choice — it depends on what you're actually looking for — but check the board before you check anything else.\n\nMarket capitalization figures above are Korea Exchange data as of September 14, 2026, cross-checked against Korea Times' reporting on the market's April 2026 milestone; both change daily, so confirm current figures before you rely on them. This guide is for informational purposes only and is not investment advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "KOSPI market cap versus KOSDAQ market cap, September 2026",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "KOSPI vs KOSDAQ",
+        "left": {"label": "KOSPI market cap (Sep 2026)", "value": "₩5,567T"},
+        "right": {"label": "KOSDAQ market cap (Sep 2026)", "value": "₩455T"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Side-by-side comparison of KOSPI and KOSDAQ: launch year, typical company, listing bar, and market cap",
+      "args": {
+        "title": "KOSPI vs KOSDAQ, side by side",
+        "subtitle": "Two boards, one exchange group",
+        "source": "Korea Exchange (Sep 14, 2026)",
+        "columns": ["", "KOSPI", "KOSDAQ"],
+        "rows": [
+          ["Launched", "1956", "1996"],
+          ["Typical company", "Established, profitable", "Smaller, high-growth"],
+          ["Listing bar", "3+ yrs + profit tests", "No minimum history"],
+          ["Market cap (Sep 14, 2026)", "₩5,567.1T (~$4.14T)", "₩455.1T (~$338B)"]
+        ]
+      },
+      "section": 3
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before judging a Korean stock by its ticker",
+      "args": {
+        "title": "Before you judge a Korean stock by its ticker",
+        "subtitle": "KOSPI vs KOSDAQ, in practice",
+        "items": [
+          {
+            "label": "Check your broker's instrument page",
+            "why": "It labels the listing venue (KOSPI or KOSDAQ) directly — the six-digit ticker code alone does not."
+          },
+          {
+            "label": "Treat KOSDAQ names as higher-volatility by default",
+            "why": "No minimum operating history requirement means more early-stage and currently-unprofitable companies list here."
+          },
+          {
+            "label": "Don't assume size or board from the ticker format",
+            "why": "Korean tickers are six digits on both boards — nothing in the code itself signals which market a stock trades on."
+          }
+        ]
+      },
+      "section": 5
+    }
+  ]
+}
