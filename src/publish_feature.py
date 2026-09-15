@@ -171,6 +171,19 @@ def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict
     return generated, figures, cover
 
 
+# 시리즈별 공개 상태(2026-09-15, 사용자 지시). 기본은 공개다.
+#
+# 프리뷰는 `private` — 네이버에 **본문 전문**이 나가는데 본진에도 같은 글을 공개해 두면 네이버가
+# 유사문서로 걸러 낼 수 있다. 시황은 아예 본진에 올리지 않는 쪽을 골랐고, 프리뷰는 글을 남기되
+# 사이트에 보이지 않게 한다 — 워드프레스의 `private`는 글·주소·분류를 그대로 두고 로그인한
+# 관리자에게만 보이며, 사이트맵·목록·피드에서 빠진다. 되돌리려면 이 표에서 한 줄을 지운다.
+LIVE_STATUS = {"프리뷰": "private"}
+
+
+def _live_status(doc: dict) -> str:
+    return LIVE_STATUS.get(str(doc.get("series") or ""), "publish")
+
+
 def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
     """검사 → PNG 생성 → 해시 기반 미디어 재사용 → 상태 보존 갱신 → 되읽기.
 
@@ -267,21 +280,24 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
     common = dict(lang=doc.get("lang", "ko"), excerpt=_excerpt(ko, lead=_seo_lead(doc)),
                   tags=post_tags.build_tags(doc), category=category_id,   # 원고의 tags + 글에서 뽑은 태그(2026-09-12)
                   featured_media_id=featured_id, focus_keyword=doc.get("focus_keyword"))
+    wanted = _live_status(doc)   # 보통 "publish", 프리뷰는 "private"(2026-09-15)
     if existing:
-        # status=None은 공개·비공개 어느 상태도 바꾸지 않는다. live일 때만 공개로 올린다.
+        # status=None은 공개·비공개 어느 상태도 바꾸지 않는다. live일 때만 상태를 올린다.
         result = publish_wordpress.update_draft(existing["id"], ko["title"], html,
-                                                status="publish" if live else None, **common)
+                                                status=wanted if live else None, **common)
     else:
         # 새 글은 원칙대로 임시저장한다. --publish는 사용자가 "발행"이라고 한 뒤에만 쓴다.
         result = publish_wordpress.publish_draft(ko["title"], html, slug=slug,
-                                                 status="publish" if live else "draft", **common)
-    expected = "publish" if live else (existing.get("status", "draft") if existing else "draft")
+                                                 status=wanted if live else "draft", **common)
+    expected = wanted if live else (existing.get("status", "draft") if existing else "draft")
     publish_wordpress.verify_published(
         result["id"], ko["title"], expected_status=expected,
         expected_featured_media=featured_id, expected_category_id=category_id,
     )
-    if live:
+    if live and wanted == "publish":
         # 텔레그램 채널 알림(2026-09-12, 홍보 1번). 다시 올린 글은 notify_post가 스스로 거른다. 실패해도 발행은 성공이다.
+        # 비공개로 올리는 글(프리뷰)은 여기서 알리지 않는다 — 링크가 독자에게 404다.
+        # 그 글의 알림은 맥의 동기화가 네이버에 올린 뒤 네이버 주소로 보낸다(scripts/notify_naver_post.py).
         notify_telegram.notify_post(base, result["id"], ko["title"], doc)
         notify_threads.notify_post(base, result["id"], ko["title"], doc)     # 스레드(2026-09-12, 홍보 2번)
     return result

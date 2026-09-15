@@ -73,3 +73,30 @@ class PreviewDocTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PreviewPrivateTest(unittest.TestCase):
+    """프리뷰는 본진에 **비공개**로만 올린다(2026-09-15, 사용자 지시).
+
+    네이버에 본문 전문이 나가는데 본진에도 같은 글을 공개해 두면 네이버가 유사문서로 걸러 낼 수
+    있다. 시황은 본진에 아예 안 올리는 쪽을 골랐고, 프리뷰는 글을 남기되 사이트에 보이지 않게 한다 —
+    워드프레스 `private`는 주소·분류를 그대로 두고 사이트맵·목록·피드에서만 뺀다.
+    """
+
+    def test_only_the_preview_series_goes_out_private(self) -> None:
+        from src import publish_feature
+        self.assertEqual(publish_feature._live_status({"series": "프리뷰"}), "private")
+        for series in ("기준표", "가이드", "Guide", "주간 결산", "다음 주 일정", "이벤트"):
+            with self.subTest(series=series):
+                self.assertEqual(publish_feature._live_status({"series": series}), "publish")
+
+    def test_a_private_post_is_not_announced_with_a_dead_link(self) -> None:
+        """비공개 글의 본진 주소는 독자에게 404다 — 그 링크로 텔레그램·스레드에 알리면 안 된다.
+
+        알림은 맥의 동기화가 네이버에 올린 뒤 네이버 주소로 보낸다(scripts/notify_naver_post.py).
+        """
+        import inspect
+
+        from src import publish_feature
+        source = inspect.getsource(publish_feature.publish)
+        self.assertIn('if live and wanted == "publish":', source)
