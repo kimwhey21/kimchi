@@ -30,6 +30,8 @@ from pathlib import Path
 import requests
 from dotenv import load_dotenv
 
+from src import publish_editorial
+
 # 단독 실행 모듈입니다. main.py가 대신 불러 주지 않으므로 여기서 .env를 읽습니다 —
 # 없으면 로컬에서 손으로 돌릴 때 설정이 없는 것처럼 동작합니다(2026-09-06 전수 점검).
 load_dotenv()
@@ -149,6 +151,11 @@ def check_market(market: str, check_site: bool, sitemap_urls: set[str] | None = 
     doc = json.loads(manuscript.read_text(encoding="utf-8"))
     for lang in ("ko", "en"):
         if lang not in doc:
+            continue
+        if lang == "ko" and not publish_editorial.KO_DAILY_TO_WORDPRESS:
+            # 한국어 시황은 네이버 블로그 전용이다(2026-09-15) — 사이트에 없는 것이 정상이다.
+            # 그날 글을 썼는지는 위의 원고 파일 검사가 이미 본다. 여기서 또 찾으면 매일 헛경보가 난다.
+            print(f"{market} {trading_date} [ko]: 네이버 전용이라 사이트 확인을 건너뜁니다.")
             continue
         slug = f"editorial-{market}-{trading_date}-{lang}"
         post = _wordpress_post(slug)

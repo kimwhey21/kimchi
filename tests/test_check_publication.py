@@ -41,8 +41,23 @@ class CheckPublicationTest(unittest.TestCase):
     def test_post_modified_before_trading_date_is_stale(self) -> None:
         post = {"id": 1, "status": "publish", "modified_gmt": "2026-09-03T10:00:00"}
         problems = self._check("2026-09-04", post)
-        self.assertEqual(len(problems), 2)  # ko·en
+        # 2026-09-15부터 한국어 시황은 네이버 전용이라 사이트에 없는 것이 정상이다 — 영어만 본다.
+        self.assertEqual(len(problems), 1)
+        self.assertIn("[en]", problems[0])
         self.assertIn("옛 글", problems[0])
+
+    def test_korean_daily_is_not_looked_for_on_the_site(self) -> None:
+        """한국어 시황은 네이버 블로그 전용이다(2026-09-15, 사용자 결정).
+
+        이 검사를 끄지 않으면 **정상 발행일에도 매일 실패 메일이 온다** — 사이트에 있을 리 없는
+        글을 찾기 때문이다. 그날 글을 썼는지는 원고 파일 검사가 이미 본다.
+        """
+        with mock.patch.object(cp.publish_editorial, "KO_DAILY_TO_WORDPRESS", False):
+            self.assertEqual(self._check("2026-09-04", None), [
+                p for p in self._check("2026-09-04", None) if "[ko]" not in p])
+        problems = self._check("2026-09-04", None)
+        self.assertFalse(any("[ko]" in p for p in problems), problems)
+        self.assertTrue(any("[en]" in p for p in problems), problems)
 
     def test_newer_trading_day_without_price_file_is_reported(self) -> None:
         post = {"id": 1, "status": "publish", "modified_gmt": "2026-09-05T12:53:52"}
@@ -63,13 +78,24 @@ class CheckPublicationTest(unittest.TestCase):
                 stale = cp.check_market("us", check_site=True, sitemap_urls={"https://fermata.it.kr/other/"})
                 fresh = cp.check_market("us", check_site=True, sitemap_urls={"https://fermata.it.kr/editorial-us-2026-09-04-ko"})
                 skipped = cp.check_market("us", check_site=True, sitemap_urls=None)
-        self.assertTrue(any("사이트맵" in p for p in stale), stale)
+        # 원고에 ko만 있으면 이제 사이트에서 찾을 글이 없다 — 사이트맵 검사도 돌 대상이 없다.
+        self.assertEqual(stale, [])
         self.assertEqual(fresh, [])
         self.assertEqual(skipped, [])
 
     def test_missing_post_is_reported(self) -> None:
         problems = self._check("2026-09-04", None)
         self.assertTrue(any("사이트에 글이 없습니다" in p for p in problems), problems)
+
+    def test_missing_manuscript_is_still_the_real_alarm(self) -> None:
+        """루틴이 글을 못 쓴 날은 여전히 잡아야 한다 — 이것이 이 워크플로의 존재 이유다."""
+        with tempfile.TemporaryDirectory() as tmp:
+            data = Path(tmp) / "data"; editorial = Path(tmp) / "editorial"; data.mkdir(); editorial.mkdir()
+            (data / "price_us_2026-09-04.json").write_text("{}", encoding="utf-8")
+            with mock.patch.object(cp, "DATA_DIR", data), mock.patch.object(cp, "EDITORIAL_DIR", editorial), \
+                    mock.patch.object(cp, "_actual_trading_date", return_value="2026-09-04"):
+                problems = cp.check_market("us", check_site=True)
+        self.assertTrue(any("원고가 없습니다" in p for p in problems), problems)
 
 
 if __name__ == "__main__":

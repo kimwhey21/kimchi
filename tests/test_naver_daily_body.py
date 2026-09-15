@@ -32,6 +32,11 @@ def _sections(n: int, chars: int) -> dict:
 
 
 class DailySpecTest(unittest.TestCase):
+    def test_the_daily_rule_ended_on_the_day_naver_became_the_only_home(self) -> None:
+        """시황이 네이버 전용이 된 뒤로는 네이버용 본문을 요구하지 않는다(2026-09-16부터)."""
+        self.assertIsNone(feature_checks.naver_spec({"market": "kr", "date": "2026-09-16"}))
+        self.assertIsNotNone(feature_checks.naver_spec({"market": "kr", "date": "2026-09-15"}))
+
     def test_daily_briefs_are_covered_from_the_start_date_only(self) -> None:
         self.assertIsNone(feature_checks.naver_spec(_daily("2026-09-13")))
         self.assertEqual(feature_checks.naver_spec(_daily())[0], "시황")
@@ -93,12 +98,20 @@ class GateWiringTest(unittest.TestCase):
 
 
 class RoutineDocTest(unittest.TestCase):
-    def test_the_shared_routine_doc_tells_the_routine_to_write_it(self) -> None:
+    def test_the_shared_routine_doc_tells_the_routine_to_stop_writing_it(self) -> None:
+        """2026-09-15부터 시황은 네이버 전용이라 네이버용 본문을 **쓰지 않는다**(사용자 결정).
+
+        지시문에 옛 규칙이 남아 있으면 루틴은 매일 쓰지 않아도 되는 본문을 계속 쓴다 —
+        관문이 요구하지 않으니 아무도 막지 않고, 시간만 두 배로 든다.
+        """
         from pathlib import Path
         text = (Path(__file__).resolve().parent.parent / "docs" / "routine_common.md").read_text(encoding="utf-8")
-        self.assertIn("naver", text)
-        self.assertIn("900~2,200자", text)
-        self.assertIn("같은 문장을 쓰지 않습니다", text)
+        self.assertIn("원고에 `naver`를 넣지 마십시오", text)
+        # 옛 지시("절 3~5개, 본문 합계 900~2,200자")가 남아 있으면 안 된다. 왜 바꿨는지 설명하는
+        # 자리에 그 수치가 나오는 것은 기록이라 괜찮다 — 지시문으로 남아 있는지를 본다.
+        self.assertNotIn("절 3~5개, 본문 합계 900~2,200자", text)
+        # 가이드·주간은 그대로다 — 본진에 쌍둥이가 있다.
+        self.assertIn("1,200~3,000자", text)
 
 
 if __name__ == "__main__":

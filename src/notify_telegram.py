@@ -115,6 +115,31 @@ def send(text: str, image_url: str | None = None) -> dict:
     return response.json()
 
 
+
+def notify_naver(doc: dict, title: str, link: str, image_url: str | None = None) -> bool:
+    """워드프레스에 쌍둥이가 없는 글(한국어 시황·잡지)을 네이버 주소로 알린다 (2026-09-15).
+
+    `notify_post`는 워드프레스에서 상태·링크·사진을 읽어 온다. 시황이 네이버 전용이 된 뒤로는
+    읽어 올 글이 없으므로, 이미 아는 주소와 사진으로 바로 보낸다. 다시 올린 글인지 가리는 일은
+    부르는 쪽(맥의 동기화)이 `posted.json`으로 이미 한다 — 한 번 올린 글은 다시 오지 않는다.
+    """
+    if str(doc.get("lang") or "ko") == "en":
+        return False
+    if not configured():
+        print("[텔레그램] 설정 없음 — 알림을 건너뜁니다")
+        return False
+    try:
+        text = compose(doc, f"{label(doc)} · {title}" if label(doc) not in title else title, link)
+        result = send(text, image_url)
+        if not result.get("ok"):
+            print(f"[텔레그램 실패] {result.get('description')}")
+            return False
+        print(f"[텔레그램] 채널에 올림: {link}")
+        return True
+    except Exception as error:   # noqa: BLE001 — 알림 실패가 발행을 실패시키면 안 된다
+        print(f"[텔레그램 실패] {error}")
+        return False
+
 def notify_post(base: str, post_id: int, title: str, doc: dict, *, force: bool = False) -> bool:
     """공개된 글 하나를 채널에 알린다. 돌려주는 값은 '보냈는가'. 예외를 밖으로 내지 않는다."""
     if str(doc.get("lang") or "ko") == "en":

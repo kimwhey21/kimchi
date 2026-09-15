@@ -34,6 +34,21 @@ def post_url(market: str, date_str: str) -> str:
     return f"https://fermata.it.kr/editorial-{market}-{date_str}-ko/"
 
 
+def entry_key(market: str, date_str: str) -> str:
+    """성적표 항목을 주소가 아니라 이 열쇠로 찾는다(2026-09-15).
+
+    한국어 시황이 네이버 전용이 된 뒤로는 **발행 시점에 주소를 모른다** — 네이버 글 번호는
+    맥이 올린 뒤에야 생긴다. 그래서 항목을 먼저 열쇠로 만들어 두고, 주소는 나중에
+    `scripts/scoreboard_naver_urls.py`가 채운다. 옛 항목은 주소로 찾던 것을 그대로 둔다.
+    """
+    return f"{market}_{date_str}"
+
+
+def find_entry(articles: list[dict], market: str, date_str: str) -> dict | None:
+    key, url = entry_key(market, date_str), post_url(market, date_str)
+    return next((a for a in articles if a.get("key") == key or (a.get("url") and a["url"] == url)), None)
+
+
 def _load() -> list[dict]:
     data = yaml.safe_load(SCOREBOARD.read_text(encoding="utf-8")) or []
     if not isinstance(data, list):
@@ -58,11 +73,14 @@ def upsert_check(articles: list[dict], doc: dict) -> str | None:
     check = (ko.get("closing") or {}).get("check") or {}
     if not (check.get("due") and check.get("what")):
         return None
-    url = post_url(doc["market"], doc["date"])
-    entry = next((a for a in articles if a.get("url") == url), None)
+    key = entry_key(doc["market"], doc["date"])
+    entry = find_entry(articles, doc["market"], doc["date"])
     if entry is None:
-        entry = {"title": ko.get("title", ""), "url": url, "date": doc["date"], "summary": "", "checks": []}
+        # 주소는 비워 둔다 — 네이버에 올라간 뒤 채워진다. 빈 주소인 항목은 성적표 페이지가 건너뛴다.
+        entry = {"title": ko.get("title", ""), "url": "", "key": key,
+                 "date": doc["date"], "summary": "", "checks": []}
         articles.insert(0, entry)
+    url = entry.get("url") or key
     entry["title"] = ko.get("title", entry.get("title", ""))
     entry["summary"] = str(check.get("summary") or ko.get("excerpt") or entry.get("summary") or
                            (ko.get("closing") or {}).get("body", "").split("\n\n")[0][:120])
@@ -86,8 +104,9 @@ def apply_review(articles: list[dict], doc: dict, today: str | None = None) -> s
         raise ValueError(f"review.verdict는 {sorted(VERDICTS)} 중 하나여야 합니다: {verdict!r}")
     if not str(review.get("result", "")).strip():
         raise ValueError("review.result(실제로 나온 것, 숫자와 함께)가 비어 있습니다.")
-    target = post_url(doc["market"], str(review.get("of_date", "")))
-    entry = next((a for a in articles if a.get("url") == target), None)
+    of_date = str(review.get("of_date", ""))
+    target = entry_key(doc["market"], of_date)
+    entry = find_entry(articles, doc["market"], of_date)
     if entry is None:
         return f"판정 건너뜀: {target}에 성적표 항목이 없습니다(옛 형식 글)."
     today = today or doc.get("date") or dt.date.today().isoformat()

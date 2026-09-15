@@ -405,6 +405,12 @@ def _previous_daily_post(market: str, date_str: str, lang: str) -> dict | None:
         return None
 
 
+# 한국어 시황을 워드프레스에도 올릴 것인가 (2026-09-15, 사용자 결정으로 끔).
+# 끄면 한국어 시황은 네이버 블로그 전용이 되고, 영어 시황(`-en`)은 그대로 워드프레스에 남는다.
+# 되돌리려면 이 값만 True로 바꾼다 — 발행 코드는 그대로 두었다.
+KO_DAILY_TO_WORDPRESS = False
+
+
 def publish(path: Path, publish_live: bool = False, render_only: bool = False) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     doc = json.loads(path.read_text(encoding="utf-8"))
@@ -582,6 +588,16 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         print(f"영어 {status}: id={en_result.get('id')} {en_result.get('link','')}")
         if publish_live:
             publish_wordpress.verify_published(en_result["id"], en["title"])
+
+    if not KO_DAILY_TO_WORDPRESS:
+        # 한국어 시황은 네이버 블로그에만, 전문으로 나간다(2026-09-15, 사용자 결정).
+        # 같은 글을 두 곳에 두면 네이버가 유사문서로 걸러 낼 위험이 있고(2026-09-13 실측 21.9~40.9% 겹침),
+        # 그걸 피하려고 매일 네이버용 본문을 따로 쓰고 있었다. 한 곳만 두면 그 일 자체가 없어진다.
+        # 네이버 발행의 방아쇠는 **원고 커밋**이라(맥의 naver_sync) 여기서 할 일이 없다.
+        # 텔레그램·스레드 알림은 네이버 주소를 알아야 하므로 맥이 올린 뒤 보낸다.
+        print("한국어: 워드프레스에 올리지 않습니다 — 네이버 블로그 전용입니다(2026-09-15).")
+        print(f"상태: {status} (영어만 워드프레스)")
+        return
 
     ko_result = publish_wordpress.publish_draft(
         ko["title"],

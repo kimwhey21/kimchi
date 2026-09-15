@@ -34,11 +34,23 @@ class PublishOrderTest(unittest.TestCase):
              patch.object(publish_wordpress, "_find_existing_post_by_slug", return_value=None):
             publish_editorial.publish(MANUSCRIPT, publish_live=True)
 
-        self.assertEqual(len(calls), 2, calls)
+        # 2026-09-15부터 한국어 시황은 워드프레스에 가지 않는다(사용자 결정) — 네이버 블로그 전용이다.
+        # 올라가는 것은 영어판뿐이고, 한국어판을 올리려 들면 이 검사가 잡는다.
+        self.assertEqual(len(calls), 1, calls)
         self.assertEqual(calls[0].get("lang"), "en")
         self.assertTrue(calls[0]["slug"].endswith("-en"), calls[0]["slug"])
-        self.assertIsNone(calls[1].get("lang"))
-        self.assertTrue(calls[1]["slug"].endswith("-ko"), calls[1]["slug"])
+        self.assertFalse(any(str(c.get("slug", "")).endswith("-ko") for c in calls), calls)
+
+
+class KoreanDailySwitchTest(unittest.TestCase):
+    """한국어 시황을 워드프레스에 올릴지는 스위치 하나다(2026-09-15).
+
+    끄는 결정을 코드에서 지우지 않고 스위치로 남긴 이유는, 네이버가 막히거나 생각이 바뀌면
+    되돌릴 수 있어야 하기 때문이다. 스위치가 사라지면 되돌리는 길도 사라진다.
+    """
+
+    def test_the_switch_exists_and_is_off(self) -> None:
+        self.assertFalse(publish_editorial.KO_DAILY_TO_WORDPRESS)
 
 
 if __name__ == "__main__":

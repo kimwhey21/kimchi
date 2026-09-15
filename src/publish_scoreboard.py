@@ -65,8 +65,9 @@ def load(path: Path = DATA) -> list[dict]:
                 problems.append(f"{i}번 글: {key}가 없습니다.")
         if a.get("date") and not _DATE.match(str(a["date"])):
             problems.append(f"{i}번 글: date는 YYYY-MM-DD여야 합니다 ({a['date']}).")
-        if a.get("url") and not str(a["url"]).startswith("https://fermata.it.kr/"):
-            problems.append(f"{i}번 글: url은 fermata.it.kr 주소여야 합니다 ({a['url']}).")
+        # 한국어 시황이 네이버 전용이 된 뒤(2026-09-15) 성적표에는 두 종류의 주소가 섞인다.
+        if a.get("url") and not str(a["url"]).startswith(("https://fermata.it.kr/", "https://blog.naver.com/")):
+            problems.append(f"{i}번 글: url은 fermata.it.kr 또는 blog.naver.com 주소여야 합니다 ({a['url']}).")
         for j, c in enumerate(a.get("checks") or [], start=1):
             if not c.get("what"):
                 problems.append(f"{i}번 글 {j}번 확인 지점: what이 없습니다.")

@@ -1,6 +1,7 @@
 """네이버 블로그(blog.naver.com/fermata49)용 원고 만들기 (2026-09-10, 사용자 결정).
 
-본진(fermata.it.kr) 글을 네이버 독자용으로 다시 짠다 — 전문이 아니라 **요약 + 그림 셋 + 링크**.
+본진(fermata.it.kr) 글을 네이버 독자용으로 짠다 — 기준표·가이드는 **요약 + 그림 셋 + 링크**,
+시황과 잡지는 본진에 쌍둥이가 없으므로 **본문 전문, 링크 없음**(시황은 2026-09-15 사용자 결정).
 이유: 네이버 검색은 네이버 안의 본문만 보고, 전문을 두 곳에 올리면 구글이 한쪽(대개 네이버)만
 고르며, 네이버 독자는 결론이 앞에 있는 짧은 글을 읽는다. 그래서
   1. 제목은 검색어 머리 + 본진 제목("코스피 마감 시황 9월 10일: …"),
@@ -167,7 +168,9 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     is_daily = market in ("kr", "us")
     if is_daily:
         prefix = ("코스피 마감 시황 " if market == "kr" else "미국증시 마감 ") + _kdate(date_str)
-        url = f"https://fermata.it.kr/editorial-{market}-{date_str}-ko/"
+        # 한국어 시황은 본진에 쌍둥이가 없다(2026-09-15, 사용자 결정) — 링크를 걸 곳이 없고,
+        # 네이버는 밖으로 나가는 링크가 붙은 글을 좋게 보지 않는다. 이 글이 곧 전문이다.
+        url = ""
         category = "시황"
         tags = list(FIXED_TAGS[market])
     elif doc.get("series") == "프리뷰":
@@ -226,6 +229,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks.append(("h", "Fermata's Take"))
         blocks.append(("q", "\n".join(take[:2])))
     full = (doc.get("naver") or {}).get("narrative") or []
+    if is_daily:
+        # 시황은 네이버가 유일한 공개처다(2026-09-15). 축약본이 아니라 본문을 그대로 싣는다 —
+        # 그전에는 900~2,200자 요약본이 갔고, 본진과 겹치지 않게 매일 다시 쓰는 일이 딸려 있었다.
+        full = list(ko.get("narrative") or [])
     if magazine:
         # 참고 블로그(피우스의 책도둑 & 매거진) 실측 꼴은 제목 → 📌 간단 브리핑 → 본문 → 자료 출처인데, 브리핑과 Take는 사용자 결정으로 뺐다.
         # 본문은 `ko.narrative` 그대로가 네이버 본문이다(본진 쌍둥이가 없으니 naver.narrative를 따로 두지 않는다).
@@ -261,6 +268,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         if srcs:
             blocks.append(("h", "자료 출처"))
             blocks += [("p", f"{x['name']}, {x['title']}" if x.get("title") else str(x["name"])) for x in srcs]
+    elif is_daily:
+        # 시황은 본진에 쌍둥이가 없다(2026-09-15) — 가리킬 글이 없으므로 안내를 넣지 않는다.
+        # 넣어 두면 "블로그에도 있습니다"가 거짓말이 된다.
+        pass
     elif full:
         blocks.append(("p", "같은 주제를 표와 그래픽으로 정리한 글은 페르마타 블로그에도 있습니다."))
     elif doc.get("series") in ("가이드", "이벤트"):
@@ -269,7 +280,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks.append(("p", "업종별 등락, 외국인·기관 수급, 금리·환율 표까지 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
     if url:
         blocks.append(("p", url))
-        # 텔레그램 채널(2026-09-12, 홍보 1번 → "진행해"): 글을 끝까지 읽은 사람에게 구독할 곳을 보여 준다.
+    # 텔레그램 채널(2026-09-12, 홍보 1번 → "진행해"): 글을 끝까지 읽은 사람에게 구독할 곳을 보여 준다.
+    # 본진 링크가 없는 시황에도 넣는다 — 이건 우리 채널이지 남의 글로 보내는 링크가 아니다(2026-09-15).
+    # 잡지는 브랜드가 퍼플썸이라 페르마타 채널을 넣지 않는다.
+    if not magazine:
         blocks.append(("p", "매일 저녁 마감 시황을 텔레그램으로도 받아 볼 수 있습니다."))
         blocks.append(("p", TELEGRAM_URL))
     # 태그는 글에서 뽑는다(src/post_tags.py, 2026-09-12): 고정어 + 종목 이름 + 주제어 + 달. 12개까지. 잡지는 원고의 tags 그대로.

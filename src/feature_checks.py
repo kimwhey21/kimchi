@@ -229,6 +229,7 @@ NAVER_DUP_MIN_CHARS = 25
 # 하필 하루 두 번으로 가장 자주 올리는 종류다 — 유사문서로 걸리면 네이버 통로가 통째로 막힌다.
 # 문턱은 가이드보다 낮다. 목적은 분량을 늘리는 것이 아니라 겹침을 없애는 것이다.
 NAVER_DAILY_SINCE = "2026-09-14"
+NAVER_DAILY_ENDED = "2026-09-16"   # 이 날짜부터 시황은 네이버 전용(본문 그대로)
 NAVER_DAILY_MARKETS = {"kr", "us"}
 NAVER_DAILY_SECTIONS = (3, 5)
 NAVER_DAILY_CHARS = (900, 2200)
@@ -243,6 +244,10 @@ def naver_spec(doc: dict) -> tuple[str, tuple[int, int], tuple[int, int]] | None
     if series == "매거진":
         return None            # 본진 쌍둥이가 없다 — 이 원고의 본문이 곧 네이버 본문이다(magazine_issues가 따로 본다)
     if not series and str(doc.get("market") or "") in NAVER_DAILY_MARKETS:
+        # 2026-09-16부터 한국어 시황은 네이버에만, 본문 그대로 나간다(사용자 결정) — 쌍둥이가 없으니
+        # 다시 쓸 대상도 없다. 그 전에 쓴 원고는 규칙이 있던 시절 것이라 그대로 검사한다.
+        if date >= NAVER_DAILY_ENDED:
+            return None
         return ("시황", NAVER_DAILY_SECTIONS, NAVER_DAILY_CHARS) if date >= NAVER_DAILY_SINCE else None
     return None
 

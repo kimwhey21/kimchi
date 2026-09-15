@@ -94,6 +94,28 @@ def publish(text: str, image_url: str | None, *, wait: float = PUBLISH_WAIT_SECO
     return _post(f"{user}/threads_publish", {"creation_id": container})["id"]
 
 
+
+def notify_naver(doc: dict, title: str, link: str, image_url: str | None = None) -> bool:
+    """워드프레스에 쌍둥이가 없는 글(한국어 시황)을 네이버 주소로 알린다 (2026-09-15).
+
+    사진은 대개 없이 보낸다 — 스레드 API는 **공개된 이미지 주소**를 요구하는데 네이버 전용 글의
+    표지는 이 맥의 로컬 파일이다. 글과 링크만으로도 스레드에는 링크 카드가 붙는다.
+    다시 올린 글인지 가리는 일은 부르는 쪽(맥의 동기화)이 `posted.json`으로 한다.
+    """
+    if str(doc.get("lang") or "ko") == "en":
+        return False
+    if not configured():
+        print("[스레드] 설정 없음 — 건너뜁니다")
+        return False
+    try:
+        text = compose(doc, title, link)
+        thread_id = publish(text, image_url)
+        print(f"[스레드] 올림: {thread_id} — {link}")
+        return True
+    except Exception as error:   # noqa: BLE001 — 알림 실패가 발행을 실패시키면 안 된다
+        print(f"[스레드 실패] {error}")
+        return False
+
 def notify_post(base: str, post_id: int, title: str, doc: dict, *, force: bool = False) -> bool:
     if str(doc.get("lang") or "ko") == "en":
         return False
