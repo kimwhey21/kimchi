@@ -688,6 +688,21 @@ def _footer(d: ImageDraw.ImageDraw, h: int, text: str) -> None:
 CREDIT = {"ko": "자료: {source} · Fermata 작성", "en": "Source: {source} · Fermata"}
 
 
+def _wrap(text: str, font, max_width: int) -> list[str]:
+    """글자가 들어갈 만큼만 한 줄에 담고 나머지를 다음 줄로. 잘라 버리지 않는다."""
+    words, lines, cur = str(text or "").split(), [], ""
+    for word in words:
+        trial = f"{cur} {word}".strip()
+        if cur and font.getlength(trial) > max_width:
+            lines.append(cur)
+            cur = word
+        else:
+            cur = trial
+    if cur:
+        lines.append(cur)
+    return lines
+
+
 def _credit(source: str, lang: str = "ko") -> str:
     return CREDIT.get(lang, CREDIT["ko"]).format(source=source)
 
@@ -904,7 +919,10 @@ def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
     ncol = max(len(r) for r in rows)
     columns = list(columns or (["항목", "발표", "예상", "차이"][:ncol] + [""] * max(0, ncol - 4)))
     row_h, top = 54, 120
-    h = top + row_h * (len(rows) + 1) + 40 + (40 if note else 0)
+    # 각주가 길면 오른쪽에서 **조용히 잘렸다**(2026-09-15 실측: "…USD at 1,359.80 on Septemb"에서 끊겼다).
+    # 글쓴이에게 글자 수를 세게 하는 대신 여기서 줄로 접는다. 접은 줄 수만큼 그림을 키운다.
+    note_lines = _wrap(note, _font(17), W - 64) if note else []
+    h = top + row_h * (len(rows) + 1) + 40 + (26 * len(note_lines) + 14 if note_lines else 0)
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
     d.text((32, 26), title, font=_font(26, True), fill=INK)
@@ -934,8 +952,8 @@ def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
             d.text((x_of(j) + (12 if j == 0 else other_w - 12), y_top + row_h / 2), cell,
                    font=_font(19, j != 0), fill=color, anchor="lm" if j == 0 else "rm")
         d.line([(32, y_top + row_h), (W - 32, y_top + row_h)], fill=LINE, width=1)
-    if note:
-        d.text((32, y + len(rows) * row_h + 18), note, font=_font(17), fill=INK)
+    for k, line in enumerate(note_lines):
+        d.text((32, y + len(rows) * row_h + 18 + 26 * k), line, font=_font(17), fill=INK)
     _footer(d, h, _credit(source, lang))
     img.save(output_path, format="PNG", optimize=True)
     return output_path
