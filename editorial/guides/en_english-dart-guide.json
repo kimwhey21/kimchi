@@ -1,0 +1,184 @@
+{
+ "kind": "feature",
+ "series": "Guide",
+ "lang": "en",
+ "date": "2026-09-15",
+ "checked": "2026-09-15",
+ "slug": "how-to-research-a-korean-company-in-english-dart-kind-and-what-the-translation-leaves-out",
+ "category_id": 153,
+ "radar_origin": "search queue: englishdart",
+ "tags": [
+  "english dart",
+  "korea dart",
+  "dart fss",
+  "Korean company filings",
+  "Open DART"
+ ],
+ "related": [
+  {
+   "title": "KOSPI vs KOSDAQ: Company Counts, Listing Bars and Risk (2026)",
+   "url": "https://fermata.it.kr/kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you/"
+  },
+  {
+   "title": "How to Buy Korean Stocks From the US in 2026: Brokers and Fees",
+   "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+  },
+  {
+   "title": "Taxes on Korean Stocks for Foreign Investors (2026)",
+   "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
+  }
+ ],
+ "sources": [
+  {
+   "name": "DART",
+   "title": "English DART front page and disclaimer (FSS)",
+   "url": "https://englishdart.fss.or.kr/"
+  },
+  {
+   "name": "Financial Supervisory Service",
+   "title": "Open DART developer portal",
+   "url": "https://opendart.fss.or.kr/"
+  },
+  {
+   "name": "KIND",
+   "title": "Korea Exchange disclosure portal",
+   "url": "https://kind.krx.co.kr/"
+  }
+ ],
+ "ko": {
+  "title": "English DART: How to Read Korean Company Filings (2026)",
+  "narrative": [
+   {
+    "heading": "The short answer: the English site is a different address",
+    "body": "Korea's corporate filings all land in one place, DART, run by the Financial Supervisory Service (FSS). The English version lives at englishdart.fss.or.kr — a separate host, not a language toggle on the Korean site. Adding a language parameter to dart.fss.or.kr does not switch it; we tried, and the page still renders in Korean.\n\nBefore you rely on anything you read there, know the sentence the FSS puts at the top of its own English site: \"Because disclosures in English are made voluntarily with no legal effect and may not correspond to the original disclosures in Korean due to mistranslation, the user is advised to refer to the original filings in Korean for specific details.\"\n\nThat one line is the whole game. English filings on DART are a courtesy translation. They are not the legal document, companies are not obliged to produce them, and where the English and the Korean differ, the Korean governs. Everything below is written around that constraint rather than pretending it does not exist."
+   },
+   {
+    "heading": "What the English site actually gives you",
+    "body": "The English site is more complete than most foreign investors expect. The top navigation runs: Latest Disclosure, Search Filings, Company Information, XBRL Financial Statements, Public Offering Information, Open DART, and About DART, with a KOR button to jump to the Korean original at any point.\n\nThe front page carries a live Today's Disclosure feed, which the site states is \"updated every 30seconds,\" split by board. When we loaded it at 20:08 on September 15, 2026, it showed 372 filings for that day: 119 KOSPI, 121 KOSDAQ, 4 KONEX, 128 categorised as Others, plus 67 under 5% and Executive reporting and 52 fund disclosures.\n\nThe filing titles in that feed are genuine English, not transliteration. The entries we saw that evening included \"Termination of Suspension of Stock Trading\" from DAWONSYS, \"Change of The Largest Shareholder\" from Ray and EOFlow, and \"New Facility Investment, etc.\" from AK Holdings and JEJUAIR. Corrections are flagged inline as \"[Correction of statement]\" ahead of the title.\n\nFor an investor who wants to know what happened to a Korean company today, this feed alone answers most of it, in English, free, with no account."
+   },
+   {
+    "heading": "Looking up one company",
+    "body": "Use Integrated Search for Disclosures on the front page. The form takes a company name or code in the box marked \"Enter company name or code,\" with a dropdown to switch the search key from company name to other identifiers, and a row of ten category checkboxes to narrow what comes back.\n\nThose categories are worth memorising, because they are how Korean disclosure is organised and they map poorly onto US filing types: Periodic Disclosure, Report on Major Issues, Issuance Disclosure, Equity Disclosure, Miscellaneous Disclosures, External Audit Matters, Fund Disclosure, Asset Securitization, Exchange Disclosure, and Fair Trade Commission Disclosure.\n\nPeriodic Disclosure is the closest thing to the 10-K and 10-Q rhythm — annual, half-year and quarterly reports. Report on Major Issues is where the events that move a share price show up. Equity Disclosure covers the ownership changes that the 5% and executive reporting feed also surfaces. If you check nothing, you get everything, which for an active large cap is a lot.\n\nCompany Information and XBRL Financial Statements are separate menus rather than sub-pages of the search, and that is where profiles and machine-readable financials sit."
+   },
+   {
+    "heading": "Reading a filing, and the button that matters",
+    "body": "Open a filing and it loads in DART's document viewer at a URL keyed to a receipt number — for the DAWONSYS filing we opened, englishdart.fss.or.kr/dsbh001/main.do?rcpNo=20260915900824. The viewer gives you a table of contents, an all-document search, previous and next navigation, a Main Documents selector, an Attachment Documents selector, and Download and Print.\n\nThe button that matters is Korean View. It swaps you to the same filing in the original Korean, which is the version with legal effect. Use it whenever a number or a date is going to drive a decision. Even without Korean, the original is where you can confirm a figure against the translation, and machine translation of a specific Korean line is far safer than trusting a whole English summary you cannot check.\n\nFilings also carry a jurisdiction note at the top — the one we read said the disclosure \"is under the jurisdiction of [Korea Exchange's KOSDAQ Market Headquarters]\" — which tells you which body governs the filing and, indirectly, which board the company is on."
+   },
+   {
+    "heading": "Where the English runs out",
+    "body": "Three gaps to plan around.\n\nFirst, coverage is voluntary, so it is uneven by company. Large, foreign-held companies translate consistently; smaller KOSDAQ names often do not, and there is no rule entitling you to an English version of any particular filing. When an English filing simply does not exist, the Korean one still does — the absence is a translation gap, not a disclosure gap.\n\nSecond, KIND, the Korea Exchange's own disclosure portal that many older guides send you to for an English view, did not serve us an English site. The address those guides use, kind.krx.co.kr/eng/main.do, returned a page-does-not-exist error when we tried it on September 15, 2026. The main KIND site loads, but its English surface is thin — mostly index and product names rather than filings. Treat DART as the English route and KIND as a Korean-language supplement.\n\nThird, the translation itself is disclaimed by the regulator, as quoted above. In practice that means using English DART to find out that something happened and when, then verifying the specifics in the Korean original before you act on them."
+   },
+   {
+    "heading": "If you want the data rather than the pages",
+    "body": "Open DART, at opendart.fss.or.kr, is the API layer over the same filings, and it appears in the English site's own top navigation. It issues API keys and serves filing lists, company profiles and XBRL financial statements as structured data rather than HTML pages.\n\nThis is the right tool if you are screening many companies rather than reading one, or if you want financial statements in a form you can put into a spreadsheet without retyping. The XBRL Financial Statements menu on the main English site is the browser-based version of the same underlying data.\n\nOne caution that follows from everything above: the API returns what was filed, including the Korean originals, and the same voluntary-translation limits apply to the English records inside it. An automated pipeline built only on English records will silently miss filings from companies that never translated them, which skews toward missing exactly the smaller companies where surprises happen."
+   },
+   {
+    "heading": "What we could and could not verify",
+    "body": "Everything described here was read directly on September 15, 2026, in a browser: the English DART front page, the Today's Disclosure counts quoted above, the ten search categories, and one filing opened in the document viewer. The FSS disclaimer is quoted verbatim from the top of the English front page.\n\nTwo limits. First, we verified that filing documents open in English and that a Korean View control exists, but we did not sample enough companies to measure what share of filings get translated — our statement that coverage skews toward larger companies reflects the voluntary basis the FSS describes, not a count we ran. Second, the English site refused direct deep links when we requested sub-pages outside a browser session; every such request returned the site's own error page. In a normal browser the same sections work, so plan to navigate from the front page rather than bookmarking deep URLs, and expect scripted access to need Open DART rather than page scraping."
+   }
+  ],
+  "closing": {
+   "heading": "The takeaway",
+   "body": "English DART is better than its reputation and worse than a substitute for the Korean original, and both halves of that matter. Go to englishdart.fss.or.kr, use Today's Disclosure to see what happened, use Integrated Search for a single company, and use Open DART if you are screening rather than reading.\n\nThen remember the FSS's own warning. The English filing is voluntary and carries no legal effect. Before a number drives a decision, press Korean View and check it against the version that does.\n\nThis is information, not investment advice. The site's structure, counts and quoted text were read on September 15, 2026 and can change."
+  }
+ },
+ "graphics": [
+  {
+   "kind": "cover",
+   "featured": true,
+   "alt": "English DART at englishdart.fss.or.kr showed 372 filings on September 15, 2026, but English filings are voluntary and carry no legal effect",
+   "args": {
+    "kicker": "Investor Guide",
+    "subject": "Reading Korean Filings in English",
+    "left": {
+     "label": "Filings that day",
+     "value": "372"
+    },
+    "right": {
+     "label": "Legal effect",
+     "value": "None"
+    }
+   }
+  },
+  {
+   "kind": "fact_table",
+   "section": 1,
+   "alt": "Today's Disclosure counts on English DART at 20:08 on September 15, 2026, split by board",
+   "args": {
+    "title": "One evening on English DART",
+    "subtitle": "Today's Disclosure feed at 20:08 KST, September 15, 2026",
+    "columns": [
+     "Tab",
+     "Filings",
+     "What it holds"
+    ],
+    "rows": [
+     [
+      "ALL",
+      "372",
+      "Everything filed that day"
+     ],
+     [
+      "KOSPI",
+      "119",
+      "Main board companies"
+     ],
+     [
+      "KOSDAQ",
+      "121",
+      "Growth board companies"
+     ],
+     [
+      "KONEX",
+      "4",
+      "Smallest listed tier"
+     ],
+     [
+      "OTHERS",
+      "128",
+      "Unlisted and other filers"
+     ],
+     [
+      "5% / Executive",
+      "67",
+      "Ownership and insider reports"
+     ],
+     [
+      "FUND",
+      "52",
+      "Fund disclosures"
+     ]
+    ],
+    "source": "English DART (FSS), read September 15, 2026",
+    "note": "The site states the feed is updated every 30 seconds."
+   }
+  },
+  {
+   "kind": "checklist",
+   "section": 3,
+   "alt": "Four steps to research a Korean company in English on DART, ending with checking the Korean original",
+   "args": {
+    "title": "Researching one Korean company in English",
+    "subtitle": "The order that avoids relying on a disclaimed translation",
+    "items": [
+     {
+      "label": "Start at englishdart.fss.or.kr",
+      "why": "The English site is a separate host, not a toggle on the Korean one"
+     },
+     {
+      "label": "Integrated Search, by company name or code",
+      "why": "Ten category filters; Periodic Disclosure is the annual and quarterly rhythm"
+     },
+     {
+      "label": "Open the filing in the viewer",
+      "why": "Table of contents, main documents, attachments, download"
+     },
+     {
+      "label": "Press Korean View before acting",
+      "why": "The Korean filing is the one with legal effect; English is voluntary"
+     }
+    ]
+   }
+  }
+ ]
+}
