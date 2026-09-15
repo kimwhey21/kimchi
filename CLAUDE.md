@@ -529,6 +529,16 @@
   네이버에 쌍둥이가 없어 그대로 둔다 ③ 성적표의 본진 주소를 네이버 주소로 갈아 끼웠다
   (`scripts/scoreboard_naver_urls.py`가 이제 빈 칸을 채울 뿐 아니라 비공개가 된 주소도 바꾼다). 바꾸지 않으면
   `publish_scoreboard.only_live`가 404를 보고 그 항목을 성적표에서 통째로 뺀다.
+- **홈·목록의 Checkpoint 탭은 네이버 블로그 카테고리로 간다**(2026-09-15, 사용자: "2"). 본진 Checkpoint를
+  전부 비공개로 돌려 `/checkpoint/` 목록이 비었는데, 탭을 지우면 되돌릴 때 여섯 군데를 다시 고쳐야 한다.
+  그래서 탭은 그대로 두고 `href`만 `https://blog.naver.com/fermata49?Redirect=Category&categoryNo=6`으로
+  바꿨다(`target="_blank"`). 고친 곳은 **페이지 6개(76 daily·77 guides·105 all·1047 checkpoint·1439 weekly·
+  1610 guide) + `twentytwentyfive//home` 템플릿** — 이 일곱이 탭 줄이 복제돼 있는 전부다(REST로 전수 조회해
+  확인했다. 724 scoreboard·1479 stocks의 'Checkpoint'는 본문 글자이지 탭이 아니다). `flex-wrap`을 건드리지 말 것 —
+  모바일에서 탭 줄이 두 줄로 접혀야 가로가 넘치지 않는다(390px 실측). `/checkpoint/` 페이지 자체는 살려 두되
+  `query-no-results` 블록의 "아직 글이 없습니다"를 네이버 안내로 바꿨다 — **목록이 다시 채워지면 그 안내는
+  저절로 사라지므로** Checkpoint를 다시 공개할 때 되돌릴 것이 없다. 네이버 카테고리 번호는 추측하지 말고
+  `PostList.naver?blogId=fermata49`를 받아 `categoryNo=`로 확인한다(시황 1·Checkpoint 6·가이드 7·Weekly 8).
 - **두 번째 네이버 블로그는 잡지다**(2026-09-13, 사용자: "blog.naver.com/jeunkim처럼 다양한 분야의 글을 잡지처럼").
   시리즈 `매거진`, 원고는 `editorial/magazine/<날짜>_<slug>.json`, 루틴은 `docs/routine_magazine.md`(매일 02:00 KST에 세 편 집필 — 다른 루틴이 없는 시각, 게시는 이 맥이 07:30·12:30·19:30 한 편씩,
   코너 일곱: 시장 읽기·시장의 역사·투자 심리·기업과 기술·과학·돈의 상식·만약에). **워드프레스에는 가지 않는다** — 발행 워크플로가
