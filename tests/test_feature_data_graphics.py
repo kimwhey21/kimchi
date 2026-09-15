@@ -54,12 +54,16 @@ class FeatureHeadingLengthTest(unittest.TestCase):
         issues = editorial_title.collect_issues(doc, kind="프리뷰")
         self.assertTrue(any("소제목 1" in i and "32자" in i for i in issues), issues)
 
-    def test_preview_needs_three_visuals(self) -> None:
+    def test_preview_needs_eight_visuals_after_the_merge(self) -> None:
+        """2026-09-16에 미국장 시황과 합쳐지며 3장 → 8장으로 올랐다.
+
+        어젯밤 마감·오늘 밤 일정·내일 아침 한국장을 한 편에 담으니 그릴 것도 그만큼 늘었다.
+        """
         doc = {"kind": "feature", "series": "프리뷰",
-               "ko": {"title": "t", "narrative": [{"heading": f"{i}. 절", "body": "9월 8일."} for i in range(1, 4)],
+               "ko": {"title": "t", "narrative": [{"heading": f"{i}. 절", "body": "9월 8일."} for i in range(1, 12)],
                       "closing": {"body": ""}}}
-        self.assertTrue(any("시각자료" in i for i in feature_checks.collect_issues(doc, graphics=2)))
-        self.assertFalse(any("시각자료" in i for i in feature_checks.collect_issues(doc, graphics=3)))
+        self.assertTrue(any("시각자료" in i for i in feature_checks.collect_issues(doc, graphics=3)))
+        self.assertFalse(any("시각자료" in i for i in feature_checks.collect_issues(doc, graphics=8)))
 
 
 if __name__ == "__main__":

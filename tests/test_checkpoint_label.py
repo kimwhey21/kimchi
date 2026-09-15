@@ -18,8 +18,10 @@ class KickerTest(unittest.TestCase):
     def test_checkpoint_without_deadline_still_shows_the_name(self) -> None:
         self.assertEqual(publish_feature._kicker({"series": "기준표", "date": "2026-09-08"}), "Checkpoint")
 
-    def test_preview_kicker_is_unchanged(self) -> None:
-        self.assertEqual(publish_feature._kicker({"series": "프리뷰", "date": "2026-09-08"}), "프리뷰")
+    def test_preview_kicker_shows_the_merged_name(self) -> None:
+        # 2026-09-16: 프리뷰가 어젯밤 마감까지 담게 되면서 화면 이름을 바꿨다(내부 키는 그대로).
+        # Checkpoint와 같은 방식이다 — `series`는 "프리뷰", 독자가 보는 것은 "미국장 브리핑".
+        self.assertEqual(publish_feature._kicker({"series": "프리뷰", "date": "2026-09-08"}), "미국장 브리핑")
 
 
 class DeadlineTest(unittest.TestCase):

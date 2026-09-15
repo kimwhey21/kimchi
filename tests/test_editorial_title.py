@@ -170,10 +170,13 @@ class UniversalRulesTest(unittest.TestCase):
         from src import editorial_title
         sections = [{"heading": f"{i}. 오늘 밤 일정", "body": "b"} for i in range(1, 4)]
         doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?", "narrative": sections}
-        self.assertEqual(collect_issues(doc, kind="프리뷰"), [])
+        # 같은 원고라도 종류마다 절 문턱이 다르다. 프리뷰는 2026-09-16에 미국장 시황과 합쳐지며
+        # 3 → 11로 올랐다 — 하루 한 편이 그날 미국장 보도의 전부가 됐기 때문이다.
+        self.assertTrue(any("11개 이상" in i for i in collect_issues(doc, kind="프리뷰")))
         self.assertTrue(any("8개 이상" in i for i in collect_issues(doc, kind="시황")))
         self.assertTrue(any("5개 이상" in i for i in collect_issues(doc, kind="기준표")))
         self.assertEqual(editorial_title.SECTION_FLOORS["가이드"], 5)
+        self.assertEqual(collect_issues({**doc, "narrative": sections * 4}, kind="프리뷰"), [])
 
     def test_heading_length_applies_to_every_kind(self) -> None:
         long = "1. 오늘 밤 일정 — 예정된 지표보다 이미 벌어진 사건, 그리고 그 뒤에 남은 것"
@@ -201,6 +204,6 @@ class UniversalRulesTest(unittest.TestCase):
     def test_short_label_is_a_note_not_a_block(self) -> None:
         notes: list[str] = []
         doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?",
-               "narrative": [{"heading": "1. 지금 숫자", "body": "b"}] * 3}
+               "narrative": [{"heading": "1. 지금 숫자", "body": "b"}] * 11}   # 프리뷰 절 문턱 11(2026-09-16)
         self.assertEqual(collect_issues(doc, kind="프리뷰", notes_out=notes), [])
         self.assertTrue(any("명사 토막" in n for n in notes), notes)

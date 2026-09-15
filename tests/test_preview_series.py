@@ -1,7 +1,9 @@
-"""밤 10시 미국장 프리뷰(시리즈 '프리뷰')를 기준표 파이프라인 위에 고정한다.
+"""저녁 「미국장 브리핑」(시리즈 키는 그대로 '프리뷰')을 기준표 파이프라인 위에 고정한다.
 
-새 파이프라인을 만들지 않고 관문·렌더·발행을 그대로 쓰되 문턱만 다르다:
-절 3개·시각자료 2장·출처 2곳. 기준표의 문턱(5·6·3)은 그대로여야 한다.
+2026-09-16에 미국장 시황과 합쳤다(사용자 결정). 전에는 밤 10시 프리뷰(절 3·시각자료 3·출처 2)와
+이튿날 아침 시황이 따로였는데, 하루 한 편이 그날 미국장 보도의 전부가 되면서 **문턱을 시황 쪽으로
+올렸다** — 절 11·시각자료 8·출처 4. 얇아지면 합칠 이유가 없어지므로 이 문턱이 곧 합친 이유다.
+기준표의 문턱(5·6·3)은 그대로여야 한다.
 """
 from __future__ import annotations
 
@@ -16,17 +18,34 @@ WORKFLOW = ROOT / ".github" / "workflows" / "preview_publish.yml"
 DOC = ROOT / "docs" / "routine_preview.md"
 
 
-def _doc(series: str) -> dict:
+def _doc(series: str, sections: int = 3) -> dict:
     body = "9월 8일 밤 8월 소비자물가가 나옵니다. DART와 한국거래소 자료를 함께 봅니다."
     return {"kind": "feature", "series": series,
             "ko": {"title": "오늘 밤 확인할 세 가지 — 물가와 국채금리",
-                   "narrative": [{"heading": f"{i}. 절", "body": body} for i in range(1, 4)],
+                   "narrative": [{"heading": f"{i}. 절", "body": body} for i in range(1, sections + 1)],
                    "closing": {"heading": "Fermata's Take", "body": "짧게."}}}
 
 
+def _full_doc() -> dict:
+    """합친 뒤의 브리핑 — 절 11·시각자료 8·출처 4를 채운 원고."""
+    doc = _doc("프리뷰", sections=11)
+    doc["ko"]["narrative"][0]["body"] = (
+        "9월 8일 밤 8월 소비자물가가 나옵니다. 로이터와 블룸버그가 같은 숫자를 전했고, "
+        "한국거래소와 DART 자료로 한국 쪽 연결을 확인했습니다.")
+    return doc
+
+
 class PreviewThresholdsTest(unittest.TestCase):
-    def test_preview_accepts_three_sections_and_two_graphics(self) -> None:
-        issues = feature_checks.collect_issues(_doc("프리뷰"), graphics=3)   # 표지 + 본문 둘 (2026-09-08)
+    def test_a_thin_preview_is_now_blocked(self) -> None:
+        """옛 문턱(절 3·시각자료 3)짜리 글은 이제 막힌다 — 그게 합친 이유다."""
+        issues = (editorial_title.collect_issues(_doc("프리뷰"), kind="프리뷰")
+                  + feature_checks.collect_issues(_doc("프리뷰"), graphics=3))
+        self.assertTrue(any("절이 3개" in i for i in issues), issues)
+        self.assertTrue(any("시각자료가 3장" in i for i in issues), issues)
+
+    def test_a_full_length_brief_passes(self) -> None:
+        issues = (editorial_title.collect_issues(_full_doc(), kind="프리뷰")
+                  + feature_checks.collect_issues(_full_doc(), graphics=8))
         self.assertFalse([i for i in issues if "절이" in i or "시각자료" in i], issues)
 
     def test_feature_thresholds_are_unchanged(self) -> None:
@@ -35,8 +54,11 @@ class PreviewThresholdsTest(unittest.TestCase):
         self.assertTrue(any("절이 3개" in i for i in issues), issues)
         self.assertTrue(any("시각자료가 2장" in i for i in issues), issues)
 
-    def test_preview_needs_two_sources_and_feature_three(self) -> None:
-        self.assertEqual(source_check.collect_issues(_doc("프리뷰")), [])
+    def test_preview_needs_four_sources_after_the_merge(self) -> None:
+        """출처 둘로는 더 이상 통과하지 못한다 — 어젯밤 마감과 오늘 밤 일정을 함께 다루니
+        확인해야 할 곳도 늘었다."""
+        self.assertTrue(source_check.collect_issues(_doc("프리뷰")))
+        self.assertEqual(source_check.collect_issues(_full_doc()), [])
         self.assertTrue(source_check.collect_issues(_doc("기준표")))
 
 
