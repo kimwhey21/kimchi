@@ -5,7 +5,7 @@
 이유: 네이버 검색은 네이버 안의 본문만 보고, 전문을 두 곳에 올리면 구글이 한쪽(대개 네이버)만
 고르며, 네이버 독자는 결론이 앞에 있는 짧은 글을 읽는다. 그래서
   1. 제목은 검색어 머리 + 본진 제목("코스피 마감 시황 9월 10일: …"),
-  2. 첫 문단은 Fermata's Take(판단)를 맨 위로,
+  2. 요약본은 Fermata's Take(판단)를 맨 위로, 본문 전문을 싣는 글(시황·프리뷰)은 본진처럼 맨 아래로,
   3. 절 다섯 개(그날 이야기·어제 판정·수급·주인공·다음 확인 지점), 1,500자 안팎,
   4. 그림 셋(지수 카드·움직인 종목·주인공 카드; 사진은 저작권 표시가 깨지므로 안 씀),
   5. 맨 아래 본진 링크 한 줄, 태그는 고정 넷 + 그날 것.
@@ -227,12 +227,16 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks.append(("img", cover))
     take = _plain((ko.get("closing") or {}).get("body", ""))
     magazine = doc.get("series") == "매거진"
-    if take and not magazine:   # 잡지에는 Take가 없다(2026-09-13 사용자 결정). 시황·가이드는 판단이 맨 앞.
+    preview = doc.get("series") == "프리뷰"
+    # 본문 전문을 싣는 글(시황·프리뷰)은 본진과 같은 차례로 간다 — Fermata's Take가 맨 아래다
+    # (2026-09-15, 사용자: "본문 형식으로 바꾸면 페르마타 테이크가 맨 아래로 가는거 아니었니 … 워드프레스 본진에 올라가던 형식말이야").
+    # 요약본(기준표·가이드·주간·이벤트)은 그대로 판단이 맨 앞이다 — 링크를 누르게 하려면 결론이 먼저 보여야 한다.
+    full_body = is_daily or preview
+    if take and not magazine and not full_body:   # 잡지에는 Take가 없다(2026-09-13 사용자 결정).
         blocks.append(("h", "Fermata's Take"))
         blocks.append(("q", "\n".join(take[:2])))
     full = (doc.get("naver") or {}).get("narrative") or []
-    preview = doc.get("series") == "프리뷰"
-    if is_daily or preview:
+    if full_body:
         # 시황은 네이버가 유일한 공개처다(2026-09-15). 축약본이 아니라 본문을 그대로 싣는다 —
         # 그전에는 900~2,200자 요약본이 갔고, 본진과 겹치지 않게 매일 다시 쓰는 일이 딸려 있었다.
         full = list(ko.get("narrative") or [])
@@ -260,6 +264,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks += [("p", p) for p in _chunks(_plain(section.get("body", ""))[:2])]
         if i < len(pics):
             blocks.append(("img", pics[i]))
+    if take and full_body:
+        # 본진 `templates/post.html.j2`의 마무리 절과 같은 자리·같은 분량이다(요약본처럼 두 문단만 자르지 않는다).
+        blocks.append(("h", "Fermata's Take"))
+        blocks += [("p", x) for x in _chunks(take)]
     check = ((ko.get("closing") or {}).get("check") or {}).get("what")
     if check:
         blocks.append(("h", "다음 확인 지점"))

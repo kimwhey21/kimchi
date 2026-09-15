@@ -24,7 +24,11 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(post["category"], "시황")
         self.assertEqual(post["url"], "")
         heads = [b[1] for b in post["blocks"] if b[0] == "h"]
-        self.assertEqual(heads[0], "Fermata's Take")
+        # 전문을 싣는 글은 본진(`templates/post.html.j2`)과 같은 차례다 — Fermata's Take가 맨 아래,
+        # 그 뒤가 다음 확인 지점이다(2026-09-15, 사용자: "본문 형식으로 바꾸면 테이크가 맨 아래로 가는거 아니었니").
+        # 맨 위로 올리면 요약본 꼴로 되돌아간다.
+        self.assertNotEqual(heads[0], "Fermata's Take")
+        self.assertEqual(heads[-2:], ["Fermata's Take", "다음 확인 지점"])
         self.assertGreater(len(heads), 5)                       # 전문이라 절이 다 들어온다
         self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]), post["blocks"][-4:])
         self.assertFalse(any("페르마타 블로그" in b[1] for b in post["blocks"]))
@@ -32,15 +36,21 @@ class BuildTest(unittest.TestCase):
         self.assertGreater(post["chars"], 2600)
 
     def test_paragraphs_are_short_and_take_is_a_quotation(self) -> None:
-        """2026-09-12: 모바일에서 문단이 벽처럼 읽혀 2~3문장으로 자르고, Fermata's Take는 인용구(q)로, 표지는 맨 앞."""
-        post = naver_post.build(Path("editorial/kr_2026-09-10.json"), Path("output/gate/kr_2026-09-10"))
+        """2026-09-12: 모바일에서 문단이 벽처럼 읽혀 2~3문장으로 자르고, Fermata's Take는 인용구(q)로, 표지는 맨 앞.
+
+        인용구 Take는 **요약본**(기준표·가이드·주간·이벤트)의 규칙이다 — 링크를 누르게 하려면 결론이
+        먼저 보여야 한다. 전문을 싣는 시황·프리뷰는 2026-09-15부터 본진 차례를 따라 맨 아래로 갔다.
+        """
+        post = naver_post.build(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json"))
         kinds = [b[0] for b in post["blocks"]]
         self.assertIn("q", kinds)
         self.assertLess(kinds.index("h"), kinds.index("q"))
-        for kind, text in post["blocks"]:
+        daily = naver_post.build(Path("editorial/kr_2026-09-10.json"), Path("output/gate/kr_2026-09-10"))
+        for kind, text in daily["blocks"]:
             if kind == "p":
                 self.assertLessEqual(len(naver_post._SENTENCE.split(text)), 3, text)
                 self.assertLessEqual(len(text), 300, text)
+        self.assertNotIn("q", [b[0] for b in daily["blocks"]])   # 전문에는 인용구 Take가 없다
         self.assertEqual(naver_post._chunks(["하나입니다. 둘입니다. 셋입니다. 넷입니다."]), ["하나입니다. 둘입니다. 셋입니다.", "넷입니다."])
 
     def test_cover_comes_first_when_present(self) -> None:
