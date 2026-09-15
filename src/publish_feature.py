@@ -148,7 +148,7 @@ def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict
                 if not price_path.exists():
                     raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 없습니다: {price_file}")
                 price_data = json.loads(price_path.read_text(encoding="utf-8"))
-            data_graphics.build(kind, price_data, path, **args)
+            data_graphics.build(kind, price_data, path, lang=str(doc.get("lang") or "ko"), **args)
         else:
             raise ValueError(f"알 수 없는 그래픽 종류: {kind}")
         image_issues = graphic_checks.verify_image(path)

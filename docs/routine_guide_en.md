@@ -210,6 +210,11 @@ KEPCO 기사가 난 날에 쓴다고 더 오르지 않습니다.
    - `ko.narrative` 5~7절, 절마다 300자 이상. 1절이 답. 소제목 80자 이하, 문장형 소제목 환영
      (`The cost most people miss: Korea taxes the sale, not the profit`).
    - `ko.closing`: heading `The takeaway`, 두세 문단. 마지막 문단에 "not tax/investment advice" 한 줄.
+   - `sources`: 본문에 이름을 댄 곳을 **주소까지**. 이제 글 아래 `How we checked`에 링크로 실립니다
+     (2026-09-15) — 그전에는 `source_check`가 개수만 세고 독자에게는 안 보였습니다.
+   - **`What we could and could not verify` 절을 하나 넣습니다**(2026-09-15). 우리가 실제로 연 페이지
+     (브로커의 공개 요금표·KRX·FSC 고시)에서 **본 그대로** 적고, 확인 못 한 항목은 확인 못 했다고 적습니다.
+     **없는 경험을 지어내지 않습니다** — "I opened an account and…"는 쓰지 않습니다.
    - `graphics` 2~3장: `cover`(featured, kicker "Investor Guide", subject 영어) + `fact_table`(section, 영어 표,
      `source` 필수) 또는 `checklist`. 한글은 어디에도 넣지 않습니다(관문이 막습니다).
    - 본문에 한글·마크다운 볼드 금지. 강조는 `<b>…</b>`. "watchlist" 같은 내부 용어 금지.
@@ -224,7 +229,12 @@ KEPCO 기사가 난 날에 쓴다고 더 오르지 않습니다.
 ## 절대 규칙
 
 - 규정·숫자는 출처 2곳이 맞을 때만. 세율은 조약·거주지에 따라 다르다는 단서를 붙입니다.
-- 특정 증권사·상품을 추천하지 않습니다.
+- **추천은 하지 않되, 비교표는 반드시 넣습니다**(2026-09-15, 사용자 승인). "Broker X is best"라고 쓰지 않고,
+  공개된 수수료·최소금액·되는 것/안 되는 것을 **표로 나란히** 놓습니다. 회사 이름을 빼면 중립이 아니라
+  **쓸모없는 글**이 됩니다 — 실측: `how to buy korean stocks` 1위 글은 Schwab $25~40 / IBKR <0.05%를 적고
+  **안 되는 증권사 다섯 곳**(Robinhood·Webull·Public·SoFi·Cash App)까지 이름을 댔습니다. 같은 검색어에서
+  우리 글은 "fees vary by broker"로 끝나 13.6위였습니다. 숫자에는 확인 날짜를 붙이고, 확인 못 한 칸은
+  `Not confirmed`라고 적습니다.
 - 한 편만, 원고 JSON 하나만 커밋합니다.
 
 ## 완료 보고

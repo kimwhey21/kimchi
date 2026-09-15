@@ -22,10 +22,22 @@ def _paragraphs(body: str) -> list[str]:
 # 영어 가이드(2026-09-12)는 같은 템플릿을 영어 문구로 렌더한다 — 템플릿을 둘로 나누면 스타일이 갈라진다.
 STRINGS = {
     "ko": {"lang": "ko", "locale": "ko_KR", "related": "관련 글",
+           "method_label": "확인한 것",
+           "checked": "{date} 기준으로 아래 출처에서 확인했습니다.",
+           "byline": "글: 페르마타 편집팀 · fermata.it.kr",
            "footer": "이 글은 정보 제공을 목적으로 하며 특정 종목의 매수·매도를 권유하지 않습니다."},
     "en": {"lang": "en", "locale": "en_US", "related": "Related",
+           "method_label": "How we checked",
+           "checked": "Checked {date} against the sources below.",
+           "byline": "Written by the Fermata editorial desk · fermata.it.kr",
            "footer": "This article is for information only and is not a recommendation to buy or sell any security."},
 }
+
+
+def _checked_line(doc: dict, strings: dict) -> str:
+    """'언제 기준인가'를 화면에 박는다 — 상시 글은 이 한 줄이 없으면 언제 쓴 글인지 독자가 모른다."""
+    date = str(doc.get("checked") or doc.get("date") or "").strip()
+    return strings["checked"].format(date=date) if date else ""
 
 
 def render(doc: dict, kicker: str, figures: dict[int, dict] | None = None,
@@ -41,6 +53,7 @@ def render(doc: dict, kicker: str, figures: dict[int, dict] | None = None,
             "figure": figures.get(index),
         })
     closing = ko.get("closing") or {}
+    strings = STRINGS.get(lang, STRINGS["ko"])
     env = Environment(loader=FileSystemLoader(str(TEMPLATES)),
                       autoescape=select_autoescape(["html", "xml"]))
     template = env.get_template("feature.html.j2")
@@ -50,5 +63,10 @@ def render(doc: dict, kicker: str, figures: dict[int, dict] | None = None,
         closing={"heading": closing.get("heading", ""),
                  "paragraphs": _paragraphs(closing.get("body", ""))},
         related=doc.get("related") or [],
-        strings=STRINGS.get(lang, STRINGS["ko"]),
+        strings=strings,
+        # 원고의 `sources`를 화면에 싣는다(2026-09-15). 그전에는 `source_check`가 개수만 세고
+        # 독자에게는 보이지 않아, 조사해 놓고 인용을 버리는 꼴이었다.
+        sources=[s for s in (doc.get("sources") or []) if s.get("name")],
+        checked_line=_checked_line(doc, strings),
+        byline=doc.get("byline") or strings["byline"],
     )

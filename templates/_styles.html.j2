@@ -96,6 +96,14 @@
   /* 관련 글 박스. 시황(post.html.j2)과 기준표(feature.html.j2)가 같이 쓴다 —
      2026-09-06에 여기 없이 feature.html.j2에만 있었다가 시황에도 넣으면서
      공유 파일로 옮겼다(복사해 두면 한쪽만 바뀐다는 원칙, 이 파일 맨 위 참고). */
+  /* 확인한 것·글쓴이 (2026-09-15) — 금융 글에서 구글이 가장 크게 보는 것이 '누가·무엇으로 확인했나'인데,
+     원고의 `sources`를 세기만 하고 화면에는 한 번도 싣지 않고 있었다. */
+  .mb-method { margin-top: 28px; padding: 18px 22px; border: 1px solid var(--mb-border); border-radius: 14px; font-size: 13px; color: var(--mb-text-muted); }
+  .mb-method-label { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 8px; color: var(--mb-text-muted); }
+  .mb-method-list { list-style: none; margin: 8px 0 0; padding: 0; }
+  .mb-method-list li { padding: 5px 0; line-height: 1.5; }
+  .mb-method-list a { color: var(--mb-text); text-decoration: underline; }
+  .mb-byline { margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--mb-border); }
   .mb-related { margin-top: 32px; padding: 20px 24px; background: var(--mb-card); border: 1px solid var(--mb-border); border-radius: 14px; }
   .mb-related-label { font-size: 13px; font-weight: 700; color: var(--mb-text-muted); margin: 0 0 4px; }
   .mb-related-list { list-style: none; margin: 0; padding: 0; }

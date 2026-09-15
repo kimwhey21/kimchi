@@ -683,8 +683,17 @@ def _footer(d: ImageDraw.ImageDraw, h: int, text: str) -> None:
     d.text((32, h - 34), text, font=_font(14), fill=SUB)
 
 
+# 그림 각주는 글의 언어를 따라간다(2026-09-15). 그전에는 영어 가이드의 표에도 `자료: … · Fermata 작성`이
+# 한글로 찍혔다 — 관문은 제목·본문만 보고 그림 속 글자는 못 본다. 눈으로 보고서야 찾았다.
+CREDIT = {"ko": "자료: {source} · Fermata 작성", "en": "Source: {source} · Fermata"}
+
+
+def _credit(source: str, lang: str = "ko") -> str:
+    return CREDIT.get(lang, CREDIT["ko"]).format(source=source)
+
+
 def price_history(price_data: dict, output_path: Path, ticker: str, title: str = "",
-                  subtitle: str = "", guide: float | None = None, guide_label: str = "") -> Path:
+                  subtitle: str = "", guide: float | None = None, guide_label: str = "", lang: str = "ko") -> Path:
     """한 지수·종목의 최근 3개월 종가 흐름 (2026-09-08, 사용자가 고른 시안 A·B).
 
     벤치마크(재테크농부) 이미지의 큰 몫이 이런 기간 차트 스크린샷입니다. 우리는
@@ -752,13 +761,13 @@ def price_history(price_data: dict, output_path: Path, ticker: str, title: str =
     d.ellipse([lx - 7, ly - 7, lx + 7, ly + 7], fill=color, outline=BG, width=3)
     d.text((lx - 12, ly - 10), fmt.format(closes[-1]) + unit, font=_font(20, True),
            fill=color, anchor="rd")
-    _footer(d, h, f"자료: 마감 종가 {dates[0]}~{dates[-1]} · Fermata 작성")
+    _footer(d, h, _credit(f"{dates[0]}~{dates[-1]}" if lang == "en" else f"마감 종가 {dates[0]}~{dates[-1]}", lang))
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
 
 def investor_flows(price_data: dict, output_path: Path, values: dict, source: str,
-                   title: str = "투자자별 순매수", subtitle: str = "", unit: str = "억원") -> Path:
+                   title: str = "투자자별 순매수", subtitle: str = "", unit: str = "억원", lang: str = "ko") -> Path:
     """외국인·기관·개인 순매수를 큰 숫자 셋으로 (2026-09-08, 시안 C).
 
     이 숫자는 시세 파일이 아니라 **조사에서** 옵니다(마감 집계 기사). 그래서
@@ -805,7 +814,7 @@ def investor_flows(price_data: dict, output_path: Path, values: dict, source: st
                 d.text((cx - 12, y + 22), label, font=lf, fill=PANEL, anchor="rm")
             else:
                 d.text((cx - width - 14, y + 22), label, font=lf, fill=color, anchor="rm")
-    _footer(d, h, f"자료: {source} · Fermata 작성")
+    _footer(d, h, _credit(source, lang))
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
@@ -813,7 +822,7 @@ def investor_flows(price_data: dict, output_path: Path, values: dict, source: st
 def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None = None,
                  items: list[dict] | None = None, title: str = "오늘 시장을 정한 숫자",
                  subtitle: str = "", note: str = "", period_days: int | None = None,
-                 period: str | None = None) -> Path:
+                 period: str | None = None, lang: str = "ko") -> Path:
     """지수·환율·유가 같은 숫자 2~4개를 카드로 (2026-09-08, 시안 D).
 
     `tickers`는 시세 파일의 지수·종목(값이 시세에서 나옵니다), `items`는 시세 파일에
@@ -872,14 +881,15 @@ def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None 
         d.text((x + 22, top + 140), change, font=_font(24, True), fill=color)
     if note:
         d.text((32, bottom + 26), note, font=_font(19), fill=INK)
-    _footer(d, h, "자료: 마감 시세 · 직접 적은 숫자는 본문 출처 참조 · Fermata 작성")
+    _footer(d, h, _credit("closing prices; figures in the article are sourced in the text" if lang == "en"
+                          else "마감 시세 · 직접 적은 숫자는 본문 출처 참조", lang))
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
 
 def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
                title: str = "발표값과 예상값", subtitle: str = "", columns: list | None = None,
-               note: str = "") -> Path:
+               note: str = "", lang: str = "ko") -> Path:
     """지표 발표값 대 예상값, 실적 대 컨센서스 같은 "실제 표"를 그림으로 (2026-09-08, 제안 9번).
 
     재테크농부 이미지의 상당수가 이런 표다. `rows`는 `[["8월 비농업 고용", "16.2만", "5.3만",
@@ -926,7 +936,7 @@ def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
         d.line([(32, y_top + row_h), (W - 32, y_top + row_h)], fill=LINE, width=1)
     if note:
         d.text((32, y + len(rows) * row_h + 18), note, font=_font(17), fill=INK)
-    _footer(d, h, f"자료: {source} · Fermata 작성")
+    _footer(d, h, _credit(source, lang))
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
@@ -942,8 +952,14 @@ BUILDERS = {"index_card": index_card, "sector_bars": sector_bars,
             "number_cards": number_cards, "fact_table": fact_table}
 
 
-def build(kind: str, price_data: dict, output_path: Path, **kwargs) -> dict:
-    """원고의 graphic 지정을 그림 파일로 만들고 렌더러가 쓸 정보를 돌려줍니다."""
+def build(kind: str, price_data: dict, output_path: Path, lang: str = "ko", **kwargs) -> dict:
+    """원고의 graphic 지정을 그림 파일로 만들고 렌더러가 쓸 정보를 돌려줍니다.
+
+    `lang`은 그림 각주("자료:" / "Source:")에만 쓴다 — 받지 않는 빌더에는 넘기지 않는다.
+    """
+    import inspect as _inspect
+    if lang != "ko" and kind in BUILDERS and "lang" in _inspect.signature(BUILDERS[kind]).parameters:
+        kwargs["lang"] = lang
     # output/은 저장소에 없습니다(gitignore). 러너에서 처음 그릴 때 만듭니다 —
     # 2026-09-04 첫 실행이 이 디렉터리가 없어 FileNotFoundError로 끝났습니다.
     ensure_korean_font()
