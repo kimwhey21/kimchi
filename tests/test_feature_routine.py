@@ -46,7 +46,11 @@ class FeatureRoutineDocTest(unittest.TestCase):
         text = re.sub(r"\s+", " ", DOC.read_text(encoding="utf-8"))
         self.assertIn("--publish", text)
         # 2026-09-12부터 자동화 스위치가 켜져 있다 — 루틴은 그 사실을 알고 관문 통과분만 커밋한다.
-        self.assertIn("커밋 즉시 공개", text)
+        self.assertIn("커밋 즉시 나갑니다", text)
+        # 2026-09-15: 본진은 비공개, 독자가 읽는 곳은 네이버다(사용자: "체크포인트는 2번").
+        # 루틴이 이걸 모르면 원고에 "본진에서 보세요" 같은 안내를 적는다.
+        self.assertIn("비공개(`private`)로만", text)
+        self.assertIn("독자가 읽는 곳은 네이버 블로그", text)
         self.assertIn("src.feature_gate", text)
         self.assertIn("--source unsplash", text)
         self.assertIn("featured_photo", text)

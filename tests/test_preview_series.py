@@ -84,9 +84,16 @@ class PreviewPrivateTest(unittest.TestCase):
     """
 
     def test_only_the_preview_series_goes_out_private(self) -> None:
+        """2026-09-15 저녁에 Checkpoint(`기준표`)도 같은 처리로 들어왔다(사용자: "체크포인트는 2번").
+
+        **가이드는 일부러 빠져 있다**(같은 결정의 "가이드는 3번") — 구글 유입이 거기서만 나오므로
+        본진에 공개로 남겨야 한다. 이 목록에 가이드를 더하지 말 것.
+        """
         from src import publish_feature
-        self.assertEqual(publish_feature._live_status({"series": "프리뷰"}), "private")
-        for series in ("기준표", "가이드", "Guide", "주간 결산", "다음 주 일정", "이벤트"):
+        for series in ("프리뷰", "기준표"):
+            with self.subTest(series=series):
+                self.assertEqual(publish_feature._live_status({"series": series}), "private")
+        for series in ("가이드", "Guide", "주간 결산", "다음 주 일정", "이벤트"):
             with self.subTest(series=series):
                 self.assertEqual(publish_feature._live_status({"series": series}), "publish")
 

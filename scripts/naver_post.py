@@ -1,7 +1,7 @@
 """네이버 블로그(blog.naver.com/fermata49)용 원고 만들기 (2026-09-10, 사용자 결정).
 
-본진(fermata.it.kr) 글을 네이버 독자용으로 짠다 — 기준표·가이드는 **요약 + 그림 셋 + 링크**,
-시황과 잡지는 본진에 쌍둥이가 없으므로 **본문 전문, 링크 없음**(시황은 2026-09-15 사용자 결정).
+본진(fermata.it.kr) 글을 네이버 독자용으로 짠다 — 가이드·주간·이벤트는 **요약 + 그림 셋 + 링크**,
+시황·프리뷰·Checkpoint·잡지는 본진에 공개 쌍둥이가 없으므로 **본문 전문, 링크 없음**(2026-09-15 사용자 결정).
 이유: 네이버 검색은 네이버 안의 본문만 보고, 전문을 두 곳에 올리면 구글이 한쪽(대개 네이버)만
 고르며, 네이버 독자는 결론이 앞에 있는 짧은 글을 읽는다. 그래서
   1. 제목은 검색어 머리 + 본진 제목("코스피 마감 시황 9월 10일: …"),
@@ -214,8 +214,9 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         tags = [str(t) for t in (doc.get("tags") or []) if "페르마타" not in str(t) and "fermata" not in str(t).lower()][:10] + ["퍼플썸매거진"]
     else:
         prefix = "투자 체크포인트"
-        slug = doc.get("slug") or Path(path).stem.replace("_", "-", 1).replace("_", "-")
-        url = f"https://fermata.it.kr/{slug}/"
+        # Checkpoint도 2026-09-15부터 본문 전문·링크 없음이다(사용자: "체크포인트는 2번"). 본진 글은
+        # 같은 날 `private`로 돌렸으므로 가리킬 공개 주소가 없다 — 시황·프리뷰와 같은 처리다.
+        url = ""
         category = "Checkpoint"
         tags = list(FIXED_TAGS["feature"])
     base_title = str(ko.get("title", ""))
@@ -231,14 +232,15 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     # 본문 전문을 싣는 글(시황·프리뷰)은 본진과 같은 차례로 간다 — Fermata's Take가 맨 아래다
     # (2026-09-15, 사용자: "본문 형식으로 바꾸면 페르마타 테이크가 맨 아래로 가는거 아니었니 … 워드프레스 본진에 올라가던 형식말이야").
     # 요약본(기준표·가이드·주간·이벤트)은 그대로 판단이 맨 앞이다 — 링크를 누르게 하려면 결론이 먼저 보여야 한다.
-    full_body = is_daily or preview
+    checkpoint = doc.get("series") == "기준표"
+    full_body = is_daily or preview or checkpoint
     if take and not magazine and not full_body:   # 잡지에는 Take가 없다(2026-09-13 사용자 결정).
         blocks.append(("h", "Fermata's Take"))
         blocks.append(("q", "\n".join(take[:2])))
     full = (doc.get("naver") or {}).get("narrative") or []
     if full_body:
-        # 시황은 네이버가 유일한 공개처다(2026-09-15). 축약본이 아니라 본문을 그대로 싣는다 —
-        # 그전에는 900~2,200자 요약본이 갔고, 본진과 겹치지 않게 매일 다시 쓰는 일이 딸려 있었다.
+        # 시황·프리뷰·Checkpoint는 네이버가 유일한 공개처다(2026-09-15). 축약본이 아니라 본문을 그대로
+        # 싣는다 — 그전에는 900~2,200자 요약본이 갔고, 본진과 겹치지 않게 매번 다시 쓰는 일이 딸려 있었다.
         full = list(ko.get("narrative") or [])
     if magazine:
         # 참고 블로그(피우스의 책도둑 & 매거진) 실측 꼴은 제목 → 📌 간단 브리핑 → 본문 → 자료 출처인데, 브리핑과 Take는 사용자 결정으로 뺐다.
@@ -279,8 +281,8 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         if srcs:
             blocks.append(("h", "자료 출처"))
             blocks += [("p", f"{x['name']}, {x['title']}" if x.get("title") else str(x["name"])) for x in srcs]
-    elif is_daily or preview:
-        # 시황은 본진에 쌍둥이가 없고(2026-09-15), 프리뷰는 링크를 빼기로 했다(같은 날 사용자 지시).
+    elif full_body:
+        # 시황은 본진에 쌍둥이가 없고(2026-09-15), 프리뷰·Checkpoint는 본진 글이 비공개다(같은 날 사용자 지시).
         # 링크가 없는데 "블로그에도 있습니다"만 남기면 갈 곳 없는 안내가 된다.
         pass
     elif full:

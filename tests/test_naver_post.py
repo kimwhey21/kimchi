@@ -38,10 +38,10 @@ class BuildTest(unittest.TestCase):
     def test_paragraphs_are_short_and_take_is_a_quotation(self) -> None:
         """2026-09-12: 모바일에서 문단이 벽처럼 읽혀 2~3문장으로 자르고, Fermata's Take는 인용구(q)로, 표지는 맨 앞.
 
-        인용구 Take는 **요약본**(기준표·가이드·주간·이벤트)의 규칙이다 — 링크를 누르게 하려면 결론이
-        먼저 보여야 한다. 전문을 싣는 시황·프리뷰는 2026-09-15부터 본진 차례를 따라 맨 아래로 갔다.
+        인용구 Take는 **요약본**(가이드·주간·이벤트)의 규칙이다 — 링크를 누르게 하려면 결론이 먼저
+        보여야 한다. 전문을 싣는 시황·프리뷰·Checkpoint는 2026-09-15부터 본진 차례를 따라 맨 아래로 갔다.
         """
-        post = naver_post.build(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json"))
+        post = naver_post.build(Path("editorial/guides/ko_isa-vs-pension-accounts.json"))
         kinds = [b[0] for b in post["blocks"]]
         self.assertIn("q", kinds)
         self.assertLess(kinds.index("h"), kinds.index("q"))
@@ -66,7 +66,13 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(post["category"], "Checkpoint")
         self.assertIn("체크포인트", post["title"])
         self.assertEqual(post["title"].count("체크포인트"), 1)
-        self.assertEqual(post["blocks"][-3][1], "https://fermata.it.kr/kr-2026-09-08-foreign-buying-reversal/")   # 마지막 둘은 텔레그램 안내(2026-09-12)
+        # Checkpoint도 2026-09-15부터 본문 전문·링크 없음이다(사용자: "체크포인트는 2번") — 본진 글을
+        # 비공개로 돌렸으니 가리킬 공개 주소가 없다. 마지막 둘은 텔레그램 안내(2026-09-12).
+        self.assertEqual(post["url"], "")
+        self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]), post["blocks"][-4:])
+        heads = [b[1] for b in post["blocks"] if b[0] == "h"]
+        self.assertEqual(heads[-1], "Fermata's Take")
+        self.assertEqual(post["blocks"][-1][1], "https://t.me/fermata_kr")
 
 
     def test_preview_goes_to_daily_with_a_dated_prefix(self) -> None:
