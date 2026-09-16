@@ -1159,8 +1159,8 @@
       "ticker": "GC=F",
       "name": "국제 금",
       "name_en": "Gold",
-      "price": 4295.1,
-      "change_pct": -0.87,
+      "price": 4298.1,
+      "change_pct": -0.8,
       "series": [
         4476.6001,
         4439.0,
@@ -1169,7 +1169,7 @@
         4408.8999,
         4351.8999,
         4332.7998,
-        4295.1001
+        4298.1001
       ],
       "history": {
         "dates": [
@@ -1314,7 +1314,7 @@
           4408.8999,
           4351.8999,
           4332.7998,
-          4295.1001
+          4298.1001
         ]
       },
       "unit": "달러",
@@ -3816,8 +3816,8 @@
       "ticker": "CL=F",
       "name": "WTI 원유",
       "name_en": "WTI Crude Oil",
-      "price": 101.95,
-      "change_pct": -3.67,
+      "price": 101.92,
+      "change_pct": -3.69,
       "series": [
         91.48,
         93.03,
@@ -3826,7 +3826,7 @@
         100.05,
         101.39,
         105.83,
-        101.95
+        101.92
       ],
       "history": {
         "dates": [
@@ -3971,7 +3971,7 @@
           100.05,
           101.39,
           105.83,
-          101.95
+          101.92
         ]
       },
       "unit": "",
@@ -4135,7 +4135,7 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 16345027449.279999,
+      "trading_value": 16346010281.6,
       "sector": "Technology"
     },
     "AMD": {
@@ -4303,7 +4303,7 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 11373580912.5,
+      "trading_value": 11374248700.0,
       "sector": "Technology"
     },
     "SNDK": {
@@ -4471,7 +4471,7 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 11162224968.58,
+      "trading_value": 11163243348.48,
       "sector": "Technology"
     },
     "AVGO": {
@@ -4639,7 +4639,7 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 7829243194.2,
+      "trading_value": 7830199933.38,
       "sector": "Technology"
     },
     "DELL": {
@@ -4807,7 +4807,7 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 7333140732.19,
+      "trading_value": 7339366776.559999,
       "sector": "Technology"
     },
     "LITE": {
@@ -4975,7 +4975,7 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 5939901383.2,
+      "trading_value": 5940544043.8,
       "sector": "Telecommunications"
     }
   },
