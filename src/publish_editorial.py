@@ -405,10 +405,23 @@ def _previous_daily_post(market: str, date_str: str, lang: str) -> dict | None:
         return None
 
 
-# 한국어 시황을 워드프레스에도 올릴 것인가 (2026-09-15, 사용자 결정으로 끔).
-# 끄면 한국어 시황은 네이버 블로그 전용이 되고, 영어 시황(`-en`)은 그대로 워드프레스에 남는다.
-# 되돌리려면 이 값만 True로 바꾼다 — 발행 코드는 그대로 두었다.
-KO_DAILY_TO_WORDPRESS = False
+# 한국어 시황을 워드프레스에도 올릴 것인가 (2026-09-16, 사용자 지시로 다시 켬).
+#
+# 2026-09-15에 껐다가 하루 만에 되돌렸다. 끄고 보니 본진에만 있던 것들(`outlook`·
+# `insight_section`·`sources`)이 **아무 데도 실리지 않았다** — 네이버로 옮기는 코드가
+# 처음부터 그 셋을 집어 가지 않았는데, 본진이 공개였을 때는 거기서 읽혀 손해가 안 보였다.
+# 사용자 지시: "예전처럼 본진에도 한국어 시황 다 올리고 비공개로 발행해."
+#
+# **상태는 `private`다.** 글·주소·분류는 그대로 남지만 사이트맵·목록·피드·익명 접근에서
+# 빠지므로, 네이버에 같은 글이 전문으로 올라가도 두 곳에 공개된 상태가 되지 않는다.
+# 되돌리려면 KO_DAILY_STATUS를 "publish"로 바꾼다.
+KO_DAILY_TO_WORDPRESS = True
+KO_DAILY_STATUS = "private"
+
+
+def ko_daily_status(publish_live: bool) -> str:
+    """한국어 시황이 워드프레스에서 가질 상태. 수동 실행은 종전대로 임시저장이다."""
+    return KO_DAILY_STATUS if publish_live else "draft"
 
 
 def publish(path: Path, publish_live: bool = False, render_only: bool = False) -> None:
@@ -590,15 +603,11 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
             publish_wordpress.verify_published(en_result["id"], en["title"])
 
     if not KO_DAILY_TO_WORDPRESS:
-        # 한국어 시황은 네이버 블로그에만, 전문으로 나간다(2026-09-15, 사용자 결정).
-        # 같은 글을 두 곳에 두면 네이버가 유사문서로 걸러 낼 위험이 있고(2026-09-13 실측 21.9~40.9% 겹침),
-        # 그걸 피하려고 매일 네이버용 본문을 따로 쓰고 있었다. 한 곳만 두면 그 일 자체가 없어진다.
-        # 네이버 발행의 방아쇠는 **원고 커밋**이라(맥의 naver_sync) 여기서 할 일이 없다.
-        # 텔레그램·스레드 알림은 네이버 주소를 알아야 하므로 맥이 올린 뒤 보낸다.
-        print("한국어: 워드프레스에 올리지 않습니다 — 네이버 블로그 전용입니다(2026-09-15).")
+        print("한국어: 워드프레스에 올리지 않습니다(KO_DAILY_TO_WORDPRESS가 꺼져 있습니다).")
         print(f"상태: {status} (영어만 워드프레스)")
         return
 
+    ko_status = ko_daily_status(publish_live)
     ko_result = publish_wordpress.publish_draft(
         ko["title"],
         html_ko,
@@ -608,20 +617,23 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         image=image_meta,
         slug=f"editorial-{market}-{date_str}-ko",
         focus_keyword="코스피 마감 시황" if market == "kr" else "뉴욕증시 마감",
-        status=status,
+        status=ko_status,
         post_id=(doc.get("wp_post_ids") or {}).get("ko"),   # 옛 글 재작성: 글 번호로 덮어쓴다
     )
-    print(f"한국어 {status}: id={ko_result.get('id')} {ko_result.get('link','')}")
+    print(f"한국어 {ko_status}: id={ko_result.get('id')} {ko_result.get('link','')}")
     if publish_live:
-        publish_wordpress.verify_published(ko_result["id"], ko["title"])
-        # 텔레그램 채널 알림(2026-09-12, 홍보 1번) — 한국어 글만, 다시 올린 글은 notify_post가 거른다.
-        from src import notify_telegram, notify_threads
-        notify_telegram.notify_post(os.environ["WORDPRESS_URL"].rstrip("/"), ko_result["id"], ko["title"], doc)
-        notify_threads.notify_post(os.environ["WORDPRESS_URL"].rstrip("/"), ko_result["id"], ko["title"], doc)   # 스레드(2026-09-12)
+        publish_wordpress.verify_published(ko_result["id"], ko["title"], expected_status=ko_status)
+        if ko_status == "publish":
+            # 텔레그램 채널 알림(2026-09-12, 홍보 1번) — 한국어 글만, 다시 올린 글은 notify_post가 거른다.
+            # 비공개 글에는 보내지 않는다(2026-09-16): 그 주소는 독자에게 404다. 알림은 맥의
+            # 동기화가 네이버에 올린 뒤 네이버 주소로 보낸다(scripts/notify_naver_post.py).
+            from src import notify_telegram, notify_threads
+            notify_telegram.notify_post(os.environ["WORDPRESS_URL"].rstrip("/"), ko_result["id"], ko["title"], doc)
+            notify_threads.notify_post(os.environ["WORDPRESS_URL"].rstrip("/"), ko_result["id"], ko["title"], doc)
 
     print(
-        f"상태: {status}"
-        + (" (바로 공개)" if publish_live else " (검수 후 공개 전환)")
+        f"상태: 영어 {status} · 한국어 {ko_status}"
+        + (" (바로 반영)" if publish_live else " (검수 후 공개 전환)")
     )
 
 

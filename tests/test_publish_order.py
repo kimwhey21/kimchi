@@ -34,23 +34,31 @@ class PublishOrderTest(unittest.TestCase):
              patch.object(publish_wordpress, "_find_existing_post_by_slug", return_value=None):
             publish_editorial.publish(MANUSCRIPT, publish_live=True)
 
-        # 2026-09-15부터 한국어 시황은 워드프레스에 가지 않는다(사용자 결정) — 네이버 블로그 전용이다.
-        # 올라가는 것은 영어판뿐이고, 한국어판을 올리려 들면 이 검사가 잡는다.
-        self.assertEqual(len(calls), 1, calls)
+        # 2026-09-16부터 한국어 시황도 다시 본진에 올라간다 — 단 **비공개**로(사용자 지시).
+        # 영어가 먼저, 한국어가 나중이라야 한국어판이 늘 최신 글이 된다.
+        self.assertEqual(len(calls), 2, calls)
         self.assertEqual(calls[0].get("lang"), "en")
+        self.assertEqual(calls[0].get("status"), "publish")
         self.assertTrue(calls[0]["slug"].endswith("-en"), calls[0]["slug"])
-        self.assertFalse(any(str(c.get("slug", "")).endswith("-ko") for c in calls), calls)
+        self.assertTrue(calls[1]["slug"].endswith("-ko"), calls[1]["slug"])
+        self.assertEqual(calls[1].get("status"), "private")
 
 
 class KoreanDailySwitchTest(unittest.TestCase):
-    """한국어 시황을 워드프레스에 올릴지는 스위치 하나다(2026-09-15).
+    """한국어 시황은 본진에 **비공개**로 올라간다(2026-09-16, 사용자 지시).
 
-    끄는 결정을 코드에서 지우지 않고 스위치로 남긴 이유는, 네이버가 막히거나 생각이 바뀌면
-    되돌릴 수 있어야 하기 때문이다. 스위치가 사라지면 되돌리는 길도 사라진다.
+    2026-09-15에 아예 안 올리게 껐다가 하루 만에 되돌렸다. 끄고 보니 본진에만 있던
+    `outlook`·`insight_section`·`sources`가 아무 데도 실리지 않았다 — 네이버로 옮기는 코드가
+    그 셋을 처음부터 집어 가지 않았는데, 본진이 공개였을 때는 거기서 읽혀 손해가 안 보였다.
+    비공개로 두는 이유는 네이버에 전문이 올라가기 때문이다(두 곳 공개 = 유사문서 위험).
     """
 
-    def test_the_switch_exists_and_is_off(self) -> None:
-        self.assertFalse(publish_editorial.KO_DAILY_TO_WORDPRESS)
+    def test_korean_daily_goes_to_wordpress_as_private(self) -> None:
+        self.assertTrue(publish_editorial.KO_DAILY_TO_WORDPRESS)
+        self.assertEqual(publish_editorial.KO_DAILY_STATUS, "private")
+        self.assertEqual(publish_editorial.ko_daily_status(True), "private")
+        # 수동 실행은 종전대로 임시저장이다 — 이 기본값을 바꾸지 말 것.
+        self.assertEqual(publish_editorial.ko_daily_status(False), "draft")
 
 
 if __name__ == "__main__":

@@ -153,19 +153,21 @@ def check_market(market: str, check_site: bool, sitemap_urls: set[str] | None = 
         if lang not in doc:
             continue
         if lang == "ko" and not publish_editorial.KO_DAILY_TO_WORDPRESS:
-            # 한국어 시황은 네이버 블로그 전용이다(2026-09-15) — 사이트에 없는 것이 정상이다.
-            # 그날 글을 썼는지는 위의 원고 파일 검사가 이미 본다. 여기서 또 찾으면 매일 헛경보가 난다.
-            print(f"{market} {trading_date} [ko]: 네이버 전용이라 사이트 확인을 건너뜁니다.")
+            print(f"{market} {trading_date} [ko]: 워드프레스에 올리지 않는 설정이라 건너뜁니다.")
             continue
+        # 한국어 시황은 본진에 **비공개**로 올린다(2026-09-16, 사용자 지시) — 네이버에 전문이
+        # 나가므로 두 곳에 공개돼 있으면 안 된다. 그래서 기대 상태가 언어마다 다르다.
+        # "publish가 아니면 실패"로 두면 정상 발행일마다 헛경보가 난다.
+        wanted = publish_editorial.KO_DAILY_STATUS if lang == "ko" else "publish"
         slug = f"editorial-{market}-{trading_date}-{lang}"
         post = _wordpress_post(slug)
         if not post:
             problems.append(f"{market} {trading_date} [{lang}]: 사이트에 글이 없습니다 (slug={slug}).")
             continue
-        if post.get("status") != "publish":
+        if post.get("status") != wanted:
             problems.append(
                 f"{market} {trading_date} [{lang}]: 상태가 '{post.get('status')}'입니다 "
-                f"(id={post.get('id')}). 공개되지 않았습니다."
+                f"(id={post.get('id')}). '{wanted}'여야 합니다."
             )
         modified = post.get("modified_gmt") or ""
         try:
@@ -181,7 +183,10 @@ def check_market(market: str, check_site: bool, sitemap_urls: set[str] | None = 
                 "그날 원고가 반영되지 않은 옛 글입니다."
             )
         link = str(post.get("link") or "")
-        if sitemap_urls is not None and link and link.rstrip("/") not in {u.rstrip("/") for u in sitemap_urls}:
+        # 비공개 글은 사이트맵에 **없는 것이 정상이다** — 워드프레스가 일부러 뺀다.
+        # 공개 글(영어판)만 사이트맵에 실렸는지 본다.
+        if (wanted == "publish" and sitemap_urls is not None and link
+                and link.rstrip("/") not in {u.rstrip("/") for u in sitemap_urls}):
             problems.append(
                 f"{market} {trading_date} [{lang}]: 글은 공개됐는데 사이트맵(/wp-sitemap.xml)에 없습니다 ({link}). "
                 "사이트맵이 멈췄습니다 — 검색엔진이 새 글을 못 찾습니다(2026-09-08·09-12에 겪은 일)."

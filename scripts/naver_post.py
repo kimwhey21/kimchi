@@ -1,7 +1,8 @@
 """네이버 블로그(blog.naver.com/fermata49)용 원고 만들기 (2026-09-10, 사용자 결정).
 
-본진(fermata.it.kr) 글을 네이버 독자용으로 짠다 — 가이드·주간·이벤트는 **요약 + 그림 셋 + 링크**,
-시황·프리뷰·Checkpoint·잡지는 본진에 공개 쌍둥이가 없으므로 **본문 전문, 링크 없음**(2026-09-15 사용자 결정).
+가이드·주간·이벤트는 **요약 + 그림 셋 + 링크**, 시황·프리뷰·Checkpoint·잡지는 본진 글을
+**그대로 옮긴다**(2026-09-16, 사용자: "네이버에는 본진 글을 똑같이 옮기기만 해라") — 절·그림·사진·
+outlook·insight·출처까지 본진 `templates/post.html.j2`와 같은 차례로, 링크 없이.
 이유: 네이버 검색은 네이버 안의 본문만 보고, 전문을 두 곳에 올리면 구글이 한쪽(대개 네이버)만
 고르며, 네이버 독자는 결론이 앞에 있는 짧은 글을 읽는다. 그래서
   1. 제목은 검색어 머리 + 본진 제목("코스피 마감 시황 9월 10일: …"),
@@ -78,6 +79,78 @@ def _period(doc: dict) -> str:
     if start.month == end.month:
         return f"{start.month}월 {start.day}일~{end.day}일"
     return f"{start.month}월 {start.day}일~{end.month}월 {end.day}일"
+
+
+
+def _media_by_section(doc: dict, graphics_dir: Path | None) -> dict[int, list[str]]:
+    """{절 번호(0부터): 그 절에 붙는 그림·사진 파일} — 본진과 같은 자리에 붙이기 위한 표.
+
+    파일 이름 앞의 두 자리는 **만든 쪽이 박아 둔 번호**이고, 뜻이 둘로 갈린다.
+      · 시황(`editorial_gate`): 절 번호 그 자체(1부터). `04-price_history.png` → 4번째 절.
+      · 기준표·프리뷰(`publish_feature`): 원고 `graphics` 목록에서의 순서(1부터).
+        그 항목의 `section` 값이 진짜 절 번호다.
+    한쪽 규칙으로 뭉뚱그리면 그림이 남의 절에 붙는다 — 2026-09-15까지 실제로 그랬다
+    (국채금리 절 밑에 원익홀딩스 카드가 붙어 있었다).
+    """
+    if not graphics_dir or not Path(graphics_dir).exists():
+        return {}
+    specs = doc.get("graphics")
+    out: dict[int, list[str]] = {}
+    for f in sorted(Path(graphics_dir).glob("*.*")):
+        if f.suffix.lower() not in (".png", ".jpg", ".jpeg") or "cover" in f.name:
+            continue
+        match = re.match(r"(\d{2})-", f.name)
+        if not match:
+            continue
+        number = int(match.group(1))
+        if isinstance(specs, list) and specs:
+            spec = specs[number - 1] if 0 < number <= len(specs) else None
+            if not isinstance(spec, dict) or spec.get("kind") == "cover":
+                continue
+            section = spec.get("section")
+            if section is None:
+                continue
+            index = int(section)
+        else:
+            index = number - 1          # 시황: 파일 번호가 곧 절 번호(1부터)
+        out.setdefault(index, []).append(str(f))
+    return out
+
+
+def _story_blocks(ko: dict, graphics_dir: Path | None) -> list[tuple[str, str]]:
+    """「이날 눈여겨볼 것」(insight_section) — 본진에 실리는 그대로. 2026-09-16 전에는 통째로 빠졌다."""
+    section = ko.get("insight_section") or {}
+    stories = section.get("stories") or []
+    if not stories:
+        return []
+    photos = sorted(Path(graphics_dir).glob("9*-story*.*")) if graphics_dir and Path(graphics_dir).exists() else []
+    blocks: list[tuple[str, str]] = [("h", str(section.get("heading") or "이날 눈여겨볼 것"))]
+    for i, story in enumerate(stories):
+        heading = re.sub(r"^\s*\d{1,2}\.\s*", "", str(story.get("heading", "")))
+        if heading:
+            blocks.append(("h", heading))
+        if i < len(photos):
+            blocks.append(("img", str(photos[i])))
+        blocks += [("p", x) for x in _chunks(_plain(story.get("body", "")))]
+        rows = [r for r in (story.get("table") or []) if isinstance(r, dict) and r.get("label")]
+        # 네이버 본문에는 표 블록이 없다. 본진의 두 칸짜리 표는 `이름 · 값` 한 줄로 옮긴다 —
+        # 모양은 못 살려도 숫자가 사라지지는 않는다.
+        blocks += [("p", f"{r['label']} · {r.get('value', '')}".strip(" ·")) for r in rows]
+    return blocks
+
+
+def _source_blocks(doc: dict) -> list[tuple[str, str]]:
+    """「자료 확인」 — 본진 글 맨 아래 출처 목록. 2026-09-16 전에는 시황에서 통째로 빠졌다."""
+    ko = doc.get("ko") or {}
+    srcs = [x for x in (ko.get("sources") or doc.get("sources") or [])
+            if isinstance(x, dict) and x.get("name")]
+    if not srcs:
+        return []
+    blocks: list[tuple[str, str]] = [("h", "자료 확인")]
+    for x in srcs:
+        title = str(x.get("title") or "").strip()
+        blocks.append(("p", f"{x['name']}, {title}" if title else str(x["name"])))
+    return blocks
 
 
 def _pick_sections(doc: dict) -> list[dict]:
@@ -249,15 +322,20 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         # 간단 브리핑은 싣지 않는다(2026-09-13, 사용자: "잡지블로그에서 간단 브리핑쪽은 빼줘"). 참고 블로그 꼴 중 남기는 것은
         # 표지 → 본문 → 자료 출처뿐이다.
     if full:
-        # 네이버용 본문(2026-09-12, 사용자 "네이버도 본진만큼 중요"): 루틴이 본진과 다른 문장으로 쓴 완전한 글. 절을 다 싣고
-        # 문단도 자르지 않는다(길이만 2~3문장으로 나눈다). 그림은 절마다 하나씩, 네 장까지.
-        pics = _graphics(graphics_dir, limit=4)
+        # 절을 다 싣고 문단도 자르지 않는다(길이만 2~3문장으로 나눈다).
+        # 그림은 **그 절의 것**을 붙인다(2026-09-16, 사용자: "본진 글을 똑같이 옮기기만 해라").
+        # 2026-09-15까지는 종류 선호 순서로 다시 줄을 세워 앞 네 장만 잘라 붙였고, 그래서
+        # 국채금리 절 밑에 원익홀딩스 카드가 붙고 나머지 절은 그림 없이 남았다.
+        by_section = _media_by_section(doc, graphics_dir) if full_body or magazine else {}
+        leftovers = _graphics(graphics_dir, limit=4) if not by_section else []
         for i, section in enumerate(full):
             heading = re.sub(r"^\s*\d{1,2}\.\s*", "", str(section.get("heading", "")))
             blocks.append(("h", heading))
             blocks += [("p", p) for p in _chunks(_plain(section.get("body", "")))]
-            if i < len(pics):
-                blocks.append(("img", pics[i]))
+            for media in by_section.get(i, []):
+                blocks.append(("img", media))
+            if not by_section and i < len(leftovers):
+                blocks.append(("img", leftovers[i]))
     else:
         pics = _graphics(graphics_dir)
     for i, section in enumerate([] if full else _pick_sections(doc)):
@@ -266,8 +344,18 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks += [("p", p) for p in _chunks(_plain(section.get("body", ""))[:2])]
         if i < len(pics):
             blocks.append(("img", pics[i]))
+    if full_body and not magazine:
+        # 본진 `templates/post.html.j2`의 차례 그대로 — 본문 뒤에 outlook, 그다음 insight_section.
+        # 2026-09-16 전에는 둘 다 네이버에 실린 적이 없었고, 본진을 비공개로 돌린 뒤로는
+        # 아무 데도 실리지 않았다(하루 800~1,500자).
+        outlook = ko.get("outlook") or {}
+        outlook_body = _plain(outlook.get("body", ""))
+        if outlook_body:
+            blocks.append(("h", str(outlook.get("heading") or "다음 거래일에 확인할 것")))
+            blocks += [("p", x) for x in _chunks(outlook_body)]
+        blocks += _story_blocks(ko, graphics_dir)
     if take and full_body:
-        # 본진 `templates/post.html.j2`의 마무리 절과 같은 자리·같은 분량이다(요약본처럼 두 문단만 자르지 않는다).
+        # 본진 마무리 절과 같은 자리·같은 분량이다(요약본처럼 두 문단만 자르지 않는다).
         blocks.append(("h", "Fermata's Take"))
         blocks += [("p", x) for x in _chunks(take)]
     check = ((ko.get("closing") or {}).get("check") or {}).get("what")
@@ -282,9 +370,9 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
             blocks.append(("h", "자료 출처"))
             blocks += [("p", f"{x['name']}, {x['title']}" if x.get("title") else str(x["name"])) for x in srcs]
     elif full_body:
-        # 시황은 본진에 쌍둥이가 없고(2026-09-15), 프리뷰·Checkpoint는 본진 글이 비공개다(같은 날 사용자 지시).
-        # 링크가 없는데 "블로그에도 있습니다"만 남기면 갈 곳 없는 안내가 된다.
-        pass
+        # 본진 글이 비공개라 가리킬 공개 주소가 없다 — "블로그에도 있습니다"는 갈 곳 없는 안내가 된다.
+        # 대신 본진 맨 아래의 「자료 확인」을 그대로 옮긴다(2026-09-16).
+        blocks += _source_blocks(doc)
     elif full:
         blocks.append(("p", "같은 주제를 표와 그래픽으로 정리한 글은 페르마타 블로그에도 있습니다."))
     elif doc.get("series") in ("가이드", "이벤트"):

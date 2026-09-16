@@ -33,6 +33,8 @@ import json
 import sys
 from pathlib import Path
 
+import requests
+
 from src import (
     data_graphics,
     editorial_facts,
@@ -52,6 +54,32 @@ GATE_DIR = ROOT / "output" / "gate"
 # 아니다 — 지수·주인공 종목 3개월 흐름, 숫자 카드, 업종, 종목 목록, 수급, 사진을
 # 그날 이야기에 맞게 고르면 저절로 넘는다.
 MIN_VISUALS = 5
+
+
+
+def _save_photo(render_dir: Path, index: int, *, url: str = "", local: Path | None = None,
+                issues: list[str], label: str = "photo") -> None:
+    """본문 사진을 `NN-photo.<확장자>`로 남긴다 — NN은 **절 번호**(그래픽과 같은 규칙).
+
+    네이버로 옮기는 코드(`scripts/naver_post.py`)가 이 폴더만 보기 때문에, 여기에 파일이
+    없으면 사진은 네이버에 한 장도 가지 않는다. 2026-09-16까지 실제로 그랬다.
+    실패는 **세어서 목록에 남긴다** — 조용히 삼키면 "사진 없음"과 "사진 못 받음"이 같아진다.
+    """
+    try:
+        if local is not None:
+            data, suffix = Path(local).read_bytes(), Path(local).suffix or ".jpg"
+        else:
+            response = requests.get(url, timeout=60, headers={"User-Agent": "fermata/1.0"},
+                                    params={"w": 1200, "q": 80} if "unsplash" in url else None)
+            response.raise_for_status()
+            kind = response.headers.get("content-type", "")
+            if not kind.startswith("image/"):
+                raise ValueError(f"이미지가 아닙니다 ({kind or '형식 불명'})")
+            data = response.content
+            suffix = ".png" if "png" in kind else ".jpg"
+        (render_dir / f"{index:02d}-{label}{suffix}").write_bytes(data)
+    except Exception as exc:  # noqa: BLE001 - 종류가 무엇이든 목록에 남긴다
+        issues.append(f"사진({label} {index}) — 파일로 남기지 못했습니다: {exc}")
 
 
 def _previous_price_data(market: str, date_str: str) -> dict | None:
@@ -144,6 +172,7 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
         if isinstance(photo, dict):
             if str(photo.get("url", "")).startswith("http"):
                 photos += 1
+                _save_photo(render_dir, index, url=str(photo["url"]), issues=issues)
             else:
                 ticker = str(photo.get("ticker") or "")
                 entry = watchlist.get(ticker)
@@ -154,16 +183,20 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
                 if picked:
                     used.add(picked["id"])
                     photos += 1
+                    _save_photo(render_dir, index, local=photo_pool.resolve(picked), issues=issues)
                 else:
                     issues.append(
                         f"사진(본문 {index}) — '{ticker}'에 맞는 승인 사진이 없습니다. 코어 종목의 "
                         "티커를 쓰거나(동적 편입 종목은 사진을 붙이지 않습니다) photo를 빼십시오.")
         elif photo:
             issues.append(f"사진(본문 {index}) — photo는 {{\"ticker\": ...}} 또는 {{\"url\": ...}}입니다: {photo!r}")
-    for story in (ko.get("insight_section") or {}).get("stories") or []:
+    # 인사이트 사진도 파일로 남긴다(2026-09-16) — 번호 90번대는 본문 절과 겹치지 않게 띄운 것이다.
+    # 네이버로 옮기는 코드가 이 폴더만 보므로, 파일이 없으면 인사이트 사진은 한 장도 못 간다.
+    for story_index, story in enumerate((ko.get("insight_section") or {}).get("stories") or [], start=1):
         image = story.get("image")
         if isinstance(image, dict) and str(image.get("url", "")).startswith("http"):
             story_photos += 1
+            _save_photo(render_dir, 90 + story_index, url=str(image["url"]), issues=issues, label="story")
         elif story.get("image_query"):
             # 발행 단계가 코어 종목명으로 풀에서 고른다. 여기서는 셀 수만 있으면 된다.
             query = str(story["image_query"]).lower()
@@ -171,8 +204,11 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
                 if entry.get("source") == "dynamic":
                     continue
                 if str(entry.get("name", "")).lower() in query or str(entry.get("name_en", "")).lower() in query:
-                    if photo_pool.pick(entry, date_str, exclude=used):
+                    picked = photo_pool.pick(entry, date_str, exclude=used)
+                    if picked:
                         story_photos += 1
+                        _save_photo(render_dir, 90 + story_index, local=photo_pool.resolve(picked),
+                                    issues=issues, label="story")
                     break
     visuals = graphics + photos + story_photos
     if visuals < min_visuals:

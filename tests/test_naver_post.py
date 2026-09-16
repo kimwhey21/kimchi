@@ -28,7 +28,8 @@ class BuildTest(unittest.TestCase):
         # 그 뒤가 다음 확인 지점이다(2026-09-15, 사용자: "본문 형식으로 바꾸면 테이크가 맨 아래로 가는거 아니었니").
         # 맨 위로 올리면 요약본 꼴로 되돌아간다.
         self.assertNotEqual(heads[0], "Fermata's Take")
-        self.assertEqual(heads[-2:], ["Fermata's Take", "다음 확인 지점"])
+        # 본진 `templates/post.html.j2`와 같은 차례다(2026-09-16, 사용자: "본진 글을 똑같이 옮기기만 해라").
+        self.assertEqual(heads[-3:], ["Fermata's Take", "다음 확인 지점", "자료 확인"])
         self.assertGreater(len(heads), 5)                       # 전문이라 절이 다 들어온다
         self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]), post["blocks"][-4:])
         self.assertFalse(any("페르마타 블로그" in b[1] for b in post["blocks"]))
