@@ -1,0 +1,120 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-16",
+  "checked": "2026-09-16",
+  "slug": "kospi-200-explained",
+  "category_id": 153,
+  "tags": ["KOSPI 200", "Korea Exchange", "KOSPI 200 rebalance", "MSCI Korea", "KODEX 200"],
+  "radar_origin": "list order",
+  "related": [
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "KOSPI vs KOSDAQ: Company Counts, Listing Bars and Risk (2026)",
+      "url": "https://fermata.it.kr/kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you/"
+    },
+    {
+      "title": "Samsung Electronics Stock: What Actually Makes the Company Money",
+      "url": "https://fermata.it.kr/samsung-electronics-for-foreign-investors/"
+    }
+  ],
+  "ko": {
+    "title": "KOSPI 200 Explained: How Korea Picks 200 Stocks (2026)",
+    "narrative": [
+      {
+        "heading": "KOSPI 200 is not \"the KOSPI\" — it's a curated 200-stock subset of it",
+        "body": "Every time a headline says \"the KOSPI fell 0.85% today,\" it is almost always talking about the KOSPI Composite Index — every single common stock listed on Korea's main board, well over 800 of them as of September 2026. The KOSPI Composite closed at 6,627.26 on September 15, 2026. KOSPI 200 is a different, smaller thing built on top of that same market: a free-float market-capitalization-weighted index of 200 stocks chosen by Korea Exchange (KRX), Korea's exchange operator, to represent the tradable, liquid core of the market.\n\nThe distinction matters because KOSPI 200 is the index that actual financial products are built on — futures, options, and Korea's most-traded domestic index funds all track it, not the full Composite. If you are reading about a stock being \"added to\" or \"dropped from\" an index in Korean market coverage, it is usually this list, not the Composite, and the two respond to completely different rules for how a stock gets in."
+      },
+      {
+        "heading": "How Korea Exchange decides who gets in: sectors first, then size and liquidity",
+        "body": "KOSPI 200 is not simply \"the 200 biggest KOSPI stocks.\" Korea Exchange builds it using what its index documentation calls an industry group method: eligible stocks are first sorted into industry sectors, and KRX fills quotas within each sector so that no single industry can dominate the list purely because it happens to be large that year. Since 2017, KRX has classified those sectors using the Global Industry Classification Standard (GICS) — the same ten-sector framework MSCI and S&P use globally — replacing the older, Korea-specific classification it used before.\n\nWithin each sector bucket, KRX screens candidates on average daily market capitalization and average daily trading value over a look-back period ending at the review date, so a stock has to be both large and actually liquid to qualify, not just large on paper. The index has been free-float weighted — meaning cross-held shares, strategic stakes, and other stock that rarely trades are excluded from the weighting calculation — since 2007; before that it was weighted on plain market capitalization. KOSPI 200 does not carry the kind of explicit single-stock or single-group weight cap that MSCI applies to its own Korea index (more on that below), so a dominant sector like semiconductors can carry an outsized share of the index's total weight."
+      },
+      {
+        "heading": "The calendar: two full reshuffles a year, plus a fast lane for big IPOs",
+        "body": "Korea Exchange rebalances KOSPI 200's full constituent list twice a year, effective in June and December. Between those two dates, a newly listed company that is large enough doesn't have to wait for the next scheduled reshuffle — KRX has a fast-track window each March and September for eligible new listings to be added mid-cycle, so a large IPO isn't locked out of index inclusion for up to a year.\n\nThe most recent regular reshuffle is a useful, concrete example of how this actually plays out. Korea Exchange announced its constituent changes for the June 2026 review on May 22, 2026, with the changes taking effect June 12, 2026. Four stocks were added — HD Hyundai Construction Equipment, DB HiTek, Dalba Global, and OCI — and four were removed: GS E&C, Sebang Global Battery, GKL (Grand Korea Leisure), and Green Cross Holdings. Additions and removals like these were reported at the time by Seoul Economic Daily and other Korean financial outlets citing the Korea Exchange announcement directly."
+      },
+      {
+        "heading": "Why a reshuffle actually moves the stock, not just the label",
+        "body": "Being added to or dropped from KOSPI 200 is not a cosmetic reclassification — it triggers real buying and selling. Korean brokerages and asset managers run large domestic index funds and ETFs (products such as KODEX 200 and TIGER 200, both benchmarked directly to KOSPI 200) that must adjust their holdings to match the new list on the effective date, and the index also underlies KOSPI 200 futures and options — contracts that, since launching in 1996 and 1997 respectively, have at times ranked among the most heavily traded derivatives products in the world by volume, before Korean regulators raised the futures contract's multiplier fivefold in 2012 specifically to cool retail speculation in it. A stock joining the index typically sees a wave of mechanical, index-linked buying around the effective date; a stock being dropped sees the reverse.\n\nA separate, unrelated use of the word \"rebalancing\" shows up in Korea market coverage too, and it is worth not confusing with this one: in June 2026, Korea Exchange CEO Jeong Eun-bo told CNBC that a broader Kospi selloff that month reflected foreign institutional investors trimming Korean equity exposure back toward fixed portfolio-allocation targets, after outsized gains had pushed Korea's weight in global portfolios far above where it started — a portfolio-level rebalancing decision made by outside fund managers, with no connection to Korea Exchange's own twice-yearly index reconstitution."
+      },
+      {
+        "heading": "KOSPI 200 vs MSCI Korea vs the KOSPI Composite: three lists, three jobs",
+        "body": "Foreign investors researching Korea run into three index names that sound similar and are not interchangeable. The KOSPI Composite is the broadest: every common stock on the KOSPI board, the number quoted in daily news headlines. KOSPI 200 is Korea Exchange's own curated, sector-balanced 200-stock subset of that same board, built to underlie domestic futures, options, and index funds. MSCI Korea is a third, separate index, built and maintained by MSCI rather than Korea Exchange, and it is the one that underlies the US-listed ETFs most foreign investors actually hold — EWY and FLKR both track MSCI's Korea index, not KOSPI 200. MSCI applies an explicit concentration cap that KOSPI 200 does not: no single stock can exceed 25% of its Korea index, and no single group of related large stocks can exceed 50%, a rule detailed in our guide to Korea ETFs. The table below lays the three out side by side."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed KOSPI 200's mechanics — 200 constituents, free-float weighting since 2007, the industry-group sector method, and the June/December rebalance with March/September fast-track entry — against Korea Exchange's own index pages and against a U.S. SEC prospectus filing that independently describes the same methodology for a KOSPI 200-linked security; the two agree. We confirmed the specific June 2026 additions and removals against two independent English-language reports of Korea Exchange's own announcement.\n\nWe could not verify a reliable figure for total assets tracking KOSPI 200. Different secondary reports of the same June 2026 reshuffle cited very different numbers for the assets affected — one put passive funds tracking the index at roughly 20 to 25 trillion won, another described roughly 160 trillion won in ETF assets as affected by the reshuffle more broadly — and we could not reconcile the two or confirm either against a Korea Exchange source directly, so we are not printing a specific figure here. If you need a current number, Korea Exchange's own index fact sheets are the primary source to check."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "KOSPI 200 is Korea Exchange's own curated list of 200 free-float-weighted stocks, rebuilt every June and December using a sector-first selection method — and it is a different list, with different rules, from both the KOSPI Composite that news headlines quote and the MSCI Korea index that underlies EWY and FLKR. The distinction is not academic: a company moving on or off KOSPI 200 triggers real mechanical buying and selling from the domestic funds and derivatives built on it, on a schedule you can actually look up in advance.\n\nThis guide reflects Korea Exchange's index rules and the June 2026 rebalance as reported and cross-checked in September 2026. Index rules, constituent lists, and fund holdings all change; check Korea Exchange's own index pages for the current list before acting on anything here. This is not investment advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "KOSPI 200: 200 constituents, rebalanced twice a year by Korea Exchange",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "KOSPI 200",
+        "left": {"label": "Constituent stocks", "value": "200"},
+        "right": {"label": "Full reshuffles per year", "value": "2"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "KOSPI 200 vs MSCI Korea 25/50 vs the KOSPI Composite compared side by side",
+      "args": {
+        "title": "Three lists, three jobs",
+        "subtitle": "KOSPI 200 vs MSCI Korea vs the KOSPI Composite",
+        "columns": ["", "KOSPI 200", "MSCI Korea 25/50", "KOSPI Composite"],
+        "rows": [
+          ["Run by", "Korea Exchange", "MSCI", "Korea Exchange"],
+          ["Constituents", "200", "~78", "~830"],
+          ["Single-stock cap", "None", "25%", "None"],
+          ["Rebalanced", "Jun & Dec", "Quarterly-ish", "Ongoing"],
+          ["Tracked by", "KODEX 200", "EWY, FLKR", "Headline \"KOSPI\""]
+        ],
+        "source": "Korea Exchange; MSCI factsheet data as cited in our KOSPI ETF guide (June 30, 2026)",
+        "note": "MSCI Korea count and cap are as of June 30, 2026 per fund factsheets. KOSPI Composite constituent count is approximate and moves with new listings and delistings."
+      },
+      "section": 5
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before assuming a stock's index status",
+      "args": {
+        "title": "Before you assume a stock is \"in the index\"",
+        "subtitle": "Which index, and as of when",
+        "items": [
+          {
+            "label": "Check which index a headline actually means",
+            "why": "\"KOSPI\" alone almost always means the Composite; KOSPI 200 is a separate, smaller list."
+          },
+          {
+            "label": "Check Korea Exchange's own current list, not a cached one",
+            "why": "The list changes every June and December, plus a fast-track window each March and September."
+          },
+          {
+            "label": "A KOSPI 200 removal isn't a delisting",
+            "why": "It usually means lower float-adjusted size or liquidity versus peers, not that the stock left KOSPI itself."
+          }
+        ]
+      },
+      "section": 3
+    }
+  ],
+  "sources": [
+    {"name": "Korea Exchange", "title": "KOSPI 200 (Global KRX product page)", "url": "https://global.krx.co.kr/contents/GLB/02/0202/0202010101/GLB0202010101.jsp"},
+    {"name": "U.S. Securities and Exchange Commission", "title": "Form 424(b)(2) prospectus describing KOSPI 200 index methodology", "url": "https://www.sec.gov/Archives/edgar/data/19617/000161577419014709/s121522_424b2.htm"},
+    {"name": "Seoul Economic Daily", "title": "KOSPI 200 to Add Dalba Global, OCI in Periodic Rebalancing", "url": "https://en.sedaily.com/news/2026/05/22/kospi-200-to-add-dalba-global-oci-in-periodic-rebalancing"},
+    {"name": "BigGo Finance", "title": "Kospi 200 Adds Dalba Global, OCI; Drops GS E&C and 3 Others", "url": "https://finance.biggo.com/news/cofUTp4BaoGGrU-IJe2W"},
+    {"name": "CNBC", "title": "Kospi selloff is rebalancing, not vote against South Korea: KRX CEO", "url": "https://www.cnbc.com/2026/06/11/south-korea-kospi-selloff-foreign-investors-krx.html"}
+  ]
+}
