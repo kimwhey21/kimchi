@@ -1,27 +1,27 @@
 {
- "date": "2026-09-15",
+ "date": "2026-09-16",
  "window": "3개월",
  "total_clicks": 5,
- "total_impressions": 909,
+ "total_impressions": 1,
  "queries": [
   {
    "query": "kospi vs kosdaq",
    "clicks": 0,
-   "impressions": 14,
+   "impressions": 16,
    "ctr": 0.0,
-   "position": 5.7
+   "position": 5.4
   },
   {
    "query": "englishdart",
    "clicks": 0,
-   "impressions": 9,
+   "impressions": 11,
    "ctr": 0.0,
-   "position": 6.7
+   "position": 6.5
   },
   {
    "query": "kosdaq vs kospi",
    "clicks": 0,
-   "impressions": 7,
+   "impressions": 8,
    "ctr": 0.0,
    "position": 9.0
   },
@@ -124,11 +124,32 @@
    "position": 5.0
   },
   {
+   "query": "difference between kospi and kosdaq",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 6.0
+  },
+  {
    "query": "kospi kosdaq meaning",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
    "position": 6.0
+  },
+  {
+   "query": "msci south korea emerging market classification 2026 official",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 6.0
+  },
+  {
+   "query": "韓國股市代號",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 7.0
   },
   {
    "query": "kospi and kosdaq difference",
@@ -145,6 +166,13 @@
    "position": 8.0
   },
   {
+   "query": "ewy vs koru",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 10.0
+  },
+  {
    "query": "what is kosdaq",
    "clicks": 0,
    "impressions": 1,
@@ -153,6 +181,13 @@
   },
   {
    "query": "how to buy stocks in korea",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 46.0
+  },
+  {
+   "query": "미국 주식 양도세",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
