@@ -192,7 +192,8 @@ def check_market(market: str, check_site: bool, sitemap_urls: set[str] | None = 
                 "사이트맵이 멈췄습니다 — 검색엔진이 새 글을 못 찾습니다(2026-09-08·09-12에 겪은 일)."
             )
         if not problems:
-            print(f"{market} {trading_date} [{lang}]: 공개 확인 (id={post.get('id')})")
+            # 한국어는 비공개가 정상이다(2026-09-16) — "공개 확인"이라고 찍으면 로그가 거짓말을 한다.
+            print(f"{market} {trading_date} [{lang}]: {wanted} 확인 (id={post.get('id')})")
     return problems
 
 
