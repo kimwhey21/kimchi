@@ -220,7 +220,10 @@ def naver_title(base: str, prefix: str, series: str | None, kdate: str) -> str:
     base = (base or "").strip()
     if series == "프리뷰":
         # "오늘 밤 미국장 프리뷰 9월 11일: 오늘 밤 8월 CPI…"처럼 '오늘 밤'이 두 번 나오지 않게 한다(실측).
-        body = re.sub(r"^오늘 밤\s*(미국장\s*)?", "", base).strip() or base
+        # 떼어낸 자리에 남는 구두점도 같이 턴다 — `오늘 밤 미국장, 오라클 실적이…`가
+        # `| , 오라클 실적이…`로 나온 적이 있다(2026-09-16에 발견, 사람이 손으로 고쳐 둔 글이었다).
+        body = re.sub(r"^오늘 밤\s*(미국장\s*)?", "", base)
+        body = re.sub(r"^[\s,、·:;–—-]+", "", body).strip() or base
         return f"오늘 밤 미국장 프리뷰 {kdate} | {body}"
     if not prefix:
         return base                                          # 가이드: 제목이 곧 검색 질문이라 그대로 둔다
