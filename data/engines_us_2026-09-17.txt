@@ -1,32 +1,34 @@
-[밸류에이션] US · 2026-09-17 · FWD PER 중앙값 23.7
+[밸류에이션] US · 2026-09-17 · FWD PER 중앙값 24.2
   종목            FWD PER     목표가 대비     52주고점 대비    애널
-  마이크론              5.9     +63.3%       -26.2%    45
-  엔비디아             13.7     +53.6%        -9.6%    58
-  머크               15.2      +5.6%        -7.7%    26
-  메타               19.3     +12.6%       -14.9%    57
-  마이크로소프트          20.8     +16.8%       -11.5%    52
-  알파벳              23.1     +24.8%       -16.1%    54
-  아마존              23.7     +33.4%       -14.4%    60
-  디어               29.5      +2.8%        -5.2%    23
-  월마트              33.3     +18.5%       -20.5%    40
-  애플               34.7      -1.6%        -3.5%    39
-  인텔               49.0     +14.5%       -29.0%    43
-  코인베이스            58.1     +22.4%       -59.1%    29
-  테슬라             162.9     +10.9%       -28.2%    38
+  마이크론              6.3     +54.8%       -22.1%    45
+  엔비디아             14.0     +49.8%        -7.3%    58
+  머크               15.4      +3.9%        -6.2%    26
+  메타               19.5     +10.7%       -13.7%    56
+  마이크로소프트          21.1     +15.1%       -10.1%    52
+  알파벳              23.4     +23.3%       -15.0%    53
+  아마존              24.2     +30.7%       -12.5%    59
+  디어               30.2      +0.4%        -2.9%    23
+  월마트              33.1     +19.3%       -21.0%    40
+  애플               35.1      -2.7%        -2.2%    39
+  인텔               52.8      +7.0%       -23.6%    43
+  코인베이스            61.4     +16.1%       -56.7%    29
+  테슬라             166.6      +8.4%       -26.6%    38
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 10건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 12건은 뺐습니다)
   2026-09-14 ▲ 코인베이스        Compass Point: Sell → Neutral
   2026-09-10 · 엔비디아         Piper Sandler: ? → Overweight
   2026-09-10 · 인텔           Piper Sandler: ? → Neutral
   2026-09-10 · 코인베이스        Morgan Stanley: ? → Equal-Weight
 
-[월가 리포트] US · 오늘 · 72건 (상향 4 하향 7 신규 22 목표가 상향 9 하향 5) · 출처 marketbeat
+[월가 리포트] US · 오늘 · 201건 (상향 5 하향 8 신규 42 목표가 상향 33 하향 55) · 출처 marketbeat
   ADSK   ▲ 상향     The Goldman Sachs Group   Neutral → Outperform     $265.00
-  BSX    ▼ 하향     Citigroup                 Buy → Neutral            
+  BSX    ▼ 하향     Citigroup                 Buy → Neutral            $57.00 → $50.00
+  FLNC   ▼ 하향     The Goldman Sachs Group   Buy → Neutral            $9.00
   GNRC   ▼ 하향     HSBC                      Hold                     $333.00
   HAWK   ▲ 상향     Bank of America           Neutral → Buy            $34.00 → $23.00
+  JBHT   ▲ 상향     Citizens Jmp              Market Perform → Outperform $300.00
   JBHT   ▲ 상향     Citigroup                 Market Perform → Outperform 
   KGFHY  ▲ 상향     Deutsche Bank Aktiengese  Sell → Hold              
   LYFT   ▼ 하향     Guggenheim                Buy → Neutral            $22.00 → $16.00
@@ -36,12 +38,13 @@
   TRTX   ▼ 하향     UBS Group                 Neutral                  
   ABEO   · 신규     Roth Capital              Buy                      $17.00
   APLD   · 신규     Wells Fargo & Company     Overweight               $50.00
-  AUGO   · 신규     Scotiabank                Outperform               $110.00
+  AUGO   · 신규     Scotiabank                Sector Outperform        $110.00
   CELC   · 신규     JPMorgan Chase & Co.      Overweight               $157.00
   CIFR   · 신규     Wells Fargo & Company     Overweight               $25.00
   CORZ   · 신규     Wells Fargo & Company     Overweight               $28.00
   CRGY   · 신규     Truist Financial          Buy                      $19.00
   CRK    · 신규     Truist Financial          Hold                     $16.00
+  CTVA   · 신규     KeyCorp                   Sector Weight            
   FHN    · 신규     Hovde Group               Market Perform           $25.00
   GRAL   · 신규     Royal Bank Of Canada      Sector Perform           $84.00
   HONA   · 신규     Susquehanna               Positive                 $190.00
@@ -49,10 +52,7 @@
   IBIO   · 신규     HC Wainwright             Buy                      $7.00
   KHC    · 신규     Royal Bank Of Canada      Outperform               $32.00
   KOPN   · 신규     Oppenheimer               Outperform               $7.00
-  MNOV   · 신규     Roth Capital              Buy                      $6.00
-  PRLD   · 신규     JPMorgan Chase & Co.      Overweight               $12.00
-  RDVT   · 신규     Raymond James Financial   Outperform               $90.00
-  SITM   · 신규     Morgan Stanley            Overweight               $730.00
+  KYNB   · 신규     Lake Street Capital       Buy                      $41.00
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
@@ -92,8 +92,8 @@
   13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 지금의 포지션이 아닙니다.
 
 [미 거시] 최근 90일
-  미 10년물 국채금리           5.00  (+0.49) 기간 최저 4.38(2026-06-26) 최고 5.00(2026-09-15)
-  미 2년물 국채금리            4.67  (+0.43) 기간 최저 4.07(2026-06-26) 최고 4.67(2026-09-15)
+  미 10년물 국채금리           5.01  (+0.50) 기간 최저 4.38(2026-06-26) 최고 5.01(2026-09-16)
+  미 2년물 국채금리            4.74  (+0.50) 기간 최저 4.07(2026-06-26) 최고 4.74(2026-09-16)
   장단기 금리차(10년-2년)       0.27  (+0.00) 기간 최저 0.27(2026-06-22) 최고 0.53(2026-08-17)
   연방기금금리                3.63  (+0.00) 기간 최저 3.63(2026-06-01) 최고 3.63(2026-06-01)
   미 소비자물가지수           334.13  (+1.56) 기간 최저 332.57(2026-06-01) 최고 334.13(2026-08-01)
@@ -107,7 +107,7 @@
    6월  평균  +0.11%  중앙  +0.29%  상승확률  60%  (n=20)
    7월  평균  +2.41%  중앙  +2.07%  상승확률  75%  (n=20)
    8월  평균  +0.18%  중앙  +1.25%  상승확률  60%  (n=20)
-   9월  평균  -0.71%  중앙  +0.15%  상승확률  50%  (n=20)  ←이번 달
+   9월  평균  -0.66%  중앙  +0.15%  상승확률  50%  (n=20)  ←이번 달
   10월  평균  +0.88%  중앙  +2.04%  상승확률  58%  (n=19)
   11월  평균  +2.09%  중앙  +2.12%  상승확률  75%  (n=20)
   12월  평균  +0.59%  중앙  +0.92%  상승확률  65%  (n=20)
