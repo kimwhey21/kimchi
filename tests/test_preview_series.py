@@ -16,27 +16,66 @@ WORKFLOW = ROOT / ".github" / "workflows" / "preview_publish.yml"
 DOC = ROOT / "docs" / "routine_preview.md"
 
 
-def _doc(series: str) -> dict:
+def _doc(series: str, sections: int = 3, chars: int = 0) -> dict:
     body = "9월 8일 밤 8월 소비자물가가 나옵니다. DART와 한국거래소 자료를 함께 봅니다."
+    if chars:
+        body = (body + " 근거를 하나 더 적습니다. ") * (chars // 40 + 1)
     return {"kind": "feature", "series": series,
             "ko": {"title": "오늘 밤 확인할 세 가지 — 물가와 국채금리",
-                   "narrative": [{"heading": f"{i}. 절", "body": body} for i in range(1, 4)],
+                   "narrative": [{"heading": f"{i}. 절", "body": body} for i in range(1, sections + 1)],
                    "closing": {"heading": "Fermata's Take", "body": "짧게."}}}
 
 
+def _preview_full() -> dict:
+    """2026-09-17 문턱을 다 채운 프리뷰 — 12절·절당 400자·초보자 설명 둘·그래픽 종류 골고루·출처 넷."""
+    doc = _doc("프리뷰", sections=12, chars=420)
+    doc["ko"]["narrative"][1]["body"] += " 초보자 설명: bp는 0.01%포인트입니다."
+    doc["ko"]["narrative"][4]["body"] += " 초보자 설명: 점도표는 위원들의 금리 전망입니다."
+    doc["ko"]["narrative"][6]["body"] += " 로이터와 블룸버그, 골드만삭스와 CME 페드워치가 같은 숫자를 전했습니다."
+    doc["graphics"] = [{"kind": "cover"}, {"kind": "calendar_strip", "section": 2}, {"kind": "fact_table", "section": 3},
+                       {"kind": "price_history", "section": 4}, {"kind": "number_cards", "section": 0},
+                       {"kind": "valuation_bars", "section": 6}, {"kind": "checklist", "section": 10},
+                       {"kind": "rate_compare", "section": 5}, {"kind": "movers_list", "section": 8}]
+    return doc
+
+
 class PreviewThresholdsTest(unittest.TestCase):
-    def test_preview_accepts_three_sections_and_two_graphics(self) -> None:
-        issues = feature_checks.collect_issues(_doc("프리뷰"), graphics=3)   # 표지 + 본문 둘 (2026-09-08)
-        self.assertFalse([i for i in issues if "절이" in i or "시각자료" in i], issues)
+    """프리뷰는 2026-09-17부터 그날 미국장의 메인 글이다(사장님: "1번2번3번 진행").
+
+    절 10·시각자료 8·출처 4, 그리고 9/15 합본 실험에서 드러난 셋 — 절당 400자, 같은 그래픽 2장,
+    초보자 상자 둘. 2026-09-08의 "3절·600~900자" 프리뷰는 표에서 가장 얇은 글이었다.
+    """
+
+    def test_the_old_three_section_preview_is_now_too_thin(self) -> None:
+        issues = (editorial_title.collect_issues(_doc("프리뷰"), kind="프리뷰")
+                  + feature_checks.collect_issues(_doc("프리뷰"), graphics=3))
+        self.assertTrue(any("10개 이상" in i for i in issues), issues)
+        self.assertTrue(any("시각자료" in i for i in issues), issues)
+        self.assertTrue(any("절이 얕습니다" in i for i in issues), issues)
+        self.assertTrue(any("초보자 설명이" in i for i in issues), issues)
+
+    def test_a_full_preview_passes_the_volume_rules(self) -> None:
+        doc = _preview_full()
+        issues = feature_checks.collect_issues(doc, graphics=8)
+        self.assertFalse([i for i in issues if "얕습니다" in i or "시각자료" in i or "초보자 설명이" in i or "같은 종류" in i], issues)
+        self.assertEqual([i for i in editorial_title.collect_issues(doc, kind="프리뷰") if "개 이상" in i], [])
+
+    def test_same_graphic_kind_is_capped_at_two(self) -> None:
+        doc = _preview_full()
+        doc["graphics"] += [{"kind": "number_cards", "section": 1}, {"kind": "number_cards", "section": 3}]
+        issues = feature_checks.collect_issues(doc, graphics=10)
+        self.assertTrue(any("number_cards" in i and "같은 종류" in i for i in issues), issues)
 
     def test_feature_thresholds_are_unchanged(self) -> None:
         issues = (editorial_title.collect_issues(_doc("기준표"), kind="기준표")
                   + feature_checks.collect_issues(_doc("기준표"), graphics=2))
         self.assertTrue(any("절이 3개" in i for i in issues), issues)
         self.assertTrue(any("시각자료가 2장" in i for i in issues), issues)
+        self.assertFalse(any("얕습니다" in i for i in issues), issues)   # 절당 글자 규칙은 프리뷰에만
 
-    def test_preview_needs_two_sources_and_feature_three(self) -> None:
-        self.assertEqual(source_check.collect_issues(_doc("프리뷰")), [])
+    def test_preview_needs_four_sources_and_feature_three(self) -> None:
+        self.assertTrue(source_check.collect_issues(_doc("프리뷰")))            # 둘로는 모자란다(2026-09-17)
+        self.assertEqual(source_check.collect_issues(_preview_full()), [])
         self.assertTrue(source_check.collect_issues(_doc("기준표")))
 
 

@@ -223,6 +223,126 @@ def ratings(market: str, days: int = 7) -> dict:
     }
 
 
+# ── 엔진 2b. 월가 리포트 — 시장 전체 (2026-09-17) ────────────────────────────────
+# 재테크농부 시황의 절반은 「오늘 나온 월가리포트」 18건이다(증권사·의견·목표가·핵심). 우리 `ratings`는
+# 야후로 **워치리스트 16종목**만 보므로 하루 1~2건이었다(2026-09-12~16 실측). 사장님 지시("월가 의견
+# 밀도 재테크농부 만큼"): 시장 전체를 보는 무료 원천을 쓴다 — MarketBeat의 오늘 페이지(50행/쪽, 등급
+# 전→후와 목표주가 전→후가 함께 있다). 막히면 야후로 대형주 목록을 돌려 같은 꼴을 만든다(목표가 없음).
+# 원문의 '핵심 내용'(재테크농부의 넷째 줄)은 여기 없다 — 루틴이 상위 몇 건만 WebSearch로 붙인다.
+STREET_URL = "https://www.marketbeat.com/ratings/"
+STREET_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+             "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+STREET_ACTIONS = {          # MarketBeat의 행동 문구 → 우리 분류, 우선순위(작을수록 앞)
+    "Upgraded by": ("up", 0), "Downgraded by": ("down", 0), "Initiated by": ("init", 1),
+    "Target Raised by": ("pt_up", 2), "Target Lowered by": ("pt_down", 2), "Target Set by": ("pt_set", 3),
+    "Reiterated by": ("reiterate", 4),
+}
+STREET_MAX = 30
+_STREET_FALLBACK_URL = "https://datahub.io/core/s-and-p-500-companies/r/constituents.csv"
+_STREET_FALLBACK_FILE = ROOT / "data" / "universe_us.txt"
+
+
+def _street_rows(page_html: str) -> list[dict]:
+    """MarketBeat 오늘 표의 행을 읽는다. 달러 표시가 없는 것(런던 GBX 등)은 뺀다."""
+    import html as html_mod
+    table = re.search(r"<table.*?</table>", page_html, re.S)
+    if not table:
+        return []
+    out = []
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", table.group(), re.S):
+        cells = [re.sub(r"\s+", " ", html_mod.unescape(re.sub(r"<[^>]+>", " ", c))).strip()
+                 for c in re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)]
+        if len(cells) < 7:
+            continue
+        company, action, firm, _analyst, price, target, rating = cells[:7]
+        if action not in STREET_ACTIONS or not price.startswith("$"):
+            continue
+        parts = company.split(" ", 1)
+        ticker, name = parts[0], (parts[1] if len(parts) > 1 else parts[0])
+        firm = firm.split(" Subscribe")[0].strip()
+        kind, rank = STREET_ACTIONS[action]
+        if kind == "reiterate" and not target:
+            continue                       # 목표가 없는 '유지'는 이야기가 없다
+        grades = [g.strip() for g in re.split(r"➝|→|->", rating)] if rating else []
+        targets = [t.strip() for t in re.split(r"➝|→|->", target)] if target else []
+        out.append({
+            "ticker": ticker, "name": name, "firm": firm, "action": kind, "rank": rank,
+            "from_grade": grades[0] if len(grades) > 1 else None,
+            "to_grade": grades[-1] if grades else None,
+            "target_from": targets[0] if len(targets) > 1 else None,
+            "target_to": targets[-1] if targets else None,
+            "price": price.split(" ")[0],
+        })
+    return out
+
+
+def _street_fallback(days: int) -> list[dict]:
+    """MarketBeat가 막히면 야후로 대형주 목록(S&P 500)을 돈다 — 목표가는 없다. 200종목 안팎, 90초."""
+    tickers: list[str] = []
+    try:
+        text = requests.get(_STREET_FALLBACK_URL, timeout=30).text
+        tickers = [line.split(",")[0].strip() for line in text.splitlines()[1:] if line.strip()]
+        if tickers:
+            _STREET_FALLBACK_FILE.write_text("\n".join(tickers), encoding="utf-8")
+    except Exception:
+        if _STREET_FALLBACK_FILE.exists():
+            tickers = _STREET_FALLBACK_FILE.read_text(encoding="utf-8").split()
+    cutoff = dt.datetime.now() - dt.timedelta(days=days)
+    out: list[dict] = []
+    for symbol in tickers[:200]:
+        try:
+            frame = yf.Ticker(symbol).upgrades_downgrades
+        except Exception:
+            continue
+        if frame is None or len(frame) == 0:
+            continue
+        index = frame.index.tz_localize(None) if getattr(frame.index, "tz", None) is not None else frame.index
+        for when, row in frame[index >= cutoff].iterrows():
+            action = {"up": "up", "down": "down", "init": "init"}.get(str(row.get("Action")))
+            if not action:
+                continue
+            out.append({"ticker": symbol, "name": symbol, "firm": row.get("Firm"), "action": action,
+                        "rank": 0 if action != "init" else 1, "from_grade": row.get("FromGrade") or None,
+                        "to_grade": row.get("ToGrade"), "target_from": None, "target_to": None,
+                        "price": None, "date": str(when)[:10]})
+    return out
+
+
+def street(days: int = 1) -> dict:
+    """[월가 리포트] 오늘 시장 전체의 의견·목표가 변경. `ratings`(워치리스트)와 다른 엔진이다."""
+    rows: list[dict] = []
+    source, failed = "marketbeat", 0
+    for page in (1, 2):
+        url = STREET_URL if page == 1 else f"{STREET_URL}?page={page}"
+        try:
+            response = requests.get(url, headers={"User-Agent": STREET_UA}, timeout=40)
+            response.raise_for_status()
+            got = _street_rows(response.text)
+        except Exception:
+            failed += 1
+            got = []
+        if not got:
+            break
+        rows += got
+    if not rows:
+        source = "yahoo-fallback"
+        rows = _street_fallback(days)
+    seen, unique = set(), []
+    for row in rows:
+        key = (row["ticker"], row["firm"], row["action"])
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(row)
+    unique.sort(key=lambda r: (r["rank"], r["ticker"]))
+    picked = unique[:STREET_MAX]
+    counts = {k: sum(1 for r in unique if r["action"] == k) for k in ("up", "down", "init", "pt_up", "pt_down", "pt_set", "reiterate")}
+    return {"engine": "street", "market": "us", "days": days, "asof": dt.date.today().isoformat(),
+            "source": source, "rows": picked, "total": len(unique), "counts": counts, "fetch_failed": failed,
+            "note": "핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. "
+                    "야후 대체 경로면 목표주가가 없습니다."}
+
+
 # ── 엔진 3. 실적 캘린더 ────────────────────────────────────────────────
 def earnings(market: str, days: int = 21) -> dict:
     """앞으로 N일 안에 실적을 내는 종목을 모읍니다.
@@ -910,6 +1030,19 @@ def _print(result: dict) -> None:
                   f"{change['from_grade'] or '?'} → {change['to_grade']}")
         if not result["changes"]:
             print("  " + result["note"])
+    elif engine == "street":
+        c = result["counts"]
+        print(f"[월가 리포트] US · 오늘 · {result['total']}건 (상향 {c['up']} 하향 {c['down']} 신규 {c['init']} "
+              f"목표가 상향 {c['pt_up']} 하향 {c['pt_down']}) · 출처 {result['source']}")
+        label = {"up": "▲ 상향", "down": "▼ 하향", "init": "· 신규", "pt_up": "▲ 목표가↑", "pt_down": "▼ 목표가↓",
+                 "pt_set": "· 목표가", "reiterate": "· 유지"}
+        for row in result["rows"]:
+            grade = f"{row['from_grade']} → {row['to_grade']}" if row.get("from_grade") else (row.get("to_grade") or "")
+            target = f"{row['target_from']} → {row['target_to']}" if row.get("target_from") else (row.get("target_to") or "")
+            print(f"  {row['ticker']:<6} {label[row['action']]:<8} {str(row['firm'])[:24]:<25} {grade:<24} {target}")
+        if result["fetch_failed"]:
+            print(f"  ⚠ 페이지 {result['fetch_failed']}장을 받지 못했습니다 — 위 목록은 일부일 수 있습니다.")
+        print("  " + result["note"])
     elif engine == "earnings":
         print(f"[실적 일정] {result['market'].upper()} · 앞으로 {result['days']}일")
         for row in result["upcoming"]:
@@ -989,7 +1122,7 @@ def _print(result: dict) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="글감 엔진 — 재료만 만들고 문장은 쓰지 않습니다.")
-    parser.add_argument("engine", choices=["valuation", "ratings", "earnings",
+    parser.add_argument("engine", choices=["valuation", "ratings", "street", "earnings",
                                            "insiders", "kr_insiders", "institutions", "flows", "sectors", "fred", "ecos",
                                            "seasonality", "all"])
     parser.add_argument("--market", choices=["kr", "us"], default="us")
@@ -1002,6 +1135,7 @@ def main() -> int:
     runners = {
         "valuation": lambda: valuation(args.market),
         "ratings": lambda: ratings(args.market, args.days or 7),
+        "street": lambda: street(args.days or 1),
         "earnings": lambda: earnings(args.market, args.days or 21),
         "insiders": lambda: insiders(args.days or 14),
         "kr_insiders": lambda: kr_insiders(args.days or 7),
@@ -1017,8 +1151,8 @@ def main() -> int:
         for name in ("flows", "kr_insiders", "sectors", "ecos"):
             names.remove(name)                 # 한국장 전용
     elif args.engine == "all":
-        for name in ("insiders", "institutions"):
-            names.remove(name)                 # SEC는 미국 종목 전용
+        for name in ("insiders", "institutions", "street"):
+            names.remove(name)                 # SEC·월가 리포트는 미국 종목 전용
 
     for name in names:
         result = runners[name]()

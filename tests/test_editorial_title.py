@@ -232,7 +232,8 @@ class UniversalRulesTest(unittest.TestCase):
         from src import editorial_title
         sections = [{"heading": f"{i}. 오늘 밤 일정", "body": "b"} for i in range(1, 4)]
         doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?", "narrative": sections}
-        self.assertEqual(collect_issues(doc, kind="프리뷰"), [])
+        self.assertTrue(any("10개 이상" in i for i in collect_issues(doc, kind="프리뷰")))   # 2026-09-17 확대
+        self.assertEqual(collect_issues(doc, kind="이벤트"), [i for i in collect_issues(doc, kind="이벤트") if "개 이상" in i])
         self.assertTrue(any("8개 이상" in i for i in collect_issues(doc, kind="시황")))
         self.assertTrue(any("5개 이상" in i for i in collect_issues(doc, kind="기준표")))
         self.assertEqual(editorial_title.SECTION_FLOORS["가이드"], 5)
@@ -263,6 +264,6 @@ class UniversalRulesTest(unittest.TestCase):
     def test_short_label_is_a_note_not_a_block(self) -> None:
         notes: list[str] = []
         doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?",
-               "narrative": [{"heading": "1. 지금 숫자", "body": "b"}] * 3}
+               "narrative": [{"heading": "1. 지금 숫자", "body": "b"}] * 10}
         self.assertEqual(collect_issues(doc, kind="프리뷰", notes_out=notes), [])
         self.assertTrue(any("명사 토막" in n for n in notes), notes)

@@ -38,7 +38,11 @@ MIN_GRAPHICS = 6          # 벤치마크 이미지 p25
 # (모든 글의 소제목 규칙이 그쪽에 모여 있다). 새 시리즈를 만들면 두 곳에 한 줄씩 더한다.
 # 주말 편성(2026-09-12, 사용자 결정): 토요일 「주간 결산」은 숫자 글이라 표지 + 지수 카드 + 종목
 # 막대 + 흐름 넷, 일요일 「다음 주 일정」은 프리뷰처럼 셋이면 된다.
-SERIES_LIMITS = {"프리뷰": {"graphics": 3}, "주간 결산": {"graphics": 4}, "다음 주 일정": {"graphics": 3},
+# 프리뷰는 2026-09-17부터 **그날 미국장의 메인 글**이다(사장님: "1번2번3번 진행"). 12절·4,500~6,000자·
+# 그림 8~10장. 9/15 합본 실험에서 드러난 셋을 여기서 막는다 — 절당 얕음(13절에 5,884자) → 절당 400자,
+# `number_cards` 네 번 → 같은 종류 2장까지, 초보자 상자 하나 → 둘 이상. 시간(19분)은 지시문의 22:00 마감.
+SERIES_LIMITS = {"프리뷰": {"graphics": 8, "min_section_chars": 400, "max_same_kind": 2, "min_beginner": 2},
+                 "주간 결산": {"graphics": 4}, "다음 주 일정": {"graphics": 3},
                  # 유입 편성(2026-09-12, 사용자 승인 "1번 2번 4번 진행"): 상시 가이드는 표·차트 둘이면 되고
                  # 글의 힘은 질문에 바로 답하는 본문에 있다. 이벤트 글은 일정표 + 차트.
                  "가이드": {"graphics": 2}, "Guide": {"graphics": 2}, "이벤트": {"graphics": 2},
@@ -188,6 +192,31 @@ def collect_issues(doc: dict, graphics: int | None = None,
     problem = radar_origin_issue(doc)
     if problem:
         issues.append(problem)
+
+    # 시리즈별 부피 규칙(2026-09-17, 프리뷰 확대). 절당 글자·같은 그래픽 종류·초보자 상자 수.
+    min_chars = limits.get("min_section_chars")
+    if min_chars:
+        thin = [(i + 1, len(re.sub(r"<[^>]+>", "", str(sec.get("body") or "")).strip()))
+                for i, sec in enumerate(sections)]
+        thin = [(i, n) for i, n in thin if n < min_chars]
+        if thin:
+            issues.append(f"절이 얕습니다 — {', '.join(f'{i}절 {n}자' for i, n in thin)}. 이 시리즈는 절마다 "
+                          f"{min_chars}자 이상입니다(9/15 실험: 13절에 5,884자, 절당 450자라 얕았습니다). "
+                          "절을 줄이지 말고 근거·숫자·초보자 설명으로 채우십시오.")
+    max_same = limits.get("max_same_kind")
+    if max_same:
+        kinds = [str(g.get("kind")) for g in (doc.get("graphics") or []) if isinstance(g, dict) and g.get("kind") != "cover"]
+        for kind in sorted(set(kinds)):
+            if kinds.count(kind) > max_same:
+                issues.append(f"그래픽 `{kind}`이 {kinds.count(kind)}장입니다 — 같은 종류는 {max_same}장까지"
+                              "(9/15 실험에서 `number_cards`가 네 번 나와 단조로웠습니다). fact_table·price_history·"
+                              "calendar_strip·checklist·valuation_bars·rate_compare로 나누십시오.")
+    min_beginner = limits.get("min_beginner")
+    if min_beginner:
+        boxes = len(re.findall(r"초보자\s*(?:용\s*)?설명", body))
+        if boxes < min_beginner:
+            issues.append(f"초보자 설명이 {boxes}개입니다 — 이 시리즈는 {min_beginner}개 이상입니다. 재테크농부 FOMC 글은 "
+                          "개념마다(bp·점도표·2년물·선반영) 상자를 달았습니다. '초보자 설명:'으로 시작하는 문단으로.")
 
     # 머리말에 쓰는 마감일 (2026-09-09). 시리즈가 명시된 기준표만 — 프리뷰는 그날 밤으로 끝난다.
     if doc.get("series") == "기준표":
