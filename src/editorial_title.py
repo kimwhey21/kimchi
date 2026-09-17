@@ -196,15 +196,51 @@ OWNER_REJECTS = (
     "루멘텀 11%, 인텔 9%: 엔비디아 밖에서 오른 종목들",           # 등락률 둘
 )
 
+# ── 2026-09-17: 상위 블로그 제목 450개를 읽고 더한 여섯 축 ─────────────────────────
+# 재테크농부 132·김무무 90·경제현미경 90·피우스 90·해외 4곳 40·우리 50개를 같은 잣대로 쟀다.
+# 우리 시황 28개 중 11개(40%)가 `A 3.2% 등락, 이유는 B입니다` 한 틀이었다 — 9/9 예문집 35개 가운데
+# 가장 쉬운 하나(`인텔 9% 급등, 이유는 등급 상향과 가격 인상`)만 골라 쓴 것이다. 질문 4%·시간 4%·
+# 1인칭 0%. 상위 블로그는 주어가 '나'(재테크농부: 매도합니다, 제가 버텼던 이유) 또는 '독자'
+# (김무무 99%·경제현미경 67%가 따옴표 인용으로 시작)이고, 시제가 '지금·오늘 밤·40분 뒤'이며,
+# 답을 감춘다(재테크농부 "이유" 27% 가운데 다섯에 넷이 `…하락한 이유`로 답을 안 준다).
+# 사장님 결정 "모두 진행해": 예문집에 여섯 축을 더하고, 관문은 낱개 제목이 아니라
+# **최근 다섯 편에 축이 고루 있는지**를 본다(axis_issues). 예문은 이 조사에서 뽑은 것이다.
+AXIS_PICKS = {
+    "시간": ("반도체 반등, 진짜 방향은 새벽 3시에 정해집니다",
+           "오늘 밤 FOMC 전에 확인할 것은 딱 둘입니다",
+           "내일 외국인이 답합니다, 코스피 6,700"),
+    "질문": ("이 반등, 내일도 이어질까?",
+           "지금 반도체 사도 될까? 판단 기준은 이것입니다",
+           "코스피 7,000 재돌파할까? 이번 주 확인할 것"),
+    "감춤 이유": ("반도체가 오늘 가장 크게 빠진 이유",
+              "지수가 오르는데 불안한 이유",
+              "코스피가 7,000선 앞에서 멈춘 이유"),
+    "독자": ("내일 아침 이것 하나만 보세요",
+           "물타기 전에 볼 것 세 가지",
+           "지금 확인할 것은 딱 두 가지"),
+    "내 돈": ("250만원 넘으면 165만원 냅니다: 미국주식 양도세",
+            "1억을 넣으면 월 얼마: 커버드콜 ETF 계산",
+            "26만원이 67만원이 되려면 필요한 것"),
+    "1인칭": ("우리가 오늘 반도체를 사지 않는 이유",
+            "우리가 FOMC 전에 현금을 남기는 이유",
+            "우리는 이 반등을 따라가지 않습니다"),
+    "인용": ("\"이렇게 싸다고?\" 삼성전자 PER 3.6배, 시장이 안 믿는 이유",
+           "\"FOMC만 넘기면 끝인 줄 알았죠\" 네 마녀의 날 앞둔 미국장"),
+}
+
 # 고른 35개를 꼴로 나누면 이렇다. 제목은 이 중 하나의 꼴이어야 한다(관문이 본다).
 HOOKS = {
     "질문": r"\?|까요?$|까\s*$|나\s*$|일까|될까|갈까|볼까|날까|맞을까|샀나|었나|였나|있었나",
     "콜론": r"^[^:：]{2,24}[:：]\s",                                   # `외국인 5조 매수: …알아야 할 것`
-    "이유·원인": r"이유|원인은|답한다|때문|정합니다|결정합니다|판단 기준",
-    "독자에게 주는 것": r"볼 것|알아야 할 것|알아둘 것|보세요|보면 됩니다|[한두세네]?\s*가지|셋만|둘만|하나만|사람|이것입니다",
+    "이유·원인": r"이유|원인은|답한다|답합니다|때문|정합니다|정해집니다|결정합니다|판단 기준",
+    "독자에게 주는 것": r"볼 것|알아야 할 것|알아둘 것|확인할 것|필요한 것|보세요|마세요|보면 됩니다|[한두세네]?\s*가지|딱 [둘셋하]|셋만|둘만|하나만|사람|이것입니다|보기 전에|전에 볼",
     "대비·인과": r"그런데|그러나|오히려|만 보면|지자 |하자 |자 [가-힣]+가 ",   # `지수만 보면 하락장, 종목을 보면 다른 이야기`
     "기록·움직임": r"급등|급락|폭락|반등|무너|흔들|던졌|최고|최저|사상|째|만에|\d+(?:\.\d+)?%|\d,\d{3}",
-    "시한": r"오늘 밤|내일|이번 ?주|다음 ?주|\d+월 \d+일|\d+주 뒤|하루 전|앞두고|점검|체크포인트",
+    "시한": r"오늘 밤|오늘|내일|지금|새벽|\d+시|\d+분 뒤|이번 ?주|다음 ?주|\d+월 \d+일|\d+주 뒤|하루 전|앞두고|점검|체크포인트",
+    # 2026-09-17 더한 축(AXIS_PICKS) — 1인칭 원칙은 추천이 아니다(「판단」 절).
+    "1인칭": r"우리가|우리는|저희가|저희는",
+    "내 돈": r"\d[\d,.]*\s*(?:만원|억|조|달러|원)[^,:]*(?:넣으면|넘으면|되려면|얼마|냅니다|받습니다|드는)",
+    "인용": r"^[“\"']",
 }
 _SHORT_TITLE = 22   # `금리 하나가 바꾼 하루`처럼 짧은 단정은 장치 없이도 제목이다
 
@@ -219,6 +255,54 @@ _REJECTED_SHAPES = (
 
 _NARRATIVE_END = re.compile(r"(?:습니다|했다|였다|었다|갔다|왔다)\s*$")
 _PROMISE = re.compile(r"이유|원인|때문|그런데|그러나|오히려|\?|까\s*$|나\s*$|[:：]\s|정합니다|결정|답한다|판단")
+
+
+# 답을 제목에서 다 말하는 꼴 — `…, 이유는 B입니다`, `…의 이유, B`. 다섯 편에 한 번만(axis_issues).
+_REVEALED = re.compile(r"(?:이유|원인)(?:는|은)\s*\S|이유[,:]\s")
+# 분포를 보는 세 축. 낱개 제목은 어느 축이어도 되지만, 최근 다섯 편에 셋이 다 있어야 한다.
+_AXIS = {
+    "시간": re.compile(r"오늘|내일|지금|새벽|\d+시\b|\d+분 뒤|이번 ?주|다음 ?주|앞두고|하루 전|밤"),
+    "질문": re.compile(HOOKS["질문"]),
+    "독자": re.compile(r"보세요|마세요|볼 것|알아야 할 것|알아둘 것|확인할 것|하나만|둘만|셋만|가지|사람|이것입니다|기준은|보기 전에|전에 볼"),
+}
+_AXIS_KINDS = ("시황", "프리뷰")   # 상시 글(가이드·기준표)에는 '시간' 축이 억지라 분포 검사를 걸지 않는다
+
+
+def title_axes(title: str) -> list[str]:
+    return [name for name, pattern in _AXIS.items() if pattern.search(str(title or ""))]
+
+
+def revealed_reason(title: str) -> bool:
+    return bool(_REVEALED.search(str(title or "")))
+
+
+def axis_issues(title: str, recent_titles: list[str] | None, kind: str | None = None) -> list[str]:
+    """축 분포(2026-09-17). 최근 네 편 + 이 제목 = 다섯 편 안에서 본다.
+
+    ① `…, 이유는 B입니다` 답 노출형은 다섯 편에 한 번 — 우리 시황 28편 중 11편이 이 꼴이었다.
+    ② 시황·프리뷰: 최근 네 편에 없는 축(시간·질문·독자)이 있으면 이 제목이 그중 하나여야 한다.
+       한 편이 한 축씩 메우면 다섯 편 안에 세 축이 다 들어온다.
+    """
+    recent = [str(r) for r in (recent_titles or []) if str(r).strip()][-4:]
+    if not title or not recent:
+        return []
+    issues: list[str] = []
+    if revealed_reason(title):
+        twins = [r for r in recent if revealed_reason(r)]
+        if twins:
+            issues.append(
+                f"답을 제목에서 다 말하는 꼴('…, 이유는 B입니다')이 최근 글에 이미 있습니다: '{twins[-1]}'. "
+                "다섯 편에 한 번만 — 우리 시황 28편 중 11편이 이 꼴이었습니다(2026-09-17). 답을 감추거나"
+                f"(`{AXIS_PICKS['감춤 이유'][0]}`), 시간·질문·독자 축으로 쓰세요.")
+    if kind in _AXIS_KINDS:
+        missing = [a for a in _AXIS if not any(_AXIS[a].search(r) for r in recent)]
+        if missing and not (set(title_axes(title)) & set(missing)):
+            examples = " / ".join(f"{a}: `{AXIS_PICKS[a][0]}`" for a in missing)
+            issues.append(
+                f"최근 네 편에 {'·'.join(missing)} 축이 없는데 이 제목도 그 축이 아닙니다. 이번 제목은 그중 하나로 — "
+                f"{examples}. (상위 블로그 제목 450개 조사, 2026-09-17: 재테크농부는 시간 30%·질문 26%, "
+                "김무무는 질문 72%인데 우리 시황은 시간 4%·질문 4%였습니다.)")
+    return issues
 
 
 def _plain_narrative(title: str) -> bool:
@@ -339,7 +423,8 @@ def last_word(text: str) -> str:
 
 def title_frame(title: str) -> dict:
     return {"contrast": bool(_CONTRAST.search(title)), "date": bool(_DATE_HOOK.search(title)),
-            "ending": heading_shape(title), "last": last_word(title)}
+            "ending": heading_shape(title), "last": last_word(title),
+            "axes": title_axes(title), "revealed": revealed_reason(title)}
 
 
 def heading_shape(text: str) -> str:
@@ -452,12 +537,13 @@ def heading_mix_issues(sections: list) -> list[str]:
 
 def collect_title_issues(title: str, price_data: dict | None = None,
                          notes_out: list[str] | None = None,
-                         recent_titles: list[str] | None = None) -> list[str]:
-    """제목 하나의 규칙 위반 목록. `recent_titles`는 같은 목록의 최근 제목(뼈대 반복 검사)."""
+                         recent_titles: list[str] | None = None,
+                         kind: str | None = None) -> list[str]:
+    """제목 하나의 규칙 위반 목록. `recent_titles`는 같은 목록의 최근 제목(뼈대 반복·축 분포 검사)."""
     title = str(title or "").strip()
     if not title:
         return []
-    issues: list[str] = frame_issues(title, recent_titles)
+    issues: list[str] = frame_issues(title, recent_titles) + axis_issues(title, recent_titles, kind)
 
     if _TRAILING_TAG.search(title):
         issues.append(
@@ -479,7 +565,8 @@ def collect_title_issues(title: str, price_data: dict | None = None,
     if not hook_names(title):
         issues.append(
             f"제목의 꼴이 예문집에 없습니다: {title!r} — 사장님이 고른 꼴은 질문·콜론(`주제: 독자에게 주는 것`)·"
-            "이유·독자에게 주는 것(`볼 것 세 가지`, `사면 안 되는 사람`)·대비·기록·시한, 아니면 22자 이하의 짧은 단정입니다. "
+            "이유·독자에게 주는 것(`볼 것 세 가지`, `사면 안 되는 사람`)·대비·기록·시한·1인칭(`우리가 … 않는 이유`)·"
+            "내 돈(`1억을 넣으면 월 얼마`)·인용(`\"이렇게 싸다고?\" …`), 아니면 22자 이하의 짧은 단정입니다. "
             "docs/editorial-style.md 「제목 문법」의 예문집을 보고 그 어법으로 다시 쓰세요.")
     for pattern, why in _REJECTED_SHAPES:
         if pattern.search(title):
@@ -508,7 +595,7 @@ def collect_issues(doc: dict, price_data: dict | None = None, *,
     """
     ko = doc.get("ko") if isinstance(doc.get("ko"), dict) else doc
     issues = collect_title_issues(ko.get("title", ""), price_data, notes_out=notes_out,
-                                  recent_titles=recent_titles)
+                                  recent_titles=recent_titles, kind=kind)
     names: set[str] = set()
     for entry in (price_data or {}).get("watchlist", {}).values():
         for key in ("name", "name_en"):

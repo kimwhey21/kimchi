@@ -211,7 +211,7 @@ class NaverPostTest(unittest.TestCase):
 
     def test_weekly_review_gets_a_period_prefix_and_daily_category(self) -> None:
         post = naver_post.build(self._manuscript("주간 결산", "weekly-review-2026-09-12"))
-        self.assertTrue(post["title"].startswith("주간 증시 결산 9월 7일~11일: "))
+        self.assertEqual(post["title"], "이번 주 증시, 무엇이 올리고 무엇이 막았나")   # 머리 없음(2026-09-17)
         self.assertEqual(post["category"], "Weekly")
         self.assertEqual(post["blocks"][-3][1], "https://fermata.it.kr/weekly-review-2026-09-12/")   # 마지막 둘은 텔레그램 안내(2026-09-12)
         self.assertIn("주간증시", post["tags"])
@@ -228,7 +228,7 @@ class NaverPostTest(unittest.TestCase):
 
     def test_week_ahead_prefix(self) -> None:
         post = naver_post.build(self._manuscript("다음 주 일정", "week-ahead-2026-09-13"))
-        self.assertTrue(post["title"].startswith("다음 주 증시 일정 9월 7일~11일: "))
+        self.assertEqual(post["title"], "이번 주 증시, 무엇이 올리고 무엇이 막았나")   # 머리 없음(2026-09-17)
         self.assertIn("증시일정", post["tags"])
 
 

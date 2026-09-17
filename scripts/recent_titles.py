@@ -52,17 +52,30 @@ def render(which: str, count: int = 5) -> str:
         frame = editorial_title.title_frame(str(ko.get("title", "")))
         tags = [t for t, on in (("대비", frame["contrast"]), ("날짜", frame["date"])) if on]
         lines.append(f"[{row['date']}] {ko.get('title', '')}")
-        lines.append(f"    꼴: {frame['ending']} · 끝말 '{frame['last']}'" + (f" · {'·'.join(tags)}" if tags else ""))
+        axes = "·".join(frame["axes"]) or "없음"
+        lines.append(f"    꼴: {frame['ending']} · 끝말 '{frame['last']}' · 축: {axes}"
+                     + (" · 답 노출형" if frame["revealed"] else "") + (f" · {'·'.join(tags)}" if tags else ""))
         heads = [str(s.get("heading", "")) for s in ko.get("narrative") or []]
         shapes = [editorial_title.heading_shape(h) for h in heads]
         lines.append(f"    소제목 {len(heads)}개: 문장 {sum(1 for s in shapes if s.endswith('문장'))} · "
                      f"이름표 {shapes.count('이름표')} · 질문 {shapes.count('질문')}")
     last = editorial_title.last_word(str((rows[-1]["doc"].get("ko") or {}).get("title", "")))
     contrast_used = any(editorial_title.title_frame(str((r["doc"].get("ko") or {}).get("title", "")))["contrast"] for r in rows)
+    # 축 분포(2026-09-17): 관문(axis_issues)이 최근 네 편 + 이 제목에서 본다.
+    last4 = [str((r["doc"].get("ko") or {}).get("title", "")) for r in rows[-4:]]
+    missing = [a for a in editorial_title._AXIS if not any(editorial_title._AXIS[a].search(t) for t in last4)]
+    revealed_used = any(editorial_title.revealed_reason(t) for t in last4)
     lines += ["", "이번 글에서 피할 것:",
               f"- '{last}'로 끝내지 않기(바로 앞 글의 끝말)",
               "- 대비 꼴('…했는데 …는 오히려') " + ("쓰지 않기 — 최근 다섯 편에 이미 있음" if contrast_used else "은 가능(최근 다섯 편에 없음)"),
-              "- 소제목은 문장 열에 여섯까지, 이름표 둘 이상, '이름, …' 꼴 둘까지, 같은 말로 끝나는 문장 둘까지"]
+              "- 답 노출형('…, 이유는 B입니다') " + ("쓰지 않기 — 최근 네 편에 이미 있음" if revealed_used else "은 가능(한 번)"),
+              "- 소제목은 문장 열에 여섯까지, 이름표 둘 이상, '이름, …' 꼴 둘까지, 같은 말로 끝나는 문장 둘까지",
+              "", "이번 제목에 넣을 것(시황·프리뷰는 관문이 막습니다):"]
+    if missing:
+        for a in missing:
+            lines.append(f"- {a} 축 (최근 네 편에 없음) — 예: `{editorial_title.AXIS_PICKS[a][0]}`")
+    else:
+        lines.append("- 시간·질문·독자 축이 다 있음 — 어느 축이든 됩니다. 1인칭·내 돈·인용 축도 예문집에 있습니다.")
     return "\n".join(lines)
 
 

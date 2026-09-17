@@ -20,7 +20,9 @@ class BuildTest(unittest.TestCase):
         글을 좋게 보지 않는다. 이 검사가 풀리면 요약본 시절로 조용히 되돌아간다.
         """
         post = naver_post.build(Path("editorial/kr_2026-09-10.json"), Path("output/gate/kr_2026-09-10"))
-        self.assertTrue(post["title"].startswith("코스피 마감 시황 9월 10일"))
+        # 네이버 제목은 본진 제목 그대로다(2026-09-17, 사장님: "날짜 시황 제목 앞에 쓰는거 삭제").
+        import json as _json
+        self.assertEqual(post["title"], _json.loads(Path("editorial/kr_2026-09-10.json").read_text(encoding="utf-8"))["ko"]["title"])
         self.assertEqual(post["category"], "시황")
         self.assertEqual(post["url"], "")
         heads = [b[1] for b in post["blocks"] if b[0] == "h"]
@@ -65,8 +67,9 @@ class BuildTest(unittest.TestCase):
     def test_checkpoint_post_goes_to_checkpoint_category(self) -> None:
         post = naver_post.build(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json"))
         self.assertEqual(post["category"], "Checkpoint")
-        self.assertIn("체크포인트", post["title"])
-        self.assertEqual(post["title"].count("체크포인트"), 1)
+        import json as _json
+        base = _json.loads(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json").read_text(encoding="utf-8"))["ko"]["title"]
+        self.assertEqual(post["title"], base)          # 꼬리표 `| 투자 체크포인트`를 붙이지 않는다(2026-09-17)
         # Checkpoint도 2026-09-15부터 본문 전문·링크 없음이다(사용자: "체크포인트는 2번") — 본진 글을
         # 비공개로 돌렸으니 가리킬 공개 주소가 없다. 마지막 둘은 텔레그램 안내(2026-09-12).
         self.assertEqual(post["url"], "")
@@ -79,7 +82,8 @@ class BuildTest(unittest.TestCase):
     def test_preview_goes_to_daily_with_a_dated_prefix(self) -> None:
         post = naver_post.build(Path("editorial/previews/us_2026-09-10.json"))
         self.assertEqual(post["category"], "시황")
-        self.assertIn("9월 10일", post["title"].split("|")[0] if "|" in post["title"] else post["title"].split(":")[0])
+        import json as _json
+        self.assertEqual(post["title"], _json.loads(Path("editorial/previews/us_2026-09-10.json").read_text(encoding="utf-8"))["ko"]["title"])
         # 2026-09-15부터 프리뷰도 링크 없이 본문 전문으로 나간다(사용자 지시) — 옛 규칙은
         # 마지막에서 세 번째 블록이 본진 주소였다. 지금은 텔레그램 안내 둘로 끝난다.
         self.assertEqual(post["url"], "")

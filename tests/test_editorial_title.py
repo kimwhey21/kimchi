@@ -135,6 +135,61 @@ class AllowedTest(unittest.TestCase):
         self.assertEqual(collect_issues({}, PRICE_DATA), [])
 
 
+
+class AxisDistributionTest(unittest.TestCase):
+    """제목 축 분포 (2026-09-17, 사장님 "모두 진행해").
+
+    상위 블로그 제목 450개를 읽은 결과: 우리 시황 28편 중 11편이 `A 3.2% 등락, 이유는 B입니다`
+    한 틀이었다 — 9/9 예문집 가운데 가장 쉬운 꼴만 골라 쓴 것이고, 질문 4%·시간 4%·1인칭 0%.
+    낱개 규칙으로는 못 잡는다(그 꼴도 예문집에 있다). 그래서 관문이 **분포**를 본다.
+    """
+
+    REVEALED = ("코인베이스 10.1% 급락, 이유는 가상자산 법안 부결입니다",
+                "다우 1.21% 하락, 이유는 금리 인상에 흔들린 은행주입니다",
+                "뉴욕증시 나흘 만에 반등, 이유는 유가입니다",
+                "반도체 ETF 5.63% 급락, 이유는 AI 속도조절 경고입니다")
+
+    def test_revealed_reason_is_allowed_once_in_five(self) -> None:
+        from src.editorial_title import collect_issues
+        issues = collect_issues({"title": "델 15.81% 급등의 이유, AI 서버 주문잔고 950억 달러"},
+                                kind="시황", recent_titles=list(self.REVEALED[:1]))
+        self.assertTrue(any("답을 제목에서 다 말하는" in i for i in issues), issues)
+        clean = collect_issues({"title": "델 15.81% 급등의 이유, AI 서버 주문잔고 950억 달러"},
+                               kind="시황", recent_titles=["금리 하나가 바꾼 하루"])
+        self.assertFalse(any("답을 제목에서" in i for i in clean), clean)
+
+    def test_a_missing_axis_must_be_filled_by_the_next_title(self) -> None:
+        from src.editorial_title import collect_issues
+        # 최근 네 편에 시간·질문·독자 축이 하나도 없다 → 이 제목은 그중 하나여야 한다.
+        blocked = collect_issues({"title": "금리 하나가 바꾼 하루"}, kind="시황", recent_titles=list(self.REVEALED))
+        self.assertTrue(any("축이 없는데" in i for i in blocked), blocked)
+        for title in ("내일 아침 이것 하나만 보세요",                     # 시간 + 독자
+                      "이 반등, 내일도 이어질까?",                       # 시간 + 질문
+                      "지금 확인할 것은 딱 두 가지"):                    # 시간 + 독자
+            with self.subTest(title=title):
+                issues = collect_issues({"title": title}, kind="시황", recent_titles=list(self.REVEALED))
+                self.assertFalse(any("축이 없는데" in i for i in issues), issues)
+
+    def test_evergreen_kinds_are_not_forced_onto_the_time_axis(self) -> None:
+        from src.editorial_title import collect_issues
+        issues = collect_issues({"title": "금리 하나가 바꾼 하루"}, kind="가이드", recent_titles=list(self.REVEALED))
+        self.assertFalse(any("축이 없는데" in i for i in issues), issues)
+
+    def test_axis_examples_are_in_the_example_book(self) -> None:
+        """새 축 예문(1인칭·내 돈·인용 포함)은 낱개 검사를 전부 통과한다 — 사장님 35개와 같은 자격."""
+        from src import editorial_title
+        for axis, titles in editorial_title.AXIS_PICKS.items():
+            for title in titles:
+                with self.subTest(axis=axis, title=title):
+                    self.assertEqual(editorial_title.collect_issues({"title": title}), [], title)
+
+    def test_recent_titles_names_the_missing_axes(self) -> None:
+        from scripts import recent_titles
+        text = recent_titles.render("kr")
+        self.assertIn("이번 제목에 넣을 것", text)
+        self.assertIn("축:", text)
+
+
 if __name__ == "__main__":
     unittest.main()
 
