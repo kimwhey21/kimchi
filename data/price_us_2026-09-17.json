@@ -1159,8 +1159,8 @@
       "ticker": "GC=F",
       "name": "국제 금",
       "name_en": "Gold",
-      "price": 4380.6,
-      "change_pct": -0.16,
+      "price": 4383.9,
+      "change_pct": -0.08,
       "series": [
         4439.0,
         4460.7002,
@@ -1169,7 +1169,7 @@
         4351.8999,
         4332.7998,
         4387.5,
-        4380.6001
+        4383.8999
       ],
       "history": {
         "dates": [
@@ -1314,7 +1314,7 @@
           4351.8999,
           4332.7998,
           4387.5,
-          4380.6001
+          4383.8999
         ]
       },
       "unit": "달러",
@@ -3736,7 +3736,7 @@
           "2026-09-17"
         ],
         "close": [
-          561.5061,
+          561.506,
           540.8994,
           586.2681,
           595.5776,
@@ -3816,8 +3816,8 @@
       "ticker": "CL=F",
       "name": "WTI 원유",
       "name_en": "WTI Crude Oil",
-      "price": 101.25,
-      "change_pct": -1.15,
+      "price": 101.24,
+      "change_pct": -1.16,
       "series": [
         93.03,
         96.05,
@@ -3826,7 +3826,7 @@
         101.39,
         105.83,
         102.43,
-        101.25
+        101.24
       ],
       "history": {
         "dates": [
@@ -3971,7 +3971,7 @@
           101.39,
           105.83,
           102.43,
-          101.25
+          101.24
         ]
       },
       "unit": "",
@@ -4143,7 +4143,7 @@
       "unit": "",
       "trading_date": "2026-09-17",
       "source": "dynamic",
-      "trading_value": 15467922994.160002,
+      "trading_value": 15469457967.6,
       "sector": "Technology"
     },
     "SNDK": {
@@ -4311,7 +4311,7 @@
       "unit": "",
       "trading_date": "2026-09-17",
       "source": "dynamic",
-      "trading_value": 13625039930.550001,
+      "trading_value": 13627816681.35,
       "sector": "Technology"
     },
     "SPCX": {
@@ -4473,7 +4473,7 @@
       "unit": "",
       "trading_date": "2026-09-17",
       "source": "dynamic",
-      "trading_value": 12966128733.91,
+      "trading_value": 12967866630.97,
       "sector": "Technology"
     },
     "AVGO": {
@@ -4641,7 +4641,7 @@
       "unit": "",
       "trading_date": "2026-09-17",
       "source": "dynamic",
-      "trading_value": 8455712752.7,
+      "trading_value": 8456979008.5,
       "sector": "Technology"
     },
     "NBIS": {
@@ -4809,7 +4809,7 @@
       "unit": "",
       "trading_date": "2026-09-17",
       "source": "dynamic",
-      "trading_value": 6688176912.820001,
+      "trading_value": 6688742160.89,
       "sector": "Technology"
     },
     "CRWV": {
@@ -4977,7 +4977,7 @@
       "unit": "",
       "trading_date": "2026-09-17",
       "source": "dynamic",
-      "trading_value": 6334409711.599999,
+      "trading_value": 6337219410.719999,
       "sector": "Technology"
     }
   },
