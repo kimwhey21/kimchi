@@ -1,0 +1,154 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-17",
+  "checked": "2026-09-17",
+  "slug": "sk-hynix-vs-micron",
+  "category_id": 153,
+  "tags": ["SK Hynix stock", "SKHY", "Micron stock", "HBM stocks", "Korean semiconductor stocks"],
+  "radar_origin": "list order",
+  "related": [
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "Samsung Electronics Stock: What Actually Makes the Company Money",
+      "url": "https://fermata.it.kr/samsung-electronics-for-foreign-investors/"
+    },
+    {
+      "title": "How to Buy Korean Stocks From the US in 2026: Brokers and Fees",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    }
+  ],
+  "ko": {
+    "title": "SK Hynix Stock vs Micron: How to Actually Buy HBM Exposure",
+    "narrative": [
+      {
+        "heading": "The short answer: both are now plain Nasdaq buys",
+        "body": "As of September 2026, you no longer need a special brokerage setup to own either side of the HBM (high-bandwidth memory) trade. <b>Micron</b> (Nasdaq: MU) has always been a normal US-listed stock. <b>SK Hynix</b> used to be the harder one to reach — its primary listing is on the Korea Exchange (KRX: 000660) — but on July 10, 2026 the company listed American Depositary Receipts directly on the Nasdaq under the ticker <b>SKHY</b>, in an offering Bloomberg and other financial media described as the largest US share sale ever completed by a foreign company, surpassing Alibaba's $25 billion 2014 listing.\n\nThat changes the practical answer to \"how do I buy SK Hynix\" for most US-based readers. You still have three routes — the new Nasdaq ADR, the Korea-listed shares directly through a broker with KRX access, or Korea ETFs like EWY and FLKR that already hold SK Hynix as a top position — and which one makes sense depends on cost, liquidity and how much you trust the ADR's current price, which is not the same question as whether the company is a good investment."
+      },
+      {
+        "heading": "Who actually leads in HBM, versus who leads in memory overall",
+        "body": "Both companies are usually described as HBM leaders, and the market-share picture depends on which product you are measuring. In overall DRAM — the broader memory category HBM belongs to — Samsung reclaimed the top spot in the second quarter of 2026 with a 39% share, according to Counterpoint Research, while SK Hynix's share fell to 26% (down from 39% a year earlier) and Micron narrowed the gap to 25%, even as SK Hynix's own quarterly revenue grew sharply.\n\nHBM specifically is a different story. Since HBM production ramped up around 2023, SK Hynix has consistently held the largest share of HBM output, the product Nvidia and other AI accelerator makers actually need for their highest-end chips. How large that lead is depends on which research firm and which quarter you look at — TrendForce and Counterpoint have both published HBM bit-share estimates for SK Hynix ranging from the high 40s to over 60% at different points in 2026, with Samsung and Micron closing the gap as HBM4 qualification proceeds. The one thing every recent estimate agrees on: SK Hynix leads in HBM even where it does not lead in memory overall, and Samsung and Micron are both gaining ground faster in HBM than in standard DRAM."
+      },
+      {
+        "heading": "The Q2 and Q3 2026 results show why the stocks moved in opposite directions",
+        "body": "SK Hynix reported record second-quarter 2026 revenue of 79.32 trillion won (about $54.55 billion at the exchange rate that quarter) and operating profit of 60.54 trillion won, an operating margin of 76%, according to the company's own results announcement. Both figures were records — and the stock still fell. Revenue and operating profit both came in below analyst expectations of roughly 84 trillion won and 64 trillion won respectively, and CNBC reported that the stock closed 9.6% lower on the day, after falling as much as 15% intraday. According to Reuters, analysts attributed the shortfall to HBM4 shipments that came in below expectations, pushing some revenue recognition into later quarters.\n\nMicron's most recent reported quarter told a cleaner story. For its fiscal third quarter of 2026 (ended in the spring), Micron posted record revenue of $41.46 billion, up from $23.86 billion the prior quarter, with an 84.6% GAAP gross margin and $28.24 billion in GAAP net income, according to the company's own results release. Micron's next report, covering fiscal Q4 2026, is due September 30, 2026 — after this guide was written — so treat any figures for that quarter as guidance, not results, until the company actually reports them."
+      },
+      {
+        "heading": "Buying Micron: nothing has changed",
+        "body": "Micron trades on the Nasdaq under the ticker <b>MU</b>, the same as any US stock. Any broker that offers US equities — Charles Schwab, Fidelity, Interactive Brokers, or a standard retail app — can buy it in a normal US-dollar brokerage account, with no currency conversion, no foreign settlement cycle and no special paperwork beyond what any US stock purchase requires.\n\nThat simplicity is itself worth naming, because it is the baseline SK Hynix's new ADR is trying to match. Before July 2026, the only way to hold SK Hynix without a Korea-capable broker was an unsponsored, thinly traded OTC ADR under the ticker HXSCF — a security most retail platforms either didn't list or listed with wide spreads and low volume. The new SKHY listing is a sponsored ADR on a major exchange, which is a meaningfully different, more liquid product."
+      },
+      {
+        "heading": "The premium the Nasdaq ADR is trading at right now — and why it matters",
+        "body": "SK Hynix's ADS-to-common-share ratio is fixed: SK Hynix's SEC filing for the Nasdaq listing states that <b>each ADS represents one-tenth of a share</b> of its Korea-listed common stock, held with Citibank, N.A. as depositary — the same ratio Bloomberg cited when it reported the offering (\"every ten ADRs corresponding to a single underlying common share\"). That ratio lets you check, at any moment, whether the ADR is trading in line with the Korea-listed shares or at a premium to them.\n\nHere is the math using our own tracked closing prices for September 16, 2026: SK Hynix's KRX-listed shares closed at 1,752,000 won. Divide by ten for the per-ADS equivalent — 175,200 won — then convert at that day's USD/KRW rate of 1,365.6 to get a parity value of about $128.30 per ADS. SKHY itself closed at $174.87 that same day, according to stockanalysis.com. That is roughly a <b>36% premium</b> over the Korea-listed parity value. Some of that reflects the ADR's own debut pop — SKHY priced at $149 on July 9 and closed its first Nasdaq session at $168.01, a 13% first-day gain reported across financial media — but a 36% gap two months after listing is large enough that it is worth checking again, on the day you actually intend to buy, rather than assuming it still holds by the time you read this."
+      },
+      {
+        "heading": "Valuation side by side: similar size, different multiples",
+        "body": "As of the September 16, 2026 close, SK Hynix (via its Nasdaq ADR) carried a market capitalization of about $937 billion, a trailing P/E of 8.96 and a forward P/E of 4.34, according to stockanalysis.com. Micron's market cap on the same day was about $1.05 trillion, with a trailing P/E of 20.91 and a forward P/E of 6.42.\n\nThe two companies are close in size, but the market is pricing them very differently on trailing earnings — Micron at roughly double SK Hynix's trailing multiple. Part of that gap likely reflects the ADR premium described above (a market-cap figure built from an inflated ADR price overstates the multiple an investor buying the Korea-listed shares directly would actually pay), and part of it may reflect the DRAM market-share erosion Counterpoint reported for SK Hynix relative to both rivals. Forward P/Es for both stocks are far below trailing P/Es, which simply reflects how fast analysts expect AI-driven memory earnings to keep growing for the whole sector, not something specific to either company."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "Confirmed against two sources each: the 1-for-10 ADS ratio and Citibank depositary role (SK Hynix's SEC F-1/A filing, corroborated by Bloomberg's reporting of the same ratio); the July 10, 2026 Nasdaq listing date, $26.5 billion offering size and $149 IPO price (Bloomberg and Yahoo Finance both reported matching figures); and SK Hynix's Q2 2026 revenue and operating profit (the company's own newsroom release, corroborated by CNBC and Reuters' reporting of the same numbers).\n\nWe could not verify one precise HBM bit-share percentage for SK Hynix. TrendForce and Counterpoint publish different point-in-time estimates for different quarters, several of the underlying reports are paywalled, and the numbers we found in secondary coverage ranged from the high 40s to over 60% depending on the source and quarter — so we reported the range and the leadership conclusion rather than a single number we could not confirm ourselves.\n\nThe 36% ADR premium in the section above is our own calculation from same-day closing prices, not a figure reported by any outlet — it will move daily and should be rechecked before you trade, not treated as a fixed fact. And Micron's fiscal Q4 2026 results were not yet public when this guide was checked; any figures for that quarter should be treated as company guidance until Micron actually reports on September 30, 2026."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "For most US-based investors, the practical barrier to owning SK Hynix fell away on July 10, 2026: it is now a normal Nasdaq ticker (SKHY) next to Micron (MU), both buyable in an ordinary US brokerage account. The harder question is no longer access — it is which company's memory business you actually want exposure to. Samsung, not SK Hynix, led overall DRAM market share in the most recent quarter Counterpoint measured, but SK Hynix has been the consistent HBM bit-share leader since the category took off, which is the specific product driving AI-chip memory demand. Micron's most recently reported quarter was the cleaner growth story; SK Hynix's was a record quarter that still disappointed the market enough to send the stock down nearly 10% in a day.\n\nIf you do buy the Nasdaq ADR, check the current SKHY price against the KRX-listed share price (divided by ten) and that day's USD/KRW rate before you place the order — the two-month-old ADR was still trading at a meaningful premium to its Korea-listed parity value as of mid-September 2026, and that gap is not guaranteed to hold, or to close, by the time you read this.\n\nThis guide describes market data and company disclosures as of September 16-17, 2026. Stock prices, exchange rates and market-share estimates change constantly; confirm current figures before investing. This is not investment advice."
+    }
+  },
+  "sources": [
+    {
+      "name": "SK hynix Newsroom",
+      "title": "SK hynix Announces 2Q26 Financial Results",
+      "url": "https://news.skhynix.com/en/q2-2026-business-results/"
+    },
+    {
+      "name": "CNBC",
+      "title": "SK Hynix shares tank as exponential earnings growth fails to satisfy AI-charged expectations",
+      "url": "https://www.cnbc.com/2026/07/29/sk-hynix-earnings-profit-revenue-hbm-memory.html"
+    },
+    {
+      "name": "Bloomberg",
+      "title": "SK Hynix ADR Stock (SKHYV) Rises After $26.5 Billion US Listing",
+      "url": "https://www.bloomberg.com/news/articles/2026-07-10/sk-hynix-indicated-to-climb-17-after-26-5-billion-adr-offering"
+    },
+    {
+      "name": "U.S. Securities and Exchange Commission",
+      "title": "SK hynix Inc. Form F-1/A (Nasdaq ADS registration)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0002120882/000119312526295501/d32785df1a.htm"
+    },
+    {
+      "name": "GlobeNewswire",
+      "title": "Micron Technology, Inc. Reports Record Results for the Third Quarter of Fiscal 2026",
+      "url": "https://www.globenewswire.com/news-release/2026/06/24/3317151/14450/en/micron-technology-inc-reports-record-results-for-the-third-quarter-of-fiscal-2026.html"
+    },
+    {
+      "name": "Counterpoint Research",
+      "title": "AI Demand Reshapes DRAM Rankings in Q2 2026",
+      "url": "https://counterpointresearch.com/en/insights/ai-demand-reshapes-dram-rankings-in-q2-2026"
+    },
+    {
+      "name": "stockanalysis.com",
+      "title": "MU and SKHY stock quotes (market cap, P/E, September 16, 2026 close)",
+      "url": "https://stockanalysis.com/stocks/mu/"
+    }
+  ],
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "SK Hynix ADR (SKHY) versus Micron (MU) share price, September 16, 2026",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "SK Hynix (SKHY) vs Micron (MU)",
+        "left": {"label": "SKHY close, Sep 16, 2026", "value": "$174.87"},
+        "right": {"label": "MU close, Sep 16, 2026", "value": "$926.55"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "SK Hynix and Micron compared on market cap, valuation and memory market share",
+      "args": {
+        "title": "SK Hynix vs Micron, side by side",
+        "columns": ["Metric", "SK Hynix (SKHY)", "Micron (MU)"],
+        "rows": [
+          ["Primary listing", "Korea Exchange (000660)", "Nasdaq"],
+          ["Nasdaq access", "ADR since Jul 10, 2026", "Direct listing"],
+          ["Market cap (Sep 16, 2026)", "$937B", "$1.05T"],
+          ["Trailing P/E", "8.96", "20.91"],
+          ["Forward P/E", "4.34", "6.42"],
+          ["Overall DRAM share, Q2 2026", "26%", "25%"]
+        ],
+        "note": "Market cap and P/E from stockanalysis.com, Sep 16, 2026 close. DRAM share from Counterpoint Research; Samsung led at 39% and is not shown here.",
+        "source": "stockanalysis.com; Counterpoint Research"
+      },
+      "section": 6
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before buying the SK Hynix Nasdaq ADR",
+      "args": {
+        "title": "Before you buy the SKHY ADR",
+        "subtitle": "What the ticker doesn't tell you",
+        "items": [
+          {
+            "label": "Check the ADR-to-parity math the day you buy",
+            "why": "SKHY traded about 36% above its KRX parity value (price ÷ 10, converted) on Sep 16, 2026."
+          },
+          {
+            "label": "Know which product you're actually betting on",
+            "why": "Samsung leads overall DRAM share; SK Hynix leads specifically in HBM, the AI memory product."
+          },
+          {
+            "label": "Don't confuse guidance with results",
+            "why": "Micron's fiscal Q4 2026 results land September 30 — earlier figures are guidance, not results."
+          }
+        ]
+      },
+      "section": 4
+    }
+  ]
+}
