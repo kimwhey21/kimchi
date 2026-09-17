@@ -170,6 +170,13 @@ class AxisDistributionTest(unittest.TestCase):
                 issues = collect_issues({"title": title}, kind="시황", recent_titles=list(self.REVEALED))
                 self.assertFalse(any("축이 없는데" in i for i in issues), issues)
 
+    def test_quote_hook_is_allowed_once_in_five(self) -> None:
+        from src.editorial_title import collect_issues
+        recent = ['"FOMC만 넘기면 끝인 줄 알았죠" 네 마녀의 날 앞둔 미국장']
+        issues = collect_issues({"title": '"이렇게 싸다고?" 삼성전자 PER 3.6배, 시장이 안 믿는 이유'},
+                                kind="시황", recent_titles=recent)
+        self.assertTrue(any("따옴표 인용" in i for i in issues), issues)
+
     def test_evergreen_kinds_are_not_forced_onto_the_time_axis(self) -> None:
         from src.editorial_title import collect_issues
         issues = collect_issues({"title": "금리 하나가 바꾼 하루"}, kind="가이드", recent_titles=list(self.REVEALED))

@@ -294,6 +294,12 @@ def axis_issues(title: str, recent_titles: list[str] | None, kind: str | None = 
                 f"답을 제목에서 다 말하는 꼴('…, 이유는 B입니다')이 최근 글에 이미 있습니다: '{twins[-1]}'. "
                 "다섯 편에 한 번만 — 우리 시황 28편 중 11편이 이 꼴이었습니다(2026-09-17). 답을 감추거나"
                 f"(`{AXIS_PICKS['감춤 이유'][0]}`), 시간·질문·독자 축으로 쓰세요.")
+    if re.match(HOOKS["인용"], title):
+        # 인용꼴(`"이렇게 싸다고?" …`)도 다섯 편에 한 번 — 문서(「더한 축 여섯」 7)가 그렇게 약속한다.
+        quoted = [r for r in recent if re.match(HOOKS["인용"], r)]
+        if quoted:
+            issues.append(f"따옴표 인용으로 시작하는 제목이 최근 글에 이미 있습니다: '{quoted[-1]}'. "
+                          "다섯 편에 한 번을 넘기면 낚시로 읽힙니다 — 다른 축으로 쓰세요.")
     if kind in _AXIS_KINDS:
         missing = [a for a in _AXIS if not any(_AXIS[a].search(r) for r in recent)]
         if missing and not (set(title_axes(title)) & set(missing)):
