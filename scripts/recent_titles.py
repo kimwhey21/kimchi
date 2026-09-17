@@ -76,6 +76,10 @@ def render(which: str, count: int = 5) -> str:
             lines.append(f"- {a} 축 (최근 네 편에 없음) — 예: `{editorial_title.AXIS_PICKS[a][0]}`")
     else:
         lines.append("- 시간·질문·독자 축이 다 있음 — 어느 축이든 됩니다. 1인칭·내 돈·인용 축도 예문집에 있습니다.")
+    if which == "preview":
+        # 2026-09-17 밤: "어느 축이든 됩니다"를 읽은 루틴이 어젯밤 요약 제목을 냈다. 프리뷰는 늘 앞을 본다.
+        lines.append("- **프리뷰는 시간 축(오늘 밤·내일·새벽) 또는 독자 축(보세요·볼 것)이 필수입니다** — 관문이 막습니다. "
+                     "어젯밤을 요약하는 제목(`…급락, …는 오히려 …했습니다`)은 시황 제목이지 프리뷰 제목이 아닙니다.")
     return "\n".join(lines)
 
 

@@ -177,6 +177,24 @@ class AxisDistributionTest(unittest.TestCase):
                                 kind="시황", recent_titles=recent)
         self.assertTrue(any("따옴표 인용" in i for i in issues), issues)
 
+    def test_preview_title_must_look_ahead(self) -> None:
+        """2026-09-17 밤 첫 확장판 제목 「은행주 이틀째 급락, 반도체는 오히려 웃었습니다」 — 어젯밤 요약이다.
+
+        대비 꼴이 예문집에 있고 최근 네 편에 세 축이 다 있어 분포 검사가 아무것도 요구하지 않았다.
+        프리뷰만은 분포와 무관하게 시간 축 또는 독자 축을 늘 요구한다. 같은 제목이 시황에서는 통과한다.
+        """
+        from src.editorial_title import collect_issues
+        recap = "은행주 이틀째 급락, 반도체는 오히려 웃었습니다"
+        recent = ["오늘 밤 8월 CPI 앞두고 확인할 것 세 가지", "10년물 국채금리, 오늘 밤 5%를 넘어설까",
+                  "FOMC 첫날, 반도체는 어제 낙폭을 되돌릴까", "오늘 밤 FOMC가 3년 2개월 만의 금리 인상을 결정합니다"]
+        self.assertTrue(any("오늘 밤을 가리켜야" in i for i in collect_issues({"title": recap}, kind="프리뷰", recent_titles=recent)))
+        self.assertTrue(any("오늘 밤을 가리켜야" in i for i in collect_issues({"title": recap}, kind="프리뷰")))   # recent 없어도
+        self.assertFalse(any("오늘 밤을 가리켜야" in i for i in collect_issues({"title": recap}, kind="시황", recent_titles=recent)))
+        for ok in ("오늘 밤 필라델피아 지수, 은행주 사흘째를 정합니다", "은행주 사흘째, 오늘 밤 이것 하나만 보세요",
+                   "반도체 랠리 사흘째, 오늘 밤도 이어질까"):
+            with self.subTest(title=ok):
+                self.assertFalse(any("오늘 밤을 가리켜야" in i for i in collect_issues({"title": ok}, kind="프리뷰", recent_titles=recent)))
+
     def test_evergreen_kinds_are_not_forced_onto_the_time_axis(self) -> None:
         from src.editorial_title import collect_issues
         issues = collect_issues({"title": "금리 하나가 바꾼 하루"}, kind="가이드", recent_titles=list(self.REVEALED))

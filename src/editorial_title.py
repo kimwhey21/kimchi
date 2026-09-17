@@ -284,9 +284,16 @@ def axis_issues(title: str, recent_titles: list[str] | None, kind: str | None = 
        한 편이 한 축씩 메우면 다섯 편 안에 세 축이 다 들어온다.
     """
     recent = [str(r) for r in (recent_titles or []) if str(r).strip()][-4:]
-    if not title or not recent:
+    if not title:
         return []
     issues: list[str] = []
+    if kind == "프리뷰" and not ({"시간", "독자"} & set(title_axes(title))):
+        issues.append(
+            f"프리뷰 제목은 오늘 밤을 가리켜야 합니다 — {title!r}은 어젯밤 요약입니다. 시간 축이나 독자 축을 넣으세요: "
+            "`반도체 랠리 사흘째, 오늘 밤도 이어질까`, `오늘 밤 미국장, 이 종목 셋만 보세요`(사장님 예문), "
+            f"`{AXIS_PICKS['시간'][0]}`.")
+    if not recent:
+        return issues
     if revealed_reason(title):
         twins = [r for r in recent if revealed_reason(r)]
         if twins:
