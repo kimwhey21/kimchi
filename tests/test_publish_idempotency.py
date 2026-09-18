@@ -109,6 +109,32 @@ class PublishIdempotencyTest(unittest.TestCase):
         self.assertEqual(update_draft.call_args.kwargs["status"], "publish")
 
 
+    @patch("src.publish_wordpress.update_draft")
+    @patch("src.publish_wordpress._featured_media_matches", return_value=True)
+    @patch("src.publish_wordpress._find_existing_post_by_slug")
+    def test_private_run_overwrites_private_post(
+        self, find_existing, media_matches, update_draft
+    ) -> None:
+        # 2026-09-18: 한국어 시황의 살아 있는 상태는 private(2026-09-16부터)인데 덮어쓰기 분기는 publish만
+        # 알았다. 9/17 미국장 제목을 고쳐 다시 올리자 옛 글이 그대로 남고 verify_published가 죽었다.
+        find_existing.return_value = {"id": 1931, "status": "private", "featured_media": 1930}
+        update_draft.return_value = {"id": 1931, "status": "private"}
+        publish_wordpress.publish_draft(
+            "인텔 7.67% 급등, 이 반등에서 확인할 것 하나", "<p>본문</p>", slug="editorial-us-2026-09-17-ko",
+            status="private", image={"url": "https://example.com/cover.png"},
+        )
+        update_draft.assert_called_once()
+        self.assertEqual(update_draft.call_args.kwargs["status"], "private")
+
+    @patch("src.publish_wordpress.update_draft")
+    @patch("src.publish_wordpress._find_existing_post_by_slug")
+    def test_draft_run_does_not_touch_private_post(self, find_existing, update_draft) -> None:
+        find_existing.return_value = {"id": 1931, "status": "private"}
+        result = publish_wordpress.publish_draft("제목", "<p>본문</p>", slug="editorial-us-2026-09-17-ko")
+        self.assertEqual(result["status"], "private")
+        update_draft.assert_not_called()
+
+
 class VerifyPublishedTest(unittest.TestCase):
     """발행이 조용히 실패하는 것을 막는 확인 단계입니다.
 

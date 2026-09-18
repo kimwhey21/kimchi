@@ -597,7 +597,7 @@ def publish_draft(
                     # 요청받은 상태를 그대로 넘깁니다.
                     status=status if status != "draft" else None,
                 )
-            if status == "publish":
+            if status in ("publish", "private"):
                 # 이미 공개된 같은 거래일 글을 정정본으로 덮어씁니다.
                 #
                 # 전에는 여기서 그냥 돌아갔습니다. 그래서 같은 거래일 원고를 다시
@@ -606,9 +606,16 @@ def publish_draft(
                 # 두 개 만들지 않으면서 내용을 바로잡으려면 덮어쓰는 것이 맞습니다.
                 # (URL과 글 번호는 그대로 유지되고, 워드프레스 리비전에 이전
                 # 내용이 남습니다.)
+                #
+                # `private`도 같다(2026-09-18). 한국어 시황·프리뷰·Checkpoint의 **살아 있는 상태**가
+                # 2026-09-16부터 private인데 이 분기는 publish만 알았다 — 9/17 미국장 제목을 고쳐
+                # 다시 올리자 "이미 private 상태라 임시저장으로 덮어쓰지 않습니다"로 돌아가고
+                # verify_published가 옛 제목을 보고 워크플로를 죽였다. 상태를 바꿀 때 그 상태를
+                # 읽는 분기까지 같이 바꾸지 않은 것(보이는 부분만 깎은 것)이 원인이다.
+                # 임시저장(draft) 요청은 여전히 살아 있는 글을 건드리지 않는다.
                 print(
-                    f"[안내] 이미 공개된 같은 거래일 글(id={existing.get('id')})을 "
-                    "새 원고로 덮어씁니다."
+                    f"[안내] 이미 {existing.get('status')} 상태인 같은 거래일 글(id={existing.get('id')})을 "
+                    f"새 원고로 덮어씁니다({status})."
                 )
                 existing_featured = existing.get("featured_media") or None
                 replacement_image = None
@@ -629,7 +636,7 @@ def publish_draft(
                     category=category,
                     image=replacement_image if existing_featured else image,
                     featured_media_id=resolved_featured,
-                    status="publish",
+                    status=status,
                 )
             # 손으로 돌리는 임시저장 실행은 공개된 글을 건드리지 않습니다.
             print(
