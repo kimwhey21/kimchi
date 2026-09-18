@@ -452,8 +452,78 @@ def heading_shape(text: str) -> str:
     return "이름표"
 
 
+# ── 같은 주인공·같은 어구 (2026-09-18, 사장님 "제목 상태 왜 이래 적용안된거같은데") ─────────────
+# 독자 피드 다섯 편에서 '은행주'가 셋, '3년 2개월 만의 금리 인상'이 둘이었다. 목록별 검사는 전부 통과했다 —
+# 그래서 이제 `recent_titles`는 독자가 보는 한 줄(`title_feed`)이고, 뼈대뿐 아니라 **주인공과 어구**도 본다.
+# 주인공 = 워치리스트 종목 이름 + 아래 시장 낱말. 다섯 편에 둘까지(최근 네 편에 이미 둘이면 막는다).
+_SUBJECTS = ("은행주", "금융주", "반도체", "국채금리", "금리", "FOMC", "연준", "유가", "환율", "외국인", "기관",
+             "코스피", "코스닥", "나스닥", "다우", "S&P", "뉴욕증시", "미국장", "한국장", "물가", "CPI", "고용",
+             "실적", "관세", "달러", "비트코인", "AI", "메모리")
+_PHRASE_MIN = 7      # 공백·문장부호·숫자를 뺀 글자 수. `오늘 밤 미국장`(6)·`코스피 7,000`(3)은 되고 `3년 2개월 만의 금리 인상`(9)은 막힌다.
+_STRIP = re.compile(r"[\s,.:;?!\"'“”‘’·()\[\]]")
+
+
+def title_subjects(title: str) -> list[str]:
+    """제목에 나온 주인공(종목·지수·업종·사건) — 긴 이름에 포함된 짧은 이름('국채금리' 안의 '금리')은 뺀다."""
+    text = str(title or "")
+    found: list[str] = []
+    for name in sorted(_configured_names() | set(_SUBJECTS), key=len, reverse=True):
+        if len(name) < 2:
+            continue   # '델' 한 글자는 '모델'에도 걸린다
+        if name.isascii():
+            if re.search(rf"(?<![A-Za-z]){re.escape(name)}(?![A-Za-z])", text):
+                found.append(name)
+        elif name in text:
+            found.append(name)
+    kept = [n for n in found if not any(n != m and n in m for m in found)]
+    return sorted(set(kept), key=text.find)
+
+
+def shared_phrase(a: str, b: str) -> str:
+    """두 제목이 공유하는 가장 긴 연속 어구 — 공백·문장부호를 빼고 재고, 결과는 `a`의 원문 그대로."""
+    xa = [(ch, i) for i, ch in enumerate(str(a or "")) if not _STRIP.match(ch)]
+    xb = [ch for ch in str(b or "") if not _STRIP.match(ch)]
+    best = (0, 0)   # (길이, a에서 끝나는 자리)
+    prev = [0] * (len(xb) + 1)
+    for i in range(1, len(xa) + 1):
+        cur = [0] * (len(xb) + 1)
+        for j in range(1, len(xb) + 1):
+            if xa[i - 1][0] == xb[j - 1]:
+                cur[j] = prev[j - 1] + 1
+                if cur[j] > best[0]:
+                    best = (cur[j], i)
+        prev = cur
+    if not best[0]:
+        return ""
+    start, end = xa[best[1] - best[0]][1], xa[best[1] - 1][1]
+    return str(a)[start:end + 1]
+
+
+def subject_issues(title: str, recent_titles: list[str] | None) -> list[str]:
+    """같은 주인공은 다섯 편에 둘까지, 같은 어구(7자 이상)는 다섯 편에 한 번."""
+    recent = [str(r) for r in (recent_titles or []) if str(r).strip()][-4:]
+    if not title or not recent:
+        return []
+    issues: list[str] = []
+    for name in title_subjects(title):
+        hits = [r for r in recent if name in r]
+        if len(hits) >= 2:
+            issues.append(
+                f"'{name}'이(가) 독자가 보는 최근 네 편 중 {len(hits)}편의 제목에 이미 있습니다('{hits[-1]}') — "
+                "이 글까지 다섯 편에 셋이면 같은 글로 읽힙니다(2026-09-18 '은행주' 셋). 다른 이름으로 부르거나"
+                "(은행주→JP모건·금융주, 반도체→마이크론) 그날의 다른 주인공을 앞세우세요.")
+    for r in recent:
+        phrase = shared_phrase(title, r)
+        if len(re.sub(r"[\d,.%]", "", _STRIP.sub("", phrase))) >= _PHRASE_MIN:   # 이름+숫자(`코스피 7,000`)는 어구가 아니다
+            issues.append(f"'{phrase}' — 최근 글 '{r}'에 이미 쓴 어구입니다. 같은 말은 다섯 편 안에서 두 번 쓰지 않습니다"
+                          "(2026-09-18 '3년 2개월 만의 금리 인상' 둘).")
+            break
+    return issues
+
+
 def frame_issues(title: str, recent_titles: list[str] | None) -> list[str]:
-    """최근 글(같은 목록: 같은 시장 시황 다섯 편, 또는 Checkpoint 목록)과 뼈대가 겹치면 막는다."""
+    """독자가 보는 최근 다섯 편(`title_feed` — 한국장·미국장·프리뷰·기준표·주간 한 줄; 가이드는 같은 시리즈)과
+    뼈대·주인공·어구가 겹치면 막는다. 2026-09-18까지는 같은 목록만 봤다."""
     recent = [str(r) for r in (recent_titles or []) if str(r).strip()][-5:]
     if not title or not recent:
         return []
@@ -469,6 +539,7 @@ def frame_issues(title: str, recent_titles: list[str] | None) -> list[str]:
     same = [r for r in recent if last_word(r) == mine["last"]]
     if mine["last"] and len(same) >= 2 and not (last_word(recent[-1]) == mine["last"]):
         issues.append(f"최근 다섯 편 중 {len(same)}편이 같은 말('{mine['last']}')로 끝납니다 — 이 글까지 셋입니다. 다른 어미로 쓰세요.")
+    issues += subject_issues(title, recent)
     return issues
 
 
@@ -552,7 +623,7 @@ def collect_title_issues(title: str, price_data: dict | None = None,
                          notes_out: list[str] | None = None,
                          recent_titles: list[str] | None = None,
                          kind: str | None = None) -> list[str]:
-    """제목 하나의 규칙 위반 목록. `recent_titles`는 같은 목록의 최근 제목(뼈대 반복·축 분포 검사)."""
+    """제목 하나의 규칙 위반 목록. `recent_titles`는 독자가 보는 최근 제목(`title_feed`; 뼈대·주인공·어구·축 분포 검사)."""
     title = str(title or "").strip()
     if not title:
         return []

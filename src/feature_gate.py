@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 
 from scripts import check_against_benchmark, compare_to_benchmark
-from src import editorial_quality, editorial_title, feature_checks, source_check
+from src import editorial_quality, editorial_title, feature_checks, source_check, title_feed
 
 ROOT = Path(__file__).resolve().parent.parent
 # 시리즈가 사는 폴더. 같은 목록에 나란히 보이는 최근 제목과 뼈대를 대조할 때 쓴다.
@@ -25,10 +25,12 @@ class FeatureGateError(ValueError):
 
 
 def recent_titles(doc: dict, path: Path | None = None, count: int = 5) -> list[str]:
-    """같은 목록에 나란히 보이는 최근 제목들 — 기준표는 Checkpoint 목록(editorial/features),
-    프리뷰는 editorial/previews. 이 원고 자신(같은 파일·같은 slug)은 뺀다(2026-09-09)."""
+    """독자가 보는 최근 제목들. 프리뷰·기준표·주간·이벤트는 네이버 피드 한 줄(`title_feed` — 한국장·미국장 시황과
+    섞여 보인다, 2026-09-18), 가이드·잡지는 같은 시리즈 목록. 이 원고 자신(같은 파일·같은 slug)은 뺀다(2026-09-09)."""
     import json
     series = str(doc.get("series") or "기준표")
+    if series in title_feed.FEED_SERIES:
+        return title_feed.feed_titles(doc, path, count, root=ROOT)
     folder = ROOT / "editorial" / SERIES_FOLDER.get(series, "features")
     rows: list[tuple[str, str]] = []
     for candidate in sorted(folder.glob("*.json")):

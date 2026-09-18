@@ -123,8 +123,10 @@ class GateWiringTest(unittest.TestCase):
             seen["recent"] = kwargs.get("recent_titles")
             return real(doc, price_data, **kwargs)
 
-        previous = [{"ko": {"title": "고용지표에 지수는 하락했는데 메모리 반도체만 오른 이유"}}]
-        with patch.object(editorial_judgment, "previous_manuscripts", return_value=previous), \
+        # 2026-09-18부터 제목 대조 목록은 같은 시장이 아니라 독자가 보는 한 줄(title_feed)이다.
+        from src import title_feed
+        with patch.object(title_feed, "feed_titles", return_value=["고용지표에 지수는 하락했는데 메모리 반도체만 오른 이유"]), \
+             patch.object(editorial_judgment, "previous_manuscripts", return_value=[]), \
              patch.object(editorial_judgment, "previous_manuscript", return_value=None), \
              patch.object(editorial_gate.editorial_title, "collect_issues", side_effect=spy):
             try:

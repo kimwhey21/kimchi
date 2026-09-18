@@ -50,6 +50,7 @@ from src import (  # noqa: E402
     photo_pool,
     publish_wordpress,
     render_html,
+    title_feed,
 )
 from src import post_tags  # noqa: E402
 
@@ -252,9 +253,9 @@ def _style_warnings(ko: dict, en: dict | None, price_data: dict, doc: dict | Non
     issues += editorial_quality.collect_issues(ko)
     previous_docs = (editorial_judgment.previous_manuscripts(doc.get("market", ""), str(doc.get("date", "")))
                      if doc is not None else [])
-    issues += editorial_title.collect_issues(   # 제목·소제목, 모든 글 공통 (최근 다섯 편과 뼈대 대조)
+    issues += editorial_title.collect_issues(   # 제목·소제목, 모든 글 공통 (독자가 보는 최근 다섯 편과 대조, 2026-09-18)
         ko, price_data, kind="시황",
-        recent_titles=[str((d.get("ko") or {}).get("title", "")) for d in previous_docs])
+        recent_titles=title_feed.feed_titles(doc) if doc is not None else None)
     if doc is not None:
         j_issues, _ = editorial_judgment.collect_issues(
             doc, editorial_judgment.previous_manuscript(doc.get("market", ""), str(doc.get("date", ""))),

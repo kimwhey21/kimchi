@@ -44,6 +44,7 @@ from src import (
     editorial_title,
     feature_checks,
     photo_pool,
+    title_feed,
 )
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -114,7 +115,9 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
     issues += [f"문체 — {i}" for i in editorial_quality.collect_issues(ko)]
     notes: list[str] = []
     previous_docs = editorial_judgment.previous_manuscripts(market, date_str)
-    recent_titles = [str((d.get("ko") or {}).get("title", "")) for d in previous_docs]
+    # 제목 대조 목록은 같은 시장 다섯 편이 아니라 독자가 보는 한 줄이다(2026-09-18, `title_feed`) —
+    # 목록별로 보다가 '은행주' 셋·'3년 2개월 만의 금리 인상' 둘이 나란히 나갔다. 문장 반복(repeat_issues)은 같은 시장.
+    recent_titles = title_feed.feed_titles(doc, path)
     issues += [f"제목·소제목 — {i}" for i in editorial_title.collect_issues(
         ko, price_data, kind="시황", notes_out=notes, recent_titles=recent_titles)]
     summary += [f"(참고) {n}" for n in notes]

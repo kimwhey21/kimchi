@@ -125,7 +125,9 @@ class SeriesRegistrationTest(unittest.TestCase):
         self.assertIn("review_", recent_titles.LISTS["weekly"])
         self.assertIn("ahead_", recent_titles.LISTS["weekahead"])
 
-    def test_recent_titles_do_not_mix_the_two_weekend_series(self) -> None:
+    def test_weekend_series_share_the_reader_feed(self) -> None:
+        # 2026-09-12에는 두 시리즈를 따로 대조했다. 2026-09-18부터는 독자가 보는 한 줄이다 — 토요일 결산 뒤에
+        # 일요일 일정이 같은 피드에 보이므로, 다음 결산은 둘 다와 뼈대·주인공을 대조한다(title_feed).
         tmp = Path(tempfile.mkdtemp())
         folder = tmp / "editorial" / "weekly"
         folder.mkdir(parents=True)
@@ -138,10 +140,10 @@ class SeriesRegistrationTest(unittest.TestCase):
         original = feature_gate.ROOT
         try:
             feature_gate.ROOT = tmp
-            titles = feature_gate.recent_titles({"series": "주간 결산", "slug": "weekly-review-2026-09-12"})
+            titles = feature_gate.recent_titles({"series": "주간 결산", "date": "2026-09-12", "slug": "weekly-review-2026-09-12"})
         finally:
             feature_gate.ROOT = original
-        self.assertEqual(titles, ["지난주 결산 제목"])
+        self.assertEqual(titles, ["지난주 결산 제목", "지난주 일정 제목"])
 
 
 class KickerTest(unittest.TestCase):
