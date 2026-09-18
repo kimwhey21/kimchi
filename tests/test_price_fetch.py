@@ -137,6 +137,25 @@ class LaggingIndexDailyBarTest(unittest.TestCase):
         quote = {"ms": "OPEN", "nv": 695452, "cv": -4087, "cr": -0.58, "cd": "KOSPI"}
         self.assertEqual(fetch_kr._apply_final_index_quote(entry, "KS11", quote), entry)
 
+    def test_naver_basis_differs_from_krx_daily_bar(self) -> None:
+        """2026-09-18: 일봉의 9/17 코스피 종가 6,724.34 ≠ 우리 9/17 파일(네이버 확정값) 6,715.41.
+        네이버의 오늘 등락폭 +178.82는 6,715.41 기준이라 일봉 기준 등식은 절대 안 맞는다 — 우리 파일 기준으로도 본다."""
+        today = fetch_kr.dt.date.today()
+        d = lambda n: (today - fetch_kr.dt.timedelta(days=n)).isoformat()
+        bar = {"ticker": "KS11", "price": 6724.34, "change_pct": 0.09, "series": [6717.97, 6724.34],
+               "trading_date": d(1), "history": {"dates": [d(2), d(1)], "close": [6717.97, 6724.34]}}
+        prior = {"ticker": "KS11", "price": 6715.41, "change_pct": -0.04, "series": [6717.97, 6715.41],
+                 "trading_date": d(1), "history": {"dates": [d(2), d(1)], "close": [6717.97, 6715.41]}}
+        quote = {"ms": "CLOSE", "nv": 689423, "cv": 17882, "cr": 2.66, "cd": "KOSPI"}
+        self.assertEqual(fetch_kr._apply_final_index_quote(bar, "KS11", quote), bar)   # 우리 파일 없이는 예전처럼 멈춘다
+        result = fetch_kr._apply_final_index_quote(bar, "KS11", quote, prior=prior)
+        self.assertEqual(result["trading_date"], today.isoformat())
+        self.assertEqual(result["price"], 6894.23)
+        self.assertEqual(result["change_pct"], 2.66)
+        # 휴장 방어는 그대로: 어제 값(6,715.41 = 6,724.34 - 8.93?)이 아니라 어제의 등락폭이 오면 어느 기준으로도 안 맞는다
+        holiday = {"ms": "CLOSE", "nv": 671541, "cv": -256, "cr": -0.04, "cd": "KOSPI"}
+        self.assertEqual(fetch_kr._apply_final_index_quote(bar, "KS11", holiday, prior=prior), bar)
+
     def test_three_day_lag_is_bridged_by_our_own_file(self) -> None:
         """2026-09-10: 일봉은 09-07에 멈췄는데 우리 파일에는 09-09 종가가 있다 — 그 이력으로 메운다."""
         today = fetch_kr.dt.date.today()

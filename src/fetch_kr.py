@@ -158,9 +158,21 @@ def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None,
     price = round(float(quote["nv"]) / 100, 2)
     change = float(quote.get("cv") or 0) / 100
     prev_close = float(entry["price"])
-    if change == 0 or abs(round(prev_close + change, 2) - price) > 0.02:
+    # 전일 종가의 기준은 둘이다 — 일봉 마지막 행, 그리고 우리가 어제 커밋한 파일의 종가(2026-09-18).
+    # 일봉(KRX 집계)의 9/17 코스피 종가는 6,724.34였는데 우리 9/17 파일은 네이버 확정값 6,715.41이었다
+    # (그날도 일봉이 늦어 네이버 값으로 덧붙였다). 네이버의 등락폭은 자기 기준(6,715.41)에서 잰 것이라
+    # 일봉 기준으로는 등식이 영원히 안 맞았고, 16:27·16:36·16:39 세 번이 같은 자리에서 멈췄다.
+    # 휴장 방어는 그대로다 — 휴장일엔 네이버 확정값이 어제 값이라 어느 기준으로도 등식이 안 맞는다.
+    bases = [prev_close]
+    if prior and str(prior.get("trading_date") or "") == last and prior.get("price") is not None:
+        bases.append(float(prior["price"]))
+    matched = next((b for b in bases if change != 0 and abs(round(b + change, 2) - price) <= 0.02), None)
+    if matched is None:
         # 등식이 안 맞으면 오늘 장이 없었거나(휴장) 응답이 다른 날 것입니다.
         return entry
+    if matched != prev_close:
+        print(f"[안내] {code}: 일봉의 전일 종가 {prev_close:,.2f}와 우리 파일의 {matched:,.2f}가 달라 "
+              "우리 파일(네이버 기준)로 등식을 맞췄습니다.")
     series = list(entry.get("series") or [])
     series = (series + [price])[-len(series):] if len(series) >= 2 else [prev_close, price]
     print(f"[안내] {code}: 일봉에 오늘({today}) 행이 아직 없어 네이버 확정 종가 "
