@@ -106,3 +106,45 @@ class WordPressSafetyTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RelatedTitleRefreshTest(unittest.TestCase):
+    """관련 글 링크의 글자는 발행 때 살아 있는 제목으로 바뀐다 (2026-09-18, 사장님 "2번 진행").
+
+    루틴마다 손으로 적은 제목이 페이지마다 달랐다 — 거래시간 글 하나를 세 페이지가 세 가지 이름으로 링크했다.
+    내부 링크의 앵커는 검색엔진이 그 글의 주제를 읽는 자리라, 제목을 고쳐도 앵커가 옛 제목이면 반쪽이다.
+    """
+
+    ENV = {"WORDPRESS_URL": "https://fermata.it.kr", "WORDPRESS_USERNAME": "u", "WORDPRESS_APP_PASSWORD": "p"}
+
+    def test_live_title_replaces_the_hand_written_one(self) -> None:
+        from unittest.mock import patch
+        from src import publish_feature, publish_wordpress
+        related = [{"title": "Korea Stock Market Hours 2026: Sessions, Price Limits, Halts",
+                    "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours/"},
+                   {"title": "Outside link", "url": "https://example.com/x/"}]
+        live = {"status": "publish", "title": {"rendered": "KOSPI Trading Hours: 09:00&#8211;15:30, Now Until 8 p.m."}}
+        with patch.dict("os.environ", self.ENV), \
+             patch.object(publish_wordpress, "_find_existing_post_by_slug", return_value=live) as find:
+            out = publish_feature._refresh_related(related)
+        self.assertEqual(out[0]["title"], "KOSPI Trading Hours: 09:00\u201315:30, Now Until 8 p.m.")   # 엔티티 풀림
+        self.assertEqual(out[1]["title"], "Outside link")            # 바깥 링크는 그대로
+        self.assertEqual(find.call_args.args[2], "koreas-trading-day-just-doubled-hours")   # slug로 찾는다
+
+    def test_missing_or_unpublished_post_keeps_the_manuscript_title(self) -> None:
+        from unittest.mock import patch
+        from src import publish_feature, publish_wordpress
+        related = [{"title": "Old title", "url": "https://fermata.it.kr/gone/"}]
+        with patch.dict("os.environ", self.ENV), \
+             patch.object(publish_wordpress, "_find_existing_post_by_slug", return_value=None):
+            self.assertEqual(publish_feature._refresh_related(related)[0]["title"], "Old title")
+        with patch.dict("os.environ", self.ENV), \
+             patch.object(publish_wordpress, "_find_existing_post_by_slug", side_effect=RuntimeError("503")):
+            self.assertEqual(publish_feature._refresh_related(related)[0]["title"], "Old title")   # 실패해도 발행은 간다
+
+    def test_offline_leaves_everything_untouched(self) -> None:
+        from unittest.mock import patch
+        from src import publish_feature
+        related = [{"title": "Old title", "url": "https://fermata.it.kr/x/"}]
+        with patch.dict("os.environ", {"WORDPRESS_URL": "", "WORDPRESS_USERNAME": "", "WORDPRESS_APP_PASSWORD": ""}):
+            self.assertEqual(publish_feature._refresh_related(related), related)

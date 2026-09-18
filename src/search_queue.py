@@ -42,6 +42,24 @@ def feasibility(position: float, has_post: bool) -> float:
 STOP = {"vs", "the", "a", "an", "to", "in", "of", "for", "is", "how", "what", "and", "or",
         "on", "at", "do", "does", "can", "are", "with", "my", "you", "your", "it", "site"}
 
+# 검색 의도(2026-09-18, 사장님 "2번 진행" — 행동 의도 검색어로 재편). '정의형'(what is·meaning·difference)은
+# 구글 AI 개요가 답을 화면에 먼저 써 줘서 1위여도 클릭이 적고, '행동형'(how to·buy·broker·account·etf·tax·hours·
+# holiday)은 사람이 결국 페이지를 열어야 하며 제휴가 붙는 자리다. 둘 다 걸리면 행동형으로 본다.
+# 이 값도 판단이지 잰 수가 아니다 — 순서를 매기는 데만 쓴다.
+INTENT_ACTION = re.compile(r"how to|buy|broker|account|etf|tax|fee|cost|hours|open time|holiday|calendar|"
+                           r"schedule|dividend|withholding|record date|ticker|\b(ewy|flkr|koru)\b")
+INTENT_DEFINE = re.compile(r"^what is|meaning|difference|explained|\bvs\b")
+INTENT_WEIGHT = {"행동": 1.3, "정의": 0.7, "중립": 1.0}
+
+
+def intent(query: str) -> str:
+    q = query.lower()
+    if INTENT_ACTION.search(q):
+        return "행동"
+    if INTENT_DEFINE.search(q):
+        return "정의"
+    return "중립"
+
 
 def ctr_at(position: float) -> float:
     for edge, value in CTR_CURVE:
@@ -83,8 +101,9 @@ def build(data: dict, posts: list[dict]) -> list[dict]:
         position = float(row.get("position") or 0) or 999.0
         impressions = int(row.get("impressions") or 0)
         post, sure = covering_post(row["query"], posts)
+        kind = intent(row["query"])
         gain = (impressions * max(0.0, ctr_at(TARGET_POSITION) - ctr_at(position))
-                * feasibility(position, post is not None))
+                * feasibility(position, post is not None) * INTENT_WEIGHT[kind])
         if post and sure < 1.0:
             action = "먼저 확인 — 낱말이 하나뿐이라 짝이 맞는지 글을 열어 보십시오"
         elif post and position > 20:
@@ -95,7 +114,7 @@ def build(data: dict, posts: list[dict]) -> list[dict]:
             action = "새 글 — 전용 글 없이도 이만큼 왔습니다"
         else:
             action = "새 글 — 수요는 있는데 우리 글이 없습니다"
-        rows.append({**row, "position": position, "gain": round(gain, 2),
+        rows.append({**row, "position": position, "gain": round(gain, 2), "intent": kind,
                      "post": (post or {}).get("slug"), "sure": sure, "action": action})
     return sorted(rows, key=lambda r: -r["gain"])
 
@@ -124,7 +143,7 @@ def main(argv: list[str] | None = None) -> int:
           f" — 올리기 쉬운 정도를 곱한 값입니다. 업계 CTR 곡선과 판단이지 우리가 잰 수가 아니니 순서를 매기는 데만 씁니다.\n")
     for row in rows[:a.top]:
         page = (f"→ /{row['post']}/" + ("  [짝 확인 필요]" if row["sure"] < 1.0 else "")) if row["post"] else "→ (없음)"
-        print(f"  gain {row['gain']:5.2f}  노출 {row['impressions']:3d}  {row['position']:5.1f}위  "
+        print(f"  gain {row['gain']:5.2f}  노출 {row['impressions']:3d}  {row['position']:5.1f}위  {row['intent']}  "
               f"{row['query']:44s} {page}")
         print(f"        {row['action']}")
     return 0

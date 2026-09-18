@@ -82,6 +82,13 @@ KEPCO 기사가 난 날에 쓴다고 더 오르지 않습니다.
 - 큐가 비었거나(파일이 오래됐거나) 위쪽이 전부 이번 주에 한 것이면 아래 「주제 목록」에서 고릅니다.
   그때는 `radar_origin`에 `list order`를 적습니다.
 - `gain`은 순서를 매기려고 만든 어림치입니다. **글에 쓰지 마십시오** — 우리가 잰 수가 아닙니다.
+- **검색 의도를 봅니다**(2026-09-18, 사장님 "행동 의도 검색어로 재편"). 큐의 줄마다 `행동`·`정의`·`중립`이
+  찍힙니다. `행동`(how to·buy·broker·account·etf·tax·hours·holiday)은 사람이 결국 페이지를 열어야 하고 제휴가
+  붙는 자리라 가중치 1.3, `정의`(what is·meaning·difference)는 구글 AI 개요가 답을 화면에 먼저 써 줘 1위여도
+  클릭이 적어 0.7입니다. 같은 노출·같은 순위면 행동형이 위에 옵니다. 새 글 주제를 고를 때도 행동형을 먼저 봅니다.
+- **`related`의 제목은 손으로 맞추지 않습니다.** 발행할 때 그 주소의 살아 있는 제목으로 바꿔 답니다
+  (`publish_feature._refresh_related`, 2026-09-18). 그전에는 루틴마다 제목을 손으로 적어 넣어 페이지마다 다른
+  이름으로 같은 글을 가리켰습니다(실측: 거래시간 글을 세 페이지가 세 가지 제목으로 링크). 주소만 맞게 적으면 됩니다.
 
 ## 기존 글 고치기 (주 2편)
 
@@ -90,6 +97,9 @@ KEPCO 기사가 난 날에 쓴다고 더 오르지 않습니다.
 1. **지금 글을 먼저 읽습니다**: `https://fermata.it.kr/wp-json/wp/v2/posts?slug=<slug>&_fields=title,content,modified`.
 2. **왜 밀렸는지 찾습니다.** 거의 언제나 셋 중 하나입니다 — ① 검색어가 제목·첫 문단·소제목에 그대로
    없다 ② 숫자·규정이 낡았다 ③ 그 질문에 답하는 절이 아예 없다.
+   2026-09-18의 예: `kospi trading hours`(65위) 글은 첫 소제목이 "The short answer: Korea now trades until 8 p.m."
+   이라 검색어가 어디에도 없었다 → 첫 소제목·첫 문장에 `KOSPI trading hours`를 넣고 「Korea stock market hours
+   at a glance」 절을 더했다. `how to buy korean stocks`(43위) 글도 같은 방식으로 첫 소제목·첫 문장을 고쳤다.
 3. 원고 `editorial/guides/en_<slug>.json`을 쓰되 **`slug`를 라이브 slug 그대로** 적습니다(파일명에서
    만들게 두면 새 글이 하나 더 생깁니다 — 2026-09-06에 실제로 그랬습니다). `checked`는 오늘,
    `radar_origin`은 `search queue: <검색어>`.

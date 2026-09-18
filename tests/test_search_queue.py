@@ -50,6 +50,19 @@ class QueueTest(unittest.TestCase):
         self.assertLess(row["sure"], 1.0)
         self.assertIn("먼저 확인", row["action"])
 
+    def test_action_intent_outranks_definition_at_the_same_numbers(self) -> None:
+        """2026-09-18 '행동 의도로 재편': 같은 노출·같은 순위면 `how to buy …`가 `what is …`보다 앞이다 —
+        정의형은 AI 개요가 답을 먼저 보여 줘 클릭이 적고, 행동형은 제휴가 붙는 자리다."""
+        self.assertEqual(sq.intent("how to buy korean stocks in canada"), "행동")
+        self.assertEqual(sq.intent("what is kosdaq"), "정의")
+        self.assertEqual(sq.intent("kospi vs kosdaq"), "정의")
+        self.assertEqual(sq.intent("ewy vs koru"), "행동")          # ETF 비교는 사는 사람의 검색이다
+        self.assertEqual(sq.intent("englishdart"), "중립")
+        rows = sq.build(_data({"query": "what is kospi", "impressions": 8, "clicks": 0, "position": 30.0},
+                              {"query": "how to buy korean stocks", "impressions": 8, "clicks": 0, "position": 30.0}), [])
+        self.assertEqual(rows[0]["query"], "how to buy korean stocks")
+        self.assertEqual(rows[0]["intent"], "행동")
+
     def test_a_query_with_no_page_is_a_new_post(self) -> None:
         row = sq.build(_data({"query": "korea dividend withholding tax rate", "impressions": 4,
                               "clicks": 0, "position": 45.0}), POSTS)[0]

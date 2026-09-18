@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import html as html_lib
 import json
 import os
 import re
@@ -120,6 +121,44 @@ def _excerpt(ko: dict, limit: int = 200, lead: str = "") -> str:
     return lead + text[:room].rsplit(" ", 1)[0].strip() + "…"
 
 
+def _refresh_related(related: list | None) -> list[dict]:
+    """`related`의 링크 제목을 **살아 있는 제목**으로 바꾼다(2026-09-18, 사장님 "2번 진행" — 내부 링크로 올리기).
+
+    그전에는 루틴마다 제목을 손으로 적어 넣어, 같은 글을 페이지마다 다른 이름으로 가리켰다(실측: 거래시간 글을
+    세 페이지가 "Korea Stock Market Hours 2026: Sessions…", "How to Buy Korean Stocks From the US in 2026: Brokers…",
+    "Can Foreigners Buy Korean Stocks? What Changed in 2026"으로 링크). 내부 링크의 글자(앵커)는 검색엔진이 그 글의
+    주제를 읽는 자리라, 제목을 고쳐도 앵커가 옛 제목이면 반쪽이다. 우리 사이트 주소(slug)로 글을 찾아 제목을 갈아
+    끼우고, 못 찾으면(오프라인·삭제된 글) 원고의 제목을 그대로 둔다. 실패는 세어서 로그에 남긴다.
+    """
+    rows = [dict(r) for r in (related or []) if isinstance(r, dict) and r.get("url")]
+    if not rows or not publish_wordpress.is_configured():
+        return rows
+    base = os.environ["WORDPRESS_URL"].rstrip("/")
+    auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
+    host = re.sub(r"^https?://", "", base).split("/")[0]
+    changed = missed = 0
+    for row in rows:
+        url = str(row["url"])
+        if host not in url:
+            continue   # 바깥 링크는 손대지 않는다
+        slug = url.rstrip("/").rsplit("/", 1)[-1]
+        try:
+            post = publish_wordpress._find_existing_post_by_slug(base, auth, slug)
+        except Exception as error:  # noqa: BLE001 - 링크 하나 때문에 발행을 막지 않는다
+            print(f"[안내] 관련 글 조회 실패({slug}): {error!r} — 원고 제목을 둡니다")
+            missed += 1
+            continue
+        title = html_lib.unescape(((post or {}).get("title") or {}).get("rendered") or "").strip()
+        if not title or (post or {}).get("status") != "publish":
+            missed += 1
+            continue
+        if title != row.get("title"):
+            row["title"] = title
+            changed += 1
+    print(f"[안내] 관련 글 제목: 살아 있는 제목으로 {changed}개 갱신, 못 찾은 것 {missed}개 (전체 {len(rows)})")
+    return rows
+
+
 def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict], dict | None]:
     """JSON의 graphics 선언을 실제 PNG와 절 번호별 figure로 바꾼다."""
     generated, figures, cover = [], {}, None
@@ -226,6 +265,7 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
                    for k, v in section_images.items()}
 
     ko = doc.get("ko") or doc
+    doc = {**doc, "related": _refresh_related(doc.get("related"))}   # 앵커는 살아 있는 제목으로(2026-09-18)
     html = render(doc, _kicker(doc), figures=figures,
                   meta_description=_excerpt(ko, lead=_seo_lead(doc)),
                   lang=str(doc.get("lang") or "ko"))

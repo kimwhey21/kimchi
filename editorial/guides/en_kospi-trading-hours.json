@@ -3,10 +3,10 @@
   "series": "Guide",
   "lang": "en",
   "date": "2026-09-15",
-  "checked": "2026-09-15",
+  "checked": "2026-09-18",
   "slug": "koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know",
   "category_id": 153,
-  "radar_origin": "search queue: kospi trading hours",
+  "radar_origin": "search queue: kospi trading hours (65위, 전용 글 있음)",
   "tags": [
     "kospi trading hours",
     "KRX after-market",
@@ -54,8 +54,12 @@
     "title": "KOSPI Trading Hours: 09:00–15:30, Now Until 8 p.m.",
     "narrative": [
       {
-        "heading": "The short answer: Korea now trades until 8 p.m.",
-        "body": "The Korean regular session has not moved. It runs 09:00 to 15:30 Korea Standard Time, weekdays, with no lunch break. What changed is what happens after it.\n\nOn Monday, September 14, 2026, the Korea Exchange launched an after-market session running 16:00 to 20:00 KST. Combined with the 08:00 pre-market on Nextrade, Korea's alternative trading system, the country's tradable day now stretches to roughly twelve hours, against about six and a half for the regular session alone.\n\nThis is a real change in mechanism, not just a longer clock. The old after-hours arrangement ran 16:00 to 18:00 and collected orders into a single-price auction executed every ten minutes. The new session matches buy and sell orders continuously, the same way the regular session does, right through to 20:00.\n\nFor a foreign investor the practical gain is time-zone arithmetic, covered further below: the 16:00 to 20:00 window lands in the early morning on the US East Coast rather than the middle of the night."
+        "heading": "KOSPI trading hours: 09:00–15:30 KST, plus an after-market to 20:00",
+        "body": "KOSPI trading hours have not moved for the regular session: it runs 09:00 to 15:30 Korea Standard Time, weekdays, with no lunch break. What changed is what happens after it.\n\nOn Monday, September 14, 2026, the Korea Exchange launched an after-market session running 16:00 to 20:00 KST. Combined with the 08:00 pre-market on Nextrade, Korea's alternative trading system, the country's tradable day now stretches to roughly twelve hours, against about six and a half for the regular session alone.\n\nThis is a real change in mechanism, not just a longer clock. The old after-hours arrangement ran 16:00 to 18:00 and collected orders into a single-price auction executed every ten minutes. The new session matches buy and sell orders continuously, the same way the regular session does, right through to 20:00.\n\nFor a foreign investor the practical gain is time-zone arithmetic, covered further below: the 16:00 to 20:00 window lands in the early morning on the US East Coast rather than the middle of the night."
+      },
+      {
+        "heading": "Korea stock market hours at a glance",
+        "body": "Regular session (KOSPI and KOSDAQ): 09:00–15:30 KST, Monday to Friday, no lunch break.\n\nAfter-market on the Korea Exchange: 16:00–20:00 KST since September 14, 2026, with continuous matching rather than the old ten-minute auctions.\n\nPre-market on Nextrade (NXT), the alternative venue: from 08:00 KST.\n\nIn US Eastern time the regular session is 20:00–02:30 the previous evening during daylight time (an hour earlier on standard time), and the after-market is 03:00–07:00.\n\nSettlement is T+2 in Korean business days, so a Korean holiday that is not on your calendar moves your settlement date. The sections below cover what exactly changed, what trades in the new session, and the price-limit and halt rules that apply throughout the day."
       },
       {
         "heading": "What exactly changed on September 14",
