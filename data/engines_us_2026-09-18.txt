@@ -1,55 +1,55 @@
-[밸류에이션] US · 2026-09-18 · FWD PER 중앙값 24.2
+[밸류에이션] US · 2026-09-18 · FWD PER 중앙값 24.5
   종목            FWD PER     목표가 대비     52주고점 대비    애널
-  마이크론              6.3     +54.8%       -22.1%    45
-  엔비디아             14.0     +49.8%        -7.3%    58
-  머크               15.4      +3.9%        -6.2%    26
-  메타               19.5     +10.7%       -13.7%    56
-  마이크로소프트          21.1     +15.1%       -10.1%    52
-  알파벳              23.4     +23.3%       -15.0%    53
-  아마존              24.2     +30.7%       -12.5%    59
-  디어               30.2      +0.4%        -2.9%    23
-  월마트              33.1     +19.3%       -21.0%    40
-  애플               35.1      -2.7%        -2.2%    39
-  인텔               52.8      +7.0%       -23.6%    43
-  코인베이스            61.4     +16.1%       -56.7%    29
-  테슬라             166.6      +8.4%       -26.6%    38
+  마이크론              6.5     +49.0%       -19.1%    45
+  엔비디아             14.2     +47.8%        -6.0%    58
+  머크               15.4      +4.1%        -6.4%    26
+  메타               19.0     +13.4%       -15.8%    56
+  마이크로소프트          20.9     +16.0%       -10.8%    52
+  알파벳              23.5     +22.6%       -14.5%    53
+  아마존              24.5     +29.4%       -11.7%    59
+  디어               30.1      +0.7%        -3.1%    23
+  월마트              33.0     +19.4%       -21.0%    40
+  애플               35.1      -2.5%        -2.4%    39
+  인텔               52.7      +7.2%       -23.7%    43
+  코인베이스            68.6      +4.0%       -51.7%    29
+  테슬라             165.8      +9.0%       -27.0%    38
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 7건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 9건은 뺐습니다)
   2026-09-14 ▲ 코인베이스        Compass Point: Sell → Neutral
 
-[월가 리포트] US · 오늘 · 65건 (상향 9 하향 6 신규 8 목표가 상향 9 하향 2) · 출처 marketbeat
+[월가 리포트] US · 오늘 · 222건 (상향 16 하향 5 신규 25 목표가 상향 41 하향 61) · 출처 marketbeat
   ACN    ▼ 하향     Guggenheim                Buy → Neutral            
+  BALL   ▲ 상향     JPMorgan Chase & Co.      Neutral → Overweight     $65.00
+  BCBP   ▼ 하향     Brean Capital             Buy → Neutral            $9.00
+  BMI    ▲ 상향     Northcoast Research       Neutral → Buy            $148.00
+  CCK    ▲ 상향     JPMorgan Chase & Co.      Neutral → Overweight     $121.00
   DT     ▲ 상향     Needham & Company LLC     Hold → Buy               $68.00
+  EQNR   ▲ 상향     Bank of America           Neutral → Buy            $49.00
   ETSY   ▲ 상향     BTIG Research             Neutral → Buy            $90.00
   FBRT   ▼ 하향     BTIG Research             Buy → Neutral            
-  FLNC   ▼ 하향     Jefferies Financial Grou  Buy → Hold               
-  FTCI   ▲ 상향     UBS Group                 Neutral → Buy            $3.60
+  FTCI   ▲ 상향     UBS Group                 Neutral → Buy            $3.50 → $3.60
   KALU   ▲ 상향     Wells Fargo & Company     Underweight → Equal Weight $169.00 → $160.00
+  LUV    ▲ 상향     Rothschild & Co Redburn   Sell → Neutral           $35.00 → $40.00
   MTSI   ▲ 상향     BMO Capital Markets       Market Perform → Outperform $335.00
   NFLX   ▼ 하향     Wells Fargo & Company     Neutral → Underweight    $80.00 → $57.00
   ORANY  ▼ 하향     Morgan Stanley            Underweight              
   RF     ▲ 상향     Robert W. Baird           Underperform → Neutral   $28.00
-  STUB   ▲ 상향     Citigroup                 Neutral → Buy            
-  TRGP   ▲ 상향     TD Cowen                  Hold → Buy               
-  WCN    ▲ 상향     UBS Group                 Neutral → Buy            $200.00
-  XENE   ▼ 하향     Deutsche Bank Aktiengese  Buy → Hold               $90.00 → $46.00
+  STUB   ▲ 상향     Citigroup                 Neutral → Buy            $9.00 → $7.00
+  TRGP   ▲ 상향     TD Cowen                  Hold → Buy               $275.00 → $350.00
+  TSN    ▲ 상향     JPMorgan Chase & Co.      Neutral → Overweight     $65.00 → $63.00
+  WCN    ▲ 상향     UBS Group                 Neutral → Buy            $176.00 → $200.00
+  YETI   ▲ 상향     Stifel Nicolaus           Hold → Buy               $45.00 → $50.00
   AGEN   · 신규     Chardan Capital           Buy                      $40.00
+  ANIK   · 신규     B. Riley Financial        Buy                      $21.00 → $23.00
+  BCSF   · 신규     Noble Financial           Neutral                  
   BGSI   · 신규     Mizuho                    Outperform               $120.00
   CATX   · 신규     William Blair             Outperform               
-  CUE    · 신규     B Riley                   Buy                      
+  CHRN   · 신규     Northland Securities      Outperform               $32.00
   CUE    · 신규     B. Riley Financial        Buy                      $83.00
-  NGVC   · 신규     Bank of America           Buy                      $35.00
-  TRAX   · 신규     Evercore                  Outperform               
-  TSEM   · 신규     Barclays                  Overweight               $310.00
-  ABEO   ▲ 목표가↑   Cantor Fitzgerald         Overweight               $28.00 → $30.00
-  DHT    ▲ 목표가↑   BTIG Research             Buy                      $23.00 → $28.00
-  FRO    ▲ 목표가↑   BTIG Research             Buy                      $55.00 → $70.00
-  HAFN   ▲ 목표가↑   BTIG Research             Buy                      $10.00 → $12.00
-  INSW   ▲ 목표가↑   BTIG Research             Buy                      $100.00 → $130.00
-  OCS    ▲ 목표가↑   HC Wainwright             Buy                      $26.00 → $39.00
-  RARE   ▲ 목표가↑   Cantor Fitzgerald         Overweight               $33.00 → $39.00
+  CUE    · 신규     B Riley                   Buy                      
+  EFSC   · 신규     Stephens                  Equal Weight             $70.00
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
@@ -89,9 +89,9 @@
   13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 지금의 포지션이 아닙니다.
 
 [미 거시] 최근 90일
-  미 10년물 국채금리           5.01  (+0.50) 기간 최저 4.38(2026-06-26) 최고 5.01(2026-09-16)
-  미 2년물 국채금리            4.74  (+0.50) 기간 최저 4.07(2026-06-26) 최고 4.74(2026-09-16)
-  장단기 금리차(10년-2년)       0.27  (+0.00) 기간 최저 0.27(2026-06-22) 최고 0.53(2026-08-17)
+  미 10년물 국채금리           4.94  (+0.43) 기간 최저 4.38(2026-06-26) 최고 5.01(2026-09-16)
+  미 2년물 국채금리            4.67  (+0.43) 기간 최저 4.07(2026-06-26) 최고 4.74(2026-09-16)
+  장단기 금리차(10년-2년)       0.25  (-0.02) 기간 최저 0.25(2026-09-18) 최고 0.53(2026-08-17)
   연방기금금리                3.63  (+0.00) 기간 최저 3.63(2026-06-01) 최고 3.63(2026-06-01)
   미 소비자물가지수           334.13  (+1.56) 기간 최저 332.57(2026-06-01) 최고 334.13(2026-08-01)
 
@@ -104,7 +104,7 @@
    6월  평균  +0.11%  중앙  +0.29%  상승확률  60%  (n=20)
    7월  평균  +2.41%  중앙  +2.07%  상승확률  75%  (n=20)
    8월  평균  +0.18%  중앙  +1.25%  상승확률  60%  (n=20)
-   9월  평균  -0.66%  중앙  +0.15%  상승확률  50%  (n=20)  ←이번 달
+   9월  평균  -0.65%  중앙  +0.15%  상승확률  50%  (n=20)  ←이번 달
   10월  평균  +0.88%  중앙  +2.04%  상승확률  58%  (n=19)
   11월  평균  +2.09%  중앙  +2.12%  상승확률  75%  (n=20)
   12월  평균  +0.59%  중앙  +0.92%  상승확률  65%  (n=20)
