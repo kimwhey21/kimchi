@@ -1,194 +1,195 @@
 {
- "kind": "feature",
- "series": "Guide",
- "lang": "en",
- "date": "2026-09-15",
- "checked": "2026-09-15",
- "slug": "kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you",
- "category_id": 153,
- "radar_origin": "search queue: kospi vs kosdaq",
- "tags": [
-  "kospi vs kosdaq",
-  "KOSDAQ delisting",
-  "Korea Exchange",
-  "Korean stock boards",
-  "KOSPI listing requirements"
- ],
- "related": [
-  {
-   "title": "How to Buy Korean Stocks From the US in 2026: Brokers and Fees",
-   "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
-  },
-  {
-   "title": "Korea Is Purging Its Penny Stocks: What the Delisting Rules Mean",
-   "url": "https://fermata.it.kr/korea-is-purging-its-penny-stocks-what-the-new-delisting-rules-mean-for-foreign-investors/"
-  },
-  {
-   "title": "Taxes on Korean Stocks for Foreign Investors (2026)",
-   "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
-  }
- ],
- "sources": [
-  {
-   "name": "Financial Services Commission",
-   "title": "Press release on delisting standards and KOSDAQ maintenance thresholds",
-   "url": "https://www.fsc.go.kr/eng/pr010101/85903"
-  },
-  {
-   "name": "Baker McKenzie",
-   "title": "Cross-Border Listings Guide - South Korea Stock Exchange",
-   "url": "https://resourcehub.bakermckenzie.com/en/resources/cross-border-listings-guide/asia-pacific/south-korea-stock-exchange/topics/overview-of-exchange"
-  },
-  {
-   "name": "Korea Exchange",
-   "title": "Market data portal (global.krx.co.kr)",
-   "url": "https://global.krx.co.kr/"
-  },
-  {
-   "name": "Fermata",
-   "title": "Daily Korean market price data, September 15, 2026"
-  }
- ],
- "ko": {
-  "title": "KOSPI vs KOSDAQ: Company Counts, Listing Bars and Risk (2026)",
-  "narrative": [
-   {
-    "heading": "The short answer: the board is a shortcut to size and risk",
-    "body": "Every Korean stock trades on one of two boards run by the Korea Exchange (KRX): KOSPI or KOSDAQ. Knowing which one a company is on tells you, before you read a single financial statement, roughly how big it is, how long it has existed and how much volatility is normal for it.\n\nKOSPI is the main board, launched in 1956, and it holds the names foreign investors already recognise — Samsung Electronics, SK Hynix, Hyundai Motor. KOSDAQ launched in 1996, modelled partly on Nasdaq, to let smaller and earlier-stage companies raise public capital without meeting KOSPI's maturity bar. The two are not rival exchanges; the same exchange group operates both.\n\nThe practical rule most investors need: a KOSPI listing leans toward established and liquid, a KOSDAQ listing leans toward smaller, younger and more volatile in both directions. Neither is automatically better. What changed in 2026 is that the distance between them widened, and the rules for staying on KOSDAQ got materially harder — both covered below."
-   },
-   {
-    "heading": "The two boards by the numbers",
-    "body": "KOSDAQ has more than twice as many listed companies as KOSPI and less than a tenth of the market value. That single comparison explains most of what follows.\n\nAs of December 31, 2025, 847 companies were listed on the KOSPI Market, including two foreign issuers, with a total market capitalisation of about KRW 3,478 trillion. On the same date, 1,827 companies were listed on KOSDAQ, including 19 foreign issuers, with a total market capitalisation of about KRW 506 trillion. Those figures are from the Baker McKenzie cross-border listings guide, which sources them from the exchange.\n\nRun the division and the shape of each board is obvious. Average KOSPI market value per company was roughly KRW 4.1 trillion; on KOSDAQ it was roughly KRW 0.28 trillion — about one-fifteenth. KOSDAQ is not a smaller version of KOSPI. It is a different population of companies that happens to trade under the same exchange group.\n\nFor scale on the index level: on September 15, 2026 the KOSPI closed at 6,627.26, down 0.85% on the day, while the KOSDAQ closed at 812.41, up 0.70%. The two boards routinely move in different directions on the same day, which is itself a reason not to treat \"Korean equities\" as one exposure."
-   },
-   {
-    "heading": "The gap widened sharply in 2026",
-    "body": "Here is the part that most comparisons miss, because it requires looking at two dates rather than one.\n\nBetween December 31, 2025 and September 14, 2026, KOSPI's total market capitalisation went from roughly KRW 3,478 trillion to roughly KRW 5,567 trillion — an increase of about 60%. Over the same stretch, KOSDAQ went the other way, from roughly KRW 506 trillion to roughly KRW 455 trillion, a decline of about 10%.\n\nSo KOSDAQ moved from just under one-seventh of KOSPI's size to under one-twelfth in nine months. The 2026 Korean bull market was a large-cap event, concentrated in semiconductors and the other heavyweight exporters that sit on the main board. It largely did not reach the smaller companies on KOSDAQ.\n\nThat matters when you read a headline about \"Korean stocks\" doubling or surging. If the position you are considering is a KOSDAQ name, the index that got the headline is probably not the index it belongs to, and the tailwind described in the article may not have touched it at all."
-   },
-   {
-    "heading": "What it takes to list, and the 2026 change to what it takes to stay",
-    "body": "The listing bars are the reason the two populations differ. KOSPI generally requires a multi-year operating history plus size, profitability and governance thresholds — the bar is built for maturity. KOSDAQ deliberately does not require the same operating history, which is precisely why earlier-stage and currently unprofitable companies list there.\n\nWhat changed in 2026 is on the other end: the bar for staying listed. The Financial Services Commission raised the market capitalisation a KOSDAQ company must maintain to avoid delisting review from KRW 4 billion to KRW 15 billion, effective January 2026, phased upward through 2029. The FSC's own estimate is that 14 KOSDAQ companies fall under delisting review in 2026 on market cap and revenue standards, rising to 165 companies — 9.5% of all KOSDAQ listings — once the schedule completes in 2029.\n\nThis is not a paper change. The FSC described a \"strict-and-prompt-exit\" principle and noted that delistings in the year of the announcement reached 38, about 2.5 times the recent three-year average of 15. KRX expanded its delisting review teams from three (16 staff) to four (about 20 staff) to handle the volume.\n\nThe consequence for a foreign investor is concrete: a small KOSDAQ company is now exposed to a rising maintenance threshold as well as to its own business risk. Our guide to Korea's delisting reform covers the mechanics."
-   },
-   {
-    "heading": "What the board actually tells you about a stock you are considering",
-    "body": "Turning all of this into a decision rule, rather than trivia:\n\nIf the company is on KOSPI, you are looking at a business that cleared a maturity bar, sits in a market that institutional money can trade in size, and is likely to be covered by analysts and included in the index products foreign investors use. Volatility that would be alarming here is genuinely unusual.\n\nIf the company is on KOSDAQ, three things are simultaneously true: the listing bar it cleared did not require an operating history, the maintenance bar it must keep clearing is rising through 2029, and the board it trades on did not participate in the 2026 large-cap rally. None of that makes it a bad investment. It does mean the burden of research is entirely on you, and that liquidity and disclosure quality vary far more widely than on the main board.\n\nA reasonable allocation rule that follows from the numbers: treat KOSPI names as candidates for core positions and KOSDAQ names as deliberate, sized-down, high-variance bets — not as interchangeable \"Korean stocks.\"\n\nOne caveat in both directions: board membership is a proxy, not a verdict. There are large, profitable, long-established companies on KOSDAQ, and there are KOSPI listings in real trouble. The board narrows the range of what you are probably looking at; it does not replace reading the filings."
-   },
-   {
-    "heading": "How to tell which board a stock is on",
-    "body": "Korean tickers are six-digit numeric codes — Samsung Electronics is 005930 — and the code format itself does not tell you the board, unlike markets where a suffix gives it away. That trips up people who assume a pattern exists.\n\nThree places give you the answer directly. Your broker's instrument detail page labels the listing venue; on international platforms the Korean suffix convention is usually .KS for KOSPI and .KQ for KOSDAQ. The Korea Exchange's own market data pages list the board next to the ticker. And most financial data providers show it in the security's profile.\n\nCheck it before you check anything else about an unfamiliar Korean company. It takes five seconds and it sets your expectations for everything that follows — the size of the business, the depth of the order book, and how much of the price move on any given day is signal rather than noise."
-   },
-   {
-    "heading": "What we could and could not verify",
-    "body": "The company counts and the December 31, 2025 market capitalisation figures come from the Baker McKenzie cross-border listings guide, read on September 15, 2026. The delisting-standard changes, the affected-company estimates and the KRX review-team figures come from the Financial Services Commission's own English press release. The September 2026 index closes come from our own daily price data for the Korean market.\n\nTwo limits worth stating. First, the December 2025 market caps and the September 2026 market caps come from different sources, so the 60% and 10% changes above should be read as the right order of magnitude rather than to the decimal. Second, we could not read KRX's own English statistics pages directly — the site's market data loads dynamically and did not return figures to us — so the company counts are as reported by the listings guide rather than pulled from the exchange ourselves. If you need exact same-day figures, KRX's market data portal is the authoritative source."
-   }
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-15",
+  "checked": "2026-09-15",
+  "slug": "kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you",
+  "category_id": 153,
+  "radar_origin": "search queue: kospi vs kosdaq",
+  "tags": [
+    "kospi vs kosdaq",
+    "KOSDAQ delisting",
+    "Korea Exchange",
+    "Korean stock boards",
+    "KOSPI listing requirements"
   ],
-  "closing": {
-   "heading": "The takeaway",
-   "body": "The board is the cheapest piece of research available on a Korean stock, and in 2026 it carries more information than it used to. KOSPI holds 847 companies worth about seven times more in aggregate than the 1,827 on KOSDAQ, and the gap widened through this year rather than closing.\n\nIf you are building a core Korean position, the main board is where the liquidity and the coverage are. If you are buying a KOSDAQ name, do it knowing the maintenance bar under it is rising to KRW 15 billion through 2029 and that the index it belongs to sat out the 2026 rally.\n\nThis is information, not investment advice. Figures were read from the sources listed below on September 15, 2026; company counts and market values change continuously."
-  }
- },
- "graphics": [
-  {
-   "kind": "cover",
-   "featured": true,
-   "alt": "KOSPI versus KOSDAQ in 2026: 847 companies worth KRW 3,478 trillion against 1,827 companies worth KRW 506 trillion",
-   "args": {
-    "kicker": "Investor Guide",
-    "subject": "KOSPI vs KOSDAQ, by the Numbers",
-    "left": {
-     "label": "KOSPI listings",
-     "value": "847"
+  "related": [
+    {
+      "title": "How to Buy Korean Stocks From the US in 2026: Brokers and Fees",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
     },
-    "right": {
-     "label": "KOSDAQ listings",
-     "value": "1,827"
+    {
+      "title": "Korea Is Purging Its Penny Stocks: What the Delisting Rules Mean",
+      "url": "https://fermata.it.kr/korea-is-purging-its-penny-stocks-what-the-new-delisting-rules-mean-for-foreign-investors/"
+    },
+    {
+      "title": "Taxes on Korean Stocks for Foreign Investors (2026)",
+      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
     }
-   }
+  ],
+  "sources": [
+    {
+      "name": "Financial Services Commission",
+      "title": "Press release on delisting standards and KOSDAQ maintenance thresholds",
+      "url": "https://www.fsc.go.kr/eng/pr010101/85903"
+    },
+    {
+      "name": "Baker McKenzie",
+      "title": "Cross-Border Listings Guide - South Korea Stock Exchange",
+      "url": "https://resourcehub.bakermckenzie.com/en/resources/cross-border-listings-guide/asia-pacific/south-korea-stock-exchange/topics/overview-of-exchange"
+    },
+    {
+      "name": "Korea Exchange",
+      "title": "Market data portal (global.krx.co.kr)",
+      "url": "https://global.krx.co.kr/"
+    },
+    {
+      "name": "Fermata",
+      "title": "Daily Korean market price data, September 15, 2026"
+    }
+  ],
+  "ko": {
+    "title": "KOSPI vs KOSDAQ: Korea's Two Boards, Explained",
+    "narrative": [
+      {
+        "heading": "The short answer: the board is a shortcut to size and risk",
+        "body": "Every Korean stock trades on one of two boards run by the Korea Exchange (KRX): KOSPI or KOSDAQ. Knowing which one a company is on tells you, before you read a single financial statement, roughly how big it is, how long it has existed and how much volatility is normal for it.\n\nKOSPI is the main board, launched in 1956, and it holds the names foreign investors already recognise — Samsung Electronics, SK Hynix, Hyundai Motor. KOSDAQ launched in 1996, modelled partly on Nasdaq, to let smaller and earlier-stage companies raise public capital without meeting KOSPI's maturity bar. The two are not rival exchanges; the same exchange group operates both.\n\nThe practical rule most investors need: a KOSPI listing leans toward established and liquid, a KOSDAQ listing leans toward smaller, younger and more volatile in both directions. Neither is automatically better. What changed in 2026 is that the distance between them widened, and the rules for staying on KOSDAQ got materially harder — both covered below."
+      },
+      {
+        "heading": "The two boards by the numbers",
+        "body": "KOSDAQ has more than twice as many listed companies as KOSPI and less than a tenth of the market value. That single comparison explains most of what follows.\n\nAs of December 31, 2025, 847 companies were listed on the KOSPI Market, including two foreign issuers, with a total market capitalisation of about KRW 3,478 trillion. On the same date, 1,827 companies were listed on KOSDAQ, including 19 foreign issuers, with a total market capitalisation of about KRW 506 trillion. Those figures are from the Baker McKenzie cross-border listings guide, which sources them from the exchange.\n\nRun the division and the shape of each board is obvious. Average KOSPI market value per company was roughly KRW 4.1 trillion; on KOSDAQ it was roughly KRW 0.28 trillion — about one-fifteenth. KOSDAQ is not a smaller version of KOSPI. It is a different population of companies that happens to trade under the same exchange group.\n\nFor scale on the index level: on September 15, 2026 the KOSPI closed at 6,627.26, down 0.85% on the day, while the KOSDAQ closed at 812.41, up 0.70%. The two boards routinely move in different directions on the same day, which is itself a reason not to treat \"Korean equities\" as one exposure."
+      },
+      {
+        "heading": "The gap widened sharply in 2026",
+        "body": "Here is the part that most comparisons miss, because it requires looking at two dates rather than one.\n\nBetween December 31, 2025 and September 14, 2026, KOSPI's total market capitalisation went from roughly KRW 3,478 trillion to roughly KRW 5,567 trillion — an increase of about 60%. Over the same stretch, KOSDAQ went the other way, from roughly KRW 506 trillion to roughly KRW 455 trillion, a decline of about 10%.\n\nSo KOSDAQ moved from just under one-seventh of KOSPI's size to under one-twelfth in nine months. The 2026 Korean bull market was a large-cap event, concentrated in semiconductors and the other heavyweight exporters that sit on the main board. It largely did not reach the smaller companies on KOSDAQ.\n\nThat matters when you read a headline about \"Korean stocks\" doubling or surging. If the position you are considering is a KOSDAQ name, the index that got the headline is probably not the index it belongs to, and the tailwind described in the article may not have touched it at all."
+      },
+      {
+        "heading": "What it takes to list, and the 2026 change to what it takes to stay",
+        "body": "The listing bars are the reason the two populations differ. KOSPI generally requires a multi-year operating history plus size, profitability and governance thresholds — the bar is built for maturity. KOSDAQ deliberately does not require the same operating history, which is precisely why earlier-stage and currently unprofitable companies list there.\n\nWhat changed in 2026 is on the other end: the bar for staying listed. The Financial Services Commission raised the market capitalisation a KOSDAQ company must maintain to avoid delisting review from KRW 4 billion to KRW 15 billion, effective January 2026, phased upward through 2029. The FSC's own estimate is that 14 KOSDAQ companies fall under delisting review in 2026 on market cap and revenue standards, rising to 165 companies — 9.5% of all KOSDAQ listings — once the schedule completes in 2029.\n\nThis is not a paper change. The FSC described a \"strict-and-prompt-exit\" principle and noted that delistings in the year of the announcement reached 38, about 2.5 times the recent three-year average of 15. KRX expanded its delisting review teams from three (16 staff) to four (about 20 staff) to handle the volume.\n\nThe consequence for a foreign investor is concrete: a small KOSDAQ company is now exposed to a rising maintenance threshold as well as to its own business risk. Our guide to Korea's delisting reform covers the mechanics."
+      },
+      {
+        "heading": "What the board actually tells you about a stock you are considering",
+        "body": "Turning all of this into a decision rule, rather than trivia:\n\nIf the company is on KOSPI, you are looking at a business that cleared a maturity bar, sits in a market that institutional money can trade in size, and is likely to be covered by analysts and included in the index products foreign investors use. Volatility that would be alarming here is genuinely unusual.\n\nIf the company is on KOSDAQ, three things are simultaneously true: the listing bar it cleared did not require an operating history, the maintenance bar it must keep clearing is rising through 2029, and the board it trades on did not participate in the 2026 large-cap rally. None of that makes it a bad investment. It does mean the burden of research is entirely on you, and that liquidity and disclosure quality vary far more widely than on the main board.\n\nA reasonable allocation rule that follows from the numbers: treat KOSPI names as candidates for core positions and KOSDAQ names as deliberate, sized-down, high-variance bets — not as interchangeable \"Korean stocks.\"\n\nOne caveat in both directions: board membership is a proxy, not a verdict. There are large, profitable, long-established companies on KOSDAQ, and there are KOSPI listings in real trouble. The board narrows the range of what you are probably looking at; it does not replace reading the filings."
+      },
+      {
+        "heading": "How to tell which board a stock is on",
+        "body": "Korean tickers are six-digit numeric codes — Samsung Electronics is 005930 — and the code format itself does not tell you the board, unlike markets where a suffix gives it away. That trips up people who assume a pattern exists.\n\nThree places give you the answer directly. Your broker's instrument detail page labels the listing venue; on international platforms the Korean suffix convention is usually .KS for KOSPI and .KQ for KOSDAQ. The Korea Exchange's own market data pages list the board next to the ticker. And most financial data providers show it in the security's profile.\n\nCheck it before you check anything else about an unfamiliar Korean company. It takes five seconds and it sets your expectations for everything that follows — the size of the business, the depth of the order book, and how much of the price move on any given day is signal rather than noise."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "The company counts and the December 31, 2025 market capitalisation figures come from the Baker McKenzie cross-border listings guide, read on September 15, 2026. The delisting-standard changes, the affected-company estimates and the KRX review-team figures come from the Financial Services Commission's own English press release. The September 2026 index closes come from our own daily price data for the Korean market.\n\nTwo limits worth stating. First, the December 2025 market caps and the September 2026 market caps come from different sources, so the 60% and 10% changes above should be read as the right order of magnitude rather than to the decimal. Second, we could not read KRX's own English statistics pages directly — the site's market data loads dynamically and did not return figures to us — so the company counts are as reported by the listings guide rather than pulled from the exchange ourselves. If you need exact same-day figures, KRX's market data portal is the authoritative source."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "The board is the cheapest piece of research available on a Korean stock, and in 2026 it carries more information than it used to. KOSPI holds 847 companies worth about seven times more in aggregate than the 1,827 on KOSDAQ, and the gap widened through this year rather than closing.\n\nIf you are building a core Korean position, the main board is where the liquidity and the coverage are. If you are buying a KOSDAQ name, do it knowing the maintenance bar under it is rising to KRW 15 billion through 2029 and that the index it belongs to sat out the 2026 rally.\n\nThis is information, not investment advice. Figures were read from the sources listed below on September 15, 2026; company counts and market values change continuously."
+    },
+    "excerpt": "KOSPI is Korea's main board — Samsung, SK Hynix, listed since 1956. KOSDAQ is the growth board, under a tenth its size. What each says about a stock."
   },
-  {
-   "kind": "fact_table",
-   "section": 1,
-   "alt": "Side by side comparison of KOSPI and KOSDAQ: launch year, listed companies, market capitalisation and average company size",
-   "args": {
-    "title": "KOSPI and KOSDAQ side by side",
-    "subtitle": "Listings and market value as of December 31, 2025",
-    "columns": [
-     "",
-     "KOSPI",
-     "KOSDAQ"
-    ],
-    "rows": [
-     [
-      "Launched",
-      "1956",
-      "1996"
-     ],
-     [
-      "Listed companies",
-      "847",
-      "1,827"
-     ],
-     [
-      "Market cap",
-      "KRW 3,478tn",
-      "KRW 506tn"
-     ],
-     [
-      "Average per company",
-      "KRW 4.1tn",
-      "KRW 0.28tn"
-     ],
-     [
-      "Typical profile",
-      "Large, established",
-      "Smaller, growth-stage"
-     ]
-    ],
-    "source": "Baker McKenzie cross-border listings guide",
-    "note": "Index closes on September 15, 2026: KOSPI 6,627.26 (-0.85%), KOSDAQ 812.41 (+0.70%)."
-   }
-  },
-  {
-   "kind": "fact_table",
-   "section": 3,
-   "alt": "The KOSDAQ market capitalisation threshold to avoid delisting review rises from KRW 4 billion to KRW 15 billion from January 2026, phased through 2029",
-   "args": {
-    "title": "Staying on KOSDAQ got harder in 2026",
-    "subtitle": "Financial Services Commission, phased through 2029",
-    "columns": [
-     "What changed",
-     "Before",
-     "From 2026"
-    ],
-    "rows": [
-     [
-      "Market cap to stay listed",
-      "KRW 4bn",
-      "KRW 15bn"
-     ],
-     [
-      "Companies under review",
-      "-",
-      "14 in 2026"
-     ],
-     [
-      "By 2029",
-      "-",
-      "165 (9.5% of KOSDAQ)"
-     ],
-     [
-      "Delistings that year",
-      "15 (3-yr avg)",
-      "38"
-     ],
-     [
-      "KRX review teams",
-      "3 teams, 16 staff",
-      "4 teams, ~20 staff"
-     ]
-    ],
-    "source": "Financial Services Commission",
-    "note": "The threshold is phased upward between 2026 and 2029, not applied in one step."
-   }
-  }
- ]
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "KOSPI versus KOSDAQ in 2026: 847 companies worth KRW 3,478 trillion against 1,827 companies worth KRW 506 trillion",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "KOSPI vs KOSDAQ, by the Numbers",
+        "left": {
+          "label": "KOSPI listings",
+          "value": "847"
+        },
+        "right": {
+          "label": "KOSDAQ listings",
+          "value": "1,827"
+        }
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 1,
+      "alt": "Side by side comparison of KOSPI and KOSDAQ: launch year, listed companies, market capitalisation and average company size",
+      "args": {
+        "title": "KOSPI and KOSDAQ side by side",
+        "subtitle": "Listings and market value as of December 31, 2025",
+        "columns": [
+          "",
+          "KOSPI",
+          "KOSDAQ"
+        ],
+        "rows": [
+          [
+            "Launched",
+            "1956",
+            "1996"
+          ],
+          [
+            "Listed companies",
+            "847",
+            "1,827"
+          ],
+          [
+            "Market cap",
+            "KRW 3,478tn",
+            "KRW 506tn"
+          ],
+          [
+            "Average per company",
+            "KRW 4.1tn",
+            "KRW 0.28tn"
+          ],
+          [
+            "Typical profile",
+            "Large, established",
+            "Smaller, growth-stage"
+          ]
+        ],
+        "source": "Baker McKenzie cross-border listings guide",
+        "note": "Index closes on September 15, 2026: KOSPI 6,627.26 (-0.85%), KOSDAQ 812.41 (+0.70%)."
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 3,
+      "alt": "The KOSDAQ market capitalisation threshold to avoid delisting review rises from KRW 4 billion to KRW 15 billion from January 2026, phased through 2029",
+      "args": {
+        "title": "Staying on KOSDAQ got harder in 2026",
+        "subtitle": "Financial Services Commission, phased through 2029",
+        "columns": [
+          "What changed",
+          "Before",
+          "From 2026"
+        ],
+        "rows": [
+          [
+            "Market cap to stay listed",
+            "KRW 4bn",
+            "KRW 15bn"
+          ],
+          [
+            "Companies under review",
+            "-",
+            "14 in 2026"
+          ],
+          [
+            "By 2029",
+            "-",
+            "165 (9.5% of KOSDAQ)"
+          ],
+          [
+            "Delistings that year",
+            "15 (3-yr avg)",
+            "38"
+          ],
+          [
+            "KRX review teams",
+            "3 teams, 16 staff",
+            "4 teams, ~20 staff"
+          ]
+        ],
+        "source": "Financial Services Commission",
+        "note": "The threshold is phased upward between 2026 and 2029, not applied in one step."
+      }
+    }
+  ]
 }

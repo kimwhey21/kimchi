@@ -6,7 +6,13 @@
   "checked": "2026-09-15",
   "slug": "kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you",
   "category_id": 153,
-  "tags": ["KOSPI vs KOSDAQ", "KOSPI", "KOSDAQ", "Korea Exchange", "Korean stock market"],
+  "tags": [
+    "KOSPI vs KOSDAQ",
+    "KOSPI",
+    "KOSDAQ",
+    "Korea Exchange",
+    "Korean stock market"
+  ],
   "radar_origin": "search queue: kospi vs kosdaq",
   "related": [
     {
@@ -23,7 +29,7 @@
     }
   ],
   "ko": {
-    "title": "KOSPI vs KOSDAQ: What Each Korean Stock Board Tells You",
+    "title": "KOSPI vs KOSDAQ: Korea's Two Boards, Explained",
     "narrative": [
       {
         "heading": "Two exchanges, one country",
@@ -53,7 +59,8 @@
     "closing": {
       "heading": "The takeaway",
       "body": "Which board a Korean stock trades on isn't a technicality — it's a quick proxy for company maturity, size, and the kind of volatility you should expect. A KOSPI listing leans toward stability; a KOSDAQ listing leans toward growth and risk in both directions. Neither is automatically the better choice — it depends on what you're actually looking for — but check the board before you check anything else.\n\nMarket capitalization figures above are Korea Exchange data as of September 14, 2026, cross-checked against Korea Times' reporting on the market's April 2026 milestone; both change daily, so confirm current figures before you rely on them. This guide is for informational purposes only and is not investment advice."
-    }
+    },
+    "excerpt": "KOSPI is Korea's main board — Samsung, SK Hynix, listed since 1956. KOSDAQ is the growth board, under a tenth its size. What each says about a stock."
   },
   "graphics": [
     {
@@ -63,8 +70,14 @@
       "args": {
         "kicker": "Investor Guide",
         "subject": "KOSPI vs KOSDAQ",
-        "left": {"label": "KOSPI market cap (Sep 2026)", "value": "₩5,567T"},
-        "right": {"label": "KOSDAQ market cap (Sep 2026)", "value": "₩455T"}
+        "left": {
+          "label": "KOSPI market cap (Sep 2026)",
+          "value": "₩5,567T"
+        },
+        "right": {
+          "label": "KOSDAQ market cap (Sep 2026)",
+          "value": "₩455T"
+        }
       }
     },
     {
@@ -74,12 +87,32 @@
         "title": "KOSPI vs KOSDAQ, side by side",
         "subtitle": "Two boards, one exchange group",
         "source": "Korea Exchange (Sep 14, 2026)",
-        "columns": ["", "KOSPI", "KOSDAQ"],
+        "columns": [
+          "",
+          "KOSPI",
+          "KOSDAQ"
+        ],
         "rows": [
-          ["Launched", "1956", "1996"],
-          ["Typical company", "Established, profitable", "Smaller, high-growth"],
-          ["Listing bar", "3+ yrs + profit tests", "No minimum history"],
-          ["Market cap (Sep 14, 2026)", "₩5,567.1T (~$4.14T)", "₩455.1T (~$338B)"]
+          [
+            "Launched",
+            "1956",
+            "1996"
+          ],
+          [
+            "Typical company",
+            "Established, profitable",
+            "Smaller, high-growth"
+          ],
+          [
+            "Listing bar",
+            "3+ yrs + profit tests",
+            "No minimum history"
+          ],
+          [
+            "Market cap (Sep 14, 2026)",
+            "₩5,567.1T (~$4.14T)",
+            "₩455.1T (~$338B)"
+          ]
         ]
       },
       "section": 3

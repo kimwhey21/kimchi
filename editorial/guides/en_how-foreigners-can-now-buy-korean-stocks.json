@@ -1,203 +1,204 @@
 {
- "kind": "feature",
- "series": "Guide",
- "lang": "en",
- "date": "2026-09-15",
- "checked": "2026-09-15",
- "slug": "how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account",
- "category_id": 153,
- "radar_origin": "search queue: how to buy korean stocks",
- "tags": [
-  "how to buy korean stocks",
-  "korean brokerage account",
-  "KRX access",
-  "Interactive Brokers Korea",
-  "Korea ETF"
- ],
- "related": [
-  {
-   "title": "Taxes on Korean Stocks for Foreign Investors (2026)",
-   "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
-  },
-  {
-   "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared",
-   "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
-  },
-  {
-   "title": "Korea Stock Market Hours 2026: Sessions, Price Limits, Halts",
-   "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know/"
-  }
- ],
- "sources": [
-  {
-   "name": "Interactive Brokers",
-   "title": "Launches Access to Korean Equities (press release, May 7, 2026)",
-   "url": "https://www.interactivebrokers.com/en/general/about/mediaRelations/5-7-26.php"
-  },
-  {
-   "name": "Interactive Brokers",
-   "title": "KRX Exchange product page",
-   "url": "https://www.interactivebrokers.com/en/trading/krx-exchange.php"
-  },
-  {
-   "name": "Interactive Brokers",
-   "title": "Stock commissions, Asia-Pacific",
-   "url": "https://www.interactivebrokers.com/en/pricing/commissions-stocks-asia-pacific.php"
-  },
-  {
-   "name": "Charles Schwab",
-   "title": "Global Account Markets and Pricing",
-   "url": "https://www.schwab.com/resource/global-account-markets-and-pricing"
-  },
-  {
-   "name": "Financial Services Commission",
-   "title": "Abolition of the foreign investor registration system (January 2, 2026)"
-  }
- ],
- "ko": {
-  "title": "How to Buy Korean Stocks From the US in 2026: Brokers and Fees",
-  "narrative": [
-   {
-    "heading": "The short answer: one broker gives you direct KRX access",
-    "body": "If you live outside Korea and want to own an actual Korea Exchange (KRX) listing rather than a fund that tracks one, there is exactly one mainstream retail route as of September 2026: an Interactive Brokers account. IBKR announced KRX access in a press release dated May 7, 2026, describing itself as \"the first major US-based broker to offer seamless trading in Korea's over $4 trillion equity market.\"\n\nThat matters because most English-language guides to this question still name Charles Schwab and Fidelity as options. On Schwab's own Global Account materials, the markets you can trade online are listed as a set of major foreign exchanges, and Korea is not among them — Korea appears only as a sell-only market handled by the broker-assisted Global Investing Services desk. In other words, a Schwab Global Account can help you get out of a Korean position; it is not a way to buy one.\n\nSo the three honest routes are: IBKR for direct KRX shares, US-listed ETFs for index exposure, and a handful of ADRs and OTC lines for a few individual names. The rest of this guide covers what each actually costs and what you give up."
-   },
-   {
-    "heading": "Which brokers actually let you buy KRX-listed shares",
-    "body": "The table below is the part worth bookmarking. It separates brokers by what they let you do with Korean equities, not by how they market themselves.\n\nInteractive Brokers is the only one in this list where a retail client can place a buy order on a KRX-listed share. IBKR's own KRX page states that existing clients can turn it on themselves by \"enabling KRX market data and trading permissions in Client Portal,\" and that new accounts are usually approved within one business day. IBKR also lists Korea's alternative trading system, NXT Exchange (Nextrade), alongside the main exchange in its Asia-Pacific commission schedule.\n\nThere is one restriction that catches people out, and it is in IBKR's own disclosure rather than the marketing copy: KRX access \"is not available to residents of Korea, clients of Interactive Brokers Securities Japan Inc., or clients of Interactive Brokers India Pvt. Ltd.\" If you are a Korean resident, an IBKR Japan client, or an IBKR India client, this route is closed to you regardless of what the general product pages say.\n\nThe brokers in the bottom half of the table are there because readers ask about them constantly. None of them offers direct KRX equity trading; several offer the Korea ETFs, which is a different product with a different tax and tracking profile."
-   },
-   {
-    "heading": "What an IBKR Korea trade costs, and why small orders cost more",
-    "body": "IBKR publishes its Korean equity commissions as a tiered percentage of trade value with a per-order minimum, and the minimum is the number that decides your real cost. The first tier — monthly Korean trade value up to KRW 2,250,000,000 — is 0.06% of trade value with a minimum of KRW 4,000 per order. The tiers step down to 0.05%, 0.04% and 0.03% as monthly volume rises, with minimums of KRW 3,400, KRW 3,000 and KRW 2,700. Third-party exchange and regulatory fees are passed through on top.\n\nHere is the arithmetic most guides skip. At the first tier, the percentage only exceeds the KRW 4,000 minimum once your order is larger than about KRW 6.67 million, because 0.06% of KRW 6,666,667 is exactly KRW 4,000. Below that, you pay the flat minimum. At the USD/KRW reference rate of 1,359.80 on September 15, 2026, that break-even order size is roughly $4,900, and the minimum itself is about $2.94.\n\nThe practical consequence: a KRW 500,000 order (about $368) costs KRW 4,000, which is 0.80% of the trade — over thirteen times the headline 0.06%. A KRW 5 million order costs the same KRW 4,000, or 0.08%. If you intend to build a Korean position in small monthly increments, the commission minimum, not the percentage, is your cost structure, and fewer larger orders are materially cheaper than many small ones.\n\nCurrency conversion is separate and cheap by comparison: IBKR's press release cites FX conversion commissions \"as low as 0.20 basis points or 0.0020% of the trade value.\" Korea also levies a securities transaction tax on sales, which is a cost of selling rather than buying — our guide to the full cost of owning Korean stocks covers that side."
-   },
-   {
-    "heading": "The 2026 rule change that opened this up",
-    "body": "None of this was possible for ordinary foreign investors until recently, and the reason is worth understanding because it explains why older guides are wrong rather than merely outdated.\n\nFor roughly two decades, buying an individual Korean stock as a foreign retail investor meant obtaining an Investment Registration Certificate from Korea's financial regulator and opening a non-resident account with a Korean securities firm — a process built for institutions. On January 2, 2026, the Financial Services Commission (FSC) scrapped that foreign-investor registration system and removed the restrictions that had kept foreign integrated accounts — omnibus accounts, in market language — effectively unavailable to individuals. The reporting cycle for identifying the ultimate beneficial owner behind an omnibus account was eased from real-time to monthly.\n\nThe structure that resulted is why you never open anything in Korea yourself. Your overseas broker opens a single account in its own name at a Korean securities company and batches all of its clients' Korea-bound orders through it. You are a client of your broker; your broker is the account holder of record in Seoul. Institutions had used this shape for years. The 2026 change is what let retail brokerages offer it."
-   },
-   {
-    "heading": "If you do not want a KRX account: ETFs and ADRs",
-    "body": "Direct KRX access is not the right answer for everyone, and for a lot of readers the honest recommendation is the boring one.\n\nUS-listed ETFs give you Korean index exposure in USD, in your existing account, with no new permissions, no FX conversion and no KRW settlement. You give up the ability to hold a specific company and you accept the fund's expense ratio and tracking behaviour. We compare the main US-listed Korea ETFs — including their expense ratios and what each actually holds — in a separate guide, because the differences between them are larger than they look.\n\nADRs and OTC lines are the middle path: a small number of Korean companies have depositary receipts or unsponsored OTC lines that trade in USD. Coverage is thin, liquidity is often much worse than the Seoul listing, and the OTC lines in particular can trade at prices that drift from the home market. If the company you want is not among them, an ETF or a KRX account are your only two options.\n\nA reasonable decision rule: if you want one specific Korean company and the position is large enough that a KRW 4,000 minimum is noise, open KRX access. If you want Korea as a slice of a portfolio, buy the ETF."
-   },
-   {
-    "heading": "When the Korean market is actually open where you live",
-    "body": "KRX runs on Korea Standard Time, UTC+9, which is 13 hours ahead of US Eastern in summer and 14 in winter. The regular session is 09:00 to 15:30 KST. For a US East Coast investor on daylight time, that is 20:00 to 02:30 the previous evening and overnight; on standard time it is 19:00 to 01:30.\n\nSince June 29, 2026, KRX has added sessions on both ends of the regular day: a pre-market from 07:00 to 08:00 KST and an after-hours session from 16:00 to 20:00 KST. The after-hours window is the useful one for the Americas, because 16:00 to 20:00 KST maps to roughly 03:00 to 07:00 US Eastern on daylight time — early morning rather than the middle of the night.\n\nThe caveat matters as much as the schedule. Liquidity does not stretch just because the session does, and spreads in the extended windows are wider than in the regular session. Treat the extended hours as a way to react to news at a civilised local hour, not as the place to build or exit a position of any size. Our guide to Korea's trading day covers the price limits, volatility interruptions and circuit breakers that fire inside those sessions.\n\nSettlement is T+2, the same cycle as most major equity markets, so the cash or shares land two business days after the trade — counted in Korean business days, which include Korean market holidays you may not have on your calendar."
-   },
-   {
-    "heading": "Tax and filing: what gets withheld before you see the money",
-    "body": "Korea withholds tax on dividends paid to non-resident investors at the point of payment. The standard non-treaty rate is 22%, made up of a 20% national tax and a 2% local surtax. Investors resident in a country with a tax treaty with Korea often qualify for a reduced rate — portfolio dividends to US residents are commonly reduced to 15% under the Korea-US treaty — but the rate that actually applies depends on your country of residence, the treaty's terms, and whether your broker or custodian files the documentation to claim it. Check what rate your broker is applying rather than assuming the treaty rate is automatic.\n\nCapital gains treatment for non-residents is a separate question from dividend withholding and turns on your treaty, the size of your holding, and your home country's own rules on foreign investment income. The detail is in our guide to the full cost of owning Korean stocks.\n\nSeparately, holding assets in a foreign brokerage account can create reporting obligations at home that have nothing to do with Korean tax. US persons, for example, have FBAR and Form 8938 thresholds keyed to foreign account balances rather than to gains. Whether your IBKR Korea holdings count depends on how and where the account is held, which is a question for your own tax adviser.\n\nNone of this is tax advice. Confirm your withholding rate and your filing obligations before you invest, not in April."
-   },
-   {
-    "heading": "What we could and could not verify",
-    "body": "Everything above about Interactive Brokers comes from IBKR's own published pages, read on September 15, 2026: the May 7, 2026 press release, the KRX exchange page, and the Asia-Pacific stock commission schedule. The commission tiers, the KRW minimums, the FX figure and the residency exclusions are quoted from those pages.\n\nTwo things we could not settle. First, IBKR's own pages disagree on how many Korean securities are available: the press release says \"more than 2,700 listed securities\" while the KRX product page says \"1,800+ Listed Securities.\" We have not found a reconciliation, so treat both as approximate and check the instrument you actually want. Second, Charles Schwab's markets-and-pricing page renders its market list dynamically, so we could not read the list directly from Schwab's own HTML; our statement that Korea is not online-tradable there rests on Schwab's published market summaries and the sell-only desk description. Fidelity's international trading page refused our request entirely, so we have not verified its Korea status either way and have marked it accordingly in the table.\n\nWhere a cell in the broker table says \"Not confirmed,\" it means exactly that — we did not find it stated by the broker, and you should ask them rather than trust us."
-   }
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-15",
+  "checked": "2026-09-15",
+  "slug": "how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account",
+  "category_id": 153,
+  "radar_origin": "search queue: how to buy korean stocks",
+  "tags": [
+    "how to buy korean stocks",
+    "korean brokerage account",
+    "KRX access",
+    "Interactive Brokers Korea",
+    "Korea ETF"
   ],
-  "closing": {
-   "heading": "The takeaway",
-   "body": "If you want a specific Korean company, Interactive Brokers is currently the one mainstream retail route to a KRX buy order, and the cost that will actually shape your returns is the KRW 4,000 per-order minimum rather than the 0.06% headline rate. Size your orders above roughly KRW 6.67 million and the percentage takes over; stay below it and you are paying a flat fee that gets proportionally worse the smaller you trade.\n\nIf you want Korea as an allocation rather than a company, buy a US-listed ETF and skip the account permissions, the currency conversion and the overnight session entirely. The direct route is better than it was a year ago, but it is not automatically the right one.\n\nThis is information, not tax or investment advice. Rates, fees and broker availability change; the figures here were read from the brokers' and regulator's own pages on September 15, 2026."
-  }
- },
- "graphics": [
-  {
-   "kind": "cover",
-   "featured": true,
-   "alt": "How to buy Korean stocks from abroad in 2026: Interactive Brokers offers direct KRX access at 0.06% with a KRW 4,000 per-order minimum",
-   "args": {
-    "kicker": "Investor Guide",
-    "subject": "Buying KRX-Listed Stocks From Abroad",
-    "left": {
-     "label": "Direct KRX route",
-     "value": "IBKR only"
+  "related": [
+    {
+      "title": "Taxes on Korean Stocks for Foreign Investors (2026)",
+      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
     },
-    "right": {
-     "label": "Min per order",
-     "value": "KRW 4,000"
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "Korea Stock Market Hours 2026: Sessions, Price Limits, Halts",
+      "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know/"
     }
-   }
+  ],
+  "sources": [
+    {
+      "name": "Interactive Brokers",
+      "title": "Launches Access to Korean Equities (press release, May 7, 2026)",
+      "url": "https://www.interactivebrokers.com/en/general/about/mediaRelations/5-7-26.php"
+    },
+    {
+      "name": "Interactive Brokers",
+      "title": "KRX Exchange product page",
+      "url": "https://www.interactivebrokers.com/en/trading/krx-exchange.php"
+    },
+    {
+      "name": "Interactive Brokers",
+      "title": "Stock commissions, Asia-Pacific",
+      "url": "https://www.interactivebrokers.com/en/pricing/commissions-stocks-asia-pacific.php"
+    },
+    {
+      "name": "Charles Schwab",
+      "title": "Global Account Markets and Pricing",
+      "url": "https://www.schwab.com/resource/global-account-markets-and-pricing"
+    },
+    {
+      "name": "Financial Services Commission",
+      "title": "Abolition of the foreign investor registration system (January 2, 2026)"
+    }
+  ],
+  "ko": {
+    "title": "How to Buy Korean Stocks From the US or Canada (2026)",
+    "narrative": [
+      {
+        "heading": "The short answer: one broker gives you direct KRX access",
+        "body": "If you live outside Korea and want to own an actual Korea Exchange (KRX) listing rather than a fund that tracks one, there is exactly one mainstream retail route as of September 2026: an Interactive Brokers account. IBKR announced KRX access in a press release dated May 7, 2026, describing itself as \"the first major US-based broker to offer seamless trading in Korea's over $4 trillion equity market.\"\n\nThat matters because most English-language guides to this question still name Charles Schwab and Fidelity as options. On Schwab's own Global Account materials, the markets you can trade online are listed as a set of major foreign exchanges, and Korea is not among them — Korea appears only as a sell-only market handled by the broker-assisted Global Investing Services desk. In other words, a Schwab Global Account can help you get out of a Korean position; it is not a way to buy one.\n\nSo the three honest routes are: IBKR for direct KRX shares, US-listed ETFs for index exposure, and a handful of ADRs and OTC lines for a few individual names. The rest of this guide covers what each actually costs and what you give up."
+      },
+      {
+        "heading": "Which brokers actually let you buy KRX-listed shares",
+        "body": "The table below is the part worth bookmarking. It separates brokers by what they let you do with Korean equities, not by how they market themselves.\n\nInteractive Brokers is the only one in this list where a retail client can place a buy order on a KRX-listed share. IBKR's own KRX page states that existing clients can turn it on themselves by \"enabling KRX market data and trading permissions in Client Portal,\" and that new accounts are usually approved within one business day. IBKR also lists Korea's alternative trading system, NXT Exchange (Nextrade), alongside the main exchange in its Asia-Pacific commission schedule.\n\nThere is one restriction that catches people out, and it is in IBKR's own disclosure rather than the marketing copy: KRX access \"is not available to residents of Korea, clients of Interactive Brokers Securities Japan Inc., or clients of Interactive Brokers India Pvt. Ltd.\" If you are a Korean resident, an IBKR Japan client, or an IBKR India client, this route is closed to you regardless of what the general product pages say.\n\nThe brokers in the bottom half of the table are there because readers ask about them constantly. None of them offers direct KRX equity trading; several offer the Korea ETFs, which is a different product with a different tax and tracking profile."
+      },
+      {
+        "heading": "What an IBKR Korea trade costs, and why small orders cost more",
+        "body": "IBKR publishes its Korean equity commissions as a tiered percentage of trade value with a per-order minimum, and the minimum is the number that decides your real cost. The first tier — monthly Korean trade value up to KRW 2,250,000,000 — is 0.06% of trade value with a minimum of KRW 4,000 per order. The tiers step down to 0.05%, 0.04% and 0.03% as monthly volume rises, with minimums of KRW 3,400, KRW 3,000 and KRW 2,700. Third-party exchange and regulatory fees are passed through on top.\n\nHere is the arithmetic most guides skip. At the first tier, the percentage only exceeds the KRW 4,000 minimum once your order is larger than about KRW 6.67 million, because 0.06% of KRW 6,666,667 is exactly KRW 4,000. Below that, you pay the flat minimum. At the USD/KRW reference rate of 1,359.80 on September 15, 2026, that break-even order size is roughly $4,900, and the minimum itself is about $2.94.\n\nThe practical consequence: a KRW 500,000 order (about $368) costs KRW 4,000, which is 0.80% of the trade — over thirteen times the headline 0.06%. A KRW 5 million order costs the same KRW 4,000, or 0.08%. If you intend to build a Korean position in small monthly increments, the commission minimum, not the percentage, is your cost structure, and fewer larger orders are materially cheaper than many small ones.\n\nCurrency conversion is separate and cheap by comparison: IBKR's press release cites FX conversion commissions \"as low as 0.20 basis points or 0.0020% of the trade value.\" Korea also levies a securities transaction tax on sales, which is a cost of selling rather than buying — our guide to the full cost of owning Korean stocks covers that side."
+      },
+      {
+        "heading": "The 2026 rule change that opened this up",
+        "body": "None of this was possible for ordinary foreign investors until recently, and the reason is worth understanding because it explains why older guides are wrong rather than merely outdated.\n\nFor roughly two decades, buying an individual Korean stock as a foreign retail investor meant obtaining an Investment Registration Certificate from Korea's financial regulator and opening a non-resident account with a Korean securities firm — a process built for institutions. On January 2, 2026, the Financial Services Commission (FSC) scrapped that foreign-investor registration system and removed the restrictions that had kept foreign integrated accounts — omnibus accounts, in market language — effectively unavailable to individuals. The reporting cycle for identifying the ultimate beneficial owner behind an omnibus account was eased from real-time to monthly.\n\nThe structure that resulted is why you never open anything in Korea yourself. Your overseas broker opens a single account in its own name at a Korean securities company and batches all of its clients' Korea-bound orders through it. You are a client of your broker; your broker is the account holder of record in Seoul. Institutions had used this shape for years. The 2026 change is what let retail brokerages offer it."
+      },
+      {
+        "heading": "If you do not want a KRX account: ETFs and ADRs",
+        "body": "Direct KRX access is not the right answer for everyone, and for a lot of readers the honest recommendation is the boring one.\n\nUS-listed ETFs give you Korean index exposure in USD, in your existing account, with no new permissions, no FX conversion and no KRW settlement. You give up the ability to hold a specific company and you accept the fund's expense ratio and tracking behaviour. We compare the main US-listed Korea ETFs — including their expense ratios and what each actually holds — in a separate guide, because the differences between them are larger than they look.\n\nADRs and OTC lines are the middle path: a small number of Korean companies have depositary receipts or unsponsored OTC lines that trade in USD. Coverage is thin, liquidity is often much worse than the Seoul listing, and the OTC lines in particular can trade at prices that drift from the home market. If the company you want is not among them, an ETF or a KRX account are your only two options.\n\nA reasonable decision rule: if you want one specific Korean company and the position is large enough that a KRW 4,000 minimum is noise, open KRX access. If you want Korea as a slice of a portfolio, buy the ETF."
+      },
+      {
+        "heading": "When the Korean market is actually open where you live",
+        "body": "KRX runs on Korea Standard Time, UTC+9, which is 13 hours ahead of US Eastern in summer and 14 in winter. The regular session is 09:00 to 15:30 KST. For a US East Coast investor on daylight time, that is 20:00 to 02:30 the previous evening and overnight; on standard time it is 19:00 to 01:30.\n\nSince June 29, 2026, KRX has added sessions on both ends of the regular day: a pre-market from 07:00 to 08:00 KST and an after-hours session from 16:00 to 20:00 KST. The after-hours window is the useful one for the Americas, because 16:00 to 20:00 KST maps to roughly 03:00 to 07:00 US Eastern on daylight time — early morning rather than the middle of the night.\n\nThe caveat matters as much as the schedule. Liquidity does not stretch just because the session does, and spreads in the extended windows are wider than in the regular session. Treat the extended hours as a way to react to news at a civilised local hour, not as the place to build or exit a position of any size. Our guide to Korea's trading day covers the price limits, volatility interruptions and circuit breakers that fire inside those sessions.\n\nSettlement is T+2, the same cycle as most major equity markets, so the cash or shares land two business days after the trade — counted in Korean business days, which include Korean market holidays you may not have on your calendar."
+      },
+      {
+        "heading": "Tax and filing: what gets withheld before you see the money",
+        "body": "Korea withholds tax on dividends paid to non-resident investors at the point of payment. The standard non-treaty rate is 22%, made up of a 20% national tax and a 2% local surtax. Investors resident in a country with a tax treaty with Korea often qualify for a reduced rate — portfolio dividends to US residents are commonly reduced to 15% under the Korea-US treaty — but the rate that actually applies depends on your country of residence, the treaty's terms, and whether your broker or custodian files the documentation to claim it. Check what rate your broker is applying rather than assuming the treaty rate is automatic.\n\nCapital gains treatment for non-residents is a separate question from dividend withholding and turns on your treaty, the size of your holding, and your home country's own rules on foreign investment income. The detail is in our guide to the full cost of owning Korean stocks.\n\nSeparately, holding assets in a foreign brokerage account can create reporting obligations at home that have nothing to do with Korean tax. US persons, for example, have FBAR and Form 8938 thresholds keyed to foreign account balances rather than to gains. Whether your IBKR Korea holdings count depends on how and where the account is held, which is a question for your own tax adviser.\n\nNone of this is tax advice. Confirm your withholding rate and your filing obligations before you invest, not in April."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "Everything above about Interactive Brokers comes from IBKR's own published pages, read on September 15, 2026: the May 7, 2026 press release, the KRX exchange page, and the Asia-Pacific stock commission schedule. The commission tiers, the KRW minimums, the FX figure and the residency exclusions are quoted from those pages.\n\nTwo things we could not settle. First, IBKR's own pages disagree on how many Korean securities are available: the press release says \"more than 2,700 listed securities\" while the KRX product page says \"1,800+ Listed Securities.\" We have not found a reconciliation, so treat both as approximate and check the instrument you actually want. Second, Charles Schwab's markets-and-pricing page renders its market list dynamically, so we could not read the list directly from Schwab's own HTML; our statement that Korea is not online-tradable there rests on Schwab's published market summaries and the sell-only desk description. Fidelity's international trading page refused our request entirely, so we have not verified its Korea status either way and have marked it accordingly in the table.\n\nWhere a cell in the broker table says \"Not confirmed,\" it means exactly that — we did not find it stated by the broker, and you should ask them rather than trust us."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "If you want a specific Korean company, Interactive Brokers is currently the one mainstream retail route to a KRX buy order, and the cost that will actually shape your returns is the KRW 4,000 per-order minimum rather than the 0.06% headline rate. Size your orders above roughly KRW 6.67 million and the percentage takes over; stay below it and you are paying a flat fee that gets proportionally worse the smaller you trade.\n\nIf you want Korea as an allocation rather than a company, buy a US-listed ETF and skip the account permissions, the currency conversion and the overnight session entirely. The direct route is better than it was a year ago, but it is not automatically the right one.\n\nThis is information, not tax or investment advice. Rates, fees and broker availability change; the figures here were read from the brokers' and regulator's own pages on September 15, 2026."
+    },
+    "excerpt": "One mainstream retail route exists for foreign investors: an Interactive Brokers account. Fees start at 0.06% of trade value, minimum KRW 4,000 per order."
   },
-  {
-   "kind": "fact_table",
-   "section": 2,
-   "alt": "Broker comparison: which brokers allow buying KRX-listed Korean shares, which are sell-only, and which offer only Korea ETFs",
-   "args": {
-    "title": "Who lets you buy a KRX-listed share",
-    "subtitle": "Read from each broker's own pages, September 15, 2026",
-    "columns": [
-     "Broker",
-     "Buy KRX shares",
-     "Cost / note"
-    ],
-    "rows": [
-     [
-      "Interactive Brokers",
-      "Yes",
-      "0.06% tiered, min KRW 4,000"
-     ],
-     [
-      "Charles Schwab",
-      "No - sell only",
-      "Korea not in online markets list"
-     ],
-     [
-      "Fidelity",
-      "Not confirmed",
-      "Page refused our request"
-     ],
-     [
-      "Robinhood / Webull",
-      "No",
-      "Korea ETFs only"
-     ],
-     [
-      "eToro",
-      "No",
-      "EWY and similar ETFs only"
-     ]
-    ],
-    "source": "Interactive Brokers, Charles Schwab",
-    "note": "Not available to residents of Korea, or clients of IBKR Japan or IBKR India."
-   }
-  },
-  {
-   "kind": "fact_table",
-   "section": 3,
-   "alt": "Effective commission by order size at Interactive Brokers tier one: the KRW 4,000 minimum dominates orders below about KRW 6.67 million",
-   "args": {
-    "title": "The minimum decides your cost, not the 0.06%",
-    "subtitle": "Tier I, our calculation from IBKR's published schedule",
-    "columns": [
-     "Order size",
-     "Commission",
-     "Effective rate"
-    ],
-    "rows": [
-     [
-      "KRW 500,000 (~$368)",
-      "KRW 4,000",
-      "0.80%"
-     ],
-     [
-      "KRW 1,000,000",
-      "KRW 4,000",
-      "0.40%"
-     ],
-     [
-      "KRW 5,000,000",
-      "KRW 4,000",
-      "0.08%"
-     ],
-     [
-      "KRW 6,666,667",
-      "KRW 4,000",
-      "0.06% - break-even"
-     ],
-     [
-      "KRW 20,000,000",
-      "KRW 12,000",
-      "0.06%"
-     ]
-    ],
-    "source": "Interactive Brokers commission schedule",
-    "note": "USD figures at the USD/KRW reference rate of 1,359.80 on September 15, 2026."
-   }
-  }
- ]
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "How to buy Korean stocks from abroad in 2026: Interactive Brokers offers direct KRX access at 0.06% with a KRW 4,000 per-order minimum",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Buying KRX-Listed Stocks From Abroad",
+        "left": {
+          "label": "Direct KRX route",
+          "value": "IBKR only"
+        },
+        "right": {
+          "label": "Min per order",
+          "value": "KRW 4,000"
+        }
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 2,
+      "alt": "Broker comparison: which brokers allow buying KRX-listed Korean shares, which are sell-only, and which offer only Korea ETFs",
+      "args": {
+        "title": "Who lets you buy a KRX-listed share",
+        "subtitle": "Read from each broker's own pages, September 15, 2026",
+        "columns": [
+          "Broker",
+          "Buy KRX shares",
+          "Cost / note"
+        ],
+        "rows": [
+          [
+            "Interactive Brokers",
+            "Yes",
+            "0.06% tiered, min KRW 4,000"
+          ],
+          [
+            "Charles Schwab",
+            "No - sell only",
+            "Korea not in online markets list"
+          ],
+          [
+            "Fidelity",
+            "Not confirmed",
+            "Page refused our request"
+          ],
+          [
+            "Robinhood / Webull",
+            "No",
+            "Korea ETFs only"
+          ],
+          [
+            "eToro",
+            "No",
+            "EWY and similar ETFs only"
+          ]
+        ],
+        "source": "Interactive Brokers, Charles Schwab",
+        "note": "Not available to residents of Korea, or clients of IBKR Japan or IBKR India."
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 3,
+      "alt": "Effective commission by order size at Interactive Brokers tier one: the KRW 4,000 minimum dominates orders below about KRW 6.67 million",
+      "args": {
+        "title": "The minimum decides your cost, not the 0.06%",
+        "subtitle": "Tier I, our calculation from IBKR's published schedule",
+        "columns": [
+          "Order size",
+          "Commission",
+          "Effective rate"
+        ],
+        "rows": [
+          [
+            "KRW 500,000 (~$368)",
+            "KRW 4,000",
+            "0.80%"
+          ],
+          [
+            "KRW 1,000,000",
+            "KRW 4,000",
+            "0.40%"
+          ],
+          [
+            "KRW 5,000,000",
+            "KRW 4,000",
+            "0.08%"
+          ],
+          [
+            "KRW 6,666,667",
+            "KRW 4,000",
+            "0.06% - break-even"
+          ],
+          [
+            "KRW 20,000,000",
+            "KRW 12,000",
+            "0.06%"
+          ]
+        ],
+        "source": "Interactive Brokers commission schedule",
+        "note": "USD figures at the USD/KRW reference rate of 1,359.80 on September 15, 2026."
+      }
+    }
+  ]
 }

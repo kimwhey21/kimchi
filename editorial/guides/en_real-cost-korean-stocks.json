@@ -1,179 +1,180 @@
 {
- "kind": "feature",
- "series": "Guide",
- "lang": "en",
- "date": "2026-09-15",
- "checked": "2026-09-15",
- "slug": "the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026",
- "category_id": 153,
- "radar_origin": "search queue: cost of trading korean stocks",
- "tags": [
-  "korea dividend withholding tax",
-  "korean stock taxes",
-  "securities transaction tax",
-  "cost of trading korean stocks",
-  "korea capital gains tax foreigners"
- ],
- "related": [
-  {
-   "title": "How to Buy Korean Stocks From the US in 2026: Brokers and Fees",
-   "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
-  },
-  {
-   "title": "KOSPI Trading Hours 2026: The New 8 p.m. After-Market",
-   "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know/"
-  },
-  {
-   "title": "Korea's Dividend Record Date Rules, and the 2023 Reform",
-   "url": "https://fermata.it.kr/korea-dividend-calendar/"
-  }
- ],
- "sources": [
-  {
-   "name": "PwC",
-   "title": "Korea, Republic of - Corporate - Other taxes",
-   "url": "https://taxsummaries.pwc.com/republic-of-korea/corporate/other-taxes"
-  },
-  {
-   "name": "Interactive Brokers",
-   "title": "Stock commissions, Asia-Pacific",
-   "url": "https://www.interactivebrokers.com/en/pricing/commissions-stocks-asia-pacific.php"
-  },
-  {
-   "name": "Interactive Brokers",
-   "title": "Launches Access to Korean Equities (May 7, 2026)",
-   "url": "https://www.interactivebrokers.com/en/general/about/mediaRelations/5-7-26.php"
-  },
-  {
-   "name": "National Tax Service",
-   "title": "Non-resident withholding and treaty application"
-  }
- ],
- "ko": {
-  "title": "Korean Stock Taxes for Foreign Investors: 22%, 15% and 0.20%",
-  "narrative": [
-   {
-    "heading": "The cost most people miss: Korea taxes the sale, not the profit",
-    "body": "Almost every guide to buying Korean stocks explains the brokerage side and stops there. The part that catches foreign investors off guard is simpler and harder to avoid: Korea levies a securities transaction tax on the value of every sale, whether the trade made money or lost it.\n\nThe rate went up this year. For share transfers made on or after January 1, 2026, the tax on listed shares traded on KOSPI and KOSDAQ rose from 0.15% to 0.20% of sale proceeds, inclusive of the special tax for rural development. PwC's Korea tax summary sets out the same figures: on KOSPI the 0.20% is a 0.05% securities transaction tax, new in 2026 and the first time the main board has carried one, plus the 0.15% rural development levy that was already there. KOSDAQ reaches 0.20% through a single rate. KONEX stays at 0.1%, and unlisted shares are taxed at 0.35%.\n\nThe mechanics matter more than the number. The tax is charged on gross proceeds, not on gain, so a position you sell at a loss is still taxed. Your broker collects it at settlement rather than billing you later, which is why it shows up as an unexplained line on a trade confirmation instead of a bill you can plan around."
-   },
-   {
-    "heading": "Dividends: 22% by default, 15% if your treaty says so",
-    "body": "Korea withholds tax on dividends at the moment they are paid. The statutory rate for non-residents is 20%, plus a local income surtax equal to 10% of that tax, bringing the all-in rate to 22%. Nothing is billed afterward — the money simply never arrives.\n\nIf you are resident in a country with a Korean tax treaty you may be entitled to less. For US residents the standard treaty rate on portfolio dividends is 15%; a 10% rate exists but applies only in narrow ownership situations retail investors will not meet. Treaty rates across Korea's network generally land between 5% and 15% depending on the country and the size of the holding.\n\nThe treaty rate is not automatic. Your broker acts as withholding agent and must hold documentation establishing your residence and beneficial ownership before applying the lower rate. From January 1, 2026 Korea tightened this: withholding agents must file the treaty-rate application with supporting evidence of substantive ownership at the competent tax office by the end of February following the year the income was paid. The paperwork your broker asks for is no longer something it can quietly skip — if it is missing, you are taxed at 22%."
-   },
-   {
-    "heading": "Capital gains: most foreign retail investors owe Korea nothing",
-    "body": "This is the part that surprises people in the other direction. A non-resident who sells listed Korean shares at a profit is generally not subject to Korean capital gains tax at all, provided two conditions hold: the investor did not own 25% or more of the company's total issued shares at any point during the year of sale or the preceding five years, and has no permanent establishment in Korea.\n\nFor anyone buying a few hundred shares of Samsung Electronics or SK Hynix, the 25% threshold is not a live concern. It exists to catch strategic and control-level stakes, not portfolios.\n\nWhere the exemption does not apply, and no treaty relief covers it, Korean tax is charged at the lower of 11% of sale proceeds or 22% of the realised gain. It is also worth knowing what did not happen: the financial investment income tax Korea had scheduled for 2025, which would have taxed retail investment gains broadly, was withdrawn before taking effect. The older regime described here is what remains in force.\n\nBeing exempt in Korea does not make the gain untaxed. Your own country almost certainly taxes it — US investors report the sale on their own return exactly as they would a domestic one."
-   },
-   {
-    "heading": "The whole bill on a real order, with numbers",
-    "body": "Taxes are only part of what separates the price on the screen from the money that reaches your account. The full stack, in the order you meet it: FX conversion into won, the buy commission, the 0.20% transaction tax when you sell, the commission again on the sale, withholding on any dividend along the way, and conversion back to your home currency.\n\nUntil recently the commission line had to be left vague, because retail access to KRX did not really exist. It does now, so it can be priced. Interactive Brokers publishes a tiered schedule for Korean stocks: 0.06% of trade value at the first tier, with a minimum of KRW 4,000 per order, stepping down to 0.03% and KRW 2,700 at the highest volume tier. Its FX conversion commission is quoted as low as 0.20 basis points, or 0.0020% of the converted amount.\n\nThe table below runs a complete round trip — buy, hold, sell — at that first tier, ignoring any price move, so the only thing being measured is friction. The pattern is the one small investors need to see: the per-order minimum, not the percentage, decides the cost of a small position. A KRW 500,000 round trip costs about 1.80% in fees and tax; the same round trip at KRW 20,000,000 costs about 0.32%.\n\nTwo cautions on the table. It uses IBKR's published rates because those are the rates we could verify; brokers that apply an FX spread rather than an explicit FX commission can cost far more on the currency leg, and we did not verify any spread-based broker's rates. And it excludes dividend withholding, which applies only if you hold across a record date."
-   },
-   {
-    "heading": "Why Korean dividends themselves may be getting larger",
-    "body": "One more 2026 change is worth understanding even though foreign investors cannot claim it directly. From January 1, 2026 Korea applies separate, lower taxation to dividend income that resident individuals receive from qualifying high-dividend listed companies — starting at 14% on the first KRW 20 million and rising through higher brackets above that, in place of ordinary progressive treatment. It runs through the fiscal year that includes December 31, 2028.\n\nThe qualification test is what makes it interesting. A company's dividend must not have fallen versus the FY2024 base year, and its payout ratio must be at least 40%, or at least 25% with a year-on-year increase of 10% or more. The tax break belongs to the resident shareholder, but the behaviour it is designed to change belongs to the company.\n\nFor a foreign investor the read-through is simple: Korea has attached a domestic tax incentive to companies raising and sustaining payouts, on top of the Value-Up programme already pushing in the same direction. You do not get the lower rate, but you hold shares in companies with a new reason to pay more."
-   },
-   {
-    "heading": "Two things worth working through before you trade",
-    "body": "First, confirm which dividend rate your broker will actually apply, in writing, before the first record date rather than after. The difference between 22% and 15% is a quarter of your dividend income, and recovering over-withheld tax afterwards is a refund process, not a correction.\n\nSecond, check your home-country reporting, which has nothing to do with Korean tax. Holding assets in a foreign brokerage account can trigger obligations keyed to account balances rather than to gains — for US persons, FBAR and Form 8938 are the usual ones. Whether your Korean holdings count depends on how and where the account is held, and it is a question for your own adviser, not your broker.\n\nA third, softer point follows from the cost table: none of these charges individually changes an investment case, but together, on a position held a few months, they can consume a meaningful share of a modest gain. That is an argument for sizing positions so the fixed costs are not proportionally punishing, and for treating Korean equities as multi-year holdings rather than short-term trades."
-   },
-   {
-    "heading": "What we could and could not verify",
-    "body": "The tax rates here were checked on September 15, 2026 against PwC's Korea tax summary, which states the increase from 0.15% to 0.20% for KOSPI and KOSDAQ transfers on or after January 1, 2026, the unchanged 0.1% for KONEX and 0.35% for unlisted shares. The commission and FX figures are quoted from Interactive Brokers' own Asia-Pacific stock commission schedule and its KRX announcement, read the same day.\n\nWhat we could not verify: the FX spreads charged by brokers that do not publish an explicit conversion commission, which is precisely the line most likely to dominate a small investor's costs; and the treaty rate any individual broker will apply to a specific client, which depends on documentation we cannot see. Treaty rates other than the US 15% are stated as a range rather than a table because we did not check each country's treaty text.\n\nTax rules change, and the 2026 changes described here are recent. Confirm anything that will drive a decision against the primary source or a professional adviser before acting on it."
-   }
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-15",
+  "checked": "2026-09-15",
+  "slug": "the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026",
+  "category_id": 153,
+  "radar_origin": "search queue: cost of trading korean stocks",
+  "tags": [
+    "korea dividend withholding tax",
+    "korean stock taxes",
+    "securities transaction tax",
+    "cost of trading korean stocks",
+    "korea capital gains tax foreigners"
   ],
-  "closing": {
-   "heading": "The takeaway",
-   "body": "Korea's tax treatment of foreign retail investors is, on balance, mild: no capital gains tax at ordinary position sizes, a dividend rate a treaty can cut from 22% to 15%, and a transaction tax of 0.20% that you pay only when you sell.\n\nThe trap is not the tax rate. It is the fixed costs around it. A round trip of KRW 500,000 runs about 1.80% in fees and tax, against about 0.32% at KRW 20,000,000 — the same trade, five times the friction, because a per-order minimum does not scale down. Size accordingly, and get your treaty documentation in before the first record date rather than after.\n\nThis is information, not tax or investment advice. Rates were checked against the sources below on September 15, 2026 and change frequently."
-  }
- },
- "graphics": [
-  {
-   "kind": "cover",
-   "featured": true,
-   "alt": "Korean stock costs for foreign investors in 2026: 22% dividend withholding or 15% by treaty, and a 0.20% securities transaction tax on every sale",
-   "args": {
-    "kicker": "Investor Guide",
-    "subject": "What Korean Stocks Actually Cost",
-    "left": {
-     "label": "Dividend withholding",
-     "value": "22% / 15%"
+  "related": [
+    {
+      "title": "How to Buy Korean Stocks From the US in 2026: Brokers and Fees",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
     },
-    "right": {
-     "label": "Tax on every sale",
-     "value": "0.20%"
+    {
+      "title": "KOSPI Trading Hours 2026: The New 8 p.m. After-Market",
+      "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know/"
+    },
+    {
+      "title": "Korea's Dividend Record Date Rules, and the 2023 Reform",
+      "url": "https://fermata.it.kr/korea-dividend-calendar/"
     }
-   }
+  ],
+  "sources": [
+    {
+      "name": "PwC",
+      "title": "Korea, Republic of - Corporate - Other taxes",
+      "url": "https://taxsummaries.pwc.com/republic-of-korea/corporate/other-taxes"
+    },
+    {
+      "name": "Interactive Brokers",
+      "title": "Stock commissions, Asia-Pacific",
+      "url": "https://www.interactivebrokers.com/en/pricing/commissions-stocks-asia-pacific.php"
+    },
+    {
+      "name": "Interactive Brokers",
+      "title": "Launches Access to Korean Equities (May 7, 2026)",
+      "url": "https://www.interactivebrokers.com/en/general/about/mediaRelations/5-7-26.php"
+    },
+    {
+      "name": "National Tax Service",
+      "title": "Non-resident withholding and treaty application"
+    }
+  ],
+  "ko": {
+    "title": "Korean Stock Taxes for Foreigners: 22%, 15%, 0.20%",
+    "narrative": [
+      {
+        "heading": "The cost most people miss: Korea taxes the sale, not the profit",
+        "body": "Almost every guide to buying Korean stocks explains the brokerage side and stops there. The part that catches foreign investors off guard is simpler and harder to avoid: Korea levies a securities transaction tax on the value of every sale, whether the trade made money or lost it.\n\nThe rate went up this year. For share transfers made on or after January 1, 2026, the tax on listed shares traded on KOSPI and KOSDAQ rose from 0.15% to 0.20% of sale proceeds, inclusive of the special tax for rural development. PwC's Korea tax summary sets out the same figures: on KOSPI the 0.20% is a 0.05% securities transaction tax, new in 2026 and the first time the main board has carried one, plus the 0.15% rural development levy that was already there. KOSDAQ reaches 0.20% through a single rate. KONEX stays at 0.1%, and unlisted shares are taxed at 0.35%.\n\nThe mechanics matter more than the number. The tax is charged on gross proceeds, not on gain, so a position you sell at a loss is still taxed. Your broker collects it at settlement rather than billing you later, which is why it shows up as an unexplained line on a trade confirmation instead of a bill you can plan around."
+      },
+      {
+        "heading": "Dividends: 22% by default, 15% if your treaty says so",
+        "body": "Korea withholds tax on dividends at the moment they are paid. The statutory rate for non-residents is 20%, plus a local income surtax equal to 10% of that tax, bringing the all-in rate to 22%. Nothing is billed afterward — the money simply never arrives.\n\nIf you are resident in a country with a Korean tax treaty you may be entitled to less. For US residents the standard treaty rate on portfolio dividends is 15%; a 10% rate exists but applies only in narrow ownership situations retail investors will not meet. Treaty rates across Korea's network generally land between 5% and 15% depending on the country and the size of the holding.\n\nThe treaty rate is not automatic. Your broker acts as withholding agent and must hold documentation establishing your residence and beneficial ownership before applying the lower rate. From January 1, 2026 Korea tightened this: withholding agents must file the treaty-rate application with supporting evidence of substantive ownership at the competent tax office by the end of February following the year the income was paid. The paperwork your broker asks for is no longer something it can quietly skip — if it is missing, you are taxed at 22%."
+      },
+      {
+        "heading": "Capital gains: most foreign retail investors owe Korea nothing",
+        "body": "This is the part that surprises people in the other direction. A non-resident who sells listed Korean shares at a profit is generally not subject to Korean capital gains tax at all, provided two conditions hold: the investor did not own 25% or more of the company's total issued shares at any point during the year of sale or the preceding five years, and has no permanent establishment in Korea.\n\nFor anyone buying a few hundred shares of Samsung Electronics or SK Hynix, the 25% threshold is not a live concern. It exists to catch strategic and control-level stakes, not portfolios.\n\nWhere the exemption does not apply, and no treaty relief covers it, Korean tax is charged at the lower of 11% of sale proceeds or 22% of the realised gain. It is also worth knowing what did not happen: the financial investment income tax Korea had scheduled for 2025, which would have taxed retail investment gains broadly, was withdrawn before taking effect. The older regime described here is what remains in force.\n\nBeing exempt in Korea does not make the gain untaxed. Your own country almost certainly taxes it — US investors report the sale on their own return exactly as they would a domestic one."
+      },
+      {
+        "heading": "The whole bill on a real order, with numbers",
+        "body": "Taxes are only part of what separates the price on the screen from the money that reaches your account. The full stack, in the order you meet it: FX conversion into won, the buy commission, the 0.20% transaction tax when you sell, the commission again on the sale, withholding on any dividend along the way, and conversion back to your home currency.\n\nUntil recently the commission line had to be left vague, because retail access to KRX did not really exist. It does now, so it can be priced. Interactive Brokers publishes a tiered schedule for Korean stocks: 0.06% of trade value at the first tier, with a minimum of KRW 4,000 per order, stepping down to 0.03% and KRW 2,700 at the highest volume tier. Its FX conversion commission is quoted as low as 0.20 basis points, or 0.0020% of the converted amount.\n\nThe table below runs a complete round trip — buy, hold, sell — at that first tier, ignoring any price move, so the only thing being measured is friction. The pattern is the one small investors need to see: the per-order minimum, not the percentage, decides the cost of a small position. A KRW 500,000 round trip costs about 1.80% in fees and tax; the same round trip at KRW 20,000,000 costs about 0.32%.\n\nTwo cautions on the table. It uses IBKR's published rates because those are the rates we could verify; brokers that apply an FX spread rather than an explicit FX commission can cost far more on the currency leg, and we did not verify any spread-based broker's rates. And it excludes dividend withholding, which applies only if you hold across a record date."
+      },
+      {
+        "heading": "Why Korean dividends themselves may be getting larger",
+        "body": "One more 2026 change is worth understanding even though foreign investors cannot claim it directly. From January 1, 2026 Korea applies separate, lower taxation to dividend income that resident individuals receive from qualifying high-dividend listed companies — starting at 14% on the first KRW 20 million and rising through higher brackets above that, in place of ordinary progressive treatment. It runs through the fiscal year that includes December 31, 2028.\n\nThe qualification test is what makes it interesting. A company's dividend must not have fallen versus the FY2024 base year, and its payout ratio must be at least 40%, or at least 25% with a year-on-year increase of 10% or more. The tax break belongs to the resident shareholder, but the behaviour it is designed to change belongs to the company.\n\nFor a foreign investor the read-through is simple: Korea has attached a domestic tax incentive to companies raising and sustaining payouts, on top of the Value-Up programme already pushing in the same direction. You do not get the lower rate, but you hold shares in companies with a new reason to pay more."
+      },
+      {
+        "heading": "Two things worth working through before you trade",
+        "body": "First, confirm which dividend rate your broker will actually apply, in writing, before the first record date rather than after. The difference between 22% and 15% is a quarter of your dividend income, and recovering over-withheld tax afterwards is a refund process, not a correction.\n\nSecond, check your home-country reporting, which has nothing to do with Korean tax. Holding assets in a foreign brokerage account can trigger obligations keyed to account balances rather than to gains — for US persons, FBAR and Form 8938 are the usual ones. Whether your Korean holdings count depends on how and where the account is held, and it is a question for your own adviser, not your broker.\n\nA third, softer point follows from the cost table: none of these charges individually changes an investment case, but together, on a position held a few months, they can consume a meaningful share of a modest gain. That is an argument for sizing positions so the fixed costs are not proportionally punishing, and for treating Korean equities as multi-year holdings rather than short-term trades."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "The tax rates here were checked on September 15, 2026 against PwC's Korea tax summary, which states the increase from 0.15% to 0.20% for KOSPI and KOSDAQ transfers on or after January 1, 2026, the unchanged 0.1% for KONEX and 0.35% for unlisted shares. The commission and FX figures are quoted from Interactive Brokers' own Asia-Pacific stock commission schedule and its KRX announcement, read the same day.\n\nWhat we could not verify: the FX spreads charged by brokers that do not publish an explicit conversion commission, which is precisely the line most likely to dominate a small investor's costs; and the treaty rate any individual broker will apply to a specific client, which depends on documentation we cannot see. Treaty rates other than the US 15% are stated as a range rather than a table because we did not check each country's treaty text.\n\nTax rules change, and the 2026 changes described here are recent. Confirm anything that will drive a decision against the primary source or a professional adviser before acting on it."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Korea's tax treatment of foreign retail investors is, on balance, mild: no capital gains tax at ordinary position sizes, a dividend rate a treaty can cut from 22% to 15%, and a transaction tax of 0.20% that you pay only when you sell.\n\nThe trap is not the tax rate. It is the fixed costs around it. A round trip of KRW 500,000 runs about 1.80% in fees and tax, against about 0.32% at KRW 20,000,000 — the same trade, five times the friction, because a per-order minimum does not scale down. Size accordingly, and get your treaty documentation in before the first record date rather than after.\n\nThis is information, not tax or investment advice. Rates were checked against the sources below on September 15, 2026 and change frequently."
+    },
+    "excerpt": "Dividends are withheld at 22% (15% under the US treaty). Selling costs 0.20% of proceeds from 2026. Capital gains usually are not taxed for non-residents."
   },
-  {
-   "kind": "fact_table",
-   "section": 0,
-   "alt": "Korean securities transaction tax rates from January 1 2026 by market, rising from 0.15% to 0.20% on KOSPI and KOSDAQ",
-   "args": {
-    "title": "Securities transaction tax, from January 1, 2026",
-    "subtitle": "Charged on sale proceeds, whether the trade gained or lost",
-    "columns": [
-     "Market",
-     "Before 2026",
-     "From 2026"
-    ],
-    "rows": [
-     [
-      "KOSPI",
-      "0.15%",
-      "0.20%"
-     ],
-     [
-      "KOSDAQ",
-      "0.15%",
-      "0.20%"
-     ],
-     [
-      "KONEX",
-      "0.1%",
-      "0.1%"
-     ],
-     [
-      "Unlisted shares",
-      "0.35%",
-      "0.35%"
-     ]
-    ],
-    "source": "PwC Korea tax summary",
-    "note": "On KOSPI the 0.20% is a new 0.05% transaction tax plus the existing 0.15% rural development levy."
-   }
-  },
-  {
-   "kind": "fact_table",
-   "section": 3,
-   "alt": "Round trip cost of a Korean stock position by size, showing 1.80% on a small order against 0.32% on a large one",
-   "args": {
-    "title": "Round-trip friction by position size",
-    "subtitle": "Buy and sell at IBKR tier I, no price move, dividends excluded",
-    "columns": [
-     "Position",
-     "Fees + tax",
-     "Share of position"
-    ],
-    "rows": [
-     [
-      "KRW 500,000 (~$368)",
-      "KRW 9,020",
-      "1.80%"
-     ],
-     [
-      "KRW 5,000,000 (~$3,677)",
-      "KRW 18,200",
-      "0.36%"
-     ],
-     [
-      "KRW 20,000,000 (~$14,708)",
-      "KRW 64,800",
-      "0.32%"
-     ]
-    ],
-    "source": "Our calculation from Interactive Brokers and PwC figures",
-    "note": "Commission KRW 4,000 minimum each way, 0.20% transaction tax on the sale, FX at 0.0020% both ways. USD at 1,359.80 on September 15, 2026."
-   }
-  }
- ]
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korean stock costs for foreign investors in 2026: 22% dividend withholding or 15% by treaty, and a 0.20% securities transaction tax on every sale",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "What Korean Stocks Actually Cost",
+        "left": {
+          "label": "Dividend withholding",
+          "value": "22% / 15%"
+        },
+        "right": {
+          "label": "Tax on every sale",
+          "value": "0.20%"
+        }
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 0,
+      "alt": "Korean securities transaction tax rates from January 1 2026 by market, rising from 0.15% to 0.20% on KOSPI and KOSDAQ",
+      "args": {
+        "title": "Securities transaction tax, from January 1, 2026",
+        "subtitle": "Charged on sale proceeds, whether the trade gained or lost",
+        "columns": [
+          "Market",
+          "Before 2026",
+          "From 2026"
+        ],
+        "rows": [
+          [
+            "KOSPI",
+            "0.15%",
+            "0.20%"
+          ],
+          [
+            "KOSDAQ",
+            "0.15%",
+            "0.20%"
+          ],
+          [
+            "KONEX",
+            "0.1%",
+            "0.1%"
+          ],
+          [
+            "Unlisted shares",
+            "0.35%",
+            "0.35%"
+          ]
+        ],
+        "source": "PwC Korea tax summary",
+        "note": "On KOSPI the 0.20% is a new 0.05% transaction tax plus the existing 0.15% rural development levy."
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 3,
+      "alt": "Round trip cost of a Korean stock position by size, showing 1.80% on a small order against 0.32% on a large one",
+      "args": {
+        "title": "Round-trip friction by position size",
+        "subtitle": "Buy and sell at IBKR tier I, no price move, dividends excluded",
+        "columns": [
+          "Position",
+          "Fees + tax",
+          "Share of position"
+        ],
+        "rows": [
+          [
+            "KRW 500,000 (~$368)",
+            "KRW 9,020",
+            "1.80%"
+          ],
+          [
+            "KRW 5,000,000 (~$3,677)",
+            "KRW 18,200",
+            "0.36%"
+          ],
+          [
+            "KRW 20,000,000 (~$14,708)",
+            "KRW 64,800",
+            "0.32%"
+          ]
+        ],
+        "source": "Our calculation from Interactive Brokers and PwC figures",
+        "note": "Commission KRW 4,000 minimum each way, 0.20% transaction tax on the sale, FX at 0.0020% both ways. USD at 1,359.80 on September 15, 2026."
+      }
+    }
+  ]
 }
