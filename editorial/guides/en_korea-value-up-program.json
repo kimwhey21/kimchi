@@ -1,0 +1,165 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-18",
+  "checked": "2026-09-18",
+  "slug": "korea-value-up-program",
+  "category_id": 153,
+  "tags": ["Korea Value-Up Program", "Korea Discount", "KRX Value-Up Index", "Korean dividend stocks", "KB Financial stock"],
+  "radar_origin": "list order",
+  "related": [
+    {
+      "title": "MSCI Korea 2026: Why Korea Is Still an Emerging Market",
+      "url": "https://fermata.it.kr/korea-is-still-an-emerging-market-what-mscis-2026-decision-means-for-foreign-investors/"
+    },
+    {
+      "title": "Korean Stock Taxes for Foreign Investors: 22%, 15% and 0.20%",
+      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
+    },
+    {
+      "title": "KOSPI 200 Explained: How Korea Picks 200 Stocks (2026)",
+      "url": "https://fermata.it.kr/kospi-200-explained/"
+    }
+  ],
+  "ko": {
+    "title": "Korea Value-Up Program: What It Actually Changed by 2026",
+    "narrative": [
+      {
+        "heading": "The short answer: a disclosure program, not a stock or an index fund",
+        "body": "The <b>Corporate Value-Up Program</b> is a voluntary disclosure system, not a company, a fund, or a guarantee. Korea's Financial Services Commission (FSC) unveiled it on February 26, 2024, as a response to the \"Korea Discount\" — the long-standing pattern of Korean listed companies trading at lower valuation multiples than peers in other developed markets, blamed on weak minority-shareholder protection, low dividend payouts, and opaque conglomerate (chaebol) ownership structures.\n\nUnder the program, a listed company can voluntarily publish a \"corporate value enhancement plan\" through the Korea Exchange (KRX) disclosure system, laying out targets for return on equity, dividend payout, and share buybacks, plus a timeline for reaching them. Nothing forces a company to join, and nothing forces it to hit the numbers it publishes once it does. That distinction — a promise disclosed, not a result guaranteed — matters for everything that follows in this guide."
+      },
+      {
+        "heading": "What the KRX Value-Up Index actually measures",
+        "body": "KRX built a separate benchmark for this, the <b>Korea Value-Up Index</b>, announcing its constituents and selection rules on September 24, 2024 and going live on September 30, 2024 with 100 companies — 67 from KOSPI, 33 from KOSDAQ. Selection runs on five criteria: ranking in the top 400 companies by market capitalization, no net loss in either of the past two fiscal years, a track record of shareholder returns through dividends or buybacks, a price-to-book ratio in the top half of eligible companies, and above-average return on equity within its sector. The index is free-float market-cap weighted, with any single stock capped at 15% of the total.\n\nBeing in the Value-Up Index is a separate thing from being in the disclosure program — a company can disclose a Value-Up plan without qualifying for the index, and the index rebalances on a set schedule (KRX ran reviews in June 2025 and June 2026) to add or drop names as they meet or miss the criteria."
+      },
+      {
+        "heading": "A 2025 law change made directors answer to all shareholders, not just company",
+        "body": "The program's disclosures were voluntary from the start, but Korea's National Assembly backed them with a legal change in 2025. An amendment to the Commercial Act, approved in July 2025, rewrote Article 382-3 of Korea's corporate law: a director's duty of loyalty, which previously ran only to \"the company\" as a legal entity, now explicitly extends to shareholders as a group, and directors must treat all shareholders fairly rather than favoring a controlling family or affiliate. The same amendment package added cumulative voting rights and tighter rules on how audit-committee members are elected, both aimed at giving minority shareholders more say against controlling blocs.\n\nThis is the piece that separates Korea's 2024-2026 push from earlier, purely voluntary corporate-governance campaigns in Korea and Japan: a director who ignores minority shareholders now has a clearer legal exposure, not just a reputational one."
+      },
+      {
+        "heading": "Since February 2026, the tax code pulls in the same direction",
+        "body": "A separate change, effective January 1, 2026, lets individual investors elect separate (lower, progressive 14%-to-30%) taxation on dividend income from qualifying companies, instead of having it stacked into ordinary progressive income tax. To qualify, a company's dividend payout ratio must be at least 40% of profit, or at least 25% with a year-over-year increase of 10 percentage points or more, measured against a fiscal-2024 base year.\n\nOn February 24, 2026, the FSC announced that Korea's Cabinet had approved a further tightening: to keep qualifying for that lower tax treatment, a high-dividend company must now also file a corporate value enhancement plan — the same Value-Up disclosure described above — through the KRX system, submitted right after its general shareholders' meeting, alongside proof it actually met the payout thresholds. In effect, the tax break for a company's dividend investors is now conditioned on the company also publishing a Value-Up plan, which is what pulled the two efforts, tax policy and governance disclosure, into one track."
+      },
+      {
+        "heading": "How many companies have actually joined, as of September 2026",
+        "body": "KRX's monthly corporate value enhancement report, published September 3, 2026 and covering data through the end of August 2026, put the participant count at <b>756 companies</b> — up from 92 at the end of 2024, an 8.2-fold increase in twenty months. Combined, those companies represent 5.0744 quadrillion won in market capitalization, 83.4% of the total value of the KOSPI and KOSDAQ markets together.\n\nThe two boards are not equally represented. On KOSPI, 354 companies have disclosed, covering 87.7% of that market's total capitalization — most of Korea's largest, most closely watched names have joined. On KOSDAQ, participation is lower in relative terms: 402 companies, but only 31.7% of that market's smaller-cap, more fragmented universe. If you are looking at a specific KOSDAQ stock, joining the program is still the exception rather than the norm."
+      },
+      {
+        "heading": "Has it worked? The index has beaten KOSPI, but the gap has narrowed since June",
+        "body": "By the numbers KRX itself tracks, yes, so far: the Value-Up Index gained 80.3% from the end of 2025 through the end of August 2026, according to the same September 3 KRX report, 18.5 percentage points ahead of the broader KOSPI's 61.8% gain over the same stretch, and also ahead of the large-cap KOSPI 200's 76.9% gain. The index hit its highest level yet, 4,276.72, on June 22, 2026, before giving back some of that lead in a more volatile second half and closing August at 3,240.84.\n\nThat gap closing is worth sitting with. A voluntary disclosure program can move a stock's valuation while investors are rewarding the story, and stop moving it once the novelty fades — Korea's own market history includes earlier governance-reform pushes that outperformed for a stretch and then didn't. Twenty months of data is not the same as a proven, permanent re-rating of the Korean market."
+      },
+      {
+        "heading": "A real example: KB Financial Group's plan, and what it paid out",
+        "body": "KB Financial Group — Korea's largest financial holding company by assets and a Value-Up Index constituent — is a useful concrete case rather than an abstraction. For 2026, KB guided to roughly 3.7 trillion won in total shareholder returns (dividends plus buybacks), and its board approved a 700 billion won share buyback-and-cancellation program for the second half of 2026 on top of a Q2 cash dividend of 1,155 won per share, according to the company's own SEC filing as a foreign private issuer. KB's framework ties extra returns to a capital cushion: once its CET1 capital ratio clears 13.5%, the excess goes to shareholders — it stood at 13.74% at the end of June 2026. Management's stated ROE target is above 11% this year, with a medium-term goal near 13%.\n\nKB Financial Group also happens to be one of the more direct access points for a US-based investor: its shares trade in New York as an American Depositary Receipt under the ticker <b>KB</b>, alongside its primary KRX listing."
+      },
+      {
+        "heading": "How a foreign investor actually gets exposure to this story",
+        "body": "There is no single \"Value-Up stock\" to buy, and the KRX-listed ETFs that directly track the Value-Up Index are Korea-domestic products, traded in won on the Korea Exchange — not available through a standard US brokerage account without a broker offering direct KRX access. For readers without that access, three more practical routes exist. First, individual constituents with US-listed shares, like KB Financial Group's NYSE ADR (KB), let you buy a specific Value-Up participant directly. Second, broad Korea ETFs available on US exchanges, such as EWY or FLKR, already hold many of the largest Value-Up disclosers — Samsung Electronics, KB Financial, and Hyundai Motor among them — though neither fund screens or weights specifically for Value-Up participation, so the exposure is indirect. Third, if you already hold individual Korean shares through a KRX-capable broker, you can check any specific holding's disclosure status yourself on the KRX system rather than assuming.\n\nWhichever route you take, a company's Value-Up disclosure is a published plan, not an audited result — the payout ratios and buyback totals it promises are worth checking against what it has actually delivered in the following year's report, the same way you would check any other management guidance."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "Confirmed against two or more sources: the FSC's February 26, 2024 program launch and the KRX Value-Up Index's September 30, 2024 debut with 100 constituents and the five selection criteria (Kim & Chang's client summary, corroborated by contemporaneous Korea Exchange coverage); the Commercial Act's Article 382-3 amendment and its July 2025 approval (Legal500's client alert, corroborated by separate legal-industry reporting on the same provision); the February 2026 tax-disclosure linkage and its payout-ratio thresholds (the FSC's own February 24, 2026 announcement, reported in parallel by two Korean financial outlets); and the September 2026 participation and index-performance figures (Korea Exchange's own monthly corporate value enhancement report dated September 3, 2026, reported independently by two outlets citing that same KRX report). KB Financial Group's 2026 capital-return figures come from the company's own SEC filing as a foreign private issuer, corroborated by a separate earnings-call transcript covering the same quarter.\n\nWe could not verify a single, current, apples-to-apples valuation gap (in P/E or P/B terms) between Korean stocks and comparable developed-market peers — different research houses measure the \"Korea Discount\" differently, and we did not find a figure we could confirm against two independent sources, so we describe the discount qualitatively rather than putting a number on it. We also could not confirm a US-listed exchange-traded product that tracks the KRX Value-Up Index itself; the ETFs we found tracking it are Korea-domestic, won-denominated listings."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "The Corporate Value-Up Program is not a stock, a fund, or a promise from the Korean government that share prices will rise — it is a disclosure system, backed since July 2025 by a legal duty for directors to treat all shareholders fairly, and since February 2026 by a tax incentive that ties a dividend tax break to actually filing a plan. As of the Korea Exchange's most recent monthly report (September 3, 2026, covering data through August), 756 companies had joined, representing 83.4% of the combined KOSPI and KOSDAQ market by value, and the dedicated Value-Up Index has outgained the broader KOSPI by 18.5 percentage points since the end of 2025.\n\nFor a foreign investor, the practical options are buying an individual Value-Up participant with US-listed shares like KB Financial Group (NYSE: KB), holding it indirectly through a broad Korea ETF like EWY or FLKR, or checking a specific KRX-listed holding's own disclosure status if your broker gives you that access. None of those three is a bet on the program itself — each is a bet on a specific company, and the program is, at most, one more thing worth checking about that company's shareholder-return record before you do.\n\nThis guide describes program rules and figures as confirmed through September 2026. Participation counts, index levels, and company-level payout figures change monthly; confirm current numbers before investing. This is not investment advice."
+    }
+  },
+  "sources": [
+    {
+      "name": "Kim & Chang",
+      "title": "Korea Exchange Announces Korea Value-Up Index",
+      "url": "https://www.kimchang.com/en/insights/detail.kc?sch_section=4&idx=30436"
+    },
+    {
+      "name": "Seoul Economic Daily",
+      "title": "Value-Up Disclosures Reach 756 Firms, Covering 87% of KOSPI Value",
+      "url": "https://en.sedaily.com/finance/2026/09/03/value-up-disclosures-reach-756-firms-covering-87-percent-of"
+    },
+    {
+      "name": "Businesskorea",
+      "title": "Value-Up Push Takes Hold Across KOSPI",
+      "url": "https://www.businesskorea.co.kr/news/articleView.html?idxno=276136"
+    },
+    {
+      "name": "Legal500",
+      "title": "Client Alert: the Korean Commercial Code Approved by the National Assembly",
+      "url": "https://www.legal500.com/developments/thought-leadership/client-alert-the-korean-commercial-code-approved-by-the-national-assembly-key-implications-and-what-to-do/"
+    },
+    {
+      "name": "Seoul Economic Daily",
+      "title": "High-Dividend Firms Must File Value-Up Disclosures With Dividend Decisions",
+      "url": "https://en.sedaily.com/news/2026/02/24/high-dividend-firms-must-file-value-up-disclosures-with"
+    },
+    {
+      "name": "Asiae",
+      "title": "High-Dividend Firms Must Disclose Value-Up Plans to Qualify for Special Taxation",
+      "url": "https://www.asiae.co.kr/en/print.htm?idxno=2026022411381470640"
+    },
+    {
+      "name": "StockTitan (SEC filing)",
+      "title": "KB Financial Group Inc. 6-K: Current Report of Foreign Private Issuer",
+      "url": "https://www.stocktitan.net/sec-filings/KB/6-k-kb-financial-group-inc-current-report-foreign-issuer-8fdd88b8f85e.html"
+    },
+    {
+      "name": "BigGo Finance (KRX report)",
+      "title": "South Korea's Value-Up Disclosures Surpass 731 Companies, Capturing 83% of Market Cap as Index Hits Record High",
+      "url": "https://finance.biggo.com/news/C0Yfp54B-PfaobXftMIw"
+    }
+  ],
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea Value-Up Index vs KOSPI performance, 2026",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea Value-Up Program",
+        "left": {"label": "Companies disclosed, Aug 2026", "value": "756"},
+        "right": {"label": "Value-Up Index gain, 2026 YTD", "value": "+80.3%"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Korea Value-Up Index performance versus KOSPI and KOSPI 200, 2026 year to date",
+      "args": {
+        "title": "The Value-Up Index against the broader market",
+        "columns": ["Metric", "Value-Up Index", "KOSPI", "KOSPI 200"],
+        "rows": [
+          ["2026 YTD gain (through Aug 2026)", "+80.3%", "+61.8%", "+76.9%"],
+          ["Level, end of August 2026", "3,240.84", "—", "—"],
+          ["Record high in 2026", "4,276.72 (Jun 22)", "~9,385 (Jun 2026)", "—"],
+          ["Constituents", "100 (67 KOSPI / 33 KOSDAQ)", "—", "200"]
+        ],
+        "note": "Value-Up Index and KOSPI/KOSPI 200 gains from the Korea Exchange's monthly corporate value enhancement report, published Sept 3, 2026.",
+        "source": "Korea Exchange (KRX), via Seoul Economic Daily and Businesskorea, Sept 3, 2026"
+      },
+      "section": 6
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before treating a stock's Value-Up disclosure as a reason to buy",
+      "args": {
+        "title": "Before you buy the Value-Up story",
+        "subtitle": "A filed plan is a promise, not a result",
+        "items": [
+          {
+            "label": "Check whether the company actually joined the disclosure program",
+            "why": "31.7% of KOSDAQ's market cap has disclosed, versus 87.7% of KOSPI's — participation isn't universal."
+          },
+          {
+            "label": "Compare last year's promise to this year's payout",
+            "why": "A Value-Up plan sets targets for ROE, dividends and buybacks — it does not guarantee the company hits them."
+          },
+          {
+            "label": "Know you can't buy the KRX Value-Up Index directly from a US broker",
+            "why": "Its tracking ETFs are Korea-domestic listings — use individual shares or funds like EWY or FLKR instead."
+          }
+        ]
+      },
+      "section": 9
+    }
+  ]
+}
