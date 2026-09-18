@@ -1,0 +1,63 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "시장 읽기",
+  "date": "2026-09-18",
+  "slug": "buffett-berkshire-chairman-succession",
+  "radar_origin": "Warren Buffett abruptly steps down as Berkshire chair as 'Father Time' wins, handing role to son Howard who will 'guard its culture and values' - Fortune",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1586165368502-1bad197a6461?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Y2hlc3MlMjBwaWVjZXN8ZW58MHwwfHx8MTc4OTc1MDk5Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+    "credit": "Unsplash / Hassan Pasha"
+  },
+  "sources": [
+    {
+      "name": "CNBC",
+      "title": "Warren Buffett steps down as chairman of Berkshire Hathaway: 'Father Time always wins'",
+      "url": "https://www.cnbc.com/2026/09/18/buffett-stepping-down-as-berkshire-chairman.html"
+    },
+    {
+      "name": "로이터",
+      "title": "Berkshire Hathaway names Warren Buffett as chairman emeritus",
+      "url": "https://www.investing.com/news/stock-market-news/berkshire-hathaway-names-warren-buffett-as-chairman-emeritus-4906996"
+    },
+    {
+      "name": "포천(Fortune)",
+      "title": "Warren Buffett abruptly steps down as Berkshire chair as 'Father Time' wins, handing role to son Howard",
+      "url": "https://fortune.com/2026/09/18/warren-buffett-resignation-chairman-berkshire-hathaway-brk-stock-howard-succession/"
+    }
+  ],
+  "tags": ["워런버핏", "버크셔해서웨이", "경영승계", "그렉애벨"],
+  "ko": {
+    "title": "56년 만의 교체: 버핏 자리에 들어간 두 사람",
+    "narrative": [
+      {
+        "heading": "버핏이 56년 만에 회장직에서 물러났다",
+        "body": "워런 버핏이 9월 18일 버크셔 해서웨이 주주들에게 보낸 편지에서 회장직을 내려놓는다고 밝혔다. 1970년부터 지켜온 자리이니 56년 만이다. 편지에는 이렇게 적혀 있었다 — '아버지 시간은 늘 이긴다. 다만 그는 나에게 너그러웠다.' 버핏은 올해 96세다. 그는 회장에서 내려오지만 이사회에는 그대로 남고, 주주로도 계속 남겠다고 밝혔다. 새 직함은 명예회장이다. CNBC는 이 소식을 전하며 명예회장이 회사 운영에 대한 실제 권한은 갖지 않는 상징적 자리라고 설명했다. 버핏은 1965년 방직회사이던 버크셔 해서웨이의 경영권을 사들인 뒤, 1970년부터는 회장 직함까지 겸해 반세기 넘게 한 사람이 최고경영자와 이사회 의장을 함께 맡는 구조를 유지해 왔다."
+      },
+      {
+        "heading": "버핏이 둘로 나눈 역할",
+        "body": "버핏은 편지에서 후임을 한 사람이 아니라 두 사람으로 나눠 설명했다 — '그렉이 회사를 운영하고, 하워드는 문화와 가치를 지킬 것이다. 둘 다 우리 대차대조표에 있는 그 어떤 것보다 값지다.' 그렉 애벨이 회사 운영의 최고책임자이고, 버핏의 장남 하워드 버핏이 이사회 의장 자리에 새로 앉았다. 버크셔 해서웨이의 공식 발표는 하워드의 역할을 회사 문화를 지키는 이사회 의장으로 못박았다 — 경영에는 직접 관여하지 않는다는 뜻이다. 로이터는 이 구조가 갑자기 나온 결정이 아니라고 짚었다. 버핏은 2011년에 이미 하워드를 비상근 이사회 의장으로 앉히고 싶다는 뜻을 밝힌 바 있고, 하워드는 그때로부터 15년 가까이 지난 지금까지 버크셔 이사로 활동해 왔다."
+      },
+      {
+        "heading": "대표 자리는 이미 넘어가 있었다",
+        "body": "그렉 애벨이 최고경영자 자리에 오른 것은 이번이 처음이 아니다. 버핏은 2025년 5월 주주총회에서 이미 연말까지 최고경영자 자리를 애벨에게 넘기겠다고 발표했고, 애벨은 올해 초부터 실제로 버크셔를 운영해 왔다. 이번에 바뀐 것은 회장 직함뿐이다. 로이터는 이번 발표가 그해 5월 발표의 마지막 단계라고 정리했다 — 최고경영자와 이사회 의장을 한 사람이 겸하던 버핏 시대의 구조를 셋으로 나누는 작업이 이번 편지로 끝났다는 뜻이다. 애벨은 버크셔 자회사인 에너지 부문을 오래 이끌며 실무를 익힌 인물로, 투자보다는 여러 자회사를 운영하는 지주회사 경영에 강점이 있다는 평가를 받아 왔다."
+      },
+      {
+        "heading": "주가는 발표 전부터 흔들렸다",
+        "body": "버크셔의 클래스 A 주식은 발표 전날인 목요일 76만3,936달러로 마감해 2.10% 하락했고, 클래스 B 주식도 509.20달러로 2.04% 하락했다. 로이터는 이 매도세가 공식 발표보다 먼저 일어났다고 전했다 — 소식이 시장에 먼저 새어 나갔다는 뜻으로 읽힌다. 정작 금요일 장 전 거래에서 클래스 B 주식은 509.24달러로 거의 움직이지 않았다. 이미 시장에 반영된 소식에는 다시 반응하지 않는다는 것을 보여준 셈이다. 버크셔는 보험·철도·에너지 자회사를 두루 거느린 몸값 1조 달러가 넘는 지주회사이고, 그만큼 회장 교체 하나에도 시장 전체가 촉각을 곤두세운다."
+      },
+      {
+        "heading": "명예회장은 무엇을 할 수 없나",
+        "body": "명예회장은 이름은 회장이지만 실제 권한은 없는 자리다. 포천(Fortune)은 이 직함이 명예직이며 회사에 대한 지휘권을 전혀 갖지 않는다고 짚었다. 창업자가 대표와 이사회 의장을 동시에 맡는 회사는 많다. 그 구조는 창업자가 있을 때는 힘이 되지만, 창업자가 사라지는 순간 회사 전체가 흔들릴 위험으로 바뀐다 — 시장은 이것을 창업자 리스크라 부른다. 버크셔는 그 위험을 대표(애벨)·이사회 의장(하워드)·명예직(버핏)으로 나눠 미리 흡수해 둔 셈이다. 대표가 회사를 잘못된 방향으로 이끌더라도 이사회 의장에게 그를 제어할 권한이 남아 있어야 이런 구조가 뜻대로 작동한다."
+      },
+      {
+        "heading": "하워드는 왜 경영자가 아닌가",
+        "body": "하워드 버핏은 아버지처럼 투자자나 경영자로 훈련받은 인물이 아니다. 그는 오랫동안 농부로 일하며 농업 관련 재단을 운영해 왔고, 1999년부터는 자신의 이름을 딴 재단의 회장을 맡고 있다. CNBC는 하워드가 33년째 버크셔 이사로 재직해 왔지만 회사 경영에는 관여한 적이 없는 인물이라고 전했다. 버핏이 경영을 잘하는 아들이 아니라 문화를 지킬 아들을 이사회 의장에 앉힌 것 자체가, 이 자리의 일이 회사를 운영하는 것이 아니라 지키는 것임을 보여준다."
+      },
+      {
+        "heading": "버핏 없는 버크셔를 보는 법",
+        "body": "버핏은 여전히 버크셔 주식을 갖고 있고 이사회에도 남는다. 그러나 그가 60년 동안 혼자 내리던 결정은 이제 두 사람이 나눠 맡는다. 1조 달러 규모 회사의 경영권 승계가 이렇게 오랜 시간에 걸쳐, 이렇게 여러 단계로 나뉘어 진행된 사례는 흔치 않다. 버핏이 이번 편지 마지막 줄에 남긴 말은 이것이었다 — '회사는 훌륭한 사람들 손에 있다. 나도 여러분과 함께 주주로 남아 지켜보려 한다.'"
+      }
+    ]
+  }
+}
