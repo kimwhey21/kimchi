@@ -4139,7 +4139,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 51218124178.87,
+      "trading_value": 51218825423.19,
       "sector": "Technology"
     },
     "SNDK": {
@@ -4307,7 +4307,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 31712915094.94,
+      "trading_value": 31716918020.82,
       "sector": "Technology"
     },
     "BE": {
@@ -4475,7 +4475,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 19493124469.37,
+      "trading_value": 19493681229.85,
       "sector": "Energy"
     },
     "AMD": {
@@ -4643,7 +4643,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 17792648215.640003,
+      "trading_value": 17794253219.58,
       "sector": "Technology"
     },
     "AVGO": {
@@ -4811,7 +4811,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 15715645998.470001,
+      "trading_value": 15716424873.050001,
       "sector": "Technology"
     },
     "GOOG": {
@@ -4979,7 +4979,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 11723560726.68,
+      "trading_value": 11724182731.140001,
       "sector": "Technology"
     }
   },
