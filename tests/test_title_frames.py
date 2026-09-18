@@ -47,6 +47,33 @@ class TitleFrameTest(unittest.TestCase):
         self.assertEqual(collect_issues(doc, kind="기준표"), [])
 
 
+class RejectedShapeInHeadingTest(unittest.TestCase):
+    """사장님이 제목에서 버린 꼴은 소제목에서도 막는다 (2026-09-18, "1번 진행해").
+
+    9/18 한국장 원고의 소제목 「외국인이 돌아왔습니다」 — '돌아온 외국인' 계열은 제목에서 세 번 버린 꼴인데
+    소제목 검사는 그것을 보지 않아 그대로 나갔다. 제목과 소제목은 같은 규칙이다.
+    """
+
+    def _sections(self, *headings):
+        return [{"heading": f"{i}. {h}", "body": "b"} for i, h in enumerate(headings, 1)]
+
+    def test_returning_foreigners_heading_is_blocked(self) -> None:
+        issues = editorial_title.collect_heading_issues(
+            self._sections("오늘 투자심리", "외국인이 돌아왔습니다", "반도체 대형주가 지수를 끌어올렸습니다"), kind="시황")
+        self.assertTrue(any("외국인이 돌아왔습니다" in i and "버린 꼴" in i for i in issues), issues)
+
+    def test_other_rejected_shapes_also_apply_to_headings(self) -> None:
+        issues = editorial_title.collect_heading_issues(
+            self._sections("SK하이닉스, 10월 27일에 갈린다", "리스크 체크리스트 — 다음 분기에 확인할 것"), kind="기준표")
+        self.assertTrue(any("갈린다" in i and "버린 꼴" in i for i in issues), issues)
+        self.assertFalse(any("줄표" in i for i in issues), issues)   # 줄표는 벤치마크가 소제목에 쓴다 — 소제목에서는 예외
+
+    def test_the_replacement_wording_passes(self) -> None:
+        issues = editorial_title.collect_heading_issues(
+            self._sections("외국인 매수 재개: 반도체 두 종목에만 몰렸습니다", "오늘 투자심리"), kind="시황")
+        self.assertFalse(any("버린 꼴" in i for i in issues), issues)
+
+
 class HeadingMixTest(unittest.TestCase):
     US_0908 = ["위험과 로테이션이 같은 하루에 겹쳤습니다", "숫자로 본 오늘", "지난 거래일 확인 지점, 오늘은 어땠나",
                "중동이 다시 유가를 밀어 올렸습니다", "캐나다도 관세로 맞받았습니다", "다우와 나스닥, 등락률이 세 배 갈렸습니다",

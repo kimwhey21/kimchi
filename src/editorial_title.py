@@ -677,6 +677,15 @@ def collect_heading_issues(sections: list, kind: str | None = None,
             issues.append(f"소제목 {index} '{bare}': 본문 블록의 라벨('초보자 설명:' 등)을 소제목에 올렸습니다 — "
                           "기계가 표에 붙인 제목처럼 읽힙니다. 라벨은 본문 문단 첫머리에 두고, 소제목은 "
                           "그 절이 하는 말로 쓰세요(`순매수는 지수를 이렇게 움직입니다`).")
+        for pattern, why in _REJECTED_SHAPES:
+            # 사장님이 제목에서 버린 꼴은 소제목에서도 같다(2026-09-18, "1번 진행해" — 9/18 한국장 소제목
+            # 「외국인이 돌아왔습니다」가 제목 관문은 피해 나갔다). 445개 소제목 중 이 하나뿐이라 부담은 없다.
+            # 줄표(—)만 예외 — 제목에서 버린 것은 꼴이 아니라 부호였고, 벤치마크는 소제목에 줄표를 쓴다
+            # (`리스크 체크리스트 — 다음 분기에 확인할 것`, tests/test_heading_shapes.py).
+            if "줄표" in why:
+                continue
+            if pattern.search(bare):
+                issues.append(f"소제목 {index} '{bare}': 버린 꼴입니다 — {why} 제목과 소제목은 같은 규칙입니다.")
         if re.search(r"[고,]\s*$", bare):
             issues.append(f"소제목 {index} '{bare}': '…고, …고'로 끝나는 대구(對句)입니다. 벤치마크 "
                           "소제목 462개에 0개 — 한 문장으로 말하세요(`메모리는 올랐고 설계주는 하락했습니다`).")
