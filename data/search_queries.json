@@ -1,15 +1,22 @@
 {
- "date": "2026-09-17",
+ "date": "2026-09-18",
  "window": "3개월",
- "total_clicks": 7,
+ "total_clicks": 10,
  "total_impressions": 1,
  "queries": [
   {
    "query": "kospi vs kosdaq",
    "clicks": 0,
-   "impressions": 17,
+   "impressions": 19,
    "ctr": 0.0,
-   "position": 5.7
+   "position": 5.8
+  },
+  {
+   "query": "kosdaq vs kospi",
+   "clicks": 0,
+   "impressions": 14,
+   "ctr": 0.0,
+   "position": 7.9
   },
   {
    "query": "englishdart",
@@ -19,18 +26,11 @@
    "position": 6.5
   },
   {
-   "query": "kosdaq vs kospi",
-   "clicks": 0,
-   "impressions": 11,
-   "ctr": 0.0,
-   "position": 9.0
-  },
-  {
    "query": "kospi trading hours",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 9,
    "ctr": 0.0,
-   "position": 66.0
+   "position": 65.3
   },
   {
    "query": "how to buy korean stocks in canada",
@@ -38,6 +38,13 @@
    "impressions": 5,
    "ctr": 0.0,
    "position": 37.2
+  },
+  {
+   "query": "kospi holiday",
+   "clicks": 0,
+   "impressions": 5,
+   "ctr": 0.0,
+   "position": 66.4
   },
   {
    "query": "how to buy korean stocks",
@@ -52,6 +59,20 @@
    "impressions": 3,
    "ctr": 0.0,
    "position": 10.3
+  },
+  {
+   "query": "how to buy korean stocks in us",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0.0,
+   "position": 40.7
+  },
+  {
+   "query": "kospi futures trading hours",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0.0,
+   "position": 48.3
   },
   {
    "query": "what is kospi",
@@ -75,7 +96,21 @@
    "position": 7.0
   },
   {
+   "query": "dart korea",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 8.0
+  },
+  {
    "query": "kospi kosdaq difference",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 8.0
+  },
+  {
+   "query": "what is kospi and kosdaq",
    "clicks": 0,
    "impressions": 2,
    "ctr": 0.0,
@@ -110,11 +145,32 @@
    "position": 39.5
   },
   {
-   "query": "how to buy korean stocks in us",
+   "query": "fomc",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 1,
    "ctr": 0.0,
-   "position": 40.0
+   "position": 1.0
+  },
+  {
+   "query": "electronics?",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 2.0
+  },
+  {
+   "query": "yes",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 2.0
+  },
+  {
+   "query": "하락원인",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 3.0
   },
   {
    "query": "kospi and kosdaq",
@@ -132,6 +188,13 @@
   },
   {
    "query": "dart filing",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 6.0
+  },
+  {
+   "query": "dart stock exchange",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
@@ -159,6 +222,13 @@
    "position": 6.0
   },
   {
+   "query": "english dart",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 7.0
+  },
+  {
    "query": "韓國股市代號",
    "clicks": 0,
    "impressions": 1,
@@ -178,6 +248,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 8.0
+  },
+  {
+   "query": "%\"2026년 9월 15일\" \"코스피\" \"마감\"",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 9.0
   },
   {
    "query": "ewy vs koru",
@@ -201,11 +278,11 @@
    "position": 11.0
   },
   {
-   "query": "what is kospi and kosdaq",
+   "query": "flkr vs ewy",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
-   "position": 11.0
+   "position": 45.0
   },
   {
    "query": "how to buy stocks in korea",
@@ -229,6 +306,13 @@
    "position": 55.0
   },
   {
+   "query": "kospi etf",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 56.0
+  },
+  {
    "query": "kospi meaning",
    "clicks": 0,
    "impressions": 1,
@@ -236,14 +320,21 @@
    "position": 59.0
   },
   {
-   "query": "kospi holiday",
+   "query": "해외주식 양도소득세 250만원",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
-   "position": 68.0
+   "position": 59.0
   },
   {
    "query": "korea stock market trading hours",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 69.0
+  },
+  {
+   "query": "south korea stock market open time",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
