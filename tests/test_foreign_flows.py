@@ -50,6 +50,23 @@ class ForeignFlowsTest(unittest.TestCase):
             f.attach_foreign_flows({"005930": {}, "000660": {}})
         self.assertIn("한 종목도 받지 못했습니다", err.getvalue())
 
+    def test_stale_bizdate_is_not_attached_as_todays_data(self) -> None:
+        """API가 아직 어제(9/17) 행만 줄 때, 오늘(9/18) 값으로 믿고 붙이지 않는다."""
+        entry = {}
+        flow = {"date": "2026.09.17", "institution_net": 196838, "foreign_net": -2170687, "foreign_ratio": 46.48}
+        err = io.StringIO()
+        with mock.patch.object(f, "fetch_one", return_value=flow), redirect_stderr(err):
+            f.attach_foreign_flows({"005930": entry}, trading_date="2026-09-18")
+        self.assertNotIn("foreign_net", entry)
+        self.assertIn("전 거래일 값", err.getvalue())
+
+    def test_matching_bizdate_is_attached(self) -> None:
+        entry = {}
+        flow = {"date": "2026.09.18", "institution_net": 1, "foreign_net": 2, "foreign_ratio": 3.0}
+        with mock.patch.object(f, "fetch_one", return_value=flow):
+            f.attach_foreign_flows({"005930": entry}, trading_date="2026-09-18")
+        self.assertEqual(entry["foreign_net"], 2)
+
 
 if __name__ == "__main__":
     unittest.main()

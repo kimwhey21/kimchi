@@ -336,8 +336,8 @@
       "ticker": "USD/KRW",
       "name": "원/달러 환율",
       "name_en": "USD/KRW",
-      "price": 1385.0,
-      "change_pct": 0.29,
+      "price": 1385.4,
+      "change_pct": 0.32,
       "series": [
         1340.5,
         1351.0,
@@ -346,15 +346,15 @@
         1363.7,
         1377.5,
         1381.0,
-        1385.0
+        1385.4
       ],
       "unit": "원",
       "trading_date": "2026-09-18",
       "quote_type": "reference_rate",
-      "as_of_label": "17:40 하나은행 고시",
-      "as_of_label_en": "17:40 Hana Bank",
-      "reference_label": "2026-09-18 17:40 하나은행 고시",
-      "reference_label_en": "2026-09-18 17:40 Hana Bank notice",
+      "as_of_label": "17:45 하나은행 고시",
+      "as_of_label_en": "17:45 Hana Bank",
+      "reference_label": "2026-09-18 17:45 하나은행 고시",
+      "reference_label_en": "2026-09-18 17:45 Hana Bank notice",
       "data_source": "Naver Finance / Hana Bank notice rate"
     }
   },
@@ -524,17 +524,14 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "반도체",
-      "foreign_net": -2170687,
-      "institution_net": 196838,
-      "foreign_ratio": 46.48
+      "sector": "반도체"
     },
     "000660": {
       "ticker": "000660",
       "name": "SK하이닉스",
       "name_en": "SK Hynix",
-      "price": 1846000.0,
-      "change_pct": 4.53,
+      "price": 1847000.0,
+      "change_pct": 4.59,
       "series": [
         1856000.0,
         1853000.0,
@@ -543,7 +540,7 @@
         1712000.0,
         1757000.0,
         1766000.0,
-        1846000.0
+        1847000.0
       ],
       "history": {
         "dates": [
@@ -688,16 +685,13 @@
           1712000.0,
           1757000.0,
           1766000.0,
-          1846000.0
+          1847000.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "반도체",
-      "foreign_net": -701796,
-      "institution_net": -53596,
-      "foreign_ratio": 50.1
+      "sector": "반도체"
     },
     "009150": {
       "ticker": "009150",
@@ -864,17 +858,14 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "반도체",
-      "foreign_net": -87365,
-      "institution_net": -31524,
-      "foreign_ratio": 37.52
+      "sector": "반도체"
     },
     "042700": {
       "ticker": "042700",
       "name": "한미반도체",
       "name_en": "Hanmi Semiconductor",
-      "price": 235000.0,
-      "change_pct": 3.07,
+      "price": 234500.0,
+      "change_pct": 2.85,
       "series": [
         250500.0,
         253000.0,
@@ -883,7 +874,7 @@
         225000.0,
         226500.0,
         228000.0,
-        235000.0
+        234500.0
       ],
       "history": {
         "dates": [
@@ -1028,16 +1019,13 @@
           225000.0,
           226500.0,
           228000.0,
-          235000.0
+          234500.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "반도체",
-      "foreign_net": -710,
-      "institution_net": -10914,
-      "foreign_ratio": 7.06
+      "sector": "반도체"
     },
     "105560": {
       "ticker": "105560",
@@ -1204,10 +1192,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "금융",
-      "foreign_net": 25860,
-      "institution_net": 56235,
-      "foreign_ratio": 78.99
+      "sector": "금융"
     },
     "055550": {
       "ticker": "055550",
@@ -1374,10 +1359,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "금융",
-      "foreign_net": -94537,
-      "institution_net": 126100,
-      "foreign_ratio": 61.8
+      "sector": "금융"
     },
     "032830": {
       "ticker": "032830",
@@ -1544,10 +1526,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "금융",
-      "foreign_net": -18377,
-      "institution_net": -1734,
-      "foreign_ratio": 23.13
+      "sector": "금융"
     },
     "005380": {
       "ticker": "005380",
@@ -1714,10 +1693,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "자동차",
-      "foreign_net": 26071,
-      "institution_net": -31199,
-      "foreign_ratio": 24.37
+      "sector": "자동차"
     },
     "000270": {
       "ticker": "000270",
@@ -1884,17 +1860,14 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "자동차",
-      "foreign_net": -4798,
-      "institution_net": -45047,
-      "foreign_ratio": 39.22
+      "sector": "자동차"
     },
     "329180": {
       "ticker": "329180",
       "name": "HD현대중공업",
       "name_en": "HD Hyundai Heavy Industries",
-      "price": 461000.0,
-      "change_pct": -1.91,
+      "price": 460500.0,
+      "change_pct": -2.02,
       "series": [
         463500.0,
         453500.0,
@@ -1903,7 +1876,7 @@
         452500.0,
         442500.0,
         470000.0,
-        461000.0
+        460500.0
       ],
       "history": {
         "dates": [
@@ -2048,16 +2021,13 @@
           452500.0,
           442500.0,
           470000.0,
-          461000.0
+          460500.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "조선·방산",
-      "foreign_net": 10026,
-      "institution_net": 57000,
-      "foreign_ratio": 13.71
+      "sector": "조선·방산"
     },
     "012450": {
       "ticker": "012450",
@@ -2224,10 +2194,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "조선·방산",
-      "foreign_net": -2067,
-      "institution_net": 19922,
-      "foreign_ratio": 45.51
+      "sector": "조선·방산"
     },
     "034020": {
       "ticker": "034020",
@@ -2394,10 +2361,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "발전·원전",
-      "foreign_net": -80957,
-      "institution_net": 97945,
-      "foreign_ratio": 23.23
+      "sector": "발전·원전"
     },
     "373220": {
       "ticker": "373220",
@@ -2564,10 +2528,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "2차전지",
-      "foreign_net": -30046,
-      "institution_net": 46823,
-      "foreign_ratio": 5.53
+      "sector": "2차전지"
     },
     "247540": {
       "ticker": "247540",
@@ -2734,17 +2695,14 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "2차전지",
-      "foreign_net": -9957,
-      "institution_net": -69473,
-      "foreign_ratio": 14.92
+      "sector": "2차전지"
     },
     "207940": {
       "ticker": "207940",
       "name": "삼성바이오로직스",
       "name_en": "Samsung Biologics",
-      "price": 1397000.0,
-      "change_pct": -0.5,
+      "price": 1396000.0,
+      "change_pct": -0.57,
       "series": [
         1452000.0,
         1423000.0,
@@ -2753,7 +2711,7 @@
         1409000.0,
         1405000.0,
         1404000.0,
-        1397000.0
+        1396000.0
       ],
       "history": {
         "dates": [
@@ -2898,16 +2856,13 @@
           1409000.0,
           1405000.0,
           1404000.0,
-          1397000.0
+          1396000.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "바이오",
-      "foreign_net": 1545,
-      "institution_net": -6412,
-      "foreign_ratio": 13.2
+      "sector": "바이오"
     },
     "196170": {
       "ticker": "196170",
@@ -3074,10 +3029,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "바이오",
-      "foreign_net": -14854,
-      "institution_net": -35366,
-      "foreign_ratio": 15.27
+      "sector": "바이오"
     },
     "068270": {
       "ticker": "068270",
@@ -3244,10 +3196,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "바이오",
-      "foreign_net": -33259,
-      "institution_net": 102982,
-      "foreign_ratio": 25.32
+      "sector": "바이오"
     },
     "035420": {
       "ticker": "035420",
@@ -3414,10 +3363,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "플랫폼",
-      "foreign_net": -128971,
-      "institution_net": -85771,
-      "foreign_ratio": 35.84
+      "sector": "플랫폼"
     },
     "035720": {
       "ticker": "035720",
@@ -3584,10 +3530,7 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "플랫폼",
-      "foreign_net": 104806,
-      "institution_net": -69832,
-      "foreign_ratio": 28.88
+      "sector": "플랫폼"
     },
     "278470": {
       "ticker": "278470",
@@ -3754,17 +3697,14 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "소비재",
-      "foreign_net": -1577,
-      "institution_net": -40416,
-      "foreign_ratio": 37.94
+      "sector": "소비재"
     },
     "277810": {
       "ticker": "277810",
       "name": "레인보우로보틱스",
       "name_en": "Rainbow Robotics",
-      "price": 433000.0,
-      "change_pct": 0.81,
+      "price": 433500.0,
+      "change_pct": 0.93,
       "series": [
         445500.0,
         449000.0,
@@ -3773,7 +3713,7 @@
         438000.0,
         427000.0,
         429500.0,
-        433000.0
+        433500.0
       ],
       "history": {
         "dates": [
@@ -3918,23 +3858,20 @@
           438000.0,
           427000.0,
           429500.0,
-          433000.0
+          433500.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "core",
-      "sector": "로봇",
-      "foreign_net": -3338,
-      "institution_net": 10287,
-      "foreign_ratio": 5.63
+      "sector": "로봇"
     },
     "010170": {
       "ticker": "010170",
       "name": "대한광통신",
       "name_en": "Taihan Fiberoptics",
-      "price": 18380.0,
-      "change_pct": 13.11,
+      "price": 18370.0,
+      "change_pct": 13.05,
       "series": [
         14960.0,
         14740.0,
@@ -3943,7 +3880,7 @@
         14320.0,
         16230.0,
         16250.0,
-        18380.0
+        18370.0
       ],
       "history": {
         "dates": [
@@ -4088,23 +4025,20 @@
           14320.0,
           16230.0,
           16250.0,
-          18380.0
+          18370.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 984331000000,
-      "foreign_net": -534470,
-      "institution_net": 25099,
-      "foreign_ratio": 4.61
+      "trading_value": 984934000000
     },
     "402340": {
       "ticker": "402340",
       "name": "SK스퀘어",
       "name_en": "SK Square",
-      "price": 1070000.0,
-      "change_pct": 5.0,
+      "price": 1071000.0,
+      "change_pct": 5.1,
       "series": [
         1138000.0,
         1135000.0,
@@ -4113,7 +4047,7 @@
         1014000.0,
         1017000.0,
         1019000.0,
-        1070000.0
+        1071000.0
       ],
       "history": {
         "dates": [
@@ -4258,23 +4192,20 @@
           1014000.0,
           1017000.0,
           1019000.0,
-          1070000.0
+          1071000.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 544195000000,
-      "foreign_net": 33942,
-      "institution_net": -44342,
-      "foreign_ratio": 46.5
+      "trading_value": 544354000000
     },
     "043260": {
       "ticker": "043260",
       "name": "성호전자",
       "name_en": "성호전자",
-      "price": 26450.0,
-      "change_pct": 19.14,
+      "price": 26500.0,
+      "change_pct": 19.37,
       "series": [
         18440.0,
         18560.0,
@@ -4283,7 +4214,7 @@
         16950.0,
         18880.0,
         22200.0,
-        26450.0
+        26500.0
       ],
       "history": {
         "dates": [
@@ -4428,23 +4359,20 @@
           16950.0,
           18880.0,
           22200.0,
-          26450.0
+          26500.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 501940000000,
-      "foreign_net": -94226,
-      "institution_net": 102340,
-      "foreign_ratio": 2.41
+      "trading_value": 502209000000
     },
     "000500": {
       "ticker": "000500",
       "name": "가온전선",
       "name_en": "가온전선",
-      "price": 330500.0,
-      "change_pct": 25.19,
+      "price": 331000.0,
+      "change_pct": 25.38,
       "series": [
         265500.0,
         250000.0,
@@ -4453,7 +4381,7 @@
         246000.0,
         247000.0,
         264000.0,
-        330500.0
+        331000.0
       ],
       "history": {
         "dates": [
@@ -4598,16 +4526,13 @@
           246000.0,
           247000.0,
           264000.0,
-          330500.0
+          331000.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 436306000000,
-      "foreign_net": 68349,
-      "institution_net": 33671,
-      "foreign_ratio": 1.96
+      "trading_value": 436879000000
     },
     "028050": {
       "ticker": "028050",
@@ -4774,17 +4699,14 @@
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 293835000000,
-      "foreign_net": -151785,
-      "institution_net": 145747,
-      "foreign_ratio": 38.54
+      "trading_value": 293906000000
     },
     "001440": {
       "ticker": "001440",
       "name": "대한전선",
       "name_en": "대한전선",
-      "price": 31800.0,
-      "change_pct": 10.8,
+      "price": 31950.0,
+      "change_pct": 11.32,
       "series": [
         31100.0,
         29700.0,
@@ -4793,7 +4715,7 @@
         28250.0,
         28100.0,
         28700.0,
-        31800.0
+        31950.0
       ],
       "history": {
         "dates": [
@@ -4938,16 +4860,13 @@
           28250.0,
           28100.0,
           28700.0,
-          31800.0
+          31950.0
         ]
       },
       "unit": "",
       "trading_date": "2026-09-18",
       "source": "dynamic",
-      "trading_value": 262008000000,
-      "foreign_net": -20366,
-      "institution_net": 20178,
-      "foreign_ratio": 11.44
+      "trading_value": 262734000000
     }
   },
   "trading_date": "2026-09-18",

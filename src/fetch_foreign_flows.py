@@ -64,22 +64,38 @@ def fetch_one(code: str) -> dict | None:
         return None
 
 
-def attach_foreign_flows(watchlist: dict) -> dict:
+def attach_foreign_flows(watchlist: dict, trading_date: str | None = None) -> dict:
     """price_data['watchlist']의 각 종목 dict에 외국인 매매 동향 필드를 붙여줍니다.
 
     watchlist: {ticker: {"ticker":..., "name":..., "price":..., ...}, ...}
+    trading_date: 그날 기준일("2026-09-18"). 주면 API 응답의 bizdate와 대조해
+    **전 거래일 값을 오늘 값으로 잘못 붙이지 않습니다** — 2026-09-18에 이 API가
+    장 마감 직후에는 아직 전날(9/17) 행만 돌려줘서, 기존 코드가 그걸 "가장 최근"으로
+    믿고 붙이는 바람에 오늘 시세 파일의 삼성전자·SK하이닉스 수급이 실제로는 어제
+    것이었다(실측: 삼성전자 foreignerPureBuyQuant -2,170,687이 9/17 행과 글자까지
+    같았다). 날짜가 안 맞으면 "못 받음"과 같게 취급합니다 — 틀린 날짜의 숫자를
+    붙이는 것보다 안 붙이는 것이 낫습니다.
     실패한 종목은 그냥 필드 없이 남습니다 (경고만 출력, 파이프라인은 계속됨).
     """
     got = 0
+    stale = 0
     for ticker, entry in watchlist.items():
         flow = fetch_one(ticker)
-        if flow:
-            got += 1
-            entry["foreign_net"] = flow["foreign_net"]
-            entry["institution_net"] = flow["institution_net"]
-            entry["foreign_ratio"] = flow["foreign_ratio"]
+        if not flow:
+            continue
+        if trading_date and flow["date"].replace(".", "-") != trading_date:
+            stale += 1
+            continue
+        got += 1
+        entry["foreign_net"] = flow["foreign_net"]
+        entry["institution_net"] = flow["institution_net"]
+        entry["foreign_ratio"] = flow["foreign_ratio"]
     if watchlist and not got:
-        # 조용한 실패 금지(2026-09-18): 전부 비면 '수급이 없는 날'이 아니라 '수집이 죽은 날'이다.
-        print(f"[경고] 외국인·기관 수급을 한 종목도 받지 못했습니다({len(watchlist)}종목) — 수집 경로가 죽었는지 보세요.",
-              file=sys.stderr)
+        if stale:
+            # 조용한 실패 금지(2026-09-18): "수집이 죽었다"와 "아직 전날 값만 있다"는 다른 문제다.
+            print(f"[경고] 외국인·기관 수급이 전부 전 거래일 값입니다({stale}/{len(watchlist)}종목) "
+                  "— 네이버가 아직 오늘 행을 안 올렸습니다. 오늘 원고에는 쓰지 마세요.", file=sys.stderr)
+        else:
+            print(f"[경고] 외국인·기관 수급을 한 종목도 받지 못했습니다({len(watchlist)}종목) — 수집 경로가 죽었는지 보세요.",
+                  file=sys.stderr)
     return watchlist

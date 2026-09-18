@@ -377,7 +377,7 @@ def fetch_all() -> dict:
     # 않아야 합니다.
     trading_date = next(macro[t]["trading_date"] for t in _REQUIRED if t in macro)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
-    fetch_foreign_flows.attach_foreign_flows(watchlist)
+    fetch_foreign_flows.attach_foreign_flows(watchlist, trading_date)
     if missing:
         print(f"[안내] 시세에서 빠진 항목 {len(missing)}개: {', '.join(missing)}")
     return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date,

@@ -127,7 +127,7 @@ class KrPartialFetchTest(unittest.TestCase):
              mock.patch.object(fetch_kr.yaml, "safe_load", return_value=self.CONFIG), \
              mock.patch.object(fetch_kr, "_fetch_dynamic_tier", return_value={}), \
              mock.patch.object(fetch_kr.fetch_foreign_flows, "attach_foreign_flows",
-                               side_effect=lambda w: None):
+                               side_effect=lambda w, *a, **k: None):
             return fetch_kr.fetch_all()
 
     def test_usdkrw_failure_no_longer_loses_the_day(self) -> None:
