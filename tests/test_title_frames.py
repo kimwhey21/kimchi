@@ -39,7 +39,9 @@ class TitleFrameTest(unittest.TestCase):
 
     def test_collect_issues_passes_recent_titles_through(self) -> None:
         doc = {"title": "인텔을 CEO 따라 사면 안 되는 이유",
-               "narrative": [{"heading": f"{i}. 오늘 볼 것 {i}", "body": "b"} for i in range(1, 6)]}
+               "narrative": [{"heading": f"{i}. 오늘 볼 것 {i}", "body": "b"} for i in range(1, 6)],
+               "title_candidates": ["인텔을 CEO 따라 사면 안 되는 이유", "지수만 보면 하락장, 종목을 보면 다른 이야기",
+                                    "반등의 이유와 반등이 이어지려면 필요한 것"]}   # 2026-09-18: 후보 셋 필수
         blocked = collect_issues(doc, kind="기준표", recent_titles=["목표주가 두 배의 SK하이닉스, 시장이 안 믿는 이유"])
         self.assertTrue(any("이유" in i for i in blocked), blocked)
         self.assertEqual(collect_issues(doc, kind="기준표"), [])

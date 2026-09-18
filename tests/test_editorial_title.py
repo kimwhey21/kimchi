@@ -219,6 +219,11 @@ if __name__ == "__main__":
     unittest.main()
 
 
+# 2026-09-18 "a진행": 피드에 실리는 글은 제목 후보 셋 이상(축을 달리해)이 있어야 관문을 지난다. 견본 제목
+# 「오늘 밤 미국장, 유가가 반도체를 흔들까?」(시간·질문)와 짝이 되는 후보 둘 — 프리뷰 규칙(시간·독자 축)도 지킨다.
+CANDS = ["오늘 밤 미국장, 유가가 반도체를 흔들까?", "오늘 밤 미국장, 이 종목 셋만 보세요", "내일 아침 이것 하나만 보세요"]
+
+
 class UniversalRulesTest(unittest.TestCase):
     """제목·소제목 규칙은 블로그의 모든 글에 같다(2026-09-08).
 
@@ -249,7 +254,7 @@ class UniversalRulesTest(unittest.TestCase):
     def test_section_floor_depends_only_on_kind(self) -> None:
         from src import editorial_title
         sections = [{"heading": f"{i}. 오늘 밤 일정", "body": "b"} for i in range(1, 4)]
-        doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?", "narrative": sections}
+        doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?", "narrative": sections, "title_candidates": CANDS}
         self.assertTrue(any("10개 이상" in i for i in collect_issues(doc, kind="프리뷰")))   # 2026-09-17 확대
         self.assertEqual(collect_issues(doc, kind="이벤트"), [i for i in collect_issues(doc, kind="이벤트") if "개 이상" in i])
         self.assertTrue(any("8개 이상" in i for i in collect_issues(doc, kind="시황")))
@@ -272,7 +277,8 @@ class UniversalRulesTest(unittest.TestCase):
         title = "오늘 밤 미국장, 유가가 반도체를 흔들까?"
         def doc(heading: str) -> dict:
             others = ["2. 오늘 투자심리", "3. 외국인 수급", "4. 다음 확인 지점", "5. 남은 질문은 하나"]
-            return {"title": title, "narrative": [{"heading": h, "body": "b"} for h in [heading] + others]}
+            return {"title": title, "narrative": [{"heading": h, "body": "b"} for h in [heading] + others],
+                    "title_candidates": CANDS}
         self.assertTrue(any("라벨" in i for i in collect_issues(doc("2. 초보자 설명: 순매수는 지수를 이렇게 움직입니다"), kind="기준표")))
         self.assertTrue(any("라벨" in i for i in collect_issues(doc("요약: 외국인은 돌아왔습니다"), kind="기준표")))
         for heading in ("2. 순매수는 지수를 이렇게 움직입니다", "2. 오후 2:30 이후 반등했습니다",
@@ -282,6 +288,6 @@ class UniversalRulesTest(unittest.TestCase):
     def test_short_label_is_a_note_not_a_block(self) -> None:
         notes: list[str] = []
         doc = {"title": "오늘 밤 미국장, 유가가 반도체를 흔들까?",
-               "narrative": [{"heading": "1. 지금 숫자", "body": "b"}] * 10}
+               "narrative": [{"heading": "1. 지금 숫자", "body": "b"}] * 10, "title_candidates": CANDS}
         self.assertEqual(collect_issues(doc, kind="프리뷰", notes_out=notes), [])
         self.assertTrue(any("명사 토막" in n for n in notes), notes)

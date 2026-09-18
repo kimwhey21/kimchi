@@ -60,6 +60,8 @@
      (글 머리말 `다음 주 일정 · 9월 14일~18일`이 이 값으로 그려집니다), `related` 2~3개(어제 주간 결산
      `https://fermata.it.kr/weekly-review-<어제>/`, 금요일 시황 — 주소는
      `https://fermata.it.kr/wp-json/wp/v2/posts?search=<낱말>&_fields=title,link`로 확인).
+   - `ko.title_candidates`: 제목 후보 셋 이상(축을 달리해). `python -m scripts.title_pick weekahead "후보1" "후보2" "후보3"`으로
+     점수를 본 뒤 가장 높은 것을 `ko.title`로 — 관문이 같은 계산으로 확인합니다(2026-09-18, 사장님 "a진행", 시황과 같은 규칙).
    - `ko.title`: **앞을 보는 제목** — 「제목 문법」 예문집의 꼴 중 하나로. 다음 주에 무엇이 무엇을
      정하는지 하나, 20~35자, 등락률은 많아야 하나. 예(꼴만 참고): `다음 주 증시, 이 세 가지에
      달렸다` / `다음 주 미국장: 9월 17일 FOMC가 5% 금리의 답을 낸다` / `추석 앞둔 코스피, 사흘

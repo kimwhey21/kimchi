@@ -45,6 +45,8 @@ def _sections(n: int) -> list[dict]:
 def _doc(title: str, sections: list[dict]) -> dict:
     return {"market": "kr", "date": "2026-09-08", "price_data": PRICE,
             "ko": {"title": title, "narrative": sections,
+                   # 2026-09-18 "a진행": 후보 셋 이상이 있어야 관문을 지난다 — 점수 0·1짜리 둘을 붙여 견본 제목이 1등이 되게
+                   "title_candidates": [title, "지수만 보면 하락장, 종목을 보면 다른 이야기", "반등의 이유와 반등이 이어지려면 필요한 것"],
                    "closing": {"heading": "Fermata's Take",
                                "body": "우리는 이번 하락을 숨 고르기로 봅니다. 외국인이 5거래일째 순매수인데 지수가 밀린 것은 개인의 차익 실현 때문이었습니다. 9월 10일 종가가 7,000선을 넘는지로 확인하겠습니다.",
                                "check": {"due": "2026-09-10", "what": "코스피 종가가 7,000선을 넘는지, 외국인 순매수가 이어지는지"}}}}
@@ -62,8 +64,10 @@ class GateTest(unittest.TestCase):
         # 관문은 "어제 원고"(editorial/kr_2026-09-07.json)를 읽어 판정을 요구한다. 그 파일은
         # 루틴이 다시 쓰면 바뀌므로(2026-09-08 밤 재작성 뒤 이 테스트가 CI에서 빨개졌다)
         # 여기서는 어제 글이 없는 날로 고정한다 — 판정 규칙은 test_editorial_judgment가 본다.
+        from src import title_feed
         with patch.object(editorial_judgment, "previous_manuscript", return_value=None), \
-             patch.object(editorial_judgment, "previous_manuscripts", return_value=[]):
+             patch.object(editorial_judgment, "previous_manuscripts", return_value=[]), \
+             patch.object(title_feed, "feed_titles", return_value=[]):   # 독자 피드 대조는 test_title_feed가 본다
             return editorial_gate.run(_write(doc), render_dir=Path(tempfile.mkdtemp()))
 
     def test_numbered_title_and_thin_body_fail(self) -> None:

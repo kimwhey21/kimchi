@@ -100,6 +100,10 @@ def render(which: str, count: int = 5) -> str:
             lines.append(f"- {a} 축 (최근 네 편에 없음) — 예: `{editorial_title.AXIS_PICKS[a][0]}`")
     else:
         lines.append("- 시간·질문·독자 축이 다 있음 — 어느 축이든 됩니다. 1인칭·내 돈·인용 축도 예문집에 있습니다.")
+    if which in FEED_LISTS:
+        # 2026-09-18 "a진행": 관문은 거르는 문이 아니라 고르는 문 — 후보 셋 중 피드와 가장 먼 것을 제목으로 요구한다.
+        lines.append(f"- **후보 셋 이상을 축을 달리해 쓰고** `python -m scripts.title_pick {which} \"후보1\" \"후보2\" \"후보3\"`로 "
+                     "점수를 본 뒤, 가장 높은 것을 `ko.title`에·셋 다 `ko.title_candidates`에 적습니다(관문이 같은 계산으로 확인합니다).")
     if which == "preview":
         # 2026-09-17 밤: "어느 축이든 됩니다"를 읽은 루틴이 어젯밤 요약 제목을 냈다. 프리뷰는 늘 앞을 본다.
         lines.append("- **프리뷰는 시간 축(오늘 밤·내일·새벽) 또는 독자 축(보세요·볼 것)이 필수입니다** — 관문이 막습니다. "

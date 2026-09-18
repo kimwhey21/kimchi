@@ -16,9 +16,14 @@ def _check(doc: dict, graphics: int | None = None, notes_out: list[str] | None =
             + feature_checks.collect_issues(doc, graphics, notes_out=notes_out))
 
 
+# 2026-09-18 "a진행": 후보 셋 이상이 있어야 관문을 지난다. 견본 제목이 늘 1등이 되도록 점수 0·1짜리 후보 둘을 붙인다.
+FILLERS = ["지수만 보면 하락장, 종목을 보면 다른 이야기", "반등의 이유와 반등이 이어지려면 필요한 것"]
+
+
 def _doc(title: str, sections: int = 7, body_extra: str = "") -> dict:
     return {"ko": {
         "title": title,
+        "title_candidates": [title] + FILLERS,
         "narrative": [{"heading": f"{i}. 절", "body": "초보자 설명: 본문입니다."}
                       for i in range(1, sections + 1)],
         "closing": {"heading": "Fermata's Take",
@@ -134,6 +139,7 @@ class RealArticleTest(unittest.TestCase):
         if not path.exists():
             self.skipTest("원고 파일이 없습니다")
         doc = json.loads(path.read_text(encoding="utf-8"))
+        doc["ko"]["title_candidates"] = [doc["ko"]["title"]] + FILLERS   # 2026-09-18 전 원고에는 후보가 없다
         self.assertEqual(_check(doc, graphics=6), [])
 
 

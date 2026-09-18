@@ -230,7 +230,7 @@ AXIS_PICKS = {
 
 # 고른 35개를 꼴로 나누면 이렇다. 제목은 이 중 하나의 꼴이어야 한다(관문이 본다).
 HOOKS = {
-    "질문": r"\?|까요?$|까\s*$|나\s*$|일까|될까|갈까|볼까|날까|맞을까|샀나|었나|였나|있었나",
+    "질문": r"\?|까요?$|까\s*$|[았었였했]나\s*$|일까|될까|갈까|볼까|날까|맞을까|샀나|었나|였나|있었나",   # '하나'는 질문이 아니다(2026-09-18)
     "콜론": r"^[^:：]{2,24}[:：]\s",                                   # `외국인 5조 매수: …알아야 할 것`
     "이유·원인": r"이유|원인은|답한다|답합니다|때문|정합니다|정해집니다|결정합니다|판단 기준",
     "독자에게 주는 것": r"볼 것|알아야 할 것|알아둘 것|확인할 것|필요한 것|보세요|마세요|보면 됩니다|[한두세네]?\s*가지|딱 [둘셋하]|셋만|둘만|하나만|사람|이것입니다|보기 전에|전에 볼",
@@ -443,7 +443,7 @@ def title_frame(title: str) -> dict:
 def heading_shape(text: str) -> str:
     """소제목의 꼴 — 질문·존댓말 문장·반말 문장·이름표(명사구)."""
     bare = _HEADING_NUMBER.sub("", str(text or "")).strip()
-    if bare.endswith("?") or re.search(r"(까|나|일까요|을까요)$", bare):
+    if bare.endswith("?") or re.search(r"(까|[았었였했]나|일까요|을까요)$", bare):   # '확인할 것 하나'는 이름표
         return "질문"
     if re.search(r"(습니다|니다)$", bare):
         return "존댓말 문장"
@@ -540,6 +540,114 @@ def frame_issues(title: str, recent_titles: list[str] | None) -> list[str]:
     if mine["last"] and len(same) >= 2 and not (last_word(recent[-1]) == mine["last"]):
         issues.append(f"최근 다섯 편 중 {len(same)}편이 같은 말('{mine['last']}')로 끝납니다 — 이 글까지 셋입니다. 다른 어미로 쓰세요.")
     issues += subject_issues(title, recent)
+    return issues
+
+
+# ── 후보 셋에서 가장 먼 것을 고른다 (2026-09-18, 사장님 "a진행") ────────────────────────────────
+# 지적 다섯 번(9/4·9/6·9/8·9/9·9/18)의 공통 원인: 관문은 "안 되는 것"을 거르는 문인데, 쓰는 쪽은 그 문을 넘는
+# **최소**를 찾는다 — 9/17에 예문 35개 중 가장 쉬운 하나가 시황 28편 중 11편, 축 규칙 뒤에는 `…까?`가 7편 중 5편.
+# 금지 규칙으로는 다양성이 나오지 않는다. 그래서 문을 **고르는 문**으로 바꾼다: 원고에 후보 셋 이상을 축을
+# 달리해 적고(`ko.title_candidates`), 관문이 후보마다 독자 피드와의 **거리 점수**를 매겨 가장 먼 것을 제목으로
+# 요구한다. 후보는 셋 다 나가도 되는 제목이어야 한다 — 점수는 '다름'을 재지 '좋음'을 재지 않는다.
+CANDIDATE_KINDS = ("시황", "프리뷰", "기준표", "주간 결산", "다음 주 일정", "이벤트")   # 독자 피드에 실리는 글 전부
+CANDIDATE_MIN = 3
+RARE_AXES = ("1인칭", "내 돈", "인용", "감춤 이유")   # 예문집에 있지만 거의 안 쓰는 축 — 최근 열 편에 없으면 +1
+
+
+def title_axes_all(title: str) -> set[str]:
+    """일곱 축 전부 — 분포 검사의 셋(시간·질문·독자)에 1인칭·내 돈·인용·감춤 이유를 더한 것."""
+    text = str(title or "")
+    axes = set(title_axes(text))
+    for name in ("1인칭", "내 돈", "인용"):
+        if re.search(HOOKS[name], text):
+            axes.add(name)
+    if "이유" in text and not revealed_reason(text):
+        axes.add("감춤 이유")
+    return axes
+
+
+def title_distance(title: str, recent_titles: list[str] | None) -> tuple[int, list[str]]:
+    """독자 피드와 얼마나 다른가 — (점수, 이유). 높을수록 멀다. 최근 네 편과 재고, 드문 축은 열 편과 잰다."""
+    recent = [str(r) for r in (recent_titles or []) if str(r).strip()][-10:]
+    near = recent[-4:]
+    text = str(title or "")
+    score, why = 0, []
+    mine = title_axes_all(text)
+    near_axes: set[str] = set().union(*(title_axes_all(r) for r in near)) if near else set()
+    for axis in _AXIS:
+        if axis in mine and axis not in near_axes:
+            score += 2; why.append(f"+2 {axis} 축(최근 네 편에 없음)")
+    for axis in RARE_AXES:
+        if axis in mine and not any(axis in title_axes_all(r) for r in recent):
+            score += 1; why.append(f"+1 {axis} 축(최근 열 편에 없음)")
+    subjects = title_subjects(text)
+    hits = [s for s in subjects if any(s in r for r in near)]
+    if subjects and not hits:
+        score += 1; why.append("+1 최근 네 편에 없던 주인공")
+    for s in hits:
+        score -= 1; why.append(f"-1 '{s}'가 최근 네 편에 있음")
+    if near:
+        prev = near[-1]
+        if heading_shape(text) != heading_shape(prev):
+            score += 1; why.append(f"+1 바로 앞 글({heading_shape(prev)})과 다른 꼴({heading_shape(text)})")
+        else:
+            score -= 1; why.append(f"-1 바로 앞 글과 같은 꼴({heading_shape(text)})")
+        if set(hook_names(text)) == set(hook_names(prev)):
+            score -= 1; why.append("-1 바로 앞 글과 같은 훅 묶음")
+    if _CONTRAST.search(text) and any(_CONTRAST.search(r) for r in near):
+        score -= 2; why.append("-2 대비 꼴이 최근 네 편에 있음")
+    if revealed_reason(text) and any(revealed_reason(r) for r in near):
+        score -= 2; why.append("-2 답 노출형이 최근 네 편에 있음")
+    return score, why
+
+
+def rank_candidates(candidates: list[str], recent_titles: list[str] | None,
+                    price_data: dict | None = None, kind: str | None = None) -> list[dict]:
+    """후보마다 {title, ok, issues, score, why} — 점수 높은 순, 관문에 막히는 후보는 맨 뒤."""
+    rows = []
+    for raw in candidates:
+        c = str(raw or "").strip()
+        if not c:
+            continue
+        issues = collect_title_issues(c, price_data, recent_titles=recent_titles, kind=kind)
+        score, why = title_distance(c, recent_titles)
+        rows.append({"title": c, "ok": not issues, "issues": issues, "score": score, "why": why})
+    rows.sort(key=lambda r: (not r["ok"], -r["score"]))
+    return rows
+
+
+def candidate_issues(ko: dict, recent_titles: list[str] | None, price_data: dict | None = None,
+                     kind: str | None = None) -> list[str]:
+    """후보 셋 이상·축 둘 이상, 후보는 셋 다 낱개 규칙을 지키고, 제목은 후보 가운데 점수가 가장 높은 것."""
+    if kind not in CANDIDATE_KINDS:
+        return []
+    title = str(ko.get("title") or "").strip()
+    raw = ko.get("title_candidates")
+    candidates = [str(c).strip() for c in raw if str(c or "").strip()] if isinstance(raw, list) else []
+    if not candidates:
+        return ["제목 후보가 없습니다 — `ko.title_candidates`에 셋 이상을 축을 달리해 적고 "
+                "`python -m scripts.title_pick`으로 점수를 본 뒤 가장 높은 것을 `ko.title`로 삼으세요"
+                "(2026-09-18, 사장님 'a진행' — 관문은 거르는 문이 아니라 고르는 문입니다)."]
+    uniq = list(dict.fromkeys(candidates))
+    issues: list[str] = []
+    if len(uniq) < CANDIDATE_MIN:
+        issues.append(f"제목 후보가 {len(uniq)}개입니다 — 셋 이상, 서로 다른 축으로 쓰세요.")
+    if len(uniq) >= 2 and len({frozenset(title_axes_all(c)) for c in uniq}) < 2:
+        issues.append("후보의 축이 모두 같습니다 — 시간·질문·독자·1인칭·내 돈·인용·감춤 이유 가운데 둘 이상으로 나눠 쓰세요.")
+    for c in uniq:
+        bad = collect_title_issues(c, price_data, kind=kind)   # 피드와 무관한 낱개 규칙 — 후보는 셋 다 나갈 수 있어야 한다
+        if bad:
+            issues.append(f"후보 {c!r}는 제목 규칙에 걸립니다: {bad[0][:90]}")
+    if title not in uniq:
+        issues.append(f"제목 {title!r}이 후보에 없습니다 — `ko.title`은 `ko.title_candidates` 가운데 하나여야 합니다.")
+        return issues
+    ranked = rank_candidates(uniq, recent_titles, price_data, kind)
+    passing = [r for r in ranked if r["ok"]]
+    mine = next(r for r in ranked if r["title"] == title)
+    if passing and mine["ok"] and mine["score"] < passing[0]["score"]:
+        best = passing[0]
+        issues.append(f"가장 먼 후보는 {best['title']!r}(점수 {best['score']}: {', '.join(best['why'])})인데 "
+                      f"제목은 {title!r}(점수 {mine['score']})입니다 — 점수가 가장 높은 후보를 제목으로 삼으세요.")
     return issues
 
 
@@ -675,11 +783,12 @@ def collect_issues(doc: dict, price_data: dict | None = None, *,
     """제목 + 소제목 규칙을 한 번에. 모든 발행 경로가 이 함수를 부릅니다.
 
     `doc`은 `{"title", "narrative", ...}`(시황의 ko) 또는 `{"ko": {...}}`(기준표·프리뷰)
-    둘 다 받습니다. `kind`는 절 수 하한(SECTION_FLOORS)에만 쓰입니다.
+    둘 다 받습니다. `kind`는 절 수 하한(SECTION_FLOORS)·축 분포·제목 후보(CANDIDATE_KINDS)에 쓰입니다.
     """
     ko = doc.get("ko") if isinstance(doc.get("ko"), dict) else doc
     issues = collect_title_issues(ko.get("title", ""), price_data, notes_out=notes_out,
                                   recent_titles=recent_titles, kind=kind)
+    issues += candidate_issues(ko, recent_titles, price_data, kind)   # 후보 셋에서 가장 먼 것(2026-09-18)
     names: set[str] = set()
     for entry in (price_data or {}).get("watchlist", {}).values():
         for key in ("name", "name_en"):

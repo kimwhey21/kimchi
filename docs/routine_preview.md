@@ -91,6 +91,9 @@
    (시간·질문·독자 가운데 최근 네 편에 없는 것 — 관문이 막습니다). 프리뷰는 시간 축이 자연스럽지만
    질문·독자·1인칭 축도 돌려 씁니다 — `오늘 밤 이것 하나만 보세요`, `이 반등, 오늘 밤도 이어질까?`,
    `우리가 FOMC 전에 현금을 남기는 이유`. 답 노출형(`…, 이유는 B입니다`)은 다섯 편에 한 번.
+   **후보 셋 이상을 축을 달리해 쓰고** `python -m scripts.title_pick preview "후보1" "후보2" "후보3"`으로 점수를 본 뒤
+   **가장 높은 것을 `ko.title`에, 후보 전부를 `ko.title_candidates`에** 적습니다(2026-09-18, 사장님 "a진행" —
+   관문이 같은 계산으로 확인하고, 후보가 없거나 더 먼 후보가 있으면 막습니다). 후보는 셋 다 나가도 되는 제목이어야 합니다.
 5. **관문.** `python -m src.feature_gate editorial/previews/<파일>.json --graphics <그래픽 수>` — 통과 전에는
    커밋하지 않습니다. → `WORDPRESS_URL= WORDPRESS_USERNAME= WORDPRESS_APP_PASSWORD= python -m src.publish_feature editorial/previews/<파일>.json --render-only`
    → `output/features/<slug>/`의 그림을 `Read`로 봅니다(축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은

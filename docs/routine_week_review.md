@@ -66,6 +66,8 @@
      `related` 2~3개(이번 주 금요일 한국장·미국장 시황: 주소는
      `https://fermata.it.kr/editorial-kr-<날짜>-ko/`·`https://fermata.it.kr/editorial-us-<날짜>-ko/`,
      `https://fermata.it.kr/wp-json/wp/v2/posts?search=<낱말>&_fields=title,link`로 확인).
+   - `ko.title_candidates`: 제목 후보 셋 이상(축을 달리해). `python -m scripts.title_pick weekly "후보1" "후보2" "후보3"`으로
+     점수를 본 뒤 가장 높은 것을 `ko.title`로 — 관문이 같은 계산으로 확인합니다(2026-09-18, 사장님 "a진행", 시황과 같은 규칙).
    - `ko.title`: 「제목 문법」의 예문집(사장님이 고른 35개) 중 하나의 꼴로. 한 주를 한 이야기로 —
      등락률은 많아야 하나, 종목 둘을 나란히 세우지 않음, 20~35자. 예(꼴만 참고):
      `코스피가 한 주에 3% 오른 이유는 반도체가 아니었다` / `이번 주 미국장: 금리 5% 앞에서 나흘

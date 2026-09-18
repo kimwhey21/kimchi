@@ -118,7 +118,8 @@ class SubjectAndPhraseTest(unittest.TestCase):
         out = recent_titles.render("kr")
         self.assertIn("독자가 보는 최근", out)
         self.assertIn("주인공 반복", out)
-        self.assertEqual(recent_titles.render("kr"), recent_titles.render("us"))   # 어느 이름으로 불러도 같은 한 줄
+        same = lambda w: recent_titles.render(w).replace(f"title_pick {w} ", "title_pick <이름> ")   # noqa: E731
+        self.assertEqual(same("kr"), same("us"))   # 어느 이름으로 불러도 같은 한 줄(안내 줄의 이름만 다르다)
 
 
 if __name__ == "__main__":
