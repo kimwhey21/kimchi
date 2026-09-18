@@ -3,7 +3,7 @@
  "google_not_indexed": 114,
  "google_indexed": 49,
  "google_clicks_28d": 10,
- "google_impressions_28d": 1,
+ "google_impressions_28d": 1640,
  "top_pages_checked": 25,
  "top_pages_broken": [
   "/kr-2026-09-07-doosan-flows/ → 404",
@@ -25,5 +25,6 @@
  "naver_blog_neighbor_delta_today": 0,
  "naver_blog_neighbors": 2,
  "naver_blog_mutual": 2,
- "naver_blog_posts": 39
+ "naver_blog_posts": 39,
+ "note": "노출수는 화면에 '1.64천'으로 줄여 나와 1로 잘못 기록됐다(2026-09-18 확인). 파서를 고쳤다."
 }
