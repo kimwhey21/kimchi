@@ -1,36 +1,43 @@
 {
- "date": "2026-09-18",
+ "date": "2026-09-19",
  "window": "3개월",
- "total_clicks": 10,
- "total_impressions": 1,
+ "total_clicks": 16,
+ "total_impressions": 2,
  "queries": [
   {
    "query": "kospi vs kosdaq",
    "clicks": 0,
-   "impressions": 19,
+   "impressions": 20,
    "ctr": 0.0,
    "position": 5.8
   },
   {
    "query": "kosdaq vs kospi",
    "clicks": 0,
-   "impressions": 14,
+   "impressions": 15,
    "ctr": 0.0,
-   "position": 7.9
+   "position": 7.7
   },
   {
    "query": "englishdart",
    "clicks": 0,
-   "impressions": 11,
+   "impressions": 12,
    "ctr": 0.0,
-   "position": 6.5
+   "position": 6.3
   },
   {
    "query": "kospi trading hours",
    "clicks": 0,
-   "impressions": 9,
+   "impressions": 10,
    "ctr": 0.0,
-   "position": 65.3
+   "position": 65.0
+  },
+  {
+   "query": "kospi holiday",
+   "clicks": 0,
+   "impressions": 6,
+   "ctr": 0.0,
+   "position": 66.0
   },
   {
    "query": "how to buy korean stocks in canada",
@@ -38,13 +45,6 @@
    "impressions": 5,
    "ctr": 0.0,
    "position": 37.2
-  },
-  {
-   "query": "kospi holiday",
-   "clicks": 0,
-   "impressions": 5,
-   "ctr": 0.0,
-   "position": 66.4
   },
   {
    "query": "how to buy korean stocks",
@@ -89,6 +89,13 @@
    "position": 5.5
   },
   {
+   "query": "dart filing",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 6.5
+  },
+  {
    "query": "can foreigners buy korean stocks",
    "clicks": 0,
    "impressions": 2,
@@ -115,6 +122,13 @@
    "impressions": 2,
    "ctr": 0.0,
    "position": 8.0
+  },
+  {
+   "query": "kospi and kosdaq",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 11.5
   },
   {
    "query": "korea dart",
@@ -145,6 +159,13 @@
    "position": 39.5
   },
   {
+   "query": "9월 fomc 한국시간",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 1.0
+  },
+  {
    "query": "fomc",
    "clicks": 0,
    "impressions": 1,
@@ -173,25 +194,11 @@
    "position": 3.0
   },
   {
-   "query": "kospi and kosdaq",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0.0,
-   "position": 4.0
-  },
-  {
    "query": "krx trading hours extension",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
    "position": 4.0
-  },
-  {
-   "query": "dart filing",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0.0,
-   "position": 6.0
   },
   {
    "query": "dart stock exchange",
@@ -257,6 +264,13 @@
    "position": 9.0
   },
   {
+   "query": "can i buy korean stocks",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 10.0
+  },
+  {
    "query": "ewy vs koru",
    "clicks": 0,
    "impressions": 1,
@@ -276,6 +290,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 11.0
+  },
+  {
+   "query": "삼성 생명 주가",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 37.0
   },
   {
    "query": "flkr vs ewy",
@@ -325,6 +346,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 59.0
+  },
+  {
+   "query": "when does the korean stock market open",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 66.0
   },
   {
    "query": "korea stock market trading hours",
