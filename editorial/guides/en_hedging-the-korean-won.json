@@ -1,0 +1,154 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-19",
+  "checked": "2026-09-19",
+  "slug": "hedging-the-korean-won",
+  "category_id": 153,
+  "radar_origin": "list order",
+  "tags": ["Korean won", "currency hedged ETF", "DBEM", "HEEM", "USD/KRW"],
+  "related": [
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "USD to KRW for Korean Stocks: Where the FX Costs Hide",
+      "url": "https://fermata.it.kr/converting-dollars-to-won-the-fx-math-behind-buying-korean-stocks/"
+    },
+    {
+      "title": "MSCI Korea 2026: Why Korea Is Still an Emerging Market",
+      "url": "https://fermata.it.kr/korea-is-still-an-emerging-market-what-mscis-2026-decision-means-for-foreign-investors/"
+    }
+  ],
+  "sources": [
+    {
+      "name": "DWS",
+      "title": "Xtrackers MSCI Emerging Markets Hedged Equity ETF (DBEM) fact sheet, Q2 6.30.26",
+      "url": "https://www.dws.com/US/EN/resources/Xtrackers-MSCI-Emerging-Markets-Hedged-Equity-ETF/DBEM_fact-sheet.pdf"
+    },
+    {
+      "name": "iShares",
+      "title": "iShares Currency Hedged MSCI Emerging Markets ETF (HEEM) product page",
+      "url": "https://www.ishares.com/us/products/268704/ishares-currency-hedged-msci-emerging-markets"
+    },
+    {
+      "name": "iShares",
+      "title": "iShares MSCI South Korea ETF (EWY) product page",
+      "url": "https://www.ishares.com/us/products/239681/ishares-msci-south-korea-capped-etf"
+    },
+    {
+      "name": "Nasdaq",
+      "title": "DWS Group closes and liquidates five Xtrackers ETFs (press release)",
+      "url": "https://www.nasdaq.com/press-release/dws-group-closes-and-liquidates-five-xtrackers-etfs-2019-10-24"
+    },
+    {
+      "name": "ETF Express",
+      "title": "DWS Group closes and liquidates five Xtrackers ETFs",
+      "url": "https://etfexpress.com/2019/10/25/dws-group-closes-and-liquidates-five-xtrackers-etfs/"
+    },
+    {
+      "name": "Korea Herald",
+      "title": "Strong exports, weak currency: Why the won can't catch a break",
+      "url": "https://www.koreaherald.com/article/10646910"
+    },
+    {
+      "name": "MSCI",
+      "title": "MSCI EM US Dollar Hedged Index and MSCI Korea 25/50 Index methodology",
+      "url": "https://www.msci.com/indexes"
+    },
+    {
+      "name": "Naver Finance / Hana Bank",
+      "title": "USD/KRW reference rate, September 15, 2026",
+      "url": "https://finance.naver.com/marketindex/"
+    }
+  ],
+  "ko": {
+    "title": "Hedging the Korean Won: What US Investors Can Actually Buy (2026)",
+    "narrative": [
+      {
+        "heading": "The short answer: the Korea-only hedged ETF is gone",
+        "body": "Type \"korean won hedge\" into a search box and the honest answer disappoints most people looking for it: there is no US-listed ETF that hedges Korean won exposure while holding only Korean stocks. One used to exist. <b>DBKO</b>, the Xtrackers MSCI South Korea Hedged Equity ETF, tracked the MSCI Korea 25/50 US Dollar Hedged Index and was designed to do exactly this — but DWS Group closed and liquidated it in 2019, and nothing has replaced it since.\n\nWhat you can actually buy today is one step removed from that: a broad emerging-markets fund that hedges its whole currency basket to the dollar and happens to hold a large Korea allocation as part of that basket. The two candidates are <b>DBEM</b> (Xtrackers MSCI Emerging Markets Hedged Equity ETF) and <b>HEEM</b> (iShares Currency Hedged MSCI Emerging Markets ETF), both of which held roughly a fifth to a quarter of their assets in Korea as of mid-2026. Neither is a Korea fund with a hedge bolted on — they are hedged emerging-markets funds where Korea happens to be the largest or second-largest country weight."
+      },
+      {
+        "heading": "What DBKO was, and why DWS shut it down",
+        "body": "DBKO launched to give US investors exposure to the MSCI Korea 25/50 Index — the same benchmark <b>EWY</b> still tracks — while neutralizing the won-to-dollar currency swing through forward contracts, so returns reflected the Korean stock market alone rather than the stock market plus the currency.\n\nIt did not survive. According to DWS Group's own October 24, 2019 press release, reported the same week by Nasdaq and ETF Express, the firm closed and liquidated five Xtrackers ETFs together, DBKO among them, with the last day of trading on November 12, 2019 and liquidation proceeds sent to shareholders on or about November 21, 2019. DWS said the five funds combined represented just 0.23% of its US Xtrackers assets as of October 18, 2019 — a rounding error, not a strategy DWS wanted to keep running. A single-country, currency-hedged equity fund is a narrow enough idea that it apparently never gathered the assets to justify the cost of operating it, and no other issuer has launched a replacement since."
+      },
+      {
+        "heading": "The two funds that give you hedged Korea exposure today",
+        "body": "<b>DBEM</b> tracks the MSCI Emerging Markets (EM) US Dollar Hedged Index, which sells each portfolio currency forward at the one-month forward rate to run 100% hedged to the dollar. Per its own fact sheet for the quarter ended June 30, 2026, the fund launched June 8, 2011, held $104.6 million in net assets, carried a 0.66% net expense ratio, and had 23.31% of its assets in South Korea — second only to Taiwan's 26.84%. Its two largest individual holdings were Samsung Electronics at 8.03% and SK Hynix at 7.52%.\n\n<b>HEEM</b> runs the same idea on iShares' emerging-markets benchmark. As of September 2026 it held $298.4 million in net assets, charged a 0.72% net expense ratio (against a 1.51% gross figure before the fee waiver iShares currently applies), and allocated 20.73% of assets to Korea, behind Taiwan's 27.66%. HEEM has existed since September 23, 2014, nearly three years longer than the gap DBKO left behind.\n\nBoth funds put Samsung Electronics and SK Hynix near the top of their holdings lists, which means the concentration risk foreign investors already face in EWY and FLKR — roughly half the fund riding on two chipmakers — shows up again here, just diluted by three or four other countries."
+      },
+      {
+        "heading": "Does the hedge actually help? The record over one, five and ten years",
+        "body": "DBEM's fact sheet gives a direct answer for the emerging-markets basket as a whole, even though it cannot isolate Korea by itself. Over the year to June 30, 2026, DBEM returned 49.79% at net asset value against 43.51% for the unhedged MSCI Emerging Markets Index — a 6-point gap in the hedge's favor. Extend the window and the pattern holds: DBEM's underlying hedged index beat the unhedged index over three years (25.66% versus 23.03% annualized), five years (10.00% versus 7.20%), and ten years (11.38% versus 10.07%).\n\nThe reason is not that hedging is inherently profitable — it is that emerging-market currencies, the won included, spent most of the past decade weakening against a persistently strong dollar, so removing that currency drag added to returns more often than it subtracted from them. As of September 15, 2026, the won traded at 1,359.8 per dollar on Hana Bank's reference rate reported by Naver Finance. Korea Herald reporting from 2026 describes a currency that has stayed weak despite Korea's export strength, averaging a record-low 1,422 against the dollar in 2025 and remaining under structural pressure near 1,400 into 2026 from sustained capital outflows into US assets. A weak, weakening won is exactly the environment in which the last decade's hedged-versus-unhedged gap was built — and exactly the environment that could reverse if the pressure eases."
+      },
+      {
+        "heading": "What the hedge actually costs you",
+        "body": "The expense ratio is the visible cost, and it is not small next to the alternative. DBEM's 0.66% and HEEM's 0.72% both run well above <b>FLKR</b>'s 0.09% for plain, unhedged Korea exposure, and above <b>EWY</b>'s 0.59% too. You are paying roughly six to seven times FLKR's fee for a fund that is not even a pure Korea holding.\n\nThe fee does not include everything, either. The mechanism both funds use — MSCI's hedged indexes sell each currency forward and reset the contracts monthly — has a rolling cost baked into the forward rate itself, reflecting the interest-rate gap between the US dollar and each hedged currency. That cost moves with rate differentials and is not broken out anywhere in the fact sheet as a separate line; it is embedded in the fund's tracking difference against its unhedged counterpart. For a sense of scale at the institutional end, Korea's National Pension Service — a sovereign investor hedging tens of billions of dollars of its own US holdings — extended its own strategic dollar-hedging program through the end of 2026, a decision covered by KED Global that shows even Korea's largest institutional investor treats currency hedging as an active, continuously reviewed cost rather than a free option. A retail investor's hedge, bought through a 0.66-0.72% expense ratio, is a much smaller and simpler version of the same trade-off."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "Confirmed directly from primary sources: DBEM's assets, expense ratio, inception date and country weights from its own June 30, 2026 fact sheet; HEEM's expense ratio, assets and Korea weight from iShares' own product page, dated September 17-18, 2026; EWY's 0.59% expense ratio from iShares' own EWY product page; and the DBKO closure timeline from DWS Group's own October 2019 press release, cross-checked against Nasdaq's and ETF Express's contemporaneous coverage of the same announcement. The USD/KRW rate of 1,359.8 is Naver Finance's report of Hana Bank's reference rate for September 15, 2026, the most recent trading day in our own price data.\n\nWe could not verify the actual forward-hedging cost paid inside DBEM or HEEM on any given day — fund issuers do not publish that figure separately from the fund's total return, so the 6-to-11-point gap described above is what showed up in realized performance, not a quoted hedging cost. We also could not find a broker that lets a retail investor hedge a Korea-only position directly with won forwards at retail-accessible size; that market exists at the institutional level NPS operates in, not one we found documented for individual investors."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "If you came here looking for a Korea-only hedged ETF, the direct answer is that DWS discontinued the only one in 2019 and nobody has relaunched the idea since. What exists instead is Korea as a large slice — 20% to 23% as of mid-2026 — of a broader hedged emerging-markets fund, DBEM or HEEM, at an expense ratio six to seven times higher than an unhedged, Korea-only alternative like FLKR.\n\nThat trade has paid off for EM investors broadly over the past decade because the dollar stayed strong and emerging-market currencies, the won included, mostly weakened against it. Whether that continues is a currency call, not a Korea call, and it comes bundled with Taiwan, China, India and a dozen other countries you may not have wanted exposure to in the first place. For most foreign investors sizing an ordinary Korean-stock position, staying unhedged through EWY or FLKR and treating the won as part of the trade is the simpler path; a dedicated hedge only earns its cost if Korea is a large enough, standalone position that currency risk, not stock selection, is what actually keeps you up at night.\n\nThis guide describes fund terms, index rules and exchange rates as of September 2026, based on the sources listed above; expense ratios, country weights and exchange rates all change, so confirm current figures before investing. This is not investment advice."
+    },
+    "excerpt": "The only Korea-only hedged ETF closed in 2019. Here is what DBEM and HEEM actually give you instead, and what the hedge has cost."
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea-only currency hedged ETF DBKO closed in 2019; DBEM now holds 23.31 percent of assets in Korea",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Hedging the Korean Won",
+        "left": {"label": "Korea-only hedged ETF (DBKO)", "value": "Closed 2019"},
+        "right": {"label": "DBEM Korea weight (2026)", "value": "23.31%"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "EWY, FLKR, DBEM and HEEM compared by hedging, expense ratio, Korea weight and assets",
+      "args": {
+        "title": "Four ways to hold Korean stocks, hedged or not",
+        "subtitle": "EWY · FLKR · DBEM · HEEM",
+        "source": "iShares, Franklin Templeton, DWS fact sheets, mid-2026",
+        "columns": ["Fund", "Hedged?", "Expense ratio", "Korea weight", "AUM"],
+        "rows": [
+          ["EWY", "No", "0.59%", "100%", "$24.5B"],
+          ["FLKR", "No", "0.09%", "100%", "$1.33B"],
+          ["DBEM", "Yes", "0.66%", "23.3%", "$104.6M"],
+          ["HEEM", "Yes", "0.72%", "20.7%", "$298.4M"]
+        ]
+      },
+      "section": 3
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before hedging Korean won exposure through a fund",
+      "args": {
+        "title": "Before you hedge your Korea exposure",
+        "subtitle": "What DBEM and HEEM actually buy you",
+        "items": [
+          {
+            "label": "Size the position first",
+            "why": "A 20-23% Korea sleeve inside a hedged fund is a smaller currency bet than hedging Korea alone."
+          },
+          {
+            "label": "You're hedging a basket, not just the won",
+            "why": "DBEM and HEEM also hedge Taiwan, China and India — neither fund hedges Korea by itself."
+          },
+          {
+            "label": "Weigh the expense ratio against FLKR's 0.09%",
+            "why": "DBEM and HEEM charge 0.66-0.72% whether or not the currency call pays off that year."
+          }
+        ]
+      },
+      "section": 5
+    }
+  ]
+}
