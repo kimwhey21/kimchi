@@ -1,0 +1,147 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-20",
+  "checked": "2026-09-20",
+  "slug": "how-to-buy-samsung-electronics-abroad",
+  "category_id": 153,
+  "radar_origin": "list order",
+  "tags": ["buy Samsung stock from US", "SSNLF", "Samsung Electronics GDR", "SMSN", "Samsung ADR"],
+  "related": [
+    {
+      "title": "How to Buy Korean Stocks From the US or Canada (2026)",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    },
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "Hedging the Korean Won: What US Investors Can Actually Buy (2026)",
+      "url": "https://fermata.it.kr/hedging-the-korean-won/"
+    }
+  ],
+  "sources": [
+    {
+      "name": "OTC Markets",
+      "title": "SSNLF (Samsung Electronics Co., Ltd.) quote and profile",
+      "url": "https://www.otcmarkets.com/stock/SSNLF/quote"
+    },
+    {
+      "name": "Hargreaves Lansdown",
+      "title": "Samsung Electronics Co GDR each Representing 0.5 Common Stock (SMSN) and Samsung Electronics GDR each Representing 0.5 Non-Voting Pref (SMSD)",
+      "url": "https://www.hl.co.uk/shares/shares-search-results/s/samsung-electronics-co-gdr-each-rep-25/company-information"
+    },
+    {
+      "name": "Investegate",
+      "title": "Samsung Electronics Co Ltd (ATT) — Delisting of GDR from the Luxembourg Stock Exchange",
+      "url": "https://www.investegate.co.uk/announcement/rns/samsung-electronics-co-ltd-att---bc94/delisting-of-gdr-from-the-luxembourgstockexchange/8573306"
+    },
+    {
+      "name": "Cleary Gottlieb",
+      "title": "Samsung in Admission of GDRs to London Stock Exchange and Delisting",
+      "url": "https://www.clearygottlieb.com/news-and-insights/news-listing/samsung-in-admission-of-gdrs-to-london-stock-exchange-and-delisting"
+    },
+    {
+      "name": "Seoul Economic Daily",
+      "title": "Bloomberg: Samsung Electronics Weighs US ADR Listing",
+      "url": "https://en.sedaily.com/international/2026/07/14/bloomberg-samsung-electronics-weighs-us-adr-listing"
+    },
+    {
+      "name": "Seeking Alpha",
+      "title": "Samsung explores potential U.S. ADR listing (SSNLF:OTCMKTS)",
+      "url": "https://seekingalpha.com/news/4613440-samsung-explores-potential-us-adr-listing"
+    }
+  ],
+  "ko": {
+    "title": "How to Buy Samsung Electronics Stock From the US (2026)",
+    "excerpt": "There is no sponsored US ADR for Samsung Electronics yet. Here are the three routes that actually work, and the one Bloomberg says the company is now weighing.",
+    "narrative": [
+      {
+        "heading": "The short answer: no US-listed ADR yet, but three routes work",
+        "body": "If you search for a ticker to buy Samsung Electronics the way you would buy a US stock, the honest answer is that one does not exist yet. Samsung Electronics has no sponsored American Depositary Receipt trading on the NYSE or Nasdaq as of September 2026. What you can actually buy from a US brokerage account falls into three groups: the unsponsored OTC pink-sheet quote <b>SSNLF</b>, the London-listed global depositary receipt <b>SMSN</b>, and the Korea Exchange common shares themselves (ticker 005930) through a broker with direct KRX access.\n\nEach one trades the same underlying business but with different costs, liquidity and settlement mechanics. SSNLF is the easiest to find inside a normal US brokerage account but the thinnest and hardest to price fairly. SMSN is exchange-traded and generally has tighter pricing, but most US retail brokerage platforms do not route orders to the London Stock Exchange by default. Direct KRX shares give you the real, most liquid market, but require a broker that offers Korean market access, which we cover in a separate guide linked below. None of the three is a shortcut around currency risk: all of them convert your dollars into a won-denominated business, one way or another."
+      },
+      {
+        "heading": "SSNLF: the OTC pink-sheet quote most US brokers already show you",
+        "body": "<b>SSNLF</b> is Samsung Electronics' unsponsored quotation on the US over-the-counter market, tracked by <b>OTC Markets</b> on its Pink tier. \"Unsponsored\" means Samsung itself did not set this quotation up or pay for it — a bank or broker-dealer created it so US clients could place a dollar-denominated order, and Samsung has no obligation to file US disclosure for it. It shows up automatically in most US brokerage search boxes, including Fidelity and Charles Schwab, which is why it is usually the first result someone finds.\n\nThe tradeoff is liquidity and price accuracy. Pink-tier OTC quotes for foreign ordinary shares are typically market-maker driven, update with a lag behind the Korea Exchange's own trading session, and carry a wider bid-ask spread than an exchange-listed instrument. Because Samsung's KRX session runs on Korean time, nine to fourteen hours ahead of US time zones depending on the season, the SSNLF quote you see when US markets open is being priced off a KRX close that may already be many hours old. For a small, buy-and-hold position that is a cost you can usually absorb; for a large or time-sensitive order it is a real risk that the fill price will not reflect the actual Korea Exchange price."
+      },
+      {
+        "heading": "SMSN: the exchange-traded GDR on the London Stock Exchange",
+        "body": "The other dollar-priced route is <b>SMSN</b>, Samsung's global depositary receipt trading on the <b>London Stock Exchange</b>'s International Order Book, an exchange-listed, order-book-matched instrument rather than a market-maker quote. According to <b>Hargreaves Lansdown</b>'s own listing pages, one SMSN GDR represents 0.5 of one Samsung Electronics common share — so two GDRs equal one KRX ordinary share. Using our own closing data, Samsung's KRX common shares closed at KRW 260,000 on September 18, 2026, with USD/KRW at 1,385.4 that same day; at that ratio, one SMSN GDR corresponds to roughly $94 of underlying stock, though the GDR's own market price will drift from that figure with London trading conditions and any premium or discount.\n\nBeing exchange-traded generally means tighter spreads than SSNLF's OTC quote, but most ordinary US retail brokerage apps do not offer direct London Stock Exchange order routing. Reaching SMSN in practice usually means a broker with international/UK market access, such as Interactive Brokers, rather than a mainstream US-only app. Hargreaves Lansdown's data also lists a second, separate GDR line, <b>SMSD</b>, representing 0.5 of a non-voting preference share (KRX ticker 005935) rather than the common stock SMSN tracks — the two are easy to confuse because both trade in London under superficially similar \"Samsung Electronics GDR\" names."
+      },
+      {
+        "heading": "What already changed: the preference-share GDR moved from Luxembourg to London",
+        "body": "Samsung's depositary receipts are not new — the company first listed GDRs on the Luxembourg Stock Exchange in 1991, specifically to give overseas investors a way to hold what were then preference shares without a Korean brokerage account. That arrangement ended recently. Regulatory filings collected by <b>Investegate</b> show Samsung's board voted on October 31, 2024 to withdraw its GDRs from Luxembourg's official list, the Luxembourg Stock Exchange granted that withdrawal on November 26, 2024, and the same GDRs (ISIN US7960502018) were admitted to the UK Financial Conduct Authority's Official List and to trading on the London Stock Exchange's Main Market on February 13, 2025. Law firm <b>Cleary Gottlieb</b>, which advised Samsung on the move, confirmed the same admission date and described the goal as diversifying Samsung's investor base and improving liquidity for the depositary receipts.\n\nThe practical effect for a foreign investor today: Luxembourg is no longer a place to trade Samsung's depositary receipts at all, and anyone holding an older reference to the Luxembourg listing is looking at a delisted line. London, not Luxembourg, is now where Samsung's GDRs live, alongside SSNLF's OTC quote and the KRX shares themselves."
+      },
+      {
+        "heading": "What might change next: Samsung is reportedly weighing an actual US ADR",
+        "body": "The bigger potential change has not happened yet. <b>Bloomberg</b> reported on July 14, 2026, in coverage picked up the same day by <b>Seeking Alpha</b> and Korea's Seoul Economic Daily, that Samsung Electronics has held preliminary discussions with international investment banks about issuing American Depositary Receipts for a US listing. Bloomberg's own reporting described the talks as \"still at a very early stage\" and said they \"may not lead to an actual listing,\" with Samsung reportedly planning to decide after watching how memory-chip share prices behave. No bank has been named publicly, and no filing or timeline has been announced as of this guide's September 2026 check.\n\nIf Samsung does eventually list a sponsored ADR on the NYSE or Nasdaq, it would be a materially different product from SSNLF or SMSN: sponsored ADRs typically come with SEC-registered disclosure, a bank-administered ratio set by Samsung itself, and inclusion in mainstream US index and screening tools that generally exclude Pink-tier OTC and foreign-exchange GDR lines today. Until that happens, or is at least formally announced, the three routes above remain the only ones that exist."
+      },
+      {
+        "heading": "Two more paths: KRX direct access and Korea ETFs",
+        "body": "If neither dollar-priced route suits you, the other two options sit at opposite ends of directness. Buying Samsung's ordinary shares directly on the <b>Korea Exchange</b> under ticker 005930 through a broker with Korean market access gives you the most liquid, most accurately priced version of the stock, in won, on Korean trading hours — our separate guide to buying Korean stocks from the US or Canada walks through which brokers offer this and what it costs. At the other end, funds like EWY and FLKR hold Samsung as roughly a quarter of their assets rather than as a standalone position — our KOSPI ETF comparison and our guide to hedging the won both cover that route in more depth, including the concentration risk of buying Samsung twice over if you already hold it directly.\n\nWhich of the five routes — SSNLF, SMSN, KRX direct, or a fund — fits depends mostly on position size and how much you already trade internationally. A small position for a buy-and-hold account may not justify opening international market access just to avoid SSNLF's spread; a larger position probably does."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "Confirmed directly: SSNLF's status as an unsponsored OTC Pink-tier quote, from <b>OTC Markets</b>' own listing; the 0.5-share ratio for both the SMSN common-stock GDR and the separate SMSD preference-share GDR, from Hargreaves Lansdown's own security pages; the Luxembourg delisting and London admission dates and the ISIN, from Investegate's regulatory-announcement archive and Cleary Gottlieb's own deal summary; and the July 14, 2026 Bloomberg report on preliminary US ADR discussions, cross-checked against Seeking Alpha's and Seoul Economic Daily's coverage of the same Bloomberg story. Samsung's own KRX closing price (KRW 260,000) and the USD/KRW rate (1,385.4) are both from our site's price data for September 18, 2026, the most recent trading day we had on file when this guide was checked.\n\nWe could not verify a current, live SMSN market price or bid-ask spread at the moment of writing — GDR quotes move throughout the London trading session, so confirm the live price with your own broker rather than treating the ratio math above as a quote. We also could not confirm whether US brokers beyond Interactive Brokers route retail orders to the London Stock Exchange's International Order Book; broker access to SMSN varies and should be checked with your own broker before assuming it is available. Finally, we found no confirmation of which investment banks Samsung has spoken to about a possible US ADR, or of any timeline for a decision — Bloomberg's reporting explicitly said the talks may not lead anywhere."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "As of September 2026, there is still no sponsored Samsung Electronics ADR trading on a US exchange. What exists instead is a three-way choice: SSNLF's easy-to-find but thinly traded OTC quote, SMSN's exchange-traded London GDR at roughly half a KRX share per certificate, or the KRX shares themselves through a broker with Korean market access. Each converts the same underlying business into dollars through a different mechanism, and each carries its own liquidity and access tradeoffs rather than one being simply \"better.\"\n\nTwo things are worth watching rather than acting on today. Samsung's preference-share GDR already moved once, from Luxembourg to London, in February 2025 — proof that these access routes do change with little warning to retail holders who are not checking company filings. And Bloomberg's July 2026 report that Samsung is weighing an actual US ADR listing remains unconfirmed and could go nowhere, but it is the one development that would eventually make this whole comparison unnecessary.\n\nThis guide describes routes, ratios and prices as of September 2026 and is not investment advice. Ratios, listings and broker access all change; confirm current terms with your own broker or the depositary bank before placing an order."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Samsung Electronics has no sponsored US ADR as of September 2026; Bloomberg reported the company is weighing one in July 2026",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Buying Samsung Electronics From the US",
+        "left": {"label": "Sponsored US ADR", "value": "None yet"},
+        "right": {"label": "Bloomberg ADR report", "value": "July 2026"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "SSNLF, SMSN and direct KRX shares compared by market, currency, ratio and liquidity",
+      "args": {
+        "title": "Three ways to buy Samsung Electronics from abroad",
+        "subtitle": "SSNLF · SMSN · KRX 005930",
+        "source": "OTC Markets, Hargreaves Lansdown, Korea Exchange, as of September 2026",
+        "columns": ["Route", "Market", "Currency", "Access"],
+        "rows": [
+          ["SSNLF", "US OTC (Pink)", "USD", "Most US brokers"],
+          ["SMSN", "London (LSE)", "USD", "UK/intl access"],
+          ["005930", "Korea Exchange", "KRW", "KRX broker only"]
+        ]
+      },
+      "section": 3
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before buying Samsung Electronics from outside Korea",
+      "args": {
+        "title": "Before you place an order",
+        "subtitle": "What the three routes don't tell you upfront",
+        "items": [
+          {
+            "label": "Ask your broker which route it actually offers",
+            "why": "Most US apps default to SSNLF; SMSN usually needs an international broker."
+          },
+          {
+            "label": "Don't confuse SMSN with SMSD",
+            "why": "SMSN tracks common stock (005930); SMSD tracks preference shares (005935)."
+          },
+          {
+            "label": "Treat a US ADR as unconfirmed",
+            "why": "Bloomberg's July 2026 report called the ADR talks early-stage, may not happen."
+          }
+        ]
+      },
+      "section": 6
+    }
+  ]
+}
