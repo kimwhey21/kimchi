@@ -1,36 +1,36 @@
 {
- "date": "2026-09-19",
+ "date": "2026-09-20",
  "window": "3개월",
- "total_clicks": 16,
+ "total_clicks": 17,
  "total_impressions": 2,
  "queries": [
   {
    "query": "kospi vs kosdaq",
    "clicks": 0,
-   "impressions": 20,
+   "impressions": 22,
    "ctr": 0.0,
-   "position": 5.8
+   "position": 5.6
   },
   {
    "query": "kosdaq vs kospi",
    "clicks": 0,
-   "impressions": 15,
+   "impressions": 17,
    "ctr": 0.0,
    "position": 7.7
   },
   {
    "query": "englishdart",
    "clicks": 0,
-   "impressions": 12,
+   "impressions": 13,
    "ctr": 0.0,
-   "position": 6.3
+   "position": 6.2
   },
   {
    "query": "kospi trading hours",
    "clicks": 0,
-   "impressions": 10,
+   "impressions": 11,
    "ctr": 0.0,
-   "position": 65.0
+   "position": 65.3
   },
   {
    "query": "kospi holiday",
@@ -47,6 +47,13 @@
    "position": 37.2
   },
   {
+   "query": "how to buy korean stocks in us",
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0.0,
+   "position": 40.0
+  },
+  {
    "query": "how to buy korean stocks",
    "clicks": 0,
    "impressions": 4,
@@ -59,13 +66,6 @@
    "impressions": 3,
    "ctr": 0.0,
    "position": 10.3
-  },
-  {
-   "query": "how to buy korean stocks in us",
-   "clicks": 0,
-   "impressions": 3,
-   "ctr": 0.0,
-   "position": 40.7
   },
   {
    "query": "kospi futures trading hours",
@@ -87,6 +87,13 @@
    "impressions": 2,
    "ctr": 0.0,
    "position": 5.5
+  },
+  {
+   "query": "kospi 200 index methodology",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 6.0
   },
   {
    "query": "dart filing",
@@ -159,6 +166,13 @@
    "position": 39.5
   },
   {
+   "query": "kospi etf",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 58.5
+  },
+  {
    "query": "9월 fomc 한국시간",
    "clicks": 0,
    "impressions": 1,
@@ -167,6 +181,13 @@
   },
   {
    "query": "fomc",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 1.0
+  },
+  {
+   "query": "krx kospi 200 index options",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
@@ -185,6 +206,20 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 2.0
+  },
+  {
+   "query": "하루만에",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 2.0
+  },
+  {
+   "query": "코스피200",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 3.0
   },
   {
    "query": "하락원인",
@@ -222,6 +257,13 @@
    "position": 6.0
   },
   {
+   "query": "kospi200 kosdaq150 2026 year end target forecast",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 6.0
+  },
+  {
    "query": "msci south korea emerging market classification 2026 official",
    "clicks": 0,
    "impressions": 1,
@@ -241,6 +283,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 7.0
+  },
+  {
+   "query": "%\"6,715.41\" kospi september 17 2026",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 8.0
   },
   {
    "query": "kospi and kosdaq difference",
@@ -292,6 +341,13 @@
    "position": 11.0
   },
   {
+   "query": "what is the kosdaq",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 11.0
+  },
+  {
    "query": "삼성 생명 주가",
    "clicks": 0,
    "impressions": 1,
@@ -325,13 +381,6 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 55.0
-  },
-  {
-   "query": "kospi etf",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0.0,
-   "position": 56.0
   },
   {
    "query": "kospi meaning",
