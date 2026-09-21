@@ -1,15 +1,15 @@
 {
- "date": "2026-09-20",
+ "date": "2026-09-21",
  "window": "3개월",
- "total_clicks": 17,
- "total_impressions": 2,
+ "total_clicks": 19,
+ "total_impressions": 3,
  "queries": [
   {
    "query": "kospi vs kosdaq",
    "clicks": 0,
-   "impressions": 22,
+   "impressions": 23,
    "ctr": 0.0,
-   "position": 5.6
+   "position": 5.4
   },
   {
    "query": "kosdaq vs kospi",
@@ -28,9 +28,9 @@
   {
    "query": "kospi trading hours",
    "clicks": 0,
-   "impressions": 11,
+   "impressions": 12,
    "ctr": 0.0,
-   "position": 65.3
+   "position": 65.7
   },
   {
    "query": "kospi holiday",
@@ -73,6 +73,13 @@
    "impressions": 3,
    "ctr": 0.0,
    "position": 48.3
+  },
+  {
+   "query": "kospi etf",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0.0,
+   "position": 59.3
   },
   {
    "query": "what is kospi",
@@ -166,11 +173,11 @@
    "position": 39.5
   },
   {
-   "query": "kospi etf",
+   "query": "how to enter korea market",
    "clicks": 0,
    "impressions": 2,
    "ctr": 0.0,
-   "position": 58.5
+   "position": 91.0
   },
   {
    "query": "9월 fomc 한국시간",
@@ -269,6 +276,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 6.0
+  },
+  {
+   "query": "difference between kosdaq and kospi",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 7.0
   },
   {
    "query": "english dart",
@@ -376,6 +390,13 @@
    "position": 46.0
   },
   {
+   "query": "what time does kospi open est",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 54.0
+  },
+  {
    "query": "korea exchange regular trading hours 09:00 15:30",
    "clicks": 0,
    "impressions": 1,
@@ -395,6 +416,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 59.0
+  },
+  {
+   "query": "korea stock market hours",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 62.0
   },
   {
    "query": "when does the korean stock market open",
@@ -423,13 +451,6 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 74.0
-  },
-  {
-   "query": "how to enter korea market",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0.0,
-   "position": 91.0
   }
  ]
 }
