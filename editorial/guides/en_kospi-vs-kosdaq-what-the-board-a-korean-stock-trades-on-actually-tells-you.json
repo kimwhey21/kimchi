@@ -3,7 +3,7 @@
   "series": "Guide",
   "lang": "en",
   "date": "2026-09-15",
-  "checked": "2026-09-15",
+  "checked": "2026-09-21",
   "slug": "kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you",
   "category_id": 153,
   "tags": [
@@ -13,7 +13,7 @@
     "Korea Exchange",
     "Korean stock market"
   ],
-  "radar_origin": "search queue: kospi vs kosdaq",
+  "radar_origin": "search queue: kospi vs kosdaq (5.4위, 1페이지 위쪽 — 첫 소제목·첫 문장에 검색어 없어서 고침)",
   "related": [
     {
       "title": "Can Foreigners Buy Korean Stocks? What Changed in 2026",
@@ -32,8 +32,8 @@
     "title": "KOSPI vs KOSDAQ: Korea's Two Boards, Explained",
     "narrative": [
       {
-        "heading": "Two exchanges, one country",
-        "body": "Every Korean stock trades on one of two boards run by the Korea Exchange (KRX): KOSPI or KOSDAQ, and the KOSPI vs KOSDAQ distinction is one of the fastest ways to size up a Korean company before you've read a single financial statement. They aren't separate markets the way, say, the NYSE and Nasdaq are sometimes loosely described — they're both operated by the same exchange group — but the companies listed on each, and what that listing tells you about the company, are genuinely different.\n\nIf you're researching a Korean stock for the first time, knowing which board it's on tells you roughly how old the company is, how large it is, and how much volatility to expect, before you look at a single number on the income statement."
+        "heading": "KOSPI vs KOSDAQ: two boards, one exchange group",
+        "body": "KOSPI vs KOSDAQ is the first split to understand before you research a single Korean stock. Every company trades on one of two boards run by the Korea Exchange (KRX), and which one it's on tells you roughly how old the company is, how large it is, and how much volatility to expect — before you've looked at a single number on the income statement.\n\nThe two aren't separate markets the way the NYSE and Nasdaq are sometimes loosely described — both boards are operated by the same exchange group — but the companies listed on each, and what that listing tells you about a company, are genuinely different. You'll see both names constantly in Korean financial data and screeners, so knowing the difference matters even before you decide whether to buy."
       },
       {
         "heading": "What KOSPI is",
