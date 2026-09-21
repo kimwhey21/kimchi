@@ -1159,8 +1159,8 @@
       "ticker": "GC=F",
       "name": "국제 금",
       "name_en": "Gold",
-      "price": 4387.3,
-      "change_pct": -0.85,
+      "price": 4389.3,
+      "change_pct": -0.8,
       "series": [
         4407.2998,
         4408.8999,
@@ -1169,7 +1169,7 @@
         4387.5,
         4399.7002,
         4424.8999,
-        4387.2998
+        4389.2998
       ],
       "history": {
         "dates": [
@@ -1314,7 +1314,7 @@
           4387.5,
           4399.7002,
           4424.8999,
-          4387.2998
+          4389.2998
         ]
       },
       "unit": "달러",
@@ -3816,8 +3816,8 @@
       "ticker": "CL=F",
       "name": "WTI 원유",
       "name_en": "WTI Crude Oil",
-      "price": 91.88,
-      "change_pct": -8.39,
+      "price": 91.91,
+      "change_pct": -8.36,
       "series": [
         102.48,
         100.05,
@@ -3826,7 +3826,7 @@
         102.43,
         101.91,
         100.3,
-        91.88
+        91.91
       ],
       "history": {
         "dates": [
@@ -3971,7 +3971,7 @@
           102.43,
           101.91,
           100.3,
-          91.88
+          91.91
         ]
       },
       "unit": "",
@@ -4143,7 +4143,7 @@
       "unit": "",
       "trading_date": "2026-09-21",
       "source": "dynamic",
-      "trading_value": 27246993635.52,
+      "trading_value": 27248880819.84,
       "sector": "Technology"
     },
     "SNDK": {
@@ -4311,7 +4311,7 @@
       "unit": "",
       "trading_date": "2026-09-21",
       "source": "dynamic",
-      "trading_value": 18343676776.8,
+      "trading_value": 18347137624.56,
       "sector": "Technology"
     },
     "SPCX": {
@@ -4477,7 +4477,7 @@
       "unit": "",
       "trading_date": "2026-09-21",
       "source": "dynamic",
-      "trading_value": 12438622981.699999,
+      "trading_value": 12440320361.0,
       "sector": "Technology"
     },
     "AVGO": {
@@ -4645,7 +4645,7 @@
       "unit": "",
       "trading_date": "2026-09-21",
       "source": "dynamic",
-      "trading_value": 9576249093.44,
+      "trading_value": 9577296455.52,
       "sector": "Technology"
     },
     "WBD": {
@@ -4813,7 +4813,7 @@
       "unit": "",
       "trading_date": "2026-09-21",
       "source": "dynamic",
-      "trading_value": 7208941986.400001,
+      "trading_value": 7208954398.8,
       "sector": "Telecommunications"
     },
     "MSTR": {
@@ -4981,7 +4981,7 @@
       "unit": "",
       "trading_date": "2026-09-21",
       "source": "dynamic",
-      "trading_value": 7019102894.5,
+      "trading_value": 7022860444.5,
       "sector": "Technology"
     }
   },
