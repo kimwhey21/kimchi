@@ -76,12 +76,12 @@ class BuildTest(unittest.TestCase):
         base = _json.loads(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json").read_text(encoding="utf-8"))["ko"]["title"]
         self.assertEqual(post["title"], base)          # 꼬리표 `| 투자 체크포인트`를 붙이지 않는다(2026-09-17)
         # Checkpoint도 2026-09-15부터 본문 전문·링크 없음이다(사용자: "체크포인트는 2번") — 본진 글을
-        # 비공개로 돌렸으니 가리킬 공개 주소가 없다. 마지막 둘은 텔레그램 안내(2026-09-12).
+        # 비공개로 돌렸으니 가리킬 공개 주소가 없다. 2026-09-22부터 텔레그램 안내도 없다 — 외부 링크 0.
         self.assertEqual(post["url"], "")
         self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]), post["blocks"][-4:])
         heads = [b[1] for b in post["blocks"] if b[0] == "h"]
         self.assertEqual(heads[-1], "Fermata's Take")
-        self.assertEqual(post["blocks"][-1][1], "https://t.me/fermata_kr")
+        self.assertFalse(any("t.me" in b[1] for b in post["blocks"]))
 
 
     def test_preview_goes_to_daily_with_a_dated_prefix(self) -> None:
@@ -126,18 +126,23 @@ class PreviewFullBodyTest(unittest.TestCase):
         heads = [b[1] for b in self._post()["blocks"] if b[0] == "h"]
         self.assertGreaterEqual(len([h for h in heads if h.endswith("절")]), 5)
 
-    def test_the_telegram_invite_survives_the_missing_link(self) -> None:
-        """링크를 뺄 때 텔레그램 안내까지 같이 사라진 적이 있다(2026-09-15) — 우리 채널은 남긴다."""
+    def test_no_external_link_at_all(self) -> None:
+        """2026-09-22 "a b 진행해": 텔레그램 안내도 뺐다 — 네이버 글에 외부 링크가 하나도 없어야 한다.
+
+        2026-09-15에는 본진 링크를 빼면서 텔레그램은 남겼다. 9/22 조사에서 52편 전부가 같은 문장 + t.me 링크로
+        끝나는 것이 잡지(외부 링크 0, 검색됨)와 다른 점이라 뺐다.
+        """
         post = self._post()
-        self.assertEqual(post["blocks"][-1], ("p", "https://t.me/fermata_kr"))
+        self.assertFalse(any("http" in b[1] for b in post["blocks"] if b[0] == "p"), post["blocks"][-3:])
+        self.assertFalse(any("텔레그램" in b[1] for b in post["blocks"]))
 
 
 if __name__ == "__main__":
     unittest.main()
 
 
-class TelegramFooterTest(unittest.TestCase):
-    def test_every_summary_ends_with_the_channel_link(self) -> None:
+class NoFooterLinkTest(unittest.TestCase):
+    def test_a_post_ends_with_its_own_content_not_a_link(self) -> None:
         import json
         import tempfile
         doc = {"market": "kr", "date": "2026-09-11", "ko": {"title": "제목", "narrative": [{"heading": "1. 절", "body": "본문."}],
@@ -146,9 +151,9 @@ class TelegramFooterTest(unittest.TestCase):
             path = Path(tmp) / "kr_2026-09-11.json"
             path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
             post = naver_post.build(path)
-        # 본진 링크가 없어진 뒤에도 텔레그램 안내는 남아야 한다(2026-09-15) — 우리 채널이지
-        # 남의 글로 보내는 링크가 아니다. 전에는 `if url:` 안에 들어 있어 같이 사라졌다.
+        # 2026-09-22: 본진 링크도 텔레그램 링크도 없다. 마지막 블록은 글 자체(Take·확인 지점·자료 확인)다.
         self.assertEqual(post["url"], "")
-        self.assertEqual(post["blocks"][-1], ("p", "https://t.me/fermata_kr"))
-        self.assertIn("텔레그램", post["blocks"][-2][1])
+        self.assertFalse(any("t.me" in b[1] or "fermata.it.kr" in b[1] for b in post["blocks"]))
+        self.assertEqual(post["blocks"][-1][0], "p")
+        self.assertIn("판단", post["blocks"][-1][1])
 
