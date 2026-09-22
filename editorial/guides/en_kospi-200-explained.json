@@ -3,11 +3,11 @@
   "series": "Guide",
   "lang": "en",
   "date": "2026-09-16",
-  "checked": "2026-09-16",
+  "checked": "2026-09-22",
   "slug": "kospi-200-explained",
   "category_id": 153,
   "tags": ["KOSPI 200", "Korea Exchange", "KOSPI 200 rebalance", "MSCI Korea", "KODEX 200"],
-  "radar_origin": "list order",
+  "radar_origin": "search queue: kospi 200 index methodology (6.0위, 전용 글로 안 잡혔지만 이 글이 이미 답하고 있어 첫 소제목·첫 문장에 검색어를 넣어 고침)",
   "related": [
     {
       "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
@@ -26,8 +26,8 @@
     "title": "KOSPI 200 Explained: How Korea Picks 200 Stocks (2026)",
     "narrative": [
       {
-        "heading": "KOSPI 200 is not \"the KOSPI\" — it's a curated 200-stock subset of it",
-        "body": "Every time a headline says \"the KOSPI fell 0.85% today,\" it is almost always talking about the KOSPI Composite Index — every single common stock listed on Korea's main board, well over 800 of them as of September 2026. The KOSPI Composite closed at 6,627.26 on September 15, 2026. KOSPI 200 is a different, smaller thing built on top of that same market: a free-float market-capitalization-weighted index of 200 stocks chosen by Korea Exchange (KRX), Korea's exchange operator, to represent the tradable, liquid core of the market.\n\nThe distinction matters because KOSPI 200 is the index that actual financial products are built on — futures, options, and Korea's most-traded domestic index funds all track it, not the full Composite. If you are reading about a stock being \"added to\" or \"dropped from\" an index in Korean market coverage, it is usually this list, not the Composite, and the two respond to completely different rules for how a stock gets in."
+        "heading": "KOSPI 200 index methodology: a curated 200-stock subset, not \"the KOSPI\"",
+        "body": "KOSPI 200 index methodology starts with a distinction most headlines skip: \"the KOSPI\" you read about and KOSPI 200 are not the same list. Every time a headline says \"the KOSPI fell 0.85% today,\" it is almost always talking about the KOSPI Composite Index — every single common stock listed on Korea's main board, well over 800 of them as of September 2026. The KOSPI Composite closed at 6,627.26 on September 15, 2026. KOSPI 200 is a different, smaller thing built on top of that same market: a free-float market-capitalization-weighted index of 200 stocks chosen by Korea Exchange (KRX), Korea's exchange operator, to represent the tradable, liquid core of the market.\n\nThe distinction matters because KOSPI 200 is the index that actual financial products are built on — futures, options, and Korea's most-traded domestic index funds all track it, not the full Composite. If you are reading about a stock being \"added to\" or \"dropped from\" an index in Korean market coverage, it is usually this list, not the Composite, and the two respond to completely different rules for how a stock gets in."
       },
       {
         "heading": "How Korea Exchange decides who gets in: sectors first, then size and liquidity",
