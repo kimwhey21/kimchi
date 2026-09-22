@@ -1,7 +1,7 @@
 {
- "date": "2026-09-21",
+ "date": "2026-09-22",
  "window": "3개월",
- "total_clicks": 19,
+ "total_clicks": 21,
  "total_impressions": 3,
  "queries": [
   {
@@ -19,6 +19,13 @@
    "position": 7.7
   },
   {
+   "query": "kospi trading hours",
+   "clicks": 0,
+   "impressions": 15,
+   "ctr": 0.0,
+   "position": 65.5
+  },
+  {
    "query": "englishdart",
    "clicks": 0,
    "impressions": 13,
@@ -26,11 +33,11 @@
    "position": 6.2
   },
   {
-   "query": "kospi trading hours",
+   "query": "krx 애프터마켓 거래대금 1조 붕괴 원인과 대체거래소 비교",
    "clicks": 0,
-   "impressions": 12,
+   "impressions": 8,
    "ctr": 0.0,
-   "position": 65.7
+   "position": 1.2
   },
   {
    "query": "kospi holiday",
@@ -90,6 +97,13 @@
   },
   {
    "query": "kosdaq kospi difference",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 5.5
+  },
+  {
+   "query": "kospi200 kosdaq150 2026 year end target forecast",
    "clicks": 0,
    "impressions": 2,
    "ctr": 0.0,
@@ -215,6 +229,13 @@
    "position": 2.0
   },
   {
+   "query": "比例大概多少",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 2.0
+  },
+  {
    "query": "하루만에",
    "clicks": 0,
    "impressions": 1,
@@ -264,13 +285,6 @@
    "position": 6.0
   },
   {
-   "query": "kospi200 kosdaq150 2026 year end target forecast",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0.0,
-   "position": 6.0
-  },
-  {
    "query": "msci south korea emerging market classification 2026 official",
    "clicks": 0,
    "impressions": 1,
@@ -313,6 +327,13 @@
    "position": 8.0
   },
   {
+   "query": "krx kospi 200 index methodology",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 8.0
+  },
+  {
    "query": "site:it.kr",
    "clicks": 0,
    "impressions": 1,
@@ -325,6 +346,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 9.0
+  },
+  {
+   "query": "\"kospi\" \"september 18, 2026\"",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 10.0
   },
   {
    "query": "can i buy korean stocks",
@@ -369,6 +397,20 @@
    "position": 37.0
   },
   {
+   "query": "krx regular trading hours 09:00 15:30 official",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 39.0
+  },
+  {
+   "query": "krx regular trading hours 09:00 15:30",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 40.0
+  },
+  {
    "query": "flkr vs ewy",
    "clicks": 0,
    "impressions": 1,
@@ -390,6 +432,13 @@
    "position": 46.0
   },
   {
+   "query": "korea stock settlement cycle t+2 2026 krx 결제일 t+2",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 47.0
+  },
+  {
    "query": "what time does kospi open est",
    "clicks": 0,
    "impressions": 1,
@@ -404,7 +453,21 @@
    "position": 55.0
   },
   {
+   "query": "etf kospi",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 56.0
+  },
+  {
    "query": "kospi meaning",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 59.0
+  },
+  {
+   "query": "krx trading calendar 2026",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
@@ -423,6 +486,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 62.0
+  },
+  {
+   "query": "korea exchange trading hours",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 63.0
   },
   {
    "query": "when does the korean stock market open",
