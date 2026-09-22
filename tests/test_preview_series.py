@@ -126,17 +126,16 @@ class PreviewPrivateTest(unittest.TestCase):
     워드프레스 `private`는 주소·분류를 그대로 두고 사이트맵·목록·피드에서만 뺀다.
     """
 
-    def test_only_the_preview_series_goes_out_private(self) -> None:
-        """2026-09-15 저녁에 Checkpoint(`기준표`)도 같은 처리로 들어왔다(사용자: "체크포인트는 2번").
-
-        **가이드는 일부러 빠져 있다**(같은 결정의 "가이드는 3번") — 구글 유입이 거기서만 나오므로
-        본진에 공개로 남겨야 한다. 이 목록에 가이드를 더하지 말 것.
+    def test_every_korean_series_goes_out_private_but_the_english_guide(self) -> None:
+        """2026-09-15 프리뷰·Checkpoint에 이어 2026-09-22부터 한국어 가이드·주간 결산·다음 주 일정·이벤트도 비공개다
+        (사장님: "본진에서는 비공개 처리해라, 네이버는 한글 컨텐츠를 주력으로"). **영어 가이드("Guide")만 공개** —
+        구글 유입의 전부가 거기서 나온다(2026-09-22: 28일 클릭 21건 전부 영어). 이 줄을 바꾸지 말 것.
         """
         from src import publish_feature
-        for series in ("프리뷰", "기준표"):
+        for series in ("프리뷰", "기준표", "가이드", "주간 결산", "다음 주 일정", "이벤트"):
             with self.subTest(series=series):
                 self.assertEqual(publish_feature._live_status({"series": series}), "private")
-        for series in ("가이드", "Guide", "주간 결산", "다음 주 일정", "이벤트"):
+        for series in ("Guide", "매거진", ""):
             with self.subTest(series=series):
                 self.assertEqual(publish_feature._live_status({"series": series}), "publish")
 

@@ -1,8 +1,10 @@
 """네이버 블로그(blog.naver.com/fermata49)용 원고 만들기 (2026-09-10, 사용자 결정).
 
-가이드·주간·이벤트는 **요약 + 그림 셋 + 링크**, 시황·프리뷰·Checkpoint·잡지는 본진 글을
-**그대로 옮긴다**(2026-09-16, 사용자: "네이버에는 본진 글을 똑같이 옮기기만 해라") — 절·그림·사진·
-outlook·insight·출처까지 본진 `templates/post.html.j2`와 같은 차례로, 링크 없이.
+**한국어 글은 전부 본진 글을 그대로 옮긴다** — 절·그림·사진·outlook·insight·출처까지 본진
+`templates/post.html.j2`와 같은 차례로, 본진 링크 없이. 2026-09-16까지는 시황·프리뷰·Checkpoint만
+이랬고 가이드·주간·이벤트는 요약 + 그림 셋 + 본진 링크였는데, 2026-09-22에 사장님이 "네이버 시황 블로그에
+워드프레스 링크가 붙는 컨텐츠에 링크를 모두 빼고 본문을 공개하고, 본진에서는 비공개 처리하라 — 네이버는 한글
+컨텐츠를 주력으로" 했다. 잡지(두 번째 블로그)는 원래부터 링크가 없다.
 이유: 네이버 검색은 네이버 안의 본문만 보고, 전문을 두 곳에 올리면 구글이 한쪽(대개 네이버)만
 고르며, 네이버 독자는 결론이 앞에 있는 짧은 글을 읽는다. 그래서
   1. 제목은 본진 제목 그대로(2026-09-17 — 그전엔 검색어·날짜 머리를 붙였다),
@@ -252,20 +254,20 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         # 주말 편성(2026-09-12): 검색어 머리에 기간을 붙인다 — "주간 증시 결산 9월 7일~11일: …"
         prefix = ("주간 증시 결산 " if doc["series"] == "주간 결산" else "다음 주 증시 일정 ") + _period(doc)
         slug = doc.get("slug") or Path(path).stem.replace("_", "-")
-        url = f"https://fermata.it.kr/{slug}/"
+        url = ""      # 본진은 비공개(2026-09-22) — 가리킬 공개 주소가 없다
         category = "Weekly"      # 네이버에도 같은 이름의 카테고리(2026-09-12)
         tags = list(FIXED_TAGS[doc["series"]])
     elif doc.get("series") == "가이드":
         # 유입 편성(2026-09-12, 사용자 승인 5번): 네이버에도 가이드를 싣는다. 제목이 곧 검색 질문이라 머리를 붙이지 않는다.
         prefix = ""
         slug = doc.get("slug") or Path(path).stem.replace("_", "-")
-        url = f"https://fermata.it.kr/{slug}/"
+        url = ""      # 본진은 비공개(2026-09-22) — 가리킬 공개 주소가 없다
         category = "가이드"
         tags = list(FIXED_TAGS["가이드"])
     elif doc.get("series") == "이벤트":
         prefix = "증시 이벤트 " + _kdate(str(doc.get("event_date") or date_str))
         slug = doc.get("slug") or Path(path).stem.replace("_", "-")
-        url = f"https://fermata.it.kr/{slug}/"
+        url = ""      # 본진은 비공개(2026-09-22) — 가리킬 공개 주소가 없다
         category = "Weekly"
         tags = list(FIXED_TAGS["이벤트"])
     elif doc.get("series") == "매거진":
@@ -297,9 +299,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     preview = doc.get("series") == "프리뷰"
     # 본문 전문을 싣는 글(시황·프리뷰)은 본진과 같은 차례로 간다 — Fermata's Take가 맨 아래다
     # (2026-09-15, 사용자: "본문 형식으로 바꾸면 페르마타 테이크가 맨 아래로 가는거 아니었니 … 워드프레스 본진에 올라가던 형식말이야").
-    # 요약본(기준표·가이드·주간·이벤트)은 그대로 판단이 맨 앞이다 — 링크를 누르게 하려면 결론이 먼저 보여야 한다.
+    # 2026-09-22부터 **한국어 글은 전부 전문**이다(사장님: "네이버는 한글 컨텐츠를 주력으로"). 요약본 + 인용구 Take +
+    # 본진 링크 꼴은 가이드·주간·이벤트에서도 없어졌다 — 본진이 비공개라 가리킬 곳이 없고, 요약본은 검색·애드포스트에 불리하다.
     checkpoint = doc.get("series") == "기준표"
-    full_body = is_daily or preview or checkpoint
+    full_body = not magazine
     if take and not magazine and not full_body:   # 잡지에는 Take가 없다(2026-09-13 사용자 결정).
         blocks.append(("h", "Fermata's Take"))
         blocks.append(("q", "\n".join(take[:2])))
@@ -362,17 +365,11 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         if srcs:
             blocks.append(("h", "자료 출처"))
             blocks += [("p", f"{x['name']}, {x['title']}" if x.get("title") else str(x["name"])) for x in srcs]
-    elif full_body:
-        # 본진 글이 비공개라 가리킬 공개 주소가 없다 — "블로그에도 있습니다"는 갈 곳 없는 안내가 된다.
-        # 대신 본진 맨 아래의 「자료 확인」을 그대로 옮긴다(2026-09-16).
-        blocks += _source_blocks(doc)
-    elif full:
-        blocks.append(("p", "같은 주제를 표와 그래픽으로 정리한 글은 페르마타 블로그에도 있습니다."))
-    elif doc.get("series") in ("가이드", "이벤트"):
-        blocks.append(("p", "표와 확인 목록까지 담은 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
     else:
-        blocks.append(("p", "업종별 등락, 외국인·기관 수급, 금리·환율 표까지 전체 글은 페르마타 블로그에서 볼 수 있습니다."))
-    if url:
+        # 본진 글이 비공개라 가리킬 공개 주소가 없다 — "블로그에도 있습니다"는 갈 곳 없는 안내가 된다.
+        # 대신 본진 맨 아래의 「자료 확인」을 그대로 옮긴다(2026-09-16). 2026-09-22부터 모든 한국어 글이 이 길이다.
+        blocks += _source_blocks(doc)
+    if url:   # 지금은 어느 갈래도 본진 링크를 갖지 않는다(2026-09-22). 되돌릴 때를 위해 남긴다.
         blocks.append(("p", url))
     # 텔레그램 채널(2026-09-12, 홍보 1번 → "진행해"): 글을 끝까지 읽은 사람에게 구독할 곳을 보여 준다.
     # 본진 링크가 없는 시황에도 넣는다 — 이건 우리 채널이지 남의 글로 보내는 링크가 아니다(2026-09-15).

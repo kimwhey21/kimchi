@@ -249,6 +249,7 @@ def collect_issues(doc: dict, graphics: int | None = None,
 # 그 글 자체가 끝까지 읽히는지를 본다. 본진과 같은 문장이 있으면 유사문서로 잡히므로 25자 이상 같은 문장을 막는다.
 NAVER_FULL_SERIES = {"가이드", "주간 결산", "다음 주 일정", "이벤트"}
 NAVER_FULL_SINCE = "2026-09-13"          # 이 날짜 이후 원고부터 요구한다(그전 원고는 요약본으로 나갔다)
+NAVER_FULL_ENDED = "2026-09-23"          # 이 날짜부터는 요구하지 않는다 — 본진이 비공개가 되어 쌍둥이가 없다(2026-09-22 사장님 결정)
 NAVER_SECTIONS = (4, 6)
 NAVER_CHARS = (1200, 3000)
 NAVER_DUP_MIN_CHARS = 25
@@ -269,6 +270,8 @@ def naver_spec(doc: dict) -> tuple[str, tuple[int, int], tuple[int, int]] | None
     date = str(doc.get("date") or "")
     series = str(doc.get("series") or "")
     if series in NAVER_FULL_SERIES:
+        if date >= NAVER_FULL_ENDED:
+            return None        # 2026-09-22부터 네이버에 `ko.narrative` 전문이 간다 — 다시 쓸 본문이 없다
         return (series, NAVER_SECTIONS, NAVER_CHARS) if date >= NAVER_FULL_SINCE else None
     if series == "매거진":
         return None            # 본진 쌍둥이가 없다 — 이 원고의 본문이 곧 네이버 본문이다(magazine_issues가 따로 본다)

@@ -29,9 +29,10 @@ ROOT = Path(__file__).resolve().parent.parent
 SCOREBOARD = ROOT / "data" / "scoreboard.yaml"
 POSTED = Path.home() / ".market-brief-naver" / "posted.json"
 KEY = re.compile(r"editorial/(kr|us)_(\d{4}-\d{2}-\d{2})\.json$")
-# 본진에 공개 쌍둥이가 없는 갈래 — 시황(아예 안 올린다)·프리뷰·기준표(비공개로만 올린다).
-# `naver_sync.py`가 알림을 보내는 조건과 같은 목록이다. 한쪽만 고치면 주소와 알림이 어긋난다.
-NAVER_ONLY_SERIES = {"프리뷰", "기준표"}
+# 본진에 공개 쌍둥이가 없는 갈래 — 시황·프리뷰·기준표(2026-09-15)에 더해 2026-09-22부터 가이드·주간 결산·
+# 다음 주 일정·이벤트(사장님: "본진에서는 비공개 처리"). `naver_sync.py`가 알림을 보내는 조건과 같은 목록이다.
+# 한쪽만 고치면 주소와 알림이 어긋난다.
+NAVER_ONLY_SERIES = {"프리뷰", "기준표", "가이드", "주간 결산", "다음 주 일정", "이벤트"}
 
 
 def _wp_slug(doc: dict, path: Path) -> str:

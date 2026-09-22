@@ -215,7 +215,8 @@ class NaverPostTest(unittest.TestCase):
         post = naver_post.build(self._manuscript("주간 결산", "weekly-review-2026-09-12"))
         self.assertEqual(post["title"], "이번 주 증시, 무엇이 올리고 무엇이 막았나")   # 머리 없음(2026-09-17)
         self.assertEqual(post["category"], "Weekly")
-        self.assertEqual(post["blocks"][-3][1], "https://fermata.it.kr/weekly-review-2026-09-12/")   # 마지막 둘은 텔레그램 안내(2026-09-12)
+        self.assertEqual(post["url"], "")   # 2026-09-22부터 본진 비공개·네이버 전문 — 링크 없음, 마지막 둘은 텔레그램 안내
+        self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]))
         self.assertIn("주간증시", post["tags"])
 
     def test_five_or_fewer_sections_keep_their_order(self) -> None:
@@ -226,7 +227,7 @@ class NaverPostTest(unittest.TestCase):
                                   ("한 주를 숫자로", "한국장", "미국장", "금리·환율·유가", "다음 주에 확인할 것")]
         path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
         heads = [b[1] for b in naver_post.build(path)["blocks"] if b[0] == "h"]
-        self.assertEqual(heads[1:6], ["한 주를 숫자로", "한국장", "미국장", "금리·환율·유가", "다음 주에 확인할 것"])
+        self.assertEqual(heads[:5], ["한 주를 숫자로", "한국장", "미국장", "금리·환율·유가", "다음 주에 확인할 것"])   # 전문: Take는 맨 아래(2026-09-22)
 
     def test_week_ahead_prefix(self) -> None:
         post = naver_post.build(self._manuscript("다음 주 일정", "week-ahead-2026-09-13"))

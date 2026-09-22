@@ -1,8 +1,8 @@
 """네이버용 원고 — 2026-09-10 사용자 결정을 고정한다.
 
-2026-09-15에 시황이 갈라졌다. 기준표·가이드는 그대로 **요약 + 그림 셋 + 링크**지만, 한국어 시황은
-네이버가 유일한 공개처가 되면서 **본문 전문, 링크 없음**이다. 본진에 쌍둥이가 없으니 겹칠 일도,
-가리킬 글도 없다.
+2026-09-15에 시황이 먼저 **본문 전문, 링크 없음**이 됐고(본진 비공개), 2026-09-22에 가이드·주간·이벤트까지
+같은 꼴이 됐다(사장님: "워드프레스 링크가 붙는 컨텐츠에 링크를 모두 빼고 본문을 공개하고, 본진에서는 비공개
+처리해라"). 이제 한국어 글은 전부 본진 글 그대로이고 본진 링크는 어디에도 없다. 잡지는 원래부터 그랬다.
 """
 from __future__ import annotations
 
@@ -38,16 +38,21 @@ class BuildTest(unittest.TestCase):
         self.assertIn("코스피", post["tags"])
         self.assertGreater(post["chars"], 2600)
 
-    def test_paragraphs_are_short_and_take_is_a_quotation(self) -> None:
-        """2026-09-12: 모바일에서 문단이 벽처럼 읽혀 2~3문장으로 자르고, Fermata's Take는 인용구(q)로, 표지는 맨 앞.
+    def test_paragraphs_are_short_and_guides_are_full_body_too(self) -> None:
+        """2026-09-12: 모바일에서 문단이 벽처럼 읽혀 2~3문장으로 자른다.
 
-        인용구 Take는 **요약본**(가이드·주간·이벤트)의 규칙이다 — 링크를 누르게 하려면 결론이 먼저
-        보여야 한다. 전문을 싣는 시황·프리뷰·Checkpoint는 2026-09-15부터 본진 차례를 따라 맨 아래로 갔다.
+        인용구(q) Take는 요약본 시절의 규칙이었다. 2026-09-22부터 가이드·주간·이벤트도 전문이라 인용구 Take가
+        없고, Fermata's Take는 본진 차례대로 맨 아래다(사장님: "링크를 모두 빼고 본문을 공개").
         """
         post = naver_post.build(Path("editorial/guides/ko_isa-vs-pension-accounts.json"))
         kinds = [b[0] for b in post["blocks"]]
-        self.assertIn("q", kinds)
-        self.assertLess(kinds.index("h"), kinds.index("q"))
+        self.assertNotIn("q", kinds)
+        heads = [b[1] for b in post["blocks"] if b[0] == "h"]
+        self.assertIn("Fermata's Take", heads)
+        self.assertGreater(heads.index("Fermata's Take"), 3)          # 절들 뒤에 온다
+        self.assertEqual(post["url"], "")
+        self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]))
+        self.assertFalse(any("페르마타 블로그" in b[1] for b in post["blocks"]))
         daily = naver_post.build(Path("editorial/kr_2026-09-10.json"), Path("output/gate/kr_2026-09-10"))
         for kind, text in daily["blocks"]:
             if kind == "p":

@@ -31,10 +31,10 @@ class NaverUrlsTest(unittest.TestCase):
             "editorial/guides/ko_isa-vs-pension-accounts.json": {"logNo": "333"},
         }
 
-    def test_guides_are_left_alone(self) -> None:
-        """가이드는 본진에 공개로 남는다(2026-09-15, 사용자: "가이드는 3번"). 구글 유입이 거기서 나온다."""
+    def test_guides_are_naver_only_too(self) -> None:
+        """2026-09-22부터 가이드도 본진 비공개·네이버 전문이다 — 주소를 네이버로 바꾼다(2026-09-15에는 그대로 뒀었다)."""
         keys, slugs = mod.naver_urls(self.posted, root=self.root)
-        self.assertNotIn("isa-vs-pension-accounts", slugs)
+        self.assertEqual(slugs["isa-vs-pension-accounts"], "https://blog.naver.com/fermata49/333")
         self.assertIn("kr-2026-09-13-kospi-per-range", slugs)
         self.assertEqual(keys["kr_2026-09-15"], "https://blog.naver.com/fermata49/111")
         self.assertEqual(slugs["editorial-kr-2026-09-15-ko"], "https://blog.naver.com/fermata49/111")
@@ -50,13 +50,13 @@ class NaverUrlsTest(unittest.TestCase):
         rows = [
             {"url": "https://fermata.it.kr/kr-2026-09-13-kospi-per-range/"},
             {"url": "https://fermata.it.kr/editorial-kr-2026-09-15-ko/"},
-            {"url": "https://fermata.it.kr/isa-vs-pension-accounts/"},          # 가이드 — 그대로
+            {"url": "https://fermata.it.kr/isa-vs-pension-accounts/"},          # 가이드 — 2026-09-22부터 바꾼다
             {"url": "https://blog.naver.com/fermata49/999"},                    # 이미 네이버 — 그대로
         ]
         mod.fill(rows, keys, slugs)
         self.assertEqual(rows[0]["url"], "https://blog.naver.com/fermata49/222")
         self.assertEqual(rows[1]["url"], "https://blog.naver.com/fermata49/111")
-        self.assertEqual(rows[2]["url"], "https://fermata.it.kr/isa-vs-pension-accounts/")
+        self.assertEqual(rows[2]["url"], "https://blog.naver.com/fermata49/333")
         self.assertEqual(rows[3]["url"], "https://blog.naver.com/fermata49/999")
 
 

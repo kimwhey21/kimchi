@@ -221,7 +221,11 @@ def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict
 # 서치콘솔 실측 — 구글 노출은 사실상 영어 가이드에서만 나왔고 Checkpoint는 0에 가까웠다. 본진에
 # 남겨 둘 이득보다 네이버가 막힐 위험이 크다. **가이드는 일부러 공개로 둔다** — 구글 유입이
 # 거기서 나오므로 같은 처리를 하면 안 된다.
-LIVE_STATUS = {"프리뷰": "private", "기준표": "private"}
+# 본진에 비공개로만 올리는 갈래. 프리뷰·기준표(2026-09-15)에 더해 2026-09-22부터 한국어 가이드·주간 결산·다음 주 일정·
+# 이벤트도 — 사장님: "네이버는 한글 컨텐츠를 주력으로, 본진에서는 비공개 처리". 영어 가이드("Guide")는 구글 유입의 전부라
+# 그대로 공개다. 이 표에 없는 시리즈는 publish.
+LIVE_STATUS = {"프리뷰": "private", "기준표": "private",
+               "가이드": "private", "주간 결산": "private", "다음 주 일정": "private", "이벤트": "private"}
 
 
 def _live_status(doc: dict) -> str:

@@ -124,7 +124,7 @@ class NaverSummaryTest(unittest.TestCase):
             post = naver_post.build(path)
         self.assertEqual(post["title"], "코스피와 코스닥, 무엇이 다른가")
         self.assertEqual(post["category"], "가이드")
-        self.assertEqual(post["url"], "https://fermata.it.kr/kospi-kosdaq-difference/")
+        self.assertEqual(post["url"], "")     # 본진은 비공개(2026-09-22) — 링크 없음
         self.assertIn("주식초보", post["tags"])
 
     def test_guide_summary_keeps_section_order(self) -> None:
@@ -139,8 +139,8 @@ class NaverSummaryTest(unittest.TestCase):
             path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
             post = naver_post.build(path)
         headings = [b[1] for b in post["blocks"] if b[0] == "h" and b[1] != "Fermata's Take"]
-        self.assertEqual(headings, ["절 1", "절 2", "절 3", "절 4", "절 5"])
-        self.assertTrue(any("전체 글은 페르마타" in b[1] and "수급" not in b[1] for b in post["blocks"] if b[0] == "p"))
+        self.assertEqual(headings, ["절 1", "절 2", "절 3", "절 4", "절 5", "사기 전에 확인하세요"])   # 전문이라 여섯 절이 다, 순서 그대로(2026-09-22)
+        self.assertFalse(any("페르마타 블로그" in b[1] for b in post["blocks"] if b[0] == "p"))
 
     def test_event_summary_carries_the_event_date(self) -> None:
         import json
@@ -197,9 +197,10 @@ class NaverFullVersionTest(unittest.TestCase):
             doc["naver"] = naver
         return doc
 
-    def test_required_for_long_lived_series_after_cutoff(self) -> None:
-        self.assertTrue(feature_checks.naver_issues(self._doc()))                       # 없으면 막는다
+    def test_required_only_between_the_two_cutoffs(self) -> None:
+        self.assertTrue(feature_checks.naver_issues(self._doc()))                       # 2026-09-13~22 원고: 없으면 막는다
         self.assertEqual(feature_checks.naver_issues(self._doc(date="2026-09-12")), []) # 그전 원고는 요약본
+        self.assertEqual(feature_checks.naver_issues(self._doc(date="2026-09-23")), []) # 2026-09-23부터는 본진 비공개·네이버 전문 — 요구 안 함
         self.assertEqual(feature_checks.naver_issues({"series": "프리뷰", "date": "2026-09-20", "ko": {}}), [])
 
     def test_length_sections_and_duplicate_sentences(self) -> None:
@@ -213,7 +214,8 @@ class NaverFullVersionTest(unittest.TestCase):
         self.assertIn("절", joined)
         self.assertIn("자입니다", joined)
 
-    def test_naver_post_uses_the_full_version_and_all_sections(self) -> None:
+    def test_naver_post_ignores_the_old_naver_body_and_carries_the_main_text(self) -> None:
+        """2026-09-22부터 네이버에 가는 것은 `ko.narrative` 전문이다 — 옛 원고에 남은 `naver` 절은 쓰지 않는다."""
         import json
         import tempfile
         naver = {"narrative": [{"heading": f"네이버 절 {i}", "body": "첫 문장입니다. 둘째 문장입니다. 셋째 문장입니다. 넷째 문장입니다."} for i in range(1, 6)]}
@@ -223,6 +225,6 @@ class NaverFullVersionTest(unittest.TestCase):
             path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
             post = naver_post.build(path)
         headings = [b[1] for b in post["blocks"] if b[0] == "h" and b[1] != "Fermata's Take"]
-        self.assertEqual(headings, [f"네이버 절 {i}" for i in range(1, 6)])
-        self.assertFalse(any("1. 절" in b[1] for b in post["blocks"]))       # 본진 절은 안 쓴다
-        self.assertTrue(any("페르마타 블로그에도" in b[1] for b in post["blocks"] if b[0] == "p"))
+        self.assertEqual(headings, ["절"] * 5)                                   # 본진 절 다섯 개 그대로(번호는 뗀다)
+        self.assertFalse(any("네이버 절" in b[1] for b in post["blocks"]))       # 옛 네이버용 본문은 안 쓴다
+        self.assertFalse(any("페르마타 블로그" in b[1] for b in post["blocks"] if b[0] == "p"))   # 본진 링크 안내도 없다
