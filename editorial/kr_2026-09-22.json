@@ -339,8 +339,8 @@
         "ticker": "USD/KRW",
         "name": "원/달러 환율",
         "name_en": "USD/KRW",
-        "price": 1360.6,
-        "change_pct": -1.05,
+        "price": 1361.3,
+        "change_pct": -1.0,
         "series": [
           1345.0,
           1348.5,
@@ -349,15 +349,15 @@
           1381.0,
           1388.0,
           1375.0,
-          1360.6
+          1361.3
         ],
         "unit": "원",
         "trading_date": "2026-09-22",
         "quote_type": "reference_rate",
-        "as_of_label": "16:27 하나은행 고시",
-        "as_of_label_en": "16:27 Hana Bank",
-        "reference_label": "2026-09-22 16:27 하나은행 고시",
-        "reference_label_en": "2026-09-22 16:27 Hana Bank notice",
+        "as_of_label": "16:37 하나은행 고시",
+        "as_of_label_en": "16:37 Hana Bank",
+        "reference_label": "2026-09-22 16:37 하나은행 고시",
+        "reference_label_en": "2026-09-22 16:37 Hana Bank notice",
         "data_source": "Naver Finance / Hana Bank notice rate"
       }
     },
@@ -366,8 +366,8 @@
         "ticker": "005930",
         "name": "삼성전자",
         "name_en": "Samsung Electronics",
-        "price": 275500.0,
-        "change_pct": 0.18,
+        "price": 275000.0,
+        "change_pct": 0.0,
         "series": [
           259500.0,
           248500.0,
@@ -376,7 +376,7 @@
           256000.0,
           260000.0,
           275000.0,
-          275500.0
+          275000.0
         ],
         "history": {
           "dates": [
@@ -521,7 +521,7 @@
             256000.0,
             260000.0,
             275000.0,
-            275500.0
+            275000.0
           ]
         },
         "unit": "",
@@ -700,8 +700,8 @@
         "ticker": "009150",
         "name": "삼성전기",
         "name_en": "Samsung Electro-Mechanics",
-        "price": 1480000.0,
-        "change_pct": 3.35,
+        "price": 1478000.0,
+        "change_pct": 3.21,
         "series": [
           1400000.0,
           1322000.0,
@@ -710,7 +710,7 @@
           1351000.0,
           1388000.0,
           1432000.0,
-          1480000.0
+          1478000.0
         ],
         "history": {
           "dates": [
@@ -855,7 +855,7 @@
             1351000.0,
             1388000.0,
             1432000.0,
-            1480000.0
+            1478000.0
           ]
         },
         "unit": "",
@@ -867,8 +867,8 @@
         "ticker": "042700",
         "name": "한미반도체",
         "name_en": "Hanmi Semiconductor",
-        "price": 238500.0,
-        "change_pct": -0.21,
+        "price": 238000.0,
+        "change_pct": -0.42,
         "series": [
           231000.0,
           226000.0,
@@ -877,7 +877,7 @@
           228000.0,
           235000.0,
           239000.0,
-          238500.0
+          238000.0
         ],
         "history": {
           "dates": [
@@ -1022,7 +1022,7 @@
             228000.0,
             235000.0,
             239000.0,
-            238500.0
+            238000.0
           ]
         },
         "unit": "",
@@ -1034,8 +1034,8 @@
         "ticker": "105560",
         "name": "KB금융",
         "name_en": "KB Financial Group",
-        "price": 175300.0,
-        "change_pct": -1.46,
+        "price": 175800.0,
+        "change_pct": -1.18,
         "series": [
           177900.0,
           181200.0,
@@ -1044,7 +1044,7 @@
           179700.0,
           175700.0,
           177900.0,
-          175300.0
+          175800.0
         ],
         "history": {
           "dates": [
@@ -1189,7 +1189,7 @@
             179700.0,
             175700.0,
             177900.0,
-            175300.0
+            175800.0
           ]
         },
         "unit": "",
@@ -1201,8 +1201,8 @@
         "ticker": "055550",
         "name": "신한지주",
         "name_en": "Shinhan Financial Group",
-        "price": 113100.0,
-        "change_pct": -0.09,
+        "price": 113200.0,
+        "change_pct": 0.0,
         "series": [
           112900.0,
           115000.0,
@@ -1211,7 +1211,7 @@
           114100.0,
           111100.0,
           113200.0,
-          113100.0
+          113200.0
         ],
         "history": {
           "dates": [
@@ -1356,7 +1356,7 @@
             114100.0,
             111100.0,
             113200.0,
-            113100.0
+            113200.0
           ]
         },
         "unit": "",
@@ -1869,8 +1869,8 @@
         "ticker": "329180",
         "name": "HD현대중공업",
         "name_en": "HD Hyundai Heavy Industries",
-        "price": 452500.0,
-        "change_pct": 0.11,
+        "price": 453500.0,
+        "change_pct": 0.33,
         "series": [
           479000.0,
           470000.0,
@@ -1879,7 +1879,7 @@
           470000.0,
           462000.0,
           452000.0,
-          452500.0
+          453500.0
         ],
         "history": {
           "dates": [
@@ -2024,7 +2024,7 @@
             470000.0,
             462000.0,
             452000.0,
-            452500.0
+            453500.0
           ]
         },
         "unit": "",
@@ -2537,8 +2537,8 @@
         "ticker": "247540",
         "name": "에코프로비엠",
         "name_en": "Ecopro BM",
-        "price": 103800.0,
-        "change_pct": -0.1,
+        "price": 103900.0,
+        "change_pct": 0.0,
         "series": [
           110300.0,
           103500.0,
@@ -2547,7 +2547,7 @@
           103900.0,
           105300.0,
           103900.0,
-          103800.0
+          103900.0
         ],
         "history": {
           "dates": [
@@ -2692,7 +2692,7 @@
             103900.0,
             105300.0,
             103900.0,
-            103800.0
+            103900.0
           ]
         },
         "unit": "",
@@ -2704,8 +2704,8 @@
         "ticker": "207940",
         "name": "삼성바이오로직스",
         "name_en": "Samsung Biologics",
-        "price": 1392000.0,
-        "change_pct": -0.78,
+        "price": 1394000.0,
+        "change_pct": -0.64,
         "series": [
           1415000.0,
           1402000.0,
@@ -2714,7 +2714,7 @@
           1404000.0,
           1399000.0,
           1403000.0,
-          1392000.0
+          1394000.0
         ],
         "history": {
           "dates": [
@@ -2859,7 +2859,7 @@
             1404000.0,
             1399000.0,
             1403000.0,
-            1392000.0
+            1394000.0
           ]
         },
         "unit": "",
@@ -2871,8 +2871,8 @@
         "ticker": "196170",
         "name": "알테오젠",
         "name_en": "Alteogen",
-        "price": 248500.0,
-        "change_pct": -2.93,
+        "price": 249000.0,
+        "change_pct": -2.73,
         "series": [
           268000.0,
           258000.0,
@@ -2881,7 +2881,7 @@
           254500.0,
           254000.0,
           256000.0,
-          248500.0
+          249000.0
         ],
         "history": {
           "dates": [
@@ -3026,7 +3026,7 @@
             254500.0,
             254000.0,
             256000.0,
-            248500.0
+            249000.0
           ]
         },
         "unit": "",
@@ -3038,8 +3038,8 @@
         "ticker": "068270",
         "name": "셀트리온",
         "name_en": "Celltrion",
-        "price": 178300.0,
-        "change_pct": -1.87,
+        "price": 178200.0,
+        "change_pct": -1.93,
         "series": [
           178200.0,
           177000.0,
@@ -3048,7 +3048,7 @@
           181300.0,
           180100.0,
           181700.0,
-          178300.0
+          178200.0
         ],
         "history": {
           "dates": [
@@ -3193,7 +3193,7 @@
             181300.0,
             180100.0,
             181700.0,
-            178300.0
+            178200.0
           ]
         },
         "unit": "",
@@ -3205,8 +3205,8 @@
         "ticker": "035420",
         "name": "네이버",
         "name_en": "Naver",
-        "price": 200500.0,
-        "change_pct": 1.06,
+        "price": 201000.0,
+        "change_pct": 1.31,
         "series": [
           206500.0,
           203000.0,
@@ -3215,7 +3215,7 @@
           200500.0,
           197500.0,
           198400.0,
-          200500.0
+          201000.0
         ],
         "history": {
           "dates": [
@@ -3360,7 +3360,7 @@
             200500.0,
             197500.0,
             198400.0,
-            200500.0
+            201000.0
           ]
         },
         "unit": "",
@@ -3706,8 +3706,8 @@
         "ticker": "277810",
         "name": "레인보우로보틱스",
         "name_en": "Rainbow Robotics",
-        "price": 439000.0,
-        "change_pct": -0.11,
+        "price": 439500.0,
+        "change_pct": 0.0,
         "series": [
           436000.0,
           417500.0,
@@ -3716,7 +3716,7 @@
           429500.0,
           434500.0,
           439500.0,
-          439000.0
+          439500.0
         ],
         "history": {
           "dates": [
@@ -3861,7 +3861,7 @@
             429500.0,
             434500.0,
             439500.0,
-            439000.0
+            439500.0
           ]
         },
         "unit": "",
@@ -3873,8 +3873,8 @@
         "ticker": "402340",
         "name": "SK스퀘어",
         "name_en": "SK Square",
-        "price": 1130000.0,
-        "change_pct": -0.26,
+        "price": 1126000.0,
+        "change_pct": -0.62,
         "series": [
           1089000.0,
           1000000.0,
@@ -3883,7 +3883,7 @@
           1019000.0,
           1072000.0,
           1133000.0,
-          1130000.0
+          1126000.0
         ],
         "history": {
           "dates": [
@@ -4028,13 +4028,13 @@
             1019000.0,
             1072000.0,
             1133000.0,
-            1130000.0
+            1126000.0
           ]
         },
         "unit": "",
         "trading_date": "2026-09-22",
         "source": "dynamic",
-        "trading_value": 658947000000
+        "trading_value": 659656000000
       },
       "066570": {
         "ticker": "066570",
@@ -4201,14 +4201,14 @@
         "unit": "",
         "trading_date": "2026-09-22",
         "source": "dynamic",
-        "trading_value": 338147000000
+        "trading_value": 338230000000
       },
       "001440": {
         "ticker": "001440",
         "name": "대한전선",
         "name_en": "대한전선",
-        "price": 31450.0,
-        "change_pct": 3.97,
+        "price": 31500.0,
+        "change_pct": 4.13,
         "series": [
           29500.0,
           28100.0,
@@ -4217,7 +4217,7 @@
           28700.0,
           31650.0,
           30250.0,
-          31450.0
+          31500.0
         ],
         "history": {
           "dates": [
@@ -4362,13 +4362,13 @@
             28700.0,
             31650.0,
             30250.0,
-            31450.0
+            31500.0
           ]
         },
         "unit": "",
         "trading_date": "2026-09-22",
         "source": "dynamic",
-        "trading_value": 286476000000
+        "trading_value": 286770000000
       },
       "222800": {
         "ticker": "222800",
@@ -4535,7 +4535,7 @@
         "unit": "",
         "trading_date": "2026-09-22",
         "source": "dynamic",
-        "trading_value": 273382000000
+        "trading_value": 273523000000
       },
       "003490": {
         "ticker": "003490",
@@ -4702,14 +4702,14 @@
         "unit": "",
         "trading_date": "2026-09-22",
         "source": "dynamic",
-        "trading_value": 210483000000
+        "trading_value": 210757000000
       },
       "010170": {
         "ticker": "010170",
         "name": "대한광통신",
         "name_en": "Taihan Fiberoptics",
-        "price": 17650.0,
-        "change_pct": -2.27,
+        "price": 17700.0,
+        "change_pct": -1.99,
         "series": [
           14150.0,
           14380.0,
@@ -4718,7 +4718,7 @@
           16250.0,
           18400.0,
           18060.0,
-          17650.0
+          17700.0
         ],
         "history": {
           "dates": [
@@ -4863,13 +4863,13 @@
             16250.0,
             18400.0,
             18060.0,
-            17650.0
+            17700.0
           ]
         },
         "unit": "",
         "trading_date": "2026-09-22",
         "source": "dynamic",
-        "trading_value": 178229000000
+        "trading_value": 178868000000
       }
     },
     "trading_date": "2026-09-22",
@@ -4890,7 +4890,7 @@
     "narrative": [
       {
         "heading": "오늘 투자심리",
-        "body": "코스피는 전 거래일보다 0.15% 오른 7,017.91로 마감했습니다. 코스닥은 0.23% 하락한 834.38, 원/달러 환율은 하나은행 고시 기준 1,360.60원으로 1.05% 하락했습니다.\n\n숫자만 보면 조용한 하루 같지만 장중에는 그렇지 않았습니다. 지수는 개장과 함께 2.2% 넘게 뛰어 7,161.61까지 올라섰다가, 오후 들어 매물이 쏟아지며 상승폭을 대부분 반납했습니다. 하루 동안 지수가 움직인 폭이 실제 마감 등락률보다 훨씬 컸던 날입니다.",
+        "body": "코스피는 전 거래일보다 0.15% 오른 7,017.91로 마감했습니다. 코스닥은 0.23% 하락한 834.38, 원/달러 환율은 하나은행 고시 기준 1,361.30원으로 1.00% 하락했습니다.\n\n숫자만 보면 조용한 하루 같지만 장중에는 그렇지 않았습니다. 지수는 개장과 함께 2.2% 넘게 뛰어 7,161.61까지 올라섰다가, 오후 들어 매물이 쏟아지며 상승폭을 대부분 반납했습니다. 하루 동안 지수가 움직인 폭이 실제 마감 등락률보다 훨씬 컸던 날입니다.",
         "graphic": {
           "kind": "number_cards",
           "tickers": [
@@ -4922,11 +4922,11 @@
       },
       {
         "heading": "항공주와 LG전자도 함께 올랐습니다",
-        "body": "항공주도 오늘의 승자였습니다. 외국인이 운송 업종에 매수세를 모으면서(firebat) 대한항공은 7.40% 올랐고, 전선·케이블 업종의 대한전선도 3.97% 상승했습니다. 다만 통신장비 쪽인 대한광통신은 2.27% 하락해, 같은 날 편입된 종목 안에서도 방향이 갈렸습니다.\n\nLG전자는 5.67% 올라 21만원대를 회복했습니다. 뚜렷한 호재성 공시는 없었지만 시장의 수급 개선 기대감과 업황 회복 전망이 작용했다는 평가입니다(재경일보)."
+        "body": "항공주도 오늘의 승자였습니다. 외국인이 운송 업종에 매수세를 모으면서(firebat) 대한항공은 7.40% 올랐고, 전선·케이블 업종의 대한전선도 4.13% 상승했습니다. 다만 통신장비 쪽인 대한광통신은 1.99% 하락해, 같은 날 편입된 종목 안에서도 방향이 갈렸습니다.\n\nLG전자는 5.67% 올라 21만원대를 회복했습니다. 뚜렷한 호재성 공시는 없었지만 시장의 수급 개선 기대감과 업황 회복 전망이 작용했다는 평가입니다(재경일보)."
       },
       {
         "heading": "반도체 대형주는 오히려 조용했습니다",
-        "body": "오늘 이야기의 시작이 반도체였던 것과 달리, 정작 저희가 보는 반도체 대형주 넷의 등락률을 평균하면 0.2%대에 그쳤습니다. 삼성전자가 0.18% 오르는 데 그쳤고 삼성전기는 3.35% 올랐지만, SK하이닉스는 2.34% 하락했고 한미반도체도 0.21% 밀렸습니다.\n\n지수를 끌어올린 재료(미국발 AI 랠리)와 실제로 크게 오른 종목(PCB·기판, 항공)이 서로 달랐던 하루입니다. 대형주보다 그 아래 부품·소재주가 먼저 반응했습니다.",
+        "body": "오늘 이야기의 시작이 반도체였던 것과 달리, 정작 저희가 보는 반도체 대형주 넷의 등락률을 평균하면 0.1%대에 그쳤습니다. 삼성전자는 보합(0.00%)에 그쳤고 삼성전기는 3.21% 올랐지만, SK하이닉스는 2.34% 하락했고 한미반도체도 0.42% 밀렸습니다.\n\n지수를 끌어올린 재료(미국발 AI 랠리)와 실제로 크게 오른 종목(PCB·기판, 항공)이 서로 달랐던 하루입니다. 대형주보다 그 아래 부품·소재주가 먼저 반응했습니다.",
         "graphic": {
           "kind": "sector_bars",
           "title": "업종별 등락, 반도체는 가운데에 있었습니다"
@@ -4990,7 +4990,7 @@
       },
       {
         "heading": "원/달러 환율과 코스닥은 반대로 갔습니다",
-        "body": "코스닥은 0.23% 하락한 834.38로 마감해, 코스피보다 더 뚜렷하게 약세를 보였습니다. 반도체 소부장주 강세에도 코스닥 전체는 하락했다는 뜻입니다.\n\n원/달러 환율은 1,360.60원으로 1.05% 하락했습니다. 위험자산 선호가 되살아난 날 통상 나타나는 방향이지만, 코스피가 장중 상승폭을 반납한 것과는 결이 달랐던 하루입니다."
+        "body": "코스닥은 0.23% 하락한 834.38로 마감해, 코스피보다 더 뚜렷하게 약세를 보였습니다. 반도체 소부장주 강세에도 코스닥 전체는 하락했다는 뜻입니다.\n\n원/달러 환율은 1,361.30원으로 1.00% 하락했습니다. 위험자산 선호가 되살아난 날 통상 나타나는 방향이지만, 코스피가 장중 상승폭을 반납한 것과는 결이 달랐던 하루입니다."
       }
     ],
     "outlook": {
@@ -5106,7 +5106,7 @@
     "narrative": [
       {
         "heading": "Today's Mood",
-        "body": "KOSPI closed up 0.15% at 7,017.91. KOSDAQ fell 0.23% to 834.38, and the won strengthened 1.05% to 1,360.60 per dollar (Hana Bank notice rate).\n\nThe headline numbers make it look like a quiet day, but it wasn't. The index jumped more than 2.2% at the open to 7,161.61, then gave back most of that gain in the afternoon as selling picked up. The intraday swing was far bigger than the closing move suggests.",
+        "body": "KOSPI closed up 0.15% at 7,017.91. KOSDAQ fell 0.23% to 834.38, and the won strengthened 1.00% to 1,361.30 per dollar (Hana Bank notice rate).\n\nThe headline numbers make it look like a quiet day, but it wasn't. The index jumped more than 2.2% at the open to 7,161.61, then gave back most of that gain in the afternoon as selling picked up. The intraday swing was far bigger than the closing move suggests.",
         "graphic": {
           "kind": "number_cards",
           "tickers": [
@@ -5138,11 +5138,11 @@
       },
       {
         "heading": "Airlines and LG Electronics Joined In",
-        "body": "Airlines were also winners today. Foreign investors concentrated buying in the transport sector (firebat), and Korean Air rose 7.40%, while a cable-sector stock among today's new entrants gained 3.97%. Telecom-equipment maker Taihan Fiberoptics fell 2.27%, though -- even among today's new entrants, direction split.\n\nLG Electronics rose 5.67%, back above 210,000 won. There was no clear news catalyst, but the move was read as improved supply-demand expectations and a recovering business outlook (JKN Ilbo)."
+        "body": "Airlines were also winners today. Foreign investors concentrated buying in the transport sector (firebat), and Korean Air rose 7.40%, while a cable-sector stock among today's new entrants gained 4.13%. Telecom-equipment maker Taihan Fiberoptics fell 1.99%, though -- even among today's new entrants, direction split.\n\nLG Electronics rose 5.67%, back above 210,000 won. There was no clear news catalyst, but the move was read as improved supply-demand expectations and a recovering business outlook (JKN Ilbo)."
       },
       {
         "heading": "Large-Cap Chips Were Oddly Quiet",
-        "body": "Even though chips were the story of the day, the four large-cap chip names we track averaged only about +0.2%. Samsung Electronics rose just 0.18%, Samsung Electro-Mechanics gained 3.35%, but SK Hynix fell 2.34% and Hanmi Semiconductor slipped 0.21%.\n\nThe catalyst that moved the index (the overnight US AI rally) and the stocks that actually moved most (PCB substrates, airlines) were different today. The parts and materials names below the large caps reacted first.",
+        "body": "Even though chips were the story of the day, the four large-cap chip names we track averaged only about +0.1%. Samsung Electronics was flat (0.00%), Samsung Electro-Mechanics gained 3.21%, but SK Hynix fell 2.34% and Hanmi Semiconductor slipped 0.42%.\n\nThe catalyst that moved the index (the overnight US AI rally) and the stocks that actually moved most (PCB substrates, airlines) were different today. The parts and materials names below the large caps reacted first.",
         "graphic": {
           "kind": "sector_bars",
           "title": "Sector averages -- chips landed in the middle"
@@ -5206,7 +5206,7 @@
       },
       {
         "heading": "KOSDAQ and the Won Went the Other Way",
-        "body": "KOSDAQ closed down 0.23% at 834.38, a sharper decline than KOSPI's -- despite the strength in chip-equipment names, the broader small-cap index still fell.\n\nThe won strengthened 1.05% to 1,360.60 per dollar, the usual direction on a risk-on day. But that's a different texture from KOSPI giving back its intraday gain."
+        "body": "KOSDAQ closed down 0.23% at 834.38, a sharper decline than KOSPI's -- despite the strength in chip-equipment names, the broader small-cap index still fell.\n\nThe won strengthened 1.00% to 1,361.30 per dollar, the usual direction on a risk-on day. But that's a different texture from KOSPI giving back its intraday gain."
       }
     ],
     "outlook": {
