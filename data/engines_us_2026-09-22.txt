@@ -1,61 +1,61 @@
-[밸류에이션] US · 2026-09-22 · FWD PER 중앙값 24.9
+[밸류에이션] US · 2026-09-22 · FWD PER 중앙값 24.5
   종목            FWD PER     목표가 대비     52주고점 대비    애널
-  마이크론              6.6     +45.1%       -16.8%    46
-  엔비디아             14.5     +44.1%        -3.9%    59
-  머크               15.7      +2.3%        -4.7%    26
-  마이크로소프트          21.2     +14.7%        -9.4%    52
-  메타               21.3      +2.3%        -3.8%    56
-  알파벳              23.9     +21.0%       -13.1%    54
-  아마존              24.9     +27.4%       -10.0%    58
-  디어               30.2      +0.5%        -3.0%    23
-  월마트              33.3     +18.6%       -20.5%    40
-  애플               35.4      -3.2%        -1.6%    39
-  인텔               59.1      -4.4%       -14.5%    43
-  코인베이스            71.0      +0.5%       -50.0%    29
-  테슬라             170.8      +5.8%       -24.8%    38
+  마이크론              6.9     +38.2%       -12.7%    46
+  엔비디아             14.6     +43.2%        -3.2%    59
+  머크               15.8      +1.4%        -3.8%    26
+  마이크로소프트          21.0     +15.7%       -10.1%    52
+  메타               21.1      +3.3%        -4.4%    56
+  알파벳              23.6     +22.3%       -14.1%    54
+  아마존              24.5     +29.1%       -11.2%    58
+  디어               31.0      -2.1%        -0.4%    23
+  월마트              34.1     +15.7%       -18.5%    40
+  애플               35.4      -3.4%        -1.6%    39
+  인텔               60.1      -6.0%       -13.0%    43
+  코인베이스            70.9      +1.3%       -50.0%    30
+  테슬라             172.4      +4.8%       -24.0%    38
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 0 하향 0 (의견 유지 10건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 0 하향 0 (의견 유지 11건은 뺐습니다)
   빈 결과도 결과입니다 — 그 주에 의견 변경이 없었다는 뜻입니다.
 
-[월가 리포트] US · 오늘 · 58건 (상향 9 하향 3 신규 23 목표가 상향 10 하향 2) · 출처 marketbeat
+[월가 리포트] US · 오늘 · 181건 (상향 13 하향 7 신규 42 목표가 상향 32 하향 38) · 출처 marketbeat
+  AM     ▲ 상향     Capital One Financial     Equal Weight → Overweight $25.00
+  BCAX   ▼ 하향     HSBC                      Equal Weight             
+  BEAT   ▼ 하향     HC Wainwright             Buy → Neutral            
+  CMPX   ▼ 하향     Wedbush                   Neutral                  
   DANOY  ▲ 상향     Deutsche Bank Aktiengese  Sell → Hold              
   DAVA   ▼ 하향     William Blair             Market Perform → Underperform 
   EAT    ▲ 상향     Northcoast Research       Neutral → Buy            $275.00
   EGO    ▲ 상향     Bank of America           Underperform → Buy       $32.00 → $54.00
+  EPM    ▲ 상향     Freedom Broker            Hold → Buy               $4.50
   ERIC   ▼ 하향     Morgan Stanley            Equal Weight → Underweight $11.00 → $9.00
-  FITB   ▲ 상향     Citigroup                 Neutral → Buy            
+  FITB   ▲ 상향     Citigroup                 Neutral → Buy            $59.00 → $62.00
+  HFWA   ▲ 상향     Brean Capital             Neutral → Buy            $33.00
   MET    ▲ 상향     Piper Sandler             Neutral → Overweight     $99.00 → $110.00
+  NFLX   ▼ 하향     HSBC                      Buy → Hold               $96.00 → $76.00
   OMER   ▲ 상향     Cantor Fitzgerald         Neutral → Overweight     $22.00
+  QNCX   ▲ 상향     Citizens Jmp              Market Perform → Outperform $77.00
   QNCX   ▲ 상향     Citigroup                 Market Perform → Outperform 
   REPYY  ▼ 하향     Santander                 Outperform → Neutral     
   RNR    ▲ 상향     Jefferies Financial Grou  Hold → Market Outperform 
-  WST    ▲ 상향     Morgan Stanley            Buy → Overweight         $365.00 → $400.00
+  WST    ▲ 상향     Morgan Stanley            Equal Weight → Overweight $365.00 → $400.00
+  ARDT   · 신규     BMO Capital Markets       Market Perform           
   BFLY   · 신규     Needham & Company LLC     Buy                      $10.00
   BILI   · 신규     BNP Paribas Exane         Outperform               $23.00
+  CRWV   · 신규     UBS Group                 Underperform → Buy       
   CXT    · 신규     Jefferies Financial Grou  Buy                      $60.00
-  EG     · 신규     Royal Bank Of Canada      Outperform               
+  CYH    · 신규     BMO Capital Markets       Market Perform           
+  DRVN   · 신규     Barclays                  Equal Weight             $14.00
+  EG     · 신규     Royal Bank Of Canada      Outperform               $455.00
   ENTX   · 신규     Cantor Fitzgerald         Overweight               
   EPD    · 신규     Melius Research           Hold                     $42.00
-  ET     · 신규     Melius Research           Hold                     $25.00
-  FISN   · 신규     Roth Capital              Buy                      
-  GEHC   · 신규     Needham & Company LLC     Buy                      $93.00
-  IMSR   · 신규     Roth Capital              Buy                      $15.00
-  IRMD   · 신규     Needham & Company LLC     Hold                     
-  KMI    · 신규     Melius Research           Buy                      $38.00
-  LFTO   · 신규     Piper Sandler             Neutral                  $19.00
-  NTDOY  · 신규     BNP Paribas Exane         Neutral                  
-  NTES   · 신규     BNP Paribas Exane         Outperform               $180.00
-  RNR    · 신규     Royal Bank Of Canada      Sector Perform           $365.00
-  SNDK   · 신규     Rosenblatt Securities     Buy                      $2,400.00
-  SPNT   · 신규     Royal Bank Of Canada      Outperform               $30.00
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
   D-8   2026-09-30  마이크론
 
-  ⚠ 3건을 받지 못했습니다. 아래 결과는 **일부입니다** — `0건`을 '그런 일이 없었다'로 읽지 마십시오.
+  ⚠ 6건을 받지 못했습니다. 아래 결과는 **일부입니다** — `0건`을 '그런 일이 없었다'로 읽지 마십시오.
 [내부자 매수] 최근 14일 · 0건
   금액과 직위를 함께 보십시오. 같은 '내부자 매수'라도 4만 달러와 300만 달러는 다른 신호입니다.
 
@@ -89,9 +89,9 @@
   13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 지금의 포지션이 아닙니다.
 
 [미 거시] 최근 90일
-  미 10년물 국채금리           5.01  (+0.60) 기간 최저 4.38(2026-06-26) 최고 5.01(2026-09-16)
+  미 10년물 국채금리           4.96  (+0.55) 기간 최저 4.38(2026-06-26) 최고 5.01(2026-09-16)
   미 2년물 국채금리            4.76  (+0.65) 기간 최저 4.07(2026-06-26) 최고 4.76(2026-09-18)
-  장단기 금리차(10년-2년)       0.20  (-0.10) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
+  장단기 금리차(10년-2년)       0.25  (-0.05) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
   연방기금금리                3.63  (+0.00) 기간 최저 3.63(2026-06-01) 최고 3.63(2026-06-01)
   미 소비자물가지수           334.13  (+1.56) 기간 최저 332.57(2026-06-01) 최고 334.13(2026-08-01)
 
