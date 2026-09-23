@@ -1,5 +1,5 @@
 {
- "date": "2026-09-22",
+ "date": "2026-09-23",
  "window": "3개월",
  "total_clicks": 21,
  "total_impressions": 3,
@@ -7,30 +7,30 @@
   {
    "query": "kospi vs kosdaq",
    "clicks": 0,
-   "impressions": 23,
+   "impressions": 27,
    "ctr": 0.0,
-   "position": 5.4
+   "position": 5.8
   },
   {
    "query": "kosdaq vs kospi",
    "clicks": 0,
-   "impressions": 17,
+   "impressions": 20,
    "ctr": 0.0,
-   "position": 7.7
+   "position": 7.6
   },
   {
    "query": "kospi trading hours",
    "clicks": 0,
-   "impressions": 15,
+   "impressions": 16,
    "ctr": 0.0,
-   "position": 65.5
+   "position": 65.6
   },
   {
    "query": "englishdart",
    "clicks": 0,
-   "impressions": 13,
+   "impressions": 14,
    "ctr": 0.0,
-   "position": 6.2
+   "position": 6.1
   },
   {
    "query": "krx 애프터마켓 거래대금 1조 붕괴 원인과 대체거래소 비교",
@@ -68,6 +68,13 @@
    "position": 43.0
   },
   {
+   "query": "kospi kosdaq difference",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0.0,
+   "position": 9.0
+  },
+  {
    "query": "what is kosdaq",
    "clicks": 0,
    "impressions": 3,
@@ -94,6 +101,13 @@
    "impressions": 3,
    "ctr": 0.0,
    "position": 81.3
+  },
+  {
+   "query": "difference between kospi and kosdaq",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 3.5
   },
   {
    "query": "kosdaq kospi difference",
@@ -132,13 +146,6 @@
   },
   {
    "query": "dart korea",
-   "clicks": 0,
-   "impressions": 2,
-   "ctr": 0.0,
-   "position": 8.0
-  },
-  {
-   "query": "kospi kosdaq difference",
    "clicks": 0,
    "impressions": 2,
    "ctr": 0.0,
@@ -215,6 +222,13 @@
    "position": 1.0
   },
   {
+   "query": "krx 애프터마켓 개장 첫 주 거래 실적과 기존 대체거래소 비교 결과 알려줘",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 1.0
+  },
+  {
    "query": "electronics?",
    "clicks": 0,
    "impressions": 1,
@@ -264,14 +278,14 @@
    "position": 4.0
   },
   {
-   "query": "dart stock exchange",
+   "query": "ist die liste vollständig?",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
-   "position": 6.0
+   "position": 5.0
   },
   {
-   "query": "difference between kospi and kosdaq",
+   "query": "dart stock exchange",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
@@ -369,6 +383,13 @@
    "position": 10.0
   },
   {
+   "query": "krx kospi 차이 200",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 10.0
+  },
+  {
    "query": "ewy vs kospi",
    "clicks": 0,
    "impressions": 1,
@@ -388,6 +409,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 11.0
+  },
+  {
+   "query": "constituent",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 12.0
   },
   {
    "query": "삼성 생명 주가",
