@@ -1,0 +1,120 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-23",
+  "checked": "2026-09-23",
+  "slug": "kospi-200-kosdaq-150-year-end-targets-2026",
+  "category_id": 153,
+  "tags": ["KOSPI target", "KOSPI 200", "KOSDAQ 150", "Korea stock market forecast", "KOSPI 2026"],
+  "radar_origin": "search queue: kospi200 kosdaq150 2026 year end target forecast (5.5위, 새 글 — 전용 글 없이도 이만큼 왔습니다). 이번 주 고치기 두 편(9/21 KOSPI vs KOSDAQ, 9/22 KOSPI 200 Explained)을 이미 써서 고치기 줄을 건너뛰고 새 글 줄로 내려왔습니다.",
+  "related": [
+    {
+      "title": "KOSPI 200 Explained: How Korea Picks 200 Stocks (2026)",
+      "url": "https://fermata.it.kr/kospi-200-explained/"
+    },
+    {
+      "title": "KOSPI vs KOSDAQ: Korea's Two Boards, Explained",
+      "url": "https://fermata.it.kr/kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you/"
+    },
+    {
+      "title": "SK Hynix Stock vs Micron: How to Actually Buy HBM Exposure",
+      "url": "https://fermata.it.kr/sk-hynix-vs-micron/"
+    }
+  ],
+  "ko": {
+    "title": "KOSPI 200 and KOSDAQ 150 in 2026: The Year-End Target Nobody Sets",
+    "narrative": [
+      {
+        "heading": "The target you're reading about is for the KOSPI, not KOSPI 200",
+        "body": "If you searched for a KOSPI 200 or KOSDAQ 150 year-end target for 2026, the numbers you'll actually find in Korean financial media — 6,500, 10,500, 11,500 — are not KOSPI 200 or KOSDAQ 150 figures at all. They are targets for the <b>KOSPI Composite Index</b>, the broad, all-common-stock benchmark that Korea Exchange (KRX) headlines quote every trading day, currently trading around 7,000. KOSPI 200 is a separate, smaller number: a curated 200-stock subset of the same board, built by Korea Exchange for futures, options and index funds, and it closed at <b>1,126.18</b> on September 23, 2026 — a completely different scale from the Composite it is drawn from.\n\nKOSDAQ works the same way. \"The KOSDAQ\" in a headline means the KOSDAQ Composite, which closed at 834.38 on September 22, 2026. KOSDAQ 150 is Korea Exchange's curated large-cap subset of that board, the one KOSDAQ 150 futures and ETFs like KODEX KOSDAQ150 actually track, and it traded around <b>1,408</b> on September 23, 2026. None of the brokerage forecasts below are built around either 200-stock or 150-stock index level — they are Composite calls, and this guide is upfront about that gap before walking through what strategists actually said."
+      },
+      {
+        "heading": "Why nobody publishes a standalone KOSPI 200 or KOSDAQ 150 target",
+        "body": "This isn't an oversight. KOSPI 200 and KOSDAQ 150 exist to be tracked by financial products — Korea Exchange rebalances KOSPI 200 twice a year using an industry-group method, and KODEX 200, TIGER 200 and the KOSPI 200 futures and options market are all built on it — not to be forecast as standalone headline numbers the way the Composite is. When a Korean brokerage does put a number on the companies inside KOSPI 200, it is usually an earnings estimate, not an index level: Samsung Securities, for instance, estimated 2026 operating profit for KOSPI 200 constituents at roughly 384 trillion won, up about 37% year over year, driven by what the firm called the strongest earnings momentum in the world at the time.\n\nThat earnings number is the input strategists actually use to build their Composite-level price targets — a rising profit estimate for the same 200 large-cap companies pushes the Composite target up, even though the KOSPI 200 index figure itself is never the headline. If you want a number that moves with sentiment toward Korea's biggest companies, watch the profit estimates for KOSPI 200 firms; if you want the number the media quotes, that's the Composite, covered next."
+      },
+      {
+        "heading": "How fast 2026 KOSPI Composite targets actually moved",
+        "body": "The 2026 targets did not sit still. Korea Investment & Securities opened the year by raising its KOSPI target from 4,600 to <b>5,650</b> on January 7, citing a 12-month forward EPS estimate of 435 — 28.8% above its October 2025 forecast — at a target price-to-earnings ratio of 13x. Seven weeks later, on February 27, Morgan Stanley raised its base-case target from 5,200 to <b>6,500</b> and its bull case from 6,000 to <b>7,500</b>, while JPMorgan separately put a bull-case figure of 7,500 on the table the same week, both citing an AI-linked memory semiconductor supercycle.\n\nThe index kept outrunning even those upgrades. On May 14, KB Securities raised its target by 40%, from 7,500 to <b>10,500</b>, forecasting that Samsung Electronics and SK Hynix's combined 2026 operating profit would jump from 91 trillion won in 2025 to roughly 630 trillion won, part of a projected 919 trillion won in total KOSPI operating profit for the year. Daishin Securities, which had already moved its own target from 7,500 to 8,800 earlier in the year, raised it again on June 17 to <b>11,500</b>, arguing that the semiconductor sector's price-to-earnings ratio would normalize from roughly 5.43x toward 8.8x as memory earnings caught up with the rally."
+      },
+      {
+        "heading": "Where the index actually sat against those targets in September",
+        "body": "The KOSPI Composite closed at <b>7,017.91</b> on September 22, 2026 — above Morgan Stanley's February base case of 6,500, inside its bull-case range on the way to 7,500, and well short of the 10,500 and 11,500 targets KB Securities and Daishin Securities set in May and June. In other words, by September the market had validated the earlier, more conservative upgrades and was still catching up to the most aggressive ones made mid-year.\n\nFor the month itself, Kiwoom Securities' September 1 outlook put the KOSPI in a <b>6,300 to 7,600</b> range, flagging roughly 90 trillion won in accumulated retail buy positions sitting above the 7,000 level — about 20 trillion won concentrated between 7,000 and 7,500, and another 72 trillion won near 8,000 — as a likely source of profit-taking that could cap further gains even if earnings kept improving. A September 6 roundup of five brokerages' monthly outlooks showed a similar band: Korea Investment & Securities at 6,200–7,400, Kiwoom at 6,300–7,600, Shinhan Investment at 6,600–8,000, Yuanta Securities at 6,700–8,100 and Samsung Securities at 6,500–8,500 — every one of which comfortably contained the index's actual September 22 close."
+      },
+      {
+        "heading": "Translating a Composite target into what it means for KOSPI 200 and KOSDAQ 150",
+        "body": "There is no fixed ratio you can apply to turn a KOSPI Composite target into a KOSPI 200 or KOSDAQ 150 number, because the two indices use different base dates, different divisors and, in KOSPI 200's case, a different rebalancing calendar than the Composite. What you can do is track them directly: KOSPI 200 closed at 1,126.18 and KOSDAQ 150 traded around 1,408 on September 23, 2026, and both move for the same underlying reason the Composite targets above keep rising — the concentrated earnings strength at Samsung Electronics, SK Hynix and the other large caps that dominate both curated indices.\n\nBecause KOSPI 200 and KOSDAQ 150 are what Korea's own index funds, ETFs and derivatives are actually priced against, a large swing in either one has a more direct, mechanical connection to fund flows than a move in the broader Composite does — the twice-yearly KOSPI 200 rebalance is a concrete example covered in our companion guide. If your goal is to track the specific instrument you hold — a KOSPI 200 futures contract, a KODEX 200 or KODEX KOSDAQ150 position — check that index's own current level directly rather than assuming it will scale with whatever Composite target a brokerage published that month."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed each brokerage revision above — Korea Investment & Securities' January move, Morgan Stanley's and JPMorgan's February calls, KB Securities' May upgrade and Daishin Securities' June upgrade — against at least two independently published Korean or English-language news reports of each firm's own research note, and we confirmed the September 22–23, 2026 index levels for the KOSPI Composite, KOSDAQ Composite, KOSPI 200 and KOSDAQ 150 against two separate data providers each.\n\nWe could not find a KOSDAQ Composite or KOSDAQ 150 year-end target for 2026 from a major securities firm that we could verify against two independent sources, so we are not printing one here — several secondary write-ups cited a \"950 to 1,050\" range for the KOSDAQ without a firm name or report date we could confirm directly, and the actual KOSDAQ Composite (834.38 on September 22) was already below that range, which made the figure impossible for us to stand behind. We also could not confirm a standalone KOSPI 200 or KOSDAQ 150 index-level target from any brokerage, because — as section two explains — that does not appear to be a number Korean strategists publish."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Every widely quoted \"2026 KOSPI target\" is a forecast for the Composite, not for KOSPI 200 or KOSDAQ 150 — the two indices that actually underlie Korea's index funds, ETFs and futures moved on their own, closing at 1,126.18 and around 1,408 respectively on September 23, 2026. The Composite targets themselves have been revised upward almost every time the market has tested them in 2026, from Korea Investment & Securities' 5,650 in January to Daishin Securities' 11,500 in June, and the index closed at 7,017.91 in September still working through that range.\n\nTreat these numbers as a read on how fast sell-side earnings estimates are rising, not as a price you should plan around — targets that get revised this often are describing a rally already in progress more than predicting one. If you hold a position tied specifically to KOSPI 200 or KOSDAQ 150, check that index's own current level rather than scaling a Composite headline. This guide reflects brokerage research notes and index levels as reported and cross-checked in September 2026; all figures change, and this is not investment advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "KOSPI 200 at 1,126 and KOSDAQ 150 at 1,408 on September 23, 2026, next to the much larger KOSPI Composite targets brokerages actually publish",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "KOSPI 200 vs KOSDAQ 150",
+        "left": {"label": "KOSPI 200 (Sep 23, 2026)", "value": "1,126"},
+        "right": {"label": "KOSDAQ 150 (Sep 23, 2026)", "value": "1,408"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Timeline of five brokerages raising their 2026 KOSPI Composite target from January to June 2026",
+      "args": {
+        "title": "How fast 2026 KOSPI targets moved",
+        "subtitle": "Each firm's KOSPI Composite year-end target, not a KOSPI 200 figure",
+        "columns": ["Date", "Firm", "Prior target", "New target"],
+        "rows": [
+          ["Jan 7", "Korea Investment & Securities", "4,600", "5,650"],
+          ["Feb 27", "Morgan Stanley (base / bull)", "5,200 / 6,000", "6,500 / 7,500"],
+          ["May 14", "KB Securities", "7,500", "10,500"],
+          ["Jun 17", "Daishin Securities", "8,800", "11,500"]
+        ],
+        "source": "Herald Corp, Hankyung, WowTV Korea, Munhwa Ilbo and Sedaily reports of each firm's research note, Jan–Jun 2026",
+        "note": "KOSPI Composite closed at 7,017.91 on September 22, 2026 — above the January and February targets, below the May and June ones."
+      },
+      "section": 3
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Five Korean brokerages' September 2026 KOSPI range forecasts compared to the index's actual close",
+      "args": {
+        "title": "Where five brokerages saw September 2026 landing",
+        "subtitle": "Monthly outlook reports published around September 1–6, 2026",
+        "columns": ["Firm", "September 2026 range"],
+        "rows": [
+          ["Korea Investment & Securities", "6,200–7,400"],
+          ["Kiwoom Securities", "6,300–7,600"],
+          ["Shinhan Investment", "6,600–8,000"],
+          ["Yuanta Securities", "6,700–8,100"],
+          ["Samsung Securities", "6,500–8,500"]
+        ],
+        "source": "Segye Ilbo roundup of five brokerages' September outlook reports, published September 6, 2026",
+        "note": "The KOSPI Composite closed at 7,017.91 on September 22, 2026 — inside every range above."
+      },
+      "section": 5
+    }
+  ],
+  "sources": [
+    {"name": "Korea Exchange", "title": "KOSPI 200 (Global KRX product page)", "url": "https://global.krx.co.kr/contents/GLB/02/0202/0202010101/GLB0202010101.jsp"},
+    {"name": "Herald Corp (biz.heraldcorp.com)", "title": "생생 증식션360 — Korea Investment & Securities raises KOSPI target to 5,650", "url": "https://biz.heraldcorp.com/article/10650335"},
+    {"name": "Hankyung", "title": "Morgan Stanley raises KOSPI target to 6,500, bull case 7,500", "url": "https://www.hankyung.com/article/2026022795536"},
+    {"name": "Nate News", "title": "JPMorgan, Nomura, Morgan Stanley: 'KOSPI 7,500 possible'", "url": "https://m.news.nate.com/view/20260227n20952"},
+    {"name": "Bloomingbit", "title": "KB Securities sets KOSPI target at 10,500", "url": "https://en.bloomingbit.io/feed/news/112141"},
+    {"name": "Munhwa Ilbo", "title": "Daishin Securities raises KOSPI target from 8,800 to 11,500", "url": "https://www.munhwa.com/article/11596294"},
+    {"name": "Segye Ilbo", "title": "Six brokerages' September 2026 KOSPI range forecasts", "url": "https://www.segye.com/newsView/20260906505670"},
+    {"name": "Investing.com (kr.investing.com)", "title": "KOSPI 200 historical data", "url": "https://kr.investing.com/indices/kospi-200-historical-data"},
+    {"name": "Investing.com (kr.investing.com)", "title": "KOSDAQ 150 index data", "url": "https://kr.investing.com/indices/kosdaq-150"},
+    {"name": "Hankyung Markets", "title": "KOSDAQ 150 futures", "url": "https://markets.hankyung.com/indices/kosdaq-future"}
+  ]
+}
