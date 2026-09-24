@@ -1,5 +1,5 @@
 {
- "date": "2026-09-23",
+ "date": "2026-09-24",
  "window": "3개월",
  "total_clicks": 21,
  "total_impressions": 3,
@@ -21,9 +21,9 @@
   {
    "query": "kospi trading hours",
    "clicks": 0,
-   "impressions": 16,
+   "impressions": 17,
    "ctr": 0.0,
-   "position": 65.6
+   "position": 65.8
   },
   {
    "query": "englishdart",
@@ -68,11 +68,32 @@
    "position": 43.0
   },
   {
+   "query": "kospi 200 index methodology",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0.0,
+   "position": 5.3
+  },
+  {
+   "query": "krx kospi 200 index methodology",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0.0,
+   "position": 5.7
+  },
+  {
    "query": "kospi kosdaq difference",
    "clicks": 0,
    "impressions": 3,
    "ctr": 0.0,
    "position": 9.0
+  },
+  {
+   "query": "kospi and kosdaq",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0.0,
+   "position": 9.7
   },
   {
    "query": "what is kosdaq",
@@ -124,13 +145,6 @@
    "position": 5.5
   },
   {
-   "query": "kospi 200 index methodology",
-   "clicks": 0,
-   "impressions": 2,
-   "ctr": 0.0,
-   "position": 6.0
-  },
-  {
    "query": "dart filing",
    "clicks": 0,
    "impressions": 2,
@@ -157,13 +171,6 @@
    "impressions": 2,
    "ctr": 0.0,
    "position": 8.0
-  },
-  {
-   "query": "kospi and kosdaq",
-   "clicks": 0,
-   "impressions": 2,
-   "ctr": 0.0,
-   "position": 11.5
   },
   {
    "query": "korea dart",
@@ -223,6 +230,13 @@
   },
   {
    "query": "krx 애프터마켓 개장 첫 주 거래 실적과 기존 대체거래소 비교 결과 알려줘",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 1.0
+  },
+  {
+   "query": "네",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
@@ -306,6 +320,13 @@
    "position": 6.0
   },
   {
+   "query": "dart korean filings",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 7.0
+  },
+  {
    "query": "difference between kosdaq and kospi",
    "clicks": 0,
    "impressions": 1,
@@ -335,13 +356,6 @@
   },
   {
    "query": "kospi and kosdaq difference",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0.0,
-   "position": 8.0
-  },
-  {
-   "query": "krx kospi 200 index methodology",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
@@ -390,6 +404,13 @@
    "position": 10.0
   },
   {
+   "query": "배당락 기준일",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 10.0
+  },
+  {
    "query": "ewy vs kospi",
    "clicks": 0,
    "impressions": 1,
@@ -398,6 +419,13 @@
   },
   {
    "query": "how to buy stocks in korea as a foreigner",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 11.0
+  },
+  {
+   "query": "kosdaq meaning",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
