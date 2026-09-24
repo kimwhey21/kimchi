@@ -1,0 +1,123 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-24",
+  "checked": "2026-09-24",
+  "slug": "korean-analyst-ratings",
+  "category_id": 153,
+  "tags": ["korea analyst ratings", "korean brokerage sell rating", "KOSPI target price accuracy", "Korean stock research bias", "KOFIA"],
+  "radar_origin": "list order",
+  "related": [
+    {
+      "title": "SK Hynix Stock vs Micron: How to Actually Buy HBM Exposure",
+      "url": "https://fermata.it.kr/sk-hynix-vs-micron/"
+    },
+    {
+      "title": "KOSPI 200 Explained: How Korea Picks 200 Stocks (2026)",
+      "url": "https://fermata.it.kr/kospi-200-explained/"
+    },
+    {
+      "title": "Korea Value-Up Program: What It Actually Changed by 2026",
+      "url": "https://fermata.it.kr/korea-value-up-program/"
+    }
+  ],
+  "ko": {
+    "title": "Korean Analyst Ratings: Why 'Sell' Almost Never Appears (2026)",
+    "narrative": [
+      {
+        "heading": "The short answer: a rating gap most foreign investors don't expect",
+        "body": "If you've read a research note from a Korean brokerage and wondered why almost nobody ever says sell, you are reading the market correctly, not missing something. Korea Financial Investment Association (KOFIA) data reported by Seoul Economic Daily on April 26, 2026 found that of 42 brokerages that published at least one equity research report over the prior year, 26 issued zero sell ratings across their entire coverage. A separate, far larger academic dataset — roughly 735,000 analyst reports from 2000 to 2024, covering 43 brokerages, studied by the Korea Capital Market Institute (KCMI) and reported by Seoul Economic Daily on May 4, 2026 and by Edaily on May 5, 2026 — puts sell opinions at just 0.14% of all ratings issued from 2015 to 2024, against a buy-or-strong-buy share of 91.17%. Two independent counts, taken years apart and using different methods, land on the same conclusion: a Korean brokerage rating is not calibrated the way a US or European one is, and reading it at face value will mislead you."
+      },
+      {
+        "heading": "How lopsided it actually is, in two independent counts",
+        "body": "The two counts also show how narrow the exceptions are. In KOFIA's one-year snapshot, only three domestic firms carried any sell rating at all: Shinyoung Securities at 1.3% of its ratings, and DS Investment & Securities and Mirae Asset Securities tied at 0.6% each, with Meritz Securities at 0.5%. Four domestic brokerages — Bukook, Yuhwa, Hanyang and Next Securities — rated 100% of their covered stocks a buy, according to a separate, year-end-2025 count of 31 domestic brokerages reported by Newdaily on March 18, 2026, which found 28 of those 31 (about nine in ten) with zero sell ratings — a slightly different measurement window than KOFIA's rolling-year count, but the same order of magnitude. Even downgrades rarely reach sell: of 70 rating downgrades Korean brokerages issued in 2026 in the KOFIA data, only two used the word sell outright, and both came from the same firm, DS Investment. The KCMI academic study adds the long view — the buy-or-strong-buy share has not always been this extreme; it rose from about 73% of ratings before 2015 to 91% from 2015 onward, alongside a shrinking research industry: the number of brokerages doing equity research fell from 36 in 2015 to 30 in 2024, and analyst headcount dropped from roughly 600 to about 400 over the same period."
+      },
+      {
+        "heading": "Why domestic brokerages won't say sell",
+        "body": "Korean financial media has traced the same structural causes for years, and Newdaily's March 2026 reporting cites the core one directly: research divisions at Korean brokerages depend on the same firm's investment banking and brokerage-commission revenue, which makes publishing a negative call on a company that could become — or already is — a client or trading counterparty a direct conflict of interest. Earlier reporting by the Korea Times in 2023, describing the same dynamic, quoted analysts on the mechanics: companies can and do restrict access to earnings briefings and guidance for analysts who publish negative views, individual investors holding a stock file complaints against analysts who cut ratings, and most Korean institutional money runs long-only rather than long-short, which leaves little buy-side demand for negative research the way hedge funds create in other markets. None of that applies in the same way to the Seoul desks of foreign banks, whose research clients and revenue mostly sit outside Korea's domestic relationships — consistent with what the KOFIA data shows: J.P. Morgan Securities' Seoul branch posted the highest sell ratio of any brokerage in the market at 51.3%, followed by Merrill Lynch International's Seoul branch at 21.3%, Citigroup Global Markets Securities at 18.4%, Goldman Sachs Securities' Seoul branch at 16.3% and Morgan Stanley International Securities' Seoul branch at 15.9%."
+      },
+      {
+        "heading": "The other half of the problem: target prices overshoot too",
+        "body": "A buy-heavy rating is only half the distortion — the KCMI study, authored by senior research fellow Kim Jun-seok and covering roughly 735,000 reports from 2000 to 2024, found that target prices have gotten less reliable at the same time ratings got more uniform. The probability that a stock actually reaches its 12-month target price fell from 30.46% in the 2000-2014 period to 18.54% from 2015 to 2023 — under one in five, well below a coin flip. The share of stocks that reached their target within a year fell even more, from 53.69% to 36.01%. Averaged across the 2015-2024 period, the expected return implied by analysts' target prices ran about 30% higher than the return stocks actually delivered. Put together with the ratings data, the pattern is not that Korean analysts are simply optimistic about a few names — it is a structural, industry-wide lean toward both bullish ratings and inflated price targets that has become more pronounced, not less, over the past decade."
+      },
+      {
+        "heading": "What this means when you read a Korean brokerage note",
+        "body": "None of this makes Korean brokerage research worthless — it means reading it the way a domestic institutional desk does, adjusting for the bias rather than taking the headline rating at face value. A few practical adjustments: treat <b>buy</b> as closer to neutral than bullish, since it is the base-rate outcome for roughly nine in ten ratings rather than a distinguishing signal; watch the direction of a rating change more than its absolute level, since a cut from Strong Buy to Buy, or from Buy down to a firm's lowest working tier (often labeled Hold or Trading Buy — true sell calls are rare enough that a downgrade to anything below buy is itself the signal), carries more information than the label does on its own; discount the target price for optimism rather than reading it as a forecast, given the roughly one-in-five hit rate the KCMI study found; and if you want research more likely to include a genuine sell or underweight call, foreign-bank Seoul desks — J.P. Morgan, Merrill Lynch, Citigroup, Goldman Sachs and Morgan Stanley among them — carried sell ratios five to fifty times higher than most domestic peers in KOFIA's own count."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed the one-year KOFIA snapshot (42 brokerages, 26 with zero sell ratings, the named domestic and foreign sell ratios, and the 70-downgrades-only-two-sell figure) through Seoul Economic Daily's April 26, 2026 report, and cross-checked the same general finding — roughly nine in ten domestic brokerages posting zero sell ratings — against a separate, year-end-2025 count of 31 domestic brokerages reported by Newdaily on March 18, 2026; the two used different measurement windows and produced slightly different brokerage counts and percentages, which we have noted rather than reconciled into one figure. We confirmed the KCMI academic figures (91.17% buy-or-strong-buy for 2015-2024, 0.14% sell, the target-price hit rates, and the 30% average overshoot) by matching Seoul Economic Daily's May 4, 2026 report against Edaily's May 5, 2026 report of the same underlying study; both cite the same author and the same roughly 735,000-report sample, with matching figures.\n\nWe could not access KOFIA's or KCMI's own primary data pages directly — everything in this guide about their findings comes through financial-media reporting of those organizations' disclosures and research, not a KOFIA disclosure filing or KCMI paper we opened ourselves. We also could not verify whether the sell-rating scarcity differs meaningfully by sector; none of the sources we found broke the figures down below the whole-market level. If you need the primary data, KOFIA's own disclosure system and KCMI's published research are the places to check."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Roughly nine in ten Korean domestic brokerages issue no sell ratings at all, and the buy-or-strong-buy share of all ratings has run above 90% since 2015 — a pattern confirmed by two independent counts, one a one-year industry snapshot and the other a 25-year, 735,000-report academic study. Target prices carry a matching bias: only about one in five actually gets reached within a year, and the gap between projected and realized returns has widened since 2015, not narrowed. None of that makes Korean sell-side research useless, but it does mean the rating label itself isn't the signal — the direction of a change, the size of a target-price revision, and whose desk wrote the note (domestic versus a foreign bank's Seoul office) tell you more than 'buy' by itself ever will.\n\nThis guide reflects KOFIA and KCMI data as reported by Korean and English-language financial media through May 2026, checked in September 2026. Coverage, ratings and target prices all change continuously; check a broker's current, full report before acting on any single rating. This is not investment advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korean analyst ratings: 26 of 42 brokerages issued zero sell ratings",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea Analyst Ratings",
+        "left": {"label": "Domestic brokerages with 0% sell ratings", "value": "26 of 42"},
+        "right": {"label": "Ratings that are Buy or Strong Buy (2015-2024)", "value": "91.17%"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Sell-rating ratio by brokerage, comparing domestic and foreign Seoul desks",
+      "args": {
+        "title": "Who actually says sell",
+        "subtitle": "Sell-rating ratio by brokerage (KOFIA data via Seoul Economic Daily, April 26, 2026)",
+        "columns": ["Brokerage", "Sell ratio"],
+        "rows": [
+          ["J.P. Morgan Securities (Seoul)", "51.3%"],
+          ["Merrill Lynch International (Seoul)", "21.3%"],
+          ["Citigroup Global Markets Securities", "18.4%"],
+          ["Goldman Sachs Securities (Seoul)", "16.3%"],
+          ["Morgan Stanley International Securities (Seoul)", "15.9%"],
+          ["Shinyoung Securities", "1.3%"],
+          ["Mirae Asset Securities / DS Investment & Securities", "0.6%"],
+          ["26 of 42 domestic and foreign brokerages", "0.0%"]
+        ],
+        "source": "Korea Financial Investment Association data, as reported by Seoul Economic Daily, April 26, 2026",
+        "note": "Figures are one brokerage's ratings as a share of its own total coverage over the prior year, not a market-wide average."
+      },
+      "section": 2
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three adjustments to make before acting on a Korean brokerage rating",
+      "args": {
+        "title": "Before you act on a Korean brokerage rating",
+        "subtitle": "Read the bias, not just the label",
+        "items": [
+          {
+            "label": "Read 'buy' as closer to neutral",
+            "why": "It is the outcome for roughly 9 in 10 ratings, so it does not by itself separate strong calls from weak ones."
+          },
+          {
+            "label": "Watch the direction of a change, not the label itself",
+            "why": "True sell calls are rare enough that any downgrade below buy is usually the real signal."
+          },
+          {
+            "label": "Discount the target price for optimism",
+            "why": "KCMI's 2000-2024 study found only about a 1-in-5 chance a stock reaches its 12-month target."
+          }
+        ]
+      },
+      "section": 5
+    }
+  ],
+  "sources": [
+    {"name": "Korea Financial Investment Association", "title": "Sell-rating data via Seoul Economic Daily: Korean Analysts Avoid 'Sell' Calls as Buy Ratings Dominate", "url": "https://en.sedaily.com/news/2026/04/26/korean-analysts-avoid-sell-calls-as-buy-ratings-dominate"},
+    {"name": "Korea Capital Market Institute", "title": "Analyst Optimism, Accuracy and Informativeness, via Seoul Economic Daily: 90% of Korean Analyst Reports Say 'Buy,' Yet Target Prices Miss 80% of the Time", "url": "https://en.sedaily.com/finance/2026/05/04/90-percent-of-korean-analyst-reports-say-buy-yet-target"},
+    {"name": "Edaily", "title": "매도 의견은 0.14%뿐...증권사 리포트, 여전한 매수 쏠림 (same KCMI study)", "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02351766645445968"},
+    {"name": "Newdaily", "title": "신뢰 추락한 증권사 종목 리포트...기업 눈치보기에 매수 일색, 매도는 실종", "url": "https://biz.newdaily.co.kr/site/data/html/2026/03/18/2026031800103.html"},
+    {"name": "Korea Times", "title": "[ANALYSIS] What's behind scarcity of 'sell' recommendations by Korean brokerages?", "url": "http://www.koreatimes.co.kr/www/biz/2023/07/175_354649.html"}
+  ]
+}
