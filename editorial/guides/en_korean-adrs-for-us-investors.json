@@ -1,0 +1,200 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-25",
+  "checked": "2026-09-25",
+  "slug": "korean-adrs-for-us-investors",
+  "category_id": 153,
+  "tags": [
+    "Korean ADR",
+    "PKX",
+    "KB Financial",
+    "SK Telecom",
+    "SKHY"
+  ],
+  "radar_origin": "list order",
+  "related": [
+    {
+      "title": "How to Buy Korean Stocks From the US or Canada (2026)",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    },
+    {
+      "title": "How to Buy Samsung Electronics Stock From the US (2026)",
+      "url": "https://fermata.it.kr/how-to-buy-samsung-electronics-abroad/"
+    },
+    {
+      "title": "SK Hynix Stock vs Micron: How to Actually Buy HBM Exposure",
+      "url": "https://fermata.it.kr/sk-hynix-vs-micron/"
+    }
+  ],
+  "ko": {
+    "title": "Korean ADR List for US Investors: Every Ticker Explained",
+    "narrative": [
+      {
+        "heading": "The short answer: eight tickers, plus one that just broke every record",
+        "body": "Eight Korean companies have American Depositary Receipts that trade as ordinary listed securities on the NYSE or Nasdaq, the same way any US stock does: <b>POSCO Holdings (PKX)</b>, <b>KT Corporation (KT)</b>, <b>SK Telecom (SKM)</b>, <b>KB Financial Group (KB)</b>, <b>Shinhan Financial Group (SHG)</b>, <b>Woori Financial Group (WF)</b>, <b>LG Display (LPL)</b> and <b>Korea Electric Power (KEP)</b>. In July 2026 a ninth joined them, and it arrived louder than any of the others combined: <b>SK Hynix</b>, trading as <b>SKHY</b> on the Nasdaq Global Select Market after the largest share sale by a non-US company on record.\n\nThe name missing from that list is the one most US investors actually search for. <b>Samsung Electronics has no sponsored ADR at all</b> — the only US-traded line, SSNLF, is an unsponsored over-the-counter pink-sheet quote, a different and thinner kind of access that we cover separately in our guide to buying Samsung from abroad.\n\nThis list and the tickers on it are current as of September 2026, cross-checked against two independent ADR screens. Company lineups do change — Korean firms have delisted US programs before — so treat this as a snapshot, not a permanent roster."
+      },
+      {
+        "heading": "What an ADR actually is, and why the ratio printed on it matters",
+        "body": "An American Depositary Receipt is not a share of the Korean company itself. It is a certificate issued by a US depositary bank, representing shares of the non-US company that the bank holds in custody back in Korea. The <b>SEC's Office of Investor Education and Advocacy</b> describes the mechanism plainly: the bank takes delivery of the underlying shares from the company or an investor, then issues ADRs against them for trading on a US exchange or over the counter — in dollars, clearing through US settlement systems, so the holder never has to transact directly in won.\n\nEvery ADR carries a ratio to the underlying share, and it is not always one-to-one. <b>Korea Electric Power's KEP</b> represents 0.5 of an ordinary share, so two ADRs equal one Korean share. <b>SK Hynix's SKHY</b> represents one-tenth of a share, so ten ADRs equal one. The ratio exists to land the ADR at a price that looks normal on a US screen — without it, a single Korean share priced in the millions of won would convert into an oddly large or oddly small dollar figure.\n\nThe SEC also separates ADRs into three levels. Level 1 is the OTC, unsponsored tier — where Samsung's SSNLF sits, with no obligation on the company's part to cooperate. Level 2 and Level 3 require the foreign company to register with the SEC and file annual 20-F reports; the eight exchange-listed names above are all in that tier, which is why they trade on the NYSE and Nasdaq itself rather than the pink sheets."
+      },
+      {
+        "heading": "The eight established names, side by side",
+        "body": "The table below sets out what each of the eight represents and where it trades. Prices move every session — treat these as a snapshot taken in late September 2026, not a quote to trade on. What is stable is the sector and the exchange: all eight are exchange-listed, not over-the-counter, which is the single biggest practical difference from a name like Samsung.\n\nThree of the eight are financial holding companies — KB, Shinhan and Woori — which is worth knowing before you buy more than one, because their share prices tend to move together on the same domestic rate and regulatory news. POSCO is Korea's steel and battery-materials group, KT and SK Telecom are the two largest wireless carriers, LG Display makes display panels, and KEPCO is the state-linked power utility. None of the eight is a chipmaker — for direct exposure to Korea's semiconductor exporters, the only ADR route as of September 2026 is the ninth name below."
+      },
+      {
+        "heading": "SK Hynix's SKHY broke the record, then broke the arbitrage",
+        "body": "SK Hynix's Nasdaq debut on July 10, 2026 raised $26.5 billion, the largest share sale by a non-US company on record, and the ADRs priced at $149 each before finishing their first session at $168.01 — a 13% first-day gain, according to <b>Bloomberg</b>. Each SKHY ADR represents one-tenth of a Korean common share.\n\nWhat makes SKHY unusual among the nine is what happened next. The <b>Korea Securities Depository (KSD)</b>, which oversees the domestic side of every Korean ADR program, confirmed that SK Hynix had capped conversion of Korean shares into ADRs at 2.5% of total shares outstanding — and that quota was exhausted on the day of the listing itself. Because new shares cannot be converted into ADRs until existing ADR holders convert back the other way, SKHY spent its first weeks trading at a real, sustained premium to the Seoul-listed shares — as high as the high-40s percent in mid-July, still in the 30s by the third week.\n\nThat premium is not a rounding error or an arbitrage opportunity waiting to be closed — the conversion cap is what keeps it from closing. Anyone comparing SKHY's price to SK Hynix's Seoul-listed price should expect a persistent gap, not treat the two as interchangeable. We go through what that means for valuing the stock, and how SKHY compares with Micron, in a separate guide."
+      },
+      {
+        "heading": "What people mistake for a Korean ADR — and what they are actually buying",
+        "body": "Two of the most-searched \"Korean stocks\" on US exchanges are not ADRs at all. <b>Coupang (CPNG)</b> is a Delaware corporation that completed a conventional initial public offering on the NYSE in 2021 — its own investor relations materials and SEC filings describe it that way. Buying CPNG buys shares of the US holding company directly, with no depositary bank, custody fee or conversion ratio involved, even though essentially all of its revenue comes from Korean e-commerce.\n\n<b>MagnaChip Semiconductor (MX)</b> is the same pattern in reverse: a Luxembourg holding company, listed directly on the NYSE, whose semiconductor fabs are in Cheongju and Gumi, Korea. Again, no ADR structure — MX is common stock of the Luxembourg parent.\n\nThe distinction matters for two practical reasons. First, ADRs carry a depositary custody fee that direct listings do not. Second, an ADR's foreign-company disclosure follows the rules of the underlying company's home market as much as US rules, while a Delaware or Luxembourg-incorporated direct listing like Coupang or MagnaChip reports under ordinary US filing requirements. Neither is better across the board — they are simply different structures that happen to get lumped together under \"Korean stocks you can buy in the US.\""
+      },
+      {
+        "heading": "Fees, dividends and voting: what actually reaches you as a holder",
+        "body": "The SEC's investor bulletin on ADRs lays out the custody fee mechanism plainly: the depositary bank is authorized to charge holders a fee — sometimes called a Depositary Services Fee — for inventorying the underlying shares and handling registration, dividend payment and recordkeeping. The most common collection method is to subtract the fee from the gross dividend before it reaches you, so the cost is often invisible unless you read the dividend statement closely. For ADRs that do not pay dividends, the fee is billed separately through your broker instead. The SEC notes that fees are typically assessed per ADR held, and that a broker can tell you the current rate before you buy.\n\nBecause all nine names here are <b>sponsored</b> programs — the Korean company itself signed the depositary agreement — the company generally absorbs part of the cost of running the facility, which is not guaranteed on an unsponsored line like Samsung's SSNLF. Voting works the same way it does for most sponsored ADRs generally: the depositary bank forwards proxy materials and is contractually expected to vote deposited shares according to instructions, subject to Korean corporate-law deadlines that are often tighter than a US company's.\n\nBuying any of the nine is mechanically no different from buying a US stock. Brokers such as <b>Interactive Brokers</b>, Charles Schwab and Fidelity let you place an order on PKX, KT, SKM, KB, SHG, WF, LPL, KEP or SKHY exactly like you would on Apple or Microsoft — no Korean brokerage account, no direct KRX access and no manual FX conversion required."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed the ticker, exchange and sector for all nine names against two independent, differently sourced ADR screens (TopForeignStocks' August 2026 list and live quotes on Investing.com), and the SK Hynix listing details — price, first-day move, conversion cap — against Bloomberg's own coverage and the Korea Securities Depository's public statements as reported by Seoul Economic Daily. We opened Coupang's own SEC prospectus to confirm its Delaware incorporation and traditional-IPO structure, and cross-checked MagnaChip's Luxembourg incorporation against two data providers.\n\nWe could not verify the exact ADR-to-share conversion ratio for six of the eight established names — PKX, KT, SKM, KB, SHG and WF. Depositary banks disclose these in each program's Form F-6 filing, and they can change, so we are not printing a number we have not confirmed directly from that filing or the depositary's own page. Confirm the current ratio with your broker or the depositary bank (BNY Mellon, Citibank or JPMorgan, depending on the program) before comparing an ADR's price to the Seoul-listed share.\n\nWe also did not verify the current custody fee for any of the nine programs — these are set by each depositary bank individually and are not published in a single place. Ask your broker what you will actually be charged before you buy."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Nine Korean names trade as real ADRs on US exchanges as of September 2026 — eight long-established ones spanning steel, telecom, banking, display panels and utilities, and one, SK Hynix, that arrived in July 2026 as the biggest non-US listing in Nasdaq history and is still trading at a premium the conversion cap won't let close.\n\nSamsung Electronics, the company most people start this search looking for, is not among them — only an unsponsored OTC line exists. And two of the most Korea-associated tickers on US exchanges, Coupang and MagnaChip, are not ADRs at all, but directly listed companies incorporated outside Korea.\n\nThis guide describes ADR structures and tickers as of September 2026. Prices, conversion caps and company lineups change; confirm current figures with your broker or the depositary bank before you trade. This is not investment advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Nine Korean ADRs trade on US exchanges as of September 2026, led by SK Hynix's record Nasdaq debut",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korean ADRs on US Exchanges",
+        "left": {
+          "label": "Established NYSE-listed Korean ADRs",
+          "value": "8"
+        },
+        "right": {
+          "label": "SK Hynix SKHY debut-day gain (July 10, 2026)",
+          "value": "+13%"
+        }
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Eight established Korean ADRs by ticker, exchange and sector",
+      "args": {
+        "title": "The eight established Korean ADRs",
+        "subtitle": "Ticker, exchange and sector, as of late September 2026",
+        "columns": [
+          "Company",
+          "Ticker",
+          "Sector"
+        ],
+        "rows": [
+          [
+            "POSCO Holdings",
+            "PKX (NYSE)",
+            "Steel & battery materials"
+          ],
+          [
+            "KB Financial Group",
+            "KB (NYSE)",
+            "Banking"
+          ],
+          [
+            "Shinhan Financial Group",
+            "SHG (NYSE)",
+            "Banking"
+          ],
+          [
+            "Woori Financial Group",
+            "WF (NYSE)",
+            "Banking"
+          ],
+          [
+            "SK Telecom",
+            "SKM (NYSE)",
+            "Mobile telecom"
+          ],
+          [
+            "KT Corporation",
+            "KT (NYSE)",
+            "Telecom"
+          ],
+          [
+            "Korea Electric Power",
+            "KEP (NYSE)",
+            "Utilities"
+          ],
+          [
+            "LG Display",
+            "LPL (NYSE)",
+            "Display panels"
+          ]
+        ],
+        "source": "TopForeignStocks (Aug 2026) and Investing.com (Sept 2026)",
+        "note": "Prices change daily and are not shown here — confirm the current quote with your broker before trading. SK Hynix (SKHY, Nasdaq) is listed separately in this guide."
+      },
+      "section": 3
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before buying a Korean ADR",
+      "args": {
+        "title": "Before you buy any Korean ADR",
+        "subtitle": "What the ticker alone won't tell you",
+        "items": [
+          {
+            "label": "Check the conversion ratio, not just the price",
+            "why": "KEP represents 0.5 of a share and SKHY represents 0.1 — the dollar price alone does not tell you what you own."
+          },
+          {
+            "label": "Confirm it's actually an ADR",
+            "why": "Coupang and MagnaChip are directly listed, foreign-incorporated companies — not depositary receipts at all."
+          },
+          {
+            "label": "Ask your broker about the custody fee",
+            "why": "It's usually deducted from your dividend rather than billed — easy to miss unless you check the statement."
+          }
+        ]
+      },
+      "section": 6
+    }
+  ],
+  "sources": [
+    {
+      "name": "U.S. Securities and Exchange Commission",
+      "title": "Investor Bulletin: American Depositary Receipts",
+      "url": "https://www.sec.gov/files/adr-bulletin.pdf"
+    },
+    {
+      "name": "TopForeignStocks",
+      "title": "The Complete List of South Korean ADRs",
+      "url": "https://topforeignstocks.com/foreign-adrs-list/the-full-list-of-south-korean-adrs/"
+    },
+    {
+      "name": "Investing.com",
+      "title": "South Korea ADRs — live list",
+      "url": "https://www.investing.com/equities/south-korea-adrs"
+    },
+    {
+      "name": "Bloomberg",
+      "title": "SK Hynix Indicated to Climb 17% After $26.5 Billion ADR Offering",
+      "url": "https://www.bloomberg.com/news/articles/2026-07-10/sk-hynix-indicated-to-climb-17-after-26-5-billion-adr-offering"
+    },
+    {
+      "name": "Seoul Economic Daily (reporting KSD statements)",
+      "title": "Korea Depository Chief Dismisses SK Hynix ADR Conversion Rumors",
+      "url": "https://en.sedaily.com/finance/2026/07/23/korea-depository-chief-dismisses-sk-hynix-adr-conversion"
+    },
+    {
+      "name": "SEC EDGAR",
+      "title": "Coupang, Inc. — Form 424B4 prospectus (Delaware incorporation, IPO structure)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1834584/000162828021004565/coupang-424b4.htm"
+    }
+  ]
+}
