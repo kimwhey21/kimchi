@@ -256,9 +256,11 @@ class FactTableFitTest(unittest.TestCase):
         self.assertIsNone(data_graphics.fact_table_fit_size(self.TOO_LONG))
 
     def test_overflow_report_names_the_cell(self) -> None:
+        # 글꼴에 따라 몇 셀이 넘치는지는 달라진다(맥 1셀, CI 리눅스 글꼴 2셀 — 2026-09-25 Tests 실패). 검사가 보장할 것은
+        # "가장 긴 셀을 이름으로 지목한다"와 "축소하면 다 들어간다"이지 넘치는 셀의 개수가 아니다.
         over = data_graphics.fact_table_overflows(self.STREET, None, 19)
-        self.assertEqual(len(over), 1, over)
-        self.assertIn("뱅크오브아메리카", over[0])
+        self.assertGreaterEqual(len(over), 1, over)
+        self.assertTrue(any("뱅크오브아메리카" in x for x in over), over)
         self.assertEqual(data_graphics.fact_table_overflows(self.STREET, None, 15), [])
 
     def test_geometry_matches_the_renderer(self) -> None:
