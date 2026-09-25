@@ -106,6 +106,17 @@ def _latest_committed_index(ticker: str, before: str, data_dir: Path | None = No
     return None
 
 
+
+def _prior_change_pct(prior: dict) -> float | None:
+    """우리가 커밋해 둔 파일의 등락률. 없으면 이력의 마지막 두 종가로 계산한다(2026-09-25)."""
+    if prior.get("change_pct") is not None:
+        return round(float(prior["change_pct"]), 2)
+    hist = prior.get("history") or {}
+    closes = hist.get("close") or []
+    if len(closes) >= 2 and closes[-2]:
+        return round((float(closes[-1]) / float(closes[-2]) - 1) * 100, 2)
+    return None
+
 def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None,
                              prior: dict | None = None) -> dict:
     """오늘 거래일 행을 네이버의 장마감 확정값으로 교체하거나, 아직 없으면 덧붙입니다.
@@ -134,8 +145,13 @@ def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None,
         # 일봉이 우리가 이미 커밋한 파일보다 뒤처졌다(2026-09-10, 사흘). 우리 파일의
         # 이력·종가를 밑바탕으로 쓰고 아래 등식은 그 마지막 종가와 맞춘다.
         print(f"[안내] {code}: 일봉이 {last}에 머물러 있어 우리 파일({prior['trading_date']})의 이력을 밑바탕으로 씁니다.")
+        # 등락률·출처도 함께 옮긴다(2026-09-25). 그전에는 price·이력만 옮기고 change_pct는 FDR 옛 행 값이 남아
+        # 휴장일 재수집(9/24)이 9/23 파일의 코스피 등락률을 0.90→0.09, 코스닥을 1.21→0.70으로 망가뜨렸고, 9/24 프리뷰에
+        # "0.09% 오른 7,080.9"가 실제로 나갔다. prior에 change_pct가 없으면 이력의 마지막 두 종가로 계산한다.
         entry = {**entry, "price": float(prior["price"]), "series": list(prior.get("series") or entry.get("series") or []),
-                 "history": prior.get("history"), "trading_date": str(prior["trading_date"])}
+                 "history": prior.get("history"), "trading_date": str(prior["trading_date"]),
+                 "change_pct": _prior_change_pct(prior),
+                 "data_source": prior.get("data_source") or f"{entry.get('data_source') or 'FinanceDataReader'} (이력은 우리 파일)"}
         last = str(prior["trading_date"])
     if last == today:
         if not quote or quote.get("ms") != "CLOSE":

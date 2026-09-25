@@ -182,3 +182,33 @@ class LaggingIndexDailyBarTest(unittest.TestCase):
         entry = self._yesterday_entry()
         quote = {"ms": "CLOSE", "nv": 695452, "cv": -1000, "cr": -0.14, "cd": "KOSPI"}
         self.assertEqual(fetch_kr._apply_final_index_quote(entry, "KS11", quote), entry)
+
+class PriorBranchCarriesChangePctTest(unittest.TestCase):
+    """휴장일 재수집이 어제 파일을 밑바탕으로 쓸 때 등락률·출처도 옮긴다(2026-09-25).
+
+    9/24 추석 휴장에 9/23 파일을 다시 쓰면서 코스피 등락률이 0.90→0.09로 바뀌어 프리뷰에 그대로 나갔다 —
+    prior 분기가 price·이력만 옮기고 change_pct는 FDR 옛 행 값을 남겼기 때문이다.
+    """
+
+    def test_change_pct_and_source_come_from_the_prior_file(self) -> None:
+        today = fetch_kr.dt.date.today().isoformat()
+        stale = {"ticker": "KS11", "price": 7017.91, "change_pct": 0.09, "trading_date": "2026-09-22",
+                 "series": [7007.72, 7017.91], "history": {"dates": ["2026-09-21", "2026-09-22"], "close": [7007.72, 7017.91]},
+                 "data_source": "FinanceDataReader"}
+        prior = {"ticker": "KS11", "price": 7080.92, "change_pct": 0.9, "trading_date": "2026-09-23",
+                 "series": [7007.72, 7017.91, 7080.92],
+                 "history": {"dates": ["2026-09-21", "2026-09-22", "2026-09-23"], "close": [7007.72, 7017.91, 7080.92]},
+                 "data_source": "Naver Finance realtime index"}
+        holiday = {"nv": 708092, "cv": 6301, "cr": 0.9, "ms": "CLOSE"}   # 휴장일: 어제 값 그대로 — 등식이 안 맞아 오늘 행을 안 만든다
+        if prior["trading_date"] >= today:
+            self.skipTest("오늘이 2026-09-23 이전이면 이 시나리오가 성립하지 않습니다")
+        result = fetch_kr._apply_final_index_quote(stale, "KS11", holiday, prior=prior)
+        self.assertEqual(result["trading_date"], "2026-09-23")
+        self.assertEqual(result["change_pct"], 0.9)                 # 0.09가 남으면 안 된다
+        self.assertEqual(result["data_source"], "Naver Finance realtime index")
+
+    def test_change_pct_is_derived_from_history_when_the_prior_lacks_it(self) -> None:
+        prior = {"price": 844.48, "trading_date": "2026-09-23", "history": {"dates": ["a", "b"], "close": [834.38, 844.48]}}
+        self.assertEqual(fetch_kr._prior_change_pct(prior), 1.21)
+        self.assertIsNone(fetch_kr._prior_change_pct({"price": 1.0, "trading_date": "x", "history": {"close": [1.0]}}))
+
