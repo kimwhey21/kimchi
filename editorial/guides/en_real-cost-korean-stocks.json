@@ -3,7 +3,7 @@
   "series": "Guide",
   "lang": "en",
   "date": "2026-09-15",
-  "checked": "2026-09-15",
+  "checked": "2026-09-25",
   "slug": "the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026",
   "category_id": 153,
   "radar_origin": "search queue: cost of trading korean stocks",
@@ -85,7 +85,7 @@
       "heading": "The takeaway",
       "body": "Korea's tax treatment of foreign retail investors is, on balance, mild: no capital gains tax at ordinary position sizes, a dividend rate a treaty can cut from 22% to 15%, and a transaction tax of 0.20% that you pay only when you sell.\n\nThe trap is not the tax rate. It is the fixed costs around it. A round trip of KRW 500,000 runs about 1.80% in fees and tax, against about 0.32% at KRW 20,000,000 — the same trade, five times the friction, because a per-order minimum does not scale down. Size accordingly, and get your treaty documentation in before the first record date rather than after.\n\nThis is information, not tax or investment advice. Rates were checked against the sources below on September 15, 2026 and change frequently."
     },
-    "excerpt": "Dividends are withheld at 22% (15% under the US treaty). Selling costs 0.20% of proceeds from 2026. Capital gains usually are not taxed for non-residents."
+    "excerpt": "Korea's dividend withholding tax is 22% for foreigners, 15% under the US treaty. Selling costs 0.20% of proceeds. Most non-residents owe no capital gains tax."
   },
   "graphics": [
     {

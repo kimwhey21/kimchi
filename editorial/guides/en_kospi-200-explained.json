@@ -3,10 +3,16 @@
   "series": "Guide",
   "lang": "en",
   "date": "2026-09-16",
-  "checked": "2026-09-22",
+  "checked": "2026-09-25",
   "slug": "kospi-200-explained",
   "category_id": 153,
-  "tags": ["KOSPI 200", "Korea Exchange", "KOSPI 200 rebalance", "MSCI Korea", "KODEX 200"],
+  "tags": [
+    "KOSPI 200",
+    "Korea Exchange",
+    "KOSPI 200 rebalance",
+    "MSCI Korea",
+    "KODEX 200"
+  ],
   "radar_origin": "search queue: kospi 200 index methodology (6.0위, 전용 글로 안 잡혔지만 이 글이 이미 답하고 있어 첫 소제목·첫 문장에 검색어를 넣어 고침)",
   "related": [
     {
@@ -23,7 +29,7 @@
     }
   ],
   "ko": {
-    "title": "KOSPI 200 Explained: How Korea Picks 200 Stocks (2026)",
+    "title": "KOSPI 200 Index Methodology: How KRX Picks the 200",
     "narrative": [
       {
         "heading": "KOSPI 200 index methodology: a curated 200-stock subset, not \"the KOSPI\"",
@@ -53,7 +59,8 @@
     "closing": {
       "heading": "The takeaway",
       "body": "KOSPI 200 is Korea Exchange's own curated list of 200 free-float-weighted stocks, rebuilt every June and December using a sector-first selection method — and it is a different list, with different rules, from both the KOSPI Composite that news headlines quote and the MSCI Korea index that underlies EWY and FLKR. The distinction is not academic: a company moving on or off KOSPI 200 triggers real mechanical buying and selling from the domestic funds and derivatives built on it, on a schedule you can actually look up in advance.\n\nThis guide reflects Korea Exchange's index rules and the June 2026 rebalance as reported and cross-checked in September 2026. Index rules, constituent lists, and fund holdings all change; check Korea Exchange's own index pages for the current list before acting on anything here. This is not investment advice."
-    }
+    },
+    "excerpt": "KOSPI 200 is a curated subset, not the 200 largest stocks. KRX sorts by industry group first, then size and liquidity, and rebalances in June and December."
   },
   "graphics": [
     {
@@ -63,8 +70,14 @@
       "args": {
         "kicker": "Investor Guide",
         "subject": "KOSPI 200",
-        "left": {"label": "Constituent stocks", "value": "200"},
-        "right": {"label": "Full reshuffles per year", "value": "2"}
+        "left": {
+          "label": "Constituent stocks",
+          "value": "200"
+        },
+        "right": {
+          "label": "Full reshuffles per year",
+          "value": "2"
+        }
       }
     },
     {
@@ -73,13 +86,43 @@
       "args": {
         "title": "Three lists, three jobs",
         "subtitle": "KOSPI 200 vs MSCI Korea vs the KOSPI Composite",
-        "columns": ["", "KOSPI 200", "MSCI Korea 25/50", "KOSPI Composite"],
+        "columns": [
+          "",
+          "KOSPI 200",
+          "MSCI Korea 25/50",
+          "KOSPI Composite"
+        ],
         "rows": [
-          ["Run by", "Korea Exchange", "MSCI", "Korea Exchange"],
-          ["Constituents", "200", "~78", "~830"],
-          ["Single-stock cap", "None", "25%", "None"],
-          ["Rebalanced", "Jun & Dec", "Quarterly-ish", "Ongoing"],
-          ["Tracked by", "KODEX 200", "EWY, FLKR", "Headline \"KOSPI\""]
+          [
+            "Run by",
+            "Korea Exchange",
+            "MSCI",
+            "Korea Exchange"
+          ],
+          [
+            "Constituents",
+            "200",
+            "~78",
+            "~830"
+          ],
+          [
+            "Single-stock cap",
+            "None",
+            "25%",
+            "None"
+          ],
+          [
+            "Rebalanced",
+            "Jun & Dec",
+            "Quarterly-ish",
+            "Ongoing"
+          ],
+          [
+            "Tracked by",
+            "KODEX 200",
+            "EWY, FLKR",
+            "Headline \"KOSPI\""
+          ]
         ],
         "source": "Korea Exchange; MSCI factsheet data as cited in our KOSPI ETF guide (June 30, 2026)",
         "note": "MSCI Korea count and cap are as of June 30, 2026 per fund factsheets. KOSPI Composite constituent count is approximate and moves with new listings and delistings."
@@ -111,10 +154,30 @@
     }
   ],
   "sources": [
-    {"name": "Korea Exchange", "title": "KOSPI 200 (Global KRX product page)", "url": "https://global.krx.co.kr/contents/GLB/02/0202/0202010101/GLB0202010101.jsp"},
-    {"name": "U.S. Securities and Exchange Commission", "title": "Form 424(b)(2) prospectus describing KOSPI 200 index methodology", "url": "https://www.sec.gov/Archives/edgar/data/19617/000161577419014709/s121522_424b2.htm"},
-    {"name": "Seoul Economic Daily", "title": "KOSPI 200 to Add Dalba Global, OCI in Periodic Rebalancing", "url": "https://en.sedaily.com/news/2026/05/22/kospi-200-to-add-dalba-global-oci-in-periodic-rebalancing"},
-    {"name": "BigGo Finance", "title": "Kospi 200 Adds Dalba Global, OCI; Drops GS E&C and 3 Others", "url": "https://finance.biggo.com/news/cofUTp4BaoGGrU-IJe2W"},
-    {"name": "CNBC", "title": "Kospi selloff is rebalancing, not vote against South Korea: KRX CEO", "url": "https://www.cnbc.com/2026/06/11/south-korea-kospi-selloff-foreign-investors-krx.html"}
+    {
+      "name": "Korea Exchange",
+      "title": "KOSPI 200 (Global KRX product page)",
+      "url": "https://global.krx.co.kr/contents/GLB/02/0202/0202010101/GLB0202010101.jsp"
+    },
+    {
+      "name": "U.S. Securities and Exchange Commission",
+      "title": "Form 424(b)(2) prospectus describing KOSPI 200 index methodology",
+      "url": "https://www.sec.gov/Archives/edgar/data/19617/000161577419014709/s121522_424b2.htm"
+    },
+    {
+      "name": "Seoul Economic Daily",
+      "title": "KOSPI 200 to Add Dalba Global, OCI in Periodic Rebalancing",
+      "url": "https://en.sedaily.com/news/2026/05/22/kospi-200-to-add-dalba-global-oci-in-periodic-rebalancing"
+    },
+    {
+      "name": "BigGo Finance",
+      "title": "Kospi 200 Adds Dalba Global, OCI; Drops GS E&C and 3 Others",
+      "url": "https://finance.biggo.com/news/cofUTp4BaoGGrU-IJe2W"
+    },
+    {
+      "name": "CNBC",
+      "title": "Kospi selloff is rebalancing, not vote against South Korea: KRX CEO",
+      "url": "https://www.cnbc.com/2026/06/11/south-korea-kospi-selloff-foreign-investors-krx.html"
+    }
   ]
 }
