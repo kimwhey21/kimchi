@@ -498,7 +498,13 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
     print(f"[안내] 시각자료 {visuals}개 — 본문 그래픽 {graphics_n}, 본문 사진 {photos_n}, "
           f"인사이트 사진 {stories_n} (표지 제외). 벤치마크 중앙값은 10개입니다.")
     if visuals < 5:
-        print("[경고] 시각자료가 5개 미만입니다. 루틴이 editorial_gate를 통과시키지 않았습니다.")
+        if render_only and not publish_wordpress.is_configured():
+            # 샌드박스(WORDPRESS_* 없음)의 render-only는 그래픽을 붙이지 않으므로 이 수는 늘 작다 — 2026-09-25 감사에서
+            # 시황 루틴 8건 전부가 이 경고를 해석하려고 코드를 3~5턴씩 읽었다. 시각자료 수의 기준은 관문(editorial_gate)이 센 값이다.
+            print("[안내] WORDPRESS_* 미설정 render-only는 본문 그래픽을 붙이지 않으므로 이 수는 정상입니다 — "
+                  "시각자료 수는 editorial_gate가 센 값이 기준입니다.")
+        else:
+            print("[경고] 시각자료가 5개 미만입니다. 루틴이 editorial_gate를 통과시키지 않았습니다.")
     if en and en.get("insight_section") and ko.get("insight_section"):
         ko_images = [s.get("image") for s in ko["insight_section"].get("stories", [])]
         en_stories = []

@@ -20,13 +20,18 @@ class StoryMaterialWorkflowTest(unittest.TestCase):
         self.text = WORKFLOW.read_text(encoding="utf-8")
 
     def test_runs_before_the_routines(self) -> None:
-        """주말 루틴은 토·일 00:00 UTC, 프리뷰 루틴은 평일 12:30 UTC. 재료는 그보다 앞선다."""
+        """주말 루틴은 토·일 00:00 UTC, 프리뷰 루틴은 평일 12:30 UTC. 재료는 그보다 앞선다.
+
+        평일 재료는 **11:40 UTC**(2026-09-25) — GitHub 예약이 실측 18~22분 늦게 떠서 12:10 예약은 12:28~12:32에
+        커밋됐고, 프리뷰 루틴(12:30 예약, 실측 12:31~35 시작)과 경주가 됐다(9/14 실제 발생). 12:00 UTC보다 앞이어야 한다.
+        """
         crons = re.findall(r'- cron: "([^"]+)"', self.text)
         parsed = {(c.split()[1], c.split()[4]): int(c.split()[0]) for c in crons}
         self.assertIn(("23", "5,6"), parsed)
-        self.assertIn(("12", "1-5"), parsed)
+        self.assertIn(("11", "1-5"), parsed, "평일 재료 예약은 12시(UTC) 전이어야 합니다 — 예약 지연 20분을 견디게")
+        self.assertNotIn(("12", "1-5"), parsed, "12:10 UTC 예약은 프리뷰 루틴과 경주가 됩니다(2026-09-14 실제 발생)")
         self.assertLess(parsed[("23", "5,6")], 40, "주말 루틴이 뜨기 전에 커밋이 끝나야 합니다")
-        self.assertLess(parsed[("12", "1-5")], 20, "프리뷰 루틴(12:30 UTC)이 뜨기 전에 커밋이 끝나야 합니다")
+        self.assertGreaterEqual(parsed[("11", "1-5")], 30, "너무 이르면 미국장 프리마켓 전 데이터가 얕습니다")
 
     def test_covers_both_markets_and_keeps_failures_visible(self) -> None:
         self.assertIn("for m in us kr", self.text)
