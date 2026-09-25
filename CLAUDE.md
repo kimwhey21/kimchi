@@ -331,6 +331,16 @@
   뺀 모든 글을 `ko.narrative` 전문·링크 없음으로 옮기고, `feature_checks.NAVER_FULL_ENDED`(2026-09-23)부터 네이버용 본문(`naver`)을
   요구하지 않는다. **영어 가이드("Guide")만 본진에 공개다.** 가이드·Weekly 탭도 네이버 카테고리 7·8로 간다(Checkpoint 탭과 같은
   방식, 같은 일곱 곳). 되돌리려면 `LIVE_STATUS` 네 줄을 지우고 `naver_post`의 `full_body = not magazine`을 옛 조건으로 되돌린다.
+- **블로그스팟(fermata49.blogspot.com, "Fermata 매거진")은 구글용 한국어 창구다**(2026-09-25). 새 글을 쓰지 않고 원고를 그대로
+  옮긴다 — 잡지·한국어 가이드·Checkpoint(확인 날짜가 안 지난 것)·주간 결산·다음 주 일정·이벤트 전부, 시황·프리뷰는 2026-09-25
+  이후 것만(디스커버 4주 시험). 영어 가이드는 본진과 겹치므로 올리지 않는다. 렌더는 `scripts/blogger_post.py`(네이버와 같은
+  블록 → HTML, 그림은 본진 미디어에 멱등 업로드, 잡지 표지는 Unsplash 주소, 글 끝 고정 줄: 네이버 이웃·텔레그램·종목 페이지,
+  잡지는 퍼플썸 네이버로만 안내하고 페르마타 이름을 쓰지 않는다), 올리기는 이 맥의 `~/.market-brief-google/blogger_sync.py`
+  (launchd `kr.it.fermata.bloggersync`, 10분, 하루 10편 상한, 공개 스위치 `~/.market-brief-google/blogger_publish_on`이 있을 때만
+  게시, 같은 크롬 프로필을 쓰는 작업이 돌면 건너뜀). 블로거 설정은 네이버 봇 `Yeti` 차단(맞춤 robots.txt)·자료실/검색 페이지
+  noindex·공식 테마(Contempo)다 — **네이버가 이 사본을 보면 유사문서로 거르므로 Yeti 차단을 풀지 말 것.** 네이버에 올리는 시각은
+  바꾸지 않는다. 판정은 11월 30일 서치콘솔(검색·디스커버 따로)과 애드센스로 하고, 잡지의 네이버 노출이 떨어지면 그날 멈춘다.
+  `tests/test_blogger_post.py`가 렌더를 고정한다.
 - **네이버 글이 원고를 다 담았는지 두 곳에서 확인한다.** `tests/test_naver_completeness.py`는 만들어지는 원고를 절·outlook·insight·표·
   Take·확인 지점·출처까지 하나씩 세고, 그림이 **자기 절 밑에** 붙는지와 4장 상한이 되살아나지 않았는지 본다. `python -m
   scripts.naver_audit`은 **네이버에 올라간 화면**을 받아 같은 대조를 한다(빠지면 0이 아닌 값으로 끝난다). 둘 다 필요하다. **`chars >
