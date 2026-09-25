@@ -94,7 +94,7 @@
   않는다. 시세 파일이 그날 처음 커밋되면 같은 실행이 루틴의 **API 트리거**(`ROUTINE_<MARKET>_FIRE_TOKEN` 시크릿, 루틴별
   `/fire` URL)로 조사·집필 루틴을 즉시 깨운다. 루틴의 자체 예약(cron)은 한 시간 뒤 예비다. 호출 실패는 워크플로를
   실패시키지 않는다. `tests/test_workflows.py`·`tests/test_fetch_only.py`가 이 구조를 고정한다.
-- **루틴 샌드박스 네트워크는 전체 열림(Full)이다.** **`m.stock.naver.com`만 전체 열림에서도 000**이다 — 한국장 편입 종목
+- **루틴 샌드박스 네트워크는 전체 열림(Full)이다.** `m.stock.naver.com`은 막힐 때가 있다(9/7 000, 9/25 200) — 한국장 편입 종목
   수집(`fetch_movers`)이라 루틴이 자구책으로 시세를 받는 날만 영향이 있다. 설정은 **루틴 편집 → 지시문 아래 구름 아이콘(Default)
   → 톱니 → Network access**에 있고(문서: code.claude.com/docs/en/routines), 바꾼 뒤에는 점검 루틴을 `RemoteTrigger run`으로 다시
   돌려 확인한다. claude.ai 설정의 "기능 → 네트워크 송신 허용" 토글은 채팅 분석 도구용이라 루틴과 무관하다. 루틴의 사진 검색은
