@@ -1,42 +1,55 @@
 [밸류에이션] US · 2026-09-25 · FWD PER 중앙값 24.0
   종목            FWD PER     목표가 대비     52주고점 대비    애널
-  마이크론              6.8     +40.3%       -13.9%    46
-  엔비디아             14.3     +45.9%        -5.1%    59
-  머크               15.5      +3.8%        -5.7%    26
-  마이크로소프트          21.0     +15.9%       -10.1%    52
-  메타               22.3      +1.2%        -0.3%    57
-  알파벳              23.0     +25.4%       -16.2%    54
-  아마존              24.0     +32.1%       -13.2%    57
-  디어               30.4      -0.6%        -3.6%    23
-  월마트              33.3     +18.4%       -20.4%    40
-  애플               35.0      -2.3%        -2.7%    39
-  인텔               61.8      -8.6%       -10.5%    43
-  코인베이스            70.3      +2.2%       -50.5%    30
-  테슬라             172.0      +4.9%       -24.2%    38
+  마이크론              6.8     +40.0%       -13.8%    46
+  엔비디아             14.4     +45.6%        -4.8%    59
+  머크               15.6      +3.3%        -5.2%    26
+  메타               21.5      +5.3%        -3.6%    57
+  마이크로소프트          21.8     +11.8%        -6.8%    52
+  알파벳              23.1     +24.9%       -15.8%    54
+  아마존              24.0     +32.0%       -13.1%    57
+  디어               30.2      +0.0%        -4.3%    23
+  월마트              33.4     +18.0%       -20.1%    40
+  애플               35.6      -3.8%        -1.2%    39
+  인텔               59.6      -5.4%       -13.6%    43
+  코인베이스            68.8      +4.4%       -51.5%    30
+  테슬라             169.4      +6.6%       -25.4%    38
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 10건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 11건은 뺐습니다)
   2026-09-23 ▲ 마이크로소프트      Stifel: Hold → Buy
 
-[월가 리포트] US · 오늘 · 17건 (상향 8 하향 0 신규 4 목표가 상향 0 하향 0) · 출처 marketbeat
-  BP     ▲ 상향     HSBC                      Underweight → Buy        
+[월가 리포트] US · 오늘 · 187건 (상향 11 하향 5 신규 24 목표가 상향 46 하향 44) · 출처 marketbeat
+  AGO    ▲ 상향     Roth Capital              Neutral → Buy            $80.00 → $85.00
+  BP     ▲ 상향     HSBC                      Hold → Buy               $46.00 → $51.30
   COST   ▲ 상향     HSBC                      Buy                      
   GLNCY  ▲ 상향     UBS Group                 Buy                      
-  HUM    ▲ 상향     Barclays                  Underperformer → Overweight 
+  GPOR   ▼ 하향     Jefferies Financial Grou  Buy → Hold               $239.00 → $180.00
+  HUM    ▲ 상향     Barclays                  Equal Weight → Overweight $407.00 → $515.00
   KRYAY  ▲ 상향     Citigroup                 Neutral → Buy            
-  MMM    ▲ 상향     Sanford C. Bernstein      Underperform → Market Perform 
+  LHX    ▼ 하향     Argus                     Buy → Hold               
+  MMM    ▲ 상향     Sanford C. Bernstein      Underperform → Market Perform $145.00 → $171.00
+  NTDOY  ▼ 하향     UBS Group                 Neutral → Sell           
   RZLT   ▲ 상향     HSBC                      Buy                      
-  STEM   ▲ 상향     UBS Group                 Neutral → Buy            
-  CF     · 신규     Sanford C. Bernstein      Outperform               
-  CHE    · 신규     UBS Group                 Buy                      
-  PGEN   · 신규     B. Riley Financial        Buy                      
-  PRSU   · 신규     Citigroup                 Outperform               
-  FRVO   · 목표가    Wolfe Research            Outperform               $29.00
-  AKAM   · 유지     UBS Group                 Neutral                  $148.00
-  AKAM   · 유지     Guggenheim                Buy                      $225.00
-  CVX    · 유지     HSBC                      Buy                      $250.00
-  META   · 유지     Piper Sandler             Overweight               $875.00
+  SNPS   ▼ 하향     KeyCorp                   Overweight → Underweight 
+  SNPS   ▼ 하향     HSBC                      Buy → Reduce             
+  SNPS   ▲ 상향     Roth Capital              Buy                      
+  STEM   ▲ 상향     UBS Group                 Neutral → Buy            $7.00
+  TTE    ▲ 상향     HSBC                      Hold → Buy               
+  ALM    · 신규     Stifel Nicolaus           Buy                      $25.00
+  CDNL   · 신규     Truist Financial          Buy                      $40.00
+  CF     · 신규     Sanford C. Bernstein      Outperform               $162.00
+  CHE    · 신규     UBS Group                 Buy                      $650.00
+  CRK    · 신규     Jefferies Financial Grou  Hold                     $14.00
+  EMR    · 신규     Wells Fargo & Company     Overweight               $177.00
+  GENI   · 신규     JPMorgan Chase & Co.      Overweight               $8.00
+  HON    · 신규     Wells Fargo & Company     Equal Weight             $231.00
+  LGND   · 신규     Barclays                  Overweight               $345.00
+  LII    · 신규     Wells Fargo & Company     Equal Weight             $424.00
+  LION   · 신규     JPMorgan Chase & Co.      Underweight              $9.00
+  MRLN   · 신규     Canaccord Genuity Group   Buy                      $7.50
+  PDFS   · 신규     Needham & Company LLC     Buy                      $60.00
+  PGEN   · 신규     B. Riley Financial        Buy                      $12.00
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
@@ -62,23 +75,23 @@
     퍼싱스퀘어(애크먼)     MICROSOFT CORP COM            +5,654,078주 (신규)
   줄인 쪽
     버크셔 해서웨이(버핏)   BANK OF AMER CORP COM        -30,230,150주 (-6%)
-    르네상스 테크놀로지     PLUG PWR INC COM NEW         -15,958,700주 (-58%)
-    르네상스 테크놀로지     NU HLDGS LTD ORD SHS CL A    -13,441,744주 (-83%)
+    르네상스 테크놀로지     NEW GOLD INC CDA COM         -25,146,246주 (전량매도)
+    르네상스 테크놀로지     B2GOLD CORP COM              -20,855,479주 (-77%)
+    르네상스 테크놀로지     CARNIVAL CORP UNIT 99/99/9   -18,097,001주 (전량매도)
+    르네상스 테크놀로지     LUCID GROUP INC COM          -16,539,862주 (전량매도)
+    르네상스 테크놀로지     PALANTIR TECHNOLOGIES INC    -15,221,439주 (-67%)
+    듀케인(드러켄밀러)     Teva Pharmaceutical Inds L   -13,591,650주 (-85%)
     버크셔 해서웨이(버핏)   KROGER CO COM                -11,000,000주 (-22%)
-    르네상스 테크놀로지     NOKIA CORP SPONSORED ADR     -10,828,400주 (-81%)
+    르네상스 테크놀로지     ITAU UNIBANCO HLDG S A SPO   -10,955,677주 (전량매도)
+    르네상스 테크놀로지     IAMGOLD CORP COM             -10,253,085주 (-75%)
     코튜 매니지먼트       CHIME FINL INC COM SHS CL    -10,071,992주 (전량매도)
-    르네상스 테크놀로지     AMERICAN AIRLINES GROUP IN    -9,687,232주 (전량매도)
-    르네상스 테크놀로지     VALE S A SPONSORED ADS        -9,601,178주 (-68%)
-    르네상스 테크놀로지     BITFARMS LTD COM              -7,767,131주 (전량매도)
-    르네상스 테크놀로지     T1 ENERGY INC COM NEW         -7,645,400주 (-64%)
-    타이거 글로벌        ZILLOW GROUP INC CL C CAP     -7,368,957주 (전량매도)
-    르네상스 테크놀로지     QUANTUMSCAPE CORP COM CL A    -7,010,500주 (-87%)
+    르네상스 테크놀로지     ROBINHOOD MKTS INC COM CL     -9,881,776주 (-82%)
   13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 지금의 포지션이 아닙니다.
 
 [미 거시] 최근 90일
-  미 10년물 국채금리           5.11  (+0.73) 기간 최저 4.38(2026-06-29) 최고 5.11(2026-09-23)
-  미 2년물 국채금리            4.85  (+0.75) 기간 최저 4.10(2026-06-29) 최고 4.85(2026-09-23)
-  장단기 금리차(10년-2년)       0.31  (+0.03) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
+  미 10년물 국채금리           5.18  (+0.80) 기간 최저 4.38(2026-06-29) 최고 5.18(2026-09-24)
+  미 2년물 국채금리            4.87  (+0.77) 기간 최저 4.10(2026-06-29) 최고 4.87(2026-09-24)
+  장단기 금리차(10년-2년)       0.36  (+0.08) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
   연방기금금리                3.63  (+0.00) 기간 최저 3.63(2026-06-01) 최고 3.63(2026-06-01)
   미 소비자물가지수           334.13  (+1.56) 기간 최저 332.57(2026-06-01) 최고 334.13(2026-08-01)
 
@@ -91,7 +104,7 @@
    6월  평균  +0.11%  중앙  +0.29%  상승확률  60%  (n=20)
    7월  평균  +2.41%  중앙  +2.07%  상승확률  75%  (n=20)
    8월  평균  +0.18%  중앙  +1.25%  상승확률  60%  (n=20)
-   9월  평균  -0.61%  중앙  +0.33%  상승확률  55%  (n=20)  ←이번 달
+   9월  평균  -0.59%  중앙  +0.59%  상승확률  55%  (n=20)  ←이번 달
   10월  평균  +0.88%  중앙  +2.04%  상승확률  58%  (n=19)
   11월  평균  +2.09%  중앙  +2.12%  상승확률  75%  (n=20)
   12월  평균  +0.59%  중앙  +0.92%  상승확률  65%  (n=20)
