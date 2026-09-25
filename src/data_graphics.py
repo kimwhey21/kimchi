@@ -188,19 +188,29 @@ def index_card(price_data: dict, output_path: Path, title: str = "오늘의 지�
     return output_path
 
 
-def sector_bars(price_data: dict, output_path: Path, title: str = "업종별 등락") -> Path:
-    """업종 평균 등락률 가로 막대. sector가 붙은 코어 종목만 씁니다."""
-    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
+def sector_rows(price_data: dict) -> list[tuple[str, float, list[dict]]]:
+    """sector_bars가 그리는 행 — (업종, 평균 등락률, 소속 종목)을 평균 내림차순으로.
+
+    렌더러와 검사(`graphic_checks`)가 **같은 함수**로 행을 만든다(2026-09-25). 2026-09-25 감사에서
+    "제목은 한 업종만 올랐다는데 막대는 여럿이 빨갛다"가 눈으로만 잡혔는데, 검사가 행을 따로 세면
+    렌더러와 어긋난 채로 통과할 수 있어 한 곳에 둔다.
+    """
     groups: dict[str, list[dict]] = {}
     for entry in (price_data.get("watchlist") or {}).values():
         sector = entry.get("sector")
         if sector:
             groups.setdefault(sector, []).append(entry)
-    rows = sorted(
+    return sorted(
         ((s, sum(e["change_pct"] for e in v) / len(v), v) for s, v in groups.items()),
         key=lambda r: r[1],
         reverse=True,
     )
+
+
+def sector_bars(price_data: dict, output_path: Path, title: str = "업종별 등락") -> Path:
+    """업종 평균 등락률 가로 막대. sector가 붙은 코어 종목만 씁니다."""
+    ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
+    rows = sector_rows(price_data)
     if not rows:
         # 그릴 게 없으면 없는 경로를 돌려주지 않고 분명히 알립니다.
         # 조용히 넘기면 호출한 쪽이 존재하지 않는 파일을 업로드하려다
@@ -402,6 +412,24 @@ def _period_rows(price_data: dict, period_days: int | None = None, period: str |
     return rows
 
 
+def movers_picked(price_data: dict, top_n: int = 6,
+                  period_days: int | None = None, period: str | None = None) -> list[dict]:
+    """movers_list가 실제로 그리는 종목 — 등락 폭 상위 `top_n`을 등락률 내림차순으로.
+
+    렌더러와 검사(`graphic_checks`)가 같은 함수를 쓴다(2026-09-25). 2026-09-25 감사에서 그림은 상위
+    여섯인데 본문은 다른 종목을 말하는 절이 눈으로만 잡혔다 — 검사가 "무엇을 그렸나"를 따로 계산하면
+    렌더러와 어긋날 수 있어 고르는 규칙을 한 곳에 둔다.
+    """
+    if period == "week" or period_days:
+        rows = _period_rows(price_data, period_days, period)
+    else:
+        rows = [e for e in (price_data.get("watchlist") or {}).values() if e.get("change_pct") is not None]
+    if not rows:
+        raise ValueError("movers_list: 등락률이 있는 종목이 없습니다")
+    rows.sort(key=lambda e: abs(float(e["change_pct"])), reverse=True)
+    return sorted(rows[:int(top_n)], key=lambda e: float(e["change_pct"]), reverse=True)
+
+
 def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
                 title: str = "오늘 많이 움직인 종목", style: str | None = None,
                 period_days: int | None = None, period: str | None = None) -> Path:
@@ -417,17 +445,10 @@ def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
     되므로 쓰지 않는다 — 막대나 타일로 간다.
     """
     ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
-    if period == "week" or period_days:
-        rows = _period_rows(price_data, period_days, period)
-        if title == "오늘 많이 움직인 종목":
-            title = ("이번 주 많이 움직인 종목" if period == "week" or int(period_days or 0) == 5
-                     else f"{period_days}거래일 등락 상위")
-    else:
-        rows = [e for e in (price_data.get("watchlist") or {}).values() if e.get("change_pct") is not None]
-    if not rows:
-        raise ValueError("movers_list: 등락률이 있는 종목이 없습니다")
-    rows.sort(key=lambda e: abs(float(e["change_pct"])), reverse=True)
-    picked = sorted(rows[:top_n], key=lambda e: float(e["change_pct"]), reverse=True)
+    if (period == "week" or period_days) and title == "오늘 많이 움직인 종목":
+        title = ("이번 주 많이 움직인 종목" if period == "week" or int(period_days or 0) == 5
+                 else f"{period_days}거래일 등락 상위")
+    picked = movers_picked(price_data, top_n, period_days, period)
     if style and style not in MOVERS_STYLES:
         # 틀린 이름으로 발행이 죽거나 그림이 빠지지 않게 — 상황으로 고른 모양으로 그리고 알린다
         # (2026-09-09, 사용자: "루틴이 잘못된 그림을 그리지 않게 해서 발행 실패를 막아라").
@@ -902,6 +923,68 @@ def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None 
     return output_path
 
 
+# fact_table의 기하(2026-09-25). 렌더러와 검사(`graphic_checks`)가 **이 상수와 함수**를 같이 쓴다 —
+# 검사가 폭을 따로 적어 두면 한쪽만 고쳐져 어긋난다. 2026-09-25 감사에서 프리뷰 세 편(9/22·23·24)의
+# 표가 연속으로 셀 글자가 열 폭을 넘어 이웃 셀과 겹친 채 나갔는데, 코드는 셀 폭을 한 번도 재지 않았다.
+FACT_TABLE_FIRST_W = 380            # 첫 열(항목) 폭
+FACT_TABLE_PAD = 12                 # 셀 안쪽 여백 — 첫 열은 왼쪽 정렬이라 왼쪽에, 나머지는 오른쪽 정렬이라 오른쪽에
+FACT_TABLE_SIZES = (19, 17, 15)     # 셀 글꼴 — 넘치면 이 순서로 줄인다(number_cards의 값 축소 루프와 같은 방식)
+FACT_TABLE_HEADER_SIZE = 15         # 머리글 글꼴은 고정(줄이지 않는다)
+
+
+def fact_table_shape(rows: list, columns: list | None = None) -> tuple[int, list[str]]:
+    """(열 수, 머리글 목록) — 렌더러가 쓰는 기본 머리글까지 같은 규칙으로."""
+    ncol = max(len(r) for r in rows)
+    columns = list(columns or (["항목", "발표", "예상", "차이"][:ncol] + [""] * max(0, ncol - 4)))
+    return ncol, [str(c) for c in columns[:ncol]]
+
+
+def fact_table_widths(ncol: int) -> tuple[float, float]:
+    """(첫 열 폭, 나머지 열 폭). 열은 캔버스 양쪽 32px 안쪽을 첫 열 380 + 나머지 균등으로 나눈다."""
+    return FACT_TABLE_FIRST_W, (W - 64 - FACT_TABLE_FIRST_W) / max(1, ncol - 1)
+
+
+def fact_table_x(j: int, ncol: int) -> float:
+    """j번째 열의 왼쪽 x."""
+    first_w, other_w = fact_table_widths(ncol)
+    return 32 + (0 if j == 0 else first_w + (j - 1) * other_w)
+
+
+def fact_table_overflows(rows: list, columns: list | None = None, size: int = FACT_TABLE_SIZES[0]) -> list[str]:
+    """열 안쪽 폭(열 폭 - 여백 2)을 넘는 셀. 넘으면 그 글자는 이웃 열의 자리로 들어가 겹친다.
+
+    글자 폭은 렌더러와 같은 폰트(`_font(size, j != 0)`)의 `getlength`로 잰다. 머리글은 고정 크기
+    (`FACT_TABLE_HEADER_SIZE`)로 따로 본다 — 글꼴을 줄여도 머리글은 안 줄어드니 넘치면 열을 줄여야 한다.
+    **폰트 주의**: 이 맥은 AppleSDGothicNeo로 재고, 러너(우분투)는 나눔고딕으로 그린다. 2026-09-25 감사
+    메모에 나눔고딕이 더 넓다고 적혀 있다(이 맥에 나눔이 없어 여기서 재보지는 못했다) — 그러니 맥에서
+    턱걸이로 통과한 셀은 러너에서 넘칠 수 있다. 여백(`FACT_TABLE_PAD`)을 줄여 통과시키지 말 것.
+    """
+    ncol, headers = fact_table_shape(rows, columns)
+    first_w, other_w = fact_table_widths(ncol)
+    inner = [first_w - 2 * FACT_TABLE_PAD] + [other_w - 2 * FACT_TABLE_PAD] * (ncol - 1)
+    over: list[str] = []
+    for j, name in enumerate(headers):
+        width = _font(FACT_TABLE_HEADER_SIZE).getlength(name)
+        if width > inner[j]:
+            over.append(f"머리글 {j + 1}열 '{name}' {width:.0f}px > {inner[j]:.0f}px")
+    for i, row in enumerate(rows):
+        for j in range(ncol):
+            cell = str(row[j]) if j < len(row) else ""
+            width = _font(size, j != 0).getlength(cell)
+            if width > inner[j]:
+                over.append(f"{i + 1}행 {j + 1}열 '{cell}' {width:.0f}px > {inner[j]:.0f}px")
+    return over
+
+
+def fact_table_fit_size(rows: list, columns: list | None = None) -> int | None:
+    """넘치는 셀이 없는 첫 글꼴 크기(19 → 17 → 15). 15에서도 넘치면 None — 렌더러는 15로 그리고 알리며,
+    검사(`graphic_checks.collect_spec_issues`)가 막는다."""
+    for size in FACT_TABLE_SIZES:
+        if not fact_table_overflows(rows, columns, size):
+            return size
+    return None
+
+
 def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
                title: str = "발표값과 예상값", subtitle: str = "", columns: list | None = None,
                note: str = "", lang: str = "ko") -> Path:
@@ -910,14 +993,22 @@ def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
     재테크농부 이미지의 상당수가 이런 표다. `rows`는 `[["8월 비농업 고용", "16.2만", "5.3만",
     "+10.9만"], ...]`처럼 문자열 행이고, 마지막 열이 '+'로 시작하면 빨강, '-'면 파랑으로
     칠한다. 숫자는 시세 파일이 아니라 조사에서 오므로 `source`(매체)가 필수다.
+
+    셀 글꼴은 19에서 시작해 열 폭을 넘는 셀이 있으면 17·15로 줄인다(2026-09-25, `fact_table_fit_size`).
+    15에서도 넘치면 15로 그리고 stderr에 알린다 — 조용히 겹친 그림을 내지 않는다.
     """
     ensure_korean_font()
     if not rows or not all(isinstance(r, (list, tuple)) and len(r) >= 2 for r in rows):
         raise ValueError("fact_table: rows는 문자열 행(2칸 이상)의 목록이어야 합니다")
     if not str(source or "").strip():
         raise ValueError("fact_table: source(출처 매체)를 적으십시오 — 이 숫자는 시세 파일에 없습니다")
-    ncol = max(len(r) for r in rows)
-    columns = list(columns or (["항목", "발표", "예상", "차이"][:ncol] + [""] * max(0, ncol - 4)))
+    ncol, columns = fact_table_shape(rows, columns)
+    cell_size = fact_table_fit_size(rows, columns)
+    if cell_size is None:
+        cell_size = FACT_TABLE_SIZES[-1]
+        over = fact_table_overflows(rows, columns, cell_size)
+        print(f"[경고] fact_table: 글꼴 {cell_size}에서도 열 폭을 넘는 셀이 {len(over)}개 있어 겹친 채 그립니다 — "
+              f"{'; '.join(over[:3])}. 셀을 줄이거나 열을 줄이십시오.", file=sys.stderr)
     row_h, top = 54, 120
     # 각주가 길면 오른쪽에서 **조용히 잘렸다**(2026-09-15 실측: "…USD at 1,359.80 on Septemb"에서 끊겼다).
     # 글쓴이에게 글자 수를 세게 하는 대신 여기서 줄로 접는다. 접은 줄 수만큼 그림을 키운다.
@@ -928,14 +1019,14 @@ def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
     d.text((32, 26), title, font=_font(26, True), fill=INK)
     if subtitle:
         d.text((32, 66), subtitle, font=_font(16), fill=SUB)
-    first_w = 380
-    other_w = (W - 64 - first_w) / max(1, ncol - 1)
+    _, other_w = fact_table_widths(ncol)
+    pad = FACT_TABLE_PAD
     def x_of(j: int) -> float:
-        return 32 + (0 if j == 0 else first_w + (j - 1) * other_w)
+        return fact_table_x(j, ncol)
     y = top
-    for j, name in enumerate(columns[:ncol]):
-        d.text((x_of(j) + (12 if j == 0 else other_w - 12), y + 14), str(name), font=_font(15), fill=SUB,
-               anchor="lm" if j == 0 else "rm")
+    for j, name in enumerate(columns):
+        d.text((x_of(j) + (pad if j == 0 else other_w - pad), y + 14), name, font=_font(FACT_TABLE_HEADER_SIZE),
+               fill=SUB, anchor="lm" if j == 0 else "rm")
     y += 40
     d.line([(32, y), (W - 32, y)], fill=INK, width=2)
     for i, row in enumerate(rows):
@@ -949,8 +1040,8 @@ def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
                 color = UP
             elif j == ncol - 1 and cell.startswith(("-", "−")):
                 color = DOWN
-            d.text((x_of(j) + (12 if j == 0 else other_w - 12), y_top + row_h / 2), cell,
-                   font=_font(19, j != 0), fill=color, anchor="lm" if j == 0 else "rm")
+            d.text((x_of(j) + (pad if j == 0 else other_w - pad), y_top + row_h / 2), cell,
+                   font=_font(cell_size, j != 0), fill=color, anchor="lm" if j == 0 else "rm")
         d.line([(32, y_top + row_h), (W - 32, y_top + row_h)], fill=LINE, width=1)
     for k, line in enumerate(note_lines):
         d.text((32, y + len(rows) * row_h + 18 + 26 * k), line, font=_font(17), fill=INK)

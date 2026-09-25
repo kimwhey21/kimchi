@@ -163,17 +163,13 @@ def _refresh_related(related: list | None) -> list[dict]:
 def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict], dict | None]:
     """JSON의 graphics 선언을 실제 PNG와 절 번호별 figure로 바꾼다."""
     generated, figures, cover = [], {}, None
+    sections = (doc.get("ko") or doc).get("narrative") or []
     for index, spec in enumerate(doc.get("graphics") or []):
         kind, args = spec["kind"], dict(spec.get("args") or {})
         title = str(args.get("title") or spec.get("alt") or "")
-        issues = graphic_checks.collect_spec_issues(kind, args, title)
-        if issues:
-            raise ValueError("그래픽 데이터 검사 실패:\n- " + "\n- ".join(issues))
         feature_builder = getattr(feature_graphics, kind, None)
-        path = output / f"{index + 1:02d}-{kind}.png"
-        if feature_builder is not None:
-            feature_builder(output_path=path, **args)
-        elif kind in data_graphics.BUILDERS:
+        price_data: dict = {}
+        if feature_builder is None and kind in data_graphics.BUILDERS:
             # 시황용 데이터 그래픽(price_history·number_cards·movers_list 등)을 기준표·
             # 프리뷰에서도 씁니다(2026-09-08). 원고에는 시세가 없으므로 `price_file`로
             # 시세 파일을 가리킵니다 — "price_file": "data/price_us_2026-09-04.json".
@@ -188,6 +184,24 @@ def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict
                 if not price_path.exists():
                     raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 없습니다: {price_file}")
                 price_data = json.loads(price_path.read_text(encoding="utf-8"))
+        # 제목↔데이터·그린 종목↔절 본문·표 셀 폭 검사(2026-09-25). 시세를 먼저 읽어야 제목 주장을 잴 수 있다.
+        body = None
+        if "section" in spec:
+            try:
+                body = str(sections[int(spec["section"])].get("body") or "")
+            except (IndexError, ValueError, AttributeError):
+                body = None   # 절 번호가 틀린 것은 아래 배치 검사가 따로 잡는다
+        notes: list[str] = []
+        issues = graphic_checks.collect_spec_issues(kind, args, title, price_data=price_data or None,
+                                                    section_body=body, notes_out=notes)
+        if issues:
+            raise ValueError("그래픽 데이터 검사 실패:\n- " + "\n- ".join(issues))
+        for note in notes:
+            print(f"(참고) 그래픽 {index + 1}({kind}) — {note}")
+        path = output / f"{index + 1:02d}-{kind}.png"
+        if feature_builder is not None:
+            feature_builder(output_path=path, **args)
+        elif kind in data_graphics.BUILDERS:
             data_graphics.build(kind, price_data, path, lang=str(doc.get("lang") or "ko"), **args)
         else:
             raise ValueError(f"알 수 없는 그래픽 종류: {kind}")

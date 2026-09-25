@@ -67,7 +67,7 @@
 
 ## 반드시 먼저 읽을 것
 
-1. `AGENTS.md`의 「기준표(feature) 글」 절 전부 — 도구 다섯 줄과 그 이유
+1. `CLAUDE.md`의 「기준표(feature) 글」 절 — 도구 다섯 줄과 그 이유(이 파일은 세션에 자동으로 실려 있으니 `AGENTS.md`를 따로 읽지 않습니다 — 같은 내용입니다)
 2. `docs/feature-style.md` 전부 — 제목·시각자료·사진 순서·절 골격·내보내기 전 확인
 3. 형식 예시: `editorial/features/us_2026-09-06_deere_upgrade.json` (필드와 그래픽
    인자를 이 파일과 똑같은 형태로 씁니다)
@@ -129,9 +129,9 @@
 6. **검사.** `python -m src.feature_gate editorial/features/<파일>.json --graphics <그래픽 수>`
    — 막히면 고쳐서 다시. 통과하면
    `WORDPRESS_URL= WORDPRESS_USERNAME= WORDPRESS_APP_PASSWORD= python -m src.publish_feature editorial/features/<파일>.json --render-only`
-   로 렌더하고, `output/features/<slug>/` 아래 그래픽 PNG를 **하나씩 `Read`로
-   봅니다.** 축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은 코드만
-   봐서는 안 보입니다(실제로 두 번 겪었습니다).
+   로 렌더하고, 출력 끝의 **「그림 모음판」**(`output/features/<slug>/sheets/sheet-NN.png`)만 **`Read`로 봅니다** — 낱장을
+   따로 읽지 않습니다(원본 크기 그대로 이어 붙인 것입니다, 2026-09-25). 축을 한 종목이 독차지하거나 이름이
+   막대와 어긋나는 것은 코드만 봐서는 안 보입니다(실제로 두 번 겪었습니다).
 7. **제목·소제목·그래픽 글자(`kicker`·`subject`·`label`)만 따로 모아 다시
    읽습니다.** 본문과 떼어 놓고 읽어야 어색한 것이 보입니다.
 8. **성적표.** `data/scoreboard.yaml`(형식은 파일 머리의 주석)에 두 가지를 합니다.
@@ -145,7 +145,7 @@
      보고에 이유를 적습니다. `python -m src.publish_scoreboard --render-only --no-live-check`로
      형식 검사를 통과해야 합니다.
 9. `git add editorial/features/<파일>.json data/scoreboard.yaml && git commit -m "기준표 원고: <제목>" && git push origin HEAD:main`
-   push 뒤 워크플로를 3분 넘게 기다리지 않습니다.
+   push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
 10. 휴대폰 알림을 한 번 보냅니다: `주말 Checkpoint 커밋: <제목> — 본진에는 몇 분 안에 비공개로 올라가고, 네이버에는 20분 안에 본문 전문이 공개됩니다.`
     건너뛰었거나 실패했을 때도 한 번, 이유와 함께.
 

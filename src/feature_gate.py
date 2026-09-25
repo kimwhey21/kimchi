@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 
 from scripts import check_against_benchmark, compare_to_benchmark
-from src import editorial_quality, editorial_title, feature_checks, source_check, title_feed
+from src import editorial_facts, editorial_quality, editorial_title, feature_checks, source_check, title_feed
 
 ROOT = Path(__file__).resolve().parent.parent
 # 시리즈가 사는 폴더. 같은 목록에 나란히 보이는 최근 제목과 뼈대를 대조할 때 쓴다.
@@ -72,6 +72,15 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     if str(doc.get("series") or "") == "매거진":
         blocking.extend(feature_checks.magazine_issues(doc))   # 잡지 꼴(브리핑·코너·출처·사진), 2026-09-13
     blocking.extend(feature_checks.naver_issues(doc))   # 네이버용 본문(2026-09-12): 오래 읽히는 시리즈는 완전한 글로
+    if str(doc.get("series") or "") == "프리뷰":
+        # 숫자 대조(2026-09-25). 프리뷰에는 이 검사가 없었다 — 9/23·9/24 프리뷰가 덮어써진 시세로 나갔고 아무도 몰랐다.
+        # 시황과 같은 원칙으로 막는다(숫자만 막는다). 밸류에이션 문장(목표주가 대비·52주 고점·PER·프리마켓·%포인트)은
+        # 등락률이 아니므로 건너뛴다(editorial_facts._NOT_A_MOVE). 시세 파일을 못 찾은 것도 막는다 — 조용히 통과시키지 않는다.
+        try:
+            files = editorial_facts.preview_price_files(doc)
+            blocking.extend(f"숫자 — {i}" for i in editorial_facts.collect_issues_for_preview(doc, files, notes_out=notes))
+        except ValueError as exc:
+            blocking.append(f"숫자 — {exc}")
     # 오늘 이 글이 막힌 이유는 문장이 아니라 재료였습니다. 재료를 안 뽑고 쓴 글은
     # 여기서 멈춥니다 — 사람이 엔진 돌리기를 기억하는 데 기대지 않습니다.
     blocking.extend(source_check.collect_issues(doc))

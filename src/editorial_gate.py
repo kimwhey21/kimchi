@@ -46,6 +46,7 @@ from src import (
     editorial_title,
     feature_checks,
     featured_image,
+    graphic_checks,
     photo_pool,
     title_feed,
 )
@@ -165,6 +166,18 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
                 # 발행 단계는 상황에 맞는 모양으로 대신 그리지만, 루틴은 여기서 고친다.
                 issues.append(f"그래픽(본문 {index}, {kind}) — style {options['style']!r}은 없습니다. "
                               f"{', '.join(allowed)} 중 하나로 쓰세요(2026-09-09 사용자가 고른 모양).")
+            # 그림 제목이 데이터와 어긋나는 것('반도체만 웃었습니다'인데 둘이 올랐다, '신고가'인데 고점 아래),
+            # 그린 종목이 그 절 본문에 하나도 없는 것, 표 셀 글자가 열을 넘는 것 — 2026-09-25 감사에서 눈으로만
+            # 잡히던 오류 7건 가운데 6건의 꼴을 코드가 본다(src/graphic_checks.py). 절반 넘게 빠진 것은 참고로만.
+            graphic_notes: list[str] = []
+            try:
+                spec_issues = graphic_checks.collect_spec_issues(
+                    kind, options, str(options.get("title") or ""), price_data=price_data,
+                    section_body=str(section.get("body") or ""), notes_out=graphic_notes)
+            except Exception as exc:  # noqa: BLE001 - 검사 자체가 죽으면 그것도 목록에(조용히 통과시키지 않는다)
+                spec_issues = [f"그래픽 검사 실패: {exc}"]
+            issues += [f"그래픽(본문 {index}, {kind}) — {m}" for m in spec_issues]
+            summary += [f"(참고) 그래픽(본문 {index}, {kind}) — {n}" for n in graphic_notes]
             try:
                 out = render_dir / f"{index:02d}-{kind}.png"
                 data_graphics.build(kind, price_data, out, **options)

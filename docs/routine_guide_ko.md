@@ -207,7 +207,7 @@
    커밋하지 않습니다. → `WORDPRESS_URL= WORDPRESS_USERNAME= WORDPRESS_APP_PASSWORD= python -m src.publish_feature
    editorial/guides/ko_<slug>.json --render-only` → `output/features/<slug>/`의 그래픽을 `Read`로 봅니다.
 6. `git add editorial/guides/ko_<slug>.json && git commit -m "가이드: <제목>" && git push origin HEAD:main`
-   (거부되면 `git pull --rebase origin main` 뒤 다시). push 뒤 워크플로를 3분 넘게 기다리지 않습니다.
+   (거부되면 `git pull --rebase origin main` 뒤 다시). push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
 7. 휴대폰 알림 한 번(PushNotification): `가이드 커밋: <제목> — 몇 분 안에 https://fermata.it.kr/<slug>/ 로 공개되고,
    네이버에는 20분 안에 요약본이 올라갑니다.` 건너뛰었거나 실패했을 때도 한 번, 이유와 함께.
 

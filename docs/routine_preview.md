@@ -42,7 +42,7 @@
 1. `docs/editorial-style.md` 전부 — 제목 문법(「더한 축 여섯」 포함)·「판단」의 **대응 원칙**·낱말·리듬.
 2. 어제 미국장 원고 `editorial/us_<가장 최근 날짜>.json`의 `outlook`과 `closing.check`(확인 지점),
    그리고 **어제 프리뷰** `editorial/previews/us_<어제>.json`의 `closing.check` — 오늘 2절이 그것을 판정합니다.
-3. `data/engines_us_<KST 오늘>.txt` — `story_material.yml`이 21:10 KST에 커밋합니다. 안에 있는 것:
+3. `data/engines_us_<KST 오늘>.txt` — `story_material.yml`이 20:40 KST 예약으로 뽑아 커밋합니다(GitHub 예약이 18~22분 늦게 떠 실제 커밋은 21:00~21:05 안팎 — 2026-09-25 실측으로 앞당김). 안에 있는 것:
    `[밸류에이션]`(우리가 보는 종목의 FWD PER·목표가 괴리·52주), `[의견 변경]`(워치리스트),
    **`[월가 리포트]`**(시장 전체의 오늘 등급·목표가 변경, 15~30건 — 2026-09-17 추가), `[실적 일정]`,
    `[내부자 매수]`, `[기관 보유 변동]`(13F), `[미 거시]`(FRED), `[계절성]`. 없으면
@@ -55,6 +55,11 @@
 
 ## 절차
 
+0. **먼저 한 명령.** `python -m scripts.routine_precheck preview` — 지금 시각·어젯밤 미국장 시세 파일·오늘 밤 프리뷰 유무·
+   재료 파일 상태(⚠ 행 포함)·어제 미국장·어제 프리뷰 요약(제목·소제목·확인 지점·판정·전망)·최근 다섯 편 제목 꼴·그래픽 종류와
+   인자·관문이 자주 잡는 낱말이 한 화면에 나옵니다. 첫 줄이 `종료:`면 이유를 보고하고 즉시 끝냅니다. `계속:`이면 이 출력이
+   재료입니다 — 어제 원고 JSON을 통째로 읽지 마십시오(2026-09-25 감사에서 실행당 가장 큰 낭비). 오늘 밤 미국 휴장 여부는
+   이 도구가 모릅니다 — 「쓰지 않는 날」대로 WebSearch로 확인합니다.
 1. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`(한글 폰트가 없으면 그래픽 렌더가 첫 번에 실패합니다)
 2. **재료를 먼저 읽습니다** — 어제 원고, 재료 파일, 시세 파일. 그다음 WebSearch로 오늘 밤 일정을
    **서로 다른 출처 2곳 이상**에서 확인합니다(실적 발표 회사·개장 전/마감 후, 경제지표 시각·컨센서스·직전치,
@@ -94,12 +99,14 @@
    **후보 셋 이상을 축을 달리해 쓰고** `python -m scripts.title_pick preview "후보1" "후보2" "후보3"`으로 점수를 본 뒤
    **가장 높은 것을 `ko.title`에, 후보 전부를 `ko.title_candidates`에** 적습니다(2026-09-18, 사장님 "a진행" —
    관문이 같은 계산으로 확인하고, 후보가 없거나 더 먼 후보가 있으면 막습니다). 후보는 셋 다 나가도 되는 제목이어야 합니다.
-5. **관문.** `python -m src.feature_gate editorial/previews/<파일>.json --graphics <그래픽 수>` — 통과 전에는
+5. **관문.** `python -m src.feature_gate editorial/previews/<파일>.json --graphics <그래픽 수>` — **숫자 대조도 돕니다**(2026-09-25):
+   본문의 종목·지수 등락률을 `graphics[*].price_file`이 가리키는 시세 파일과 맞춰 보고, 어젯밤 등락 1위 종목이 본문에 없으면
+   막습니다(목표주가 대비·52주 고점·PER·프리마켓·%포인트는 등락률이 아니라 건너뜁니다). 통과 전에는
    커밋하지 않습니다. → `WORDPRESS_URL= WORDPRESS_USERNAME= WORDPRESS_APP_PASSWORD= python -m src.publish_feature editorial/previews/<파일>.json --render-only`
-   → `output/features/<slug>/`의 그림을 `Read`로 봅니다(축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은
+   → 출력 끝의 **「그림 모음판」**(`output/features/<slug>/sheets/sheet-NN.png`, 원본 크기 그대로 서너 장씩 이어 붙임)만 `Read`로 봅니다 — 낱장을 따로 읽지 않습니다(축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은
    코드만 봐서는 안 보입니다) → 제목·소제목·그래픽 글자만 따로 읽습니다.
 6. `git add editorial/previews/<파일>.json && git commit -m "프리뷰: <제목>" && git push origin HEAD:main`
-   push 뒤 워크플로를 3분 넘게 기다리지 않습니다. **알림은 보내지 않습니다**(맥이 네이버에 올린 뒤
+   push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다). **알림은 보내지 않습니다**(맥이 네이버에 올린 뒤
    네이버 주소로 보냅니다). 건너뛰었거나 실패했을 때만 휴대폰 알림 한 번.
 
 ## 절대 규칙

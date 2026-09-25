@@ -70,7 +70,7 @@
 
 큐 원고: `git mv editorial/queue/<파일> editorial/<파일> && git add editorial/<파일> && git commit -m "옛 글 재작성: <거래일> <시장>" && git push origin HEAD:main`
 기존 원고: `git add editorial/<파일> && git commit -m "옛 글 재작성: <거래일> <시장>" && git push origin HEAD:main`
-push가 거부되면 `git pull --rebase origin main` 뒤 다시. 3분 넘게 워크플로를 기다리지 않습니다.
+push가 거부되면 `git pull --rebase origin main` 뒤 다시. 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지).
 
 ## 절대 규칙
 
