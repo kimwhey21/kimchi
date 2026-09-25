@@ -22,7 +22,8 @@
 5. 영어판 문체 — `editorial_quality_en`
 6. 시각자료 — 본문 `graphic`을 실제로 그려 보고(틀린 티커·없는 이력은 여기서 드러남),
    `photo`가 승인 풀에 있는지 보고, 합계가 최소 개수 이상인지 센다.
-   그린 그림은 `output/gate/<market>_<date>/`에 남긴다 — **`Read`로 직접 본다.**
+   그린 그림은 `output/gate/<market>_<date>/`에 남기고, 표지와 함께 `sheets/`에 모음판으로 이어 붙인다 —
+   **루틴은 모음판만 `Read`로 본다**(2026-09-25, 낱장 11턴 → 서너 턴).
 
     python -m src.editorial_gate editorial/kr_2026-09-08.json
 """
@@ -36,6 +37,7 @@ from pathlib import Path
 import requests
 
 from src import (
+    contact_sheet,
     data_graphics,
     editorial_facts,
     editorial_judgment,
@@ -43,6 +45,7 @@ from src import (
     editorial_quality_en,
     editorial_title,
     feature_checks,
+    featured_image,
     photo_pool,
     title_feed,
 )
@@ -225,7 +228,29 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
     summary.append(f"본문 {len(ko.get('narrative') or [])}절:")
     summary += _heading_lines(ko)
     summary.append(f"시각자료 {visuals}개 (본문 그래픽 {graphics} · 본문 사진 {photos} · 인사이트 사진 {story_photos})")
-    if rendered:
+    # 표지도 여기서 그린다(2026-09-25) — 발행 때 같은 함수가 같은 입력으로 그리므로 여기서 보면 발행본을 본 것이다.
+    # 옛날에는 render-only를 따로 돌려 output/의 표지를 또 Read했다. `sheets/` 아래에 두는 것은 naver_post가
+    # 이름에 'cover'가 든 파일을 표지로 집어 가기 때문이다(하위 폴더는 보지 않는다).
+    sheet_dir = render_dir / contact_sheet.SUBDIR
+    sheet_dir.mkdir(parents=True, exist_ok=True)
+    cover_path = sheet_dir / "00-cover.png"
+    try:
+        featured_image.create(market, date_str, price_data, cover_path, doc=ko)
+    except Exception as exc:  # noqa: BLE001 - 발행 때도 같은 자리에서 죽는다. 여기서 알린다.
+        issues.append(f"표지 — 그리지 못했습니다(발행도 같은 자리에서 실패합니다): {exc}")
+        cover_path = None
+    # 낱장 열한 장을 따로 Read하면 11턴이다. 원본 크기 그대로 이어 붙인 모음판만 읽게 한다(src/contact_sheet.py).
+    try:
+        sheets = contact_sheet.build(
+            ([cover_path] if cover_path else [])
+            + [f for f in contact_sheet.gather(render_dir) if "cover" not in f.name],   # 맥의 naver_post 표지는 중복
+            sheet_dir)
+    except Exception as exc:  # noqa: BLE001 - 모음판 실패는 낱장 목록으로 대신하고 이유를 남긴다
+        sheets = []
+        summary.append(f"(참고) 그림 모음판을 만들지 못했습니다 — 낱장을 읽으십시오: {exc}")
+    if sheets:
+        summary += contact_sheet.describe(sheets)
+    elif rendered:
         summary.append("그린 그림 — Read 툴로 직접 보십시오:")
         summary += [f"  {p}" for p in rendered]
     return issues, summary

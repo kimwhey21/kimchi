@@ -15,7 +15,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from src import data_graphics, feature_graphics, graphic_checks, notify_telegram, notify_threads, post_tags, publish_wordpress
+from src import (contact_sheet, data_graphics, feature_graphics, graphic_checks, notify_telegram, notify_threads,
+                 post_tags, publish_wordpress)
 
 # 단독 실행 모듈이라 main.py가 대신 불러 주지 않습니다. 이게 빠져 있으면
 # `is_configured()`가 False가 되어 **조용히 "업로드 안 함"으로 끝납니다** —
@@ -244,6 +245,14 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
     output = OUTPUT / _slug(doc, path)
     output.mkdir(parents=True, exist_ok=True)
     images, section_images, featured = _build_graphics(doc, output)
+    # 그림을 낱장으로 Read하면 프리뷰 한 편에 8~11턴이다(2026-09-25 감사). 원본 크기 그대로 이어 붙인
+    # 모음판(`<slug>/sheets/sheet-NN.png`)만 읽게 한다 — 발행 러너에서는 아무도 안 보지만 몇백 ms라 그냥 만든다.
+    try:
+        sheets = contact_sheet.build(contact_sheet.gather(output), output / contact_sheet.SUBDIR)
+        for line in contact_sheet.describe(sheets):
+            print(line)
+    except Exception as exc:  # noqa: BLE001 - 모음판 실패는 낱장으로 대신하고 이유를 남긴다
+        print(f"(참고) 그림 모음판을 만들지 못했습니다 — {output}의 낱장을 읽으십시오: {exc}")
     run_gate(doc, graphics=len(images), path=path)  # 다섯 검사의 단일 관문
 
     figures = {}
