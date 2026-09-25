@@ -101,7 +101,7 @@
 6. `git add editorial/weekly/<파일>.json && git commit -m "주간 결산: <제목>" && git push origin HEAD:main`
    (push 거부 시 `git pull --rebase origin main` 뒤 다시). push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
 7. 휴대폰 알림을 한 번 보냅니다(PushNotification):
-   `주간 결산 커밋: <제목> — 몇 분 안에 https://fermata.it.kr/<slug>/ 로 비공개로 올라가고, 네이버에는 20분 안에 전문이 올라갑니다.`
+   `주간 결산 커밋: <제목> — 몇 분 안에 https://fermata.it.kr/<slug>/ 로 비공개로 올라가고, 네이버에는 10분 안에 전문이 올라갑니다.`
    건너뛰었거나 실패했을 때도 한 번, 이유와 함께.
 
 ## 네이버용 본문 — 쓰지 않습니다 (2026-09-22 확정)

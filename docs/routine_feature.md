@@ -138,7 +138,7 @@
    - 새 원고의 확인 지점을 `verdict: pending`으로 추가합니다(글 주소는 전처럼
      `https://fermata.it.kr/<slug>/`로 적습니다 — 본진 글이 비공개라도 그대로 적으십시오.
      맥이 네이버에 올린 뒤 `scripts/scoreboard_naver_urls.py`가 네이버 주소로 갈아 끼웁니다.
-     그때까지 20분쯤 성적표에서 안 보이는데, 정상입니다).
+     그때까지 10분쯤 성적표에서 안 보이는데, 정상입니다).
    - `due`가 지났는데 `pending`인 항목을 조사해 `result`(숫자와 함께)·`checked`(오늘)·
      `verdict`를 적습니다. 시세는 `data/price_*.json`, 나머지는 WebSearch로 확인합니다.
      판정은 글이 가리킨 방향과 실제가 맞았는지만 봅니다. 모르면 `pending`으로 두고
@@ -146,7 +146,7 @@
      형식 검사를 통과해야 합니다.
 9. `git add editorial/features/<파일>.json data/scoreboard.yaml && git commit -m "기준표 원고: <제목>" && git push origin HEAD:main`
    push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
-10. 휴대폰 알림을 한 번 보냅니다: `주말 Checkpoint 커밋: <제목> — 본진에는 몇 분 안에 비공개로 올라가고, 네이버에는 20분 안에 본문 전문이 공개됩니다.`
+10. 휴대폰 알림을 한 번 보냅니다: `주말 Checkpoint 커밋: <제목> — 본진에는 몇 분 안에 비공개로 올라가고, 네이버에는 10분 안에 본문 전문이 공개됩니다.`
     건너뛰었거나 실패했을 때도 한 번, 이유와 함께.
 
 ## 하지 않는 것
