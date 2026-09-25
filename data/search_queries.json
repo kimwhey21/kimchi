@@ -1,22 +1,29 @@
 {
- "date": "2026-09-24",
+ "date": "2026-09-25",
  "window": "3개월",
- "total_clicks": 21,
+ "total_clicks": 24,
  "total_impressions": 3,
  "queries": [
   {
    "query": "kospi vs kosdaq",
-   "clicks": 0,
-   "impressions": 27,
-   "ctr": 0.0,
-   "position": 5.8
+   "clicks": 1,
+   "impressions": 35,
+   "ctr": 2.9,
+   "position": 5.4
   },
   {
    "query": "kosdaq vs kospi",
    "clicks": 0,
-   "impressions": 20,
+   "impressions": 21,
    "ctr": 0.0,
-   "position": 7.6
+   "position": 7.2
+  },
+  {
+   "query": "englishdart",
+   "clicks": 0,
+   "impressions": 17,
+   "ctr": 0.0,
+   "position": 6.1
   },
   {
    "query": "kospi trading hours",
@@ -24,13 +31,6 @@
    "impressions": 17,
    "ctr": 0.0,
    "position": 65.8
-  },
-  {
-   "query": "englishdart",
-   "clicks": 0,
-   "impressions": 14,
-   "ctr": 0.0,
-   "position": 6.1
   },
   {
    "query": "krx 애프터마켓 거래대금 1조 붕괴 원인과 대체거래소 비교",
@@ -47,11 +47,32 @@
    "position": 66.0
   },
   {
+   "query": "kospi 200 index methodology",
+   "clicks": 0,
+   "impressions": 5,
+   "ctr": 0.0,
+   "position": 3.6
+  },
+  {
    "query": "how to buy korean stocks in canada",
    "clicks": 0,
    "impressions": 5,
    "ctr": 0.0,
    "position": 37.2
+  },
+  {
+   "query": "what is kosdaq",
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0.0,
+   "position": 10.2
+  },
+  {
+   "query": "dart korean",
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0.0,
+   "position": 12.5
   },
   {
    "query": "how to buy korean stocks in us",
@@ -68,7 +89,14 @@
    "position": 43.0
   },
   {
-   "query": "kospi 200 index methodology",
+   "query": "can foreigners buy korean stocks",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0.0,
+   "position": 5.3
+  },
+  {
+   "query": "kospi200 kosdaq150 2026 year end target forecast",
    "clicks": 0,
    "impressions": 3,
    "ctr": 0.0,
@@ -94,13 +122,6 @@
    "impressions": 3,
    "ctr": 0.0,
    "position": 9.7
-  },
-  {
-   "query": "what is kosdaq",
-   "clicks": 0,
-   "impressions": 3,
-   "ctr": 0.0,
-   "position": 10.3
   },
   {
    "query": "kospi futures trading hours",
@@ -138,25 +159,11 @@
    "position": 5.5
   },
   {
-   "query": "kospi200 kosdaq150 2026 year end target forecast",
-   "clicks": 0,
-   "impressions": 2,
-   "ctr": 0.0,
-   "position": 5.5
-  },
-  {
    "query": "dart filing",
    "clicks": 0,
    "impressions": 2,
    "ctr": 0.0,
    "position": 6.5
-  },
-  {
-   "query": "can foreigners buy korean stocks",
-   "clicks": 0,
-   "impressions": 2,
-   "ctr": 0.0,
-   "position": 7.0
   },
   {
    "query": "dart korea",
@@ -173,18 +180,25 @@
    "position": 8.0
   },
   {
+   "query": "\"krx\" \"2026\" \"september 24\"",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 9.5
+  },
+  {
+   "query": "배당락 기준일",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 10.0
+  },
+  {
    "query": "korea dart",
    "clicks": 0,
    "impressions": 2,
    "ctr": 0.0,
    "position": 17.5
-  },
-  {
-   "query": "dart korean",
-   "clicks": 0,
-   "impressions": 2,
-   "ctr": 0.0,
-   "position": 18.5
   },
   {
    "query": "korean brokerage account",
@@ -222,6 +236,13 @@
    "position": 1.0
   },
   {
+   "query": "kospi index methodology",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 1.0
+  },
+  {
    "query": "krx kospi 200 index options",
    "clicks": 0,
    "impressions": 1,
@@ -243,6 +264,13 @@
    "position": 1.0
   },
   {
+   "query": "왜 하락?",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 1.0
+  },
+  {
    "query": "electronics?",
    "clicks": 0,
    "impressions": 1,
@@ -257,7 +285,21 @@
    "position": 2.0
   },
   {
+   "query": "中文",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 2.0
+  },
+  {
    "query": "比例大概多少",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 2.0
+  },
+  {
+   "query": "삼성전자 삼성전자우 배당금 차이",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
@@ -362,6 +404,13 @@
    "position": 8.0
   },
   {
+   "query": "krx kospi pbr per 차이",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 8.0
+  },
+  {
    "query": "site:it.kr",
    "clicks": 0,
    "impressions": 1,
@@ -404,7 +453,7 @@
    "position": 10.0
   },
   {
-   "query": "배당락 기준일",
+   "query": "그래",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
@@ -444,6 +493,13 @@
    "impressions": 1,
    "ctr": 0.0,
    "position": 12.0
+  },
+  {
+   "query": "in english",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 15.0
   },
   {
    "query": "삼성 생명 주가",
@@ -545,6 +601,13 @@
   },
   {
    "query": "korea exchange trading hours",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0.0,
+   "position": 63.0
+  },
+  {
+   "query": "kospi market hours",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
