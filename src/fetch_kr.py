@@ -80,6 +80,82 @@ def _fetch_naver_index_quotes() -> dict[str, dict]:
     return {item.get("cd"): item for item in datas if item.get("cd")}
 
 
+
+def _fetch_naver_item_quotes(codes: list[str]) -> dict[str, dict]:
+    """종목의 **KRX 정규장 확정 종가**를 네이버 실시간 폴링에서 받습니다(2026-09-25).
+
+    왜 필요한가: FinanceDataReader(네이버 fchart) 일봉의 오늘 행은 15:30 이후에도 NXT 애프터마켓(~20:00)을 따라
+    계속 움직입니다. 16:20~16:40에 세 번 수집한 9/23 파일은 27종목 중 14종목이 서로 달랐고, 발행된 등락률은
+    KRX 기준(삼성전자 3.62%)도 NXT 확정 기준(3.24%)도 아닌 제3의 값(2.70%)이었습니다. 폴링 응답의 ``nv``는
+    15:30 확정 뒤 고정되고(``ms=CLOSE``), ``pcv``는 KRX 전일 종가, ``cr``은 언론·HTS가 쓰는 그 등락률입니다.
+    한 요청에 여러 종목을 묶어 보냅니다.
+    """
+    quotes: dict[str, dict] = {}
+    for i in range(0, len(codes), 20):
+        chunk = [str(c) for c in codes[i:i + 20]]
+        response = requests.get(_NAVER_INDEX_URL, params={"query": "SERVICE_ITEM:" + ",".join(chunk)},
+                                headers=_NAVER_HEADERS, timeout=_NAVER_TIMEOUT_SECONDS)
+        response.raise_for_status()
+        areas = (response.json().get("result") or {}).get("areas") or []
+        for area in areas:
+            for item in area.get("datas") or []:
+                if item.get("cd"):
+                    quotes[str(item["cd"])] = item
+    return quotes
+
+
+def _apply_krx_close(entry: dict, quote: dict | None, today: str) -> dict:
+    """오늘 거래일이면 종목 가격·등락률을 KRX 정규장 확정 종가(폴링 nv/cr/pcv)로 바꿉니다.
+
+    - 기준일이 오늘이 아니면(휴장·지연) 그대로 둡니다.
+    - 오늘인데 확정(``ms=CLOSE``)을 못 받았으면 예외 — 스냅숏을 종가라고 발행하지 않습니다(지수와 같은 원칙).
+    - 폴링 값이 FDR 값과 15% 넘게 다르면 종목 코드가 어긋난 것이라 예외.
+    이력(history)의 마지막 행만 KRX 종가로 바꿉니다 — 앞 행들은 FDR(NXT 포함) 종가라 주간 통계에 ±0.3%p 섞임이
+    남지만, 지금처럼 수집 시각마다 달라지는 값보다 작습니다(2026-09-25 검증).
+    """
+    if str(entry.get("trading_date") or "") != today:
+        return entry
+    code = str(entry.get("ticker"))
+    if not quote:
+        raise ValueError(f"{code}: 네이버 확정 종가(폴링)를 받지 못했습니다.")
+    if quote.get("ms") != "CLOSE":
+        raise ValueError(f"{code}: 장마감 확정 종목 종가(ms=CLOSE)를 아직 확인하지 못했습니다(ms={quote.get('ms')}).")
+    nv, pcv, cr = float(quote["nv"]), float(quote["pcv"]), float(quote["cr"])
+    fdr_price = float(entry.get("price") or 0)
+    if fdr_price and abs(nv - fdr_price) / fdr_price > 0.15:
+        raise ValueError(f"{code}: 폴링 종가 {nv:,.0f}가 일봉 {fdr_price:,.0f}와 15% 넘게 다릅니다 — 코드 불일치 의심.")
+    # 폴링의 cr·cv는 **부호가 없다**(KB금융 9/23: nv 174,100 < pcv 175,700인데 cr 0.91, rf '5'=하락). 등락률은 nv·pcv로
+    # 직접 계산하고 cr은 크기 대조에만 쓴다 — 2026-09-25 실제 데이터로 시험하다 잡은 것.
+    if not pcv:
+        raise ValueError(f"{code}: 폴링에 전일 종가(pcv)가 없습니다.")
+    change_pct = (nv - pcv) / pcv * 100
+    if abs(abs(change_pct) - cr) > 0.05:
+        raise ValueError(f"{code}: 계산한 등락률 {change_pct:.2f}%와 폴링 cr {cr}이 다릅니다 — 응답 형식 확인 필요.")
+    series = list(entry.get("series") or [])
+    if series:
+        series[-1] = round(nv, 4)
+    return {**entry, "price": round(nv, 2), "change_pct": round(change_pct, 2), "prev_close_krx": round(pcv, 2),
+            "series": series, "history": price_history.replace_last(entry.get("history"), nv),
+            "data_source": "Naver Finance realtime item (KRX regular-session close)"}
+
+
+def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str) -> dict[str, dict]:
+    """워치리스트 전체(코어+편입)에 KRX 확정 종가를 적용합니다. 코어가 실패하면 전체를 멈추고, 편입 종목은 뺍니다."""
+    today = dt.date.today().isoformat()
+    if trading_date != today:
+        return watchlist
+    quotes = _fetch_naver_item_quotes(list(watchlist))
+    out: dict[str, dict] = {}
+    for ticker, entry in watchlist.items():
+        try:
+            out[ticker] = _apply_krx_close(entry, quotes.get(str(ticker)), today)
+        except ValueError as exc:
+            if entry.get("source") == "dynamic":
+                print(f"[안내] 편입 종목 제외 — {entry.get('name', ticker)}: {exc}")
+                continue
+            raise
+    return out
+
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
 
@@ -393,6 +469,8 @@ def fetch_all() -> dict:
     # 않아야 합니다.
     trading_date = next(macro[t]["trading_date"] for t in _REQUIRED if t in macro)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
+    # 종목 가격·등락률을 KRX 정규장 확정 종가로(2026-09-25) — 일봉 오늘 행은 20:00까지 NXT를 따라 움직인다.
+    watchlist = _apply_krx_closes(watchlist, trading_date)
     fetch_foreign_flows.attach_foreign_flows(watchlist, trading_date)
     if missing:
         print(f"[안내] 시세에서 빠진 항목 {len(missing)}개: {', '.join(missing)}")

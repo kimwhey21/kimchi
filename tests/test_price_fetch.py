@@ -212,3 +212,62 @@ class PriorBranchCarriesChangePctTest(unittest.TestCase):
         self.assertEqual(fetch_kr._prior_change_pct(prior), 1.21)
         self.assertIsNone(fetch_kr._prior_change_pct({"price": 1.0, "trading_date": "x", "history": {"close": [1.0]}}))
 
+
+
+class KrxCloseForStocksTest(unittest.TestCase):
+    """종목 가격·등락률은 KRX 정규장 확정 종가(네이버 폴링 nv/cr/pcv)로 쓴다(2026-09-25).
+
+    16:20~16:40에 세 번 받은 9/23 일봉은 27종목 중 14종목이 서로 달랐고(NXT 애프터마켓이 20:00까지 움직인다),
+    발행된 삼성전자 등락률 2.70%는 KRX 기준 3.62%도 NXT 확정 3.24%도 아니었다.
+    """
+    TODAY = fetch_kr.dt.date.today().isoformat()
+
+    def _entry(self, date=None):
+        return {"ticker": "005930", "name": "삼성전자", "price": 285000.0, "change_pct": 2.7, "trading_date": date or self.TODAY,
+                "series": [277500.0, 285000.0], "history": {"dates": ["2026-09-22", self.TODAY], "close": [277500.0, 285000.0]},
+                "source": "core"}
+
+    def test_close_and_change_come_from_the_polling_quote(self) -> None:
+        quote = {"cd": "005930", "nv": 286500, "cv": 10000, "cr": 3.62, "pcv": 276500, "ms": "CLOSE"}
+        out = fetch_kr._apply_krx_close(self._entry(), quote, self.TODAY)
+        self.assertEqual(out["price"], 286500.0)
+        self.assertEqual(out["change_pct"], 3.62)
+        self.assertEqual(out["prev_close_krx"], 276500.0)
+        self.assertEqual(out["series"][-1], 286500.0)
+        self.assertEqual(out["history"]["close"][-1], 286500.0)
+        self.assertIn("KRX", out["data_source"])
+
+    def test_polling_cr_is_unsigned_so_the_sign_comes_from_the_prices(self) -> None:
+        """KB금융 9/23 실제 응답: nv 174,100 · pcv 175,700 · cr 0.91 · rf '5'(하락) — cr을 그대로 쓰면 +0.91%가 된다."""
+        entry = {**self._entry(), "ticker": "105560", "price": 174100.0, "series": [175700.0, 174100.0],
+                 "history": {"dates": ["2026-09-22", self.TODAY], "close": [175700.0, 174100.0]}}
+        out = fetch_kr._apply_krx_close(entry, {"nv": 174100, "cv": 1600, "cr": 0.91, "pcv": 175700, "ms": "CLOSE", "rf": "5"}, self.TODAY)
+        self.assertEqual(out["change_pct"], -0.91)
+        with self.assertRaises(ValueError):   # cr 크기가 계산값과 다르면 응답 형식이 바뀐 것
+            fetch_kr._apply_krx_close(entry, {"nv": 174100, "cr": 5.0, "pcv": 175700, "ms": "CLOSE"}, self.TODAY)
+
+    def test_not_today_is_left_alone(self) -> None:
+        entry = self._entry(date="2026-09-23")
+        self.assertEqual(fetch_kr._apply_krx_close(entry, None, self.TODAY), entry)
+
+    def test_snapshot_is_never_published_as_a_close(self) -> None:
+        with self.assertRaises(ValueError):
+            fetch_kr._apply_krx_close(self._entry(), {"nv": 285000, "cr": 2.7, "pcv": 276500, "ms": "OPEN"}, self.TODAY)
+        with self.assertRaises(ValueError):
+            fetch_kr._apply_krx_close(self._entry(), None, self.TODAY)
+
+    def test_wildly_different_quote_means_a_wrong_code(self) -> None:
+        with self.assertRaises(ValueError):
+            fetch_kr._apply_krx_close(self._entry(), {"nv": 100000, "cr": 1.0, "pcv": 99000, "ms": "CLOSE"}, self.TODAY)
+
+    def test_core_failure_stops_and_dynamic_failure_drops(self) -> None:
+        from unittest.mock import patch
+        wl = {"005930": self._entry(), "999999": {**self._entry(), "ticker": "999999", "name": "편입", "source": "dynamic"}}
+        quotes = {"005930": {"nv": 286500, "cr": 3.62, "pcv": 276500, "ms": "CLOSE"}}
+        with patch.object(fetch_kr, "_fetch_naver_item_quotes", return_value=quotes):
+            out = fetch_kr._apply_krx_closes(wl, self.TODAY)
+        self.assertEqual(set(out), {"005930"})                        # 편입 종목은 조용히 빠진다
+        with patch.object(fetch_kr, "_fetch_naver_item_quotes", return_value={}):
+            with self.assertRaises(ValueError):
+                fetch_kr._apply_krx_closes({"005930": self._entry()}, self.TODAY)   # 코어는 멈춘다
+        self.assertEqual(fetch_kr._apply_krx_closes(wl, "2026-09-23"), wl)          # 오늘 거래일이 아니면 그대로
