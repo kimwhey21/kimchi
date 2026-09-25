@@ -131,6 +131,50 @@ def _fetch_price_data(fetcher, market: str) -> dict:
     raise RuntimeError("시세 수집 재시도 흐름이 비정상적으로 종료됐습니다.")
 
 
+
+# 이미 커밋된 거래일 파일에서 다시 쓰지 않는 값들(2026-09-25). 가격·등락률·이력은 그날 확정된 것이고,
+# 재수집(같은 날 :27/:34, 다음 날 휴장 실행)이 이 값을 바꾸면 발행된 글과 파일이 어긋난다 —
+# 9/24 휴장 재수집이 9/23 파일의 삼성전자를 2.70→3.24%, 코스피를 0.90→0.09%로 덮어썼다.
+_KEEP_ONCE_WRITTEN = ("price", "change_pct", "series", "history", "trading_date", "prev_close_krx", "data_source", "unit")
+_FILL_IF_EMPTY = ("foreign_net", "institution_net", "foreign_ratio")
+
+
+def _merge_price_file(existing: dict, fresh: dict) -> dict:
+    """같은 거래일 파일이 이미 있으면 가격은 그대로 두고 빈 칸만 채운다.
+
+    - macro(지수·환율): 기존 값을 지킨다. 기존에 없는 항목만 새로 넣는다.
+    - watchlist: 기존 종목은 가격 계열을 지키고, 수급(foreign_net·institution_net·foreign_ratio)이 비어 있으면
+      새 값으로 채운다(같은 날 수집은 0/27, 다음 날 재수집이 27/27을 채운다 — 2026-09-25 검증).
+      새로 편입된 종목은 더한다. 기존 종목을 빼지는 않는다.
+    """
+    if str(existing.get("trading_date")) != str(fresh.get("trading_date")):
+        return fresh
+    merged = {**fresh, "trading_date": existing["trading_date"]}
+    macro = dict(existing.get("macro") or {})
+    for ticker, entry in (fresh.get("macro") or {}).items():
+        if ticker not in macro:
+            macro[ticker] = entry
+    merged["macro"] = macro
+    watchlist = {}
+    fresh_wl = fresh.get("watchlist") or {}
+    for ticker, old in (existing.get("watchlist") or {}).items():
+        new = fresh_wl.get(ticker) or {}
+        entry = dict(old)                                   # 기존 값은 전부 지킨다
+        for key, value in new.items():
+            if key not in entry:                            # 기존에 없던 칸만 새로 넣는다
+                entry[key] = value
+        for key in _FILL_IF_EMPTY:                          # 수급은 비어 있을 때만 채운다
+            if old.get(key) in (None, 0, 0.0, "") and new.get(key) not in (None, ""):
+                entry[key] = new[key]
+        watchlist[ticker] = entry
+    for ticker, entry in fresh_wl.items():
+        if ticker not in watchlist:
+            watchlist[ticker] = entry
+    merged["watchlist"] = watchlist
+    merged["missing"] = list(existing.get("missing") or fresh.get("missing") or [])
+    return merged
+
+
 def run(
     market: str,
     with_english: bool = False,
@@ -197,6 +241,22 @@ def run(
     # (루틴의 WebSearch는 막혀 있지 않으므로 '왜 움직였는지' 조사는 루틴이 합니다.)
     DATA_DIR.mkdir(exist_ok=True)
     price_path = DATA_DIR / f"price_{market}_{date_str}.json"
+    if price_path.exists():
+        # 같은 거래일 파일이 이미 있다 — 가격은 한 번 쓴 그대로, 빈 칸만 보강한다(2026-09-25).
+        try:
+            existing = json.loads(price_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            existing = None
+        if existing:
+            before = json.dumps(existing, ensure_ascii=False, sort_keys=True)
+            price_data = _merge_price_file(existing, price_data)
+            if json.dumps(price_data, ensure_ascii=False, sort_keys=True) == before:
+                print(f"[안내] {price_path.name}는 이미 있고 보강할 빈 칸이 없어 다시 쓰지 않습니다.")
+                if fetch_only:
+                    return price_path
+            else:
+                filled = sum(1 for e in price_data["watchlist"].values() if e.get("foreign_net") not in (None, 0))
+                print(f"[안내] {price_path.name}는 이미 있어 가격은 두고 빈 칸만 보강했습니다(수급 있는 종목 {filled}개).")
     price_path.write_text(
         json.dumps(price_data, ensure_ascii=False, indent=2), encoding="utf-8"
     )

@@ -45,3 +45,49 @@ class FetchOnlyTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WriteOnceMergeTest(unittest.TestCase):
+    """같은 거래일 시세 파일이 이미 있으면 가격은 다시 쓰지 않고 빈 칸만 채운다(2026-09-25).
+
+    9/24 휴장 재수집이 9/23 파일의 삼성전자 등락률을 2.70→3.24%, 코스피를 0.90→0.09%로 덮어써
+    발행된 글과 파일이 어긋났다. 같은 날 :27/:34 재시도도 매번 값을 바꿔 루틴의 push를 거절시켰다.
+    """
+
+    def _old(self):
+        return {"trading_date": "2026-09-23", "missing": [],
+                "macro": {"KS11": {"price": 7080.92, "change_pct": 0.9, "history": {"dates": ["a"], "close": [7080.92]}}},
+                "watchlist": {"005930": {"ticker": "005930", "name": "삼성전자", "price": 286500.0, "change_pct": 3.62, "prev_close_krx": 276500.0,
+                                         "series": [276500.0, 286500.0], "history": {"dates": ["a", "b"], "close": [276500.0, 286500.0]},
+                                         "trading_date": "2026-09-23", "source": "core", "data_source": "Naver Finance realtime item (KRX regular-session close)"}}}
+
+    def test_prices_are_kept_and_empty_flows_are_filled(self) -> None:
+        from src import main as main_mod
+        fresh = {"trading_date": "2026-09-23", "missing": [],
+                 "macro": {"KS11": {"price": 7080.92, "change_pct": 0.09, "history": {"dates": ["a"], "close": [7080.92]}}, "KQ11": {"price": 844.48, "change_pct": 1.21}},
+                 "watchlist": {"005930": {"ticker": "005930", "name": "삼성전자", "price": 285000.0, "change_pct": 2.7, "series": [277500.0, 285000.0],
+                                          "history": {"dates": ["a", "b"], "close": [277500.0, 285000.0]}, "trading_date": "2026-09-23", "source": "core",
+                                          "foreign_net": 4513767, "institution_net": 1346883, "foreign_ratio": 46.63},
+                               "402340": {"ticker": "402340", "name": "SK스퀘어", "price": 1178000.0, "change_pct": 3.88, "source": "dynamic", "trading_date": "2026-09-23"}}}
+        out = main_mod._merge_price_file(self._old(), fresh)
+        s = out["watchlist"]["005930"]
+        self.assertEqual(s["price"], 286500.0)                       # 가격은 그대로
+        self.assertEqual(s["change_pct"], 3.62)
+        self.assertEqual(s["history"]["close"][-1], 286500.0)
+        self.assertEqual(s["foreign_net"], 4513767)                   # 빈 칸(수급)은 채움
+        self.assertIn("KRX", s["data_source"])
+        self.assertEqual(out["macro"]["KS11"]["change_pct"], 0.9)    # 지수도 그대로
+        self.assertEqual(out["macro"]["KQ11"]["change_pct"], 1.21)   # 없던 항목은 더함
+        self.assertIn("402340", out["watchlist"])                     # 새 편입 종목은 더함
+
+    def test_a_different_trading_date_is_a_new_file(self) -> None:
+        from src import main as main_mod
+        fresh = {"trading_date": "2026-09-28", "macro": {}, "watchlist": {}}
+        self.assertIs(main_mod._merge_price_file(self._old(), fresh), fresh)
+
+    def test_existing_flows_are_not_overwritten(self) -> None:
+        from src import main as main_mod
+        old = self._old(); old["watchlist"]["005930"]["foreign_net"] = 1; old["watchlist"]["005930"]["institution_net"] = 2; old["watchlist"]["005930"]["foreign_ratio"] = 46.0
+        fresh = {"trading_date": "2026-09-23", "macro": {}, "watchlist": {"005930": {"ticker": "005930", "price": 1.0, "change_pct": 0.0, "foreign_net": 9, "institution_net": 9, "foreign_ratio": 1.0}}}
+        s = main_mod._merge_price_file(old, fresh)["watchlist"]["005930"]
+        self.assertEqual((s["foreign_net"], s["institution_net"], s["foreign_ratio"]), (1, 2, 46.0))
