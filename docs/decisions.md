@@ -612,8 +612,9 @@
   `src/stock_pages.py`·`templates/stock.html.j2`·`config/stock_pages.yaml`·`stock_pages.yml`(토 11:30)·`docs/routine_stock_notes.md`와
   월간 루틴(trig_01WDkBf1Nu9cLdrqWN5aM2KM, 꺼 둠)·네이버 주소표(`scripts/naver_map_sync.py`·`data/naver_posts.json`·맥 `naver_sync.naver_map`)·
   `site_audit --stocks`·홈과 목록 탭 7곳의 Stocks 링크·워드프레스 페이지 38개(휴지통, 30일 뒤 자동 삭제)·블로그스팟 글 끝 "종목
-  페이지" 줄(블로거 라벨의 종목 이름은 워치리스트에서 뽑아 유지). 남은 것: 블로그스팟에 이미 올라간 20편 중 13편의 글 끝 링크는
-  404가 된다(블로그스팟 동기화에 본문 수정 기능이 없다), 비공개 한국어 글 네 편의 `related`에 종목 주소가 있다(방문자에게
+  페이지" 줄(블로거 라벨의 종목 이름은 워치리스트에서 뽑아 유지). 이미 올라간 블로그스팟 20편 중 13편의 그 줄은 같은 날
+  맥의 `~/.market-brief-google/blogger_remove_stock_links.py`(편집기 HTML 보기에서 그 줄만 지우고 업데이트, 공개 글로 확인)로
+  지웠다 — 사장님 "1번 고쳐야지", 다시 받아 보니 남은 글 0편. 비공개 한국어 글 네 편의 `related`에 종목 주소가 남아 있다(방문자에게
   보이지 않는다). 실제 방문 수(애널리틱스)는 보지 않고 정했다.
 - **공개된 한국어 글은 텔레그램 채널 `@fermata_kr`과 스레드 `@fermata.it.kr`에 자동으로 올린다**(2026-09-12, 홍보 1·2번 —
   `src/notify_telegram.py`·`src/notify_threads.py`, `publish_feature`·`publish_editorial`이 공개 직후 부른다). 표지 + 제목 +
