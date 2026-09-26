@@ -29,7 +29,7 @@
     대상은 독자 피드의 글 전부(시황·프리뷰·기준표·주간·이벤트, `CANDIDATE_KINDS`), 가이드는 뺀다. **제목 지적이 또 오면 규칙
     문장을 더하지 말고 점수표(`title_distance`)의 가중치와 후보 요구를 먼저 본다.** **버린 꼴은 소제목에도 같다.**
 - **보이는 부분만 깎지 않는다 — 바꾸기 전에 연쇄 목록, 바꾼 뒤에 원본 대조.** 절차 셋이 **의무**다.
-  - **연쇄 목록**: 무엇을 바꾸기 전에 그것을 읽는 곳을 `grep`으로 다 찾아 표로 만든다(본진·네이버·표지·성적표·테스트·문서).
+  - **연쇄 목록**: 무엇을 바꾸기 전에 그것을 읽는 곳을 `grep`으로 다 찾아 표로 만든다(본진·네이버·표지·테스트·문서).
     표의 줄마다 '바꿈'·'해당 없음'을 적어 보고에 넣는다. 목록이 없으면 바꾸지 않는다.
   - **원본 대조**: 옮기거나 다시 쓴 것은 기계로 대조한다 — 네이버 글은 `python -m scripts.naver_audit`, 원고→네이버 블록은
     `tests/test_naver_completeness.py`, 문서·지시문을 다시 쓰면 **`python -m scripts.rule_diff <파일>`로 사라진 규칙 줄을 뽑아
@@ -232,20 +232,17 @@
   올린다. 자동화 스위치가 켜져 있어 커밋 즉시 공개된다. 스위치를 끄면 임시저장으로 돌아가고, 그때 공개는 사람이 "발행"이라고 한
   뒤 `python -m src.publish_feature <원고> --publish` 한 번이다. 루틴이 고른 표지 사진은 `featured_photo.url`로 적고 러너가 받는다 —
   `output/`은 커밋하지 않는다.
-- **기준표 성적표**(`data/scoreboard.yaml` → `src/publish_scoreboard.py` → /scoreboard/ 페이지). 기준표마다 "언제 무엇을 확인할지"를
-  적고, 날짜가 지나면 실제 결과와 판정(적중·빗나감·절반·확인 전)을 적는다. 틀린 것도 지우지 않는다. 파일이 바뀌면
-  `scoreboard_publish.yml`이 페이지 본문만 갱신한다(상태는 안 건드림). 판정에는 반드시 result(숫자)와 checked(날짜)를 함께 적는다 —
-  없으면 검사가 막는다. **시황도 성적표에 오른다** — 원고의 `closing.check`(확인 지점)와 `review`(어제 판정)를 발행 워크플로가
-  `src/scoreboard_sync.py`로 옮긴다. 관문(`editorial_gate`)이 세 문장 이상의 판단·확인 지점·어제 판정·초보자 설명을
-  본다(`src/editorial_judgment.py`) — 발행은 막지 않고 경고만 남긴다.
-- **자동화 스위치는 GitHub 저장소 변수 `FERMATA_AUTO_PUBLISH` 하나다.** `true`면 기준표 초안이 커밋 즉시 공개되고 성적표 페이지도
-  처음 만들 때부터 공개된다. 성적표 페이지(724)는 그전에 임시저장으로 만들어져 스위치와 무관하게 보류 상태다(`publish_scoreboard`는
-  있는 페이지의 상태를 건드리지 않는다) — 공개는 사람이 "발행"이라고 한 뒤. 새 발행 경로를 만들 때는 이 변수를 같은 뜻으로 읽게 만든다 — 스위치를 여럿 두지 않는다.
+- **시황의 판단은 글 안에서 닫힌다.** 원고의 `closing.check`(확인 지점)를 다음 거래일 글의 「어제 본 것」 절이 읽어 판정하고
+  `review`(어제 판정)로 적는다. 관문(`editorial_gate`)이 세 문장 이상의 판단·확인 지점·어제 판정·초보자 설명을
+  본다(`src/editorial_judgment.py`) — 발행은 막지 않고 경고만 남긴다. 확인 지점을 따로 모으던 성적표(/scoreboard/ 페이지와
+  기록 파일)는 2026-09-26 사장님 결정으로 없앴다(내력은 `docs/decisions.md`).
+- **자동화 스위치는 GitHub 저장소 변수 `FERMATA_AUTO_PUBLISH` 하나다.** `true`면 기준표 초안이 커밋 즉시 공개된다.
+  새 발행 경로를 만들 때는 이 변수를 같은 뜻으로 읽게 만든다 — 스위치를 여럿 두지 않는다.
 - **밤 9시 반 미국장 프리뷰는 시리즈 "프리뷰"로 기준표 파이프라인을 쓰되, 그날 미국장의 메인 글이다.** 평일 21:30 KST 루틴이
   `editorial/previews/us_<날짜>.json`을 커밋하면 `preview_publish.yml`이 본진에 **비공개**로 올리고 맥이 네이버에 전문을 올린다.
   구성은 `docs/routine_preview.md`의 12절. 문턱은 절 10·시각자료 8·출처 4(`editorial_title.SECTION_FLOORS`,
   `feature_checks.SERIES_LIMITS`, `source_check.SERIES_MIN_SOURCES`)에 더해 절당 400자, 같은 그래픽 종류 2장, 초보자 설명 둘 이상.
-  지시문의 **22:00 마감**. 아침 마감 시황은 그대로다(판정·성적표·한국 연결 담당) — 합치지 않는다. **「월가 리포트」
+  지시문의 **22:00 마감**. 아침 마감 시황은 그대로다(판정·한국 연결 담당) — 합치지 않는다. **「월가 리포트」
   엔진**(`story_engines.street`)이 MarketBeat에서 시장 전체의 등급 전→후·목표가 전→후를 읽고, 막히면 야후로 S&P 500을 돌린다.
   '핵심 내용'은 원천에 없으니 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙인다 — 지어내지 않는다. `story_material.yml`의
   `all --market us`에 들어 있다.
@@ -322,12 +319,11 @@
   고른 것이라 빼지 않는다). 맥의 `naver_sync.render`가 `00-photo-cover.jpg`로 내려받고 `blogger_post`는 원본 주소를 쓴다.
   Take를 두 문장만 뽑아 맨 위 인용구로 올리는 것은 **요약본**의 규칙이다. `tests/test_naver_post.py`가 양쪽을 다 고정한다.
 - **Checkpoint도 본진에는 비공개로만 올라가고 네이버에 본문 전문이 나간다.** 프리뷰와 같은 처리다 — `publish_feature.LIVE_STATUS`에
-  `"기준표": "private"` 한 줄. 성적표의 본진 주소는 네이버 주소로 갈아 끼운다(`scripts/scoreboard_naver_urls.py`가 빈 칸을 채울 뿐
-  아니라 비공개가 된 주소도 바꾼다). 바꾸지 않으면 `publish_scoreboard.only_live`가 404를 보고 그 항목을 성적표에서 통째로 뺀다.
+  `"기준표": "private"` 한 줄.
 - **홈·목록의 Checkpoint 탭은 네이버 블로그 카테고리로 간다.** 탭은 그대로 두고 `href`만
   `https://blog.naver.com/fermata49?Redirect=Category&categoryNo=6`으로 바꿨다(`target="_blank"`). 고친 곳은 **페이지 6개(76 daily·77
   guides·105 all·1047 checkpoint·1439 weekly·1610 guide) + `twentytwentyfive//home` 템플릿** — 이 일곱이 탭 줄이 복제돼 있는 전부다
-  (724 scoreboard·1479 stocks의 'Checkpoint'는 본문 글자이지 탭이 아니다). `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
+  (1479 stocks의 'Checkpoint'는 본문 글자이지 탭이 아니다). `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
   줄로 접혀야 가로가 넘치지 않는다. `/checkpoint/` 페이지의 `query-no-results` 블록은 네이버 안내이고 목록이 다시 채워지면 저절로
   사라진다. 네이버 카테고리 번호는 추측하지 말고 `PostList.naver?blogId=fermata49`를 받아 `categoryNo=`로 확인한다(시황 1·Checkpoint
   6·가이드 7·Weekly 8).
@@ -363,7 +359,7 @@
 - **고친 것이 있으면 곧바로 커밋·푸시한다.** 클라우드 루틴이 규칙과 관문 코드를 **깃허브에서** 받아 가기 때문이다 — 맥에서만 고쳐
   두면 루틴은 옛 규칙으로 계속 돈다. 대상은 `main`이다(작업 브랜치를 만들지 않는다 — 발행 워크플로가 `main` 푸시로만 돈다).
   - **푸시 전에 `python -m unittest discover -s tests`를 돌려 통과한 것만 올린다.** 실패하면 올리지 않고 보고한다.
-  - **`editorial/**`·`data/scoreboard.yaml`·`config/stock_pages.yaml` 같은 발행 트리거 경로가 섞였는지 먼저 본다**
+  - **`editorial/**`·`config/stock_pages.yaml` 같은 발행 트리거 경로가 섞였는지 먼저 본다**
     (`.github/workflows`의 `paths`). 섞였다면 그 커밋은 글을 공개시키므로, 의도한 발행이 아니면 나눠서 올린다.
   - 비밀값(`.env`, 토큰)과 `output/`·벤치마크 코퍼스는 어떤 경우에도 커밋하지 않는다.
   - 커밋 메시지는 무엇을 왜 바꿨는지 한국어 한 줄로 적는다.

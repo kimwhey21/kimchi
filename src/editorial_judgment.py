@@ -4,7 +4,7 @@
 ------------------------------------------------
 재테크농부와의 남은 차이는 "사람이 판단하고 책임지는 글"이다. 그래서 시황도
 1. 마무리(Fermata's Take)를 한 절로 — 우리는 이렇게 봅니다 + 근거 + 언제 무엇으로 확인하겠다
-   (`closing.check`: due·what). 확인 지점은 성적표에 자동으로 쌓인다(`scoreboard_sync`).
+   (`closing.check`: due·what).
 2. "어제 본 것, 오늘은 어땠나" 절 — 어제 글의 확인 지점을 오늘 결과로 판정한다(`review`).
 3. 어려운 말이 세 개 이상이면 초보자 설명 한 토막.
 
@@ -104,7 +104,7 @@ def collect_issues(doc: dict, previous: dict | None = None,
     if not (due and what):
         issues.append(
             "closing.check가 없습니다. {\"due\": \"YYYY-MM-DD\", \"what\": \"무엇을 어떤 숫자로 확인할지\"} — "
-            "이 확인 지점이 성적표(/scoreboard/)에 자동으로 올라가고, 다음 날 글이 판정합니다.")
+            "다음 날 글의 '어제 본 것' 절이 이 확인 지점을 판정합니다.")
     else:
         try:
             due_day = dt.date.fromisoformat(due)

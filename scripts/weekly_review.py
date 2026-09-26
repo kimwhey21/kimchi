@@ -6,7 +6,6 @@
 - 글의 꼴: 절 수·소제목 길이·시각자료 수·제목 길이와 등락률 개수·문장 수·'습니다' 비율을
   재테크농부 집계(data/benchmark_stats.json)와 나란히
 - 판단: Fermata's Take 확인 지점·어제 판정·초보자 설명·기관 인용이 있는 글의 비율
-- 성적표: 이번 주에 판정된 확인 지점의 적중률, 기한이 지났는데 판정이 없는 것
 - 검색 수치(노출·클릭)는 여기서 못 잰다 — Site Kit 화면은 관리자 로그인이 필요하다.
   Claude 세션이 화면을 읽어 덧붙인다.
 
@@ -24,7 +23,6 @@ import statistics
 import sys
 from pathlib import Path
 
-import yaml
 
 from src import editorial_title
 
@@ -100,23 +98,12 @@ def collect(week_ending: dt.date) -> dict:
             day = Path(path).stem.split("_")[-1]
             if _in(day, start, end) and not (ROOT / "editorial" / f"{market}_{day}.json").exists():
                 missed.append(f"{market} {day}")
-    # 성적표
-    judged, pending_overdue = [], []
-    sb = ROOT / "data" / "scoreboard.yaml"
-    if sb.exists():
-        for article in yaml.safe_load(sb.read_text(encoding="utf-8")) or []:
-            for check in article.get("checks", []):
-                verdict = check.get("verdict", "pending")
-                if verdict != "pending" and _in(str(check.get("checked", "")), start, end):
-                    judged.append(verdict)
-                if verdict == "pending" and str(check.get("due", ""))[:10] < end.isoformat():
-                    pending_overdue.append(f"{article.get('title', '')[:30]} — {check.get('due')}")
     bench = {}
     bs = ROOT / "data" / "benchmark_stats.json"
     if bs.exists():
         bench = json.loads(bs.read_text(encoding="utf-8")).get("stats", {})
     return {"start": start, "end": end, "daily": daily, "features": features, "missed": sorted(missed),
-            "judged": judged, "pending_overdue": pending_overdue, "bench": bench}
+            "bench": bench}
 
 
 def _med(rows: list[dict], key: str):
@@ -209,24 +196,13 @@ def render(data: dict) -> tuple[str, str]:
                   f"- 바로 앞 글과 같은 말로 끝난 제목: {repeats}건 (0이어야 한다)",
                   f"- 대비 꼴(`…했는데 …는 오히려`) 제목: {contrast}편 / {len(d)}편 (재테크농부 104편 중 4편)",
                   f"- 소제목 중 문장(`~습니다`·`~다`) 비율 중앙값: {_med(d, 'sentence_pct')}% (재테크농부 절반 안팎, 관문은 60%까지)", ""]
-    judged = data["judged"]
-    if judged:
-        hit = judged.count("hit"); mixed = judged.count("mixed"); miss = judged.count("miss")
-        lines += ["## 성적표", "", f"- 이번 주 판정 {len(judged)}건: 적중 {hit} · 절반 {mixed} · 빗나감 {miss} (적중률 {round(100 * (hit + 0.5 * mixed) / len(judged))}%)"]
-    else:
-        lines += ["## 성적표", "", "- 이번 주 판정된 확인 지점 없음"]
-    if data["pending_overdue"]:
-        lines += [f"- 기한이 지났는데 판정이 없는 것 {len(data['pending_overdue'])}건: " + "; ".join(data["pending_overdue"][:5])]
-    lines += ["", "## 글 목록", "", "| 날짜 | 시장 | 제목 | 절 | 시각자료 | 확인 지점 |", "|---|---|---|---:|---:|:---:|"]
+    lines += ["## 글 목록", "", "| 날짜 | 시장 | 제목 | 절 | 시각자료 | 확인 지점 |", "|---|---|---|---:|---:|:---:|"]
     for r in sorted(d + f, key=lambda r: r["date"]):
         lines.append(f"| {r['date']} | {r['market']} | {r['title'][:40]} | {r['sections']} | {r['visuals']} | {'○' if r['has_check'] else '—'} |")
     lines += ["", "## 검색 성적", ""] + (latest_search_report() or ["- 아직 기록 없음 (이 맥의 일요일 22:00 작업 `search_snapshot.py`가 reports/search_<날짜>.md를 만든다)"]) + [""]
     lines += ["## 사장님께", "", "이번 주 가장 좋았던 글 하나와 가장 아쉬웠던 글 하나를 짚어 주세요. 그 판단을 규칙에 넣습니다.", ""]
     summary = [f"지난 한 주({data['start']}~{data['end']}): 시황 {len(d)}편, 기준표·프리뷰 {len(f)}편, 빠진 거래일 {len(data['missed'])}일.",
-               f"절 수 {_med(d, 'sections')}(재테크농부 {b('소제목 수')}), 시각자료 {_med(d, 'visuals')}(10), 제목 등락률 {_med(d, 'title_pct')}개(0).",
-               (f"성적표 판정 {len(judged)}건, 적중률 {round(100 * (judged.count('hit') + 0.5 * judged.count('mixed')) / len(judged))}%." if judged else "성적표 판정 없음.")]
-    if data["pending_overdue"]:
-        summary.append(f"판정 안 된 확인 지점 {len(data['pending_overdue'])}건.")
+               f"절 수 {_med(d, 'sections')}(재테크농부 {b('소제목 수')}), 시각자료 {_med(d, 'visuals')}(10), 제목 등락률 {_med(d, 'title_pct')}개(0)."]
     summary.append("이번 주 최고·최악 글 하나씩 짚어 주세요.")
     return "\n".join(lines), "\n".join(summary)
 

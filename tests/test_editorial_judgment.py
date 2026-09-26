@@ -1,14 +1,9 @@
-"""판단(Fermata's Take + 확인 지점)·어제 판정·초보자 설명 검사와 성적표 옮기기 (2026-09-08)."""
+"""판단(Fermata's Take + 확인 지점)·어제 판정·초보자 설명 검사 (2026-09-08)."""
 from __future__ import annotations
 
-import tempfile
 import unittest
-from pathlib import Path
-from unittest.mock import patch
 
-import yaml
-
-from src import editorial_judgment, scoreboard_sync
+from src import editorial_judgment
 
 GOOD_CLOSING = {"heading": "Fermata's Take",
                 "body": "우리는 이번 하락을 추세 전환이 아니라 숨 고르기로 봅니다. 외국인이 닷새째 순매수인데 지수가 밀린 것은 개인의 차익 실현 때문이었습니다. 9월 10일 종가가 7,000선을 넘는지로 확인하겠습니다.",
@@ -79,26 +74,6 @@ class JudgmentTest(unittest.TestCase):
         doc = _doc(); doc["ko"]["narrative"][0]["body"] = "저는 매수했습니다."
         issues, _ = editorial_judgment.collect_issues(doc)
         self.assertTrue(any("포지션 화법" in i for i in issues), issues)
-
-
-class ScoreboardSyncTest(unittest.TestCase):
-    def setUp(self) -> None:
-        self.tmp = Path(tempfile.mkdtemp()) / "scoreboard.yaml"
-        self.tmp.write_text("# 성적표\n\n- title: 어제 글\n  url: https://fermata.it.kr/editorial-kr-2026-09-07-ko/\n  date: 2026-09-07\n  summary: s\n  checks:\n    - due: 2026-09-08\n      what: 7,000선을 넘는지\n      verdict: pending\n", encoding="utf-8")
-        self.patcher = patch.object(scoreboard_sync, "SCOREBOARD", self.tmp); self.patcher.start(); self.addCleanup(self.patcher.stop)
-
-    def test_review_judges_yesterday_and_check_is_added(self) -> None:
-        doc = _doc(review={"of_date": "2026-09-07", "verdict": "miss", "result": "종가 6,954.52로 7,000선 아래"})
-        doc["price_data"] = {}
-        path = self.tmp.parent / "kr_2026-09-08.json"; path.write_text(__import__("json").dumps(doc, ensure_ascii=False), encoding="utf-8")
-        notes = scoreboard_sync.sync([path])
-        data = yaml.safe_load(self.tmp.read_text(encoding="utf-8"))
-        prev = next(a for a in data if str(a["date"]) == "2026-09-07")
-        self.assertEqual(prev["checks"][0]["verdict"], "miss"); self.assertEqual(str(prev["checks"][0]["checked"]), "2026-09-08")
-        today = next(a for a in data if str(a["date"]) == "2026-09-08")
-        self.assertEqual(today["checks"][0]["verdict"], "pending"); self.assertEqual(str(today["checks"][0]["due"]), "2026-09-10")
-        self.assertTrue(self.tmp.read_text(encoding="utf-8").startswith("# 성적표"))
-        self.assertEqual(len(notes), 2, notes)
 
 
 if __name__ == "__main__":

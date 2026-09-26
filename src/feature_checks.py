@@ -107,10 +107,10 @@ def position_issues(body: str) -> list[str]:
 
 def deadline_issue(doc: dict) -> str | None:
     """기준표의 마감일(최상위 `deadline`, YYYY-MM-DD) — 글 머리말 'Checkpoint · N월 N일까지 확인할 것'이
-    이 값으로 그려진다(2026-09-09). 성적표에 적은 확인 지점 중 마지막 날짜와 같아야 한다."""
+    이 값으로 그려진다(2026-09-09). 본문에 박은 확인 날짜 중 마지막 날짜와 같아야 한다."""
     deadline = doc.get("deadline")
     if not deadline:
-        return ("최상위 `deadline`(YYYY-MM-DD)이 없습니다 — 성적표에 적은 확인 지점 중 마지막 날짜를 "
+        return ("최상위 `deadline`(YYYY-MM-DD)이 없습니다 — 본문에 박은 확인 날짜 중 마지막 날짜를 "
                 "적으십시오. 글 머리말 'Checkpoint · N월 N일까지 확인할 것'이 이 값으로 그려집니다.")
     try:
         day = dt.date.fromisoformat(str(deadline))
