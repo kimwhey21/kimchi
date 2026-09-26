@@ -339,8 +339,11 @@
 - **본진은 영어 사이트다**(2026-09-26, 사장님: "온전히 영어사이트로 탈바꿈하자" → "남기고 1~5번 진행해"). 탭은 All·Daily·Guides
   셋이고, 탭 줄이 복제돼 있는 곳은 **페이지 3개(76 daily·77 guides·105 all) + `twentytwentyfive//home` 템플릿** 넷이다(네이버로 가던
   Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은 없앴다). `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
-  줄로 접혀야 가로가 넘치지 않는다. 사이트 언어 설정(`ko_KR`)과 태그라인은 REST로 바꾸면 200이 오고도 그대로여서(원인 미확인)
-  **방문자 화면만 영어로 만드는 Code Snippets 12번**(`locale`→`en_US`, 태그라인 필터 — 관리자 화면과 사장님 계정은 한국어)이 맡는다.
+  줄로 접혀야 가로가 넘치지 않는다. **사이트 언어는 영어다 — REST로는 `"language": ""`(빈 값)로 보낸다.** 워드프레스는 영어를 빈 값으로
+  저장하고 `"en_US"`는 설치된 언어 목록에 없다며 옛 값으로 되돌린다(200이 오고도 안 바뀐다). 사장님 계정 언어는 `ko_KR`로 고정해
+  관리자 화면은 한국어다. **Code Snippets 12번**이 방문자 화면의 `locale`→`en_US`와 태그라인을 한 번 더 못박는다. 영어 글의 출처 칸은
+  한국 매체를 영어 이름(모르면 주소)과 `Korean-language article`로 그리고(`src/english_sources.py`), 영어 이름을 못 찾은 편입 종목은
+  종목 코드로 쓴다(`render_html._display_name`·`data_graphics.localized`).
   날짜 형식은 `F j, Y`, 템플릿에 글자로 저장된 문구(Previous·Next·By 등)도 영어다. 한국어 소개·연락처·개인정보처리방침(697·698·226)은
   페이지는 남기고 메뉴에서만 뺐다. 네이버 카테고리 번호는 추측하지 말고 `PostList.naver?blogId=fermata49`를 받아 `categoryNo=`로
   확인한다(시황 1·Checkpoint 6·가이드 7·Weekly 8).
