@@ -4206,7 +4206,7 @@
    "043260": {
     "ticker": "043260",
     "name": "성호전자",
-    "name_en": "성호전자",
+    "name_en": "Sungho Electronics",
     "price": 21750.0,
     "change_pct": 15.2,
     "series": [
@@ -4707,7 +4707,7 @@
    "347700": {
     "ticker": "347700",
     "name": "스피어",
-    "name_en": "스피어",
+    "name_en": "Sphere",
     "price": 23850.0,
     "change_pct": 17.2,
     "series": [
@@ -5422,9 +5422,9 @@
      ]
     },
     {
-     "heading": "Why Sphere (스피어) also bought into a nickel smelter",
+     "heading": "Why Sphere also bought into a nickel smelter",
      "icon": "rocket",
-     "body": "Sphere (스피어) acquired a 10% stake in EII, the operator of an Indonesian nickel smelter, for $240 million (Hankyung). It's a move by a company that supplies nickel and superalloys to SpaceX to lock down its own raw-material supply chain.\n\nThe stake secures roughly 7,200 tons of nickel a year and is expected to generate more than 180 billion won in direct business impact (Hankyung). Sphere's core contract is the 10-year-plus deal signed with SpaceX in July 2025 to supply nickel and superalloys; that business alone generated 29.7 billion won in revenue in the fourth quarter of 2025 (Hankyung).\n\nVertical integration from raw material (nickel) to finished product (specialty alloys) can cushion margins against swings in commodity prices. How much of that shows up in earnings, though, is still an expectation tied to the timing of the stake purchase, not a confirmed number.",
+     "body": "Sphere acquired a 10% stake in EII, the operator of an Indonesian nickel smelter, for $240 million (Hankyung). It's a move by a company that supplies nickel and superalloys to SpaceX to lock down its own raw-material supply chain.\n\nThe stake secures roughly 7,200 tons of nickel a year and is expected to generate more than 180 billion won in direct business impact (Hankyung). Sphere's core contract is the 10-year-plus deal signed with SpaceX in July 2025 to supply nickel and superalloys; that business alone generated 29.7 billion won in revenue in the fourth quarter of 2025 (Hankyung).\n\nVertical integration from raw material (nickel) to finished product (specialty alloys) can cushion margins against swings in commodity prices. How much of that shows up in earnings, though, is still an expectation tied to the timing of the stake purchase, not a confirmed number.",
      "table": [
       {
        "label": "EII stake acquired",

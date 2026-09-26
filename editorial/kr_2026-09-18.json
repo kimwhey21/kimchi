@@ -4206,7 +4206,7 @@
    "043260": {
     "ticker": "043260",
     "name": "성호전자",
-    "name_en": "성호전자",
+    "name_en": "Sungho Electronics",
     "price": 26500.0,
     "change_pct": 19.37,
     "series": [
@@ -4373,7 +4373,7 @@
    "000500": {
     "ticker": "000500",
     "name": "가온전선",
-    "name_en": "가온전선",
+    "name_en": "Gaon Cable",
     "price": 331000.0,
     "change_pct": 25.38,
     "series": [
@@ -4707,7 +4707,7 @@
    "001440": {
     "ticker": "001440",
     "name": "대한전선",
-    "name_en": "대한전선",
+    "name_en": "Taihan Cable & Solution",
     "price": 31950.0,
     "change_pct": 11.32,
     "series": [
@@ -5302,7 +5302,7 @@
     {
      "heading": "Why Cable and Optics Stocks Are on Fire",
      "icon": "bolt",
-     "body": "Gaon Cable, Taihan Electric Wire, Daehan Fiberoptics and Sungho Electronics all ranked among today's most heavily traded names. The common thread is power demand from AI data centers.\n\nGlobal data center power demand is projected to reach 161 gigawatts in 2026, up 31% year over year on cloud capex, but grid buildout of high-voltage transformers and switchgear can't keep pace -- leaving a projected 268-gigawatt supply gap by 2030.\n\nGaon Cable (가온전선) has been a poster child for this theme: its North American busduct sales for AI data centers were already forecast to grow from about 80 billion won last year to 320 billion this year and 800 billion next year. Today's simultaneous move in Taihan Electric Wire and Daehan Fiberoptics suggests the theme is broadening beyond a single stock.",
+     "body": "Gaon Cable, Taihan Electric Wire, Daehan Fiberoptics and Sungho Electronics all ranked among today's most heavily traded names. The common thread is power demand from AI data centers.\n\nGlobal data center power demand is projected to reach 161 gigawatts in 2026, up 31% year over year on cloud capex, but grid buildout of high-voltage transformers and switchgear can't keep pace -- leaving a projected 268-gigawatt supply gap by 2030.\n\nGaon Cable has been a poster child for this theme: its North American busduct sales for AI data centers were already forecast to grow from about 80 billion won last year to 320 billion this year and 800 billion next year. Today's simultaneous move in Taihan Electric Wire and Daehan Fiberoptics suggests the theme is broadening beyond a single stock.",
      "table": [
       {
        "label": "Projected 2030 global grid supply gap",

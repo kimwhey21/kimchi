@@ -4039,7 +4039,7 @@
       "036540": {
         "ticker": "036540",
         "name": "SFA반도체",
-        "name_en": "SFA반도체",
+        "name_en": "SFA Semicon",
         "price": 10480.0,
         "change_pct": 16.57,
         "series": [
@@ -4206,7 +4206,7 @@
       "067310": {
         "ticker": "067310",
         "name": "하나마이크론",
-        "name_en": "하나마이크론",
+        "name_en": "HANA Micron",
         "price": 44850.0,
         "change_pct": 16.34,
         "series": [
@@ -4707,7 +4707,7 @@
       "437730": {
         "ticker": "437730",
         "name": "삼현",
-        "name_en": "삼현",
+        "name_en": "Samhyun",
         "price": 55700.0,
         "change_pct": 9.22,
         "series": [
@@ -5235,7 +5235,7 @@
         {
           "heading": "Why the Chip Market Is Set to Double This Year",
           "icon": "chip",
-          "body": "Korea Eximbank's overseas research institute just raised its forecast for this year's global chip market to $1.6 trillion -- double last year's size, and 60% above the forecast the same institute gave in the second quarter (Financial News).\n\nMemory is driving the growth. This year's memory chip market is expected to reach about $886.5 billion, four times last year's size, with memory's share of the total chip market rising from 30% last year to 55% this year. DRAM is expected to grow 3.4x to $519.0 billion, and NAND 4.9x to $360.0 billion.\n\nThat forecast sits behind why equipment and back-end names like SFA Semicon (SFA반도체) and Hana Micron outran the large caps today. If the market grows this much, that volume eventually flows through as orders to equipment, materials and back-end suppliers.",
+          "body": "Korea Eximbank's overseas research institute just raised its forecast for this year's global chip market to $1.6 trillion -- double last year's size, and 60% above the forecast the same institute gave in the second quarter (Financial News).\n\nMemory is driving the growth. This year's memory chip market is expected to reach about $886.5 billion, four times last year's size, with memory's share of the total chip market rising from 30% last year to 55% this year. DRAM is expected to grow 3.4x to $519.0 billion, and NAND 4.9x to $360.0 billion.\n\nThat forecast sits behind why equipment and back-end names like SFA Semicon and Hana Micron outran the large caps today. If the market grows this much, that volume eventually flows through as orders to equipment, materials and back-end suppliers.",
           "table": [
             {
               "label": "This year's global chip market forecast",
