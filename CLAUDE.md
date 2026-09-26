@@ -264,6 +264,8 @@
   절 4·2·2. **종목 허브 페이지** `/stocks/<slug>/` 37개(`config/stock_pages.yaml`, `src/stock_pages.py`, `stock_pages.yml` 토 11:30 KST):
   숫자는 시세 파일에서만, 「최근 흐름」은 매월 1일 루틴의 `editorial/stocks/notes_<YYYY-MM>.json`(`docs/routine_stock_notes.md`,
   `--check-notes` 통과 후 커밋). 홈·목록 탭에 Stocks. 한국어 가이드·이벤트는 네이버에 전문, 본진은 비공개(아래 「발행 워크플로우」).
+  「이 종목이 나온 글」은 **네이버 주소로만** 잇는다(`data/naver_posts.json` — 맥이 `scripts/naver_map_sync.py`로 하루 한 번
+  그 파일만 커밋한다). 표에 없는 글과 잡지는 싣지 않는다 — 한국어 글은 본진 비공개라 본진 주소는 방문자에게 404다.
 - 그림을 그린 뒤에는 **`Read` 툴로 직접 본다.** 축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은 코드만 봐서는 안 보인다.
   `src/graphic_checks.py`가 그림의 데이터와 제목이 어긋나는 것을 잡지만 전부는 아니다.
 

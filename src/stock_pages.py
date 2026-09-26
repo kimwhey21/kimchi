@@ -40,6 +40,7 @@ import requests
 import yaml
 from dotenv import load_dotenv
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from markupsafe import Markup, escape
 
 from src import data_graphics, post_tags, publish_wordpress
 from src.feature_checks import POSITION_PHRASES
@@ -188,18 +189,32 @@ def validate_notes(doc: dict, items: list[dict]) -> list[str]:
 
 # ── 이 종목이 나온 글 ───────────────────────────────────────────────────────
 
-def _doc_url(doc: dict, path: Path) -> str:
-    market = doc.get("market")
-    if market in ("kr", "us"):
-        return f"https://fermata.it.kr/editorial-{market}-{doc.get('date')}-ko/"
-    slug = doc.get("slug") or (f"us-{doc.get('date')}-preview" if doc.get("series") == "프리뷰"
-                               else path.stem.replace("_", "-", 1).replace("_", "-"))
-    return f"https://fermata.it.kr/{slug}/"
+NAVER_POSTS = ROOT / "data" / "naver_posts.json"
 
 
-def related_posts(name: str, editorial_dir: Path | None = None, limit: int = RELATED_LIMIT) -> list[dict]:
-    """제목이나 소제목에 이름이 낱말로 나오는 우리 글, 최신순. 영어 원고는 뺀다."""
+def naver_posts(path: Path = NAVER_POSTS) -> dict[str, str]:
+    """원고 경로(`editorial/...json`) → 네이버 주소. 이 맥이 `scripts/naver_map_sync.py`로 하루 한 번 커밋한다.
+
+    표가 없으면 멈춘다 — 조용히 빈 표로 가면 모든 종목 페이지에서 글 목록이 사라지고도 성공처럼 보인다.
+    """
+    if not path.exists():
+        raise FileNotFoundError(f"네이버 주소표가 없습니다: {path} — 맥에서 python -m scripts.naver_map_sync --push")
+    table = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(table, dict):
+        raise ValueError(f"네이버 주소표 형식이 틀렸습니다: {path}")
+    return {str(k): str(v) for k, v in table.items()}
+
+
+def related_posts(name: str, editorial_dir: Path | None = None, limit: int = RELATED_LIMIT,
+                  naver: dict[str, str] | None = None) -> list[dict]:
+    """제목이나 소제목에 이름이 낱말로 나오는 우리 글, 최신순 — **독자가 열 수 있는 네이버 주소로** 잇는다.
+
+    2026-09-26: 전에는 본진 주소로 이었는데, 한국어 글은 본진에서 전부 비공개라(2026-09-22 결정) 37쪽의 링크 179개가
+    방문자에게 404였다. 이제 네이버 주소표(`naver_posts`)에 있는 글만 싣는다 — 표에 없는 글(아직 네이버에 안 올라간 글)은
+    다음 주 갱신 때 들어온다. 영어 원고는 뺀다(한 목록에 두 언어를 섞지 않는다). 잡지는 페르마타 이름으로 잇지 않는다.
+    """
     base = editorial_dir or ROOT / "editorial"
+    naver = naver if naver is not None else naver_posts()
     rows: list[tuple[str, str, str]] = []
     for path in glob.glob(str(base / "**" / "*.json"), recursive=True):
         p = Path(path)
@@ -209,7 +224,10 @@ def related_posts(name: str, editorial_dir: Path | None = None, limit: int = REL
             doc = json.loads(p.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
-        if str(doc.get("lang") or "ko") == "en":
+        if str(doc.get("lang") or "ko") == "en" or doc.get("series") == "매거진":
+            continue
+        url = naver.get("editorial/" + p.relative_to(base).as_posix())
+        if not url:
             continue
         ko = doc.get("ko") or {}
         title = str(ko.get("title") or "")
@@ -225,7 +243,7 @@ def related_posts(name: str, editorial_dir: Path | None = None, limit: int = REL
             rank = 1
         else:
             continue
-        rows.append((rank, str(doc.get("date") or ""), title, _doc_url(doc, p)))
+        rows.append((rank, str(doc.get("date") or ""), title, url))
     rows.sort(key=lambda r: (r[0], r[1]), reverse=False)
     rows = sorted(rows, key=lambda r: r[1], reverse=True)
     rows = sorted(rows, key=lambda r: r[0])
@@ -243,12 +261,24 @@ def _label(date_str: str) -> str:
     return f"{d.year}년 {d.month}월 {d.day}일"
 
 
+def note_html(note: str | None) -> Markup | None:
+    """노트 글을 페이지에 넣을 꼴로 — 굵은 글씨(`<b>…</b>`)만 살리고 나머지는 전부 글자로 바꾼다(2026-09-26).
+
+    `validate_notes`가 마크다운 `**` 대신 `<b>…</b>`를 쓰라고 시키는데 템플릿은 자동으로 이스케이프해서, 첫 노트가
+    나가면 `&lt;b&gt;HBM&lt;/b&gt;`처럼 태그가 글자로 보일 뻔했다. 다른 태그는 여전히 글자로 나간다.
+    """
+    if not note:
+        return None
+    safe = str(escape(note)).replace("&lt;b&gt;", "<b>").replace("&lt;/b&gt;", "</b>")
+    return Markup(safe)
+
+
 def render_page(item: dict, s: dict, trading_date: str, chart_url: str | None,
                 note: str | None, note_label: str | None, related: list[dict]) -> str:
     return _env().get_template("stock.html.j2").render(
         mode="page", market_label=MARKET_LABEL[item["market"]], trading_label=_label(trading_date),
         name=item["name"], name_en=item["name_en"], ticker=item["ticker"], sector=item["sector"], s=s,
-        chart_url=chart_url, blurb=item["blurb"], note=note, note_label=note_label, related=related)
+        chart_url=chart_url, blurb=item["blurb"], note=note_html(note), note_label=note_label, related=related)
 
 
 def render_index(rows: list[dict], trading_dates: dict[str, str]) -> str:
@@ -351,6 +381,7 @@ def build(markets: list[str], *, upload: bool, live: bool, data_dir: Path | None
     prices = {m: json.loads(latest_price_file(m, data_dir).read_text(encoding="utf-8")) for m in markets}
     trading_dates = {m: str(prices[m]["trading_date"]) for m in markets}
     notes = latest_notes()
+    naver = naver_posts()          # 한 번만 읽는다 — 없으면 여기서 멈춘다
     OUTPUT.mkdir(parents=True, exist_ok=True)
     base = auth = None
     if upload:
@@ -381,7 +412,7 @@ def build(markets: list[str], *, upload: bool, live: bool, data_dir: Path | None
         note = note_label = None
         if notes and notes[0].get(item["ticker"]):
             note, note_label = str(notes[0][item["ticker"]]), _label(notes[1]) + " 기준"
-        related = related_posts(item["name"])
+        related = related_posts(item["name"], naver=naver)
         html = render_page(item, s, trading_dates[market], chart_url, note, note_label, related)
         (OUTPUT / f"{item['slug']}.html").write_text(html, encoding="utf-8")
         if upload:

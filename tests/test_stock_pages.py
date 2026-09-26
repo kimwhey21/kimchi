@@ -79,10 +79,14 @@ class RelatedPostsTest(unittest.TestCase):
                 "ko": {"title": "삼성전자 PER, 지금 숫자로", "narrative": []}}), encoding="utf-8")
             (base / "features" / "en_x.json").write_text(json.dumps({"kind": "feature", "lang": "en", "date": "2026-09-08", "slug": "en",
                 "ko": {"title": "Samsung Electronics 삼성전자", "narrative": []}}), encoding="utf-8")
-            rows = stock_pages.related_posts("삼성전자", editorial_dir=base)
+            naver = {"editorial/kr_2026-09-10.json": "https://blog.naver.com/fermata49/1",
+                     "editorial/kr_2026-09-11.json": "https://blog.naver.com/fermata49/2",
+                     "editorial/features/kr_2026-09-06_x.json": "https://blog.naver.com/fermata49/3"}
+            rows = stock_pages.related_posts("삼성전자", editorial_dir=base, naver=naver)
         self.assertEqual([r["date"] for r in rows], ["2026-09-10", "2026-09-06"])   # 삼성전기 ≠ 삼성전자, 영어 제외
-        self.assertEqual(rows[0]["url"], "https://fermata.it.kr/editorial-kr-2026-09-10-ko/")
-        self.assertEqual(rows[1]["url"], "https://fermata.it.kr/samsung-per/")
+        # 한국어 글은 본진에서 비공개(404)라 네이버 주소로 잇는다(2026-09-26).
+        self.assertEqual(rows[0]["url"], "https://blog.naver.com/fermata49/1")
+        self.assertEqual(rows[1]["url"], "https://blog.naver.com/fermata49/3")
 
     def test_body_mentions_come_after_title_mentions(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -91,8 +95,36 @@ class RelatedPostsTest(unittest.TestCase):
                 "ko": {"title": "코스피 하락", "narrative": [{"heading": "반도체", "body": "삼성전자가 3.53% 내렸습니다."}]}}), encoding="utf-8")
             (base / "kr_2026-09-01.json").write_text(json.dumps({"market": "kr", "date": "2026-09-01",
                 "ko": {"title": "삼성전자 급등", "narrative": []}}), encoding="utf-8")
-            rows = stock_pages.related_posts("삼성전자", editorial_dir=base)
+            naver = {"editorial/kr_2026-09-11.json": "https://blog.naver.com/fermata49/11",
+                     "editorial/kr_2026-09-01.json": "https://blog.naver.com/fermata49/1"}
+            rows = stock_pages.related_posts("삼성전자", editorial_dir=base, naver=naver)
         self.assertEqual([r["date"] for r in rows], ["2026-09-01", "2026-09-11"])
+
+    def test_only_posts_readers_can_open_and_never_the_magazine(self) -> None:
+        """네이버 주소표에 없는 한국어 글은 싣지 않는다(본진은 비공개라 404). 잡지는 퍼플썸이라 잇지 않는다."""
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            (base / "magazine").mkdir()
+            (base / "kr_2026-09-11.json").write_text(json.dumps({"market": "kr", "date": "2026-09-11",
+                "ko": {"title": "삼성전자 급락", "narrative": []}}), encoding="utf-8")
+            (base / "kr_2026-09-12.json").write_text(json.dumps({"market": "kr", "date": "2026-09-12",
+                "ko": {"title": "삼성전자 반등", "narrative": []}}), encoding="utf-8")
+            (base / "magazine" / "2026-09-13_x.json").write_text(json.dumps({"series": "매거진", "date": "2026-09-13",
+                "ko": {"title": "삼성전자의 역사", "narrative": []}}), encoding="utf-8")
+            naver = {"editorial/kr_2026-09-11.json": "https://blog.naver.com/fermata49/11",
+                     "editorial/magazine/2026-09-13_x.json": "https://blog.naver.com/puplesum_/13"}
+            rows = stock_pages.related_posts("삼성전자", editorial_dir=base, naver=naver)
+        self.assertEqual([r["url"] for r in rows], ["https://blog.naver.com/fermata49/11"])
+
+    def test_missing_naver_table_stops_instead_of_emptying_pages(self) -> None:
+        with self.assertRaises(FileNotFoundError):
+            stock_pages.naver_posts(Path(tempfile.mkdtemp()) / "none.json")
+
+    def test_committed_naver_table_has_no_magazine_and_only_naver_urls(self) -> None:
+        table = stock_pages.naver_posts()
+        self.assertTrue(table)
+        self.assertFalse([k for k in table if "/magazine/" in k])
+        self.assertTrue(all(v.startswith("https://blog.naver.com/fermata49/") for v in table.values()))
 
 
 class RenderTest(unittest.TestCase):
@@ -118,6 +150,17 @@ class RenderTest(unittest.TestCase):
         self.assertEqual(stock_pages.page_title(item), "삼성전자 주가 (005930)")
         self.assertIn("1주 -", stock_pages.excerpt(item, s, "2026-09-11"))
 
+    def test_note_bold_renders_as_bold_and_other_tags_stay_text(self) -> None:
+        """노트 검사는 `**` 대신 `<b>…</b>`를 쓰라고 시킨다 — 페이지에서 태그가 글자로 보이면 안 된다(2026-09-26)."""
+        item = {"market": "kr", "ticker": "005930", "slug": "samsung-electronics", "name": "삼성전자",
+                "name_en": "Samsung Electronics", "sector": "반도체", "blurb": "메모리 회사입니다."}
+        s = stock_pages.stats(ENTRY, "2026-09-11")
+        html = stock_pages.render_page(item, s, "2026-09-11", None, "<b>HBM</b> 수요 & <script>x</script>",
+                                       "2026년 10월 1일 기준", [])
+        self.assertIn("<b>HBM</b>", html)
+        self.assertNotIn("&lt;b&gt;", html)
+        self.assertIn("&lt;script&gt;", html)
+        self.assertIn("수요 &amp;", html)
 
 class WorkflowTest(unittest.TestCase):
     def test_workflow_runs_weekly_and_on_notes_without_llm_keys(self) -> None:
