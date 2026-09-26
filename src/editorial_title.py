@@ -78,6 +78,14 @@ _INVENTED = {
     "상한가": "벤치마크 제목 1,089개에 0회입니다(미국 시장에는 없는 제도입니다).",
 }
 
+# 기간을 가리키는 '이 주'·'이주'(2026-09-26, 사용자: "9월 이 주, 목표주가가 두 번 바뀌었습니다 — 이주라는 말이
+# 이상해, 둘째 주인지 2주 동안인지"). 둘째 주·2주·이번 주 세 가지로 읽히고, 글은 발행일 뒤에도 읽힌다.
+# 벤치마크 155편에 0회('이번 주'는 200회). 며칠에 걸친 일이면 날짜(`9월 15일과 23일`)로, 한 주 안이면 `이번 주`로 쓴다.
+# 앞에 한글이 붙은 것('외국인이 주도')은 조사 '이'라 제외한다.
+_AMBIGUOUS_WEEK = re.compile(r"(?<![가-힣])이\s?주(?=[,\s]|$)")
+_AMBIGUOUS_WEEK_WHY = ("'이 주'는 둘째 주·2주 동안·이번 주 세 가지로 읽힙니다(벤치마크 0회). 며칠에 걸친 일이면 "
+                       "날짜로(`9월 15일과 23일`), 한 주 안이면 `이번 주`로 쓰세요.")
+
 # 제목 속 등락률. 벤치마크 최근 104편(2026-08-06~09-05)에서 등락률이 둘 이상인
 # 제목은 0개, 하나인 제목도 12개뿐이다(88%는 숫자% 없음). 우리는 9/7·9/8 이틀 연속
 # "A 8.47% 급등, B 5.78% 급락. 코스피가 0.58% 하락한 이유."처럼 셋을 나열했고,
@@ -686,6 +694,8 @@ def collect_heading_issues(sections: list, kind: str | None = None,
                 continue
             if pattern.search(bare):
                 issues.append(f"소제목 {index} '{bare}': 버린 꼴입니다 — {why} 제목과 소제목은 같은 규칙입니다.")
+        if _AMBIGUOUS_WEEK.search(bare):
+            issues.append(f"소제목 {index} '{bare}': {_AMBIGUOUS_WEEK_WHY}")
         if re.search(r"[고,]\s*$", bare):
             issues.append(f"소제목 {index} '{bare}': '…고, …고'로 끝나는 대구(對句)입니다. 벤치마크 "
                           "소제목 462개에 0개 — 한 문장으로 말하세요(`메모리는 올랐고 설계주는 하락했습니다`).")
@@ -762,6 +772,8 @@ def collect_title_issues(title: str, price_data: dict | None = None,
     for word, why in _INVENTED.items():
         if word in title:
             issues.append(f"제목의 '{word}'는 지어낸 말입니다 — {why}")
+    if _AMBIGUOUS_WEEK.search(title):
+        issues.append(f"제목 {title!r}: {_AMBIGUOUS_WEEK_WHY}")
 
     if not hook_names(title):
         issues.append(

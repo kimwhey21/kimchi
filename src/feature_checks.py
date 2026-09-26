@@ -73,6 +73,9 @@ POSITION_PHRASES = ("제가 매수", "제가 매도", "저는 매수", "저는 �
                     "보유 물량", "익절했", "저는 이렇게 대응하겠", "제 포트폴리오")
 
 
+ROOT = Path(__file__).resolve().parents[1]
+
+
 def beginner_issues(body: str) -> tuple[list[str], list[str]]:
     """(막을 것, 참고) — 초보자 설명: 무조건 요구하지도, 그냥 넘기지도 않습니다.
 
@@ -192,6 +195,15 @@ def collect_issues(doc: dict, graphics: int | None = None,
     problem = radar_origin_issue(doc)
     if problem:
         issues.append(problem)
+
+    # 표지 사진은 `url`로 적는다. 루틴이 샌드박스에 받은 `output/…` 경로를 `local_path`로 적으면 관문은 통과하고
+    # 발행 러너에서 "표지 사진이 없습니다"로 죽는다(2026-09-20 wall_street_sign, 2026-09-26 samsung_semiconductor —
+    # 두 번 다 워드프레스 글이 안 만들어졌다). output/은 커밋하지 않으므로 여기서 미리 막는다.
+    photo = doc.get("featured_photo") or {}
+    local = str(photo.get("local_path") or "")
+    if local and not photo.get("url") and (local.startswith("output/") or not (ROOT / local).exists()):
+        issues.append(f"표지 사진 `featured_photo.local_path`={local!r}는 발행 러너에 없는 파일입니다(output/은 커밋하지 "
+                      "않습니다). 고른 사진의 Unsplash 주소를 `featured_photo.url`에 적으세요(docs/routine_feature.md).")
 
     # 시리즈별 부피 규칙(2026-09-17, 프리뷰 확대). 절당 글자·같은 그래픽 종류·초보자 상자 수.
     min_chars = limits.get("min_section_chars")

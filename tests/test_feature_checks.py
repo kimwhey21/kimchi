@@ -205,3 +205,20 @@ class ReversalHookTest(unittest.TestCase):
         """느슨하게 만들었다고 아무 제목이나 통과하면 안 됩니다."""
         issues = _check(_doc("메모리 반도체 업황과 수급 정리 보고서입니다"), graphics=6)
         self.assertTrue(any("예문집" in i for i in issues), issues)
+
+
+class CoverPhotoPathTest(unittest.TestCase):
+    """루틴이 `output/…`를 local_path로 적으면 관문은 통과하고 러너에서 죽었다(9/20 wall_street_sign, 9/26 samsung_semiconductor)."""
+
+    def _doc(self, photo: dict) -> dict:
+        return {"series": "기준표", "featured_photo": photo,
+                "ko": {"title": "같은 삼성전자를 보고 왜 63만원과 27만원이 나왔을까",
+                       "narrative": [{"heading": "1. 확인 지점은 10월 8일입니다", "body": "10월 8일에 봅니다."}] * 5}}
+
+    def test_output_local_path_is_blocked(self) -> None:
+        issues = feature_checks.collect_issues(self._doc({"local_path": "output/photos/samsung_semiconductor/01.jpg"}), graphics=6)
+        self.assertTrue(any("발행 러너에 없는" in i for i in issues), issues)
+
+    def test_url_passes(self) -> None:
+        issues = feature_checks.collect_issues(self._doc({"url": "https://images.unsplash.com/photo-1", "alt": "칩"}), graphics=6)
+        self.assertFalse([i for i in issues if "발행 러너에 없는" in i], issues)

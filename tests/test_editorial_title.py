@@ -291,3 +291,27 @@ class UniversalRulesTest(unittest.TestCase):
                "narrative": [{"heading": "1. 지금 숫자", "body": "b"}] * 10, "title_candidates": CANDS}
         self.assertEqual(collect_issues(doc, kind="프리뷰", notes_out=notes), [])
         self.assertTrue(any("명사 토막" in n for n in notes), notes)
+
+
+class AmbiguousWeekTest(unittest.TestCase):
+    """2026-09-26 — 사장님: "9월 이 주, 목표주가가 두 번 바뀌었습니다 — 이주라는 말이 이상해". 둘째 주·2주·이번 주로 읽힌다."""
+
+    def test_heading_with_ambiguous_week_is_blocked(self) -> None:
+        doc = {"title": "같은 삼성전자를 보고 왜 63만원과 27만원이 나왔을까",
+               "narrative": [{"heading": "1. 9월 이 주, 목표주가가 두 번 바뀌었습니다", "body": "b"}]}
+        issues = collect_issues(doc)
+        self.assertTrue(any("이 주" in i and "둘째 주" in i for i in issues), issues)
+        doc["narrative"][0]["heading"] = "1. 9월 이주, 목표주가가 두 번 바뀌었습니다"
+        self.assertTrue(any("둘째 주" in i for i in collect_issues(doc)))
+
+    def test_title_with_ambiguous_week_is_blocked(self) -> None:
+        issues = collect_issues({"title": "9월 이 주, 목표주가는 왜 두 번 바뀌었을까"})
+        self.assertTrue(any("둘째 주" in i for i in issues), issues)
+
+    def test_dates_and_particle_pass(self) -> None:
+        """날짜로 쓴 것과 조사 '이'('외국인이 주도')는 걸리지 않는다."""
+        doc = {"title": "같은 삼성전자를 보고 왜 63만원과 27만원이 나왔을까",
+               "narrative": [{"heading": "1. 9월 15일과 23일, 목표주가가 두 번 바뀌었습니다", "body": "b"},
+                             {"heading": "2. 외국인이 주도한 반등이었습니다", "body": "b"},
+                             {"heading": "3. 이번 주 확인할 것", "body": "b"}]}
+        self.assertFalse([i for i in collect_issues(doc) if "둘째 주" in i])

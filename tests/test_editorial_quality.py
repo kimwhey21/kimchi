@@ -108,3 +108,18 @@ class DeclineVerbExclusionTest(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertTrue(editorial_quality._decline_wording("본문", text))
 
+
+
+class RulerPhraseTest(unittest.TestCase):
+    """2026-09-26 — 사장님: "'같은 잣대를 댔습니다'는 표현이 아주 어색해, 다시는 쓰지 마라". 벤치마크 155편에 0회."""
+
+    def test_ruler_verb_is_blocked_in_heading_and_body(self) -> None:
+        for text in ("BNK는 SK하이닉스에도 같은 잣대를 댔습니다", "같은 잣대를 대면", "같은 잣대를 댄 리포트"):
+            with self.subTest(text=text):
+                issues = editorial_quality._invented("소제목", text)
+                self.assertTrue(any("기준을 적용" in i for i in issues), issues)
+
+    def test_ruler_noun_is_fine(self) -> None:
+        """명사 '잣대'(`밸류에이션이라는 잣대`)는 벤치마크가 쓴다 — 동사 '대다'만 막는다."""
+        self.assertEqual(editorial_quality._invented("본문", "밸류에이션이라는 잣대로 보면 비쌉니다"), [])
+        self.assertEqual(editorial_quality._invented("소제목", "BNK는 SK하이닉스에도 같은 기준을 적용했습니다"), [])
