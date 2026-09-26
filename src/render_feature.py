@@ -55,7 +55,9 @@ def render(doc: dict, kicker: str, figures: dict[int, dict] | None = None,
     closing = ko.get("closing") or {}
     strings = STRINGS.get(lang, STRINGS["ko"])
     env = Environment(loader=FileSystemLoader(str(TEMPLATES)),
-                      autoescape=select_autoescape(["html", "xml"]))
+                      # "j2"가 빠져 feature.html.j2에 이스케이프가 안 걸렸다(2026-09-26) — 제목·그림 설명·출처에 따옴표나
+                      # <·&가 있으면 태그가 깨질 수 있었다. 본문 문단은 원래 HTML이라 템플릿에서 |safe로 둔다.
+                      autoescape=select_autoescape(["html", "xml", "j2"]))
     template = env.get_template("feature.html.j2")
     return template.render(
         title=ko["title"], kicker=kicker, sections=sections,

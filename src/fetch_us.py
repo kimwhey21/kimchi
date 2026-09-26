@@ -58,6 +58,21 @@ def previous_close(historical_prev: float, last_close: float, quote_metadata: di
     return historical_prev if no_session else metadata_prev
 
 
+def required_trading_date(macro: dict) -> str:
+    """필수 지수(다우·S&P·나스닥)의 기준일 — 셋이 다르면 멈춘다(2026-09-26).
+
+    전에는 집합(set)에서 `next()`로 하나를 골라, 실행마다 어느 지수의 날짜를 쓸지가 바뀌었다(파이썬 해시가 실행마다
+    달라진다). 한 지수 일봉이 하루 늦으면 파일 날짜가 무작위로 틀어지고, 늦은 지수의 등락률이 오늘 파일에 경고 없이
+    들어갈 수 있었다. 한국장은 `data_quality`가 이미 이렇게 막는다. 멈추면 main이 다시 시도하고, 예약 재시도(:27/:34)가 있다.
+    """
+    dates = {t: str(macro[t]["trading_date"]) for t in sorted(_REQUIRED) if t in macro}
+    if not dates:
+        raise ValueError("필수 지수(다우·S&P·나스닥)를 하나도 받지 못했습니다.")
+    if len(set(dates.values())) > 1:
+        raise ValueError(f"필수 지수의 기준일이 서로 다릅니다: {dates} — 늦은 지수가 따라올 때까지 기다립니다.")
+    return next(iter(dates.values()))
+
+
 def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_yield: bool = False,
                 unit: str = "", **_ignore) -> dict:
     """종목/지수 하나의 최근 시세를 가져와 카드에 필요한 형태로 정리합니다."""
@@ -192,9 +207,7 @@ def fetch_all() -> dict:
     _require_core_coverage(watchlist, config["watchlist"], miss_macro + miss_stock)
     # 거래일은 필수 지수에서 읽습니다. 선택 항목이 빠져도 기준일은 흔들리지
     # 않아야 합니다.
-    trading_date = next(
-        macro[t]["trading_date"] for t in _REQUIRED if t in macro
-    )
+    trading_date = required_trading_date(macro)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
     missing = miss_macro + miss_stock
     if missing:

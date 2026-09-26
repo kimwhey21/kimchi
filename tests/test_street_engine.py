@@ -58,3 +58,30 @@ class StreetParserTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class StreetFallbackTest(unittest.TestCase):
+    """MarketBeat가 비면 야후로 넘어간다 — 2026-09-26 전에는 `yf`를 안 불러와 늘 0건이었고 세지도 않았다."""
+
+    def test_fallback_really_runs_and_counts_failures(self) -> None:
+        import datetime as dt
+        import sys
+        import pandas as pd
+        from unittest import mock
+        from src import story_engines as se
+        frame = pd.DataFrame({"Firm": ["Citi"], "Action": ["up"], "FromGrade": ["Hold"], "ToGrade": ["Buy"]},
+                             index=pd.DatetimeIndex([dt.datetime.now()]))
+        good, bad = mock.MagicMock(), mock.MagicMock()
+        good.upgrades_downgrades = frame
+        type(bad).upgrades_downgrades = mock.PropertyMock(side_effect=RuntimeError("blocked"))
+        fake_yf = mock.MagicMock()
+        fake_yf.Ticker.side_effect = lambda s: good if s == "AAA" else bad
+        empty_page = mock.MagicMock(status_code=200, text="<html></html>")
+        universe = mock.MagicMock(text="Symbol,Name\nAAA,a\nBBB,b\n")
+        with mock.patch.dict(sys.modules, {"yfinance": fake_yf}), \
+             mock.patch.object(se.requests, "get", side_effect=[empty_page, universe]), \
+             mock.patch.object(se, "_STREET_FALLBACK_FILE", mock.MagicMock(exists=lambda: False)):
+            result = se.street()
+        self.assertEqual(result["source"], "yahoo-fallback")
+        self.assertEqual([r["ticker"] for r in result["rows"]], ["AAA"])
+        self.assertEqual(result["fetch_failed"], 2)     # 빈 MarketBeat 1 + 못 받은 종목 1

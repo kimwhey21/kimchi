@@ -276,15 +276,23 @@ def _street_rows(page_html: str) -> list[dict]:
     return out
 
 
-def _street_fallback(days: int) -> list[dict]:
-    """MarketBeat가 막히면 야후로 대형주 목록(S&P 500)을 돈다 — 목표가는 없다. 200종목 안팎, 90초."""
+def _street_fallback(days: int) -> tuple[list[dict], int]:
+    """MarketBeat가 막히면 야후로 대형주 목록(S&P 500)을 돈다 — 목표가는 없다. 200종목 안팎, 90초.
+
+    (행, 못 받은 종목 수)를 돌려준다. 2026-09-26: 전에는 `yf`를 이 함수에서 불러오지 않아 매번 NameError가 났고,
+    그걸 세지 않고 삼켜 "오늘 등급 변경 없음"처럼 보였다 — 예비 경로가 한 번도 돈 적이 없었다.
+    """
+    import yfinance as yf
     tickers: list[str] = []
+    failed = 0
     try:
         text = requests.get(_STREET_FALLBACK_URL, timeout=30).text
         tickers = [line.split(",")[0].strip() for line in text.splitlines()[1:] if line.strip()]
-        if tickers:
-            _STREET_FALLBACK_FILE.write_text("\n".join(tickers), encoding="utf-8")
-    except Exception:
+        new = "\n".join(tickers)
+        if tickers and (not _STREET_FALLBACK_FILE.exists() or _STREET_FALLBACK_FILE.read_text(encoding="utf-8") != new):
+            _STREET_FALLBACK_FILE.write_text(new, encoding="utf-8")
+    except Exception:  # noqa: BLE001 — 목록을 못 받으면 저장해 둔 목록으로, 그것도 없으면 실패로 센다
+        failed += 1
         if _STREET_FALLBACK_FILE.exists():
             tickers = _STREET_FALLBACK_FILE.read_text(encoding="utf-8").split()
     cutoff = dt.datetime.now() - dt.timedelta(days=days)
@@ -292,7 +300,8 @@ def _street_fallback(days: int) -> list[dict]:
     for symbol in tickers[:200]:
         try:
             frame = yf.Ticker(symbol).upgrades_downgrades
-        except Exception:
+        except Exception:  # noqa: BLE001 — 센다(조용한 실패 금지)
+            failed += 1
             continue
         if frame is None or len(frame) == 0:
             continue
@@ -305,7 +314,7 @@ def _street_fallback(days: int) -> list[dict]:
                         "rank": 0 if action != "init" else 1, "from_grade": row.get("FromGrade") or None,
                         "to_grade": row.get("ToGrade"), "target_from": None, "target_to": None,
                         "price": None, "date": str(when)[:10]})
-    return out
+    return out, failed
 
 
 def street(days: int = 1) -> dict:
@@ -322,11 +331,14 @@ def street(days: int = 1) -> dict:
             failed += 1
             got = []
         if not got:
+            if page == 1 and not failed:
+                failed += 1      # 200인데 표가 비었다 — 화면 구조가 바뀐 것일 수 있다("0건"과 구분해 알린다)
             break
         rows += got
     if not rows:
         source = "yahoo-fallback"
-        rows = _street_fallback(days)
+        rows, fallback_failed = _street_fallback(days)
+        failed += fallback_failed
     seen, unique = set(), []
     for row in rows:
         key = (row["ticker"], row["firm"], row["action"])

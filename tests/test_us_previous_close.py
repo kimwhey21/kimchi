@@ -35,5 +35,19 @@ class PreviousCloseTest(unittest.TestCase):
         self.assertEqual(fetch_us.previous_close(97.0, 100.0, None), 97.0)
 
 
+class RequiredTradingDateTest(unittest.TestCase):
+    """미국장 기준일은 필수 지수 셋에서 — 서로 다르면 무작위로 하나를 고르지 않고 멈춘다(2026-09-26)."""
+
+    def test_agreeing_indexes_give_the_date(self) -> None:
+        macro = {t: {"trading_date": "2026-09-25"} for t in ("^DJI", "^GSPC", "^IXIC")}
+        self.assertEqual(fetch_us.required_trading_date(macro), "2026-09-25")
+
+    def test_a_lagging_index_stops_the_run(self) -> None:
+        macro = {"^DJI": {"trading_date": "2026-09-25"}, "^GSPC": {"trading_date": "2026-09-25"},
+                 "^IXIC": {"trading_date": "2026-09-24"}}
+        with self.assertRaises(ValueError):
+            fetch_us.required_trading_date(macro)
+
+
 if __name__ == "__main__":
     unittest.main()
