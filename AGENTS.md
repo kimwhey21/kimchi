@@ -104,8 +104,10 @@
   `--source unsplash`로 고정한다. 루틴 지시문은 `docs/routine_common.md`·`routine_kr.md`·`routine_us.md`에 있고 루틴 프롬프트는
   그 파일을 가리키는 몇 줄뿐이다 — **규칙은 파일에서 고친다.** 같은 환경(Default)의 환경변수에
   `UNSPLASH_ACCESS_KEY`·`FRED_API_KEY`·`ECOS_API_KEY`가 들어 있고 저장소에는 없다. 점검 루틴은 네트워크와 환경변수를 함께 본다.
-- **매체 목록은 `config/magazine_feeds.yaml` 하나다.** 레이더가 읽는 묶음(`sets`: `magazine`·`ko`)과 시황 루틴이 이름만 쓰는
-  목록(`market_media.kr`·`.us`)이 함께 있다. **아침 레이더(`python -m scripts.magazine_radar --set <묶음>`)는 주말
+- **매체 목록은 `config/magazine_feeds.yaml` 하나다.** 레이더가 읽는 묶음(`sets`: `magazine`·`ko`)과 시황 루틴이 쓰는
+  목록(`market_media.kr`·`.us`, 매체마다 받는 길 `domain`·`search`·`feeds`)이 함께 있다. **검색 도구에 막힌
+  매체(`search: false`)는 `allowed_domains`에 넣지 않고**(하나라도 섞이면 검색 전체가 400) 헤드라인 피드로 본다 —
+  `scripts/media_headlines.py`가 precheck ⑩에 붙인다(레이더가 아니다, 본문은 열지 않는다, 브라우저인 척하지 않는다). **아침 레이더(`python -m scripts.magazine_radar --set <묶음>`)는 주말
   Checkpoint(`ko,magazine`)·한국어 가이드(`ko`)·영어 가이드(`magazine`)·잡지(`magazine`)에만 붙인다** — 시황과 프리뷰에는 붙이지
   않는다. 레이더에서 얻는 것은 **주제뿐이다**(가이드에서는 목록 안 순서만 바꾼다) — 기사를 옮겨 쓰지 않고 사실은 늘 출처에서
   다시 확인한다. 피드를 더할 때는 **직접 받아 보고 출력까지 읽는다** — 죽은 피드와 잡음은 둘 다 "오늘 화제가 없다"로 보인다.

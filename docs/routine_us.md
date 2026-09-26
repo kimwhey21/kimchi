@@ -22,7 +22,8 @@
 
 목록은 `config/magazine_feeds.yaml`의 `market_media.us` 하나입니다(2026-09-14에 이 문서에서
 옮겼습니다 — 매체를 더하거나 빼는 것은 이제 그 파일에서 합니다). 찍어 보려면
-`python -m scripts.magazine_radar --media us`. 그 가운데 **3곳 이상**을 씁니다.
+`python -m scripts.magazine_radar --media us`. 그 가운데 **3곳 이상**을 씁니다. 검색 도구에 막힌 매체(목록에서 `search: false`)는 precheck ⑩의 헤드라인으로
+보고, 검색 도구의 `allowed_domains`에는 ⑩ 첫 줄의 주소만 넣습니다(2026-09-26 — `docs/routine_common.md`「턴을 아끼는 규칙」).
 **시황에는 아침 레이더를 붙이지 않습니다** — 주제가 이미 그날 장세로 정해져 있고,
 마감 직후에 나가야 하는 급한 글이라 피드를 훑을 시간이 없습니다.
 

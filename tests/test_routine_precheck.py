@@ -86,6 +86,16 @@ class RoutinePrecheckTest(unittest.TestCase):
         self.repo = _Repo()
         self.addCleanup(self.repo.tmp.cleanup)
         self.root = self.repo.root
+        # ⑩은 매체 피드를 받는다(네트워크) — 테스트에서는 바꿔 끼우고, 무엇을 넘겼는지 본다.
+        self.media_calls: list[tuple] = []
+
+        def fake_media(market, now, names):
+            self.media_calls.append((market, now, list(names)))
+            return f"(시험 헤드라인 {market})"
+
+        patcher = mock.patch.object(rp, "media_text", side_effect=fake_media)
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     def _build(self, market: str, now: str, **kw) -> str:
         return rp.build(market, root=self.root, now=_kst(now), **kw)
@@ -242,6 +252,43 @@ class RoutinePrecheckTest(unittest.TestCase):
         out = rp._run_section("시험", boom, failures)
         self.assertEqual(out, "## 시험\n확인 실패 — RuntimeError: 이유")
         self.assertEqual(failures, ["시험: RuntimeError: 이유"])
+
+    # ── ⑩ 검색에 막힌 매체의 헤드라인(2026-09-26) ─────────────────────────────
+    def test_daily_markets_get_blocked_media_headlines(self) -> None:
+        """시황 둘에만 붙는다 — 프리뷰는 시황 매체 목록을 쓰지 않는다. 종목 이름을 넘겨 관련 제목을 앞에 세운다."""
+        self.repo.price("kr", "2026-09-23")
+        text = self._build("kr", "2026-09-23T16:25")
+        self.assertIn("## ⑩ 검색에 막힌 매체의 헤드라인", text)
+        self.assertIn("(시험 헤드라인 kr)", text)
+        market, now, names = self.media_calls[-1]
+        self.assertEqual(market, "kr")
+        self.assertEqual(now, _kst("2026-09-23T16:25"))
+        self.assertTrue(names, "시세 파일의 종목 이름을 넘겨야 한다")
+        self._preview_fixture()
+        before = len(self.media_calls)
+        text = self._build("preview", "2026-09-25T21:35")
+        self.assertNotIn("## ⑩", text)
+        self.assertEqual(len(self.media_calls), before)
+
+    def test_headlines_are_skipped_when_the_routine_stops(self) -> None:
+        """종료 날은 피드를 받지 않는다 — 첫 줄만 읽고 끝나는 실행에 네트워크를 쓰지 않는다."""
+        self.repo.price("kr", "2026-09-23")
+        self.repo.doc("kr", "2026-09-23", "오늘 제목")
+        self._build("kr", "2026-09-23T17:40")
+        self.assertEqual(self.media_calls, [])
+
+    def test_headline_failure_is_counted(self) -> None:
+        self.repo.price("us", "2026-09-25")
+        with mock.patch.object(rp, "media_text", side_effect=RuntimeError("헤드라인 피드를 하나도 받지 못했습니다")):
+            text = self._build("us", "2026-09-26T07:25")
+        self.assertIn("확인 실패 1건: ⑩ 검색에 막힌 매체의 헤드라인", text)
+        self.assertTrue(text.startswith("계속:"))
+
+    def test_watchlist_names_reads_both_languages(self) -> None:
+        data = {"watchlist": {"005930": {"name": "삼성전자", "name_en": "Samsung Electronics"},
+                              "NVDA": {"name": "엔비디아", "name_en": "NVIDIA"}, "X": "깨진 줄"}}
+        self.assertEqual(rp.watchlist_names(data), ["삼성전자", "Samsung Electronics", "엔비디아", "NVIDIA"])
+        self.assertEqual(rp.watchlist_names({}), [])
 
     def test_dynamic_missing_is_a_warning(self) -> None:
         self.repo.price("kr", "2026-09-23", dynamic=0)

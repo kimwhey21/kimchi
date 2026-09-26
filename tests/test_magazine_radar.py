@@ -125,10 +125,11 @@ class MarketMediaTest(unittest.TestCase):
 
     def test_both_markets_keep_the_outlets_the_editorial_routines_used(self) -> None:
         media = mr.config()["market_media"]
-        self.assertEqual(media["kr"], ["연합뉴스", "한국경제", "아시아경제", "이데일리",
-                                       "머니투데이", "서울경제", "매일경제"])
-        self.assertEqual(media["us"], ["Reuters", "CNBC", "Bloomberg", "Yahoo Finance",
-                                       "Investing.com", "Barron's", "WSJ"])
+        # 2026-09-26부터 매체마다 받는 길(domain·search·feeds)이 붙었다 — 이름은 그대로다.
+        self.assertEqual([m["name"] for m in media["kr"]], ["연합뉴스", "한국경제", "아시아경제", "이데일리",
+                                                            "머니투데이", "서울경제", "매일경제"])
+        self.assertEqual([m["name"] for m in media["us"]], ["Reuters", "CNBC", "Bloomberg", "Yahoo Finance",
+                                                            "Investing.com", "Barron's", "WSJ"])
 
     def test_the_editorial_docs_point_at_the_config_and_skip_the_radar(self) -> None:
         for doc, key in (("routine_kr.md", "market_media.kr"), ("routine_us.md", "market_media.us")):
@@ -140,8 +141,13 @@ class MarketMediaTest(unittest.TestCase):
     def test_the_media_flag_prints_names_without_touching_the_network(self) -> None:
         def boom(*a, **k):
             raise AssertionError("--media는 피드를 읽지 않는다")
-        with mock.patch.object(mr.requests, "get", side_effect=boom):
+        with mock.patch.object(mr.requests, "get", side_effect=boom), \
+                mock.patch("sys.stdout", new_callable=__import__("io").StringIO) as out:
             self.assertEqual(mr.main(["--media", "kr"]), 0)
+        text = out.getvalue()
+        self.assertIn("연합뉴스(헤드라인 피드)", text)       # 막힌 매체는 받는 길을 밝힌다
+        self.assertIn("allowed_domains: hankyung.com", text)
+        self.assertNotIn("yna.co.kr", text.split("allowed_domains:")[1])
 
 
 class RoutinesUseTheRadarTest(unittest.TestCase):

@@ -12,14 +12,15 @@
     python3 -m scripts.routine_precheck preview            # 밤 프리뷰 루틴(editorial/previews/us_<KST 오늘>.json)
     python3 -m scripts.routine_precheck kr --allow-stale   # 예비 실행: 시세가 어제 것이어도 종료 대신 경고
 
-항목 아홉 — ① 지금 시각 ② 최신 시세 파일(거래일·수집 시각·종목 수·수급 있는 종목 수) ③ 그 거래일 원고 유무
+항목 열 — ① 지금 시각 ② 최신 시세 파일(거래일·수집 시각·종목 수·수급 있는 종목 수) ③ 그 거래일 원고 유무
 ④ 새 거래일 시세 유무(휴장) ⑤ 재료 파일(`data/engines_*.txt`) ⑥ 어제 원고 요약(제목·소제목·확인 지점·
 판정·전망 — 원고 통째 읽기를 대체) ⑦ 최근 제목 꼴(`scripts/recent_titles.render`) ⑧ 그래픽 종류·인자
 (`src/data_graphics.py`·`src/feature_graphics.py`를 코드에서 읽음) ⑨ 관문이 자주 잡는 낱말
-(`src/editorial_quality.py`의 상수에서 뽑음).
+(`src/editorial_quality.py`의 상수에서 뽑음) ⑩ 검색 도구에 막힌 시황 매체의 헤드라인과 `allowed_domains`에 넣을
+매체(`scripts/media_headlines.py`, kr·us만, 2026-09-26 — 매체 피드를 받는 유일한 항목이다).
 
 조용한 실패를 만들지 않는다(CLAUDE.md): 결론을 정하는 ①~④는 예외를 삼키지 않는다 — 틀리면 죽는 것이
-낫다. ⑤~⑨는 항목마다 따로 돌려 실패하면 그 자리에 이유를 찍고 첫 줄 바로 아래에 `확인 실패 N건`으로 센다.
+낫다. ⑤~⑩은 항목마다 따로 돌려 실패하면 그 자리에 이유를 찍고 첫 줄 바로 아래에 `확인 실패 N건`으로 센다.
 
 저장소 위치는 `--root` 또는 환경변수 `MARKET_BRIEF_ROOT`로 바꿀 수 있다(테스트가 임시 디렉터리를 쓴다).
 데이터(`data/`·`editorial/`)만 root를 따르고, 코드에서 읽는 것(그래픽 빌더·금지 낱말)은 이 스크립트 옆의
@@ -395,8 +396,21 @@ def vocabulary_text(width: int = 110) -> str:
 
 
 # ----------------------------------------------------------------------------- 조립
+def watchlist_names(data: dict) -> list[str]:
+    """헤드라인을 우리 종목 순으로 앞에 세우려고 — 한국어·영어 이름 둘 다."""
+    watch = data.get("watchlist") or {}
+    rows = watch.values() if isinstance(watch, dict) else watch
+    return [n for row in rows if isinstance(row, dict) for n in (row.get("name"), row.get("name_en")) if n]
+
+
+def media_text(market: str, now: dt.datetime, names: list[str]) -> str:
+    """⑩ — 매체 피드를 받는다(네트워크). 테스트는 이 함수를 바꿔 끼운다."""
+    from scripts import media_headlines
+    return media_headlines.render(market, now=now, names=names)
+
+
 def _run_section(title: str, fn, failures: list[str]) -> str:
-    """⑤~⑨ 항목 하나. 실패하면 그 자리에 이유를 찍고 failures에 센다 — 삼키지 않는다."""
+    """⑤~⑩ 항목 하나. 실패하면 그 자리에 이유를 찍고 failures에 센다 — 삼키지 않는다."""
     try:
         body = fn()
     except Exception as exc:  # noqa: BLE001 — 이유를 찍고 첫 줄 아래에 센다(조용한 실패 금지)
@@ -529,12 +543,18 @@ def build(market: str, *, root: Path | None = None, now: dt.datetime | None = No
     sections.append(_run_section("⑨ 관문이 자주 잡는 낱말(src/editorial_quality.py 상수, 앞→뒤로 바꿔 쓴다)",
                                  vocabulary_text, failures))
 
+    # ⑩ 검색에 막힌 매체의 헤드라인 — 시황만(프리뷰는 시황 매체 목록을 쓰지 않는다)
+    if market in ("kr", "us"):
+        names = watchlist_names(price[1] if price else {})
+        sections.append(_run_section("⑩ 검색에 막힌 매체의 헤드라인(scripts.media_headlines — 레이더가 아니다)",
+                                     lambda: media_text(market, now, names), failures))
+
     head = [verdict] + [f"경고: {w}" for w in warnings]
     if failures:
         head.append(f"확인 실패 {len(failures)}건: " + " | ".join(failures))
     text = "\n".join(head + [""] + sections)
     if len(text) > MAX_CHARS:
-        tail = (f"\n(… {MAX_CHARS:,}자 상한으로 뒤를 잘랐습니다 — 잘린 것은 뒤쪽 항목(낱말·그래픽)이고 결론·시세·원고·"
+        tail = (f"\n(… {MAX_CHARS:,}자 상한으로 뒤를 잘랐습니다 — 잘린 것은 뒤쪽 항목(헤드라인·낱말·그래픽)이고 결론·시세·원고·"
                 "재료·어제 요약은 위에 다 있습니다)")
         text = text[: MAX_CHARS - len(tail)].rstrip() + tail
     return text

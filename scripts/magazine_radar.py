@@ -3,7 +3,7 @@
     python -m scripts.magazine_radar                       # 잡지 묶음, 최근 36시간 제목을 갈래별로
     python -m scripts.magazine_radar --set ko              # 한국 매체 묶음 (한국어 가이드)
     python -m scripts.magazine_radar --set ko,magazine --hours 48   # 주말 Checkpoint
-    python -m scripts.magazine_radar --media kr            # 시황 루틴이 조사할 매체 이름만 (피드를 읽지 않는다)
+    python -m scripts.magazine_radar --media kr            # 시황 루틴이 조사할 매체 이름과 검색 주소 (피드를 읽지 않는다)
     python -m scripts.magazine_radar --set ko --raw        # 같은 기사 묶기를 끄고 받은 그대로
     python -m scripts.magazine_radar --hours 48 --json radar.json
 
@@ -241,15 +241,17 @@ def group(rows: list[dict], overlap: float = 0.40) -> tuple[list[dict], dict[str
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--set", dest="feed_set", default="magazine", help="피드 묶음: magazine·ko·all, 쉼표로 여럿")
-    ap.add_argument("--media", choices=("kr", "us"), help="시황 루틴이 조사할 매체 이름만 찍고 끝낸다(피드를 읽지 않음)")
+    ap.add_argument("--media", choices=("kr", "us"), help="시황 루틴이 조사할 매체 이름과 검색 주소만 찍고 끝낸다(피드를 읽지 않음)")
     ap.add_argument("--hours", type=int, default=36)
     ap.add_argument("--raw", action="store_true", help="묶지 않고 받은 그대로 (묶음이 의심스러울 때)")
     ap.add_argument("--json", type=Path)
     a = ap.parse_args(argv)
     if a.media:
-        names = config()["market_media"][a.media]
-        print(f"{a.media} 시황 조사 매체 {len(names)}곳 — 이 가운데 3곳 이상:")
-        print("  " + " · ".join(names))
+        # 받는 길은 매체마다 적혀 있다(2026-09-26) — 검색이 막힌 곳은 precheck ⑩의 헤드라인으로 본다.
+        media = config()["market_media"][a.media]
+        print(f"{a.media} 시황 조사 매체 {len(media)}곳 — 이 가운데 3곳 이상:")
+        print("  " + " · ".join(m["name"] + ("" if m.get("search", True) else "(헤드라인 피드)") for m in media))
+        print("  allowed_domains: " + " · ".join(m["domain"] for m in media if m.get("search", True)))
         return 0
     raw, failed = radar(a.hours, feeds_for(a.feed_set))
     rows, counts = (raw, {"tape": 0, "noise": 0, "merged": 0}) if a.raw else group(raw)

@@ -4,9 +4,11 @@
 #   sets         — 아침 레이더(`scripts/magazine_radar.py`)가 실제로 읽는 RSS 묶음.
 #                  `python -m scripts.magazine_radar --set <이름>`. 여기서 얻는 것은 **주제**입니다 —
 #                  글 하나를 옮기지 않고 출처 둘 이상을 종합해 씁니다.
-#   market_media — 레이더를 돌리지 않고 **이름만** 쓰는 목록. 시황 루틴이 "이 가운데 3곳 이상"을
+#   market_media — 레이더를 돌리지 않는 시황 매체 목록. 시황 루틴이 "이 가운데 3곳 이상"을
 #                  고를 때 봅니다. 시황은 그날 마감 직후에 쓰는 급한 글이라 RSS를 훑을 시간이
 #                  없고, 주제도 이미 정해져 있습니다(그날 장세). `--media kr|us`로 봅니다.
+#                  매체마다 **받는 길**이 적혀 있습니다(2026-09-26) — `search: false`인 곳은 검색 도구가
+#                  막혀 헤드라인 피드(`feeds`)로만 봅니다(`scripts/media_headlines.py`, precheck ⑩).
 #
 # column: 그 매체가 주로 먹여 주는 갈래(레이더가 이 갈래로 묶어 보여 줍니다).
 # paid: true면 제목만 레이더로 쓰고 본문 재료는 무료 매체에서 가져옵니다.
@@ -163,25 +165,50 @@ sets:
       url: https://news.google.com/rss/search?q=%22South%20Korea%22%20%28economy%20OR%20exports%20OR%20won%20OR%20chipmakers%20OR%20%22central%20bank%22%29%20-%22North%20Korea%22%20-missile%20-Kim&hl=en-US&gl=US&ceid=US:en
       column: 거시·경제
 
-# 시황 루틴이 조사할 매체 — 이름만. 레이더를 돌리지 않습니다.
+# 시황 루틴이 조사할 매체. 레이더를 돌리지 않습니다.
 # 목록을 고친다는 것은 시황 글의 근거가 달라진다는 뜻입니다(2026-09-14에 옮길 때는 글자 그대로 옮겼습니다).
+#
+# 받는 길(2026-09-26). 루틴의 검색 도구(WebSearch)는 매체 조건(`allowed_domains`)에 **Anthropic 로봇을 막은
+# 매체가 하나라도 섞이면 검색 전체를 400으로 거절**합니다 — 9/26 미국장 루틴이 이 오류로 두 번 헛돌았습니다.
+#   domain  검색 도구에 넣는 주소. `search: false`가 아닌 것만 `allowed_domains`에 넣습니다.
+#   search  false = 검색 도구가 막힌 매체(2026-09-26 매체마다 따로 검색해 400을 확인). 빠지면 true.
+#   feeds   막힌 매체의 헤드라인 피드 — 매체 공식 RSS, 없으면 구글뉴스 `site:` 검색 RSS.
+#           `scripts/media_headlines.py`가 읽어 precheck ⑩에 제목·시각·요약을 찍습니다. 본문은 열지 않습니다
+#           (매체가 AI 접근을 막은 것이므로) — 제목은 단서이고, 사실 확인은 검색되는 매체에서 합니다.
+# 피드를 더할 때는 직접 받아 보고 출력까지 읽습니다. 9/26 확인: feeds.a.dj.com(WSJ 옛 주소)은 200인데
+# 2025년 1월 기사에서 멈춰 있었고, Barron's 자체 RSS는 403입니다.
 market_media:
   kr:
-    - 연합뉴스
-    - 한국경제
-    - 아시아경제
-    - 이데일리
-    - 머니투데이
-    - 서울경제
-    - 매일경제
+    - name: 연합뉴스
+      domain: yna.co.kr
+      search: false
+      feeds: [https://www.yna.co.kr/rss/market.xml]
+    - {name: 한국경제, domain: hankyung.com}
+    - {name: 아시아경제, domain: asiae.co.kr}
+    - {name: 이데일리, domain: edaily.co.kr}
+    - {name: 머니투데이, domain: mt.co.kr}
+    - {name: 서울경제, domain: sedaily.com}
+    - name: 매일경제
+      domain: mk.co.kr
+      search: false
+      feeds: [https://www.mk.co.kr/rss/50200011/]
   us:
-    - Reuters
-    - CNBC
-    - Bloomberg
-    - Yahoo Finance
-    - Investing.com
-    - Barron's
-    - WSJ
+    - name: Reuters
+      domain: reuters.com
+      search: false
+      feeds: ["https://news.google.com/rss/search?q=site:reuters.com+(stocks+OR+markets+OR+%22Wall+Street%22)+when:1d&hl=en-US&gl=US&ceid=US:en"]
+    - {name: CNBC, domain: cnbc.com}
+    - {name: Bloomberg, domain: bloomberg.com}
+    - {name: Yahoo Finance, domain: finance.yahoo.com}
+    - {name: Investing.com, domain: investing.com}
+    - name: Barron's
+      domain: barrons.com
+      search: false
+      feeds: ["https://news.google.com/rss/search?q=site:barrons.com+when:1d&hl=en-US&gl=US&ceid=US:en"]
+    - name: WSJ
+      domain: wsj.com
+      search: false
+      feeds: [https://feeds.content.dowjones.io/public/rss/RSSMarketsMain]
 
 # 지수 시세 보도("오늘 코스피가 몇 % 움직였다")를 접을 묶음. 주제를 고르는 자리에서는 잡음이고,
 # 그 이야기는 우리 시황 글이 쓴다. **잡지 묶음은 넣지 않는다** — 「시장 읽기」 코너가 바로 그 기사로 글을 쓴다.
