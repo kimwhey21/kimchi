@@ -164,13 +164,19 @@ def _prep_insight_section(insight_section: dict | None, lang: str = "ko") -> dic
 
 def _localize_credits(generated: dict, lang: str) -> dict:
     """영어 글이면 본문 사진·인사이트 사진의 저작자 표시를 영어로(2026-09-26, `photo_pool.credit_en`).
+    대체 글(alt)도 풀의 `seen`(한국어 묘사)이 그대로 들어오므로, 한글이 있으면 비워 템플릿이 영어 소제목을 쓰게 한다.
     원고 dict는 한국어판과 사진 dict를 함께 쓰므로 고치지 않고 사본을 만든다."""
     if lang != "en":
         return generated
 
     def fix(photo):
-        if isinstance(photo, dict) and photo.get("credit"):
-            return {**photo, "credit": photo_pool.credit_en(photo["credit"])}
+        if not isinstance(photo, dict):
+            return photo
+        photo = dict(photo)
+        if photo.get("credit"):
+            photo["credit"] = photo_pool.credit_en(photo["credit"])
+        if any("가" <= ch <= "힣" for ch in str(photo.get("alt") or "")):
+            photo["alt"] = ""
         return photo
 
     out = dict(generated)

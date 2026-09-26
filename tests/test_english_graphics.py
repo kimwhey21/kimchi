@@ -127,7 +127,7 @@ class EnglishCreditTest(unittest.TestCase):
 
     def test_english_render_localizes_credit_and_korean_keeps_it(self) -> None:
         doc = EnglishPhotoTest.US_0914
-        photo = {"id": "p", "url": "https://x/p.jpg", "alt": "chip",
+        photo = {"id": "p", "url": "https://x/p.jpg", "alt": "기판에 얹힌 칩",
                  "credit": "사진: Un ragazzo chiamato Bi / 플리커 (BY-SA 2.0)"}
         story_image = {"url": "https://x/s.jpg", "credit": "사진: naotakem / 플리커 (BY 2.0)"}
         en = json.loads(json.dumps(doc["en"]))
@@ -137,6 +137,8 @@ class EnglishCreditTest(unittest.TestCase):
         html = render_html.render("us", "2026-09-14", doc["price_data"], en, lang="en")
         self.assertIn("Photo: Un ragazzo chiamato Bi / Flickr (BY-SA 2.0)", html)
         self.assertNotIn("플리커", html)
+        self.assertNotIn("기판에 얹힌 칩", html)                    # 한국어 alt는 영어 소제목으로
+        self.assertIn(f'alt="{en["narrative"][0]["heading"]}"', html)
         self.assertEqual(photo["credit"], "사진: Un ragazzo chiamato Bi / 플리커 (BY-SA 2.0)")   # 원본은 그대로
         ko = json.loads(json.dumps(doc["ko"]))
         ko["narrative"][0]["photo"] = photo
