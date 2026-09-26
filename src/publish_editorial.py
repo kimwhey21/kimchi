@@ -425,7 +425,7 @@ def ko_daily_status(publish_live: bool) -> str:
     return KO_DAILY_STATUS if publish_live else "draft"
 
 
-def publish(path: Path, publish_live: bool = False, render_only: bool = False) -> None:
+def publish(path: Path, publish_live: bool = False, render_only: bool = False, only_en: bool = False) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     doc = json.loads(path.read_text(encoding="utf-8"))
     # 기준표(feature) 원고는 스키마가 다릅니다 — 그날 시세가 아니라 밸류에이션·
@@ -618,6 +618,11 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
         if publish_live:
             publish_wordpress.verify_published(en_result["id"], en["title"])
 
+    if only_en:
+        # 영어판만 다시 올린다(2026-09-26) — 9/9~9/25 영어 시황 24편에 그림을 채울 때 한국어 비공개 글은 건드리지 않으려고.
+        print("--only-en: 한국어판은 건드리지 않습니다.")
+        return
+
     if not KO_DAILY_TO_WORDPRESS:
         print("한국어: 워드프레스에 올리지 않습니다(KO_DAILY_TO_WORDPRESS가 꺼져 있습니다).")
         print(f"상태: {status} (영어만 워드프레스)")
@@ -673,6 +678,11 @@ def main() -> None:
         help="워드프레스 설정이 없어도 HTML만 만들고 조용히 끝냅니다. "
              "**자동 실행에는 붙이지 마십시오** — 설정 누락이 성공으로 보입니다.",
     )
+    parser.add_argument(
+        "--only-en",
+        action="store_true",
+        help="영어판만 올리고 한국어판은 건드리지 않습니다 (지난 영어 글 고치기용).",
+    )
     args = parser.parse_args()
 
     if args.paths:
@@ -690,7 +700,7 @@ def main() -> None:
 
     for path in paths:
         print(f"원고: {path}")
-        publish(path, publish_live=args.publish_live, render_only=args.render_only)
+        publish(path, publish_live=args.publish_live, render_only=args.render_only, only_en=args.only_en)
 
 
 if __name__ == "__main__":
