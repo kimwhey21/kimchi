@@ -48,6 +48,11 @@ class BloggerPostTest(unittest.TestCase):
         self.assertEqual(result["labels"][0], "가이드")
         self.assertIn(blogger_post.DISCLAIMER, result["html"])
         self.assertNotIn("<h2>1. ", result["html"])           # 절 번호는 네이버와 같이 뗀다
+        # 블로거는 본문 첫 글자로 홈 목록 요약을 만든다 — 글머리·사진 출처는 글 끝에 둔다(2026-09-26).
+        import re as _re
+        first_text = _re.sub(r"<[^>]+>", " ", result["html"]).split()[:1]
+        self.assertNotIn("가이드", first_text)
+        self.assertLess(result["html"].find("비중이 답이다"), result["html"].find("가이드 · 2026년 9월 20일 확인"))
 
     def test_labels_never_carry_commas(self):
         self.assertNotIn(",", "".join(blogger_post.labels({"series": "매거진", "group": "돈의, 상식"}, [])))

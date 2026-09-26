@@ -185,12 +185,18 @@ def render(path: Path | str, graphics_dir: Path | None = None, upload: bool = Tr
         elif not (blocks and blocks[0][0] == "img" and str(blocks[0][1]).startswith("http")):
             blocks.insert(0, ("img", str(photo["url"])))
 
+    credits: list[str] = []
+
     def resolve(src: str) -> tuple[str | None, str | None]:
         src = str(src)
         name = Path(src).name
         if photo.get("url") and (src.startswith("http") or (magazine and "cover" in name)):
             credit = photo.get("credit")
-            return _unsplash(str(photo["url"])), (f"사진: {credit}" if credit else None)
+            # 사진 출처는 그림 밑이 아니라 글 끝 한 줄로(2026-09-26) — 블로거는 본문 첫 글자로 요약을 만들어, 홈 목록 요약이
+            # "과학 사진: go-e / Unsplash …"로 시작했다. 출처 표시(CC BY 의무)는 글 끝에 그대로 남는다.
+            if credit and credit not in credits:
+                credits.append(credit)
+            return _unsplash(str(photo["url"])), None
         if src.startswith("http"):
             return src, None
         if not upload:
@@ -204,7 +210,9 @@ def render(path: Path | str, graphics_dir: Path | None = None, upload: bool = Tr
     body, images = blocks_to_html(blocks, resolve)
     text = " ".join(str(v) for k, v in blocks if k in ("p", "q", "h"))
     stocks = [] if magazine else stock_names(text)
-    page = f"<p><small>{_esc(kicker(doc))}</small></p>\n{body}\n{footer(doc)}"
+    # 글머리 한 줄(코너·확인 날짜)도 글 끝으로 — 같은 이유(요약이 "Checkpoint · 10월 27일까지 확인할 것 …"으로 시작했다).
+    meta = " · ".join([kicker(doc)] + [f"사진: {c}" for c in credits])
+    page = f"{body}\n<p><small>{_esc(meta)}</small></p>\n{footer(doc)}"
     return {
         "title": post["title"],
         "html": page,
