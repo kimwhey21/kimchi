@@ -6,7 +6,7 @@
 - 그림은 본진 워드프레스 미디어 라이브러리에 올려(해시로 멱등, `publish_wordpress.upload_featured_image`) 그 주소를 쓴다.
   블로거 API도 편집기 자동화도 파일을 받아 주지 않기 때문이다. 이미 올라간 그림은 다시 올리지 않는다.
 - 잡지 표지는 원고의 `featured_photo.url`(Unsplash 원본 주소)을 그대로 쓰고 캡션에 저작자를 적는다.
-- 글 끝 고정 줄: 시황·프리뷰는 네이버(이웃 추가), 새 글 알림은 텔레그램, 본문에 나온 코어 종목은 본진 종목 페이지.
+- 글 끝 고정 줄: 시황·프리뷰는 네이버(이웃 추가), 새 글 알림은 텔레그램. 본진 종목 페이지 줄은 2026-09-26에 종목 페이지와 함께 없앴다.
   잡지는 퍼플썸 네이버 블로그로 안내하고 페르마타 이름을 쓰지 않는다(2026-09-13 브랜드 규칙).
 - 라벨은 시리즈 하나 + 코너/시장 하나 + 종목 이름 몇 개. 라벨 페이지가 곧 허브다.
 
@@ -24,14 +24,13 @@ import sys
 from pathlib import Path
 
 from scripts import naver_post
-from src import post_tags, publish_wordpress, stock_pages
+from src import post_tags, publish_wordpress
 
 NAVER_FERMATA = "https://blog.naver.com/fermata49"
 NAVER_MAGAZINE = "https://blog.naver.com/puplesum_"
 TELEGRAM = "https://t.me/fermata_kr"
-STOCKS_BASE = "https://fermata.it.kr/stocks/"
 DISCLAIMER = "이 글은 정보 제공을 위한 것이며 특정 종목의 매수·매도 권유가 아닙니다. 투자 판단과 책임은 독자에게 있습니다."
-MAX_STOCK_LINKS = 4
+MAX_STOCK_LABELS = 4
 MAX_LABELS = 8
 
 
@@ -90,19 +89,14 @@ def _upload(path: Path) -> str | None:
     return str(response.json().get("source_url") or "") or None
 
 
-def stock_links(doc: dict, text: str) -> list[tuple[str, str]]:
-    """본문에 이름이 나온 코어 종목 → 본진 종목 페이지(/stocks/<slug>/, 공개). 낱말 경계로 찾는다(post_tags.mentioned)."""
-    out: list[tuple[str, str]] = []
-    for item in stock_pages.load_config():
-        name = item.get("name") or ""
-        if name and post_tags.mentioned(name, text):
-            out.append((name, f"{STOCKS_BASE}{item['slug']}/"))
-        if len(out) >= MAX_STOCK_LINKS:
-            break
-    return out
+def stock_names(text: str) -> list[str]:
+    """본문에 이름이 나온 종목(워치리스트·최근 시세 파일) — 블로거 라벨용, 본문에 처음 나온 순서로. 낱말 경계로 찾는다.
+    2026-09-26까지는 본진 종목 페이지(/stocks/) 링크도 글 끝에 달았다 — 종목 페이지를 없애며 링크는 뺐다."""
+    found = [(text.find(name), name) for name in post_tags.known_names() if post_tags.mentioned(name, text)]
+    return [name for _, name in sorted(found)][:MAX_STOCK_LABELS]
 
 
-def labels(doc: dict, stocks: list[tuple[str, str]]) -> list[str]:
+def labels(doc: dict, stocks: list[str]) -> list[str]:
     series = str(doc.get("series") or "")
     market = doc.get("market")
     if market == "kr":
@@ -122,7 +116,7 @@ def labels(doc: dict, stocks: list[tuple[str, str]]) -> list[str]:
     else:
         base = ["Checkpoint"]
     out: list[str] = []
-    for label in base + [name for name, _ in stocks]:
+    for label in base + list(stocks):
         label = label.strip().replace(",", " ")
         if label and label not in out:
             out.append(label)
@@ -139,7 +133,7 @@ def permalink(doc: dict, path: Path) -> str:
     return raw[:60].rstrip("-")
 
 
-def footer(doc: dict, stocks: list[tuple[str, str]]) -> str:
+def footer(doc: dict) -> str:
     magazine = doc.get("series") == "매거진"
     lines: list[str] = []
     if magazine:
@@ -149,8 +143,6 @@ def footer(doc: dict, stocks: list[tuple[str, str]]) -> str:
             f'<p><b>매일 아침 코스피 마감 시황과 저녁 미국장 프리뷰</b>는 네이버 블로그에 올라갑니다. '
             f'<a href="{NAVER_FERMATA}">페르마타 네이버 블로그 이웃 추가</a></p>')
         lines.append(f'<p>새 글 알림은 <a href="{TELEGRAM}">텔레그램 채널 @fermata_kr</a>에서 받을 수 있습니다.</p>')
-    if stocks:
-        lines.append("<p>종목 페이지: " + ", ".join(f'<a href="{url}">{_esc(name)}</a>' for name, url in stocks) + "</p>")
     lines.append(f"<p><small>{_esc(DISCLAIMER)}</small></p>")
     return "<hr>\n" + "\n".join(lines)
 
@@ -211,8 +203,8 @@ def render(path: Path | str, graphics_dir: Path | None = None, upload: bool = Tr
 
     body, images = blocks_to_html(blocks, resolve)
     text = " ".join(str(v) for k, v in blocks if k in ("p", "q", "h"))
-    stocks = [] if magazine else stock_links(doc, text)
-    page = f"<p><small>{_esc(kicker(doc))}</small></p>\n{body}\n{footer(doc, stocks)}"
+    stocks = [] if magazine else stock_names(text)
+    page = f"<p><small>{_esc(kicker(doc))}</small></p>\n{body}\n{footer(doc)}"
     return {
         "title": post["title"],
         "html": page,

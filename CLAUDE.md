@@ -32,8 +32,8 @@
 - **보이는 부분만 깎지 않는다 — 바꾸기 전에 연쇄 목록, 바꾼 뒤에 원본 대조.** 절차 셋이 **의무**다.
   - **연쇄 목록**: 무엇을 바꾸기 전에 그것을 읽는 곳을 `grep`으로 다 찾아 표로 만든다(본진·네이버·표지·테스트·문서).
     표의 줄마다 '바꿈'·'해당 없음'을 적어 보고에 넣는다. 목록이 없으면 바꾸지 않는다.
-  - **원본 대조**: 옮기거나 다시 쓴 것은 기계로 대조한다 — 네이버 글은 `python -m scripts.naver_audit`, 본진의 영어 글·종목
-    페이지는 `python -m scripts.site_audit --english`·`--stocks`(발행 확인·종목 페이지 워크플로가 돌린다), 원고→네이버 블록은
+  - **원본 대조**: 옮기거나 다시 쓴 것은 기계로 대조한다 — 네이버 글은 `python -m scripts.naver_audit`, 본진의 영어 글은
+    `python -m scripts.site_audit --english`(발행 확인 워크플로가 돌린다), 원고→네이버 블록은
     `tests/test_naver_completeness.py`, 문서·지시문을 다시 쓰면 **`python -m scripts.rule_diff <파일>`로 사라진 규칙 줄(과 앞부분만 남은 줄)을 뽑아
     보고에 열거하고 줄마다 '일부러 뺐다'고 말한다.** 말할 수 없는 줄은 도로 넣는다. 사장님이 정한 문구는 테스트
     바늘(`tests/test_preview_series.py`의 needle 등)로 박는다.
@@ -271,11 +271,8 @@
   주제 60개를 아홉 갈래로 나눠 어제와 다른 갈래에서 고른다), **이벤트**(일요일 다음 주 일정 루틴이 그 주의 큰 이벤트 하나를
   `editorial/events/<날짜>_<slug>.json`으로 더 쓴다, 분류 Weekly, 머리말은 `event_date`). 한 목록에 두 언어를 섞지 않는다.
   `guide_publish.yml`·`weekly_publish.yml`이 자동화 스위치대로 공개한다. 문턱은 가이드 절 5·시각자료 2·출처 2, Guide 절 5·2·2, 이벤트
-  절 4·2·2. **종목 허브 페이지** `/stocks/<slug>/` 37개(`config/stock_pages.yaml`, `src/stock_pages.py`, `stock_pages.yml` 토 11:30 KST):
-  숫자는 시세 파일에서만, 「최근 흐름」은 매월 1일 루틴의 `editorial/stocks/notes_<YYYY-MM>.json`(`docs/routine_stock_notes.md`,
-  `--check-notes` 통과 후 커밋). 홈·목록 탭에 Stocks. 한국어 가이드·이벤트는 네이버에 전문, 본진은 비공개(아래 「발행 워크플로우」).
-  「이 종목이 나온 글」은 **네이버 주소로만** 잇는다(`data/naver_posts.json` — 맥이 `scripts/naver_map_sync.py`로 하루 한 번
-  그 파일만 커밋한다). 표에 없는 글과 잡지는 싣지 않는다 — 한국어 글은 본진 비공개라 본진 주소는 방문자에게 404다.
+  절 4·2·2. 한국어 가이드·이벤트는 네이버에 전문, 본진은 비공개(아래 「발행 워크플로우」). **종목 허브 페이지(`/stocks/`)는
+  2026-09-26 사장님 결정으로 없앴다**(코드·워크플로·월간 루틴·홈 탭·페이지 38개, 내력은 `docs/decisions.md`).
 - 그림을 그린 뒤에는 **`Read` 툴로 직접 본다.** 축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은 코드만 봐서는 안 보인다.
   `src/graphic_checks.py`가 그림의 데이터와 제목이 어긋나는 것을 잡지만 전부는 아니다.
 
@@ -313,7 +310,7 @@
 - **홈 제목·설명·언어 표시와 검색 제외 페이지는 Code Snippets 11번("SEO: 홈·영어 목록 영어 표시…")이 정한다**(2026-09-26).
   관리자 Rank Math '홈페이지' 칸의 한국어 값은 이 조각이 덮어쓰므로 **홈 제목은 조각의 문구를 고친다.** 홈·Daily(76)·Guides(77)·
   전체(105)와 영어 글은 `lang="en"`·`og:locale en_US`, 빈 한국어 목록(1047·1610·1439)과 threads-callback(1604)은 noindex·사이트맵 제외.
-  영어 시황 끝에는 관련 영어 가이드 링크가 최대 3개 붙는다(`publish_editorial._guide_links`) — 종목 페이지는 한국어라 걸지 않는다.
+  영어 시황 끝에는 관련 영어 가이드 링크가 최대 3개 붙는다(`publish_editorial._guide_links`).
 - **공개된 한국어 글은 텔레그램 채널 `@fermata_kr`과 스레드 `@fermata.it.kr`에 자동으로 올린다**(`src/notify_telegram.py`·
   `src/notify_threads.py`, `publish_feature`·`publish_editorial`이 공개 직후 부른다). 표지 + 제목 + Take 두 문장 + 링크. 다시 올린
   글(최초 공개와 수정이 10분 넘게 벌어진 글)과 영어 글은 보내지 않는다. 토큰은 GitHub 시크릿(`TELEGRAM_BOT_TOKEN`,
@@ -352,7 +349,7 @@
 - **블로그스팟(fermata49.blogspot.com, "Fermata 매거진")은 구글용 한국어 창구다**(2026-09-25). 새 글을 쓰지 않고 원고를 그대로
   옮긴다 — 잡지·한국어 가이드·Checkpoint(확인 날짜가 안 지난 것)·주간 결산·다음 주 일정·이벤트 전부, 시황·프리뷰는 2026-09-25
   이후 것만(디스커버 4주 시험). 영어 가이드는 본진과 겹치므로 올리지 않는다. 렌더는 `scripts/blogger_post.py`(네이버와 같은
-  블록 → HTML, 그림은 본진 미디어에 멱등 업로드, 잡지 표지는 Unsplash 주소, 글 끝 고정 줄: 네이버 이웃·텔레그램·종목 페이지,
+  블록 → HTML, 그림은 본진 미디어에 멱등 업로드, 잡지 표지는 Unsplash 주소, 글 끝 고정 줄: 네이버 이웃·텔레그램,
   잡지는 퍼플썸 네이버로만 안내하고 페르마타 이름을 쓰지 않는다), 올리기는 이 맥의 `~/.market-brief-google/blogger_sync.py`
   (launchd `kr.it.fermata.bloggersync`, 10분, 하루 10편 상한, 공개 스위치 `~/.market-brief-google/blogger_publish_on`이 있을 때만
   게시, 같은 크롬 프로필을 쓰는 작업이 돌면 건너뜀). 블로거 설정은 네이버 봇 `Yeti` 차단(맞춤 robots.txt)·자료실/검색 페이지
@@ -378,7 +375,7 @@
 - **고친 것이 있으면 곧바로 커밋·푸시한다.** 클라우드 루틴이 규칙과 관문 코드를 **깃허브에서** 받아 가기 때문이다 — 맥에서만 고쳐
   두면 루틴은 옛 규칙으로 계속 돈다. 대상은 `main`이다(작업 브랜치를 만들지 않는다 — 발행 워크플로가 `main` 푸시로만 돈다).
   - **푸시 전에 `python -m unittest discover -s tests`를 돌려 통과한 것만 올린다.** 실패하면 올리지 않고 보고한다.
-  - **`editorial/**`·`config/stock_pages.yaml` 같은 발행 트리거 경로가 섞였는지 먼저 본다**
+  - **`editorial/**` 같은 발행 트리거 경로가 섞였는지 먼저 본다**
     (`.github/workflows`의 `paths`). 섞였다면 그 커밋은 글을 공개시키므로, 의도한 발행이 아니면 나눠서 올린다.
   - 비밀값(`.env`, 토큰)과 `output/`·벤치마크 코퍼스는 어떤 경우에도 커밋하지 않는다.
   - 커밋 메시지는 무엇을 왜 바꿨는지 한국어 한 줄로 적는다.

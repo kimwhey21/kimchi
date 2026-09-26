@@ -1,12 +1,11 @@
 """독자가 보는 **본진 화면**을 받아 빈 그림과 죽은 링크를 센다 (2026-09-26).
 
     python -m scripts.site_audit --english     # 시장별 가장 최근 영어 시황(고친 날 이후 글)
-    python -m scripts.site_audit --stocks      # 종목 페이지 37쪽의 「이 종목이 나온 글」 링크와 그림
 
 왜 필요한가: 2026-09-26 점검에서 셋이 한꺼번에 나왔다 — 영어 시황 24편의 그림 자리가 전부 `<img src="">`였고(9/9부터),
 종목 페이지 37쪽의 글 링크 179개가 방문자에게 404였다(한국어 글을 본진 비공개로 돌린 9/22부터). 둘 다 "독자가 읽는 곳이
 바뀌었는데 그 글을 가져다 쓰는 곳이 따라 바뀌지 않은" 꼴이고, 우리 검사는 네이버 화면(`naver_audit`)만 보고 있었다.
-본진의 영어 글과 종목 페이지도 **실제 화면**을 받아 센다. 카페24 공유 호스팅이라 한 번에 하나씩, 사이에 쉰다.
+본진의 영어 글도 **실제 화면**을 받아 센다(종목 페이지 점검 `--stocks`는 2026-09-26 종목 페이지를 없애며 뺐다). 카페24 공유 호스팅이라 한 번에 하나씩, 사이에 쉰다.
 문제가 있으면 0이 아닌 값으로 끝나 워크플로가 빨간 X가 되고 텔레그램 운영 알림이 간다.
 """
 from __future__ import annotations
@@ -19,7 +18,6 @@ import time
 from pathlib import Path
 
 import requests
-import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://fermata.it.kr"
@@ -71,40 +69,15 @@ def english_problems(root: Path = ROOT, get=_get) -> list[str]:
     return problems
 
 
-def stock_problems(root: Path = ROOT, get=_get) -> list[str]:
-    config = yaml.safe_load((root / "config" / "stock_pages.yaml").read_text(encoding="utf-8"))
-    problems: list[str] = []
-    for market in ("kr", "us"):
-        for item in config.get(market) or []:
-            url = f"{SITE}/stocks/{item['slug']}/"
-            response = get(url)
-            if response.status_code != 200:
-                problems.append(f"{url}: HTTP {response.status_code}")
-                continue
-            html = response.text
-            start = html.find("이 종목이 나온 글")
-            section = html[start:start + 6000] if start >= 0 else ""
-            own = [u for u in re.findall(r'href="(https://fermata\.it\.kr/[^"]+)"', section) if "/stocks/" not in u]
-            if own:
-                problems.append(f"{url}: 본진 주소 링크 {len(own)}개(한국어 글은 비공개라 404) — {own[0]}")
-            if empty_images(html):
-                problems.append(f"{url}: 빈 그림 태그 {empty_images(html)}개")
-    print(f"종목 페이지 {sum(len(config.get(m) or []) for m in ('kr', 'us'))}쪽 확인")
-    return problems
-
-
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--english", action="store_true")
-    parser.add_argument("--stocks", action="store_true")
     args = parser.parse_args(argv)
-    if not (args.english or args.stocks):
-        parser.error("--english 또는 --stocks")
+    if not args.english:
+        parser.error("--english")
     problems: list[str] = []
     if args.english:
         problems += english_problems()
-    if args.stocks:
-        problems += stock_problems()
     if problems:
         print("\n문제:", *problems, sep="\n- ")
         return 1

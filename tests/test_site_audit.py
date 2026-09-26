@@ -32,19 +32,5 @@ class EnglishTest(unittest.TestCase):
             html = '<img class="mb-figure" src="https://x/a.png"><img class="mb-figure" src="https://x/b.png">'
             self.assertEqual(site_audit.english_problems(self._root(tmp), get=lambda u: _Resp(html)), [])
 
-
-class StocksTest(unittest.TestCase):
-    def test_links_to_private_posts_are_problems(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            (root / "config").mkdir()
-            (root / "config" / "stock_pages.yaml").write_text("kr:\n  - {ticker: '005930', slug: samsung-electronics}\n",
-                                                              encoding="utf-8")
-            bad = '<h2>이 종목이 나온 글</h2><a href="https://fermata.it.kr/editorial-kr-2026-09-23-ko/">x</a>'
-            good = '<h2>이 종목이 나온 글</h2><a href="https://blog.naver.com/fermata49/1">x</a><a href="https://fermata.it.kr/stocks/">목록</a>'
-            self.assertEqual(len(site_audit.stock_problems(root, get=lambda u: _Resp(bad))), 1)
-            self.assertEqual(site_audit.stock_problems(root, get=lambda u: _Resp(good)), [])
-
-
 if __name__ == "__main__":
     unittest.main()

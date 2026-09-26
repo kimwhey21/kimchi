@@ -26,7 +26,7 @@ class BloggerPostTest(unittest.TestCase):
         self.assertRegex(result["slug"], r"^[a-z0-9-]+$")
         self.assertEqual(result["unresolved"], [])
 
-    def test_guide_gets_fermata_footer_stock_links_and_kicker(self):
+    def test_guide_gets_fermata_footer_stock_labels_and_kicker(self):
         doc = {
             "kind": "feature", "series": "가이드", "date": "2026-09-20", "checked": "2026-09-20",
             "slug": "why-samsung-moves-with-kospi", "tags": [],
@@ -42,8 +42,8 @@ class BloggerPostTest(unittest.TestCase):
         self.assertIn("가이드 · 2026년 9월 20일 확인", result["html"])
         self.assertIn(blogger_post.NAVER_FERMATA, result["html"])
         self.assertIn(blogger_post.TELEGRAM, result["html"])
-        self.assertIn("/stocks/samsung-electronics/", result["html"])
-        self.assertIn("/stocks/sk-hynix/", result["html"])
+        self.assertNotIn("/stocks/", result["html"])          # 종목 페이지는 2026-09-26에 없앴다
+        self.assertNotIn("종목 페이지", result["html"])
         self.assertIn("삼성전자", result["labels"])
         self.assertEqual(result["labels"][0], "가이드")
         self.assertIn(blogger_post.DISCLAIMER, result["html"])

@@ -606,6 +606,15 @@
   꼬리표는 1/가이드 수)로 고른다. 종목 페이지는 한국어라 영어 글에서 걸지 않았다. 5번(글마다 AI 활용 표시)은 사장님이 뺐다 —
   잡지 블로그가 자동 생성으로도 노출이 잘 되므로 문제가 아니라는 판단. 개인정보처리방침 /privacy/·/privacy-policy/는 겹침이 아니라
   영문·국문 판이다.
+- **종목 허브 페이지(`/stocks/`)를 없앴다**(2026-09-26, 사장님: "워드프레스에 stocks가 필요한가?" → "2번 완전히 없애기").
+  근거: 서치콘솔 3개월 검색어 101개 가운데 종목 관련은 1개("삼성 생명 주가", 37위·노출 1회, 전체 노출 259회 중 1회), 영어
+  사이트 안의 한국어 페이지 37쪽, 네이버 증권·야후에 이미 있는 종가·차트라 이기기 어렵고 같은 틀의 페이지 37개였다. 걷어낸 것:
+  `src/stock_pages.py`·`templates/stock.html.j2`·`config/stock_pages.yaml`·`stock_pages.yml`(토 11:30)·`docs/routine_stock_notes.md`와
+  월간 루틴(trig_01WDkBf1Nu9cLdrqWN5aM2KM, 꺼 둠)·네이버 주소표(`scripts/naver_map_sync.py`·`data/naver_posts.json`·맥 `naver_sync.naver_map`)·
+  `site_audit --stocks`·홈과 목록 탭 7곳의 Stocks 링크·워드프레스 페이지 38개(휴지통, 30일 뒤 자동 삭제)·블로그스팟 글 끝 "종목
+  페이지" 줄(블로거 라벨의 종목 이름은 워치리스트에서 뽑아 유지). 남은 것: 블로그스팟에 이미 올라간 20편 중 13편의 글 끝 링크는
+  404가 된다(블로그스팟 동기화에 본문 수정 기능이 없다), 비공개 한국어 글 네 편의 `related`에 종목 주소가 있다(방문자에게
+  보이지 않는다). 실제 방문 수(애널리틱스)는 보지 않고 정했다.
 - **공개된 한국어 글은 텔레그램 채널 `@fermata_kr`과 스레드 `@fermata.it.kr`에 자동으로 올린다**(2026-09-12, 홍보 1·2번 —
   `src/notify_telegram.py`·`src/notify_threads.py`, `publish_feature`·`publish_editorial`이 공개 직후 부른다). 표지 + 제목 +
   Take 두 문장 + 링크. 다시 올린 글(최초 공개와 수정이 10분 넘게 벌어진 글)과 영어 글은 보내지 않는다. 토큰은 GitHub 시크릿
