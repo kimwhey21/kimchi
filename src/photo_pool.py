@@ -16,9 +16,9 @@
 **업종** 사진을 씁니다. 업종이 맞으면 표지로 충분하다는 것이 2026-09-06에
 정리한 규칙입니다 — 은행주가 무너진 글에 은행 사진이 나오는 것은 당연합니다.
 
-같은 업종에 사진이 여럿이면 **그 묶음이 표지 사진을 쓴 횟수로 차례를 돌립니다**
-(`featured_image.cover_turn`, 2026-09-26). 다섯 장을 다 쓰기 전에는 같은 사진이
-돌아오지 않습니다. 2026-09-08~25에는 날짜÷장수의 나머지였는데 사흘 연속만 다르고
+같은 업종에 사진이 여럿이면 **가장 오래 안 쓴 사진을 고릅니다**
+(`featured_image.cover_history`가 커밋된 시황 원고에서 이력을 다시 만든다, 2026-09-26).
+다 쓰기 전에는 같은 사진이 돌아오지 않고, 보관함에 사진을 더해도 순서가 밀리지 않습니다. 2026-09-08~25에는 날짜÷장수의 나머지였는데 사흘 연속만 다르고
 닷새 뒤엔 같은 사진이 왔습니다(인텔 9/17·SK하이닉스 9/22). 목록에서 어제 글과
 구분되게 하는 것이 이 기능의 목적이라, 회전이 없으면 절반은 의미가 없습니다.
 
@@ -93,8 +93,14 @@ def candidate_ids(entry: dict | None, photos: list[dict] | None = None) -> tuple
     return tuple(sorted(p["id"] for p in _candidates(photos, entry)))
 
 
+def pool_as_of(date_str: str, photos: list[dict] | None = None) -> list[dict]:
+    """그 날짜에 보관함에 있었던 사진 — `added`(더한 날)가 그 뒤인 것은 뺀다. 옛 표지가 무엇이었는지 다시 셀 때 쓴다."""
+    photos = photos if photos is not None else load()
+    return [p for p in photos if not p.get("added") or str(p["added"]) <= str(date_str)]
+
+
 def pick(entry: dict | None, date_str: str, photos: list[dict] | None = None,
-         exclude: set[str] | None = None, turn: int | None = None) -> dict | None:
+         exclude: set[str] | None = None, history: list[str] | None = None) -> dict | None:
     """그날 쓸 사진 하나. 맞는 것이 없으면 None(= 데이터 그래픽으로 갑니다).
 
     `date_str`로 돌려 쓰기 때문에 같은 종목이 이어져도 표지가 달라집니다.
@@ -111,11 +117,14 @@ def pick(entry: dict | None, date_str: str, photos: list[dict] | None = None,
     if not hits:
         return None
     hits = sorted(hits, key=lambda p: p["id"])
-    if turn is not None:
+    if history is not None:
         # 2026-09-26 — 사장님: "다양하게 다채롭게 돌려쓰기로 한 거 아니었냐". 날짜÷장수 나머지는 사흘 연속만 다르고
-        # 닷새 뒤엔 같은 사진이 돌아왔다(인텔 9/17·SK하이닉스 9/22가 같은 남색 기판). `turn`은 그 묶음이 표지 사진을
-        # 쓴 **횟수**(featured_image.cover_turn이 커밋된 원고에서 다시 센다)라 다섯 장을 다 쓰기 전에는 같은 장이 안 온다.
-        return hits[turn % len(hits)]
+        # 닷새 뒤엔 같은 사진이 돌아왔다(인텔 9/17·SK하이닉스 9/22가 같은 남색 기판). `history`는 이 묶음이 지금까지
+        # 표지로 쓴 사진 id를 오래된 순으로 늘어놓은 것(featured_image.cover_history가 커밋된 원고에서 다시 만든다).
+        # **가장 오래 안 쓴 사진**을 고른다 — 한 번도 안 쓴 것이 먼저(id 순), 그다음 마지막으로 쓴 지 오래된 순.
+        # 횟수÷장수로 하면 보관함에 사진을 더할 때마다 순서가 밀려 방금 쓴 사진이 또 걸렸다(실측: 9장이 되자 남색 기판).
+        last = {pid: i for i, pid in enumerate(history)}
+        return min(hits, key=lambda p: (last.get(p["id"], -1), p["id"]))
     try:
         ordinal = dt.date.fromisoformat(date_str).toordinal()
     except (TypeError, ValueError):

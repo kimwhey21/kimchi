@@ -133,23 +133,31 @@ if __name__ == "__main__":
     unittest.main()
 
 
-class TurnRotationTest(unittest.TestCase):
-    """2026-09-26 — 사장님: "다양하게 다채롭게 돌려쓰기로 한 거 아니었냐". 횟수로 돌리면 다 쓰기 전엔 같은 장이 안 온다."""
+class HistoryRotationTest(unittest.TestCase):
+    """2026-09-26 — 사장님: "다양하게 다채롭게 돌려쓰기로 한 거 아니었냐". 가장 오래 안 쓴 사진을 고르면 다 쓰기 전엔 안 겹친다."""
 
     def setUp(self) -> None:
         self.photos = photo_pool.load()
         self.entry = {"ticker": "005930", "name": "삼성전자", "sector": "반도체"}
 
-    def test_turns_cycle_through_every_photo_before_repeating(self) -> None:
+    def test_cycles_through_every_photo_before_repeating(self) -> None:
         ids = photo_pool.candidate_ids(self.entry, self.photos)
-        picks = [photo_pool.pick(self.entry, "2026-09-26", self.photos, turn=t)["id"] for t in range(len(ids))]
-        self.assertEqual(sorted(picks), sorted(ids))
-        self.assertEqual(photo_pool.pick(self.entry, "2026-09-26", self.photos, turn=len(ids))["id"], picks[0])
+        history: list[str] = []
+        for _ in ids:
+            history.append(photo_pool.pick(self.entry, "2026-09-26", self.photos, history=history)["id"])
+        self.assertEqual(sorted(history), sorted(ids))
+        self.assertEqual(photo_pool.pick(self.entry, "2026-09-26", self.photos, history=history)["id"], history[0])
 
-    def test_turn_ignores_the_date(self) -> None:
-        a = photo_pool.pick(self.entry, "2026-09-17", self.photos, turn=3)["id"]
-        b = photo_pool.pick(self.entry, "2026-09-22", self.photos, turn=3)["id"]
-        self.assertEqual(a, b)
+    def test_adding_a_photo_does_not_bring_back_the_last_used_one(self) -> None:
+        """횟수÷장수로 하면 보관함이 9장이 되자 방금 쓴 남색 기판이 또 걸렸다(실측). 가장 오래 안 쓴 것을 고르면 안 그렇다."""
+        history = ["semi-circuit-board-navy", "semi-circuit-board-navy"]
+        picked = photo_pool.pick(self.entry, "2026-09-28", self.photos, history=history)["id"]
+        self.assertNotEqual(picked, "semi-circuit-board-navy")
+
+    def test_pool_as_of_hides_photos_added_later(self) -> None:
+        old = {p["id"] for p in photo_pool.pool_as_of("2026-09-17", self.photos)}
+        self.assertNotIn("semi-wafer-copper", old)
+        self.assertIn("semi-circuit-board-navy", old)
 
     def test_us_ticker_and_kr_ticker_share_the_semiconductor_bundle(self) -> None:
         intel = {"ticker": "INTC", "name": "인텔"}

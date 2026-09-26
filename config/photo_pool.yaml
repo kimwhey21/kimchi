@@ -545,3 +545,39 @@ photos:
     credit: "사진: Fredrick F. / Unsplash"
     license: "Unsplash License"
     source_page: "https://unsplash.com/photos/red-and-white-ship-on-sea-under-cloudy-sky-during-daytime-U9_pRASawlc"
+  - id: semi-wafer-copper
+    file: assets/photos/semi-wafer-copper.jpg
+    added: "2026-09-26"
+    sector: "반도체"
+    tickers: ["005930", "000660", "009150", "042700", "NVDA", "MU", "INTC", "SOXX"]
+    seen: "비스듬히 본 웨이퍼, 구리빛·초록 다이가 얕은 심도로 앞쪽만 또렷하다"
+    credit: "사진: Laura Ockel / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/green-and-brown-abstract-painting-nIEHqGSymRU"
+  - id: semi-wafer-green-grid
+    file: assets/photos/semi-wafer-green-grid.jpg
+    added: "2026-09-26"
+    sector: "반도체"
+    tickers: ["005930", "000660", "009150", "042700", "NVDA", "MU", "INTC", "SOXX"]
+    seen: "정면에서 본 웨이퍼, 초록·노랑 다이가 격자로 빼곡하다"
+    credit: "사진: Laura Ockel / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/green-yellow-and-grey-frame-pGVr8YRtQ80"
+  - id: semi-wafer-iridescent
+    file: assets/photos/semi-wafer-iridescent.jpg
+    added: "2026-09-26"
+    sector: "반도체"
+    tickers: ["005930", "000660", "009150", "042700", "NVDA", "MU", "INTC", "SOXX"]
+    seen: "보라·초록 무지개빛 다이가 대각선으로 늘어선 웨이퍼 클로즈업"
+    credit: "사진: Laura Ockel / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/silicon-wafer-with-iridescent-microchip-grid-qOx9KsvpqcM"
+  - id: semi-assembly-engineer
+    file: assets/photos/semi-assembly-engineer.jpg
+    added: "2026-09-26"
+    sector: "반도체"
+    tickers: ["005930", "000660", "009150", "042700", "NVDA", "MU", "INTC", "SOXX"]
+    seen: "흰 셔츠의 여성 엔지니어가 자동화 조립 라인 앞에서 노트북을 보고 있다"
+    credit: "사진: ThisisEngineering / Unsplash"
+    license: "Unsplash License"
+    source_page: "https://unsplash.com/photos/woman-in-white-long-sleeve-shirt-using-black-laptop-computer-ZPeXrWxOjRQ"
