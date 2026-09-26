@@ -253,6 +253,17 @@ LIVE_STATUS = {"프리뷰": "private", "기준표": "private",
                "가이드": "private", "주간 결산": "private", "다음 주 일정": "private", "이벤트": "private"}
 
 
+# 한국어 글을 본진에 아예 올리지 않는다(2026-09-26, 사장님: "워드프레스에 비공개로 올라가는 한국어 컨탠츠를 지워도 되냐?" →
+# "확인못한거 확인하고 문제없으면 둘다 진행해"). 위 표에서 `private`인 시리즈가 한국어 글이다 — 그 글은 방문자에게 404였고
+# (사이트맵·목록·피드에도 없다), 네이버·블로그스팟은 맥이 원고에서 직접 만든다. 검사(관문)와 HTML 렌더는 그대로 돌리고
+# 워드프레스 업로드·발행만 건너뛴다. 되돌리려면 True로.
+KO_TO_WORDPRESS = False
+
+
+def _skips_wordpress(doc: dict) -> bool:
+    return not KO_TO_WORDPRESS and _live_status(doc) == "private"
+
+
 def _live_status(doc: dict) -> str:
     # 시리즈 칸이 빠진 원고는 관문(`feature_gate`)이 커밋 전에 막는다(2026-09-26). 이 표 자체는 사장님이 정한 대로 둔다.
     return LIVE_STATUS.get(str(doc.get("series") or ""), "publish")
@@ -280,8 +291,9 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
         print(f"(참고) 그림 모음판을 만들지 못했습니다 — {output}의 낱장을 읽으십시오: {exc}")
     run_gate(doc, graphics=len(images), path=path)  # 다섯 검사의 단일 관문
 
+    skip_wordpress = _skips_wordpress(doc)
     figures = {}
-    if upload and publish_wordpress.is_configured():
+    if upload and not skip_wordpress and publish_wordpress.is_configured():
         for section, value in section_images.items():
             media_id = publish_wordpress.upload_featured_image(
                 os.environ["WORDPRESS_URL"].rstrip("/"),
@@ -311,6 +323,10 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
     html_path.write_text(html, encoding="utf-8")
     if not upload:
         return {"html": str(html_path), "uploaded": False}
+    if skip_wordpress:
+        print("[안내] 한국어 글은 본진(워드프레스)에 올리지 않습니다(KO_TO_WORDPRESS, 2026-09-26) — 검사는 통과했고, "
+              "네이버·블로그스팟은 맥이 원고에서 올립니다.")
+        return {"html": str(html_path), "uploaded": False, "skipped": "ko-not-on-wordpress"}
     if not publish_wordpress.is_configured():
         # 설정이 없으면 조용히 넘어가지 않고 말합니다. 발행한 줄 알고 넘어가는
         # 것이 발행 실패보다 나쁩니다.

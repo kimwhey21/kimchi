@@ -500,7 +500,12 @@ def _previous_daily_post(market: str, date_str: str, lang: str) -> dict | None:
 # **상태는 `private`다.** 글·주소·분류는 그대로 남지만 사이트맵·목록·피드·익명 접근에서
 # 빠지므로, 네이버에 같은 글이 전문으로 올라가도 두 곳에 공개된 상태가 되지 않는다.
 # 되돌리려면 KO_DAILY_STATUS를 "publish"로 바꾼다.
-KO_DAILY_TO_WORDPRESS = True
+#
+# 2026-09-26부터는 **아예 올리지 않는다**(사장님: "워드프레스에 비공개로 올라가는 한국어 컨탠츠를 지워도 되냐?" →
+# "문제없으면 둘다 진행해"). 비공개로 둔 이유(9/16: 네이버 사본이 전망·인사이트·출처를 빠뜨려 본진이 유일한 보관처였다)는
+# 네이버가 원고를 빠짐없이 옮기게 되면서(test_naver_completeness·naver_audit) 사라졌다. 한국어 그림도 올리지 않는다 —
+# 다만 본문·인사이트 **사진**은 영어판이 같은 것을 쓰므로 그대로 올린다. 되돌리려면 True로.
+KO_DAILY_TO_WORDPRESS = False
 KO_DAILY_STATUS = "private"
 
 
@@ -554,7 +559,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
         _attach_section_graphics(
             ko.get("narrative"), price_data, market, date_str,
             _previous_price_data(market, date_str),
-            upload=not render_only,
+            upload=not render_only and KO_DAILY_TO_WORDPRESS,   # 한국어판을 안 올리면 그 그림도 안 올린다
         )
         # 영어판 그림(2026-09-26). 전에는 한국어판만 그려, 영어 글 절의 graphic에는 명세만 남아 템플릿이
         # `<img src="">`를 찍었다 — 9/9부터 영어 시황 24편의 그림 자리가 전부 비었다. 영어 명세(글자는 영어)를

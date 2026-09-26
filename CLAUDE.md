@@ -119,14 +119,16 @@
   낡았는지**를 보는 자리로만 쓴다. **큐는 검색 의도를 본다** — `search_queue.intent`가 행동(how to·buy·broker·etf·tax·hours)
   1.3배, 정의(what is·difference) 0.7배. 순위 밀린 글은 제목·첫 소제목·첫 문장에 검색어를 그대로 넣는다. `related` 제목은 발행 때
   살아 있는 제목으로 바뀐다(`publish_feature._refresh_related`).
-- **한국어 시황은 본진에 `private`로 올리고, 네이버에는 본진 글을 그대로 옮긴다.** 스위치는
-  `publish_editorial.KO_DAILY_TO_WORDPRESS`(켬)와 `KO_DAILY_STATUS`(`private`) 둘이다. 영어판(`-en`)은 그대로 공개다. 그림은
+- **한국어 시황은 본진에 올리지 않고(2026-09-26부터, 그전에는 `private`), 네이버에는 원고를 그대로 옮긴다.** 스위치는
+  `publish_editorial.KO_DAILY_TO_WORDPRESS`(끔)와 `KO_DAILY_STATUS`(켜면 `private`) 둘이다. 한국어 그림도 올리지 않지만 본문·인사이트
+  **사진은 영어판이 같이 쓰므로 올린다.** 영어판(`-en`)은 그대로 공개다. 그림은
   **절 번호**로 붙이고 4장 상한은 없으며 `editorial_gate`가 본문·인사이트 **사진도 파일로 남긴다**. **영어판 본문 그림은 영어
   명세로 따로 그린다**(`data_graphics.build(lang="en")`, 2026-09-26 — 그전 영어 시황 24편은 그림 자리가 `<img src="">`였다).
   영어 명세의 글자에 한글이 있으면 관문이 막고, 주소가 없는 그림은 태그를 찍지 않는다. **원본이 어디인지 바뀌면 옮기는
   코드의 전제도 같이 바뀐다 — 본문을 어디서 가져오는지(`full`)만 갈아 끼우고 끝내지 말 것.**
-- **프리뷰는 네이버에 본문 전문(링크 없이)으로 나가고, 본진에는 비공개로만 올린다.** 네이버 쪽은 시황과 같은 처리이고, 본진 쪽은
-  `publish_feature.LIVE_STATUS`의 한 줄이다. 워드프레스 `private`는 글·주소·분류를 그대로 두고 **사이트맵·목록·피드·익명
+- **프리뷰는 네이버에 본문 전문(링크 없이)으로 나가고, 본진에는 올리지 않는다**(2026-09-26부터, 그전에는 비공개). 네이버 쪽은
+  시황과 같은 처리이고, 본진 쪽은 `publish_feature.LIVE_STATUS`에서 `private`인 시리즈(한국어 글)를 `KO_TO_WORDPRESS`(끔)가 검사만
+  하고 업로드 없이 끝낸다. 켜면 `private`로 올라가는데, 워드프레스 `private`는 글·주소·분류를 그대로 두고 **사이트맵·목록·피드·익명
   접근(404)에서만 뺀다**. **비공개 글은 텔레그램·스레드에 알리지 않는다** — 알림은 맥의 동기화가 네이버에 올린 뒤 네이버 주소로
   보낸다(`scripts/notify_naver_post.py`).
 - **미국장 시황·프리뷰를 저녁 한 편으로 합치는 개편은 보류다**(사용자 결정, 되돌린 커밋은 `11c6ac6`의 revert). 다시 할 때는
@@ -250,7 +252,7 @@
 - **자동화 스위치는 GitHub 저장소 변수 `FERMATA_AUTO_PUBLISH` 하나다.** `true`면 기준표 초안이 커밋 즉시 공개된다.
   새 발행 경로를 만들 때는 이 변수를 같은 뜻으로 읽게 만든다 — 스위치를 여럿 두지 않는다.
 - **밤 9시 반 미국장 프리뷰는 시리즈 "프리뷰"로 기준표 파이프라인을 쓰되, 그날 미국장의 메인 글이다.** 평일 21:30 KST 루틴이
-  `editorial/previews/us_<날짜>.json`을 커밋하면 `preview_publish.yml`이 본진에 **비공개**로 올리고 맥이 네이버에 전문을 올린다.
+  `editorial/previews/us_<날짜>.json`을 커밋하면 `preview_publish.yml`이 검사하고(본진에는 올리지 않는다) 맥이 네이버에 전문을 올린다.
   구성은 `docs/routine_preview.md`의 12절. 문턱은 절 10·시각자료 8·출처 4(`editorial_title.SECTION_FLOORS`,
   `feature_checks.SERIES_LIMITS`, `source_check.SERIES_MIN_SOURCES`)에 더해 절당 400자, 같은 그래픽 종류 2장, 초보자 설명 둘 이상.
   지시문의 **22:00 마감**. 아침 마감 시황은 그대로다(판정·한국 연결 담당) — 합치지 않는다. **「월가 리포트」
@@ -271,7 +273,7 @@
   주제 60개를 아홉 갈래로 나눠 어제와 다른 갈래에서 고른다), **이벤트**(일요일 다음 주 일정 루틴이 그 주의 큰 이벤트 하나를
   `editorial/events/<날짜>_<slug>.json`으로 더 쓴다, 분류 Weekly, 머리말은 `event_date`). 한 목록에 두 언어를 섞지 않는다.
   `guide_publish.yml`·`weekly_publish.yml`이 자동화 스위치대로 공개한다. 문턱은 가이드 절 5·시각자료 2·출처 2, Guide 절 5·2·2, 이벤트
-  절 4·2·2. 한국어 가이드·이벤트는 네이버에 전문, 본진은 비공개(아래 「발행 워크플로우」). **종목 허브 페이지(`/stocks/`)는
+  절 4·2·2. 한국어 가이드·이벤트는 네이버에 전문, 본진에는 올리지 않는다(아래 「발행 워크플로우」). **종목 허브 페이지(`/stocks/`)는
   2026-09-26 사장님 결정으로 없앴다**(코드·워크플로·월간 루틴·홈 탭·페이지 38개, 내력은 `docs/decisions.md`).
 - 그림을 그린 뒤에는 **`Read` 툴로 직접 본다.** 축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은 코드만 봐서는 안 보인다.
   `src/graphic_checks.py`가 그림의 데이터와 제목이 어긋나는 것을 잡지만 전부는 아니다.
@@ -332,20 +334,22 @@
   2026-09-26 사장님 "1번으로 해, 사진 다음에 틀" — 그전에는 잡지만 사진이고 나머지는 전부 틀뿐이었다. 틀은 9/8에 사장님이 여섯 안 중
   고른 것이라 빼지 않는다). 맥의 `naver_sync.render`가 `00-photo-cover.jpg`로 내려받고 `blogger_post`는 원본 주소를 쓴다.
   Take를 두 문장만 뽑아 맨 위 인용구로 올리는 것은 **요약본**의 규칙이다. `tests/test_naver_post.py`가 양쪽을 다 고정한다.
-- **Checkpoint도 본진에는 비공개로만 올라가고 네이버에 본문 전문이 나간다.** 프리뷰와 같은 처리다 — `publish_feature.LIVE_STATUS`에
-  `"기준표": "private"` 한 줄.
+- **Checkpoint도 본진에는 올리지 않고 네이버에 본문 전문이 나간다.** 프리뷰와 같은 처리다 — `publish_feature.LIVE_STATUS`의
+  `"기준표": "private"` 줄이 한국어 글 표시이고 `KO_TO_WORDPRESS`가 업로드를 건너뛴다.
 - **홈·목록의 Checkpoint 탭은 네이버 블로그 카테고리로 간다.** 탭은 그대로 두고 `href`만
   `https://blog.naver.com/fermata49?Redirect=Category&categoryNo=6`으로 바꿨다(`target="_blank"`). 고친 곳은 **페이지 6개(76 daily·77
   guides·105 all·1047 checkpoint·1439 weekly·1610 guide) + `twentytwentyfive//home` 템플릿** — 이 일곱이 탭 줄이 복제돼 있는 전부다
-  (1479 stocks의 'Checkpoint'는 본문 글자이지 탭이 아니다). `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
+  `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
   줄로 접혀야 가로가 넘치지 않는다. `/checkpoint/` 페이지의 `query-no-results` 블록은 네이버 안내이고 목록이 다시 채워지면 저절로
   사라진다. 네이버 카테고리 번호는 추측하지 말고 `PostList.naver?blogId=fermata49`를 받아 `categoryNo=`로 확인한다(시황 1·Checkpoint
   6·가이드 7·Weekly 8).
-- **한국어 글은 전부 본진 비공개·네이버 전문이다**(2026-09-22, 사장님 결정: 네이버가 한국어 주력). 시황·프리뷰·Checkpoint에
+- **한국어 글은 전부 본진에 없고 네이버 전문이다**(2026-09-22 비공개로, 2026-09-26부터는 아예 올리지 않는다 — 사장님 결정:
+  네이버가 한국어 주력, 올려 두던 비공개 85편은 휴지통). 시황·프리뷰·Checkpoint에
   이어 **한국어 가이드·주간 결산·다음 주 일정·이벤트**도 같은 처리다 — `publish_feature.LIVE_STATUS`에 네 줄, `naver_post`는 잡지를
   뺀 모든 글을 `ko.narrative` 전문·링크 없음으로 옮기고, `feature_checks.NAVER_FULL_ENDED`(2026-09-23)부터 네이버용 본문(`naver`)을
   요구하지 않는다. **영어 가이드("Guide")만 본진에 공개다.** 가이드·Weekly 탭도 네이버 카테고리 7·8로 간다(Checkpoint 탭과 같은
   방식, 같은 일곱 곳). 되돌리려면 `LIVE_STATUS` 네 줄을 지우고 `naver_post`의 `full_body = not magazine`을 옛 조건으로 되돌린다.
+  본진에 다시 (비공개로) 올리려면 `publish_feature.KO_TO_WORDPRESS`·`publish_editorial.KO_DAILY_TO_WORDPRESS`를 `True`로.
 - **블로그스팟(fermata49.blogspot.com, "Fermata 매거진")은 구글용 한국어 창구다**(2026-09-25). 새 글을 쓰지 않고 원고를 그대로
   옮긴다 — 잡지·한국어 가이드·Checkpoint(확인 날짜가 안 지난 것)·주간 결산·다음 주 일정·이벤트 전부, 시황·프리뷰는 2026-09-25
   이후 것만(디스커버 4주 시험). 영어 가이드는 본진과 겹치므로 올리지 않는다. 렌더는 `scripts/blogger_post.py`(네이버와 같은

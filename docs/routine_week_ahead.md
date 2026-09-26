@@ -84,7 +84,7 @@
 6. `git add editorial/weekly/<파일>.json && git commit -m "다음 주 일정: <제목>" && git push origin HEAD:main`
    (push 거부 시 `git pull --rebase origin main` 뒤 다시). push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
 7. 휴대폰 알림을 한 번 보냅니다(PushNotification):
-   `다음 주 일정 커밋: <제목> — 몇 분 안에 https://fermata.it.kr/<slug>/ 로 비공개로 올라가고, 네이버에는 10분 안에 전문이 올라갑니다.`
+   `다음 주 일정 커밋: <제목> — 네이버에 10분 안에 전문이 올라갑니다(본진에는 올리지 않습니다).`
    건너뛰었거나 실패했을 때도 한 번, 이유와 함께.
 
 ## 이벤트 글 (2026-09-12, 유입 편성 — 사용자 승인 "4번 진행")
@@ -110,12 +110,12 @@
     `source` 필수) 또는 `calendar_strip`(section 0) + 있으면 `price_history`(section 2, `price_file`).
 - **관문.** `python -m src.feature_gate editorial/events/<파일>.json --graphics <수>` → 통과하면 렌더 확인 →
   `git add editorial/events/<파일>.json && git commit -m "이벤트: <제목>" && git push origin HEAD:main`.
-  `weekly_publish.yml`이 다음 주 일정과 같은 정책으로 본진에 **비공개**로 올리고, 네이버에는 10분 안에 전문이 갑니다.
+  `weekly_publish.yml`이 다음 주 일정과 같은 정책으로 검사하고(본진에는 올리지 않는다), 네이버에는 10분 안에 전문이 갑니다.
 - 다음 주 일정을 못 쓴 날(재료 부족)에는 이벤트 글도 쓰지 않습니다. 알림은 두 글을 한 번에 보냅니다.
 
 ## 네이버용 본문 — 쓰지 않습니다 (2026-09-22 확정)
 
-**이 시리즈는 본진(fermata.it.kr)에 비공개(`private`)로만 올라가고, 네이버 블로그에는 `ko.narrative` 전문이
+**이 시리즈는 본진(fermata.it.kr)에 올리지 않고(2026-09-26부터, 그전에는 비공개), 네이버 블로그에는 `ko.narrative` 전문이
 링크 없이 나갑니다**(사장님: "워드프레스 링크가 붙는 컨텐츠에 링크를 모두 빼고 본문을 공개하고, 본진에서는 비공개
 처리해라 — 네이버는 한글 컨텐츠를 주력으로 해야 한다").
 

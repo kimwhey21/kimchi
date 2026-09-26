@@ -48,6 +48,7 @@ class CheckPublicationTest(unittest.TestCase):
         """
         self.assertEqual(self._check("2026-09-04", self._posts("2026-09-05T12:53:52")), [])
 
+    @mock.patch.object(cp.publish_editorial, "KO_DAILY_TO_WORDPRESS", True)   # 스위치를 켰을 때의 동작(2026-09-26부터 기본은 꺼짐)
     def test_public_korean_daily_is_an_alarm(self) -> None:
         """한국어 시황이 **공개**돼 있으면 잡아야 한다(2026-09-16).
 
@@ -59,6 +60,7 @@ class CheckPublicationTest(unittest.TestCase):
         problems = self._check("2026-09-04", posts)
         self.assertTrue(any("[ko]" in x and "private" in x for x in problems), problems)
 
+    @mock.patch.object(cp.publish_editorial, "KO_DAILY_TO_WORDPRESS", True)   # 스위치를 켰을 때의 동작(2026-09-26부터 기본은 꺼짐)
     def test_post_modified_before_trading_date_is_stale(self) -> None:
         problems = self._check("2026-09-04", self._posts("2026-09-03T10:00:00"))
         # 두 언어 모두 본진에 올라가므로(2026-09-16) 둘 다 옛 글로 잡힌다.
@@ -66,6 +68,7 @@ class CheckPublicationTest(unittest.TestCase):
         self.assertTrue(all("옛 글" in x for x in problems), problems)
         self.assertTrue(any("[ko]" in x for x in problems) and any("[en]" in x for x in problems), problems)
 
+    @mock.patch.object(cp.publish_editorial, "KO_DAILY_TO_WORDPRESS", True)   # 스위치를 켰을 때의 동작(2026-09-26부터 기본은 꺼짐)
     def test_korean_daily_is_looked_for_again(self) -> None:
         """한국어 시황은 다시 본진에 올라간다(2026-09-16, 사용자 지시) — 없으면 잡아야 한다.
 
@@ -78,6 +81,13 @@ class CheckPublicationTest(unittest.TestCase):
         with mock.patch.object(cp.publish_editorial, "KO_DAILY_TO_WORDPRESS", False):
             off = self._check("2026-09-04", None)
         self.assertFalse(any("[ko]" in p for p in off), off)
+
+    def test_korean_daily_is_not_on_wordpress_by_default(self) -> None:
+        """2026-09-26부터 한국어 시황은 본진에 올리지 않는다(사장님 "둘다 진행해") — 한국어는 찾지 않고 영어만 본다."""
+        self.assertFalse(cp.publish_editorial.KO_DAILY_TO_WORDPRESS)
+        problems = self._check("2026-09-04", None)
+        self.assertFalse(any("[ko]" in p for p in problems), problems)
+        self.assertTrue(any("[en]" in p for p in problems), problems)
 
     def test_newer_trading_day_without_price_file_is_reported(self) -> None:
         problems = self._check("2026-09-08", self._posts("2026-09-05T12:53:52"))
