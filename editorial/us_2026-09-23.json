@@ -5301,8 +5301,8 @@
             "^IXIC",
             "^VIX"
           ],
-          "title": "3대 지수, 국채금리에 밀렸습니다",
-          "note": "VIX는 이틀 만에 다시 올랐습니다."
+          "title": "The three indexes slipped as yields rose",
+          "note": "The VIX rose again after two days."
         },
         "body": "Wall Street's story today started in the bond market, not the stock market. All three major indexes fell, but the trigger wasn't earnings or company news - it was Treasury yields. Under that pressure, SpaceX and Alphabet fell hard while Palantir and Deere moved the other way."
       },
@@ -5318,8 +5318,8 @@
             "^TNX",
             "^TYX"
           ],
-          "title": "국채금리, 2007년 이후 최고치로",
-          "note": "PMI 호조와 국채 입찰 부진이 겹쳤습니다."
+          "title": "Treasury yields at their highest since 2007",
+          "note": "Strong PMI data met a weak Treasury auction."
         },
         "body": "The 10-year Treasury yield rose 3.04% to 5.11%, its highest level since 2007, Yahoo Finance reported. The 30-year yield climbed 1.98% to 5.40%.\n\nThe trigger was a hotter-than-expected economic reading. S&P Global's September composite PMI came in at 58.4, well above the 55.3 consensus. A weak $80 billion five-year Treasury auction added to the pressure, with the auction yield landing at 5.033%, the highest since before 2006, according to Wolf Street. Fed Governor Michael Barr said \"further policy adjustments are likely to be needed,\" reaffirming a hawkish tone.\n\nBeginner's note: PMI (Purchasing Managers' Index) surveys company purchasing managers on how busy business is that month. Above 50 means expansion, below means contraction. A reading this far above expectations signals an overheating economy, which pushes Treasury yields up - and higher yields hit growth and tech stocks first, since they look less attractive next to bonds."
       },
@@ -5332,7 +5332,7 @@
         "graphic": {
           "kind": "price_history",
           "ticker": "MU",
-          "title": "마이크론, 실적 발표를 앞두고 잠시 숨을 골랐습니다"
+          "title": "Micron pauses ahead of earnings"
         },
         "photo": {
           "ticker": "MU"
@@ -5343,41 +5343,41 @@
         "heading": "Micron still looks cheapest on valuation",
         "graphic": {
           "kind": "fact_table",
-          "title": "오늘 하락한 반도체·빅테크, 밸류에이션은 이렇게 다릅니다",
+          "title": "Chips and big tech fell today; valuations differ",
           "columns": [
-            "종목",
-            "FWD PER",
-            "목표가 대비",
-            "52주 고점 대비"
+            "Stock",
+            "Fwd P/E",
+            "Upside to target",
+            "vs 52-wk high"
           ],
           "rows": [
             [
-              "마이크론",
-              "6.7배",
+              "Micron",
+              "6.7x",
               "+41.3%",
               "-14.6%"
             ],
             [
-              "엔비디아",
-              "14.4배",
+              "Nvidia",
+              "14.4x",
               "+45.3%",
               "-4.7%"
             ],
             [
-              "알파벳",
-              "22.7배",
+              "Alphabet",
+              "22.7x",
               "+27.1%",
               "-17.3%"
             ],
             [
-              "마이크로소프트",
-              "21.1배",
+              "Microsoft",
+              "21.1x",
               "+15.3%",
               "-9.6%"
             ]
           ],
           "source": "Yahoo Finance",
-          "note": "FWD PER은 앞으로 1년 예상 이익 기준입니다."
+          "note": "Forward P/E is based on expected earnings over the next 12 months."
         },
         "body": "Lining up today's semiconductor and big-tech decliners on our valuation engine, Micron is still the cheapest. Its forward P/E of 6.7x leaves 41.3% of upside to its price target and sits 14.6% below its 52-week high. Forty-six analysts cover the stock.\n\nBy the same measure, Nvidia trades at a forward P/E of 14.4x with 45.3% of upside to its target - more than twice as expensive as Micron by that multiple, yet with even more room to run. A low multiple doesn't automatically mean more room left."
       },
@@ -5386,7 +5386,7 @@
         "graphic": {
           "kind": "stock_spotlight",
           "ticker": "SPCX",
-          "title": "스페이스X, 최근 반등분을 하루 만에 반납했습니다",
+          "title": "SpaceX gave back its recent rebound in one day",
           "style": "daily_bars"
         },
         "body": "The biggest decliner on our list today was SpaceX (Space Exploration Technologies), down 4.11% to $148.36 - almost exactly where it stood eight sessions ago ($148.15).\n\n24/7 Wall St. and FX Leaders point to three overlapping headwinds. Tomorrow (September 24) brings the company's first post-IPO lockup expiration, releasing 328 million shares onto the market. President and COO Gwynne Shotwell has also proposed a $52 million stock sale. On top of that, valuation worries resurfaced ahead of the September 28 Starship test flight. The outlets also reported broader weakness across space stocks, with AST SpaceMobile down 6% and Rocket Lab down 2%.\n\nNotably, hedge fund Coatue Management built a brand-new 18.56 million-share stake in SpaceX as of its June 30 13F filing. Smart money bought in three months ago at roughly the same level where today's new supply is hitting the market - which is why this pullback is worth watching beyond just today."
@@ -5396,7 +5396,7 @@
         "graphic": {
           "kind": "stock_spotlight",
           "ticker": "GOOGL",
-          "title": "알파벳, 3개월 최고가에서 밀려났습니다",
+          "title": "Alphabet slipped from its three-month high",
           "style": "numbers"
         },
         "body": "Alphabet fell 3.80% to $337.83. Its non-voting GOOG shares fell 3.58% in the same direction - when both share classes of the same company move together, it signals a company-wide re-rating rather than a one-off catalyst. The trigger was a sharply higher capital spending guidance, which brought AI data-center spending concerns back to the surface. More on the numbers below."
@@ -5406,7 +5406,7 @@
         "graphic": {
           "kind": "movers_list",
           "top_n": 6,
-          "title": "오늘 크게 움직인 종목은 이렇게 갈렸습니다",
+          "title": "Today's biggest movers split both ways",
           "style": "bars"
         },
         "photo": {
@@ -5418,25 +5418,25 @@
         "heading": "Microsoft rose despite two downgrades",
         "graphic": {
           "kind": "fact_table",
-          "title": "마이크로소프트, 오늘 증권사 세 곳의 의견이 갈렸습니다",
+          "title": "Microsoft: three brokers split on the stock today",
           "columns": [
-            "증권사",
-            "의견 변화",
-            "목표주가"
+            "Broker",
+            "Rating change",
+            "Price target"
           ],
           "rows": [
             [
-              "스티펠",
+              "Stifel",
               "Hold → Buy",
-              "575달러"
+              "$575"
             ],
             [
-              "레이먼드제임스",
+              "Raymond James",
               "Outperform → Underperform",
               "-"
             ],
             [
-              "울프리서치",
+              "Wolfe Research",
               "Outperform → Peer Perform",
               "-"
             ]
@@ -5453,8 +5453,8 @@
             "CL=F",
             "GC=F"
           ],
-          "title": "유가와 금, 나란히 내려갔습니다",
-          "note": "금리가 오르면 무이자 자산인 금의 매력이 줄어듭니다."
+          "title": "Oil and gold both fell",
+          "note": "Higher yields reduce the appeal of gold, which pays no interest."
         },
         "body": "WTI crude fell 2.12% to $92.58 a barrel, continuing to ease from above $100 four sessions ago but still holding above $90. Gold fell 1.23% to $4,322.70 an ounce - when Treasury yields rise, there's less reason to hold an asset that pays no interest."
       },
