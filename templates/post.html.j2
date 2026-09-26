@@ -41,7 +41,7 @@
   {% if section.graphic and section.graphic.url %}
   <img class="mb-figure" src="{{ section.graphic.url }}" alt="{{ section.graphic.alt }}" loading="lazy">
   {% endif %}
-  {% if section.photo %}
+  {% if section.photo and section.photo.url %}
   <img class="mb-story-photo" src="{{ section.photo.url }}" alt="{{ section.photo.alt or section.heading }}" loading="lazy">
   {% if section.photo.credit %}
   <p class="mb-photo-credit">{% if section.photo.credit_url %}<a href="{{ section.photo.credit_url }}" target="_blank" rel="noopener">{{ section.photo.credit }}</a>{% else %}{{ section.photo.credit }}{% endif %}</p>
@@ -119,7 +119,7 @@
     <span class="mb-story-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">{{ item.icon_svg|safe }}</svg></span>
     <h3>{{ item.heading }}</h3>
   </div>
-  {% if item.image %}
+  {% if item.image and item.image.url %}
   <img class="mb-story-photo" src="{{ item.image.url }}" alt="{{ item.image.alt or item.heading }}"{% if item.image.width and item.image.height %} width="{{ item.image.width }}" height="{{ item.image.height }}"{% endif %} loading="lazy">
   {% if item.image.credit %}
   <p class="mb-photo-credit">{% if item.image.credit_url %}<a href="{{ item.image.credit_url }}" target="_blank" rel="noopener">{{ item.image.credit }}</a>{% else %}{{ item.image.credit }}{% endif %}</p>

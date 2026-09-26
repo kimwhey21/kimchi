@@ -314,6 +314,24 @@ def _attach_section_photos(narrative: list | None, price_data: dict, date_str: s
     return used
 
 
+def _share_section_photos(ko_narrative: list, en_narrative: list, price_data: dict, date_str: str,
+                          upload: bool = True, exclude_ids: set[str] | None = None) -> None:
+    """영어판 본문 사진. 절 수가 같으면 같은 절에 한국어판 사진을 그대로 쓴다(같은 날 같은 이야기).
+
+    그 복사로 채워지지 않은 영어 명세(`{"ticker": ...}`)는 한국어판과 같은 규칙으로 고른다(2026-09-26).
+    전에는 절 수가 다르면 복사를 통째로 건너뛰어 명세가 그대로 남았고, 템플릿이 `<img src="">`를 찍었다 —
+    us 9/14는 한국어 10절·영어 9절이라 영어판 MU 절의 사진 자리가 비었다. 풀은 날짜와 제외 목록으로
+    고르므로 같은 종목이면 한국어판과 같은 사진이 나온다. 맞는 사진이 없으면 photo를 지운다.
+    """
+    if len(en_narrative) == len(ko_narrative):
+        for ko_section, en_section in zip(ko_narrative, en_narrative):
+            if ko_section.get("photo"):
+                en_section["photo"] = ko_section["photo"]
+    pending = [s for s in en_narrative if isinstance(s.get("photo"), dict) and not s["photo"].get("url")]
+    if pending:
+        _attach_section_photos(pending, price_data, date_str, upload=upload, exclude_ids=exclude_ids)
+
+
 def _count_visuals(ko: dict) -> tuple[int, int, int]:
     graphics = sum(1 for s in ko.get("narrative") or [] if (s.get("graphic") or {}).get("url"))
     photos = sum(1 for s in ko.get("narrative") or [] if (s.get("photo") or {}).get("url"))
@@ -492,11 +510,10 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
         upload=not render_only,
         exclude_ids={cover_photo["id"]} if cover_photo else None,
     )
-    if en and en.get("narrative") and len(en["narrative"]) == len(ko.get("narrative") or []):
-        # 영어판은 같은 절에 같은 사진·그래픽을 씁니다(같은 날 같은 이야기).
-        for ko_section, en_section in zip(ko["narrative"], en["narrative"]):
-            if ko_section.get("photo"):
-                en_section["photo"] = ko_section["photo"]
+    if en and en.get("narrative"):
+        _share_section_photos(ko.get("narrative") or [], en["narrative"], price_data, date_str,
+                              upload=not render_only,
+                              exclude_ids={cover_photo["id"]} if cover_photo else None)
     ko["insight_section"] = _attach_story_images(
         ko.get("insight_section"), price_data, date_str,
         upload=not render_only,

@@ -74,5 +74,39 @@ class TemplateTest(unittest.TestCase):
         self.assertNotIn('<img class="mb-figure"', html)     # 스타일시트의 .mb-figure는 그대로 있다
 
 
+class EnglishPhotoTest(unittest.TestCase):
+    """us 9/14: 한국어 10절·영어 9절이라 사진 복사가 통째로 건너뛰어 영어 MU 절이 `<img src="">`였다(2026-09-26)."""
+
+    US_0914 = json.loads((ROOT / "editorial" / "us_2026-09-14.json").read_text(encoding="utf-8"))
+
+    def test_unequal_sections_still_resolve_english_photo_specs(self) -> None:
+        doc = json.loads(json.dumps(self.US_0914))
+        ko, en = doc["ko"]["narrative"], doc["en"]["narrative"]
+        self.assertNotEqual(len(ko), len(en))                     # 버그가 난 모양 그대로
+        publish_editorial._share_section_photos(ko, en, doc["price_data"], "2026-09-14", upload=False)
+        for section in en:
+            photo = section.get("photo")
+            self.assertTrue(photo is None or photo.get("url"), photo)   # 명세만 남은 절이 없다
+        self.assertTrue(any((s.get("photo") or {}).get("url") for s in en), "MU는 코어 종목이라 풀 사진이 있다")
+
+    def test_equal_sections_copy_korean_photos(self) -> None:
+        ko = [{"photo": {"id": "p1", "url": "https://x/p1.jpg"}}, {"photo": None}]
+        en = [{"photo": {"ticker": "MU"}}, {}]
+        with mock.patch.object(publish_editorial, "_attach_section_photos") as attach:
+            publish_editorial._share_section_photos(ko, en, {}, "2026-09-14", upload=False)
+        self.assertEqual(en[0]["photo"]["url"], "https://x/p1.jpg")
+        attach.assert_not_called()
+
+    def test_photo_or_story_image_without_url_prints_no_tag(self) -> None:
+        generated = json.loads(json.dumps(self.US_0914["en"]))
+        for section in generated["narrative"]:
+            section["graphic"] = None
+        for story in (generated.get("insight_section") or {}).get("stories") or []:
+            story["image"] = {"alt": "no url"}
+        html = render_html.render("us", "2026-09-14", self.US_0914["price_data"], generated, lang="en")
+        self.assertNotIn('src=""', html)
+        self.assertNotIn('<img class="mb-story-photo"', html)
+
+
 if __name__ == "__main__":
     unittest.main()
