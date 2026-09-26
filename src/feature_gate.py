@@ -56,6 +56,10 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     ko = doc.get("ko") or doc
     blocking = []
     notes: list[str] = []
+    if not str(doc.get("series") or "").strip():
+        # 시리즈 칸이 없으면 머리말·태그·관문은 기준표(Checkpoint)로 보는데 발행은 공개로 올린다(2026-09-26 점검) —
+        # 한국어 Checkpoint가 본진에 공개로 나가고 알림까지 갈 수 있으므로 커밋 전에 막는다.
+        blocking.append("series가 없습니다 — \"기준표\"·\"프리뷰\"·\"가이드\"·\"Guide\" 등 시리즈를 적으십시오.")
     if path is not None and str(doc.get("series") or "") != "매거진":
         # 글 주소(2026-09-26): 한글이 섞였거나 비면 발행이 멈춘다 — 커밋 전에 여기서 먼저 막는다.
         from src import publish_feature

@@ -254,9 +254,8 @@ LIVE_STATUS = {"프리뷰": "private", "기준표": "private",
 
 
 def _live_status(doc: dict) -> str:
-    # 시리즈 칸이 빠진 원고는 머리말·태그·관문처럼 기준표(Checkpoint)로 본다(2026-09-26) — 전에는 여기만 "publish"로
-    # 떨어져, 관문은 Checkpoint로 통과시키고 발행은 공개로 올리며 텔레그램·스레드 알림까지 나갈 수 있었다.
-    return LIVE_STATUS.get(str(doc.get("series") or "기준표"), "publish")
+    # 시리즈 칸이 빠진 원고는 관문(`feature_gate`)이 커밋 전에 막는다(2026-09-26). 이 표 자체는 사장님이 정한 대로 둔다.
+    return LIVE_STATUS.get(str(doc.get("series") or ""), "publish")
 
 
 def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:

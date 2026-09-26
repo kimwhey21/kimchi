@@ -11,7 +11,7 @@ class FeatureGateWiringTest(unittest.TestCase):
         # 출처 검사는 mock으로 막지 않습니다 — 이 검사가 게이트에 실제로 걸려
         # 있는지가 이 테스트의 관심사이기도 합니다. 그래서 본문에 출처를 넣어
         # 통과시키고, 빠졌을 때 막는지는 아래 테스트가 봅니다.
-        doc = {"ko": {"title": "제목",
+        doc = {"series": "기준표", "ko": {"title": "제목",
                       "narrative": [{"heading": "1.", "body":
                           "트렌드포스 전망입니다. 모건스탠리가 상향했습니다. "
                           "관세청 통계도 같습니다."}],

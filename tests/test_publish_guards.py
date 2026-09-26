@@ -58,9 +58,11 @@ class RetryTest(unittest.TestCase):
 
 
 class SeriesTest(unittest.TestCase):
-    def test_missing_series_is_treated_as_checkpoint(self) -> None:
-        self.assertEqual(publish_feature._live_status({}), publish_feature.LIVE_STATUS["기준표"])
-        self.assertEqual(publish_feature._live_status({"series": "Guide"}), "publish")
+    def test_missing_series_is_blocked_before_commit(self) -> None:
+        from src import feature_gate
+        with self.assertRaises(feature_gate.FeatureGateError) as ctx:
+            feature_gate.run({"ko": {"title": "제목", "narrative": []}}, graphics=0)
+        self.assertIn("series가 없습니다", str(ctx.exception))
 
 
 if __name__ == "__main__":
