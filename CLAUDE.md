@@ -317,8 +317,9 @@
   시황은 절 3~5·900~2,200자(분량을 늘리는 것이 목적이 아니라 겹침을 없애는 것이 목적이다). 25자 이상 같은 문장이 있으면 관문이
   막는다 — 기준표 계열은 `feature_gate`, 시황은 `editorial_gate`. 루틴 지시문은 `docs/routine_common.md`의 「네이버용 본문」 절이고,
   규칙을 바꾸면 그 문서도 같이 고친다. **전문이 가는 글은 본진과 같은 차례다 — 표지 → 본문 → Fermata's Take → 다음 확인 지점.** **표지는 원고에 `featured_photo.url`
-  사진이 있으면 그 사진이다**(Checkpoint·프리뷰·가이드·주간·이벤트 전부, 2026-09-26 — 그전에는 잡지만 사진이고 나머지는 전부 같은
-  남색·베이지 cover 그래픽이었다). 맥의 `naver_sync.render`가 `00-photo-cover.jpg`로 내려받고 `blogger_post`는 원본 주소를 쓴다.
+  사진이 있으면 그 사진이 먼저 가고, 남색·베이지 cover 그래픽은 그 다음에 그대로 간다**(Checkpoint·프리뷰·가이드·주간·이벤트 전부,
+  2026-09-26 — 그전에는 잡지만 사진이고 나머지는 전부 틀뿐이었다. 틀은 9/8에 사장님이 여섯 안 중 고른 것이라 빼지 않는다; 사진과
+  틀 중 무엇을 남길지는 사장님이 정한다). 맥의 `naver_sync.render`가 `00-photo-cover.jpg`로 내려받고 `blogger_post`는 원본 주소를 쓴다.
   Take를 두 문장만 뽑아 맨 위 인용구로 올리는 것은 **요약본**의 규칙이다. `tests/test_naver_post.py`가 양쪽을 다 고정한다.
 - **Checkpoint도 본진에는 비공개로만 올라가고 네이버에 본문 전문이 나간다.** 프리뷰와 같은 처리다 — `publish_feature.LIVE_STATUS`에
   `"기준표": "private"` 한 줄. 성적표의 본진 주소는 네이버 주소로 갈아 끼운다(`scripts/scoreboard_naver_urls.py`가 빈 칸을 채울 뿐

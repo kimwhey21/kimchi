@@ -77,5 +77,6 @@ class PhotoCoverForEverySeriesTest(unittest.TestCase):
             result = blogger_post.render(path, graphics, upload=False)
             html = result["html"]
             self.assertIn("images.unsplash.com/photo-abc", html)
-            self.assertEqual(html.count("<img"), 1, html)          # 사진 한 장뿐, cover 그래픽은 안 나간다
+            self.assertEqual(html.count("<img"), 2, html)          # 사진 → 남색·베이지 틀 순으로 둘 다 간다(사장님 2026-09-26)
+            self.assertLess(html.find("images.unsplash.com/photo-abc"), html.find("01-cover.png"))
             self.assertLess(html.find("<img"), html.find("비중이 답이다"))

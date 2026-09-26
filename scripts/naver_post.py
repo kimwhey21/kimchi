@@ -208,6 +208,16 @@ def _cover(graphics_dir: Path | None) -> str | None:
     return None
 
 
+def _template_cover(graphics_dir: Path | None, photo: str) -> str | None:
+    """사진 표지(`00-photo-cover.jpg`) 뒤에 붙일 cover 그래픽(`01-cover.png`) — 사진이 아닌 cover 파일 중 첫 것."""
+    if not graphics_dir or not Path(graphics_dir).exists():
+        return None
+    for f in sorted(glob.glob(str(graphics_dir / "*.png")) + glob.glob(str(graphics_dir / "*.jpg"))):
+        if "cover" in Path(f).name and f != photo and "photo-cover" not in Path(f).name:
+            return f
+    return None
+
+
 # 네이버 제목은 **앞자리가 곧 검색 매칭 자리**다(2026-09-13, 사장님 "왜 네이버에서 검색해도 안 나오냐" 조사).
 # 실측: 네이버에 올린 18편 중 여덟 편이 "투자 체크포인트:"로 시작했는데 아무도 그 말로 검색하지 않는다.
 # 게다가 모바일 검색 결과는 제목을 30자 안팎에서 자르므로, 종목·지수 이름이 뒤로 밀리면 검색어와 겹칠 기회 자체가 없다.
@@ -294,6 +304,12 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     cover = _cover(graphics_dir)
     if cover:
         blocks.append(("img", cover))
+        if "photo-cover" in Path(cover).name:
+            # 원고의 Unsplash 사진이 첫 그림일 때도 남색·베이지 cover 그래픽은 그 다음에 그대로 간다(2026-09-26, 사장님:
+            # "남색베이지 틀도 우리 그때 당시 엄선했던 작품이다 함부로 버릴수 없다"). 사진과 틀 중 무엇을 남길지는 사장님이 정한다.
+            template = _template_cover(graphics_dir, cover)
+            if template:
+                blocks.append(("img", template))
     take = _plain((ko.get("closing") or {}).get("body", ""))
     magazine = doc.get("series") == "매거진"
     preview = doc.get("series") == "프리뷰"

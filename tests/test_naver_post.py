@@ -170,4 +170,5 @@ class PhotoCoverTest(unittest.TestCase):
         post = naver_post.build(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json"), tmp)
         imgs = [b[1] for b in post["blocks"] if b[0] == "img"]
         self.assertEqual(imgs[0], str(tmp / "00-photo-cover.jpg"))
-        self.assertNotIn(str(tmp / "01-cover.png"), imgs)          # 남색·베이지 틀은 사진이 있으면 빠진다
+        self.assertEqual(imgs[1], str(tmp / "01-cover.png"))       # 남색·베이지 틀은 사진 다음에 그대로 간다(사장님 2026-09-26)
+        self.assertEqual(imgs.count(str(tmp / "01-cover.png")), 1)
