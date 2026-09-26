@@ -56,6 +56,13 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     ko = doc.get("ko") or doc
     blocking = []
     notes: list[str] = []
+    if path is not None and str(doc.get("series") or "") != "매거진":
+        # 글 주소(2026-09-26): 한글이 섞였거나 비면 발행이 멈춘다 — 커밋 전에 여기서 먼저 막는다.
+        from src import publish_feature
+        try:
+            publish_feature._slug(doc, Path(path))
+        except ValueError as exc:
+            blocking.append(f"주소 — {exc}")
     if str(doc.get("lang") or "ko") == "en":
         # 영어 가이드(2026-09-12): 한국어 문체·제목 문법 검사는 맞지 않는다. 영어 전용 검사 + 출처 수만 막는다.
         blocking.extend(feature_checks.collect_issues_en(doc, graphics=graphics))

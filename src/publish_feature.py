@@ -85,8 +85,18 @@ def _kicker(doc: dict) -> str:
 
 
 def _slug(doc: dict, path: Path) -> str:
-    value = doc.get("slug") or path.stem
-    return re.sub(r"[^a-z0-9-]+", "-", str(value).lower()).strip("-")
+    """글 주소. 영문 소문자·숫자·하이픈만 — 한글이 섞였거나 비면 멈춘다(2026-09-26).
+
+    전에는 영문 밖의 글자를 지우고 넘어가서 `"삼성전자-목표주가"`는 빈 주소가, `"samsung-목표가"`는 `samsung`이 됐다.
+    빈 주소로 기존 글을 찾으면 워드프레스가 조건을 무시하고 최근 글을 돌려줘 **그 글을 덮어쓸** 수 있었다.
+    """
+    value = str(doc.get("slug") or path.stem)
+    if re.search(r"[^A-Za-z0-9_\-]", value):
+        raise ValueError(f"slug {value!r}에 영문 소문자·숫자·하이픈 밖의 글자가 있습니다 — 영문으로 적으십시오.")
+    slug = re.sub(r"[^a-z0-9-]+", "-", value.lower()).strip("-")
+    if not slug:
+        raise ValueError(f"slug가 비었습니다({value!r}).")
+    return slug
 
 
 def _seo_lead(doc: dict) -> str:
@@ -244,7 +254,9 @@ LIVE_STATUS = {"프리뷰": "private", "기준표": "private",
 
 
 def _live_status(doc: dict) -> str:
-    return LIVE_STATUS.get(str(doc.get("series") or ""), "publish")
+    # 시리즈 칸이 빠진 원고는 머리말·태그·관문처럼 기준표(Checkpoint)로 본다(2026-09-26) — 전에는 여기만 "publish"로
+    # 떨어져, 관문은 Checkpoint로 통과시키고 발행은 공개로 올리며 텔레그램·스레드 알림까지 나갈 수 있었다.
+    return LIVE_STATUS.get(str(doc.get("series") or "기준표"), "publish")
 
 
 def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:

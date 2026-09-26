@@ -15,6 +15,7 @@ import re
 import sys
 import time
 import hashlib
+import json
 from pathlib import Path
 
 import requests
@@ -30,13 +31,37 @@ RETRY_STATUS = {502, 503, 504}
 RETRY_BACKOFF_SECONDS: tuple[float, ...] = (3, 8)
 
 
-def _request(method: str, url: str, **kwargs):
-    """`requests.get/post`를 감싸 5xx·연결 오류에 두 번까지 다시 시도합니다."""
+class _Found:
+    """재시도 전에 이미 만들어진 것을 찾았을 때 돌려주는 응답 흉내 — 호출한 쪽은 평소처럼 `.json()`을 읽는다."""
+
+    status_code = 201
+
+    def __init__(self, data: dict):
+        self._data = data
+        self.text = json.dumps(data, ensure_ascii=False)[:500]
+
+    def json(self) -> dict:
+        return self._data
+
+
+def _request(method: str, url: str, *, before_retry=None, **kwargs):
+    """`requests.get/post`를 감싸 5xx·연결 오류에 두 번까지 다시 시도합니다.
+
+    `before_retry`(2026-09-26): 새 글·새 그림을 **만드는** 요청은 서버가 저장을 마친 뒤 502나 시간 초과가 날 수 있어,
+    그대로 다시 보내면 같은 글이 두 편 생긴다(워드프레스는 두 번째를 `-2` 주소로 만든다). 다시 보내기 전에 이 함수로
+    "이미 있나"를 묻고, 있으면 그것을 결과로 돌려준다. 고치기·읽기 요청은 같은 결과가 나오므로 넘기지 않는다.
+    """
     waits = (0, *RETRY_BACKOFF_SECONDS)
     response = None
     for attempt, wait in enumerate(waits):
         if wait:
             time.sleep(wait)
+            if before_retry is not None:
+                found = before_retry()
+                if found:
+                    print(f"[안내] {method.upper()} {url}: 다시 보내기 전에 확인하니 이미 만들어져 있어 그것을 씁니다 "
+                          f"(id={found.get('id')})", file=sys.stderr)
+                    return _Found(found)
         last = attempt == len(waits) - 1
         try:
             response = getattr(requests, method)(url, **kwargs)
@@ -319,7 +344,13 @@ def _get_post_by_id(base_url: str, auth: tuple[str, str], post_id: int) -> dict 
 def _find_existing_post_by_slug(
     base_url: str, auth: tuple[str, str], slug: str
 ) -> dict | None:
-    """재실행 때 같은 글을 새로 만들지 않도록 고정 slug의 기존 글을 찾습니다."""
+    """재실행 때 같은 글을 새로 만들지 않도록 고정 slug의 기존 글을 찾습니다.
+
+    빈 slug로 물으면 워드프레스가 조건을 무시하고 가장 최근 글을 돌려준다 — 그 글을 덮어쓰게 되므로 멈춘다(2026-09-26).
+    돌려받은 글의 slug가 다르면 없는 것으로 본다.
+    """
+    if not str(slug or "").strip():
+        raise WordPressPublishError("빈 slug로 기존 글을 찾으려 했습니다 — 아무 글이나 덮어쓸 수 있어 멈춥니다.")
     response = _request("get", 
         f"{base_url}/wp-json/wp/v2/posts",
         auth=auth,
@@ -336,6 +367,8 @@ def _find_existing_post_by_slug(
             f"기존 초안 확인 실패 (HTTP {response.status_code}): {response.text[:500]}"
         )
     posts = response.json()
+    if posts and str(posts[0].get("slug")) != str(slug):
+        return None
     return posts[0] if posts else None
 
 
@@ -403,8 +436,20 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
                 if f"market-brief-sha256:{digest}" in description:
                     return int(media["id"])
 
+        def _uploaded_already() -> dict | None:
+            # 파일명에 해시 앞 12자가 들어가므로, 응답을 놓친 업로드도 제목으로 찾을 수 있다(설명은 아직 안 붙었다).
+            found = _request("get", f"{base_url}/wp-json/wp/v2/media", auth=auth,
+                             params={"search": digest[:12], "per_page": 20, "context": "edit"}, timeout=TIMEOUT_SECONDS)
+            if found.status_code >= 400:
+                return None
+            for media in found.json():
+                if digest[:12] in str(media.get("source_url", "")):
+                    return media
+            return None
+
         upload = _request("post", 
             f"{base_url}/wp-json/wp/v2/media",
+            before_retry=_uploaded_already,
             auth=auth,
             headers={
                 "Content-Disposition": f'attachment; filename="{filename}"',
@@ -670,6 +715,7 @@ def publish_draft(
     endpoint = f"{base_url}/wp-json/wp/v2/posts"
     response = _request("post", 
         endpoint,
+        before_retry=(lambda: _find_existing_post_by_slug(base_url, auth, slug)) if slug else None,
         auth=auth,
         params={"lang": lang} if lang else None,
         json=payload,

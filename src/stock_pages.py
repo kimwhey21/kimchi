@@ -310,9 +310,16 @@ RETRY_WAITS = (8, 20, 45, 90)
 WRITE_PAUSE = 1.5
 
 
-def _request(method: str, url: str, **kwargs) -> requests.Response:
+def _request(method: str, url: str, before_retry=None, **kwargs) -> requests.Response:
+    """5xx·연결 오류에 기다렸다 다시. `before_retry`는 새 페이지를 만들 때만 — 다시 보내기 전에 "이미 생겼나"를 물어
+    있으면 그것을 결과로 쓴다(2026-09-26). 저장을 마친 뒤 502가 나면 같은 페이지가 `-2` 주소로 하나 더 생기기 때문이다."""
     last = None
-    for wait in (*RETRY_WAITS, None):
+    for attempt, wait in enumerate((*RETRY_WAITS, None)):
+        if attempt and before_retry is not None:
+            found = before_retry()
+            if found:
+                print(f"    {url.rsplit('/', 1)[-1]}: 다시 보내기 전에 확인하니 이미 있습니다(id={found.get('id')})")
+                return publish_wordpress._Found(found)
         try:
             response = requests.request(method, url, timeout=TIMEOUT, **kwargs)
             if response.status_code < 500:
@@ -349,7 +356,8 @@ def upsert_page(base: str, auth: tuple[str, str], slug: str, title: str, html: s
         action = f"갱신 (상태 {page.get('status')})"
     else:
         body.update({"slug": slug, "status": "publish" if live else "draft"})
-        response = _request("POST", f"{base}/wp-json/wp/v2/pages", auth=auth, json=body)
+        response = _request("POST", f"{base}/wp-json/wp/v2/pages", auth=auth, json=body,
+                            before_retry=lambda: _find_page(base, auth, slug))
         action = "새로 만듦 (공개)" if live else "새로 만듦 (임시저장)"
     if response.status_code >= 400:
         raise StockPagesError(f"{slug} 저장 실패 (HTTP {response.status_code}): {response.text[:300]}")
