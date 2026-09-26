@@ -5303,7 +5303,7 @@
             [
               "10-year Treasury yield",
               "Break above 5%",
-              "Intraday 5.01%, closed 4.96% (reversed)"
+              "5.01% intraday → 4.96% close"
             ]
           ],
           "source": "TradingKey, Bloomberg, CNBC"
