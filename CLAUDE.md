@@ -354,6 +354,10 @@
   요구하지 않는다. **영어 가이드("Guide")만 본진에 공개다.** 본진의 가이드·Weekly·Checkpoint 탭은 2026-09-26에 뺐다(위
   「본진은 영어 사이트다」). 되돌리려면 `LIVE_STATUS` 네 줄을 지우고 `naver_post`의 `full_body = not magazine`을 옛 조건으로 되돌린다.
   본진에 다시 (비공개로) 올리려면 `publish_feature.KO_TO_WORDPRESS`·`publish_editorial.KO_DAILY_TO_WORDPRESS`를 `True`로.
+  **본진에서 사라진 한국어 글 주소는 사본으로 301 이동한다**(2026-09-26 — 구글이 색인해 둔 28쪽이 404였다). Code Snippets 13번이
+  **404일 때만** 움직이고, 표는 이 맥의 `~/.market-brief-google/redirect_sync.py`가 만든다(블로그스팟 사본 → 네이버 사본 → 옛
+  시황은 같은 날 영어판, 한국어 목록은 블로그스팟 이름표 목록). `blogger_sync`가 글을 올릴 때마다 다시 돌려 네이버로 보내던
+  주소를 블로그스팟으로 바꾼다. 13번 조각을 손으로 고치지 말 것 — 다음 실행이 덮어쓴다.
   **시황 블로그(fermata49) 게시는 2026-09-26부터 멈춰 있다**(사장님 결정 — 검색 0/62, 이용제한 고객센터에 문의). 스위치는 이 맥의
   `~/.market-brief-naver/fermata49_pause.json` 하나이고 `naver_sync`가 읽는다(잡지는 그대로 올라간다). 그동안 한국어 원고는
   블로그스팟에만 나가고, 텔레그램·스레드 알림은 **블로그스팟 주소로** 나간다 — 맥의 `blogger_sync`가 올린 직후
