@@ -206,7 +206,7 @@
 - 핵심 셋: **제목에 결론을 넣지 않는다**(읽기 전에 답을 알면 누를 이유가 없다), **시각자료 최소 6장**(벤치마크 중앙값 10장),
   **본문에 확인 날짜를 박는다**(글의 수명이 그날까지 늘어난다).
 - **독자에게 보이는 이름은 Checkpoint다.** 내부 키(`series: 기준표`)는 그대로 두고 화면에 나가는 곳만 — 워드프레스 분류
-  Checkpoint(id 432)와 홈 탭, 글 머리말 `Checkpoint · N월 N일까지 확인할 것`(원고 최상위 `deadline`, 관문이 확인), 표지 kicker.
+  Checkpoint(id 432), 글 머리말 `Checkpoint · N월 N일까지 확인할 것`(원고 최상위 `deadline`, 관문이 확인), 표지 kicker.
   제목 글자에 라벨을 넣지 않는다 — 대신 확인 날짜를 제목에 넣는 것이 기본이다.
 - **제목·소제목 규칙은 `docs/editorial-style.md` 「제목 문법」·「소제목」 하나이고 모든 글(시황·기준표·프리뷰·가이드)에 같다.
   검사도 `src/editorial_title.py` 하나다.** 글 종류별로 규칙을 따로 두지 말 것.
@@ -261,8 +261,8 @@
   `all --market us`에 들어 있다.
 - **주말 편성**: 토 10:00 KST 「주간 결산」(`docs/routine_week_review.md`, `editorial/weekly/review_<토요일>.json`, 시리즈 "주간 결산")과
   일 20:00 KST 「다음 주 일정」(`docs/routine_week_ahead.md`, `editorial/weekly/ahead_<일요일>.json`, 시리즈 "다음 주 일정")은 기준표
-  파이프라인을 그대로 쓰고 `weekly_publish.yml`이 **바로 공개**한다. 분류는 Weekly(id 433, 목록 페이지 `/weekly/`, 홈 탭; 네이버에도
-  같은 이름). 지수·종목·환율·금리 숫자는 `python -m scripts.weekly_stats`에서만 온다 — 검색 결과의 등락률을 옮겨 적지 않는다.
+  파이프라인을 그대로 쓰고 `weekly_publish.yml`이 **바로 공개**한다. 분류는 Weekly(id 433; 네이버에도 같은 이름 — 본진의 `/weekly/`
+  목록과 탭은 2026-09-26에 없앴다). 지수·종목·환율·금리 숫자는 `python -m scripts.weekly_stats`에서만 온다 — 검색 결과의 등락률을 옮겨 적지 않는다.
   그래픽은 `number_cards`·`movers_list`에 `"period": "week"`를 넣어 달력 주간 등락으로 그린다. 문턱은 주간 결산 절 5·시각자료 4·출처 2,
   다음 주 일정 절 4·시각자료 3·출처 2. 머리말은 최상위 `period`로 `주간 결산 · 9월 7일~11일`. 거래일 3일 미만인 주는 결산을 쓰지
   않는다. 지난주 판정(맞음·빗나감)은 이 글에 넣지 않는다 — 사용자가 아직 정하지 않았다.
@@ -336,19 +336,20 @@
   Take를 두 문장만 뽑아 맨 위 인용구로 올리는 것은 **요약본**의 규칙이다. `tests/test_naver_post.py`가 양쪽을 다 고정한다.
 - **Checkpoint도 본진에는 올리지 않고 네이버에 본문 전문이 나간다.** 프리뷰와 같은 처리다 — `publish_feature.LIVE_STATUS`의
   `"기준표": "private"` 줄이 한국어 글 표시이고 `KO_TO_WORDPRESS`가 업로드를 건너뛴다.
-- **홈·목록의 Checkpoint 탭은 네이버 블로그 카테고리로 간다.** 탭은 그대로 두고 `href`만
-  `https://blog.naver.com/fermata49?Redirect=Category&categoryNo=6`으로 바꿨다(`target="_blank"`). 고친 곳은 **페이지 6개(76 daily·77
-  guides·105 all·1047 checkpoint·1439 weekly·1610 guide) + `twentytwentyfive//home` 템플릿** — 이 일곱이 탭 줄이 복제돼 있는 전부다
-  `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
-  줄로 접혀야 가로가 넘치지 않는다. `/checkpoint/` 페이지의 `query-no-results` 블록은 네이버 안내이고 목록이 다시 채워지면 저절로
-  사라진다. 네이버 카테고리 번호는 추측하지 말고 `PostList.naver?blogId=fermata49`를 받아 `categoryNo=`로 확인한다(시황 1·Checkpoint
-  6·가이드 7·Weekly 8).
+- **본진은 영어 사이트다**(2026-09-26, 사장님: "온전히 영어사이트로 탈바꿈하자" → "남기고 1~5번 진행해"). 탭은 All·Daily·Guides
+  셋이고, 탭 줄이 복제돼 있는 곳은 **페이지 3개(76 daily·77 guides·105 all) + `twentytwentyfive//home` 템플릿** 넷이다(네이버로 가던
+  Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은 없앴다). `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
+  줄로 접혀야 가로가 넘치지 않는다. 사이트 언어 설정(`ko_KR`)과 태그라인은 REST로 바꾸면 200이 오고도 그대로여서(원인 미확인)
+  **방문자 화면만 영어로 만드는 Code Snippets 12번**(`locale`→`en_US`, 태그라인 필터 — 관리자 화면과 사장님 계정은 한국어)이 맡는다.
+  날짜 형식은 `F j, Y`, 템플릿에 글자로 저장된 문구(Previous·Next·By 등)도 영어다. 한국어 소개·연락처·개인정보처리방침(697·698·226)은
+  페이지는 남기고 메뉴에서만 뺐다. 네이버 카테고리 번호는 추측하지 말고 `PostList.naver?blogId=fermata49`를 받아 `categoryNo=`로
+  확인한다(시황 1·Checkpoint 6·가이드 7·Weekly 8).
 - **한국어 글은 전부 본진에 없고 네이버 전문이다**(2026-09-22 비공개로, 2026-09-26부터는 아예 올리지 않는다 — 사장님 결정:
   네이버가 한국어 주력, 올려 두던 비공개 85편은 휴지통). 시황·프리뷰·Checkpoint에
   이어 **한국어 가이드·주간 결산·다음 주 일정·이벤트**도 같은 처리다 — `publish_feature.LIVE_STATUS`에 네 줄, `naver_post`는 잡지를
   뺀 모든 글을 `ko.narrative` 전문·링크 없음으로 옮기고, `feature_checks.NAVER_FULL_ENDED`(2026-09-23)부터 네이버용 본문(`naver`)을
-  요구하지 않는다. **영어 가이드("Guide")만 본진에 공개다.** 가이드·Weekly 탭도 네이버 카테고리 7·8로 간다(Checkpoint 탭과 같은
-  방식, 같은 일곱 곳). 되돌리려면 `LIVE_STATUS` 네 줄을 지우고 `naver_post`의 `full_body = not magazine`을 옛 조건으로 되돌린다.
+  요구하지 않는다. **영어 가이드("Guide")만 본진에 공개다.** 본진의 가이드·Weekly·Checkpoint 탭은 2026-09-26에 뺐다(위
+  「본진은 영어 사이트다」). 되돌리려면 `LIVE_STATUS` 네 줄을 지우고 `naver_post`의 `full_body = not magazine`을 옛 조건으로 되돌린다.
   본진에 다시 (비공개로) 올리려면 `publish_feature.KO_TO_WORDPRESS`·`publish_editorial.KO_DAILY_TO_WORDPRESS`를 `True`로.
 - **블로그스팟(fermata49.blogspot.com, "Fermata 매거진")은 구글용 한국어 창구다**(2026-09-25). 새 글을 쓰지 않고 원고를 그대로
   옮긴다 — 잡지·한국어 가이드·Checkpoint(확인 날짜가 안 지난 것)·주간 결산·다음 주 일정·이벤트 전부, 시황·프리뷰는 2026-09-25
