@@ -213,6 +213,16 @@
   </div>
   {% endif %}
 
+  {% if guides and lang == "en" %}
+  <div class="mb-related mb-guides">
+    <p class="mb-related-label">Guides for foreign investors</p>
+    <ul class="mb-related-list">
+      {% for item in guides %}<li><a href="{{ item.url }}">{{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
   {% if related %}
   <div class="mb-related">
     <p class="mb-related-label">{{ "Previous close" if lang == "en" else "지난 거래일 시황" }}</p>

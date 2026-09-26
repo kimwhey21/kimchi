@@ -145,5 +145,45 @@ class EnglishCreditTest(unittest.TestCase):
         self.assertIn("사진: Un ragazzo chiamato Bi / 플리커", render_html.render("us", "2026-09-14", doc["price_data"], ko))
 
 
+class GuideLinkTest(unittest.TestCase):
+    """영어 시황 → 영어 가이드 내부 링크(2026-09-26). 그전에는 시황에서 가이드로 가는 링크가 0개였다."""
+
+    def test_candidates_follow_the_story(self) -> None:
+        pick = lambda name: [g["slug"] for g in publish_editorial._guide_candidates(
+            json.loads((ROOT / "editorial" / f"{name}.json").read_text(encoding="utf-8"))["en"])]
+        self.assertEqual(pick("kr_2026-09-23")[0], "korea-market-holidays-2026")   # 추석 직전 거래일
+        self.assertIn("sk-hynix-vs-micron", pick("us_2026-09-14")[:2])              # 마이크론 급락일
+        self.assertEqual(publish_editorial._guide_candidates({"title": "x", "narrative": []}), [])
+
+    def test_only_live_published_guides_are_linked(self) -> None:
+        en = json.loads((ROOT / "editorial" / "kr_2026-09-23.json").read_text(encoding="utf-8"))["en"]
+        def find(base, auth, slug):
+            if slug == "korea-market-holidays-2026":
+                return {"status": "draft", "title": {"rendered": "x"}, "link": "https://s/x/"}
+            return {"status": "publish", "title": {"rendered": f"T &amp; {slug}"}, "link": f"https://s/{slug}/"}
+        env = {"WORDPRESS_URL": "https://s", "WORDPRESS_USERNAME": "u", "WORDPRESS_APP_PASSWORD": "p"}
+        with mock.patch.dict("os.environ", env), \
+                mock.patch.object(publish_editorial.publish_wordpress, "is_configured", return_value=True), \
+                mock.patch.object(publish_editorial.publish_wordpress, "_find_existing_post_by_slug", side_effect=find):
+            links = publish_editorial._guide_links(en)
+        self.assertLessEqual(len(links), publish_editorial.GUIDE_LINKS)
+        self.assertNotIn("https://s/x/", [l["url"] for l in links])          # 초안은 링크하지 않는다
+        self.assertTrue(links and links[0]["title"].startswith("T & "))      # 살아 있는 제목, 엔티티 풀림
+
+    def test_not_configured_means_no_links(self) -> None:
+        with mock.patch.object(publish_editorial.publish_wordpress, "is_configured", return_value=False):
+            self.assertEqual(publish_editorial._guide_links({"title": "KOSPI"}), [])
+
+    def test_block_renders_in_english_only(self) -> None:
+        doc = EnglishPhotoTest.US_0914
+        guides = [{"title": "SK Hynix vs Micron", "url": "https://fermata.it.kr/sk-hynix-vs-micron/"}]
+        en_html = render_html.render("us", "2026-09-14", doc["price_data"], json.loads(json.dumps(doc["en"])),
+                                     lang="en", guides=guides)
+        self.assertIn("Guides for foreign investors", en_html)
+        self.assertIn('href="https://fermata.it.kr/sk-hynix-vs-micron/"', en_html)
+        ko_html = render_html.render("us", "2026-09-14", doc["price_data"], json.loads(json.dumps(doc["ko"])), guides=guides)
+        self.assertNotIn("Guides for foreign investors", ko_html)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import html as html_lib
 import json
 import os
 import re
@@ -392,6 +393,71 @@ def _previous_price_data(market: str, date_str: str) -> dict | None:
     return json.loads(files[-1].read_text(encoding="utf-8"))
 
 
+GUIDE_LINKS = 3
+_GUIDE_TAG_TAIL = re.compile(r"\s+(stock|stocks)$")
+
+
+def _guide_candidates(en: dict) -> list[dict]:
+    """영어 시황 본문에 걸리는 영어 가이드를 점수순으로(2026-09-26, 사장님 SEO '1번 진행').
+
+    영어 시황은 매일 새로 크롤링되는 글이고, 검색어로 순위를 다투는 것은 가이드다 — 시황에서 가이드로
+    링크를 보내야 가이드가 힘을 받는다. 그전에는 시황에서 가이드로 가는 링크가 0개였다(9/26 실측).
+    가이드 원고의 `tags`(검색어)가 시황 본문에 나오면 점수를 준다. 여러 가이드에 흔한 꼬리표(KOSPI·
+    Korea Exchange)는 가볍게 — 1/(그 꼬리표를 가진 가이드 수). 고르는 것까지만 하고 살아 있는지는 따로 본다.
+    """
+    guides: dict[str, dict] = {}
+    for path in sorted((ROOT / "editorial" / "guides").glob("en_*.json")):
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        slug = str(doc.get("slug") or "")
+        if doc.get("lang") != "en" or not slug:
+            continue
+        tags = {_GUIDE_TAG_TAIL.sub("", str(t).strip().lower()) for t in doc.get("tags") or [] if str(t).strip()}
+        entry = guides.setdefault(slug, {"slug": slug, "title": (doc.get("ko") or {}).get("title") or "", "tags": set()})
+        entry["tags"] |= tags
+    df: dict[str, int] = {}
+    for g in guides.values():
+        for tag in g["tags"]:
+            df[tag] = df.get(tag, 0) + 1
+    parts = [str(en.get("title") or "")]
+    for section in en.get("narrative") or []:
+        parts += [str(section.get("heading") or ""), str(section.get("body") or "")]
+    text = " ".join(parts).lower()
+    scored = []
+    for g in guides.values():
+        hits = [t for t in g["tags"] if re.search(r"(?<![a-z0-9])" + re.escape(t) + r"(?![a-z0-9])", text)]
+        score = sum(1 / df[t] for t in hits)
+        if score > 0:
+            scored.append((round(score, 4), g["slug"], g))
+    scored.sort(key=lambda row: (-row[0], row[1]))
+    return [g for _, _, g in scored]
+
+
+def _guide_links(en: dict | None, limit: int = GUIDE_LINKS) -> list[dict]:
+    """고른 가이드 가운데 **공개 상태로 살아 있는 것**만, 살아 있는 제목으로. 설정이 없거나 조회가 실패하면 빈 목록 —
+    링크는 있으면 좋은 것이지 발행 조건이 아니다(`_previous_daily_post`와 같은 원칙). 못 찾은 수는 찍는다."""
+    if not en or not publish_wordpress.is_configured():
+        return []
+    base = os.environ["WORDPRESS_URL"].rstrip("/")
+    auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
+    out, missed = [], 0
+    for guide in _guide_candidates(en):
+        if len(out) >= limit:
+            break
+        try:
+            post = publish_wordpress._find_existing_post_by_slug(base, auth, guide["slug"])
+        except Exception as exc:  # noqa: BLE001 - 링크 하나 때문에 발행을 막지 않음
+            print(f"[안내] 가이드 링크 조회 실패({guide['slug']}): {exc!r}", file=sys.stderr)
+            missed += 1
+            continue
+        if not post or post.get("status") != "publish":
+            missed += 1
+            continue
+        title = html_lib.unescape(post["title"]["rendered"]).strip() or guide["title"]
+        out.append({"title": title, "url": post["link"]})
+    print(f"[안내] 영어 가이드 링크 {len(out)}개" + (f" (못 찾은 것 {missed}개)" if missed else ""))
+    return out
+
+
 def _previous_daily_post(market: str, date_str: str, lang: str) -> dict | None:
     """전 거래일 같은 시장·같은 언어 시황 글을 찾습니다(내부 링크용, 2026-09-06 추가).
 
@@ -555,6 +621,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
         html_en = render_html.render(
             market, date_str, price_data, en, lang="en", market_label=market_label_en,
             related=[related_en] if related_en else None,
+            guides=_guide_links(en),
         )
         (OUTPUT_DIR / f"{market}_{date_str}_editorial_en.html").write_text(
             html_en, encoding="utf-8"

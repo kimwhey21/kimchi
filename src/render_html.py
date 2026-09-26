@@ -198,6 +198,7 @@ def render(
     market_label: str | None = None,
     subscribe_form_action: str | None = None,
     related: list[dict] | None = None,
+    guides: list[dict] | None = None,
 ) -> str:
     generated = _localize_credits(generated, lang)
     macro_cards = [_to_card(v, lang, date_str) for v in price_data["macro"].values()]
@@ -268,4 +269,5 @@ def render(
         meta_description=meta_description,
         subscribe_form_action=subscribe_form_action,
         related=related or [],
+        guides=guides or [],
     )
