@@ -1,0 +1,287 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-26",
+  "checked": "2026-09-26",
+  "slug": "korea-market-holidays-2026",
+  "category_id": 153,
+  "tags": [
+    "Korea stock market holidays",
+    "KRX holidays 2026",
+    "KOSPI",
+    "KOSDAQ",
+    "Korea Exchange"
+  ],
+  "radar_origin": "search queue: kospi holiday",
+  "related": [
+    {
+      "title": "KOSPI Trading Hours: 09:00-15:30, Now Until 8 p.m.",
+      "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know/"
+    },
+    {
+      "title": "Korea Dividend Record Date: What Changed in 2026, and What Hasn't",
+      "url": "https://fermata.it.kr/korea-dividend-calendar/"
+    },
+    {
+      "title": "How to Buy Korean Stocks From the US or Canada (2026)",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    }
+  ],
+  "ko": {
+    "title": "Korea Stock Market Holidays 2026: Every KRX Closed Trading Day",
+    "narrative": [
+      {
+        "heading": "The short answer: KRX is closed 17 weekdays in 2026",
+        "body": "The Korea Exchange trades Monday through Friday, and in 2026 it sits closed on 17 of those weekdays — the highest count in years. Two of the 17 are not on any prior calendar: a nationwide local election on June 3, and Constitution Day on July 17, reinstated as a public holiday for the first time in 18 years. <b>Korea Exchange</b> confirmed both closures directly, and <b>Korea Times</b> reported that the market — KOSPI, KOSDAQ, KONEX, the ETF, ETN and ELW markets, the bond and repo markets, the KRX Startup Market, and the derivatives and commodities markets covering oil and gold — all shut on both dates.\n\nIf you are used to the roughly 9 to 10 U.S. market holidays a year, 17 will look like a lot. Some of that gap is real — Korea observes more national holidays than the U.S. does — and some of it is 2026 being an unusually crowded year, between the election and the restored holiday landing in the same twelve months.\n\nThe rest of this guide lays out the full calendar, explains the two additions that are new this year, and covers the two counterintuitive edges of the schedule: a day the market closes even though offices stay open, and a day offices close while the market keeps trading."
+      },
+      {
+        "heading": "The full 2026 calendar, month by month",
+        "body": "The year opens with New Year's Day on Thursday, January 1, and the market's first trading day, January 2, opens an hour late — 10:00 a.m. for the securities market and 9:45 a.m. for derivatives — to make room for the exchange's annual opening ceremony. February brings the year's longest closure: Seollal, the Lunar New Year, closes the market for three straight weekdays, February 16 through 18.\n\nSpring adds four more closed days. March 2 is Independence Movement Day, observed a day late because March 1 falls on a Sunday. May carries three: Labor Day on May 1, Children's Day on May 5, and Buddha's Birthday, observed on May 25 because the actual date falls on a Sunday. Then come the two dates unique to 2026, covered in the next section: the local election on June 3 and Constitution Day on July 17.\n\nAugust closes on the 17th for Liberation Day, observed late because August 15 lands on a Saturday. September brings the second long closure of the year: Chuseok, the harvest festival, closes the market on both Thursday, September 24 and Friday, September 25 (the holiday period itself runs into the following weekend). October closes twice — National Foundation Day, observed on October 5 because October 3 is a Saturday, and Hangeul Day on October 9. The year ends with Christmas on December 25 and the market's own year-end closure on December 31."
+      },
+      {
+        "heading": "Two additions unique to 2026: an election and a reinstated holiday",
+        "body": "June 3, 2026 is election day for South Korea's nationwide local elections, and <b>Korea Exchange</b> announced it would close the securities, derivatives and general commodities markets — including oil and gold — for the day, with night trading on the evening of June 2 running normally beforehand. This is not a standing annual closure; it recurs only when a national or local election falls on a weekday.\n\nJuly 17 is the more unusual case. Constitution Day marks the 1948 promulgation of South Korea's constitution and was a public holiday until 2008, when it was dropped amid concerns that the five-day workweek, adopted in 2004, already left companies with enough non-working days. <b>Korea Herald</b> reported that the Act on Public Holidays was revised and passed by the National Assembly on Thursday, January 29, 2026, restoring the holiday after 18 years — momentum that built after President Lee Jae Myung raised the issue at a senior secretaries' meeting on July 17, 2025. The change lifts the country's total official non-working days for the year from 118 to 119.\n\nKorea Exchange treated the restored holiday exactly like any other: markets shut on July 17, with night derivatives trading on the evening of July 16 proceeding as usual beforehand. Neither addition is guaranteed to recur — the next nationwide local elections are not until 2030, and Constitution Day now stands as a permanent fixture only if the 2026 amendment holds."
+      },
+      {
+        "heading": "Not every public holiday closes the market, and the reverse also happens",
+        "body": "Two dates on the 2026 calendar cut against the intuition that market holidays and public holidays are the same list. Labor Day, May 1, is not one of the legal public holidays that close government offices, courts or schools in Korea — it is a paid rest day under the labor law for employees, not a red-letter day on the official holiday regulation. The stock market closes anyway, because Korea Exchange sets its own trading calendar and has chosen to observe it as a full closure regardless.\n\nMemorial Day, June 6, runs the other way: it is a public holiday that closes government offices and schools, and it is not on Korea Exchange's list of market closures at all. Trading proceeds as normal.\n\nDecember 31 is a third case worth knowing on its own terms. It is not a public holiday of any kind — it is a market-specific year-end closure that Korea Exchange sets so that settlement and back-office processes can close out the trading year cleanly, with the last trading day falling on December 30 instead. None of these three exceptions are new for 2026; they recur every year and are simply easy to miss if you are working from a general Korean public-holiday calendar rather than the exchange's own list."
+      },
+      {
+        "heading": "Substitute holidays, and a calendar that moves every year",
+        "body": "Four of the 2026 closures are not on their holiday's usual date at all. Korea's substitute-holiday rule shifts a holiday to the next working day when it falls on a weekend, so Independence Movement Day (March 1, a Sunday in 2026) is observed on March 2, Buddha's Birthday (May 24, a Sunday) on May 25, Liberation Day (August 15, a Saturday) on August 17, and National Foundation Day (October 3, a Saturday) on October 5. Plan around the observed date, not the date printed on the holiday's usual calendar square, and expect the substitute dates to move again next year as the weekday alignment changes.\n\nSeollal and Chuseok move even more, because they follow the lunar calendar rather than the Gregorian one. Seollal fell in late January in 2025 and lands in mid-February in 2026; Chuseok moves by roughly ten to eleven days most years and can shift by a full month across a longer span. A closure schedule built from one year's dates will not carry over to the next, and a holiday cluster that misses your own country's calendar this year can land right on top of it the next."
+      },
+      {
+        "heading": "What this means if you are trading from outside Korea",
+        "body": "The practical planning problem is less about any single closed day and more about clusters. Seollal (February 16 to 18) and Chuseok (September 24 to 25, running into the weekend) each close the market for the better part of a week when weekends are counted in, which matters because Korean equity trades settle on a T+2 basis — a sale does not turn into usable proceeds until two business days later, and a market holiday does not count as one of those days. A trade placed right before a multi-day closure settles later, by the calendar, than the same trade placed on an ordinary week. The worked example in the next section walks through exactly how much later.\n\nThe other date worth flagging on your own calendar is January 2 itself: the securities market's 10:00 a.m. open, an hour later than its normal 9:00 a.m. start, is easy to miss if you assume the new trading year opens on the usual schedule. For the rest of the year's session times, price limits and circuit breakers — including the one annual case where the market opens late for a reason that has nothing to do with a holiday — see our guide to Korea's trading hours and volatility halts."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Korea's 2026 market calendar has 17 closed weekdays, two of them new this year: a nationwide local election on June 3 and Constitution Day on July 17, reinstated after 18 years off the books. Four more are substitute holidays shifted off a weekend date, and two — Labor Day and the December 31 year-end closure — close the market on days that are not public holidays at all, while Memorial Day runs the other way and leaves the market open.\n\nThe dates that actually change your plans are the multi-day clusters — Seollal in February and Chuseok in September — where T+2 settlement can push proceeds out by most of a week, not the individual single-day closures.\n\nThis guide describes Korea Exchange's 2026 trading calendar as confirmed as of September 2026. Holiday dates and any additional temporary closures are set by Korea Exchange itself; confirm the current calendar on the exchange's own site before you plan a trade around it. This is not investment advice."
+    }
+  },
+  "insight_section": {
+    "heading": "Two things worth working through before a holiday closes the market",
+    "stories": [
+      {
+        "heading": "The paper trail behind Constitution Day's comeback",
+        "body": "Constitution Day's return to the calendar was not a sudden announcement — it moved through the same legislative steps any other change to Korea's holiday law would. <b>Korea Herald</b> traced the amendment to the Act on Public Holidays passing the National Assembly on Thursday, January 29, 2026, months after President Lee Jae Myung raised the idea publicly on July 17, 2025 — Constitution Day's own date, the previous year.\n\nThe reason it left the calendar in the first place is worth remembering too: in 2008, with the five-day workweek only a few years old, the government judged that companies already carried enough non-working days and dropped Constitution Day specifically, rather than trimming a more recent addition. Eighteen years later, the calculus reversed, and the same category of concern — the total count of non-working days — is now cited as evidence the change is modest: one added day, 118 to 119 for the year.",
+        "icon": "scale",
+        "image_query": "Seoul National Assembly building",
+        "table": [
+          {
+            "label": "Public holiday until",
+            "value": "2007 (removed in 2008)"
+          },
+          {
+            "label": "Years off the calendar",
+            "value": "18"
+          },
+          {
+            "label": "Act amended",
+            "value": "Act on Public Holidays"
+          },
+          {
+            "label": "Passed National Assembly",
+            "value": "January 29, 2026"
+          },
+          {
+            "label": "2026 non-working days",
+            "value": "118 → 119"
+          }
+        ]
+      },
+      {
+        "heading": "A T+2 settlement worked example across the Chuseok closure",
+        "body": "Say a U.S.-based investor sells a Korean stock on Wednesday, September 23, 2026, the last ordinary trading day before that year's Chuseok closure. Settlement is T+2 — two business days after the trade — but a business day skips both weekends and market holidays, and 2026's Chuseok closes the market on Thursday the 24th and Friday the 25th, immediately followed by the weekend of the 26th and 27th.\n\nCount it out: the two business days after September 23 are not September 24 and 25 — both are closed — nor the 26th and 27th, both weekend days. The first two business days actually available are Monday, September 28 and Tuesday, September 29, so proceeds that would ordinarily post on a Friday instead post on the following Tuesday, six calendar days later. The same trade placed a week earlier, clear of the holiday cluster, would have settled in the ordinary two calendar days.\n\nNone of this is unique to Chuseok — Seollal in February works the same way, and so would any run of consecutive closures. The rule to carry away is not a date, it is the method: count forward in business days, not calendar days, and treat every multi-day closure on the calendar above as a reason to check the settlement date before you assume your proceeds are free to redeploy.",
+        "icon": "coin",
+        "image_query": "calendar and clock",
+        "table": [
+          {
+            "label": "Trade date",
+            "value": "Wed, Sep 23, 2026"
+          },
+          {
+            "label": "Sep 24–25",
+            "value": "Closed — Chuseok"
+          },
+          {
+            "label": "Sep 26–27",
+            "value": "Closed — weekend"
+          },
+          {
+            "label": "Settlement (T+2 business days)",
+            "value": "Tue, Sep 29, 2026"
+          },
+          {
+            "label": "Calendar days elapsed",
+            "value": "6, not 2"
+          }
+        ]
+      }
+    ]
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea Exchange closes for 17 weekdays in 2026, two of them new this year",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea Stock Market Holidays 2026",
+        "left": {
+          "label": "KRX closures in 2026",
+          "value": "17 days"
+        },
+        "right": {
+          "label": "New this year",
+          "value": "2 closures"
+        }
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "All 17 Korea Exchange closed trading days in 2026, with dates and weekdays",
+      "args": {
+        "title": "Korea Exchange closed trading days, 2026",
+        "subtitle": "17 weekdays, KOSPI and KOSDAQ",
+        "columns": [
+          "Holiday",
+          "Date",
+          "Weekday"
+        ],
+        "rows": [
+          [
+            "New Year's Day",
+            "Jan 1",
+            "Thu"
+          ],
+          [
+            "Seollal (day before)",
+            "Feb 16",
+            "Mon"
+          ],
+          [
+            "Seollal",
+            "Feb 17",
+            "Tue"
+          ],
+          [
+            "Seollal (day after)",
+            "Feb 18",
+            "Wed"
+          ],
+          [
+            "Independence Movement Day (obs.)",
+            "Mar 2",
+            "Mon"
+          ],
+          [
+            "Labor Day",
+            "May 1",
+            "Fri"
+          ],
+          [
+            "Children's Day",
+            "May 5",
+            "Tue"
+          ],
+          [
+            "Buddha's Birthday (obs.)",
+            "May 25",
+            "Mon"
+          ],
+          [
+            "Local election day",
+            "Jun 3",
+            "Wed"
+          ],
+          [
+            "Constitution Day",
+            "Jul 17",
+            "Fri"
+          ],
+          [
+            "Liberation Day (obs.)",
+            "Aug 17",
+            "Mon"
+          ],
+          [
+            "Chuseok (day before)",
+            "Sep 24",
+            "Thu"
+          ],
+          [
+            "Chuseok",
+            "Sep 25",
+            "Fri"
+          ],
+          [
+            "National Foundation Day (obs.)",
+            "Oct 5",
+            "Mon"
+          ],
+          [
+            "Hangeul Day",
+            "Oct 9",
+            "Fri"
+          ],
+          [
+            "Christmas Day",
+            "Dec 25",
+            "Fri"
+          ],
+          [
+            "Year-end closure",
+            "Dec 31",
+            "Thu"
+          ]
+        ],
+        "source": "Korea Exchange",
+        "note": "\"(obs.)\" marks a substitute holiday, observed a day after the actual date because the holiday fell on a weekend."
+      },
+      "section": 2
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things a general Korean holiday calendar will not tell you about KRX closures",
+      "args": {
+        "title": "Before you plan a trade around a 2026 holiday",
+        "subtitle": "What a general Korean holiday calendar leaves out",
+        "items": [
+          {
+            "label": "The market closure list is not the public holiday list",
+            "why": "Labor Day and December 31 close the market without being public holidays; Memorial Day is a public holiday but the market stays open."
+          },
+          {
+            "label": "Settlement counts business days, not calendar days",
+            "why": "A trade placed right before Seollal or Chuseok can settle up to a week later than the same trade any other week."
+          },
+          {
+            "label": "This exact calendar will not repeat next year",
+            "why": "Substitute holidays and the lunar dates for Seollal and Chuseok both move every year — recheck before assuming a date carries over."
+          }
+        ]
+      },
+      "section": 6
+    }
+  ],
+  "sources": [
+    {
+      "name": "Korea Exchange",
+      "title": "Korea Exchange to close markets on June 3 and July 17, 2026",
+      "url": "https://en.sedaily.com/finance/2026/05/20/korea-exchange-to-close-on-local-election-day-constitution"
+    },
+    {
+      "name": "Korea Times",
+      "title": "Korean stock markets to close on June 3 for local elections",
+      "url": "https://www.koreatimes.co.kr/business/banking-finance/20260520/korean-stock-markets-to-close-on-june-3-for-local-elections"
+    },
+    {
+      "name": "Korea Herald",
+      "title": "Extra long weekend in July, as Constitution Day reinstated as public holiday",
+      "url": "https://www.koreaherald.com/article/10665867"
+    }
+  ]
+}
