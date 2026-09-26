@@ -31,6 +31,33 @@ _NAN_RETRY_DELAYS = (10, 30, 60, 120)
 _NAN_RETRY_ATTEMPTS = len(_NAN_RETRY_DELAYS) + 1
 
 
+def previous_close(historical_prev: float, last_close: float, quote_metadata: dict | None) -> float:
+    """등락률의 분모가 될 직전 종가.
+
+    Yahoo 일봉 이력에는 드물게 직전 거래일 한 줄이 빠집니다. 2026-08-31에는 주요 지수와 DE의 8/28 값이 누락돼
+    8/27 대비 등락률이 계산됐습니다. 메타데이터의 previousClose는 이 경우에도 실제 직전 종가를 주므로,
+    regularMarketPrice가 마지막 일봉과 일치할 때 우선 씁니다.
+
+    **예외(2026-09-26): 그 사이에 장이 없었던 날.** 채권만 쉬는 날(콜럼버스 데이·재향군인의 날)이나 휴장 뒤 재실행에서는
+    메타데이터의 previousClose가 마지막 종가와 같게 나와 등락률이 0.00%가 됩니다 — 9/04 파일의 ^TNX가 -0.0으로 찍혔는데
+    일봉으로는 4.762→4.784(+0.46%)였습니다. 메타데이터 직전 종가가 마지막 종가와 같은데 일봉으로는 움직임이 있으면,
+    메타데이터가 '오늘 장이 없었다'는 뜻이므로 일봉을 믿습니다. 진짜 보합인 날은 둘 다 같아서 어느 쪽이든 0입니다.
+    """
+    try:
+        metadata_last = float((quote_metadata or {}).get("regularMarketPrice"))
+        metadata_prev = float((quote_metadata or {}).get("previousClose"))
+    except (TypeError, ValueError, KeyError):
+        # 메타데이터가 없는 종목은 기존 일봉 계산으로 안전하게 폴백합니다.
+        return historical_prev
+    tolerance = max(0.02, abs(last_close) * 0.001)
+    if not (math.isfinite(metadata_last) and math.isfinite(metadata_prev) and metadata_prev != 0):
+        return historical_prev
+    if abs(metadata_last - last_close) > tolerance:
+        return historical_prev
+    no_session = abs(metadata_prev - last_close) <= tolerance < abs(historical_prev - last_close)
+    return historical_prev if no_session else metadata_prev
+
+
 def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_yield: bool = False,
                 unit: str = "", **_ignore) -> dict:
     """종목/지수 하나의 최근 시세를 가져와 카드에 필요한 형태로 정리합니다."""
@@ -76,27 +103,7 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
     # 과거처럼 10으로 나누면 4.758%가 0.48%로 잘못 표시됩니다.
 
     historical_prev, last_close = closes[-2], closes[-1]
-    prev_close = historical_prev
-
-    # Yahoo 일봉 이력에는 드물게 직전 거래일 한 줄이 빠집니다. 2026-08-31에는
-    # 주요 지수와 DE의 8/28 값이 누락돼 8/27 대비 등락률이 계산됐습니다.
-    # 메타데이터의 previousClose는 이 경우에도 실제 직전 종가를 제공하므로,
-    # regularMarketPrice가 마지막 일봉과 일치할 때 우선 사용합니다.
-    try:
-        metadata_last = float(quote_metadata.get("regularMarketPrice"))
-        metadata_prev = float(quote_metadata.get("previousClose"))
-        tolerance = max(0.02, abs(last_close) * 0.001)
-        if (
-            math.isfinite(metadata_last)
-            and math.isfinite(metadata_prev)
-            and metadata_prev != 0
-            and abs(metadata_last - last_close) <= tolerance
-        ):
-            prev_close = metadata_prev
-    except (TypeError, ValueError, KeyError):
-        # 메타데이터가 없는 종목은 기존 일봉 계산으로 안전하게 폴백합니다.
-        pass
-
+    prev_close = previous_close(historical_prev, last_close, quote_metadata)
     change_pct = (last_close - prev_close) / prev_close * 100
 
     return {

@@ -277,7 +277,9 @@ def cover_history(entry: dict | None, market: str, date_str: str,
         if past_date < LRU_START:
             picked = photo_pool.pick(lead, past_date, photos=photo_pool.pool_as_of(past_date, photos))
         else:
-            picked = photo_pool.pick(lead, past_date, photos=photos, history=history)
+            # 그 날짜의 보관함으로 고른다(2026-09-26). 지금 보관함을 쓰면 나중에 더한 사진이 그날 쓰인 것처럼 잡혀,
+            # 사진을 더한 다음 날 방금 쓴 사진이 또 걸린다.
+            picked = photo_pool.pick(lead, past_date, photos=photo_pool.pool_as_of(past_date, photos), history=history)
         if picked:
             history.append(picked["id"])
     return history
@@ -302,6 +304,18 @@ def _photo_for(price_data: dict, doc: dict | None, date_str: str, market: str | 
     except photo_pool.PhotoPoolError as error:
         print(f"[경고] 사진 보관함을 쓰지 못해 데이터 그래픽으로 갑니다: {error}")
         return None
+
+
+def cover_photo(price_data: dict, doc: dict | None, date_str: str, market: str) -> dict | None:
+    """그날 표지에 **실제로** 붙는 사진 — `create`와 같은 계산. 표지가 그래픽인 날은 None.
+
+    본문·인사이트 사진이 표지 사진과 겹치지 않게 뺄 때 쓴다(2026-09-26). 전에는 `_photo_for`를 `market` 없이 불러
+    날짜로 고른 사진을 뺐는데, 표지는 LRU_START부터 "가장 오래 안 쓴 사진"이라 둘이 어긋났고, 표지가 그래픽인 날에도
+    사진 하나를 괜히 뺐다.
+    """
+    if choose_layout(price_data, doc, date_str) != "photo":
+        return None
+    return _photo_for(price_data, doc, date_str, market)
 
 
 def _lead_for(price_data: dict, doc: dict | None) -> dict | None:

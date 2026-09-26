@@ -477,7 +477,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
     # 순서를 맞춰 재사용합니다(같은 소재에 다른 사진이 붙지 않게, 그리고
     # Unsplash 호출을 두 배로 늘리지 않게).
     # 표지가 풀 사진을 쓰는 날은 그 사진을 본문에서 다시 쓰지 않습니다.
-    cover_photo = featured_image._photo_for(price_data, ko, date_str)
+    cover_photo = featured_image.cover_photo(price_data, ko, date_str, market)
     used_photos = _attach_section_photos(
         ko.get("narrative"), price_data, date_str,
         upload=not render_only,

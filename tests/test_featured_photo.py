@@ -185,3 +185,45 @@ class CoverHistoryTest(unittest.TestCase):
                 picks.append(photo_pool.pick(samsung, date, history=history)["id"])
                 self._manuscript(folder, "kr", date, "삼성전자가 끌어올린 장")
             self.assertEqual(len(set(picks)), 9, picks)
+
+    def test_adding_a_photo_does_not_repeat_yesterdays_cover(self) -> None:
+        """사진을 더한 다음 날 방금 쓴 사진이 또 걸리면 안 된다(2026-09-26 검토).
+
+        LRU 구간의 지난 날도 **그 날짜의 보관함**으로 다시 골라야 이력이 실제로 나간 표지와 같다. 지금 보관함으로 고르면
+        새 사진이 지난 날에 쓰인 것처럼 잡혀, 실제로 쓴 사진이 이력에서 빠지고 다음 날 또 나왔다.
+        """
+        samsung = {"ticker": "005930", "name": "삼성전자", "sector": "반도체"}
+        before = photo_pool.load()
+        key = photo_pool.candidate_ids(samsung, before)
+        template = next(p for p in before if p["id"] == key[0])
+        # 새 사진이 후보 순서의 맨 앞에 와야 옛 버그가 드러난다(검토자 재현: pool {b, c}에 a를 더함).
+        new = dict(template, id="semi-aaa-added-later", added="2026-09-30")
+        after = [new] + before
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            actual = []
+            for date in ("2026-09-28", "2026-09-29"):
+                history = featured_image.cover_history(samsung, "kr", date, editorial_dir=folder, photos=before)
+                actual.append(photo_pool.pick(samsung, date, photos=before, history=history)["id"])
+                self._manuscript(folder, "kr", date, "삼성전자가 끌어올린 장")
+            history = featured_image.cover_history(samsung, "kr", "2026-09-30", editorial_dir=folder, photos=after)
+            self.assertEqual(history, actual)
+            today = photo_pool.pick(samsung, "2026-09-30", photos=after, history=history)["id"]
+            self.assertNotIn(today, actual)
+
+
+
+class CoverPhotoTest(unittest.TestCase):
+    """본문 사진에서 뺄 '표지 사진'은 표지가 실제로 쓴 사진이어야 한다(2026-09-26)."""
+
+    def test_graphic_cover_days_exclude_nothing(self) -> None:
+        doc = {"title": "삼성전자와 SK하이닉스가 함께 올랐습니다"}      # 둘을 부르면 trio 그래픽 표지
+        self.assertEqual(featured_image.choose_layout(PRICE, doc, "2026-09-28"), "trio")
+        self.assertIsNone(featured_image.cover_photo(PRICE, doc, "2026-09-28", "kr"))
+
+    def test_photo_cover_days_match_the_cover(self) -> None:
+        doc = {"title": "삼성전자가 끌어올린 장"}
+        if featured_image.choose_layout(PRICE, doc, "2026-09-28") != "photo":
+            self.skipTest("이 시세로는 사진 표지가 아닙니다")
+        expected = featured_image._photo_for(PRICE, doc, "2026-09-28", "kr")
+        self.assertEqual(featured_image.cover_photo(PRICE, doc, "2026-09-28", "kr")["id"], expected["id"])

@@ -152,7 +152,9 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
     graphics, photos, story_photos = 0, 0, 0
     rendered: list[str] = []
     watchlist = price_data.get("watchlist") or {}
-    used: set[str] = set()
+    # 표지에 실제로 붙는 사진은 본문·인사이트에서 다시 쓰지 않는다(2026-09-26) — 네이버 표지도 같은 그림이다.
+    cover = featured_image.cover_photo(price_data, ko, date_str, market)
+    used: set[str] = {cover["id"]} if cover else set()
     for index, section in enumerate(ko.get("narrative") or [], start=1):
         spec = section.get("graphic")
         if isinstance(spec, dict) and spec.get("kind"):
