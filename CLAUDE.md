@@ -354,10 +354,14 @@
   요구하지 않는다. **영어 가이드("Guide")만 본진에 공개다.** 본진의 가이드·Weekly·Checkpoint 탭은 2026-09-26에 뺐다(위
   「본진은 영어 사이트다」). 되돌리려면 `LIVE_STATUS` 네 줄을 지우고 `naver_post`의 `full_body = not magazine`을 옛 조건으로 되돌린다.
   본진에 다시 (비공개로) 올리려면 `publish_feature.KO_TO_WORDPRESS`·`publish_editorial.KO_DAILY_TO_WORDPRESS`를 `True`로.
+  **시황 블로그(fermata49) 게시는 2026-09-26부터 멈춰 있다**(사장님 결정 — 검색 0/62, 이용제한 고객센터에 문의). 스위치는 이 맥의
+  `~/.market-brief-naver/fermata49_pause.json` 하나이고 `naver_sync`가 읽는다(잡지는 그대로 올라간다). 그동안 한국어 원고는
+  블로그스팟에만 나가고, 네이버 주소로 보내던 텔레그램·스레드 알림도 나가지 않는다. 다시 켤 때는 `"paused": false`와
+  `"resume_from"` 날짜를 적는다 — 멈춘 동안 쌓인 글을 한꺼번에 올리지 않는다.
 - **블로그스팟(fermata49.blogspot.com, "Fermata 매거진")은 구글용 한국어 창구다**(2026-09-25). 새 글을 쓰지 않고 원고를 그대로
   옮긴다 — 잡지·한국어 가이드·Checkpoint(확인 날짜가 안 지난 것)·주간 결산·다음 주 일정·이벤트 전부, 시황·프리뷰는 2026-09-25
   이후 것만(디스커버 4주 시험). 영어 가이드는 본진과 겹치므로 올리지 않는다. 렌더는 `scripts/blogger_post.py`(네이버와 같은
-  블록 → HTML, 그림은 본진 미디어에 멱등 업로드, 잡지 표지는 Unsplash 주소, 글 끝 고정 줄: 네이버 이웃·텔레그램,
+  블록 → HTML, 그림은 본진 미디어에 멱등 업로드, 잡지 표지는 Unsplash 주소, 글 끝 고정 줄: 텔레그램(시황 블로그 이웃 추가 줄은 게시 멈춤과 함께 뺐다),
   잡지는 퍼플썸 네이버로만 안내하고 페르마타 이름을 쓰지 않는다), 올리기는 이 맥의 `~/.market-brief-google/blogger_sync.py`
   (launchd `kr.it.fermata.bloggersync`, 10분, 하루 10편 상한, 공개 스위치 `~/.market-brief-google/blogger_publish_on`이 있을 때만
   게시, 같은 크롬 프로필을 쓰는 작업이 돌면 건너뜀). 블로거 설정은 네이버 봇 `Yeti` 차단(맞춤 robots.txt)·자료실/검색 페이지

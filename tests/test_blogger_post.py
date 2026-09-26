@@ -40,7 +40,7 @@ class BloggerPostTest(unittest.TestCase):
             path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
             result = blogger_post.render(path, None, upload=False)
         self.assertIn("가이드 · 2026년 9월 20일 확인", result["html"])
-        self.assertIn(blogger_post.NAVER_FERMATA, result["html"])
+        self.assertNotIn(blogger_post.NAVER_FERMATA, result["html"])  # 시황 블로그 게시 멈춤(2026-09-26) — 새 글이 안 가는 곳으로 안내하지 않는다
         self.assertIn(blogger_post.TELEGRAM, result["html"])
         self.assertNotIn("/stocks/", result["html"])          # 종목 페이지는 2026-09-26에 없앴다
         self.assertNotIn("종목 페이지", result["html"])
