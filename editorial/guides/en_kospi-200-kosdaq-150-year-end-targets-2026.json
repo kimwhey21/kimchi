@@ -75,13 +75,13 @@
         "subtitle": "Each firm's KOSPI Composite year-end target, not a KOSPI 200 figure",
         "columns": ["Date", "Firm", "Prior target", "New target"],
         "rows": [
-          ["Jan 7", "Korea Investment & Securities", "4,600", "5,650"],
-          ["Feb 27", "Morgan Stanley (base / bull)", "5,200 / 6,000", "6,500 / 7,500"],
+          ["Jan 7", "Korea Investment", "4,600", "5,650"],
+          ["Feb 27", "Morgan Stanley", "5,200 / 6,000", "6,500 / 7,500"],
           ["May 14", "KB Securities", "7,500", "10,500"],
           ["Jun 17", "Daishin Securities", "8,800", "11,500"]
         ],
         "source": "Herald Corp, Hankyung, WowTV Korea, Munhwa Ilbo and Sedaily reports of each firm's research note, Jan–Jun 2026",
-        "note": "KOSPI Composite closed at 7,017.91 on September 22, 2026 — above the January and February targets, below the May and June ones."
+        "note": "Morgan Stanley figures are base / bull cases. KOSPI Composite closed at 7,017.91 on September 22, 2026 — above the January and February targets, below the May and June ones."
       },
       "section": 3
     },
@@ -107,7 +107,7 @@
   ],
   "sources": [
     {"name": "Korea Exchange", "title": "KOSPI 200 (Global KRX product page)", "url": "https://global.krx.co.kr/contents/GLB/02/0202/0202010101/GLB0202010101.jsp"},
-    {"name": "Herald Corp (biz.heraldcorp.com)", "title": "생생 증식션360 — Korea Investment & Securities raises KOSPI target to 5,650", "url": "https://biz.heraldcorp.com/article/10650335"},
+    {"name": "Herald Corp (biz.heraldcorp.com)", "title": "Korea Investment & Securities raises KOSPI target to 5,650", "url": "https://biz.heraldcorp.com/article/10650335"},
     {"name": "Hankyung", "title": "Morgan Stanley raises KOSPI target to 6,500, bull case 7,500", "url": "https://www.hankyung.com/article/2026022795536"},
     {"name": "Nate News", "title": "JPMorgan, Nomura, Morgan Stanley: 'KOSPI 7,500 possible'", "url": "https://m.news.nate.com/view/20260227n20952"},
     {"name": "Bloomingbit", "title": "KB Securities sets KOSPI target at 10,500", "url": "https://en.bloomingbit.io/feed/news/112141"},
