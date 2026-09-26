@@ -150,10 +150,11 @@ class ValuationContextTest(unittest.TestCase):
         self.assertEqual(self._us(
             "하락한 쪽에서는 디어(-2.13%)가 두드러졌습니다. 디어는 FWD PER 29.5배로 목표주가 대비로는 "
             "2.8%밖에 안 남아, 시장이 이미 그 가격을 상당 부분 인정하고 있다는 뜻입니다."), [])
-        # 창(뒤 45자) 안에 'PER·목표주가'가 있으면 앞 괄호의 숫자도 대조하지 않습니다 — 틀린 -9.99%를
-        # 놓치는 쪽을 택한 것입니다(확실할 때만 실패시킨다). 창 밖이면 잡습니다(아래 window 테스트).
-        missed = self._us("하락한 쪽에서는 디어(-9.99%)가 두드러졌습니다. 디어는 FWD PER 29.5배로 목표주가 대비로는 2.8%밖에 안 남았습니다.")
-        self.assertEqual(missed, [])
+        # 2026-09-25에는 창(뒤 45자)이 다음 문장의 'PER·목표주가'까지 닿아 앞 괄호의 틀린 -9.99%를 놓쳤다. 2026-09-26부터
+        # 건너뛰기 판정을 **그 문장 안**에서만 하므로, 다른 문장의 밸류에이션 낱말은 앞 문장의 숫자를 끄지 않는다 — 잡는다.
+        caught = self._us("하락한 쪽에서는 디어(-9.99%)가 두드러졌습니다. 디어는 FWD PER 29.5배로 목표주가 대비로는 2.8%밖에 안 남았습니다.")
+        self.assertEqual(len(caught), 1, caught)
+        self.assertIn("9.99%", caught[0])
 
     def test_target_price_chain_in_parentheses_is_skipped(self) -> None:
         """9/22 본문 9: 앞 괄호의 '목표주가까지'가 뒤 종목의 괄호 숫자까지 설명합니다."""

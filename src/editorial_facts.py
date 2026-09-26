@@ -94,7 +94,7 @@ _POINT_UNIT = re.compile(r"\s*(?:포인트|p(?![A-Za-z]))")
 # "CBC뉴스는 오전 9시 44분 기준으로 삼성중공업 1.55% 상승을 전했습니다" 같은
 # 인용은 좋은 원고에서 흔하고, 이걸 실패로 잡으면 검사가 쓸모없어집니다.
 _INTRADAY = re.compile(
-    r"(장중|오전|오후|시각|\d+시\s*\d*분|기준으로|현재|한때|출발|시가|intraday|as of|morning"
+    r"(장중|오전|오후|시각|\d+시\s*\d*분|기준으로|현재|한때|출발|시가(?!총)|intraday|as of|morning"
     r"|afternoon|opened|by midday)",
     re.IGNORECASE,
 )
@@ -133,6 +133,89 @@ _TITLE_LIKE = ("제목", "본문 소제목")
 
 
 _TAG = re.compile(r"<[^>]+>")
+
+# ── 2026-09-26 점검에서 나온 네 구멍 ────────────────────────────────────────────────────────────────
+# ① 방향: 크기만 보고 부호는 안 봐서 "삼성전자 2.70% 하락"(실제 +2.70%)이 통과했다. 숫자 **바로 뒤**(한국어)·**바로 앞**
+#    (영어)의 등락 낱말이나 숫자 앞 부호가 시세와 반대일 때만 막는다 — 떨어진 곳의 낱말은 다른 종목 이야기일 수 있다.
+# ② 남의 숫자: 그날 **어느 종목이든** 그만큼 움직였으면 통과시켜 옆 종목과 숫자가 뒤바뀐 문장이 나갔을 것이다. 이제
+#    **같은 문장에 이름·티커가 나온** 종목의 숫자일 때만 넘어간다("각각 0.20%, 1.05%"는 그대로 통과).
+# ③ 건너뛰기 창이 문장·문단을 넘었다: 다음 문단의 "장중"이 앞 문장의 숫자 검사를 껐다. 창을 **그 문장 안**으로 자른다.
+# ④ 이름을 낱말 속에서 찾았다: "소셜미디어"의 '디어'(Deere)를 잡아 맞는 글을 막고, '미디어'만 있어도 Deere를 다뤘다고 봤다.
+#    이름 앞이 글자면 이름으로 보지 않고, 영어 이름은 뒤도 본다. 알려진 합성어('애플리케이션' 등)는 뺀다.
+_SENTENCE_END = re.compile(r"[.!?](?=\s|$)|\n")
+_WORD_CHAR = re.compile(r"[가-힣A-Za-z0-9]")
+_COMPOUNDS = {"애플": ("애플리케이션",), "메타": ("메타버스", "메타데이터"), "인텔": ("인텔리전스",), "델": ("델타",)}
+_UP_AFTER = re.compile(r"^\s*(?:의\s*)?(?:상승|올랐|오른|오르며|올라|급등|뛰었|뛴|뛰며|반등|강세)")
+_DOWN_AFTER = re.compile(r"^\s*(?:의\s*)?(?:하락|내렸|내린|내리며|내려|급락|떨어|빠졌|빠진|빠지며|밀렸|밀린|밀리며|약세)")
+_UP_BEFORE = re.compile(r"\b(?:rose|gained|climbed|jumped|surged|rallied|soared|added|advanced|up)\s+(?:by\s+)?$", re.IGNORECASE)
+_DOWN_BEFORE = re.compile(r"\b(?:fell|lost|dropped|slid|plunged|tumbled|sank|slumped|declined|down)\s+(?:by\s+)?$", re.IGNORECASE)
+
+
+# 같은 회사의 다른 주식 — 글은 회사 이름 하나로 쓰므로 서로의 등락률을 남의 숫자로 보지 않는다(GOOGL 이름은 "Google",
+# GOOG는 "Alphabet"인데 글은 "Alphabet rose 3.22%"로 GOOGL 값을 쓴다). 한국 우선주는 코드 끝자리만 다르다(005930·005935).
+_SAME_COMPANY = ({"GOOG", "GOOGL"}, {"BRK-A", "BRK-B"})
+
+
+def _same_company(a: dict, b: dict) -> bool:
+    ta, tb = str(a.get("ticker") or ""), str(b.get("ticker") or "")
+    if any(ta in group and tb in group for group in _SAME_COMPANY):
+        return True
+    return len(ta) == len(tb) == 6 and ta.isdigit() and tb.isdigit() and ta[:5] == tb[:5]
+
+
+_TIGHT = re.compile(
+    r"^\s*(?:[은는이가도의]|'s)?\s*(?:\([A-Z0-9.\-]{1,8}\))?\s*"
+    r"(?:rose|fell|gained|lost|added|climbed|dropped|jumped|slid|surged|plunged|tumbled|soared|sank|rallied|slumped"
+    r"|advanced|declined|was up|was down)?\s*(?:by\s+)?[+\-−]?$", re.IGNORECASE)
+
+
+def _sentence_bounds(text: str, at: int) -> tuple[int, int]:
+    start = 0
+    for m in _SENTENCE_END.finditer(text, 0, at):
+        start = m.end()
+    m = _SENTENCE_END.search(text, at)
+    return start, (m.start() + 1 if m else len(text))
+
+
+def _name_at(text: str, at: int, name: str) -> bool:
+    """`text[at:]`에서 시작하는 `name`이 낱말 속 글자가 아니라 이름인가."""
+    if at > 0 and _WORD_CHAR.match(text[at - 1]):
+        return False
+    end = at + len(name)
+    if name[-1:].isascii() and name[-1:].isalpha() and end < len(text) and text[end].isascii() and text[end].isalpha():
+        return False
+    return not any(text.startswith(word, at) for word in _COMPOUNDS.get(name, ()))
+
+
+def _mentions(text: str, name: str) -> bool:
+    start = 0
+    while True:
+        at = text.find(name, start)
+        if at < 0:
+            return False
+        if _name_at(text, at, name):
+            return True
+        start = at + 1
+
+
+def _stated_direction(text: str, pct_start: int, pct_end: int) -> int:
+    """숫자에 바로 붙은 방향: +1 오름, -1 내림, 0 모름(부호 → 한국어 뒤 낱말 → 영어 앞 낱말 순)."""
+    sign = text[pct_start - 1: pct_start] if pct_start > 0 else ""
+    if sign == "+":
+        return 1
+    if sign in ("-", "−"):
+        return -1
+    after = text[pct_end: pct_end + 8]
+    if _UP_AFTER.match(after):
+        return 1
+    if _DOWN_AFTER.match(after):
+        return -1
+    before = text[max(0, pct_start - 16): pct_start]
+    if _UP_BEFORE.search(before):
+        return 1
+    if _DOWN_BEFORE.search(before):
+        return -1
+    return 0
 
 
 def _strip_tags(text: str) -> str:
@@ -228,7 +311,7 @@ def _lead_mentioned(lead: dict, haystack: str, tickers: set) -> bool:
     for name in list(names):
         names.extend(_ALIASES.get(name, ()))
     for name in names:
-        if name and name in haystack:
+        if name and _mentions(haystack, name):
             return True
     ticker = str(lead.get("ticker") or "")
     if ticker in tickers:
@@ -322,13 +405,13 @@ def _quoted_moves(
     other_day: re.Pattern[str] = _OTHER_DAY,
     bounds: bool = False,
     own_days: frozenset[str] = frozenset(),
-) -> list[tuple[dict, float, tuple[str, str] | None]]:
-    """글에서 (종목, 원고가 적은 등락률, 경계) 쌍을 뽑습니다.
+) -> list[tuple]:
+    """글에서 (종목, 원고가 적은 등락률, 경계, (이름 위치, 숫자 시작, 숫자 끝))을 뽑습니다.
 
     경계는 소수점 등락률이면 None, `bounds=True`(제목류)에서 "5% 넘게"를 읽었으면
     ("floor", "넘게"), "5%대"를 읽었으면 ("band", "대")입니다.
     """
-    found: list[tuple[dict, float, tuple[str, str] | None]] = []
+    found: list[tuple] = []
     claimed: list[tuple[int, int]] = []  # 이미 긴 이름이 차지한 구간
     for name, entry in names:
         start = 0
@@ -338,12 +421,16 @@ def _quoted_moves(
                 break
             end = at + len(name)
             start = end
+            if not _name_at(text, at, name):
+                start = at + 1
+                continue  # '소셜미디어' 안의 '디어'
             if any(s <= at < e for s, e in claimed):
                 continue  # '에코프로비엠' 안의 '에코프로'
             if end < len(text) and text[end].isdigit():
                 continue  # '나스닥100', '코스피200'은 다른 지표입니다
             claimed.append((at, end))
-            window = text[max(0, at - _WINDOW_BEFORE) : end + _WINDOW_AFTER]
+            s_start, s_end = _sentence_bounds(text, at)
+            window = text[max(s_start, at - _WINDOW_BEFORE) : min(s_end, end + _WINDOW_AFTER)]
             if _NOT_A_MOVE.search(window) or _INTRADAY.search(window):
                 continue
             if _mentions_other_day(text, at, window, other_day, own_days):
@@ -373,7 +460,7 @@ def _quoted_moves(
                     continue
             elif not _MOVE_WORDS.search(window) and "(" not in window:
                 continue
-            found.append((entry, quoted, kind))
+            found.append((entry, quoted, kind, (at, end, end + match.start(), end + match.end())))
     return found
 
 
@@ -397,12 +484,10 @@ def collect_issues(
 
     names = _names_by_length(price_data, lang)
     own_days = _own_day_markers(price_data)
-    known_percents = {
-        round(abs(float(e["change_pct"])), 2) for e in _checkable_entries(price_data)
-    }
+    by_ticker = {str(e.get("ticker")): e for e in _checkable_entries(price_data) if e.get("ticker")}
     for where, text in _texts(doc):
         title_like = where.startswith(_TITLE_LIKE)
-        for entry, quoted, bound in _quoted_moves(
+        for entry, quoted, bound, (name_at, name_end, pct_start, pct_end) in _quoted_moves(
             text, names, other_day, bounds=title_like, own_days=own_days
         ):
             actual = round(abs(float(entry["change_pct"])), 2)
@@ -417,10 +502,28 @@ def collect_issues(
                 )
                 continue
             if round(quoted, 2) == actual:
+                stated = _stated_direction(text, pct_start, pct_end)
+                change = float(entry["change_pct"])
+                if stated and change and (stated > 0) != (change > 0):
+                    issues.append(
+                        f"{where}: '{entry['name']}'을 {quoted:.2f}% {'상승' if stated > 0 else '하락'}으로 적었는데 "
+                        f"시세는 {change:+.2f}%입니다 — 방향이 반대입니다.")
                 continue
-            # 같은 글에서 다른 종목의 등락률을 나란히 적는 문장이 흔합니다.
-            # 시세에 실제로 있는 값이면 문장 구조 문제일 뿐이라 넘어갑니다.
-            if round(quoted, 2) in known_percents:
+            # 같은 문장에서 다른 종목의 등락률을 나란히 적는 일이 흔합니다("각각 0.20%, 1.05%").
+            # **같은 문장에 이름·티커가 나온** 종목의 값이면 문장 구조 문제일 뿐이라 넘어갑니다(2026-09-26 — 전에는
+            # 그날 어느 종목의 값이든 넘어가서 옆 종목과 숫자가 뒤바뀐 문장도 통과했다).
+            s_start, s_end = _sentence_bounds(text, name_at)
+            sentence = text[s_start:s_end]
+            # 숫자가 이름에 바로 붙어 있으면("삼성전자가 1.36%", "Samsung rose 1.36%") 그 이름의 숫자다 — 이웃 종목의 값이어도
+            # 넘기지 않는다. 사이에 다른 말이 끼면("…는 각각 0.20%, 1.05%") 누구의 숫자인지 문장 구조로만 알 수 있어 넘긴다.
+            tight = bool(_TIGHT.match(text[name_end:pct_start])) and not re.search(r"각각|respectively", sentence,
+                                                                                  re.IGNORECASE)
+            neighbours = set() if tight else {round(abs(float(e["change_pct"])), 2) for n, e in names if e is not entry and _mentions(sentence, n)}
+            neighbours |= {round(abs(float(e["change_pct"])), 2) for t, e in by_ticker.items()
+                           if e is not entry and re.search(rf"(?<![A-Za-z0-9]){re.escape(t)}(?![A-Za-z0-9])", sentence)}
+            neighbours |= {round(abs(float(e["change_pct"])), 2) for e in by_ticker.values()
+                           if e is not entry and _same_company(e, entry)}
+            if round(quoted, 2) in neighbours:
                 continue
             issues.append(
                 f"{where}: '{entry['name']}' 등락률을 {quoted:.2f}%로 적었는데 "
