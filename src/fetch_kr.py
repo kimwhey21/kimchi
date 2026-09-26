@@ -10,6 +10,8 @@ FinanceDataReader로 코스피/코스닥/환율과 관심 종목의 종가, 등�
 """
 from __future__ import annotations
 
+import re
+
 import datetime as dt
 import json
 import math
@@ -478,6 +480,44 @@ def fetch_all() -> dict:
             "missing": missing}
 
 
+_YAHOO_SUFFIX = {"KOSPI": ".KS", "KOSDAQ": ".KQ"}
+_CORP_TAIL = re.compile(r"[,\s]+(?:co\.?,?\s*ltd\.?|co\.|ltd\.?|corp\.?|corporation|inc\.?|incorporated|plc)$", re.IGNORECASE)
+_LATIN_NAME = re.compile(r"[A-Za-z0-9&.,'()\- ]{2,}")
+
+
+def clean_english_name(raw: str) -> str | None:
+    """야후 회사명을 글에 쓸 꼴로 — 법인 꼬리를 떼고, 전부 대문자면 낱말 첫 글자만 크게. 영문이 아니면 None."""
+    name = str(raw or "").strip()
+    previous = None
+    while previous != name:
+        previous = name
+        name = _CORP_TAIL.sub("", name).strip().rstrip(",").strip()
+    if not name or not _LATIN_NAME.fullmatch(name):
+        return None
+    if name.isupper():
+        name = " ".join(w if len(w) <= 3 else w.capitalize() for w in name.split())
+    return name
+
+
+def english_name(ticker: str, market: str | None) -> str | None:
+    """동적 편입 종목의 영어 이름 — 야후 회사명(2026-09-26).
+
+    그전에는 `name_en_map`에 없으면 한글 이름이 영어판에 그대로 나갔다(9/17 "Sphere (스피어)", 9/18 가온전선, 9/21
+    SFA반도체). 네이버 증권 API에는 종목 영어 이름이 없고, 야후는 **시장 접미어가 맞을 때만** 정확하다 — 347700.KQ는
+    Sphere Corp.인데 347700.KS는 다른 회사가 나온다. 그래서 시장을 모르면 찾지 않는다.
+    """
+    suffix = _YAHOO_SUFFIX.get(str(market or "").upper())
+    if not suffix:
+        return None
+    try:
+        import yfinance as yf
+        info = yf.Ticker(f"{ticker}{suffix}").info or {}
+    except Exception as exc:  # noqa: BLE001 — 한 종목의 이름 조회라 이유를 찍고 한글 이름으로 간다
+        print(f"[안내] {ticker}{suffix} 영어 이름 조회 실패: {exc}")
+        return None
+    return clean_english_name(info.get("longName") or info.get("shortName") or "")
+
+
 def _fetch_dynamic_tier(
     config: dict, core: dict[str, dict], trading_date: str
 ) -> dict[str, dict]:
@@ -509,11 +549,11 @@ def _fetch_dynamic_tier(
     added: dict[str, dict] = {}
     for mover in movers:
         ticker, name = mover["ticker"], mover["name"]
-        name_en = name_en_map.get(name)
+        name_en = name_en_map.get(name) or english_name(ticker, mover.get("market"))
         if not name_en:
             print(
-                f"[안내] '{name}'의 영어 표기가 config/watchlist_kr.yaml의 "
-                "name_en_map에 없어 영어판에도 한글 이름이 나갑니다."
+                f"[안내] '{name}'의 영어 표기를 name_en_map에서도 야후에서도 찾지 못해 "
+                "영어판에 한글 이름이 나갑니다 — config/watchlist_kr.yaml의 name_en_map에 적으십시오."
             )
         try:
             entry = _fetch_one(ticker=ticker, name=name, name_en=name_en or name)

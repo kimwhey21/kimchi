@@ -211,6 +211,21 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
                         "티커를 쓰거나(동적 편입 종목은 사진을 붙이지 않습니다) photo를 빼십시오.")
         elif photo:
             issues.append(f"사진(본문 {index}) — photo는 {{\"ticker\": ...}} 또는 {{\"url\": ...}}입니다: {photo!r}")
+    # 영어판 그림도 그려 본다(2026-09-26). 발행이 영어 명세를 영어 모드로 그리므로, 명세가 틀렸으면 여기서 막는다.
+    # 파일은 `en/` 아래에 둔다 — 네이버로 옮기는 코드는 이 폴더 바로 아래 `NN-` 파일만 보므로 영어 그림이 섞이지 않는다.
+    en_narrative = (doc.get("en") or {}).get("narrative") or []
+    for index, section in enumerate(en_narrative, start=1):
+        spec = section.get("graphic")
+        if not (isinstance(spec, dict) and spec.get("kind")):
+            continue
+        kind = spec["kind"]
+        options = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt", "lang")}
+        if kind == "two_day_compare":
+            options["previous"] = _previous_price_data(market, date_str)
+        try:
+            data_graphics.build(kind, price_data, render_dir / "en" / f"{index:02d}-{kind}.png", lang="en", **options)
+        except Exception as exc:  # noqa: BLE001 - 어떤 실패든 목록에 담는다
+            issues.append(f"영어 그래픽(본문 {index}, {kind}) — {exc}")
     # 인사이트 사진도 파일로 남긴다(2026-09-16) — 번호 90번대는 본문 절과 겹치지 않게 띄운 것이다.
     # 네이버로 옮기는 코드가 이 폴더만 보므로, 파일이 없으면 인사이트 사진은 한 장도 못 간다.
     for story_index, story in enumerate((ko.get("insight_section") or {}).get("stories") or [], start=1):

@@ -233,6 +233,10 @@ def _lead_mentioned(lead: dict, haystack: str, tickers: set) -> bool:
     ticker = str(lead.get("ticker") or "")
     if ticker in tickers:
         return True
+    # 한국 종목코드(여섯 자리)를 적은 것도 다룬 것이다(2026-09-26). 영어 이름을 못 찾은 편입 종목은 name_en이 한글이라,
+    # 영어판이 "1위 종목을 다뤘나"를 통과하려면 한글을 써야 했고, 그 한글은 영어 문체 검사가 막는다.
+    if ticker.isdigit() and len(ticker) == 6 and re.search(rf"(?<!\d){ticker}(?!\d)", haystack):
+        return True
     tokens = {ticker} if _TICKER_SHAPE.match(ticker) else set()
     for name in names:
         tokens.update(_ABBREVIATION.findall(name))

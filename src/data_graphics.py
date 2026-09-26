@@ -121,6 +121,64 @@ def _color(change: float) -> str:
     return FLAT
 
 
+# 영어판 그림(2026-09-26). 영어 시황에도 그림을 넣으면서, 그림 속 고정 글자·종목명·업종명을 영어로 바꾼다.
+# 빌더마다 언어 인자를 달지 않고 `build(lang="en")`이 그리는 동안만 `_LANG`을 켠다 — 제목·설명은 원고의 영어 명세가 준다.
+_LANG = "ko"
+_EN = {
+    "오늘의 지수": "Today's indexes", "업종별 등락": "Moves by sector",
+    "외국인 순매매 상·하위": "Foreign net buying, top and bottom", "주": " sh",
+    "어제와 오늘, 같은 종목의 등락": "Previous session vs today", "어제": "Prev. session", "오늘": "Today",
+    "오늘 많이 움직인 종목": "Today's biggest movers", "이번 주 많이 움직인 종목": "This week's biggest movers",
+    "종목": "Stock", "종가": "Close", "5거래일": "5 sessions",
+    "외국인과 기관, 같은 종목에서 반대로": "Foreigners vs institutions, opposite sides",
+    "외국인": "Foreigners", "기관": "Institutions", "개인": "Retail", "기타법인": "Other corporates",
+    "3개월 최고 대비": "vs 3-month high", "3개월 최저 대비": "vs 3-month low",
+    "투자자별 순매수": "Net buying by investor type", "억원": "KRW 100M",
+    "항목": "Item", "발표": "Actual", "예상": "Forecast", "차이": "Surprise", "발표값과 예상값": "Actual vs forecast",
+    "원": " won", "주간 ": "Week ", "오늘 시장을 정한 숫자": "Today's key numbers",
+}
+# 카드·막대에 들어가기엔 긴 영어 지수 이름을 짧게(한국어 "다우존스"와 같은 길이로).
+_SHORT_EN = {"Dow Jones Industrial Average": "Dow Jones", "Nasdaq Composite": "Nasdaq",
+             "US 10-Year Treasury Yield": "US 10Y yield", "US 30-Year Treasury Yield": "US 30Y yield"}
+_SECTOR_EN = {
+    "2차전지": "Batteries", "금융": "Financials", "로봇": "Robotics", "바이오": "Biotech", "반도체": "Semiconductors",
+    "발전·원전": "Power & nuclear", "소비재": "Consumer", "자동차": "Autos", "조선·방산": "Shipbuilding & defense",
+    "플랫폼": "Internet platforms", "건설": "Construction", "통신": "Telecom", "화학": "Chemicals", "철강": "Steel",
+    "게임": "Games", "엔터": "Entertainment", "유통": "Retail", "보험": "Insurance", "증권": "Brokers", "에너지": "Energy",
+}
+_MONTHS_EN = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+
+def _t(text: str) -> str:
+    """그림 속 고정 글자 — 영어 모드면 번역표로, 표에 없으면 그대로(원고의 영어 명세가 준 글자)."""
+    return _EN.get(text, text) if _LANG == "en" else text
+
+
+def _has_hangul(text: str) -> bool:
+    return any("\uac00" <= ch <= "\ud7a3" for ch in str(text or ""))
+
+
+def localized(price_data: dict | None, lang: str) -> dict | None:
+    """영어 그림용 시세 사본 — 종목명은 `name_en`, 업종은 영어, 한국 종목 단위는 won. 원본은 건드리지 않는다."""
+    if lang != "en" or not price_data:
+        return price_data
+    import copy
+    out = copy.deepcopy(price_data)
+    for group in ("macro", "watchlist"):
+        for entry in (out.get(group) or {}).values():
+            if entry.get("name_en"):
+                entry["name"] = _SHORT_EN.get(entry["name_en"], entry["name_en"])
+            sector = entry.get("sector")
+            if sector and _has_hangul(sector):
+                entry["sector"] = _SECTOR_EN.get(sector, "Other")
+            ticker = str(entry.get("ticker", ""))
+            if entry.get("unit") == "원" or (not entry.get("unit") and ticker.isdigit() and len(ticker) == 6):
+                entry["unit"] = " won"
+            elif entry.get("unit") == "달러":
+                entry["unit"] = " USD"
+    return out
+
+
 def _fmt(value: float, unit: str = "") -> str:
     if abs(value) >= 1000:
         return f"{value:,.0f}{unit}"
@@ -166,7 +224,7 @@ def index_card(price_data: dict, output_path: Path, title: str = "오늘의 지�
     h = 250
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(21, True), fill=SUB)
+    d.text((32, 26), _t(title), font=_font(21, True), fill=SUB)
 
     pad, gap = 32, 18
     cw = (W - pad * 2 - gap * (len(macro) - 1)) // max(1, len(macro))
@@ -175,7 +233,7 @@ def index_card(price_data: dict, output_path: Path, title: str = "오늘의 지�
         d.rounded_rectangle([x, 66, x + cw, h - 28], 14, fill=PANEL, outline=LINE)
         color = _color(entry["change_pct"])
         d.text((x + 22, 84), entry["name"], font=_font(19), fill=SUB)
-        unit = "원" if entry.get("unit") == "원" else ""
+        unit = _t("원") if entry.get("unit") in ("원", " won") else ""
         d.text((x + 22, 112), _fmt(entry["price"], unit), font=_font(33, True), fill=INK)
         d.text(
             (x + 22, 158),
@@ -221,7 +279,7 @@ def sector_bars(price_data: dict, output_path: Path, title: str = "업종별 등
     h = top + row_h * len(rows) + 30
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(21, True), fill=SUB)
+    d.text((32, 26), _t(title), font=_font(21, True), fill=SUB)
 
     span = max(abs(r[1]) for r in rows) or 1.0
     mid, half = 360, 250      # 오른쪽에 대표 종목 이름이 들어갈 자리를 남깁니다
@@ -261,7 +319,7 @@ def flow_chart(price_data: dict, output_path: Path, top_n: int = 5,
     h = top + row_h * len(picked) + 30
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(21, True), fill=SUB)
+    d.text((32, 26), _t(title), font=_font(21, True), fill=SUB)
 
     span = max(abs(e["foreign_net"]) for e in picked) or 1
     # 종목명은 왼쪽 고정. 막대가 이름을 덮지 않도록 0축을 충분히 오른쪽에 둡니다.
@@ -278,7 +336,7 @@ def flow_chart(price_data: dict, output_path: Path, top_n: int = 5,
             d.rounded_rectangle([mid - width, y + 7, mid, y + 31], 5, fill=color)
         d.text((32, y + 10), e["name"][:12], font=_font(18, True), fill=INK)
         # 라벨은 캔버스 밖으로 나가지 않도록 오른쪽 끝에 정렬합니다.
-        label = f"{net:+,}주"
+        label = f"{net:+,}" + _t("주")
         d.text((W - 32 - d.textlength(label, font=_font(17)), y + 11), label,
                font=_font(17), fill=color)
     img.save(output_path, format="PNG", optimize=True)
@@ -304,9 +362,9 @@ def two_day_compare(price_data: dict, output_path: Path, previous: dict | None =
     h = top + row_h * len(picks) + 34
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(21, True), fill=SUB)
-    d.text((470, 56), "어제", font=_font(15), fill=SUB)
-    d.text((720, 56), "오늘", font=_font(15), fill=SUB)
+    d.text((32, 26), _t(title), font=_font(21, True), fill=SUB)
+    d.text((470, 56), _t("어제"), font=_font(15), fill=SUB)
+    d.text((720, 56), _t("오늘"), font=_font(15), fill=SUB)
 
     span = max(
         max(abs(prev[t]["change_pct"]), abs(today[t]["change_pct"])) for t in picks
@@ -447,7 +505,7 @@ def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
     ensure_korean_font()   # 폰트 없으면 두부(□) 그림 대신 여기서 멈춥니다
     if (period == "week" or period_days) and title == "오늘 많이 움직인 종목":
         title = ("이번 주 많이 움직인 종목" if period == "week" or int(period_days or 0) == 5
-                 else f"{period_days}거래일 등락 상위")
+                 else (f"Top movers over {period_days} sessions" if _LANG == "en" else f"{period_days}거래일 등락 상위"))
     picked = movers_picked(price_data, top_n, period_days, period)
     if style and style not in MOVERS_STYLES:
         # 틀린 이름으로 발행이 죽거나 그림이 빠지지 않게 — 상황으로 고른 모양으로 그리고 알린다
@@ -470,7 +528,7 @@ def _movers_bars(picked: list[dict], output_path: Path, title: str) -> Path:
     h = top + row_h * len(picked) + 30
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((48, 36), title, font=_font(22, True), fill=INK)
+    d.text((48, 36), _t(title), font=_font(22, True), fill=INK)
     mx = max(abs(float(e["change_pct"])) for e in picked) or 1.0
     has_down = any(float(e["change_pct"]) < 0 for e in picked)
     zx = 330 if not has_down else 520
@@ -500,7 +558,7 @@ def _movers_tiles(picked: list[dict], output_path: Path, title: str) -> Path:
     h = 84 + rows_n * 160 + 20
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((48, 36), title, font=_font(22, True), fill=INK)
+    d.text((48, 36), _t(title), font=_font(22, True), fill=INK)
     for i, e in enumerate(picked):
         x = 48 + (i % cols) * 308; y = 84 + (i // cols) * 160
         v = float(e["change_pct"]); c = _color(v)
@@ -516,8 +574,8 @@ def _movers_table(picked: list[dict], output_path: Path, title: str) -> Path:
     h = 122 + 46 * len(picked) + 30
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((48, 36), title, font=_font(22, True), fill=INK)
-    for key, x in (("종목", 48), ("종가", 420), ("오늘", 600), ("5거래일", 760)):
+    d.text((48, 36), _t(title), font=_font(22, True), fill=INK)
+    for key, x in ((_t("종목"), 48), (_t("종가"), 420), (_t("오늘"), 600), (_t("5거래일"), 760)):
         d.text((x, 84), key, font=_font(15), fill=SUB)
     d.line([(48, 108), (W - 48, 108)], fill=LINE, width=1)
     for i, e in enumerate(picked):
@@ -568,12 +626,12 @@ def flow_compare(price_data: dict, output_path: Path, top_n: int = 5,
     h = top + row_h * len(picked) + 30
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(21, True), fill=SUB)
+    d.text((32, 26), _t(title), font=_font(21, True), fill=SUB)
     # 범례
     d.rounded_rectangle([32, 62, 56, 62 + 14], 4, fill=INK)
-    d.text((64, 60), "외국인", font=_font(16), fill=SUB)
+    d.text((64, 60), _t("외국인"), font=_font(16), fill=SUB)
     d.rounded_rectangle([132, 62, 156, 62 + 14], 4, fill=FLAT)
-    d.text((164, 60), "기관", font=_font(16), fill=SUB)
+    d.text((164, 60), _t("기관"), font=_font(16), fill=SUB)
 
     span = max(max(abs(e["foreign_net"]), abs(e["institution_net"])) for e in picked) or 1
     mid, half = 430, 230
@@ -642,7 +700,7 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
     d = ImageDraw.Draw(img)
     d.rounded_rectangle([32, 24, W - 32, h - 24], 16, fill=PANEL, outline=LINE)
     if title:
-        d.text((60, 48), title, font=_font(19, True), fill=SUB)
+        d.text((60, 48), _t(title), font=_font(19, True), fill=SUB)
     name = str(picked["name"]); nf = _font(48, True)
     while d.textlength(name, font=nf) > 420 and nf.size > 26:
         nf = _font(nf.size - 4, True)
@@ -655,8 +713,8 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
     x0, y0, x1, y1 = 520, 92, W - 60, 236
     if style == "numbers":
         p5 = _pct_over(picked, 5); hi, lo, cur = max(closes), min(closes), closes[-1]
-        stats = [("종가", price, INK), ("5거래일", p5, None),
-                 ("3개월 최고 대비", (cur / hi - 1) * 100, None), ("3개월 최저 대비", (cur / lo - 1) * 100, None)]
+        stats = [(_t("종가"), price, INK), (_t("5거래일"), p5, None),
+                 (_t("3개월 최고 대비"), (cur / hi - 1) * 100, None), (_t("3개월 최저 대비"), (cur / lo - 1) * 100, None)]
         for i, (key, value, fixed) in enumerate(stats):
             x = x0 + (i % 2) * 210; y = 92 + (i // 2) * 84
             d.text((x, y), key, font=_font(15), fill=SUB)
@@ -673,7 +731,7 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
         d.polygon(pts + [(x1, y1), (x0, y1)], fill="#F6E4E0" if change >= 0 else "#E0EAF6")
         d.line(pts, fill=color, width=3)
         d.ellipse([pts[-1][0] - 5, pts[-1][1] - 5, pts[-1][0] + 5, pts[-1][1] + 5], fill=color)
-        d.text((x0, y1 + 8), f"최근 3개월 · 최저 {lo:,.2f} · 최고 {hi:,.2f}", font=_font(15), fill=SUB)
+        d.text((x0, y1 + 8), (f"Last 3 months · low {lo:,.2f} · high {hi:,.2f}" if _LANG == "en" else f"최근 3개월 · 최저 {lo:,.2f} · 최고 {hi:,.2f}"), font=_font(15), fill=SUB)
     else:
         daily = [(closes[i] / closes[i - 1] - 1) * 100 for i in range(max(1, len(closes) - 8), len(closes))]
         mid = (y0 + y1) // 2; mx = max(abs(v) for v in daily) or 1.0; bw = (x1 - x0) / len(daily)
@@ -682,7 +740,7 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
             bx = x0 + i * bw + 6; bh = (mid - y0 - 10) * abs(v) / mx
             c = _color(v) if i == len(daily) - 1 else ("#E9B3AA" if v >= 0 else "#B3C8E6")
             d.rectangle([bx, mid - bh if v >= 0 else mid, bx + bw - 12, mid if v >= 0 else mid + bh], fill=c)
-        d.text((x0, y1 + 8), f"최근 {len(daily)}거래일 일별 등락률 (오늘 진하게)", font=_font(15), fill=SUB)
+        d.text((x0, y1 + 8), (f"Daily moves, last {len(daily)} sessions (today in bold)" if _LANG == "en" else f"최근 {len(daily)}거래일 일별 등락률 (오늘 진하게)"), font=_font(15), fill=SUB)
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
@@ -753,13 +811,14 @@ def price_history(price_data: dict, output_path: Path, ticker: str, title: str =
     unit = _unit_for(entry)
     fmt = "{:,.0f}" if abs(closes[-1]) >= 10000 else "{:,.2f}"
     name = str(entry.get("name"))
-    title = title or f"{name}, 최근 3개월"
-    subtitle = subtitle or f"{dates[-1]} 종가 {fmt.format(closes[-1])}{unit} ({change:+.2f}%)"
+    title = title or (f"{name}, last 3 months" if _LANG == "en" else f"{name}, 최근 3개월")
+    subtitle = subtitle or (f"{dates[-1]} close {fmt.format(closes[-1])}{unit} ({change:+.2f}%)" if _LANG == "en"
+                            else f"{dates[-1]} 종가 {fmt.format(closes[-1])}{unit} ({change:+.2f}%)")
 
     h = 600
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(26, True), fill=INK)
+    d.text((32, 26), _t(title), font=_font(26, True), fill=INK)
     d.text((32, 66), subtitle, font=_font(16), fill=SUB)
     x0, y0, x1, y1 = 118, 112, W - 48, h - 82
     lo, hi = min(closes), max(closes)
@@ -792,7 +851,7 @@ def price_history(price_data: dict, output_path: Path, ticker: str, title: str =
         month = day[:7]
         if month not in seen and i > 0 and dates[i - 1][:7] != month:
             seen.add(month)
-            d.text((X(i), y1 + 10), f"{int(day[5:7])}월", font=_font(14), fill=SUB, anchor="ma")
+            d.text((X(i), y1 + 10), (_MONTHS_EN[int(day[5:7]) - 1] if _LANG == "en" else f"{int(day[5:7])}월"), font=_font(14), fill=SUB, anchor="ma")
     lx, ly = pts[-1]
     d.ellipse([lx - 7, ly - 7, lx + 7, ly + 7], fill=color, outline=BG, width=3)
     d.text((lx - 12, ly - 10), fmt.format(closes[-1]) + unit, font=_font(20, True),
@@ -820,17 +879,17 @@ def investor_flows(price_data: dict, output_path: Path, values: dict, source: st
     h = top + row_h * len(rows) + 70
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(26, True), fill=INK)
-    d.text((32, 66), subtitle or f"순매수 ({unit})", font=_font(16), fill=SUB)
+    d.text((32, 26), _t(title), font=_font(26, True), fill=INK)
+    d.text((32, 66), subtitle or (f"Net buying ({_t(unit)})" if _LANG == "en" else f"순매수 ({unit})"), font=_font(16), fill=SUB)
     span = max(abs(v) for _, v in rows) or 1.0
     cx, half = 560, 330
     d.line([(cx, top - 10), (cx, h - 60)], fill=LINE, width=2)
     for i, (name, v) in enumerate(rows):
         y = top + i * row_h
-        d.text((48, y + 22), name, font=_font(24, True), fill=INK, anchor="lm")
+        d.text((48, y + 22), _t(name), font=_font(24, True), fill=INK, anchor="lm")
         width = max(6, abs(v) / span * half)
         color = UP if v > 0 else (DOWN if v < 0 else FLAT)
-        label = f"{v:+,.0f}{unit if unit != '억원' else '억'}"
+        label = f"{v:+,.0f}" if _LANG == "en" else f"{v:+,.0f}{unit if unit != '억원' else '억'}"
         lf = _font(26, True)
         if v >= 0:
             d.rounded_rectangle([cx, y, cx + width, y + 44], 8, fill=color)
@@ -878,7 +937,8 @@ def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None 
             if over is None:
                 raise ValueError(f"number_cards: {ticker}의 이력이 짧아 주간(기간) 등락을 셀 수 없습니다")
             change = float(over)
-            change_text = ("주간 " if period == "week" or int(period_days or 0) == 5 else f"{period_days}일 ") + f"{change:+.2f}%"
+            change_text = (_t("주간 ") if period == "week" or int(period_days or 0) == 5
+                           else (f"{period_days}d " if _LANG == "en" else f"{period_days}일 ")) + f"{change:+.2f}%"
         else:
             change = float(entry.get("change_pct") or 0)
             change_text = f"{change:+.2f}%"
@@ -901,7 +961,7 @@ def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None 
     h = 400 + (56 if note else 0)
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(26, True), fill=INK)
+    d.text((32, 26), _t(title), font=_font(26, True), fill=INK)
     if subtitle:
         d.text((32, 66), subtitle, font=_font(16), fill=SUB)
     gap, left, top, bottom = 18, 32, 104, 300
@@ -909,7 +969,8 @@ def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None 
     for i, (label, value, change, color) in enumerate(cards):
         x = left + i * (cw + gap)
         d.rounded_rectangle([x, top, x + cw, bottom], 14, fill=PANEL, outline=LINE)
-        d.text((x + 22, top + 22), label[:14], font=_font(16), fill=SUB)
+        d.text((x + 22, top + 22), label if _LANG == "en" and d.textlength(label, font=_font(16)) <= cw - 44 else label[:14],
+               font=_font(16), fill=SUB)
         vf = _font(30, True)
         while d.textlength(value, font=vf) > cw - 44 and vf.size > 18:
             vf = _font(vf.size - 2, True)
@@ -935,7 +996,7 @@ FACT_TABLE_HEADER_SIZE = 15         # 머리글 글꼴은 고정(줄이지 않�
 def fact_table_shape(rows: list, columns: list | None = None) -> tuple[int, list[str]]:
     """(열 수, 머리글 목록) — 렌더러가 쓰는 기본 머리글까지 같은 규칙으로."""
     ncol = max(len(r) for r in rows)
-    columns = list(columns or (["항목", "발표", "예상", "차이"][:ncol] + [""] * max(0, ncol - 4)))
+    columns = list(columns or ([_t("항목"), _t("발표"), _t("예상"), _t("차이")][:ncol] + [""] * max(0, ncol - 4)))
     return ncol, [str(c) for c in columns[:ncol]]
 
 
@@ -1016,7 +1077,7 @@ def fact_table(price_data: dict, output_path: Path, rows: list, source: str,
     h = top + row_h * (len(rows) + 1) + 40 + (26 * len(note_lines) + 14 if note_lines else 0)
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
-    d.text((32, 26), title, font=_font(26, True), fill=INK)
+    d.text((32, 26), _t(title), font=_font(26, True), fill=INK)
     if subtitle:
         d.text((32, 66), subtitle, font=_font(16), fill=SUB)
     _, other_w = fact_table_widths(ncol)
@@ -1076,5 +1137,13 @@ def build(kind: str, price_data: dict, output_path: Path, lang: str = "ko", **kw
     if kind not in BUILDERS:
         raise ValueError(f"모르는 그래픽 종류 {kind!r} — 쓸 수 있는 것: {', '.join(sorted(BUILDERS))}")
     builder = BUILDERS[kind]
-    builder(price_data, output_path, **kwargs)
+    global _LANG
+    before = _LANG
+    _LANG = "en" if lang == "en" else "ko"
+    try:
+        if lang == "en" and isinstance(kwargs.get("previous"), dict):
+            kwargs["previous"] = localized(kwargs["previous"], lang)
+        builder(localized(price_data, lang), output_path, **kwargs)
+    finally:
+        _LANG = before
     return {"local_path": str(output_path), "kind": kind}

@@ -1,0 +1,78 @@
+"""영어 시황의 본문 그림 (2026-09-26).
+
+9/9부터 영어 시황 24편의 그림 자리가 전부 `<img src="">`였다 — 발행 코드가 한국어판 그림만 그리고 영어판 절에는
+명세만 남겼다. 이제 영어 명세를 영어 모드로 그리고(종목명·업종·단위·고정 글자 영어), 주소가 없으면 태그를 찍지 않는다.
+"""
+import json
+import tempfile
+import unittest
+from pathlib import Path
+from unittest import mock
+
+from src import data_graphics, publish_editorial, render_html
+
+ROOT = Path(__file__).resolve().parent.parent
+DOC = json.loads((ROOT / "editorial" / "kr_2026-09-22.json").read_text(encoding="utf-8"))
+
+
+class LocalizedTest(unittest.TestCase):
+    def test_names_sectors_units_become_english_and_original_is_untouched(self) -> None:
+        pd = DOC["price_data"]
+        en = data_graphics.localized(pd, "en")
+        samsung = en["watchlist"]["005930"]
+        self.assertEqual(samsung["name"], "Samsung Electronics")
+        self.assertEqual(samsung["sector"], "Semiconductors")
+        self.assertEqual(samsung["unit"], " won")
+        self.assertEqual(en["macro"]["USD/KRW"]["unit"], " won")
+        self.assertEqual(pd["watchlist"]["005930"]["name"], "삼성전자")     # 원본은 그대로
+        self.assertIs(data_graphics.localized(pd, "ko"), pd)
+
+    def test_long_index_names_are_shortened(self) -> None:
+        pd = {"macro": {"^DJI": {"name": "다우존스", "name_en": "Dow Jones Industrial Average", "price": 1.0,
+                                  "change_pct": 0.1}}, "watchlist": {}}
+        self.assertEqual(data_graphics.localized(pd, "en")["macro"]["^DJI"]["name"], "Dow Jones")
+
+
+class BuildTest(unittest.TestCase):
+    def test_english_mode_is_switched_back_off(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            data_graphics.build("sector_bars", DOC["price_data"], Path(tmp) / "a.png", lang="en", title="Sectors")
+            self.assertEqual(data_graphics._LANG, "ko")
+            self.assertEqual(data_graphics._t("오늘"), "오늘")
+
+    def test_every_english_spec_in_a_real_manuscript_draws(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            for i, section in enumerate(DOC["en"]["narrative"], 1):
+                spec = section.get("graphic")
+                if not spec:
+                    continue
+                opts = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt", "lang")}
+                if spec["kind"] == "two_day_compare":
+                    continue
+                data_graphics.build(spec["kind"], DOC["price_data"], Path(tmp) / f"{i}.png", lang="en", **opts)
+
+
+class AttachTest(unittest.TestCase):
+    def test_english_sections_get_their_own_graphic_urls(self) -> None:
+        en = json.loads(json.dumps(DOC["en"]["narrative"]))
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(publish_editorial, "OUTPUT_DIR", Path(tmp)):
+            publish_editorial._attach_section_graphics(en, DOC["price_data"], "kr", "2026-09-22", None,
+                                                       upload=False, lang="en")
+        drawn = [s["graphic"] for s in en if s.get("graphic")]
+        self.assertTrue(drawn)
+        for graphic in drawn:
+            self.assertTrue(graphic["url"].endswith("_en.png"), graphic)
+
+
+class TemplateTest(unittest.TestCase):
+    def test_a_graphic_without_url_prints_no_image_tag(self) -> None:
+        generated = json.loads(json.dumps(DOC["en"]))
+        for section in generated["narrative"]:
+            section.pop("photo", None)          # 명세만 남은 절(옛 버그의 모양)
+        html = render_html.render("kr", "2026-09-22", DOC["price_data"], generated, lang="en")
+        self.assertNotIn('class="mb-figure" src=""', html)
+        self.assertNotIn('<img class="mb-figure"', html)     # 스타일시트의 .mb-figure는 그대로 있다
+
+
+if __name__ == "__main__":
+    unittest.main()

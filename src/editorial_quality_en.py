@@ -1,6 +1,7 @@
 """Minimum publication checks for the deterministic English market brief."""
 from __future__ import annotations
 
+import json
 import re
 
 
@@ -32,6 +33,23 @@ def validate_generated(generated: dict) -> None:
                 (f"body {index}", str(section.get("body", ""))),
             ]
         )
+    # 그림 명세와 인사이트도 독자에게 보인다(2026-09-26). 영어판 그림을 그리기 시작하면서 명세의 제목·설명·표 칸이
+    # 그대로 그림에 박힌다 — us 9/23 영어판 명세는 제목이 전부 한국어였다. 인사이트에는 "Sphere (스피어)"처럼
+    # 한글 종목명이 섞여 나갔다(9/17·9/18·9/21).
+    for index, section in enumerate(narrative, start=1):
+        spec = section.get("graphic") or {}
+        if isinstance(spec, dict):
+            for key in ("title", "subtitle", "note", "guide_label"):
+                if spec.get(key):
+                    fields.append((f"graphic {index} {key}", str(spec[key])))
+            for key in ("columns", "rows", "items", "values"):
+                if spec.get(key):
+                    fields.append((f"graphic {index} {key}", json.dumps(spec[key], ensure_ascii=False)))
+    for index, story in enumerate((generated.get("insight_section") or {}).get("stories") or [], start=1):
+        fields.append((f"insight {index} heading", str(story.get("heading", ""))))
+        fields.append((f"insight {index} body", str(story.get("body", ""))))
+        for row in story.get("table") or []:
+            fields.append((f"insight {index} table", f"{row.get('label', '')} {row.get('value', '')}"))
     for key in ("theme_section", "stock_section", "outlook", "closing"):
         section = generated.get(key) or {}
         fields.append((f"{key} heading", str(section.get("heading", ""))))

@@ -324,7 +324,7 @@ def _count_visuals(ko: dict) -> tuple[int, int, int]:
 
 def _attach_section_graphics(doc_section: list, price_data: dict, market: str,
                              date_str: str, previous: dict | None,
-                             upload: bool = True) -> None:
+                             upload: bool = True, lang: str = "ko") -> None:
     """본문 절에 지정된 데이터 그래픽을 만들고, `upload`면 사이트에 올려 URL을 채웁니다.
 
     사진과 달리 이 그림은 그날 시세에서 그리므로 숫자가 어긋날 수 없습니다.
@@ -340,19 +340,21 @@ def _attach_section_graphics(doc_section: list, price_data: dict, market: str,
         if not isinstance(spec, dict) or not spec.get("kind"):
             continue
         kind = spec["kind"]
-        options = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt")}
+        options = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt", "lang")}
         if kind == "two_day_compare":
             options["previous"] = previous
         try:
-            local = OUTPUT_DIR / f"{market}_{date_str}_{index}_{kind}.png"
-            data_graphics.build(kind, price_data, local, **options)
+            suffix = "_en" if lang == "en" else ""
+            local = OUTPUT_DIR / f"{market}_{date_str}_{index}_{kind}{suffix}.png"
+            data_graphics.build(kind, price_data, local, lang=lang, **options)
             if not upload:
                 section["graphic"] = {"url": str(local), "alt": spec.get("title", ""), "kind": kind}
                 print(f"[안내] 본문 그래픽(업로드 안 함): {kind} -> {local}")
                 continue
             url = publish_wordpress.upload_image_url(
                 {"local_path": str(local), "alt": spec.get("title", ""),
-                 "caption": "이 글의 시세로 만든 데이터 그래픽입니다."}
+                 "caption": ("Data graphic built from this article's closing prices." if lang == "en"
+                             else "이 글의 시세로 만든 데이터 그래픽입니다.")}
             )
             if url:
                 section["graphic"] = {"url": url, "alt": spec.get("title", ""), "kind": kind}
@@ -472,6 +474,15 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False) -
             _previous_price_data(market, date_str),
             upload=not render_only,
         )
+        # 영어판 그림(2026-09-26). 전에는 한국어판만 그려, 영어 글 절의 graphic에는 명세만 남아 템플릿이
+        # `<img src="">`를 찍었다 — 9/9부터 영어 시황 24편의 그림 자리가 전부 비었다. 영어 명세(글자는 영어)를
+        # 영어 모드로 그린다. 명세가 없거나 그리기에 실패한 절은 graphic을 지워 빈 그림이 나가지 않는다.
+        if en and en.get("narrative"):
+            _attach_section_graphics(
+                en.get("narrative"), price_data, market, date_str,
+                _previous_price_data(market, date_str),
+                upload=not render_only, lang="en",
+            )
 
     # 인사이트 스토리 사진. 한국어판에서 찾은 사진을 영어판이 그대로 쓰도록
     # 순서를 맞춰 재사용합니다(같은 소재에 다른 사진이 붙지 않게, 그리고
