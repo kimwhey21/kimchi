@@ -362,7 +362,11 @@
   게시, 같은 크롬 프로필을 쓰는 작업이 돌면 건너뜀). 블로거 설정은 네이버 봇 `Yeti` 차단(맞춤 robots.txt)·자료실/검색 페이지
   noindex·공식 테마(Contempo)다 — **네이버가 이 사본을 보면 유사문서로 거르므로 Yeti 차단을 풀지 말 것.** 네이버에 올리는 시각은
   바꾸지 않는다. 판정은 11월 30일 서치콘솔(검색·디스커버 따로)과 애드센스로 하고, 잡지의 네이버 노출이 떨어지면 그날 멈춘다.
-  `tests/test_blogger_post.py`가 렌더를 고정한다.
+  `tests/test_blogger_post.py`가 렌더를 고정한다. **테마 겉모습은 토스피드 풍이다**(2026-09-26, 사장님 "토스피드처럼 만들어줘") —
+  Contempo 위에 스타일·Pretendard 글꼴·메뉴(매거진·가이드·Checkpoint·Weekly·시황)를 얹은 것이고, 이 맥의
+  `~/.market-brief-google/blogger_theme_toss.py`가 넣는다(스타일만 `--update-css`, 되돌리기 `--restore`, 원본은
+  `blogger_tmp/theme_before_toss_20260926.xml`). **글머리 한 줄과 표지 사진 출처는 글 끝에 둔다** — 블로거는 본문 첫 글자로 홈
+  목록 요약을 만들어, 맨 위에 두면 요약이 "과학 사진: Unsplash …"로 시작한다(`blogger_post.render`).
 - **네이버 글이 원고를 다 담았는지 두 곳에서 확인한다.** `tests/test_naver_completeness.py`는 만들어지는 원고를 절·outlook·insight·표·
   Take·확인 지점·출처까지 하나씩 세고, 그림이 **자기 절 밑에** 붙는지와 4장 상한이 되살아나지 않았는지 본다. `python -m
   scripts.naver_audit`은 **네이버에 올라간 화면**을 받아 같은 대조를 한다(빠지면 0이 아닌 값으로 끝난다). 둘 다 필요하다. **`chars >
