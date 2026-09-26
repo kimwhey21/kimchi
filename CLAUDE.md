@@ -310,6 +310,10 @@
 - **사이트맵은 워드프레스 기본(`/wp-sitemap.xml`)이다.** Rank Math 사이트맵 모듈은 꺼 두었고 옛 `/sitemap_index.xml`은 404다.
   **다시 켜지 말 것.** 네이버 서치어드바이저에는 새 주소를 제출했고, 구글 서치콘솔은 사용자 계정으로 제출한다. 새 글마다
   `~/.market-brief-naver/nsa_request.py`가 네이버 수집 요청을 넣는다(10분 동기화에 붙어 있음).
+- **홈 제목·설명·언어 표시와 검색 제외 페이지는 Code Snippets 11번("SEO: 홈·영어 목록 영어 표시…")이 정한다**(2026-09-26).
+  관리자 Rank Math '홈페이지' 칸의 한국어 값은 이 조각이 덮어쓰므로 **홈 제목은 조각의 문구를 고친다.** 홈·Daily(76)·Guides(77)·
+  전체(105)와 영어 글은 `lang="en"`·`og:locale en_US`, 빈 한국어 목록(1047·1610·1439)과 threads-callback(1604)은 noindex·사이트맵 제외.
+  영어 시황 끝에는 관련 영어 가이드 링크가 최대 3개 붙는다(`publish_editorial._guide_links`) — 종목 페이지는 한국어라 걸지 않는다.
 - **공개된 한국어 글은 텔레그램 채널 `@fermata_kr`과 스레드 `@fermata.it.kr`에 자동으로 올린다**(`src/notify_telegram.py`·
   `src/notify_threads.py`, `publish_feature`·`publish_editorial`이 공개 직후 부른다). 표지 + 제목 + Take 두 문장 + 링크. 다시 올린
   글(최초 공개와 수정이 10분 넘게 벌어진 글)과 영어 글은 보내지 않는다. 토큰은 GitHub 시크릿(`TELEGRAM_BOT_TOKEN`,
