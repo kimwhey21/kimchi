@@ -183,14 +183,18 @@ def render(path: Path | str, graphics_dir: Path | None = None, upload: bool = Tr
     photo = doc.get("featured_photo") or {}
     unresolved: list[str] = []
     blocks = list(post["blocks"])
-    if magazine and photo.get("url") and not (blocks and blocks[0][0] == "img"):
+    # 표지 사진은 잡지만이 아니라 원고에 `featured_photo.url`이 있는 모든 글이다(2026-09-26, 사장님: "사진이 안 보이는데 …
+    # 다양하게 다채롭게 돌려쓰기로 한 거 아니었냐"). 그전에는 Checkpoint·프리뷰·가이드가 전부 같은 남색·베이지 cover 그래픽이었다.
+    if photo.get("url") and not (blocks and blocks[0][0] == "img" and str(blocks[0][1]).startswith("http")):
         # 네이버 동기화는 표지를 파일로 내려받아 붙이지만 여기서는 원본 주소를 쓴다 — 그림 폴더가 없어도 표지는 붙는다.
-        blocks.insert(0, ("img", str(photo["url"])))
+        # cover 그래픽이 첫 그림으로 들어 있으면 아래 resolve가 사진 주소로 갈아 끼우므로 여기서는 없을 때만 넣는다.
+        if not (blocks and blocks[0][0] == "img"):
+            blocks.insert(0, ("img", str(photo["url"])))
 
     def resolve(src: str) -> tuple[str | None, str | None]:
         src = str(src)
         name = Path(src).name
-        if magazine and photo.get("url") and (src.startswith("http") or "cover" in name):
+        if photo.get("url") and (src.startswith("http") or "cover" in name):
             credit = photo.get("credit")
             return _unsplash(str(photo["url"])), (f"사진: {credit}" if credit else None)
         if src.startswith("http"):

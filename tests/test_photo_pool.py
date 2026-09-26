@@ -131,3 +131,26 @@ class SelectionTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TurnRotationTest(unittest.TestCase):
+    """2026-09-26 — 사장님: "다양하게 다채롭게 돌려쓰기로 한 거 아니었냐". 횟수로 돌리면 다 쓰기 전엔 같은 장이 안 온다."""
+
+    def setUp(self) -> None:
+        self.photos = photo_pool.load()
+        self.entry = {"ticker": "005930", "name": "삼성전자", "sector": "반도체"}
+
+    def test_turns_cycle_through_every_photo_before_repeating(self) -> None:
+        ids = photo_pool.candidate_ids(self.entry, self.photos)
+        picks = [photo_pool.pick(self.entry, "2026-09-26", self.photos, turn=t)["id"] for t in range(len(ids))]
+        self.assertEqual(sorted(picks), sorted(ids))
+        self.assertEqual(photo_pool.pick(self.entry, "2026-09-26", self.photos, turn=len(ids))["id"], picks[0])
+
+    def test_turn_ignores_the_date(self) -> None:
+        a = photo_pool.pick(self.entry, "2026-09-17", self.photos, turn=3)["id"]
+        b = photo_pool.pick(self.entry, "2026-09-22", self.photos, turn=3)["id"]
+        self.assertEqual(a, b)
+
+    def test_us_ticker_and_kr_ticker_share_the_semiconductor_bundle(self) -> None:
+        intel = {"ticker": "INTC", "name": "인텔"}
+        self.assertEqual(photo_pool.candidate_ids(intel, self.photos), photo_pool.candidate_ids(self.entry, self.photos))

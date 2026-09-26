@@ -64,8 +64,19 @@ class PhotoCoverTest(unittest.TestCase):
         publish_wordpress가 alt로 "같은 데이터로 만든 이미지인지"를 판단합니다.
         2026-09-03에 alt가 같아 대표 이미지가 어제 것으로 남은 적이 있습니다.
         """
-        _, first = self._render("2026-09-06")
-        _, second = self._render("2026-09-07")
+        # 2026-09-26부터 사진은 날짜가 아니라 "그 묶음이 사진을 쓴 횟수"로 바뀐다 — 사이에 반도체 사진 표지가 한 번
+        # 나갔다는 원고를 두고 다음 날을 그린다.
+        saved = featured_image.EDITORIAL_DIR
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                featured_image.EDITORIAL_DIR = Path(tmp)
+                _, first = self._render("2026-09-16")
+                (Path(tmp) / "kr_2026-09-16.json").write_text(json.dumps(
+                    {"market": "kr", "date": "2026-09-16", "price_data": PRICE, "ko": {"title": "삼성전자가 끌어올린 장"}},
+                    ensure_ascii=False), encoding="utf-8")
+                _, second = self._render("2026-09-17")
+        finally:
+            featured_image.EDITORIAL_DIR = saved
         self.assertNotEqual(first["photo_id"], second["photo_id"])
         self.assertNotEqual(first["alt"], second["alt"])
 
@@ -127,3 +138,39 @@ class MoveColorTest(unittest.TestCase):
     def test_sign_decides_the_color(self) -> None:
         self.assertEqual(featured_image._move_color(0.01), featured_image._UP)
         self.assertEqual(featured_image._move_color(-0.01), featured_image._DOWN)
+
+
+class CoverTurnTest(unittest.TestCase):
+    """표지 돌려쓰기 횟수는 커밋된 시황 원고에서 다시 센다(2026-09-26) — 상태 파일이 없어 러너와 맥이 같은 답을 낸다."""
+
+    def _manuscript(self, folder: Path, market: str, date: str, title: str) -> None:
+        doc = {"market": market, "date": date, "price_data": PRICE, "ko": {"title": title}}
+        (folder / f"{market}_{date}.json").write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+
+    def test_counts_only_earlier_photo_days_of_the_same_bundle(self) -> None:
+        samsung = {"ticker": "005930", "name": "삼성전자", "sector": "반도체"}
+        kb = {"ticker": "105560", "name": "KB금융", "sector": "금융"}
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            self._manuscript(folder, "kr", "2026-09-16", "삼성전자가 끌어올린 장")      # 반도체 사진 1
+            self._manuscript(folder, "us", "2026-09-16", "KB금융이 끌어올린 장")        # 금융 — 다른 묶음
+            self._manuscript(folder, "kr", "2026-09-18", "SK하이닉스가 끌어올린 장")    # 반도체 사진 2
+            self._manuscript(folder, "kr", "2026-09-10", "삼성전자가 끌어올린 장")      # ROTATION_START 전 — 안 센다
+            self._manuscript(folder, "kr", "2026-09-19", "삼성전자와 SK하이닉스가 함께") # 둘 부름 → trio, 안 센다
+            self.assertEqual(featured_image.cover_turn(samsung, "kr", "2026-09-20", editorial_dir=folder), 2)
+            self.assertEqual(featured_image.cover_turn(kb, "kr", "2026-09-20", editorial_dir=folder), 1)
+            # 같은 날짜의 한국장은 미국장보다 앞이다
+            self.assertEqual(featured_image.cover_turn(kb, "us", "2026-09-16", editorial_dir=folder), 0)
+            self.assertEqual(featured_image.cover_turn(kb, "kr", "2026-09-16", editorial_dir=folder), 0)
+            self.assertEqual(featured_image.cover_turn(samsung, "us", "2026-09-16", editorial_dir=folder), 1)
+
+    def test_five_semiconductor_days_get_five_different_covers(self) -> None:
+        samsung = {"ticker": "005930", "name": "삼성전자", "sector": "반도체"}
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            picks = []
+            for day in ("16", "17", "18", "21", "22"):
+                turn = featured_image.cover_turn(samsung, "kr", f"2026-09-{day}", editorial_dir=folder)
+                picks.append(photo_pool.pick(samsung, f"2026-09-{day}", turn=turn)["id"])
+                self._manuscript(folder, "kr", f"2026-09-{day}", "삼성전자가 끌어올린 장")
+            self.assertEqual(len(set(picks)), 5, picks)

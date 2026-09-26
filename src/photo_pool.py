@@ -84,8 +84,15 @@ def _candidates(photos: list[dict], entry: dict | None) -> list[dict]:
     return [p for p in photos if sector and p.get("sector") == sector]
 
 
+def candidate_ids(entry: dict | None, photos: list[dict] | None = None) -> tuple[str, ...]:
+    """그 종목에 붙을 수 있는 사진 id 묶음(정렬). 표지 돌려쓰기의 **횟수를 세는 열쇠**다 — 미국 종목은 업종 없이
+    티커로만 사진이 걸려 있어 업종 이름으로는 못 묶는다(2026-09-26)."""
+    photos = photos if photos is not None else load()
+    return tuple(sorted(p["id"] for p in _candidates(photos, entry)))
+
+
 def pick(entry: dict | None, date_str: str, photos: list[dict] | None = None,
-         exclude: set[str] | None = None) -> dict | None:
+         exclude: set[str] | None = None, turn: int | None = None) -> dict | None:
     """그날 쓸 사진 하나. 맞는 것이 없으면 None(= 데이터 그래픽으로 갑니다).
 
     `date_str`로 돌려 쓰기 때문에 같은 종목이 이어져도 표지가 달라집니다.
@@ -102,6 +109,11 @@ def pick(entry: dict | None, date_str: str, photos: list[dict] | None = None,
     if not hits:
         return None
     hits = sorted(hits, key=lambda p: p["id"])
+    if turn is not None:
+        # 2026-09-26 — 사장님: "다양하게 다채롭게 돌려쓰기로 한 거 아니었냐". 날짜÷장수 나머지는 사흘 연속만 다르고
+        # 닷새 뒤엔 같은 사진이 돌아왔다(인텔 9/17·SK하이닉스 9/22가 같은 남색 기판). `turn`은 그 묶음이 표지 사진을
+        # 쓴 **횟수**(featured_image.cover_turn이 커밋된 원고에서 다시 센다)라 다섯 장을 다 쓰기 전에는 같은 장이 안 온다.
+        return hits[turn % len(hits)]
     try:
         ordinal = dt.date.fromisoformat(date_str).toordinal()
     except (TypeError, ValueError):

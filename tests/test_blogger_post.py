@@ -55,3 +55,27 @@ class BloggerPostTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PhotoCoverForEverySeriesTest(unittest.TestCase):
+    """잡지만이 아니라 `featured_photo.url`이 있는 모든 글의 첫 그림이 그 사진이다(2026-09-26)."""
+
+    def test_guide_with_photo_puts_photo_first_and_drops_graphic_cover(self):
+        doc = {
+            "kind": "feature", "series": "가이드", "date": "2026-09-20", "checked": "2026-09-20",
+            "slug": "photo-cover-guide", "tags": [],
+            "featured_photo": {"url": "https://images.unsplash.com/photo-abc?w=1600", "alt": "칩", "credit": "사진: 아무개 / Unsplash"},
+            "ko": {"title": "삼성전자는 왜 코스피와 같이 움직일까",
+                   "narrative": [{"heading": "1. 비중이 답이다", "body": "삼성전자는 코스피 시가총액 1위입니다."}],
+                   "closing": {"body": "비중을 먼저 봅니다."}},
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "ko_photo-cover-guide.json"
+            path.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+            graphics = Path(tmp) / "g"; graphics.mkdir()
+            (graphics / "01-cover.png").write_bytes(b"png")
+            result = blogger_post.render(path, graphics, upload=False)
+            html = result["html"]
+            self.assertIn("images.unsplash.com/photo-abc", html)
+            self.assertEqual(html.count("<img"), 1, html)          # 사진 한 장뿐, cover 그래픽은 안 나간다
+            self.assertLess(html.find("<img"), html.find("비중이 답이다"))

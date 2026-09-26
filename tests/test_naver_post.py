@@ -157,3 +157,17 @@ class NoFooterLinkTest(unittest.TestCase):
         self.assertEqual(post["blocks"][-1][0], "p")
         self.assertIn("판단", post["blocks"][-1][1])
 
+
+
+class PhotoCoverTest(unittest.TestCase):
+    """원고의 Unsplash 사진(`00-photo-cover.jpg`, naver_sync.render가 내려받는다)이 cover 그래픽보다 앞이다(2026-09-26)."""
+
+    def test_photo_cover_beats_graphic_cover(self) -> None:
+        import tempfile
+        tmp = Path(tempfile.mkdtemp())
+        for name in ("00-photo-cover.jpg", "01-cover.png", "02-number_cards.png"):
+            (tmp / name).write_bytes(b"x")
+        post = naver_post.build(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json"), tmp)
+        imgs = [b[1] for b in post["blocks"] if b[0] == "img"]
+        self.assertEqual(imgs[0], str(tmp / "00-photo-cover.jpg"))
+        self.assertNotIn(str(tmp / "01-cover.png"), imgs)          # 남색·베이지 틀은 사진이 있으면 빠진다

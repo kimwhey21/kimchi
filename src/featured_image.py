@@ -34,6 +34,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import json
+
 from PIL import Image, ImageDraw, ImageFilter
 
 from . import data_graphics, photo_pool
@@ -212,18 +214,71 @@ def choose_layout(price_data: dict, doc: dict | None = None,
     return "single"
 
 
-def _photo_for(price_data: dict, doc: dict | None, date_str: str) -> dict | None:
+# 표지 사진 돌려쓰기의 기억(2026-09-26). 9/8에 "같은 종목이 사흘 연속 주인공이어도 표지가 다르게"로 정하고 날짜÷장수
+# 나머지로 짰더니, 사흘 연속은 달랐지만 닷새 뒤엔 같은 사진이 돌아왔다(인텔 9/17·SK하이닉스 9/22가 같은 남색 기판,
+# 사장님: "다양하게 다채롭게 돌려쓰기로 한 거 아니었냐"). 상태 파일 대신 **커밋된 시황 원고**(price_data가 들어 있다)로
+# 그 묶음이 표지 사진을 쓴 횟수를 다시 센다 — 러너와 맥이 같은 저장소를 보므로 같은 답이 나오고, 같은 날 다시 돌려도
+# 같은 사진이다. ROTATION_START 전의 날은 세지 않는다(그때 사진은 옛 규칙으로 골랐다).
+EDITORIAL_DIR = Path(__file__).resolve().parents[1] / "editorial"
+ROTATION_START = "2026-09-15"
+
+
+def _turn_key(market: str, date_str: str) -> tuple[str, int]:
+    return (str(date_str), 0 if market == "kr" else 1)   # 같은 날짜면 한국장(저녁)이 미국장(다음 아침)보다 먼저
+
+
+def cover_turn(entry: dict | None, market: str, date_str: str,
+               editorial_dir: Path | None = None, photos: list[dict] | None = None) -> int:
+    """이 종목의 사진 묶음이 ROTATION_START 이후 표지 사진으로 쓰인 횟수 — 오늘 글보다 앞선 시황 원고만 센다."""
+    key = photo_pool.candidate_ids(entry, photos)
+    if not key:
+        return 0
+    folder = Path(editorial_dir or EDITORIAL_DIR)
+    mine = _turn_key(market, date_str)
+    turn, unreadable = 0, 0
+    for path in sorted(list(folder.glob("kr_*.json")) + list(folder.glob("us_*.json"))):
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+            past_market, past_date = str(doc.get("market") or ""), str(doc.get("date") or "")
+            if past_date < ROTATION_START or _turn_key(past_market, past_date) >= mine:
+                continue
+            price_data = doc.get("price_data") or {}
+            ko = doc.get("ko") if isinstance(doc.get("ko"), dict) else None
+            ranked = _ranked(price_data)
+            named = _stocks_named_in_title(ko, price_data)
+            if len(named) >= 2:
+                continue
+            if not (len(named) == 1 or len(ranked) < 3):
+                top, second = abs(ranked[0]["change_pct"]), abs(ranked[1]["change_pct"])
+                if not (second and top / second >= _SOLO_RATIO):
+                    continue
+            lead = _lead_for(price_data, ko)
+            if lead and photo_pool.candidate_ids(lead, photos) == key:
+                turn += 1
+        except Exception as error:  # noqa: BLE001 — 세고 알린다(조용한 실패 금지)
+            unreadable += 1
+            print(f"[경고] 표지 돌려쓰기 횟수를 셀 때 {path.name}을 읽지 못했습니다: {error}")
+    if unreadable:
+        print(f"[경고] 표지 돌려쓰기: 원고 {unreadable}편을 못 읽어 횟수가 낮게 잡혔을 수 있습니다.")
+    return turn
+
+
+def _photo_for(price_data: dict, doc: dict | None, date_str: str, market: str | None = None) -> dict | None:
     """그날 주인공에게 붙일 승인된 사진. 보관함이 깨졌으면 사진 없이 갑니다.
 
     보관함 오류로 **발행 자체가 멈추면 안 됩니다** — 표지가 그래픽이 되는 것과
     그날 글이 안 올라가는 것은 무게가 다릅니다. 다만 조용히 넘기지 않고 왜
     건너뛰었는지 찍습니다.
+
+    `market`이 있으면 돌려쓰기 횟수(`cover_turn`)로 고르고, 없으면(레이아웃 판정처럼
+    "사진이 있나"만 볼 때) 날짜로 고른다 — 어느 쪽이든 있고 없음은 같다.
     """
     lead = _lead_for(price_data, doc)
     if not lead:
         return None
     try:
-        return photo_pool.pick(lead, date_str)
+        turn = cover_turn(lead, market, date_str) if market else None
+        return photo_pool.pick(lead, date_str, turn=turn)
     except photo_pool.PhotoPoolError as error:
         print(f"[경고] 사진 보관함을 쓰지 못해 데이터 그래픽으로 갑니다: {error}")
         return None
@@ -433,7 +488,7 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path,
     """
     layout = choose_layout(price_data, doc, date_str)
     ranked = _ranked(price_data)
-    photo = _photo_for(price_data, doc, date_str) if layout == "photo" else None
+    photo = _photo_for(price_data, doc, date_str, market) if layout == "photo" else None
     if layout == "photo" and photo is None:
         layout = "single"          # 고르는 사이에 보관함이 사라진 경우
 
