@@ -16,6 +16,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
+from . import photo_pool
+
 TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates"
 
 # 외국인 순매매 표에 남길 줄 수 (순매수 상위 N + 순매도 상위 N).
@@ -160,6 +162,27 @@ def _prep_insight_section(insight_section: dict | None, lang: str = "ko") -> dic
     return {**insight_section, "stories": stories}
 
 
+def _localize_credits(generated: dict, lang: str) -> dict:
+    """영어 글이면 본문 사진·인사이트 사진의 저작자 표시를 영어로(2026-09-26, `photo_pool.credit_en`).
+    원고 dict는 한국어판과 사진 dict를 함께 쓰므로 고치지 않고 사본을 만든다."""
+    if lang != "en":
+        return generated
+
+    def fix(photo):
+        if isinstance(photo, dict) and photo.get("credit"):
+            return {**photo, "credit": photo_pool.credit_en(photo["credit"])}
+        return photo
+
+    out = dict(generated)
+    out["narrative"] = [{**s, "photo": fix(s.get("photo"))} if s.get("photo") else s
+                        for s in generated.get("narrative") or []]
+    insight = generated.get("insight_section")
+    if isinstance(insight, dict) and insight.get("stories"):
+        out["insight_section"] = {**insight, "stories": [{**st, "image": fix(st.get("image"))} if st.get("image") else st
+                                                         for st in insight["stories"]]}
+    return out
+
+
 def render(
     market: str,
     date_str: str,
@@ -170,6 +193,7 @@ def render(
     subscribe_form_action: str | None = None,
     related: list[dict] | None = None,
 ) -> str:
+    generated = _localize_credits(generated, lang)
     macro_cards = [_to_card(v, lang, date_str) for v in price_data["macro"].values()]
 
     first_body = (generated.get("narrative") or [{}])[0].get("body", "")

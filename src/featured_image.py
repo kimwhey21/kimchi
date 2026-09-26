@@ -577,7 +577,8 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path,
     caption = "Market snapshot graphic generated from the figures in this article."
     if photo:
         # CC BY 계열은 **저작자 표시가 의무**입니다. 캡션에 그대로 싣습니다.
-        caption = f"{photo['credit']}. Figures in the image are that day's closing data."
+        credit = photo_pool.credit_en(photo["credit"]) if lang == "en" else photo["credit"]
+        caption = f"{credit}. Figures in the image are that day's closing data."
         # alt에도 사진 id를 넣습니다. _featured_media_matches가 alt로 "같은
         # 데이터로 만든 이미지인지"를 판단하는데, 숫자가 같고 사진만 다른 날
         # 옛 미디어를 재사용하면 표지가 어제 사진으로 남습니다.

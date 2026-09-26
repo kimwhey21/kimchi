@@ -108,5 +108,40 @@ class EnglishPhotoTest(unittest.TestCase):
         self.assertNotIn('<img class="mb-story-photo"', html)
 
 
+class EnglishCreditTest(unittest.TestCase):
+    """풀 사진의 저작자 표시는 한국어로 적혀 있다 — 영어 글에서는 영어로(2026-09-26, us 9/14 'Photo'가 '사진: … / 플리커')."""
+
+    def test_every_pool_credit_converts_without_hangul(self) -> None:
+        from src import photo_pool
+        for photo in photo_pool.load():
+            with self.subTest(photo=photo["id"]):
+                converted = photo_pool.credit_en(photo.get("credit", ""))
+                self.assertFalse(any("가" <= ch <= "힣" for ch in converted), converted)
+        self.assertEqual(photo_pool.credit_en("사진: Un ragazzo chiamato Bi / 플리커 (BY-SA 2.0)"),
+                         "Photo: Un ragazzo chiamato Bi / Flickr (BY-SA 2.0)")
+
+    def test_unknown_korean_fails_loudly(self) -> None:
+        from src import photo_pool
+        with self.assertRaises(ValueError):
+            photo_pool.credit_en("사진: 누군가 / 모르는 곳")
+
+    def test_english_render_localizes_credit_and_korean_keeps_it(self) -> None:
+        doc = EnglishPhotoTest.US_0914
+        photo = {"id": "p", "url": "https://x/p.jpg", "alt": "chip",
+                 "credit": "사진: Un ragazzo chiamato Bi / 플리커 (BY-SA 2.0)"}
+        story_image = {"url": "https://x/s.jpg", "credit": "사진: naotakem / 플리커 (BY 2.0)"}
+        en = json.loads(json.dumps(doc["en"]))
+        en["narrative"][0]["photo"] = photo
+        for story in (en.get("insight_section") or {}).get("stories") or []:
+            story["image"] = story_image
+        html = render_html.render("us", "2026-09-14", doc["price_data"], en, lang="en")
+        self.assertIn("Photo: Un ragazzo chiamato Bi / Flickr (BY-SA 2.0)", html)
+        self.assertNotIn("플리커", html)
+        self.assertEqual(photo["credit"], "사진: Un ragazzo chiamato Bi / 플리커 (BY-SA 2.0)")   # 원본은 그대로
+        ko = json.loads(json.dumps(doc["ko"]))
+        ko["narrative"][0]["photo"] = photo
+        self.assertIn("사진: Un ragazzo chiamato Bi / 플리커", render_html.render("us", "2026-09-14", doc["price_data"], ko))
+
+
 if __name__ == "__main__":
     unittest.main()

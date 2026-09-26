@@ -134,3 +134,20 @@ def pick(entry: dict | None, date_str: str, photos: list[dict] | None = None,
 
 def resolve(photo: dict) -> Path:
     return ROOT / photo["file"]
+
+
+# 영어 글의 저작자 표시(2026-09-26). 풀의 `credit`은 한국어로 적혀 있어("사진: X / 플리커 (BY-SA 2.0)") 영어 시황
+# 사진 밑에 그대로 찍혔다(us 9/14). 저작자 표시는 CC 라이선스상 빼면 안 되므로 글자만 영어로 바꾼다.
+# 풀에 있는 꼴은 셋(Unsplash·플리커·위키미디어 공용)이다. 모르는 한국어가 남으면 예외로 올린다 — 조용히
+# 한국어를 영어 글에 내보내지 않는다.
+_CREDIT_EN = (("사진: ", "Photo: "), ("플리커", "Flickr"), ("위키미디어 공용", "Wikimedia Commons"),
+              ("퍼블릭 도메인", "Public domain"))
+
+
+def credit_en(credit: str) -> str:
+    text = str(credit or "")
+    for ko, en in _CREDIT_EN:
+        text = text.replace(ko, en)
+    if any("가" <= ch <= "힣" for ch in text):
+        raise ValueError(f"영어로 바꾸지 못한 저작자 표시입니다 — photo_pool._CREDIT_EN에 더하십시오: {credit!r}")
+    return text
