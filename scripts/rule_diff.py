@@ -22,7 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 RULE = re.compile(r"않습니다|않는다|금지|필수|반드시|막습니다|막는다|늘 |이상|이하|까지|\d+절|\d+장|\d+곳|\d+자|"
-                  r"`[^`]+`|\*\*[^*]+\*\*|해야|하지 마|씁니다|쓴다|요구")
+                  r"`[^`]+`|\*\*[^*]+\*\*|해야|하지 마|말 것|말라|지 말|씁니다|쓴다|요구")
 
 
 def rule_lines(text: str) -> list[str]:
@@ -58,6 +58,22 @@ def removed_rules(old: str, new: str) -> list[str]:
     return gone
 
 
+def _norm(text: str) -> str:
+    return re.sub(r"[\s`*·—\-,.:;()（）\"'「」]", "", text)
+
+
+def shortened_rules(old: str, new: str) -> list[str]:
+    """앞부분은 새 판에 있는데 **줄 전체는 없는** 규칙 줄 — 고쳐 썼거나, 뒷부분이 잘렸다(2026-09-26).
+
+    `removed_rules`는 고쳐 쓴 줄을 빠진 것으로 세지 않으려고 앞 24자·첫 문장만 본다. 그래서 "예약 시각을 마감 정각으로
+    되돌리지 말 것. 16:00/07:00 정각은 … 20분 뒤다."를 첫 문장만 남기고 잘라도 아무 말이 없었다. 이 목록은 그런 줄을
+    따로 보여 준다 — 사람이 "고쳐 썼다"인지 "뒷부분을 뺐다"인지 말해야 한다.
+    """
+    new_norm = _norm(new)
+    gone = set(removed_rules(old, new))
+    return [line for line in rule_lines(old) if line not in gone and _norm(line) not in new_norm]
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("path")
@@ -71,12 +87,18 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     new = (ROOT / rel).read_text(encoding="utf-8")
     gone = removed_rules(old, new)
-    if not gone:
+    short = shortened_rules(old, new)
+    if not gone and not short:
         print(f"{rel}: {a.ref} 대비 사라진 규칙 줄 없음.")
         return 0
-    print(f"{rel}: {a.ref} 대비 사라진 규칙 줄 {len(gone)}개 — 하나씩 '일부러 뺐다'고 말할 수 있어야 합니다.")
-    for line in gone:
-        print("  -", line[:120])
+    if gone:
+        print(f"{rel}: {a.ref} 대비 사라진 규칙 줄 {len(gone)}개 — 하나씩 '일부러 뺐다'고 말할 수 있어야 합니다.")
+        for line in gone:
+            print("  -", line[:120])
+    if short:
+        print(f"{rel}: 앞부분만 남은 규칙 줄 {len(short)}개 — 고쳐 쓴 것인지, 뒷부분을 뺀 것인지 줄마다 말하십시오.")
+        for line in short:
+            print("  ~", line[:120])
     return 1
 
 

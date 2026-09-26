@@ -79,9 +79,10 @@ _AWKWARD_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
 # 자리에서"가 걸렸다) 어간 음절 블록 전체를 제외한다 — 가~갛은 '가'로 시작하는
 # 모든 활용형(가·갔·갈·간·감…)을 한 번에 덮는다.
 _DECLINE_VERB = re.compile(
-    r"내(렸|린|려(?![가-갛오-옿와-왛서-섷노-놓두-둫주-줗]))"
+    r"내(렸|린|려(?![가-갛오-옿와-왛서-섷노-놓두-둫주-줗바-밯]))"   # 바~밯: 내려받다(2026-09-26)
 )
-_NOT_A_DECLINE = re.compile(r"(금리|결론|판단|평가|명령|지시|처방|진단|끌어)")
+# 결정·판정·신호·결단·조치·평결·선고를 내리다(2026-09-26 — "연준이 결정을 내렸습니다"가 걸렸다).
+_NOT_A_DECLINE = re.compile(r"(금리|결론|판단|평가|명령|지시|처방|진단|끌어|결정|판정|신호|결단|조치|평결|선고)")
 # 창이 좁으면 "금리를 0.25%포인트 내렸습니다"에서 '금리'를 놓친다.
 _DECLINE_WINDOW = 28
 
@@ -93,6 +94,8 @@ def _decline_wording(field: str, text: str) -> list[str]:
         before = text[max(0, match.start() - _DECLINE_WINDOW) : match.start()]
         if _NOT_A_DECLINE.search(before):
             continue
+        if _NOT_A_DECLINE.match(text[match.end(): match.end() + 8].lstrip()):
+            continue        # "연준이 내린 결정" — 뒤에 오는 말이 결정·판정이면 등락이 아니다
         snippet = text[max(0, match.start() - 18) : match.end() + 6].strip()
         issues.append(
             f"{field} '...{snippet}...': 등락은 '하락했습니다'로 씁니다. "

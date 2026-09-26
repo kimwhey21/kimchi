@@ -170,8 +170,14 @@ def _merge_price_file(existing: dict, fresh: dict) -> dict:
                 entry[key] = new[key]
         watchlist[ticker] = entry
     for ticker, entry in fresh_wl.items():
-        if ticker not in watchlist:
-            watchlist[ticker] = entry
+        if ticker in watchlist:
+            continue
+        # 한국 종목은 KRX 정규장 확정 종가로 덮어쓴 것만 더한다(2026-09-26). 휴장일 재수집은 거래일이 오늘이 아니라
+        # `_apply_krx_close`를 건너뛰므로, 그때 새로 잡힌 종목은 NXT가 섞인 값이다 — 이미 나간 글의 파일에 끼우지 않는다.
+        if str(ticker).isdigit() and len(str(ticker)) == 6 and "prev_close_krx" not in entry:
+            print(f"[안내] {ticker}: KRX 확정 종가가 아닌 값이라 이미 있는 거래일 파일에 더하지 않습니다.")
+            continue
+        watchlist[ticker] = entry
     merged["watchlist"] = watchlist
     merged["missing"] = list(existing.get("missing") or fresh.get("missing") or [])
     return merged

@@ -35,6 +35,8 @@
 """
 from __future__ import annotations
 
+import re
+
 import requests
 
 _URL = "https://m.stock.naver.com/api/stocks/marketValue/{market}"
@@ -181,10 +183,14 @@ def _is_us_common_stock(symbol: str, name: str) -> bool:
     if any(char in symbol for char in ("^", "/", ".")):
         return False
     lowered = name.lower()
-    return not any(
-        word in lowered
-        for word in ("preferred", "warrant", " unit", "depositary", "right")
-    )
+    # 2026-09-26: 'depositary'가 ADR(보통주 예탁증서 — ARM·BABA·PDD)까지 막았고, 'right'가 'Brightspring'까지 막았다.
+    # 우선주 예탁증서는 이름에 'preferred'가 있어 그대로 걸러지고, 권리(rights)는 낱말로만 찾는다.
+    # config/watchlist_us.yaml의 이름표에 "Arm Holdings plc American Depositary Shares"가 이미 있다 — 받으려던 종목이다.
+    if "depositary" in lowered and "american depositary" not in lowered:
+        return False
+    if re.search(r"\brights?\b", lowered):
+        return False
+    return not any(word in lowered for word in ("preferred", "warrant", " unit"))
 
 
 def fetch_top_dollar_volume_us(

@@ -111,7 +111,9 @@ if __name__ == "__main__":
     for k, v in sorted(posted.items(), key=lambda kv: kv[0]):
         rel = k.replace("\\", "/").split("market-brief/")[-1]
         path = ROOT / rel
-        if not path.exists() or "/magazine/" in rel or "/guides/" in rel or "/weekly/" in rel or "/events/" in rel:
+        # 가이드·주간·이벤트도 2026-09-22부터 전문이 나가므로 대조한다(2026-09-26). 전에는 요약본 시절 규칙대로 건너뛰면서
+        # "빠진 항목 합계: 0"을 찍었다 — 대조하지 않은 것을 온전하다고 적은 셈이었다. 잡지는 다른 블로그라 뺀다.
+        if not path.exists() or "/magazine/" in rel:
             continue
         if wanted and v["logNo"] not in wanted:
             continue

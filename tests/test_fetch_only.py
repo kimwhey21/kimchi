@@ -68,7 +68,8 @@ class WriteOnceMergeTest(unittest.TestCase):
                  "watchlist": {"005930": {"ticker": "005930", "name": "삼성전자", "price": 285000.0, "change_pct": 2.7, "series": [277500.0, 285000.0],
                                           "history": {"dates": ["a", "b"], "close": [277500.0, 285000.0]}, "trading_date": "2026-09-23", "source": "core",
                                           "foreign_net": 4513767, "institution_net": 1346883, "foreign_ratio": 46.63},
-                               "402340": {"ticker": "402340", "name": "SK스퀘어", "price": 1178000.0, "change_pct": 3.88, "source": "dynamic", "trading_date": "2026-09-23"}}}
+                               "402340": {"ticker": "402340", "name": "SK스퀘어", "price": 1178000.0, "change_pct": 3.88, "source": "dynamic", "trading_date": "2026-09-23",
+                                          "prev_close_krx": 1134000.0}}}
         out = main_mod._merge_price_file(self._old(), fresh)
         s = out["watchlist"]["005930"]
         self.assertEqual(s["price"], 286500.0)                       # 가격은 그대로
@@ -79,6 +80,13 @@ class WriteOnceMergeTest(unittest.TestCase):
         self.assertEqual(out["macro"]["KS11"]["change_pct"], 0.9)    # 지수도 그대로
         self.assertEqual(out["macro"]["KQ11"]["change_pct"], 1.21)   # 없던 항목은 더함
         self.assertIn("402340", out["watchlist"])                     # 새 편입 종목은 더함
+
+    def test_a_stock_without_krx_close_is_not_added_to_an_existing_file(self) -> None:
+        """휴장일 재수집은 KRX 종가 덮어쓰기를 건너뛴다 — 그때 새로 잡힌 종목(NXT 섞인 값)은 이미 나간 글의 파일에 끼우지 않는다."""
+        from src import main as main_mod
+        fresh = {"trading_date": "2026-09-23", "macro": {}, "watchlist": {
+            "000500": {"ticker": "000500", "name": "가온전선", "price": 1.0, "change_pct": 9.0, "source": "dynamic"}}}
+        self.assertNotIn("000500", main_mod._merge_price_file(self._old(), fresh)["watchlist"])
 
     def test_a_different_trading_date_is_a_new_file(self) -> None:
         from src import main as main_mod

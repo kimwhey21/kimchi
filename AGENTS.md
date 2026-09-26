@@ -32,7 +32,7 @@
   - **연쇄 목록**: 무엇을 바꾸기 전에 그것을 읽는 곳을 `grep`으로 다 찾아 표로 만든다(본진·네이버·표지·테스트·문서).
     표의 줄마다 '바꿈'·'해당 없음'을 적어 보고에 넣는다. 목록이 없으면 바꾸지 않는다.
   - **원본 대조**: 옮기거나 다시 쓴 것은 기계로 대조한다 — 네이버 글은 `python -m scripts.naver_audit`, 원고→네이버 블록은
-    `tests/test_naver_completeness.py`, 문서·지시문을 다시 쓰면 **`python -m scripts.rule_diff <파일>`로 사라진 규칙 줄을 뽑아
+    `tests/test_naver_completeness.py`, 문서·지시문을 다시 쓰면 **`python -m scripts.rule_diff <파일>`로 사라진 규칙 줄(과 앞부분만 남은 줄)을 뽑아
     보고에 열거하고 줄마다 '일부러 뺐다'고 말한다.** 말할 수 없는 줄은 도로 넣는다. 사장님이 정한 문구는 테스트
     바늘(`tests/test_preview_series.py`의 needle 등)로 박는다.
   - **보고의 '안 한 것' 칸**: 확인 못 한 것·손대지 않은 것을 보고에 따로 적는다. 비어 있으면 안 한 것이 없다는 뜻이다 —

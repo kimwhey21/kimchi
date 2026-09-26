@@ -82,7 +82,9 @@ def main(argv: list[str] | None = None) -> int:
     if not a.which or not a.candidates:
         ap.error("<kr|us|preview|checkpoint|weekly|weekahead|event> 와 후보를 주거나 --doc <원고>를 주세요.")
     price = json.loads(a.price.read_text(encoding="utf-8")) if a.price else None
-    recent = title_feed.feed_titles(count=10)
+    # 관문과 같은 목록(최근 5편, 2026-09-26) — 전에는 10편과 비교해 같은 후보라도 점수가 달라, 여기서 동점인 후보가
+    # 관문에서 '가장 먼 후보가 아니다'로 막힐 수 있었다(kr 9/21 관문 [5,2,4] vs 여기 [4,2,4]).
+    recent = title_feed.feed_titles()
     print(render([c for c in a.candidates if c.strip()], recent, price, KINDS[a.which]))
     return 0
 
