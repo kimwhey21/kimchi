@@ -42,6 +42,12 @@ jobs:
           WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
           WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
 
+      - name: 영어 시황 화면 확인
+        # 본진에 공개되는 영어 시황의 실제 화면에서 빈 그림을 센다(2026-09-26) — 9/9~9/25 영어 시황 24편의 그림 자리가
+        # 전부 `<img src="">`였는데 아무 검사도 영어 화면을 보지 않아 몰랐다. 실패하면 아래 텔레그램 알림이 간다.
+        if: always()
+        run: python -m scripts.site_audit --english
+
       - name: 실패 알림 (텔레그램 운영 대화)
         # 2026-09-12: 어떤 워크플로가 왜 죽었는지 휴대폰으로. 토큰이 없으면 조용히 넘어간다(curl이라 앞 단계가 어디서 죽었든 된다).
         if: failure()

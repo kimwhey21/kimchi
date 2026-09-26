@@ -44,6 +44,10 @@ jobs:
           WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
           FERMATA_AUTO_PUBLISH: ${{ vars.FERMATA_AUTO_PUBLISH }}
 
+      - name: 종목 페이지 화면 확인
+        # 갱신한 페이지를 방문자처럼 받아 본진 주소 링크(한국어 글은 비공개라 404)와 빈 그림을 센다(2026-09-26).
+        run: python -m scripts.site_audit --stocks
+
       - name: 실패 알림 (텔레그램 운영 대화)
         # 2026-09-12: 어떤 워크플로가 왜 죽었는지 휴대폰으로. 토큰이 없으면 조용히 넘어간다(curl이라 앞 단계가 어디서 죽었든 된다).
         if: failure()
