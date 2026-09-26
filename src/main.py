@@ -144,7 +144,9 @@ def _merge_price_file(existing: dict, fresh: dict) -> dict:
 
     - macro(지수·환율): 기존 값을 지킨다. 기존에 없는 항목만 새로 넣는다.
     - watchlist: 기존 종목은 가격 계열을 지키고, 수급(foreign_net·institution_net·foreign_ratio)이 비어 있으면
-      새 값으로 채운다(같은 날 수집은 0/27, 다음 날 재수집이 27/27을 채운다 — 2026-09-25 검증).
+      새 값으로 채운다. 같은 날 수집은 0/27이다 — 네이버가 마감 직후 전날 줄만 준다. 2026-09-25의 '다음 날 재수집이
+      27/27을 채운다'는 추석 연휴(거래일이 안 바뀌는 날)에만 맞았고, 평일에는 새 파일을 써서 이 병합이 돌지 않았다.
+      그래서 전 거래일 파일은 다음 날 아침 `scripts/fill_kr_flows.py`가 채운다(2026-09-26).
       새로 편입된 종목은 더한다. 기존 종목을 빼지는 않는다.
     """
     if str(existing.get("trading_date")) != str(fresh.get("trading_date")):

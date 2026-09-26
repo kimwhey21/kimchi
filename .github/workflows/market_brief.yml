@@ -124,6 +124,15 @@ jobs:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
 
+      - name: 한국장 전 거래일 수급 채우기
+        # 네이버 수급 API는 한국장 마감 직후(16:20)에 아직 전날 줄만 줘서, 그날 시세 파일의 종목별
+        # 외국인·기관 수급은 늘 비었다(2026-09-11부터). 다음 날 아침 미국장 수집 때는 전날 줄이 반드시
+        # 나와 있으므로 여기서 전 거래일 한국장 파일의 빈 칸만 채운다(2026-09-26). 가격은 건드리지 않는다.
+        # 이미 있는 파일을 고치는 것(M)이라 루틴 호출 조건(새 파일 ??)에는 걸리지 않는다. 실패해도 미국장
+        # 시세 커밋은 막지 않는다.
+        if: ${{ success() && steps.market.outputs.market == 'us' }}
+        run: python -m scripts.fill_kr_flows || echo "::warning::한국장 수급 채우기 실패 — 다음 아침에 다시 시도합니다"
+
       - name: 시세 파일 커밋
         id: commit
         # 조사·집필을 맡는 클라우드 루틴은 샌드박스 네트워크 정책 때문에

@@ -156,6 +156,18 @@ def price_summary(root: Path, path: Path, data: dict) -> tuple[list[str], dict]:
              f"종목 {len(entries)} (코어 {core} · 편입 {dynamic}) · 수급(foreign_net) 있는 종목 {flows} · "
              f"지수·환율 {len(macro)} · missing {len(missing)}"
              + (f" ({', '.join(str(m) for m in missing[:6])})" if missing else "")]
+    # 한국장 종목별 수급은 그날 파일에 없고 다음 날 아침 전 거래일 파일에 채워진다(2026-09-26) — 쓸 수 있는 쪽을 보여 준다.
+    if path.name.startswith("price_kr_"):
+        earlier = sorted(p for p in path.parent.glob("price_kr_*.json") if p.name < path.name)
+        if earlier:
+            try:
+                prev = json.loads(earlier[-1].read_text(encoding="utf-8"))
+                pw = list((prev.get("watchlist") or {}).values())
+                pf = sum(1 for e in pw if e.get("foreign_net") is not None)
+                lines.append(f"전 거래일 {earlier[-1].name}: 종목별 수급 {pf}/{len(pw)} — 종목별 수급은 여기서 '어제(날짜)'로 씁니다"
+                             " (그림은 \"day\": \"previous\")")
+            except (OSError, ValueError) as exc:
+                lines.append(f"전 거래일 파일을 읽지 못했습니다: {earlier[-1].name} ({exc})")
     return lines, stats
 
 

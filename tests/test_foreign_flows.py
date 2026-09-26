@@ -46,7 +46,7 @@ class ForeignFlowsTest(unittest.TestCase):
 
     def test_all_stocks_empty_is_reported_once(self) -> None:
         err = io.StringIO()
-        with mock.patch.object(f, "fetch_one", return_value=None), redirect_stderr(err):
+        with mock.patch.object(f, "fetch_rows", return_value=None), redirect_stderr(err):
             f.attach_foreign_flows({"005930": {}, "000660": {}})
         self.assertIn("한 종목도 받지 못했습니다", err.getvalue())
 
@@ -55,7 +55,7 @@ class ForeignFlowsTest(unittest.TestCase):
         entry = {}
         flow = {"date": "2026.09.17", "institution_net": 196838, "foreign_net": -2170687, "foreign_ratio": 46.48}
         err = io.StringIO()
-        with mock.patch.object(f, "fetch_one", return_value=flow), redirect_stderr(err):
+        with mock.patch.object(f, "fetch_rows", return_value=[flow]), redirect_stderr(err):
             f.attach_foreign_flows({"005930": entry}, trading_date="2026-09-18")
         self.assertNotIn("foreign_net", entry)
         self.assertIn("전 거래일 값", err.getvalue())
@@ -63,9 +63,19 @@ class ForeignFlowsTest(unittest.TestCase):
     def test_matching_bizdate_is_attached(self) -> None:
         entry = {}
         flow = {"date": "2026.09.18", "institution_net": 1, "foreign_net": 2, "foreign_ratio": 3.0}
-        with mock.patch.object(f, "fetch_one", return_value=flow):
+        with mock.patch.object(f, "fetch_rows", return_value=[flow]):
             f.attach_foreign_flows({"005930": entry}, trading_date="2026-09-18")
         self.assertEqual(entry["foreign_net"], 2)
+
+    def test_the_row_for_the_trading_date_is_picked_from_several_days(self) -> None:
+        """여러 날을 받아 날짜가 맞는 줄을 고른다(2026-09-26) — 최신 줄이 아니어도."""
+        rows = [{"date": "2026.09.23", "institution_net": 9, "foreign_net": 9, "foreign_ratio": 9.0},
+                {"date": "2026.09.22", "institution_net": 1, "foreign_net": 2, "foreign_ratio": 3.0}]
+        self.assertEqual(f.row_for(rows, "2026-09-22")["foreign_net"], 2)
+        self.assertIsNone(f.row_for(rows, "2026-09-21"))
+        with mock.patch.object(f.requests, "get", return_value=_Resp([ROW, ROW])) as get:
+            self.assertEqual(len(f.fetch_rows("005930", 15)), 2)
+        self.assertIn("pageSize=15", get.call_args.args[0])
 
 
 if __name__ == "__main__":

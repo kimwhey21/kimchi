@@ -340,13 +340,11 @@ def _attach_section_graphics(doc_section: list, price_data: dict, market: str,
         if not isinstance(spec, dict) or not spec.get("kind"):
             continue
         kind = spec["kind"]
-        options = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt", "lang")}
-        if kind == "two_day_compare":
-            options["previous"] = previous
         try:
+            source, options = data_graphics.graphic_inputs(spec, price_data, previous)
             suffix = "_en" if lang == "en" else ""
             local = OUTPUT_DIR / f"{market}_{date_str}_{index}_{kind}{suffix}.png"
-            data_graphics.build(kind, price_data, local, lang=lang, **options)
+            data_graphics.build(kind, source, local, lang=lang, **options)
             if not upload:
                 section["graphic"] = {"url": str(local), "alt": spec.get("title", ""), "kind": kind}
                 print(f"[안내] 본문 그래픽(업로드 안 함): {kind} -> {local}")

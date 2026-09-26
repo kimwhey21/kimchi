@@ -23,7 +23,7 @@ import sys
 
 import requests
 
-_URL = "https://m.stock.naver.com/api/stock/{code}/trend?pageSize=1"
+_URL = "https://m.stock.naver.com/api/stock/{code}/trend?pageSize={size}"
 _HEADERS = {"User-Agent": "Mozilla/5.0", "Accept": "application/json"}
 
 
@@ -45,6 +45,33 @@ def _parse_row(row: dict) -> dict:
     }
 
 
+def fetch_rows(code: str, page_size: int = 5) -> list[dict] | None:
+    """종목 하나의 최근 `page_size`거래일 외국인/기관 순매매 — 최신이 앞. 실패하면 None.
+
+    2026-09-26: 전에는 `pageSize=1`로 최신 한 줄만 받았는데, 장 마감 직후(16:20)에는 그 한 줄이 아직 전날이라 날짜
+    대조에서 버려졌고, 결과적으로 9/11부터 한국장 시세 파일의 종목별 수급이 매일 비었다. 여러 날을 받아 **날짜가 맞는
+    줄**을 고르면, 다음 날 아침 채우기(`scripts/fill_kr_flows.py`)와 지난 파일 되채우기가 같은 함수로 된다. 최대 15일.
+    """
+    try:
+        response = requests.get(_URL.format(code=code, size=page_size), headers=_HEADERS, timeout=10)
+        response.raise_for_status()
+        rows = response.json()
+        if not isinstance(rows, list) or not rows:
+            raise ValueError("투자자 동향 응답이 비어 있음")
+        return [_parse_row(row) for row in rows]
+    except Exception as e:
+        print(f"[경고] 외국인 매매동향 조회 실패 (code={code}): {e!r}", file=sys.stderr)
+        return None
+
+
+def row_for(rows: list[dict] | None, trading_date: str) -> dict | None:
+    """그 거래일("2026-09-18")의 줄 — 없으면 None(틀린 날짜의 숫자를 붙이지 않는다)."""
+    for row in rows or []:
+        if row["date"].replace(".", "-") == trading_date:
+            return row
+    return None
+
+
 def fetch_one(code: str) -> dict | None:
     """종목 하나의 가장 최근 거래일 외국인/기관 순매매 동향을 돌려줍니다.
 
@@ -52,16 +79,8 @@ def fetch_one(code: str) -> dict | None:
            "foreign_ratio": float} 또는 실패 시 None.
     (institution_net/foreign_net은 순매매 "수량"이며, 양수=순매수 음수=순매도)
     """
-    try:
-        response = requests.get(_URL.format(code=code), headers=_HEADERS, timeout=10)
-        response.raise_for_status()
-        rows = response.json()
-        if not isinstance(rows, list) or not rows:
-            raise ValueError("투자자 동향 응답이 비어 있음")
-        return _parse_row(rows[0])
-    except Exception as e:
-        print(f"[경고] 외국인 매매동향 조회 실패 (code={code}): {e!r}", file=sys.stderr)
-        return None
+    rows = fetch_rows(code, 1)
+    return rows[0] if rows else None
 
 
 def attach_foreign_flows(watchlist: dict, trading_date: str | None = None) -> dict:
@@ -80,10 +99,11 @@ def attach_foreign_flows(watchlist: dict, trading_date: str | None = None) -> di
     got = 0
     stale = 0
     for ticker, entry in watchlist.items():
-        flow = fetch_one(ticker)
-        if not flow:
+        rows = fetch_rows(ticker, 5)
+        if not rows:
             continue
-        if trading_date and flow["date"].replace(".", "-") != trading_date:
+        flow = row_for(rows, trading_date) if trading_date else rows[0]
+        if not flow:
             stale += 1
             continue
         got += 1
@@ -94,7 +114,8 @@ def attach_foreign_flows(watchlist: dict, trading_date: str | None = None) -> di
         if stale:
             # 조용한 실패 금지(2026-09-18): "수집이 죽었다"와 "아직 전날 값만 있다"는 다른 문제다.
             print(f"[경고] 외국인·기관 수급이 전부 전 거래일 값입니다({stale}/{len(watchlist)}종목) "
-                  "— 네이버가 아직 오늘 행을 안 올렸습니다. 오늘 원고에는 쓰지 마세요.", file=sys.stderr)
+                  "— 네이버가 아직 오늘 행을 안 올렸습니다. 다음 날 아침 미국장 수집이 채웁니다"
+                  "(scripts/fill_kr_flows.py). 오늘 원고는 전 거래일 파일의 확정 수급을 '어제'로 쓰세요.", file=sys.stderr)
         else:
             print(f"[경고] 외국인·기관 수급을 한 종목도 받지 못했습니다({len(watchlist)}종목) — 수집 경로가 죽었는지 보세요.",
                   file=sys.stderr)

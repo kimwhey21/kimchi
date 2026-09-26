@@ -157,11 +157,14 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
     used: set[str] = {cover["id"]} if cover else set()
     for index, section in enumerate(ko.get("narrative") or [], start=1):
         spec = section.get("graphic")
+        source = None
         if isinstance(spec, dict) and spec.get("kind"):
+            try:
+                source, options = data_graphics.graphic_inputs(spec, price_data, _previous_price_data(market, date_str))
+            except ValueError as exc:       # 그림만 건너뛴다 — 같은 절의 사진 검사는 아래에서 계속한다
+                issues.append(f"그래픽(본문 {index}, {spec['kind']}) — {exc}")
+        if source is not None:
             kind = spec["kind"]
-            options = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt")}
-            if kind == "two_day_compare":
-                options["previous"] = _previous_price_data(market, date_str)
             allowed = {"movers_list": data_graphics.MOVERS_STYLES,
                        "stock_spotlight": data_graphics.SPOTLIGHT_STYLES}.get(kind)
             if allowed and options.get("style") and options["style"] not in allowed:
@@ -174,7 +177,7 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
             graphic_notes: list[str] = []
             try:
                 spec_issues = graphic_checks.collect_spec_issues(
-                    kind, options, str(options.get("title") or ""), price_data=price_data,
+                    kind, options, str(options.get("title") or ""), price_data=source,
                     section_body=str(section.get("body") or ""), notes_out=graphic_notes)
             except Exception as exc:  # noqa: BLE001 - 검사 자체가 죽으면 그것도 목록에(조용히 통과시키지 않는다)
                 spec_issues = [f"그래픽 검사 실패: {exc}"]
@@ -182,12 +185,12 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
             summary += [f"(참고) 그래픽(본문 {index}, {kind}) — {n}" for n in graphic_notes]
             try:
                 out = render_dir / f"{index:02d}-{kind}.png"
-                data_graphics.build(kind, price_data, out, **options)
+                data_graphics.build(kind, source, out, **options)
                 graphics += 1
                 rendered.append(str(out))
             except Exception as exc:  # noqa: BLE001 - 어떤 실패든 목록에 담는다
                 issues.append(f"그래픽(본문 {index}, {kind}) — {exc}")
-        elif spec:
+        elif spec and not (isinstance(spec, dict) and spec.get("kind")):
             issues.append(f"그래픽(본문 {index}) — graphic에 kind가 없습니다: {spec!r}")
         photo = section.get("photo")
         if isinstance(photo, dict):
@@ -219,11 +222,9 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
         if not (isinstance(spec, dict) and spec.get("kind")):
             continue
         kind = spec["kind"]
-        options = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt", "lang")}
-        if kind == "two_day_compare":
-            options["previous"] = _previous_price_data(market, date_str)
         try:
-            data_graphics.build(kind, price_data, render_dir / "en" / f"{index:02d}-{kind}.png", lang="en", **options)
+            source, options = data_graphics.graphic_inputs(spec, price_data, _previous_price_data(market, date_str))
+            data_graphics.build(kind, source, render_dir / "en" / f"{index:02d}-{kind}.png", lang="en", **options)
         except Exception as exc:  # noqa: BLE001 - 어떤 실패든 목록에 담는다
             issues.append(f"영어 그래픽(본문 {index}, {kind}) — {exc}")
     # 인사이트 사진도 파일로 남긴다(2026-09-16) — 번호 90번대는 본문 절과 겹치지 않게 띄운 것이다.

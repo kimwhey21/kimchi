@@ -524,7 +524,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "반도체"
+      "sector": "반도체",
+      "foreign_net": -1906839,
+      "institution_net": 1660246,
+      "foreign_ratio": 46.52
     },
     "000660": {
       "ticker": "000660",
@@ -691,7 +694,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "반도체"
+      "sector": "반도체",
+      "foreign_net": -262655,
+      "institution_net": 217161,
+      "foreign_ratio": 50.2
     },
     "009150": {
       "ticker": "009150",
@@ -858,7 +864,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "반도체"
+      "sector": "반도체",
+      "foreign_net": 80636,
+      "institution_net": 71790,
+      "foreign_ratio": 37.69
     },
     "042700": {
       "ticker": "042700",
@@ -1025,7 +1034,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "반도체"
+      "sector": "반도체",
+      "foreign_net": -65114,
+      "institution_net": -783,
+      "foreign_ratio": 7.06
     },
     "105560": {
       "ticker": "105560",
@@ -1192,7 +1204,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "금융"
+      "sector": "금융",
+      "foreign_net": -268867,
+      "institution_net": 264066,
+      "foreign_ratio": 78.99
     },
     "055550": {
       "ticker": "055550",
@@ -1359,7 +1374,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "금융"
+      "sector": "금융",
+      "foreign_net": -64367,
+      "institution_net": 70424,
+      "foreign_ratio": 61.82
     },
     "032830": {
       "ticker": "032830",
@@ -1526,7 +1544,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "금융"
+      "sector": "금융",
+      "foreign_net": -18987,
+      "institution_net": -554,
+      "foreign_ratio": 23.15
     },
     "005380": {
       "ticker": "005380",
@@ -1693,7 +1714,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "자동차"
+      "sector": "자동차",
+      "foreign_net": -93098,
+      "institution_net": 6587,
+      "foreign_ratio": 24.39
     },
     "000270": {
       "ticker": "000270",
@@ -1860,7 +1884,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "자동차"
+      "sector": "자동차",
+      "foreign_net": -69199,
+      "institution_net": 2922,
+      "foreign_ratio": 39.22
     },
     "329180": {
       "ticker": "329180",
@@ -2027,7 +2054,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "조선·방산"
+      "sector": "조선·방산",
+      "foreign_net": -4805,
+      "institution_net": -28258,
+      "foreign_ratio": 13.67
     },
     "012450": {
       "ticker": "012450",
@@ -2194,7 +2224,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "조선·방산"
+      "sector": "조선·방산",
+      "foreign_net": -15965,
+      "institution_net": 12381,
+      "foreign_ratio": 45.48
     },
     "034020": {
       "ticker": "034020",
@@ -2361,7 +2394,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "발전·원전"
+      "sector": "발전·원전",
+      "foreign_net": -601267,
+      "institution_net": -199859,
+      "foreign_ratio": 23.27
     },
     "373220": {
       "ticker": "373220",
@@ -2528,7 +2564,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "2차전지"
+      "sector": "2차전지",
+      "foreign_net": -6881,
+      "institution_net": 59130,
+      "foreign_ratio": 5.54
     },
     "247540": {
       "ticker": "247540",
@@ -2695,7 +2734,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "2차전지"
+      "sector": "2차전지",
+      "foreign_net": -97357,
+      "institution_net": 11967,
+      "foreign_ratio": 14.86
     },
     "207940": {
       "ticker": "207940",
@@ -2862,7 +2904,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "바이오"
+      "sector": "바이오",
+      "foreign_net": -4537,
+      "institution_net": 1682,
+      "foreign_ratio": 13.19
     },
     "196170": {
       "ticker": "196170",
@@ -3029,7 +3074,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "바이오"
+      "sector": "바이오",
+      "foreign_net": 267,
+      "institution_net": -18292,
+      "foreign_ratio": 15.3
     },
     "068270": {
       "ticker": "068270",
@@ -3196,7 +3244,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "바이오"
+      "sector": "바이오",
+      "foreign_net": -92467,
+      "institution_net": 47311,
+      "foreign_ratio": 25.31
     },
     "035420": {
       "ticker": "035420",
@@ -3363,7 +3414,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "플랫폼"
+      "sector": "플랫폼",
+      "foreign_net": -91682,
+      "institution_net": -43488,
+      "foreign_ratio": 35.96
     },
     "035720": {
       "ticker": "035720",
@@ -3530,7 +3584,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "플랫폼"
+      "sector": "플랫폼",
+      "foreign_net": -603127,
+      "institution_net": -73911,
+      "foreign_ratio": 28.86
     },
     "278470": {
       "ticker": "278470",
@@ -3697,7 +3754,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "소비재"
+      "sector": "소비재",
+      "foreign_net": 8621,
+      "institution_net": -26977,
+      "foreign_ratio": 37.92
     },
     "277810": {
       "ticker": "277810",
@@ -3864,7 +3924,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "core",
-      "sector": "로봇"
+      "sector": "로봇",
+      "foreign_net": -13725,
+      "institution_net": 9648,
+      "foreign_ratio": 5.67
     },
     "010170": {
       "ticker": "010170",
@@ -4031,7 +4094,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 670984000000
+      "trading_value": 670984000000,
+      "foreign_net": 4389318,
+      "institution_net": 121315,
+      "foreign_ratio": 4.88
     },
     "402340": {
       "ticker": "402340",
@@ -4198,7 +4264,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 333292000000
+      "trading_value": 333292000000,
+      "foreign_net": -43024,
+      "institution_net": 10824,
+      "foreign_ratio": 46.49
     },
     "036930": {
       "ticker": "036930",
@@ -4365,7 +4434,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 208508000000
+      "trading_value": 208508000000,
+      "foreign_net": -35149,
+      "institution_net": 19638,
+      "foreign_ratio": 8.86
     },
     "006400": {
       "ticker": "006400",
@@ -4532,7 +4604,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 163192000000
+      "trading_value": 163192000000,
+      "foreign_net": -48839,
+      "institution_net": 48838,
+      "foreign_ratio": 25.69
     },
     "240810": {
       "ticker": "240810",
@@ -4699,7 +4774,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 117654000000
+      "trading_value": 117654000000,
+      "foreign_net": 140275,
+      "institution_net": 79598,
+      "foreign_ratio": 15.21
     },
     "000150": {
       "ticker": "000150",
@@ -4866,7 +4944,10 @@
       "unit": "",
       "trading_date": "2026-09-16",
       "source": "dynamic",
-      "trading_value": 114289000000
+      "trading_value": 114289000000,
+      "foreign_net": -27821,
+      "institution_net": 24122,
+      "foreign_ratio": 19.45
     }
   },
   "trading_date": "2026-09-16",

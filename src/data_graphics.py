@@ -1122,6 +1122,26 @@ BUILDERS = {"index_card": index_card, "sector_bars": sector_bars,
             "number_cards": number_cards, "fact_table": fact_table}
 
 
+# 전 거래일 시세로 그릴 수 있는 그림(2026-09-26). 종목별 외국인·기관 수급은 그날 마감 직후에는 아직 없고 다음 날 아침에야
+# 채워지므로(`scripts/fill_kr_flows.py`), 한국장 글은 확정된 전 거래일 수급을 '어제'로 그린다 — 명세에 `"day": "previous"`.
+PREVIOUS_DAY_KINDS = ("flow_chart", "flow_compare")
+
+
+def graphic_inputs(spec: dict, price_data: dict, previous: dict | None) -> tuple[dict, dict]:
+    """원고의 graphic 명세 → (그릴 시세, 빌더 인자). 발행(`publish_editorial`)과 관문(`editorial_gate`)이 같이 쓴다."""
+    kind = spec["kind"]
+    options = {k: v for k, v in spec.items() if k not in ("kind", "url", "alt", "lang", "day")}
+    if kind == "two_day_compare":
+        options["previous"] = previous
+    if spec.get("day") == "previous":
+        if kind not in PREVIOUS_DAY_KINDS:
+            raise ValueError(f"\"day\": \"previous\"는 {', '.join(PREVIOUS_DAY_KINDS)}에만 씁니다({kind})")
+        if not previous:
+            raise ValueError("전 거래일 시세 파일이 없어 어제 수급을 그릴 수 없습니다")
+        return previous, options
+    return price_data, options
+
+
 def build(kind: str, price_data: dict, output_path: Path, lang: str = "ko", **kwargs) -> dict:
     """원고의 graphic 지정을 그림 파일로 만들고 렌더러가 쓸 정보를 돌려줍니다.
 
