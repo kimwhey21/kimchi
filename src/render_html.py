@@ -17,6 +17,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 from . import photo_pool
+from .english_sources import english_sources, has_hangul
 
 TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates"
 
@@ -71,7 +72,13 @@ DEFAULT_ICON = "chip"
 
 
 def _display_name(entry: dict, lang: str) -> str:
-    return entry.get("name_en") or entry["name"] if lang == "en" else entry["name"]
+    if lang != "en":
+        return entry["name"]
+    # 영어 글: 편입 종목은 영어 이름을 못 찾으면 `name_en`에 한글이 들어간다(2026-09-26 실측 9종목) — 그때는 종목 코드로.
+    name_en = entry.get("name_en") or ""
+    if name_en and not has_hangul(name_en):
+        return name_en
+    return entry.get("ticker") or name_en or entry["name"]
 
 
 def _to_card(entry: dict, lang: str = "ko", reference_date: str | None = None) -> dict:
@@ -262,7 +269,7 @@ def render(
         stock_cards=stock_cards,
         outlook=generated.get("outlook"),
         closing=generated.get("closing"),
-        source_notes=generated.get("sources", []),
+        source_notes=english_sources(generated.get("sources")) if lang == "en" else generated.get("sources", []),
         insight_section=_prep_insight_section(generated.get("insight_section"), lang),
         calendar=generated.get("calendar", []),
         foreign_flow_rows=foreign_flow_rows,

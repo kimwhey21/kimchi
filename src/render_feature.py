@@ -11,6 +11,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+from .english_sources import english_source
+
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATES = ROOT / "templates"
 
@@ -68,7 +70,8 @@ def render(doc: dict, kicker: str, figures: dict[int, dict] | None = None,
         strings=strings,
         # 원고의 `sources`를 화면에 싣는다(2026-09-15). 그전에는 `source_check`가 개수만 세고
         # 독자에게는 보이지 않아, 조사해 놓고 인용을 버리는 꼴이었다.
-        sources=[s for s in (doc.get("sources") or []) if s.get("name")],
+        sources=[english_source(s) if str(doc.get("lang") or "ko") == "en" else s
+                 for s in (doc.get("sources") or []) if s.get("name")],   # 영어 글은 출처도 영어로(2026-09-26)
         checked_line=_checked_line(doc, strings),
         byline=doc.get("byline") or strings["byline"],
     )

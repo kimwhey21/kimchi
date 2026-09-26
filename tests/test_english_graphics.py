@@ -185,5 +185,36 @@ class GuideLinkTest(unittest.TestCase):
         self.assertNotIn("Guides for foreign investors", ko_html)
 
 
+
+class EnglishSourcesAndNamesTest(unittest.TestCase):
+    """영어 글에 한국어가 새지 않게(2026-09-26 — 공개 글 57편 중 17편의 본문에 한국어가 남아 있었다)."""
+
+    def test_korean_sources_become_english_and_keep_the_link(self) -> None:
+        from src import english_sources as es
+        got = es.english_source({"name": "아시아경제", "title": "코스피, 6800선 강보합 마감", "url": "https://view.asiae.co.kr/a"})
+        self.assertEqual(got, {"name": "Asia Economy", "title": es.KOREAN_ARTICLE, "url": "https://view.asiae.co.kr/a"})
+        unknown = es.english_source({"name": "잡포스트", "title": "현대건설 급등", "url": "https://www.job-post.co.kr/n/1"})
+        self.assertEqual(unknown["name"], "job-post.co.kr")                 # 모르는 매체는 지어내지 않고 주소로
+        same = {"name": "Reuters", "title": "Stocks rise", "url": "https://reuters.com/x"}
+        self.assertEqual(es.english_source(same), same)
+
+    def test_english_daily_page_has_no_hangul_in_sources_or_names(self) -> None:
+        import re
+        doc = json.loads((ROOT / "editorial" / "kr_2026-09-04.json").read_text(encoding="utf-8"))
+        html = render_html.render("kr", "2026-09-04", doc["price_data"], json.loads(json.dumps(doc["en"])), lang="en")
+        section = html[html.find('class="mb-sources"'):]
+        self.assertNotRegex(section[:section.find("</section>")], "[가-힣]")
+        ko = render_html.render("kr", "2026-09-04", doc["price_data"], json.loads(json.dumps(doc["ko"])))
+        self.assertIn("오피니언뉴스", ko)                                       # 한국어 글은 그대로
+
+    def test_hangul_name_en_falls_back_to_ticker(self) -> None:
+        entry = {"name": "삼현", "name_en": "삼현", "ticker": "437730"}
+        self.assertEqual(render_html._display_name(entry, "en"), "437730")
+        self.assertEqual(render_html._display_name({"name": "스피어", "name_en": "Sphere"}, "en"), "Sphere")
+        self.assertEqual(render_html._display_name(entry, "ko"), "삼현")
+        out = data_graphics.localized({"watchlist": {"437730": dict(entry)}}, "en")
+        self.assertEqual(out["watchlist"]["437730"]["name"], "437730")
+
+
 if __name__ == "__main__":
     unittest.main()

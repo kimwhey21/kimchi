@@ -166,8 +166,12 @@ def localized(price_data: dict | None, lang: str) -> dict | None:
     out = copy.deepcopy(price_data)
     for group in ("macro", "watchlist"):
         for entry in (out.get(group) or {}).values():
-            if entry.get("name_en"):
-                entry["name"] = _SHORT_EN.get(entry["name_en"], entry["name_en"])
+            name_en = entry.get("name_en") or ""
+            if name_en and not _has_hangul(name_en):
+                entry["name"] = _SHORT_EN.get(name_en, name_en)
+            elif _has_hangul(entry.get("name")) and entry.get("ticker"):
+                # 영어 이름을 못 찾은 편입 종목(`name_en`이 한글) — 영어 그림에는 종목 코드로(2026-09-26).
+                entry["name"] = str(entry["ticker"])
             sector = entry.get("sector")
             if sector and _has_hangul(sector):
                 entry["sector"] = _SECTOR_EN.get(sector, "Other")
