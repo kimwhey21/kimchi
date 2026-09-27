@@ -1,0 +1,120 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-27",
+  "checked": "2026-09-27",
+  "slug": "korea-us-tax-treaty-forms",
+  "category_id": 153,
+  "tags": ["korea dividend withholding tax", "US Korea tax treaty", "W-8BEN Korea", "IRS Form 6166", "NTS reduced tax rate application"],
+  "radar_origin": "list order (Category B) — search queue's fix quota was already used twice this week (2026-09-21, 2026-09-25); its one remaining 'new' line duplicated kospi-200-kosdaq-150-year-end-targets-2026, already published, so fell back to the topic list.",
+  "related": [
+    {
+      "title": "Korean Stock Taxes for Foreigners: 22%, 15%, 0.20%",
+      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
+    },
+    {
+      "title": "Korea Dividend Record Date: What Changed in 2026, and What Hasn't",
+      "url": "https://fermata.it.kr/korea-dividend-calendar/"
+    },
+    {
+      "title": "How to Buy Korean Stocks From the US or Canada (2026)",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    }
+  ],
+  "ko": {
+    "title": "Korea's 2026 Dividend Tax Treaty Rules: Why W-8BEN Doesn't Cut It",
+    "narrative": [
+      {
+        "heading": "The short answer: W-8BEN is the wrong form entirely",
+        "body": "If you searched for how W-8BEN relates to your Korean dividend tax, the direct answer is: it doesn't. W-8BEN is a US Internal Revenue Service form you give to a <b>US</b> withholding agent — your US broker, a US company paying you a fee — to certify that you are not a US person for US tax purposes. It has no role in a dividend paid by a Korean company to a US resident, because the withholding happens on the other side of the treaty. For Korean-source dividends, the paperwork that actually gets you the treaty rate is Korean, not American, and it runs through your broker or custodian as the withholding agent, backed by a US-issued certificate of residency. Skip that paperwork and Korea withholds at its full domestic rate — not 15%, but 22% — whether you filed a W-8BEN with your US broker or not."
+      },
+      {
+        "heading": "What Korea withholds by default: 22%, not 20%",
+        "body": "Korea's statutory withholding tax on dividends paid to a non-resident is 20%, but that is not the number that actually lands on your account. The Local Income Tax Act adds a surtax of 10% of the national tax, not 10 percentage points — 20% plus 2 percentage points of surtax — for a combined effective rate of 22%, according to PwC's Worldwide Tax Summaries for the Republic of Korea, current as of September 2026. That 22% is the default outcome for any US investor holding KRX-listed shares directly or through a US brokerage's Korean custody arrangement, unless the treaty-reduced rate has been separately established before the dividend is paid."
+      },
+      {
+        "heading": "The US treaty rate is 15% for almost every individual investor",
+        "body": "The US-Korea income tax treaty caps the withholding rate on dividends at 15% for portfolio investors — anyone holding less than 10% of the voting stock of the Korean company paying the dividend — and at 10% for a US corporate parent that owns 10% or more, per PwC's summary of the treaty rate. For essentially every individual buying KOSPI or KOSDAQ shares, ADRs, or a Korea ETF through a retail brokerage account, 15% is the applicable number; the 10% rate is built for direct corporate investment, not portfolio holdings. The gap between 22% and 15% is real money — on a stock yielding 3%, it is the difference between keeping 78 cents and 85 cents of every dollar of dividend income, before any US foreign tax credit."
+      },
+      {
+        "heading": "What actually proves you qualify: Korea's form, not America's",
+        "body": "The document that gets you 15% instead of 22% is a Korean National Tax Service application — for an individual, the Application for Entitlement to Reduced Tax Rate on Domestic Source Income (Form No. 29-12) — submitted to the withholding agent, your broker or its Korean custodian, not filed by you directly with a foreign government the way a tax return would be. Alongside it, the withholding agent needs a certificate proving you are a US tax resident for the relevant year; without both documents on file before the dividend is paid, Korea's system has no way to know a treaty even applies, and defaults to the full 22%."
+      },
+      {
+        "heading": "Getting the piece only the IRS can give you",
+        "body": "The certificate of US tax residency is IRS Form 6166, and the only way to get one is to file Form 8802 with the IRS first — use of Form 8802 is mandatory, according to the IRS's own page on the process. The user fee is $85 per application for individual filers as of September 2026, rising to $105 on October 1, 2026. The IRS does not publish a guaranteed turnaround time; it recommends mailing the application, fee included, at least 45 days before you need the certificate, and several tax-filing services report real-world processing commonly running six to ten weeks — treat that as a planning estimate, not an IRS-confirmed figure. The practical takeaway: order Form 6166 well before your first Korean dividend record date of the year, not after you notice 22% came out instead of 15%."
+      },
+      {
+        "heading": "The 2026 deadline that makes timing non-negotiable",
+        "body": "Since January 1, 2026, Korea has tightened this from a paperwork formality into a hard deadline: PwC's summary states that a withholding agent must submit the reduced-rate application and its supporting documents to the competent tax office by the end of February of the year following the year the dividend was paid. That is the withholding agent's own filing deadline to the tax authority — separate from, and earlier in practice, the step of getting your certificate of residency and reduced-rate application to your broker before the dividend is paid in the first place, which is what actually determines whether 15% or 22% comes out on the day it is paid. Miss either step and the fallback is the full 22%, corrected later only through a refund claim, if at all."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed the 20% national withholding rate plus 10%-of-tax local surtax (effective 22%), the 15%/10% US treaty rate split, and the withholding agent's end-of-February filing deadline effective January 1, 2026, through PwC's Worldwide Tax Summaries page for the Republic of Korea, current as of September 2026. We confirmed IRS Form 8802's mandatory status, the current $85 individual fee, and the October 1, 2026 increase to $105 directly from the IRS's own page on Form 6166. We found the individual-investor form number — 29-12, \"Application for Entitlement to Reduced Tax Rate on Domestic Source Income (for Non-resident Individual)\" — in a Clearstream international-settlement guide bearing that exact form title and number; we could not independently open a National Tax Service page confirming the same number, so we are naming Clearstream as the source for that specific figure rather than treating it as NTS-confirmed.\n\nWe could not verify what any single US broker actually does on your behalf — some custodians collect and file this paperwork automatically for clients holding Korean shares, others expect the investor to request and forward Form 6166 themselves, and we did not test either behavior directly. We also could not confirm the IRS's real-world Form 8802 processing time from the IRS itself; the six-to-ten-week estimate above comes from third-party filing services, not an IRS-published figure."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "W-8BEN has nothing to do with your Korean dividend withholding — it is a US form for US-source income, and filing one with your US broker changes nothing about what a Korean company withholds. The number that actually moves is set by Korea's own paperwork: an NTS reduced-rate application (Form No. 29-12 for individuals) filed with your broker as withholding agent, backed by an IRS Certificate of Residency (Form 6166, requested via Form 8802) proving you're a US taxpayer. Get both in place before a dividend is paid, and Korea withholds 15%, not 22%. Since January 1, 2026, your broker also has its own end-of-February deadline to file that paperwork with Korea's tax office — one more reason not to leave this until dividend season.\n\nThis guide reflects rates and procedures published through September 2026. Tax treaties, forms and deadlines can all change, and how any individual broker handles this paperwork varies — confirm your own broker's process and current IRS fees before relying on any figure here. This is not tax advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea dividend withholding: 22% default versus 15% US treaty rate",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea Dividend Withholding",
+        "left": {"label": "Default rate without treaty paperwork", "value": "22%"},
+        "right": {"label": "US treaty rate for portfolio holders", "value": "15%"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Korea dividend withholding rate by situation: no paperwork, US treaty portfolio, US treaty corporate",
+      "args": {
+        "title": "What Korea actually withholds on your dividend",
+        "subtitle": "Default rate vs. US treaty rate, by ownership",
+        "columns": ["Situation", "Rate"],
+        "rows": [
+          ["No treaty paperwork on file", "22%"],
+          ["US treaty, portfolio holder (under 10% ownership)", "15%"],
+          ["US treaty, 10%+ corporate ownership", "10%"]
+        ],
+        "source": "PwC Worldwide Tax Summaries, Republic of Korea — Corporate Withholding Taxes, checked September 2026",
+        "note": "The local surtax is 10% of the national withholding tax, not 10 percentage points — 20% national plus a 2-point surtax equals 22% combined."
+      },
+      "section": 2
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things that actually get you Korea's 15% treaty rate instead of 22%",
+      "args": {
+        "title": "What actually proves you qualify for 15%, not 22%",
+        "subtitle": "None of this is W-8BEN",
+        "items": [
+          {
+            "label": "File Korea's own reduced-rate form",
+            "why": "Form No. 29-12 for individual investors — filed with your broker as withholding agent, not a US IRS form."
+          },
+          {
+            "label": "Back it with an IRS Certificate of Residency",
+            "why": "Form 6166, requested through Form 8802. Korea has no way to verify your US tax residency without it."
+          },
+          {
+            "label": "Watch the end-of-February deadline",
+            "why": "Since Jan. 1, 2026, your withholding agent must file this with Korea's tax office by end of February."
+          }
+        ]
+      },
+      "section": 5
+    }
+  ],
+  "sources": [
+    {"name": "PwC", "title": "Korea, Republic of - Corporate - Withholding taxes", "url": "https://taxsummaries.pwc.com/republic-of-korea/corporate/withholding-taxes"},
+    {"name": "IRS", "title": "Form 6166 – Certification of U.S. tax residency", "url": "https://www.irs.gov/individuals/international-taxpayers/form-6166-certification-of-us-tax-residency"},
+    {"name": "Clearstream", "title": "Guide on completing the Application for Entitlement to Reduced Tax Rate on Domestic Source Income (for Non-resident Individual) [Form No.29-12]", "url": "https://www.clearstream.com/clearstream-en/securities-services/asset-services/tax-and-certification/guide-on-completing-the-application-for-entitlement-to-reduced-tax-rate-on-domestic-source-income-for-non-resident-individual-form-no-29-12--1314876"}
+  ]
+}
