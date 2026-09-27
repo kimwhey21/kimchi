@@ -241,7 +241,7 @@
 },
 "000270": {
 "corp": "00106641",
-"en": "Kia Corporation",
+"en": "KIA Corporation",
 "founded": "1944",
 "industry": "Autos & auto parts",
 "ksic": "30121",
@@ -501,11 +501,11 @@
 },
 "000760": {
 "corp": "00145686",
-"en": "Rifa Co., Ltd.",
+"en": "RIFA Co., Ltd.",
 "founded": "1950",
 "industry": "Wholesale trade",
 "ksic": "467",
-"name": "Rifa",
+"name": "RIFA",
 "pref": false,
 "web": "www.rifa.co.kr"
 },
@@ -601,11 +601,11 @@
 },
 "0008Z0": {
 "corp": "01294110",
-"en": "S & SYS Co., Ltd.",
+"en": "S&sys Co., Ltd.",
 "founded": "2017",
 "industry": "Electrical equipment",
 "ksic": "28123",
-"name": "S & SYS",
+"name": "S&sys",
 "pref": false,
 "web": "www.snsys.net"
 },
@@ -921,11 +921,11 @@
 },
 "001360": {
 "corp": "00126414",
-"en": "Samsung Pharmaceutical.Co., Ltd.",
+"en": "Samsung PHARMACEUTICAL.Co., Ltd.",
 "founded": "1929",
 "industry": "Pharmaceuticals",
 "ksic": "212",
-"name": "Samsung Pharmaceutical",
+"name": "Samsung PHARMACEUTICAL",
 "pref": false,
 "web": "www.sspharm.co.kr"
 },
@@ -1771,11 +1771,11 @@
 },
 "002820": {
 "corp": "00132211",
-"en": "SUN & L Co., Ltd.",
+"en": "Sun&l Co., Ltd.",
 "founded": "1959",
 "industry": "Rubber & plastics",
 "ksic": "22232",
-"name": "SUN & L",
+"name": "Sun&l",
 "pref": false,
 "web": "sunandl.com/"
 },
@@ -1801,11 +1801,11 @@
 },
 "002880": {
 "corp": "00149804",
-"en": "Dya Co., Ltd.",
+"en": "DYA Co., Ltd.",
 "founded": "1960",
 "industry": "Autos & auto parts",
 "ksic": "303",
-"name": "Dya",
+"name": "DYA",
 "pref": false,
 "web": "www.dy-a.co.kr"
 },
@@ -1971,11 +1971,11 @@
 },
 "003160": {
 "corp": "00118275",
-"en": "Di Corporation",
+"en": "DI Corporation",
 "founded": "1961",
 "industry": "Medical & precision instruments",
 "ksic": "27212",
-"name": "Di",
+"name": "DI",
 "pref": false,
 "web": "www.di.co.kr"
 },
@@ -3801,11 +3801,11 @@
 },
 "007120": {
 "corp": "00104786",
-"en": "MiraeING.Co., Ltd.",
+"en": "Mirae ING.Co., Ltd.",
 "founded": "1971",
 "industry": "IT services",
 "ksic": "620",
-"name": "MiraeING",
+"name": "Mirae ING",
 "pref": false,
 "web": "www.miraeing.co.kr"
 },
@@ -4341,11 +4341,11 @@
 },
 "009140": {
 "corp": "00102140",
-"en": "Kie Co., Ltd.",
+"en": "KIE Co., Ltd.",
 "founded": "1973",
 "industry": "Semiconductors & electronic components",
 "ksic": "2629",
-"name": "Kie",
+"name": "KIE",
 "pref": false,
 "web": "www.kie.co.kr"
 },
@@ -4371,11 +4371,11 @@
 },
 "009160": {
 "corp": "00138260",
-"en": "Simpacinc",
+"en": "SIMPACInc",
 "founded": "1973",
 "industry": "Steel & metals",
 "ksic": "24113",
-"name": "Simpacinc",
+"name": "SIMPACInc",
 "pref": false,
 "web": "www.simpac.co.kr"
 },
@@ -5027,11 +5027,11 @@
 },
 "011090": {
 "corp": "00139764",
-"en": "Enex Co., Ltd.",
+"en": "ENEX Co., Ltd.",
 "founded": "1976",
 "industry": "Furniture",
 "ksic": "32021",
-"name": "Enex",
+"name": "ENEX",
 "pref": false,
 "web": "www.enex.co.kr"
 },
@@ -5247,7 +5247,7 @@
 },
 "011790": {
 "corp": "00139889",
-"en": "SKC Ltd",
+"en": "SKC LTD",
 "founded": "1973",
 "industry": "Chemicals",
 "ksic": "204",
@@ -5853,11 +5853,11 @@
 },
 "014790": {
 "corp": "00161116",
-"en": "HL D&I Halla Corporation",
+"en": "HL D&i Halla Corporation",
 "founded": "1980",
 "industry": "Construction",
 "ksic": "41221",
-"name": "HL D&I Halla",
+"name": "HL D&i Halla",
 "pref": false,
 "web": "www.halla.co.kr"
 },
@@ -5883,11 +5883,11 @@
 },
 "014830": {
 "corp": "00159786",
-"en": "Unid Co., Ltd.",
+"en": "UNID Co., Ltd.",
 "founded": "1980",
 "industry": "Chemicals",
 "ksic": "20129",
-"name": "Unid",
+"name": "UNID",
 "pref": false,
 "web": "www.unid.co.kr"
 },
@@ -6423,11 +6423,11 @@
 },
 "017900": {
 "corp": "00152729",
-"en": "Auk Corp",
+"en": "AUK CORP",
 "founded": "1984",
 "industry": "Semiconductors & electronic components",
 "ksic": "2612",
-"name": "Auk",
+"name": "AUK",
 "pref": false,
 "web": "www.auk.co.kr"
 },
@@ -6533,11 +6533,11 @@
 },
 "018620": {
 "corp": "00103547",
-"en": "WooGeneB & G Co., Ltd.",
+"en": "Woo Gene B&G Co., Ltd.",
 "founded": "1985",
 "industry": "Pharmaceuticals",
 "ksic": "21230",
-"name": "WooGeneB & G",
+"name": "Woo Gene B&G",
 "pref": false,
 "web": "www.woogenebng.com"
 },
@@ -7173,7 +7173,7 @@
 },
 "024090": {
 "corp": "00177199",
-"en": "DCM Corp",
+"en": "DCM CORP",
 "founded": "1987",
 "industry": "Steel & metals",
 "ksic": "2419",
@@ -7413,11 +7413,11 @@
 },
 "025770": {
 "corp": "00159342",
-"en": "KoreaInformation & Communication",
+"en": "Korea Information & Communication",
 "founded": "1986",
 "industry": "Telecommunications",
 "ksic": "61299",
-"name": "KoreaInformation & Communication",
+"name": "Korea Information & Communication",
 "pref": false,
 "web": "www.kicc.co.kr"
 },
@@ -7483,11 +7483,11 @@
 },
 "025950": {
 "corp": "00116408",
-"en": "DongshinEngineering & Construction",
+"en": "Dongshin Engineering & Construction",
 "founded": "1958",
 "industry": "Construction",
 "ksic": "41221",
-"name": "DongshinEngineering & Construction",
+"name": "Dongshin Engineering & Construction",
 "pref": false,
 "web": "www.dongsin.biz"
 },
@@ -7653,11 +7653,11 @@
 },
 "028050": {
 "corp": "00126308",
-"en": "Samsung E&A Co., Ltd.",
+"en": "Samsung E&a Co., Ltd.",
 "founded": "1978",
 "industry": "Engineering services",
 "ksic": "72129",
-"name": "Samsung E&A",
+"name": "Samsung E&a",
 "pref": false,
 "web": "www.samsungena.com"
 },
@@ -7883,11 +7883,11 @@
 },
 "031330": {
 "corp": "00128661",
-"en": "Samt Co., Ltd.",
+"en": "SAMT Co., Ltd.",
 "founded": "1990",
 "industry": "Wholesale trade",
 "ksic": "4659",
-"name": "Samt",
+"name": "SAMT",
 "pref": false,
 "web": "www.isamt.com"
 },
@@ -8363,11 +8363,11 @@
 },
 "033790": {
 "corp": "00276083",
-"en": "Fino Inc.",
+"en": "FINO Inc.",
 "founded": "1990",
 "industry": "Electrical equipment",
 "ksic": "282",
-"name": "Fino",
+"name": "FINO",
 "pref": false,
 "web": "www.finoes.co.kr"
 },
@@ -8423,11 +8423,11 @@
 },
 "034230": {
 "corp": "00171265",
-"en": "Paradise.Co., Ltd.",
+"en": "PARADISE.Co., Ltd.",
 "founded": "1972",
 "industry": "Sports & recreation",
 "ksic": "91249",
-"name": "Paradise",
+"name": "PARADISE",
 "pref": false,
 "web": "www.paradise.co.kr/ko/main"
 },
@@ -8573,11 +8573,11 @@
 },
 "035290": {
 "corp": "00249502",
-"en": "Gold & S Co., Ltd.",
+"en": "Gold&S Co., Ltd.",
 "founded": "1994",
 "industry": "Software & game publishing",
 "ksic": "581",
-"name": "Gold & S",
+"name": "Gold&S",
 "pref": false,
 "web": "www.goldns.co.kr"
 },
@@ -9303,11 +9303,11 @@
 },
 "039200": {
 "corp": "00263654",
-"en": "Oscotecinc.",
+"en": "OSCOTECInc.",
 "founded": "1998",
 "industry": "Pharmaceuticals",
 "ksic": "212",
-"name": "Oscotecinc",
+"name": "OSCOTECInc",
 "pref": false,
 "web": "www.oscotec.com"
 },
@@ -9793,11 +9793,11 @@
 },
 "043200": {
 "corp": "00266934",
-"en": "Paru Co., Ltd.",
+"en": "PARU Co., Ltd.",
 "founded": "1995",
 "industry": "Electrical equipment",
 "ksic": "281",
-"name": "Paru",
+"name": "PARU",
 "pref": false,
 "web": "www.paru.co.kr"
 },
@@ -9993,11 +9993,11 @@
 },
 "044990": {
 "corp": "00311216",
-"en": "H & SHigh Tech Corp.",
+"en": "H&SHigh Tech Corp.",
 "founded": "1995",
 "industry": "Semiconductors & electronic components",
 "ksic": "262",
-"name": "H & SHigh Tech",
+"name": "H&SHigh Tech",
 "pref": false,
 "web": "www.hnshightech.com/"
 },
@@ -11263,11 +11263,11 @@
 },
 "054950": {
 "corp": "00361381",
-"en": "Jvm Co., Ltd.",
+"en": "JVM Co., Ltd.",
 "founded": "1977",
 "industry": "Machinery",
 "ksic": "29192",
-"name": "Jvm",
+"name": "JVM",
 "pref": false,
 "web": "www.myjvm.com"
 },
@@ -11913,11 +11913,11 @@
 },
 "064480": {
 "corp": "00359076",
-"en": "Bridgeteccorp.",
+"en": "BRIDGETECCorp.",
 "founded": "1995",
 "industry": "Software & game publishing",
 "ksic": "58221",
-"name": "Bridgeteccorp",
+"name": "BRIDGETECCorp",
 "pref": false,
 "web": "www.bridgetec.co.kr"
 },
@@ -12233,11 +12233,11 @@
 },
 "066430": {
 "corp": "00370200",
-"en": "I-robotics,Co., Ltd.",
+"en": "I-ROBOTICS,Co., Ltd.",
 "founded": "1999",
 "industry": "Wholesale trade",
 "ksic": "467",
-"name": "I-robotics",
+"name": "I-ROBOTICS",
 "pref": false,
 "web": "www.yom.or.kr"
 },
@@ -12883,11 +12883,11 @@
 },
 "071950": {
 "corp": "00210856",
-"en": "Koas Co., Ltd.",
+"en": "KOAS Co., Ltd.",
 "founded": "1992",
 "industry": "Furniture",
 "ksic": "320",
-"name": "Koas",
+"name": "KOAS",
 "pref": false,
 "web": "www.ikoas.com"
 },
@@ -12983,11 +12983,11 @@
 },
 "073010": {
 "corp": "00328191",
-"en": "Ksp Co., Ltd.",
+"en": "KSP Co., Ltd.",
 "founded": "2000",
 "industry": "Machinery",
 "ksic": "29111",
-"name": "Ksp",
+"name": "KSP",
 "pref": false,
 "web": "www.kspvalve.com"
 },
@@ -13393,11 +13393,11 @@
 },
 "079370": {
 "corp": "00442570",
-"en": "Zeus Co., Ltd.",
+"en": "ZEUS Co., Ltd.",
 "founded": "1988",
 "industry": "Machinery",
 "ksic": "29271",
-"name": "Zeus",
+"name": "ZEUS",
 "pref": false,
 "web": "www.globalzeus.com"
 },
@@ -13453,11 +13453,11 @@
 },
 "079940": {
 "corp": "00506294",
-"en": "Gabia,Inc.",
+"en": "GABIA,Inc.",
 "founded": "1999",
 "industry": "Software & game publishing",
 "ksic": "58221",
-"name": "Gabia",
+"name": "GABIA",
 "pref": false,
 "web": "www.gabia.com"
 },
@@ -14243,11 +14243,11 @@
 },
 "088390": {
 "corp": "00494476",
-"en": "Innoxcorporation",
+"en": "INNOXCorporation",
 "founded": "2001",
 "industry": "Shipbuilding, aerospace & rail",
 "ksic": "319",
-"name": "Innoxcorporation",
+"name": "INNOXCorporation",
 "pref": false,
 "web": "www.innoxcorp.com"
 },
@@ -14573,11 +14573,11 @@
 },
 "091340": {
 "corp": "00580667",
-"en": "S & Kpolytec Co., Ltd.",
+"en": "S&kpolytec Co., Ltd.",
 "founded": "1999",
 "industry": "Semiconductors & electronic components",
 "ksic": "2629",
-"name": "S & Kpolytec",
+"name": "S&kpolytec",
 "pref": false,
 "web": "www.snkpolytec.com"
 },
@@ -14693,11 +14693,11 @@
 },
 "092220": {
 "corp": "00589127",
-"en": "Kec Corporation",
+"en": "KEC Corporation",
 "founded": "2006",
 "industry": "Semiconductors & electronic components",
 "ksic": "2612",
-"name": "Kec",
+"name": "KEC",
 "pref": false,
 "web": "www.kec.co.kr"
 },
@@ -14743,7 +14743,7 @@
 },
 "092600": {
 "corp": "00537337",
-"en": "NC&Co., Ltd.",
+"en": "NC& Co., Ltd.",
 "founded": "1997",
 "industry": "Semiconductors & electronic components",
 "ksic": "2611",
@@ -15043,11 +15043,11 @@
 },
 "095610": {
 "corp": "00524421",
-"en": "Tes Co., Ltd.",
+"en": "TES Co., Ltd.",
 "founded": "2002",
 "industry": "Machinery",
 "ksic": "29271",
-"name": "Tes",
+"name": "TES",
 "pref": false,
 "web": "http://www.hites.co.kr"
 },
@@ -15363,11 +15363,11 @@
 },
 "099440": {
 "corp": "00580056",
-"en": "Smec Co., Ltd.",
+"en": "SMEC Co., Ltd.",
 "founded": "1996",
 "industry": "Machinery",
 "ksic": "29221",
-"name": "Smec",
+"name": "SMEC",
 "pref": false,
 "web": "www.esmec.com"
 },
@@ -15953,11 +15953,11 @@
 },
 "107640": {
 "corp": "00474588",
-"en": "HanJungNCS.Co., Ltd.",
+"en": "Han Jung NCS.Co., Ltd.",
 "founded": "1995",
 "industry": "Electrical equipment",
 "ksic": "281",
-"name": "HanJungNCS",
+"name": "Han Jung NCS",
 "pref": false,
 "web": "www.hjncs.com"
 },
@@ -16733,11 +16733,11 @@
 },
 "123840": {
 "corp": "00809429",
-"en": "Nuon Co., Ltd.",
+"en": "NUON Co., Ltd.",
 "founded": "2010",
 "industry": "Food products",
 "ksic": "108",
-"name": "Nuon",
+"name": "NUON",
 "pref": false,
 "web": "www.vacuum-coater.com"
 },
@@ -16853,11 +16853,11 @@
 },
 "126700": {
 "corp": "00825959",
-"en": "HyVISION SYSTEM.Inc.",
+"en": "HyVISION System.Inc.",
 "founded": "2010",
 "industry": "Medical & precision instruments",
 "ksic": "273",
-"name": "HyVISION SYSTEM",
+"name": "HyVISION System",
 "pref": false,
 "web": "www.hyvision.co.kr"
 },
@@ -16973,11 +16973,11 @@
 },
 "129890": {
 "corp": "01207716",
-"en": "Abko Co., Ltd.",
+"en": "ABKO Co., Ltd.",
 "founded": "2001",
 "industry": "Semiconductors & electronic components",
 "ksic": "26329",
-"name": "Abko",
+"name": "ABKO",
 "pref": false,
 "web": "www.abko.co.kr"
 },
@@ -17703,11 +17703,11 @@
 },
 "148930": {
 "corp": "00885906",
-"en": "Hytc Co., Ltd.",
+"en": "HYTC Co., Ltd.",
 "founded": "2005",
 "industry": "Fabricated metal products",
 "ksic": "25924",
-"name": "Hytc",
+"name": "HYTC",
 "pref": false,
 "web": "www.hyseoul.com"
 },
@@ -17823,7 +17823,7 @@
 },
 "155660": {
 "corp": "00110608",
-"en": "DSR Corp",
+"en": "DSR CORP",
 "founded": "1965",
 "industry": "Steel & metals",
 "ksic": "242",
@@ -18273,11 +18273,11 @@
 },
 "179900": {
 "corp": "00961774",
-"en": "Uti Inc.",
+"en": "UTI Inc.",
 "founded": "2010",
 "industry": "Semiconductors & electronic components",
 "ksic": "2629",
-"name": "Uti",
+"name": "UTI",
 "pref": false,
 "web": "www.utikorea.com"
 },
@@ -18973,11 +18973,11 @@
 },
 "201490": {
 "corp": "00965813",
-"en": "Me2on Co., Ltd.",
+"en": "ME2ON Co., Ltd.",
 "founded": "2010",
 "industry": "Software & game publishing",
 "ksic": "5821",
-"name": "Me2on",
+"name": "ME2ON",
 "pref": false,
 "web": "www.me2on.com"
 },
@@ -19023,11 +19023,11 @@
 },
 "204270": {
 "corp": "00447575",
-"en": "Jntc Co., Ltd.",
+"en": "JNTC Co., Ltd.",
 "founded": "1996",
 "industry": "Semiconductors & electronic components",
 "ksic": "262",
-"name": "Jntc",
+"name": "JNTC",
 "pref": false,
 "web": "www.thejnt.com"
 },
@@ -19073,11 +19073,11 @@
 },
 "205100": {
 "corp": "01042085",
-"en": "Exem Co., Ltd.",
+"en": "EXEM Co., Ltd.",
 "founded": "2014",
 "industry": "Software & game publishing",
 "ksic": "58221",
-"name": "Exem",
+"name": "EXEM",
 "pref": false,
 "web": "www.ex-em.com"
 },
@@ -20283,11 +20283,11 @@
 },
 "238490": {
 "corp": "00556712",
-"en": "Hims Co., Ltd.",
+"en": "HIMS Co., Ltd.",
 "founded": "1999",
 "industry": "Machinery",
 "ksic": "29272",
-"name": "Hims",
+"name": "HIMS",
 "pref": false,
 "web": "www.hims.co.kr"
 },
@@ -20633,11 +20633,11 @@
 },
 "251120": {
 "corp": "01160974",
-"en": "Bio-fd&C Co., Ltd.",
+"en": "Bio-fd&c Co., Ltd.",
 "founded": "2005",
 "industry": "Pharmaceuticals",
 "ksic": "2110",
-"name": "Bio-fd&C",
+"name": "Bio-fd&c",
 "pref": false,
 "web": "www.biofdnc.com"
 },
@@ -21073,11 +21073,11 @@
 },
 "263920": {
 "corp": "01185566",
-"en": "HuM & C Co., Ltd.",
+"en": "HuM&C Co., Ltd.",
 "founded": "2002",
 "industry": "Other manufacturing",
 "ksic": "33999",
-"name": "HuM & C",
+"name": "HuM&C",
 "pref": false,
 "web": "humnc.com"
 },
@@ -22483,11 +22483,11 @@
 },
 "309930": {
 "corp": "01335453",
-"en": "Joyworks & Co Co., Ltd.",
+"en": "JOYWORKS&Co Co., Ltd.",
 "founded": "2018",
 "industry": "Retail",
 "ksic": "475",
-"name": "Joyworks",
+"name": "JOYWORKS",
 "pref": false,
 "web": ""
 },
@@ -22833,11 +22833,11 @@
 },
 "321260": {
 "corp": "01359736",
-"en": "Pro2000 Co., Ltd.",
+"en": "PRO2000 Co., Ltd.",
 "founded": "2019",
 "industry": "Semiconductors & electronic components",
 "ksic": "261",
-"name": "Pro2000",
+"name": "PRO2000",
 "pref": false,
 "web": "pro-2000.co.kr"
 },
@@ -23783,11 +23783,11 @@
 },
 "355690": {
 "corp": "01444380",
-"en": "Atum Co., Ltd.",
+"en": "ATUM Co., Ltd.",
 "founded": "2016",
 "industry": "Semiconductors & electronic components",
 "ksic": "26293",
-"name": "Atum",
+"name": "ATUM",
 "pref": false,
 "web": "www.iatum.com/"
 },
@@ -24453,11 +24453,11 @@
 },
 "377460": {
 "corp": "01175499",
-"en": "Q Aid Co., Ltd.",
+"en": "Q AID Co., Ltd.",
 "founded": "2015",
 "industry": "Repair services",
 "ksic": "953",
-"name": "Q Aid",
+"name": "Q AID",
 "pref": false,
 "web": "www.winiaaid.com"
 },
@@ -24503,11 +24503,11 @@
 },
 "378850": {
 "corp": "01532603",
-"en": "Hwaseung R&A Co., Ltd.",
+"en": "Hwaseung R&a Co., Ltd.",
 "founded": "2021",
 "industry": "Autos & auto parts",
 "ksic": "30399",
-"name": "Hwaseung R&A",
+"name": "Hwaseung R&a",
 "pref": false,
 "web": "www.hsrna.com"
 },
@@ -24643,11 +24643,11 @@
 },
 "383930": {
 "corp": "01437432",
-"en": "DT & Cro Co., Ltd.",
+"en": "Dt&cro Co., Ltd.",
 "founded": "2017",
 "industry": "Research & development",
 "ksic": "70113",
-"name": "DT & Cro",
+"name": "Dt&cro",
 "pref": false,
 "web": "www.dtncro.com"
 },
@@ -25693,11 +25693,11 @@
 },
 "440110": {
 "corp": "01292291",
-"en": "Fadu Inc.",
+"en": "FADU Inc.",
 "founded": "2015",
 "industry": "Semiconductors & electronic components",
 "ksic": "26112",
-"name": "Fadu",
+"name": "FADU",
 "pref": false,
 "web": "www.fadu.io/"
 },
@@ -26043,11 +26043,11 @@
 },
 "452450": {
 "corp": "01429220",
-"en": "Pie Co., Ltd.",
+"en": "PIE Co., Ltd.",
 "founded": "2018",
 "industry": "Machinery",
 "ksic": "29299",
-"name": "Pie",
+"name": "PIE",
 "pref": false,
 "web": "piegroup.co.kr"
 },
@@ -26093,11 +26093,11 @@
 },
 "455180": {
 "corp": "01638387",
-"en": "Kga Co., Ltd.",
+"en": "KGA Co., Ltd.",
 "founded": "2017",
 "industry": "Machinery",
 "ksic": "29271",
-"name": "Kga",
+"name": "KGA",
 "pref": false,
 "web": "www.kga-i.com"
 },
