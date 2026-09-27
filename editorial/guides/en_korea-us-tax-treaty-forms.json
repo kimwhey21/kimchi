@@ -39,7 +39,7 @@
       },
       {
         "heading": "What actually proves you qualify: Korea's form, not America's",
-        "body": "The document that gets you 15% instead of 22% is a Korean National Tax Service application — for an individual, the Application for Entitlement to Reduced Tax Rate on Domestic Source Income (Form No. 29-12) — submitted to the withholding agent, your broker or its Korean custodian, not filed by you directly with a foreign government the way a tax return would be. Alongside it, the withholding agent needs a certificate proving you are a US tax resident for the relevant year; without both documents on file before the dividend is paid, Korea's system has no way to know a treaty even applies, and defaults to the full 22%."
+        "body": "The document that gets you 15% instead of 22% is a Korean National Tax Service application — for an individual, the Application for Entitlement to Reduced Tax Rate on Domestic Source Income — submitted to the withholding agent, your broker or its Korean custodian, not filed by you directly with a foreign government the way a tax return would be. Alongside it, the withholding agent needs a certificate proving you are a US tax resident for the relevant year; without both documents on file before the dividend is paid, Korea's system has no way to know a treaty even applies, and defaults to the full 22%."
       },
       {
         "heading": "Getting the piece only the IRS can give you",
@@ -51,12 +51,12 @@
       },
       {
         "heading": "What we could and could not verify",
-        "body": "We confirmed the 20% national withholding rate plus 10%-of-tax local surtax (effective 22%), the 15%/10% US treaty rate split, and the withholding agent's end-of-February filing deadline effective January 1, 2026, through PwC's Worldwide Tax Summaries page for the Republic of Korea, current as of September 2026. We confirmed IRS Form 8802's mandatory status, the current $85 individual fee, and the October 1, 2026 increase to $105 directly from the IRS's own page on Form 6166. We found the individual-investor form number — 29-12, \"Application for Entitlement to Reduced Tax Rate on Domestic Source Income (for Non-resident Individual)\" — in a Clearstream international-settlement guide bearing that exact form title and number; we could not independently open a National Tax Service page confirming the same number, so we are naming Clearstream as the source for that specific figure rather than treating it as NTS-confirmed.\n\nWe could not verify what any single US broker actually does on your behalf — some custodians collect and file this paperwork automatically for clients holding Korean shares, others expect the investor to request and forward Form 6166 themselves, and we did not test either behavior directly. We also could not confirm the IRS's real-world Form 8802 processing time from the IRS itself; the six-to-ten-week estimate above comes from third-party filing services, not an IRS-published figure."
+        "body": "We confirmed the 20% national withholding rate plus 10%-of-tax local surtax (effective 22%), the 15%/10% US treaty rate split, and the withholding agent's end-of-February filing deadline effective January 1, 2026, through PwC's Worldwide Tax Summaries page for the Republic of Korea, current as of September 2026. We confirmed IRS Form 8802's mandatory status, the current $85 individual fee, and the October 1, 2026 increase to $105 directly from the IRS's own page on Form 6166. We name the individual investor's form by its title, \"Application for Entitlement to Reduced Tax Rate on Domestic Source Income (for Non-resident Individual)\", and leave out its form number: we could not open a National Tax Service page confirming the number, so we do not print one. Your broker or its Korean custodian can give you the current version of the form.\n\nWe could not verify what any single US broker actually does on your behalf — some custodians collect and file this paperwork automatically for clients holding Korean shares, others expect the investor to request and forward Form 6166 themselves, and we did not test either behavior directly. We also could not confirm the IRS's real-world Form 8802 processing time from the IRS itself; the six-to-ten-week estimate above comes from third-party filing services, not an IRS-published figure."
       }
     ],
     "closing": {
       "heading": "The takeaway",
-      "body": "W-8BEN has nothing to do with your Korean dividend withholding — it is a US form for US-source income, and filing one with your US broker changes nothing about what a Korean company withholds. The number that actually moves is set by Korea's own paperwork: an NTS reduced-rate application (Form No. 29-12 for individuals) filed with your broker as withholding agent, backed by an IRS Certificate of Residency (Form 6166, requested via Form 8802) proving you're a US taxpayer. Get both in place before a dividend is paid, and Korea withholds 15%, not 22%. Since January 1, 2026, your broker also has its own end-of-February deadline to file that paperwork with Korea's tax office — one more reason not to leave this until dividend season.\n\nThis guide reflects rates and procedures published through September 2026. Tax treaties, forms and deadlines can all change, and how any individual broker handles this paperwork varies — confirm your own broker's process and current IRS fees before relying on any figure here. This is not tax advice."
+      "body": "W-8BEN has nothing to do with your Korean dividend withholding — it is a US form for US-source income, and filing one with your US broker changes nothing about what a Korean company withholds. The number that actually moves is set by Korea's own paperwork: an NTS reduced-rate application for individuals, filed with your broker as withholding agent, backed by an IRS Certificate of Residency (Form 6166, requested via Form 8802) proving you're a US taxpayer. Get both in place before a dividend is paid, and Korea withholds 15%, not 22%. Since January 1, 2026, your broker also has its own end-of-February deadline to file that paperwork with Korea's tax office — one more reason not to leave this until dividend season.\n\nThis guide reflects rates and procedures published through September 2026. Tax treaties, forms and deadlines can all change, and how any individual broker handles this paperwork varies — confirm your own broker's process and current IRS fees before relying on any figure here. This is not tax advice."
     }
   },
   "graphics": [
@@ -97,7 +97,7 @@
         "items": [
           {
             "label": "File Korea's own reduced-rate form",
-            "why": "Form No. 29-12 for individual investors — filed with your broker as withholding agent, not a US IRS form."
+            "why": "Korea's reduced-rate application for individual investors — filed with your broker as withholding agent, not a US IRS form."
           },
           {
             "label": "Back it with an IRS Certificate of Residency",
@@ -114,7 +114,6 @@
   ],
   "sources": [
     {"name": "PwC", "title": "Korea, Republic of - Corporate - Withholding taxes", "url": "https://taxsummaries.pwc.com/republic-of-korea/corporate/withholding-taxes"},
-    {"name": "IRS", "title": "Form 6166 – Certification of U.S. tax residency", "url": "https://www.irs.gov/individuals/international-taxpayers/form-6166-certification-of-us-tax-residency"},
-    {"name": "Clearstream", "title": "Guide on completing the Application for Entitlement to Reduced Tax Rate on Domestic Source Income (for Non-resident Individual) [Form No.29-12]", "url": "https://www.clearstream.com/clearstream-en/securities-services/asset-services/tax-and-certification/guide-on-completing-the-application-for-entitlement-to-reduced-tax-rate-on-domestic-source-income-for-non-resident-individual-form-no-29-12--1314876"}
+    {"name": "IRS", "title": "Form 6166 – Certification of U.S. tax residency", "url": "https://www.irs.gov/individuals/international-taxpayers/form-6166-certification-of-us-tax-residency"}
   ]
 }
