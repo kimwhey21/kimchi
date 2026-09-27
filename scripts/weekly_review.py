@@ -28,6 +28,8 @@ from src import editorial_title
 
 ROOT = Path(__file__).resolve().parent.parent
 REPORTS = ROOT / "reports"
+# 검색·네이버 수치(search_<날짜>)는 공개 저장소에 두지 않는다(2026-09-28) — 이 맥의 비공개 기록에만 있다. 클라우드 루틴은 못 읽는다
+NOTES_REPORTS = Path.home() / "Downloads" / "kimchi-notes" / "reports"
 _PCT = re.compile(r"\d+(?:\.\d+)?\s*%")
 _INSTITUTION = re.compile(r"증권|리포트|목표주가|투자의견|애널리스트|골드만|JP모건|모건스탠리|씨티|UBS")
 
@@ -118,7 +120,7 @@ def latest_search_report(reports_dir: Path | None = None) -> list[str]:
     (`~/.market-brief-google/search_snapshot.py`)이 읽어 저장소에 남기고 여기서는 그 파일을 싣는다.
     기준선 2026-09-12: 구글 색인 11, 네이버 색인 1 — 늘지 않으면 검색엔진이 새 글을 못 찾는 것이다.
     """
-    folder = reports_dir or REPORTS
+    folder = reports_dir or NOTES_REPORTS
     files = sorted(folder.glob("search_*.md"))
     if not files:
         return []
@@ -199,7 +201,7 @@ def render(data: dict) -> tuple[str, str]:
     lines += ["## 글 목록", "", "| 날짜 | 시장 | 제목 | 절 | 시각자료 | 확인 지점 |", "|---|---|---|---:|---:|:---:|"]
     for r in sorted(d + f, key=lambda r: r["date"]):
         lines.append(f"| {r['date']} | {r['market']} | {r['title'][:40]} | {r['sections']} | {r['visuals']} | {'○' if r['has_check'] else '—'} |")
-    lines += ["", "## 검색 성적", ""] + (latest_search_report() or ["- 아직 기록 없음 (이 맥의 일요일 22:00 작업 `search_snapshot.py`가 reports/search_<날짜>.md를 만든다)"]) + [""]
+    lines += ["", "## 검색 성적", ""] + (latest_search_report() or ["- 검색·네이버 수치는 비공개 기록(kimchi-notes/reports)에만 있다 — 이 보고에는 싣지 않는다"]) + [""]
     lines += ["## 사장님께", "", "이번 주 가장 좋았던 글 하나와 가장 아쉬웠던 글 하나를 짚어 주세요. 그 판단을 규칙에 넣습니다.", ""]
     summary = [f"지난 한 주({data['start']}~{data['end']}): 시황 {len(d)}편, 기준표·프리뷰 {len(f)}편, 빠진 거래일 {len(data['missed'])}일.",
                f"절 수 {_med(d, 'sections')}(재테크농부 {b('소제목 수')}), 시각자료 {_med(d, 'visuals')}(10), 제목 등락률 {_med(d, 'title_pct')}개(0)."]
