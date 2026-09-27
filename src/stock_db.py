@@ -1,5 +1,6 @@
 """본진 한국 종목 데이터베이스 — 코스피·코스닥 전 종목을 영어 데이터 페이지로 (2026-09-27, 사장님 "바로 정식버전으로 구현하자").
 
+    python -m src.stock_db webcheck                 # 회사 홈페이지가 아직 열리는지 다시 보고, 닫힌 것은 링크를 뺀다
     python -m src.stock_db rename                   # 이름 다듬기 규칙을 고친 뒤 메타 이름만 다시 짓기(DART 호출 없음)
     python -m src.stock_db meta                     # data/stock_meta.json(영문명·업종·설립·홈페이지) 만들기·보강 — 커밋하는 파일
     python -m src.stock_db run --push               # 매일: 전 종목 시세 + 상위 종목·순번 종목 상세 → 워드프레스
@@ -317,6 +318,49 @@ def skhy_premium(hynix_close: float | None, fx: float | None) -> dict | None:
 
 
 # ── 메타(영문명·업종) ────────────────────────────────────────────────────────────────
+def _curl_status(url: str) -> int:
+    """curl로 연다(파이썬 SSL은 브라우저가 여는 옛 사이트의 핸드셰이크를 못 한다 — gabia.com, 2026-09-27). 못 열면 0."""
+    import subprocess
+    try:
+        out = subprocess.run(["curl", "-sL", "-o", "/dev/null", "-m", "15", "-A", UA["User-Agent"], "-w", "%{http_code}", url],
+                             capture_output=True, text=True, timeout=40).stdout.strip()
+        return int(out or 0)
+    except (subprocess.SubprocessError, ValueError):
+        return 0
+
+
+def web_alive(url: str) -> str | None:
+    """회사 홈페이지가 사람에게 열리면 쓸 주소를, 아니면 None. http → https → 도메인 첫 화면 순서.
+    403·401·429처럼 '봇이라 막음'은 산 것으로 본다(브라우저로는 열린다). 깊은 주소가 404인데 도메인이 살아 있으면 도메인으로 바꾼다."""
+    bare = re.sub(r"^https?://", "", url.strip())
+    root = bare.split("/")[0]
+    candidates = [("http://" + bare, url), ("https://" + bare, "https://" + bare)]
+    if root != bare.rstrip("/"):
+        candidates += [("http://" + root, root), ("https://" + root, "https://" + root)]
+    for probe, keep in candidates:
+        code = _curl_status(probe)
+        if 200 <= code < 400 or code in (401, 403, 405, 429, 999):
+            return keep
+    return None
+
+
+def web_check(meta: dict, workers: int = 16) -> list[str]:
+    """홈페이지 칸을 다시 확인해 닫힌 사이트는 비운다(web_dead에 원래 주소). 바깥 사이트라 동시에 연다."""
+    import concurrent.futures as cf
+    rows = [(c, v.get("web") or v.get("web_dead")) for c, v in meta.items() if v.get("web") or v.get("web_dead")]
+    dead = []
+    with cf.ThreadPoolExecutor(workers) as pool:
+        for (code, url), alive in zip(rows, pool.map(lambda r: web_alive(r[1]), rows)):
+            if alive:
+                meta[code]["web"] = alive
+                meta[code].pop("web_dead", None)
+            else:
+                meta[code]["web_dead"] = url
+                meta[code]["web"] = ""
+                dead.append(code)
+    return dead
+
+
 def build_meta(session: requests.Session, codes: list[str], existing: dict, key: str, max_company_calls: int = 4000) -> dict:
     """DART 영문명과 업종·설립·홈페이지. 이미 있는 종목은 건너뛴다(회사 개황은 잘 안 바뀐다)."""
     r = _get(session, f"{DART}/corpCode.xml", params={"crtfc_key": key})
@@ -394,6 +438,7 @@ def quote(row: dict) -> dict:
 def assemble(listing: list[dict], details: dict[str, dict], meta: dict) -> tuple[list[dict], list[list], dict]:
     """워드프레스로 보낼 것 — 종목별 항목(상세가 있으면 전체, 없으면 시세만), 목록, 시장 요약의 종목 부분."""
     items = []
+    listed = {r["code"] for r in listing}
     for row in listing:
         m = meta.get(row["code"]) or {}
         data = {"code": row["code"], "market": row["market"], "name": display_name(row["code"], row.get("name_ko"), meta), "en": m.get("en", ""),
@@ -402,7 +447,8 @@ def assemble(listing: list[dict], details: dict[str, dict], meta: dict) -> tuple
         full = row["code"] in details
         if full:
             data.update(details[row["code"]])
-            data["peers"] = [{"code": p, "name": (meta.get(p) or {}).get("name") or p} for p in data.get("peers", [])]
+            # 네이버 동종 업종에 ETF·목록 밖 종목이 섞여 온다 — 우리 페이지가 없는 코드로 링크하면 404(2026-09-27 전수 점검 9곳)
+            data["peers"] = [{"code": p, "name": (meta.get(p) or {}).get("name") or p} for p in data.get("peers", []) if p in listed]
             data["detail_date"] = row.get("date")
         items.append({"code": row["code"], "merge": not full, "data": data})
     index = [[r["code"], display_name(r["code"], r.get("name_ko"), meta), r["market"], r.get("close"), r.get("pct"),
@@ -558,12 +604,18 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("command", choices=["meta", "rename", "run"])
+    ap.add_argument("command", choices=["meta", "rename", "webcheck", "run"])
     ap.add_argument("--detail-all", action="store_true")
     ap.add_argument("--push", action="store_true")
     ap.add_argument("--out", type=Path)
     ap.add_argument("--limit", type=int, help="시가총액 상위 N종목만(점검용)")
     a = ap.parse_args(argv)
+    if a.command == "webcheck":
+        meta = json.loads(META.read_text(encoding="utf-8"))
+        dead = web_check(meta)
+        META.write_text(json.dumps(meta, ensure_ascii=False, indent=0, sort_keys=True) + "\n", encoding="utf-8")
+        print(f"홈페이지 {sum(1 for v in meta.values() if v.get('web')) + len(dead)}개 확인 — 닫힌 {len(dead)}개를 비움")
+        return 0
     if a.command == "rename":
         meta = json.loads(META.read_text(encoding="utf-8"))
         override = watchlist_names()

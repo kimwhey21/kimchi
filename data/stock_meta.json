@@ -267,7 +267,8 @@
 "ksic": "64992",
 "name": "Noroo Holdings",
 "pref": false,
-"web": "www.norooholdings.co.kr"
+"web": "",
+"web_dead": "www.norooholdings.co.kr"
 },
 "000325": {
 "corp": "00113508",
@@ -277,7 +278,8 @@
 "ksic": "64992",
 "name": "Noroo Holdings (Pref.)",
 "pref": true,
-"web": "www.norooholdings.co.kr"
+"web": "",
+"web_dead": "www.norooholdings.co.kr"
 },
 "000370": {
 "corp": "00135917",
@@ -287,7 +289,7 @@
 "ksic": "65121",
 "name": "Hanwha General Insurance",
 "pref": false,
-"web": "www.hwgeneralins.com/"
+"web": "https://www.hwgeneralins.com/"
 },
 "000390": {
 "corp": "00129387",
@@ -457,7 +459,7 @@
 "ksic": "24213",
 "name": "Youngpoong",
 "pref": false,
-"web": "www.ypzinc.co.kr"
+"web": "https://www.ypzinc.co.kr"
 },
 "000680": {
 "corp": "00104698",
@@ -557,7 +559,7 @@
 "ksic": "29223",
 "name": "Hwacheon Machine Tool",
 "pref": false,
-"web": "www.hwacheon.com"
+"web": "https://www.hwacheon.com"
 },
 "000860": {
 "corp": "00100939",
@@ -847,7 +849,7 @@
 "ksic": "28410",
 "name": "Kumho Electric",
 "pref": false,
-"web": "www.khe.co.kr"
+"web": "https://www.khe.co.kr"
 },
 "001230": {
 "corp": "00114792",
@@ -997,7 +999,7 @@
 "ksic": "65121",
 "name": "Hyundai Marine & Fire Insurance",
 "pref": false,
-"web": "www.hi.co.kr"
+"web": "https://www.hi.co.kr"
 },
 "001460": {
 "corp": "00122579",
@@ -1337,7 +1339,8 @@
 "ksic": "411",
 "name": "Eehwa Construction",
 "pref": false,
-"web": "www.ee-hwa.co.kr"
+"web": "",
+"web_dead": "www.ee-hwa.co.kr"
 },
 "001940": {
 "corp": "00159740",
@@ -1377,7 +1380,8 @@
 "ksic": "715",
 "name": "Asia Holdings",
 "pref": false,
-"web": "asiaholdings.co.kr"
+"web": "",
+"web_dead": "asiaholdings.co.kr"
 },
 "002070": {
 "corp": "00107677",
@@ -1457,7 +1461,7 @@
 "ksic": "2419",
 "name": "Hanil Iron & Steel",
 "pref": false,
-"web": "www.hanilsteel.co.kr"
+"web": "https://www.hanilsteel.co.kr"
 },
 "002230": {
 "corp": "00155638",
@@ -2337,7 +2341,8 @@
 "ksic": "32029",
 "name": "AceBed",
 "pref": false,
-"web": "www.acebed.co.kr"
+"web": "",
+"web_dead": "www.acebed.co.kr"
 },
 "003830": {
 "corp": "00113544",
@@ -3137,7 +3142,7 @@
 "ksic": "64992",
 "name": "Hyundai G.F. Holdings",
 "pref": false,
-"web": "https://www.hyundaigfholdings.co.kr/web/html/ko/CI"
+"web": "www.hyundaigfholdings.co.kr"
 },
 "005490": {
 "corp": "00155319",
@@ -3447,7 +3452,8 @@
 "ksic": "231",
 "name": "Kuk Young G M",
 "pref": false,
-"web": "www.kukyong.com"
+"web": "",
+"web_dead": "www.kukyong.com"
 },
 "006060": {
 "corp": "00166227",
@@ -3527,7 +3533,8 @@
 "ksic": "64121",
 "name": "Jeju Bank",
 "pref": false,
-"web": "www.e-jejubank.com"
+"web": "",
+"web_dead": "www.e-jejubank.com"
 },
 "006260": {
 "corp": "00105952",
@@ -3777,7 +3784,8 @@
 "ksic": "105",
 "name": "Woosung",
 "pref": false,
-"web": "wsgroup.co.kr"
+"web": "",
+"web_dead": "wsgroup.co.kr"
 },
 "007070": {
 "corp": "00140177",
@@ -3887,7 +3895,7 @@
 "ksic": "28202",
 "name": "DN Automotive",
 "pref": false,
-"web": "www.dnautomotive.com"
+"web": "https://www.dnautomotive.com"
 },
 "007370": {
 "corp": "00150536",
@@ -3897,7 +3905,8 @@
 "ksic": "212",
 "name": "Jin Yang Pharmaceutical",
 "pref": false,
-"web": "www.jinyangpharm.co.kr"
+"web": "",
+"web_dead": "www.jinyangpharm.co.kr"
 },
 "007390": {
 "corp": "00117276",
@@ -4287,7 +4296,8 @@
 "ksic": "23192",
 "name": "Kumbi",
 "pref": false,
-"web": "www.e-kumbi.co.kr"
+"web": "",
+"web_dead": "www.e-kumbi.co.kr"
 },
 "0088D0": {
 "corp": "01958111",
@@ -4337,7 +4347,7 @@
 "ksic": "49301",
 "name": "KCTC",
 "pref": false,
-"web": "www.kctc.co.kr"
+"web": "https://www.kctc.co.kr"
 },
 "009140": {
 "corp": "00102140",
@@ -4357,7 +4367,8 @@
 "ksic": "2622",
 "name": "Samsung Electro-Mechanics",
 "pref": false,
-"web": "www.sem.samsung.co.kr"
+"web": "",
+"web_dead": "www.sem.samsung.co.kr"
 },
 "009155": {
 "corp": "00126371",
@@ -4367,7 +4378,8 @@
 "ksic": "2622",
 "name": "Samsung Electro-Mechanics (Pref.)",
 "pref": true,
-"web": "www.sem.samsung.co.kr"
+"web": "",
+"web_dead": "www.sem.samsung.co.kr"
 },
 "009160": {
 "corp": "00138260",
@@ -4477,7 +4489,8 @@
 "ksic": "303",
 "name": "Ajin Electronic Components",
 "pref": false,
-"web": "www.dwecc.com"
+"web": "",
+"web_dead": "www.dwecc.com"
 },
 "0093G0": {
 "corp": "01947072",
@@ -4597,7 +4610,8 @@
 "ksic": "24222",
 "name": "Sambo Industrial",
 "pref": false,
-"web": "www.samboind.com"
+"web": "",
+"web_dead": "www.samboind.com"
 },
 "009680": {
 "corp": "00151128",
@@ -4677,7 +4691,8 @@
 "ksic": "467",
 "name": "MDSsphere",
 "pref": false,
-"web": "www.playgram.co.kr"
+"web": "",
+"web_dead": "www.playgram.co.kr"
 },
 "009830": {
 "corp": "00162461",
@@ -4907,7 +4922,8 @@
 "ksic": "29223",
 "name": "Hwacheon Machinery",
 "pref": false,
-"web": "www.hwacheon.co.kr"
+"web": "",
+"web_dead": "www.hwacheon.co.kr"
 },
 "010690": {
 "corp": "00166315",
@@ -4933,7 +4949,8 @@
 "ksic": "303",
 "name": "Pyung Hwa Holdings",
 "pref": false,
-"web": "www.phhc.co.kr"
+"web": "",
+"web_dead": "www.phhc.co.kr"
 },
 "010780": {
 "corp": "00115977",
@@ -5173,7 +5190,8 @@
 "ksic": "20421",
 "name": "Hannong Chemicals",
 "pref": false,
-"web": "hannong.koreasme.com"
+"web": "",
+"web_dead": "hannong.koreasme.com"
 },
 "011560": {
 "corp": "00133876",
@@ -5283,7 +5301,7 @@
 "ksic": "2612",
 "name": "Shinsung E&G",
 "pref": false,
-"web": "www.shinsungeng.com"
+"web": "https://www.shinsungeng.com"
 },
 "012030": {
 "corp": "00163345",
@@ -5419,7 +5437,8 @@
 "ksic": "20132",
 "name": "Kyung-in Synthetic",
 "pref": false,
-"web": "www.kyungin.co.kr"
+"web": "",
+"web_dead": "www.kyungin.co.kr"
 },
 "012620": {
 "corp": "00143907",
@@ -5449,7 +5468,8 @@
 "ksic": "17902",
 "name": "Monalisa",
 "pref": false,
-"web": "www.monarisa.co.kr"
+"web": "",
+"web_dead": "www.monarisa.co.kr"
 },
 "0126Z0": {
 "corp": "01965324",
@@ -5489,7 +5509,7 @@
 "ksic": "212",
 "name": "Shinil Pharmaceutical",
 "pref": false,
-"web": "www.sinilpharm.com"
+"web": "https://www.sinilpharm.com"
 },
 "012800": {
 "corp": "00112651",
@@ -5709,7 +5729,8 @@
 "ksic": "46414",
 "name": "Agabang",
 "pref": false,
-"web": "www.agabang.com"
+"web": "",
+"web_dead": "www.agabang.com"
 },
 "014100": {
 "corp": "00267854",
@@ -5739,7 +5760,8 @@
 "ksic": "1721",
 "name": "Daeyoung Packaging",
 "pref": false,
-"web": "www.dypc.co.kr"
+"web": "",
+"web_dead": "www.dypc.co.kr"
 },
 "014190": {
 "corp": "00128175",
@@ -5859,7 +5881,7 @@
 "ksic": "41221",
 "name": "HL D&I Halla",
 "pref": false,
-"web": "www.halla.co.kr"
+"web": "https://www.halla.co.kr"
 },
 "014820": {
 "corp": "00132637",
@@ -5869,7 +5891,8 @@
 "ksic": "222",
 "name": "Dongwon Systems",
 "pref": false,
-"web": "dongwonsystems.com/"
+"web": "",
+"web_dead": "dongwonsystems.com/"
 },
 "014825": {
 "corp": "00132637",
@@ -5879,7 +5902,8 @@
 "ksic": "222",
 "name": "Dongwon Systems (Pref.)",
 "pref": true,
-"web": "dongwonsystems.com/"
+"web": "",
+"web_dead": "dongwonsystems.com/"
 },
 "014830": {
 "corp": "00159786",
@@ -6249,7 +6273,8 @@
 "ksic": "32029",
 "name": "Fursys",
 "pref": false,
-"web": "www.fursys.co.kr"
+"web": "",
+"web_dead": "www.fursys.co.kr"
 },
 "016880": {
 "corp": "00143651",
@@ -6309,7 +6334,8 @@
 "ksic": "265",
 "name": "Interm",
 "pref": false,
-"web": "www.inter-m.co.kr"
+"web": "",
+"web_dead": "www.inter-m.co.kr"
 },
 "017370": {
 "corp": "00142883",
@@ -6359,7 +6385,8 @@
 "ksic": "29241",
 "name": "Soosan Cebotics",
 "pref": false,
-"web": "www.soosanheavy.com"
+"web": "",
+"web_dead": "www.soosanheavy.com"
 },
 "017650": {
 "corp": "00109781",
@@ -6429,7 +6456,7 @@
 "ksic": "2612",
 "name": "Auk",
 "pref": false,
-"web": "www.auk.co.kr"
+"web": "https://www.auk.co.kr"
 },
 "017940": {
 "corp": "00165583",
@@ -6579,7 +6606,7 @@
 "ksic": "29172",
 "name": "Hanon Systems",
 "pref": false,
-"web": "www.hanonsystems.com"
+"web": "https://www.hanonsystems.com"
 },
 "019010": {
 "corp": "00267906",
@@ -6619,7 +6646,7 @@
 "ksic": "289",
 "name": "THN",
 "pref": false,
-"web": "www.th-net.co.kr"
+"web": "https://www.th-net.co.kr"
 },
 "019210": {
 "corp": "00139719",
@@ -6629,7 +6656,7 @@
 "ksic": "25934",
 "name": "YG-1",
 "pref": false,
-"web": "www.yg1.solutions"
+"web": "https://www.yg1.solutions"
 },
 "019490": {
 "corp": "00156150",
@@ -6669,7 +6696,8 @@
 "ksic": "64209",
 "name": "GMI Venture",
 "pref": false,
-"web": "www.geminivc.co.kr"
+"web": "",
+"web_dead": "www.geminivc.co.kr"
 },
 "019660": {
 "corp": "00159731",
@@ -6809,7 +6837,7 @@
 "ksic": "732",
 "name": "Sigong Tech",
 "pref": false,
-"web": "www.sigongtech.co.kr"
+"web": "https://www.sigongtech.co.kr"
 },
 "020760": {
 "corp": "00198697",
@@ -6869,7 +6897,8 @@
 "ksic": "64209",
 "name": "Atinum Investment",
 "pref": false,
-"web": "www.hanmivc.co.kr"
+"web": "",
+"web_dead": "www.hanmivc.co.kr"
 },
 "021240": {
 "corp": "00170558",
@@ -6939,7 +6968,8 @@
 "ksic": "64992",
 "name": "Hanwha Machinery & Service Holdings",
 "pref": false,
-"web": "www.hanwhamachinerynserviceholdings.com"
+"web": "",
+"web_dead": "www.hanwhamachinerynserviceholdings.com"
 },
 "0220WL": {
 "corp": "02042949",
@@ -6949,7 +6979,8 @@
 "ksic": "64992",
 "name": "Hanwha Machinery & Service Holdings (Pref.)",
 "pref": true,
-"web": "www.hanwhamachinerynserviceholdings.com"
+"web": "",
+"web_dead": "www.hanwhamachinerynserviceholdings.com"
 },
 "022100": {
 "corp": "00155212",
@@ -7199,7 +7230,8 @@
 "ksic": "303",
 "name": "KB Autosys",
 "pref": false,
-"web": "www.kbautosys.com"
+"web": "",
+"web_dead": "www.kbautosys.com"
 },
 "024720": {
 "corp": "00203290",
@@ -7449,7 +7481,8 @@
 "ksic": "463",
 "name": "Silla SG",
 "pref": false,
-"web": "www.sisfood.co.kr"
+"web": "",
+"web_dead": "www.sisfood.co.kr"
 },
 "025880": {
 "corp": "00101752",
@@ -7479,7 +7512,8 @@
 "ksic": "16212",
 "name": "Dongwha Enterprise",
 "pref": false,
-"web": "www.dongwha.co.kr"
+"web": "",
+"web_dead": "www.dongwha.co.kr"
 },
 "025950": {
 "corp": "00116408",
@@ -7909,7 +7943,8 @@
 "ksic": "303",
 "name": "Austem",
 "pref": false,
-"web": "www.yyauto.co.kr"
+"web": "",
+"web_dead": "www.yyauto.co.kr"
 },
 "031820": {
 "corp": "00186559",
@@ -7959,7 +7994,7 @@
 "ksic": "46510",
 "name": "Daou Data",
 "pref": false,
-"web": "www.daoudata.co.kr"
+"web": "https://www.daoudata.co.kr"
 },
 "032280": {
 "corp": "00127909",
@@ -8869,7 +8904,8 @@
 "ksic": "467",
 "name": "Gamsung",
 "pref": false,
-"web": "www.gamsungcorp.co.kr"
+"web": "",
+"web_dead": "www.gamsungcorp.co.kr"
 },
 "036630": {
 "corp": "00268002",
@@ -8969,7 +9005,7 @@
 "ksic": "29229",
 "name": "Jusung Engineering",
 "pref": false,
-"web": "jusung.com"
+"web": "https://jusung.com"
 },
 "037030": {
 "corp": "00231354",
@@ -9009,7 +9045,7 @@
 "ksic": "631",
 "name": "YG Plus",
 "pref": false,
-"web": "www.ygplus.com"
+"web": "https://www.ygplus.com"
 },
 "037330": {
 "corp": "00265421",
@@ -9069,7 +9105,8 @@
 "ksic": "2642",
 "name": "Samji Electronics",
 "pref": false,
-"web": "www.samjielec.co.kr"
+"web": "",
+"web_dead": "www.samjielec.co.kr"
 },
 "037560": {
 "corp": "00222532",
@@ -9089,7 +9126,8 @@
 "ksic": "47111",
 "name": "GwangjuShinsegae",
 "pref": false,
-"web": "www.gjshinsegae.com"
+"web": "",
+"web_dead": "www.gjshinsegae.com"
 },
 "037760": {
 "corp": "00239596",
@@ -9219,7 +9257,8 @@
 "ksic": "47711",
 "name": "Wiz",
 "pref": false,
-"web": "www.wizit.com"
+"web": "",
+"web_dead": "www.wizit.com"
 },
 "038680": {
 "corp": "00264635",
@@ -9439,7 +9478,7 @@
 "ksic": "27192",
 "name": "DIO",
 "pref": false,
-"web": "dio.co.kr"
+"web": "https://dio.co.kr"
 },
 "039860": {
 "corp": "00230425",
@@ -9529,7 +9568,7 @@
 "ksic": "58221",
 "name": "Polaris Office",
 "pref": false,
-"web": "www.polarisofficecorp.com"
+"web": "https://www.polarisofficecorp.com"
 },
 "041190": {
 "corp": "00231664",
@@ -9549,7 +9588,7 @@
 "ksic": "29241",
 "name": "Hyundai Everdigm",
 "pref": false,
-"web": "www.hyundaieverdigm.com"
+"web": "https://www.hyundaieverdigm.com"
 },
 "041460": {
 "corp": "00361169",
@@ -9639,7 +9678,8 @@
 "ksic": "2219",
 "name": "SY Dong-a",
 "pref": false,
-"web": "www.dahs.co.kr"
+"web": "",
+"web_dead": "www.dahs.co.kr"
 },
 "041960": {
 "corp": "00187415",
@@ -9749,7 +9789,8 @@
 "ksic": "3111",
 "name": "Hanwha Ocean",
 "pref": false,
-"web": "www.hanwhaocean.com/pub/main/index.do"
+"web": "",
+"web_dead": "www.hanwhaocean.com/pub/main/index.do"
 },
 "042700": {
 "corp": "00161383",
@@ -9769,7 +9810,8 @@
 "ksic": "411",
 "name": "Sangji Construction",
 "pref": false,
-"web": "www.sangji.co.kr"
+"web": "",
+"web_dead": "www.sangji.co.kr"
 },
 "043100": {
 "corp": "00220109",
@@ -9849,7 +9891,8 @@
 "ksic": "303",
 "name": "PHA",
 "pref": false,
-"web": "www.phauto.co.kr"
+"web": "",
+"web_dead": "www.phauto.co.kr"
 },
 "043590": {
 "corp": "00260611",
@@ -9909,7 +9952,8 @@
 "ksic": "411",
 "name": "KD",
 "pref": false,
-"web": "kdcon.co.kr"
+"web": "",
+"web_dead": "kdcon.co.kr"
 },
 "044340": {
 "corp": "00293886",
@@ -9949,7 +9993,8 @@
 "ksic": "901",
 "name": "Billions",
 "pref": false,
-"web": "www.unidusok.com"
+"web": "",
+"web_dead": "www.unidusok.com"
 },
 "044490": {
 "corp": "00186799",
@@ -10349,7 +10394,8 @@
 "ksic": "271",
 "name": "Synergy Innovation",
 "pref": false,
-"web": "http://www.synergyinnovation.co.kr"
+"web": "",
+"web_dead": "http://www.synergyinnovation.co.kr"
 },
 "048910": {
 "corp": "00351807",
@@ -10659,7 +10705,7 @@
 "ksic": "42311",
 "name": "Kepco Plant Service & Engineering",
 "pref": false,
-"web": "www.kps.co.kr"
+"web": "https://www.kps.co.kr"
 },
 "051630": {
 "corp": "00347734",
@@ -10989,7 +11035,7 @@
 "ksic": "58221",
 "name": "Korea Information Certificate Authority, Incorporated",
 "pref": false,
-"web": "www.kica.co.kr"
+"web": "https://www.kica.co.kr"
 },
 "053350": {
 "corp": "00353610",
@@ -11059,7 +11105,8 @@
 "ksic": "303",
 "name": "Sambo Motors",
 "pref": false,
-"web": "www.sambomotos.co.kr"
+"web": "",
+"web_dead": "www.sambomotos.co.kr"
 },
 "053800": {
 "corp": "00298270",
@@ -11139,7 +11186,7 @@
 "ksic": "262",
 "name": "Elentec",
 "pref": false,
-"web": "www.elentec.co.kr"
+"web": "https://www.elentec.co.kr"
 },
 "054220": {
 "corp": "00201432",
@@ -11279,7 +11326,7 @@
 "ksic": "2229",
 "name": "Tapex",
 "pref": false,
-"web": "tapex.co.kr"
+"web": "https://tapex.co.kr"
 },
 "055550": {
 "corp": "00382199",
@@ -11339,7 +11386,7 @@
 "ksic": "2229",
 "name": "Shinwha Intertek",
 "pref": false,
-"web": "www.shinwha.com"
+"web": "https://www.shinwha.com"
 },
 "056730": {
 "corp": "00318662",
@@ -11549,7 +11596,8 @@
 "ksic": "213",
 "name": "Metabiomed",
 "pref": false,
-"web": "wwwlmeta-biomed.com"
+"web": "",
+"web_dead": "wwwlmeta-biomed.com"
 },
 "059270": {
 "corp": "00453442",
@@ -11709,7 +11757,8 @@
 "ksic": "58221",
 "name": "YoungLimWon SoftLab",
 "pref": false,
-"web": "ksystem.co.kr"
+"web": "",
+"web_dead": "ksystem.co.kr"
 },
 "060900": {
 "corp": "00367695",
@@ -11729,7 +11778,7 @@
 "ksic": "64992",
 "name": "HL Holdings",
 "pref": false,
-"web": "hlholdings.co.kr"
+"web": "https://hlholdings.co.kr"
 },
 "061040": {
 "corp": "00309831",
@@ -11959,7 +12008,8 @@
 "ksic": "474",
 "name": "PonyLink",
 "pref": false,
-"web": "www.gemvaxlink.com"
+"web": "",
+"web_dead": "www.gemvaxlink.com"
 },
 "064820": {
 "corp": "00152437",
@@ -12129,7 +12179,8 @@
 "ksic": "465",
 "name": "Hyper",
 "pref": false,
-"web": "medifon.com"
+"web": "",
+"web_dead": "medifon.com"
 },
 "065660": {
 "corp": "00631837",
@@ -12159,7 +12210,8 @@
 "ksic": "221",
 "name": "Pakers",
 "pref": false,
-"web": "www.xleds.co.kr"
+"web": "",
+"web_dead": "www.xleds.co.kr"
 },
 "065710": {
 "corp": "00220622",
@@ -12229,7 +12281,8 @@
 "ksic": "612",
 "name": "Bucket Studio",
 "pref": false,
-"web": "www.towin-global.com"
+"web": "",
+"web_dead": "www.towin-global.com"
 },
 "066430": {
 "corp": "00370200",
@@ -12319,7 +12372,8 @@
 "ksic": "2622",
 "name": "DAP",
 "pref": false,
-"web": "www.dapmc.co.kr"
+"web": "",
+"web_dead": "www.dapmc.co.kr"
 },
 "066910": {
 "corp": "00306870",
@@ -12499,7 +12553,7 @@
 "ksic": "47111",
 "name": "Savezone I&C",
 "pref": false,
-"web": "www.savezone.co.kr"
+"web": "https://www.savezone.co.kr"
 },
 "067900": {
 "corp": "00190756",
@@ -12589,7 +12643,8 @@
 "ksic": "29171",
 "name": "ilShinbiobase",
 "pref": false,
-"web": "http://www.ilshinlab.co.kr"
+"web": "",
+"web_dead": "http://www.ilshinlab.co.kr"
 },
 "068760": {
 "corp": "00541349",
@@ -13019,7 +13074,8 @@
 "ksic": "221",
 "name": "Kumho Tire",
 "pref": false,
-"web": "www.kumhotire.co.kr"
+"web": "",
+"web_dead": "www.kumhotire.co.kr"
 },
 "073490": {
 "corp": "00462121",
@@ -13059,7 +13115,8 @@
 "ksic": "339",
 "name": "Lithium-for-earth",
 "pref": false,
-"web": "http://www.urbanlithium.com"
+"web": "",
+"web_dead": "http://www.urbanlithium.com"
 },
 "073640": {
 "corp": "00373021",
@@ -13119,7 +13176,7 @@
 "ksic": "303",
 "name": "Saeronautomotive Corporration",
 "pref": false,
-"web": "www.saeronauto.co.kr"
+"web": "https://www.saeronauto.co.kr"
 },
 "075580": {
 "corp": "00415628",
@@ -13249,7 +13306,8 @@
 "ksic": "29272",
 "name": "HB Technology",
 "pref": false,
-"web": "www.ncbnet.co.kr"
+"web": "",
+"web_dead": "www.ncbnet.co.kr"
 },
 "078160": {
 "corp": "00453929",
@@ -13319,7 +13377,8 @@
 "ksic": "591",
 "name": "Iokenm",
 "pref": false,
-"web": "www.iok.co.kr"
+"web": "",
+"web_dead": "www.iok.co.kr"
 },
 "078890": {
 "corp": "00441304",
@@ -13449,7 +13508,8 @@
 "ksic": "292",
 "name": "Junjin Construction & Robot",
 "pref": false,
-"web": "junjin.com"
+"web": "",
+"web_dead": "junjin.com"
 },
 "079940": {
 "corp": "00506294",
@@ -13519,7 +13579,8 @@
 "ksic": "75210",
 "name": "Modetournetworkinc",
 "pref": false,
-"web": "www.modetour.co.kr"
+"web": "",
+"web_dead": "www.modetour.co.kr"
 },
 "080220": {
 "corp": "00447487",
@@ -13709,7 +13770,7 @@
 "ksic": "29271",
 "name": "LOTVacuum",
 "pref": false,
-"web": "www.lotvacuum.com"
+"web": "https://www.lotvacuum.com"
 },
 "083420": {
 "corp": "00454946",
@@ -13819,7 +13880,8 @@
 "ksic": "2411",
 "name": "Daehan Steel",
 "pref": false,
-"web": "www.idaehan.com"
+"web": "",
+"web_dead": "www.idaehan.com"
 },
 "084110": {
 "corp": "00228059",
@@ -14309,7 +14371,8 @@
 "ksic": "29271",
 "name": "Techwing",
 "pref": false,
-"web": "techwing.co.kr"
+"web": "",
+"web_dead": "techwing.co.kr"
 },
 "089140": {
 "corp": "00416414",
@@ -14369,7 +14432,7 @@
 "ksic": "71310",
 "name": "kt nasmedia",
 "pref": false,
-"web": "www.nasmedia.co.kr"
+"web": "https://www.nasmedia.co.kr"
 },
 "089790": {
 "corp": "00365457",
@@ -14449,7 +14512,8 @@
 "ksic": "303",
 "name": "iWIN",
 "pref": false,
-"web": "www.kwangjinwintec.com"
+"web": "",
+"web_dead": "www.kwangjinwintec.com"
 },
 "090350": {
 "corp": "00583442",
@@ -14479,7 +14543,8 @@
 "ksic": "29280",
 "name": "Robostar",
 "pref": false,
-"web": "robostar.co.kr"
+"web": "",
+"web_dead": "robostar.co.kr"
 },
 "090370": {
 "corp": "00442835",
@@ -14549,7 +14614,8 @@
 "ksic": "29280",
 "name": "Hyulim Robot",
 "pref": false,
-"web": "www.dstrobot.com"
+"web": "",
+"web_dead": "www.dstrobot.com"
 },
 "090850": {
 "corp": "00656951",
@@ -14879,7 +14945,8 @@
 "ksic": "2642",
 "name": "Seowonintech",
 "pref": false,
-"web": "seowonintech.co.kr"
+"web": "",
+"web_dead": "seowonintech.co.kr"
 },
 "094170": {
 "corp": "00695969",
@@ -14909,7 +14976,7 @@
 "ksic": "261",
 "name": "Chips & Media",
 "pref": false,
-"web": "www.chipsnmedia.com"
+"web": "https://www.chipsnmedia.com"
 },
 "094480": {
 "corp": "00587457",
@@ -15039,7 +15106,8 @@
 "ksic": "76320",
 "name": "AJ Networks",
 "pref": false,
-"web": "www.ajnet.co.kr"
+"web": "",
+"web_dead": "www.ajnet.co.kr"
 },
 "095610": {
 "corp": "00524421",
@@ -15209,7 +15277,8 @@
 "ksic": "26519",
 "name": "Mcnex",
 "pref": false,
-"web": "www.mcnex.co.kr"
+"web": "",
+"web_dead": "www.mcnex.co.kr"
 },
 "097780": {
 "corp": "00562360",
@@ -15469,7 +15538,8 @@
 "ksic": "29142",
 "name": "Seoam Machinery Industry",
 "pref": false,
-"web": "smiltd.co.kr"
+"web": "",
+"web_dead": "smiltd.co.kr"
 },
 "100700": {
 "corp": "00362201",
@@ -15539,7 +15609,8 @@
 "ksic": "29142",
 "name": "Woorim Power Train Solution",
 "pref": false,
-"web": "www.woorimgear.co.kr"
+"web": "",
+"web_dead": "www.woorimgear.co.kr"
 },
 "101240": {
 "corp": "00520610",
@@ -15869,7 +15940,7 @@
 "ksic": "14199",
 "name": "Hansae",
 "pref": false,
-"web": "www.hansae.com"
+"web": "https://www.hansae.com"
 },
 "105740": {
 "corp": "00533003",
@@ -16529,7 +16600,7 @@
 "ksic": "461",
 "name": "Golfzon Holdings",
 "pref": false,
-"web": "www.golfzonholdings.com"
+"web": "https://www.golfzonholdings.com"
 },
 "121600": {
 "corp": "00439965",
@@ -16659,7 +16730,8 @@
 "ksic": "303",
 "name": "MS Autotech",
 "pref": false,
-"web": "ms-global.com"
+"web": "",
+"web_dead": "ms-global.com"
 },
 "123330": {
 "corp": "00624998",
@@ -16779,7 +16851,7 @@
 "ksic": "5299",
 "name": "Taewoong Logistics",
 "pref": false,
-"web": "www.e-tgl.com"
+"web": "https://www.e-tgl.com"
 },
 "125020": {
 "corp": "00381756",
@@ -16869,7 +16941,7 @@
 "ksic": "42311",
 "name": "Soosan Industries",
 "pref": false,
-"web": "www.soosanind.co.kr"
+"web": "https://www.soosanind.co.kr"
 },
 "126730": {
 "corp": "00446901",
@@ -17239,7 +17311,8 @@
 "ksic": "62021",
 "name": "WINS Technet",
 "pref": false,
-"web": "www.wins21.co.kr"
+"web": "",
+"web_dead": "www.wins21.co.kr"
 },
 "137080": {
 "corp": "00362122",
@@ -17869,7 +17942,8 @@
 "ksic": "46414",
 "name": "Zero to Seven",
 "pref": false,
-"web": "www.0to7.com"
+"web": "",
+"web_dead": "www.0to7.com"
 },
 "159910": {
 "corp": "00896753",
@@ -18629,7 +18703,8 @@
 "ksic": "2642",
 "name": "Oneul E&M",
 "pref": false,
-"web": "www.hyulimnetworks.com/"
+"web": "",
+"web_dead": "www.hyulimnetworks.com/"
 },
 "192440": {
 "corp": "00917861",
@@ -19039,7 +19114,8 @@
 "ksic": "303",
 "name": "HL Mando",
 "pref": false,
-"web": "www.mando.com"
+"web": "",
+"web_dead": "www.mando.com"
 },
 "204610": {
 "corp": "00609661",
@@ -19179,7 +19255,7 @@
 "ksic": "582",
 "name": "Jiransecurity",
 "pref": false,
-"web": "www.jiransecurity.com"
+"web": "https://www.jiransecurity.com"
 },
 "208370": {
 "corp": "01047451",
@@ -19209,7 +19285,8 @@
 "ksic": "262",
 "name": "Photon",
 "pref": false,
-"web": "www.biologdevice.com"
+"web": "",
+"web_dead": "www.biologdevice.com"
 },
 "208860": {
 "corp": "01084364",
@@ -19549,7 +19626,7 @@
 "ksic": "71310",
 "name": "Incross",
 "pref": false,
-"web": "www.incross.com"
+"web": "https://www.incross.com"
 },
 "216080": {
 "corp": "01222867",
@@ -19739,7 +19816,7 @@
 "ksic": "72911",
 "name": "ZGOO Holdings",
 "pref": false,
-"web": "www.zgoo.xyz"
+"web": "https://www.zgoo.xyz"
 },
 "221840": {
 "corp": "00688358",
@@ -19909,7 +19986,8 @@
 "ksic": "582",
 "name": "Nexon Games",
 "pref": false,
-"web": "nexongames.co.kr"
+"web": "",
+"web_dead": "nexongames.co.kr"
 },
 "225590": {
 "corp": "01101041",
@@ -19989,7 +20067,8 @@
 "ksic": "20423",
 "name": "Outin Futures",
 "pref": false,
-"web": "www.outinco.com"
+"web": "",
+"web_dead": "www.outinco.com"
 },
 "227840": {
 "corp": "01108099",
@@ -20149,7 +20228,7 @@
 "ksic": "6202",
 "name": "STraffic",
 "pref": false,
-"web": "www.straffic.co.kr"
+"web": "https://www.straffic.co.kr"
 },
 "234340": {
 "corp": "00763701",
@@ -20249,7 +20328,8 @@
 "ksic": "20423",
 "name": "CLIO Cosmetics",
 "pref": false,
-"web": "www.clio.co.kr"
+"web": "",
+"web_dead": "www.clio.co.kr"
 },
 "238090": {
 "corp": "00942131",
@@ -20419,7 +20499,8 @@
 "ksic": "292",
 "name": "Temc CNS",
 "pref": false,
-"web": "http://www.oceanbridge.co.kr"
+"web": "",
+"web_dead": "http://www.oceanbridge.co.kr"
 },
 "241820": {
 "corp": "01051092",
@@ -20449,7 +20530,8 @@
 "ksic": "582",
 "name": "Namu AX",
 "pref": false,
-"web": "namutech.co.kr"
+"web": "",
+"web_dead": "namutech.co.kr"
 },
 "243070": {
 "corp": "01159853",
@@ -20559,7 +20641,8 @@
 "ksic": "28202",
 "name": "Ecopro BM",
 "pref": false,
-"web": "www.ecoprobm.co.kr"
+"web": "",
+"web_dead": "www.ecoprobm.co.kr"
 },
 "247660": {
 "corp": "00660459",
@@ -20849,7 +20932,7 @@
 "ksic": "582",
 "name": "Softcamp",
 "pref": false,
-"web": "www.softcamp.co.kr"
+"web": "https://www.softcamp.co.kr"
 },
 "258830": {
 "corp": "00959229",
@@ -21199,7 +21282,8 @@
 "ksic": "35200",
 "name": "Kyungdong City Gas",
 "pref": false,
-"web": "www.kdgas.co.kr"
+"web": "",
+"web_dead": "www.kdgas.co.kr"
 },
 "267320": {
 "corp": "01208849",
@@ -21269,7 +21353,8 @@
 "ksic": "28519",
 "name": "Everybot",
 "pref": false,
-"web": "www.everybot.net"
+"web": "",
+"web_dead": "www.everybot.net"
 },
 "270870": {
 "corp": "01214248",
@@ -21339,7 +21424,8 @@
 "ksic": "26299",
 "name": "Hanwha Systems",
 "pref": false,
-"web": "hanwhasystems.com"
+"web": "",
+"web_dead": "hanwhasystems.com"
 },
 "272290": {
 "corp": "01237540",
@@ -21819,7 +21905,8 @@
 "ksic": "26224",
 "name": "DK Tech",
 "pref": false,
-"web": "www.dtktech.co.kr/"
+"web": "",
+"web_dead": "www.dtktech.co.kr/"
 },
 "290560": {
 "corp": "01130849",
@@ -21919,7 +22006,7 @@
 "ksic": "58222",
 "name": "Pintel",
 "pref": false,
-"web": "www.pintel.co.kr/html/index/"
+"web": "www.pintel.co.kr"
 },
 "293480": {
 "corp": "00248974",
@@ -22309,7 +22396,7 @@
 "ksic": "58222",
 "name": "Saltlux",
 "pref": false,
-"web": "www.saltlux.com/"
+"web": "https://www.saltlux.com/"
 },
 "304360": {
 "corp": "01258020",
@@ -22329,7 +22416,7 @@
 "ksic": "213",
 "name": "PeopleBio",
 "pref": false,
-"web": "www.peoplebio.net/kr/index.php"
+"web": "www.peoplebio.net"
 },
 "305090": {
 "corp": "01267967",
@@ -22829,7 +22916,8 @@
 "ksic": "292",
 "name": "HanWool Semiconductor",
 "pref": false,
-"web": "www.wintec.co.kr"
+"web": "",
+"web_dead": "www.wintec.co.kr"
 },
 "321260": {
 "corp": "01359736",
@@ -22999,7 +23087,8 @@
 "ksic": "620",
 "name": "Saltware",
 "pref": false,
-"web": "saltware.co.kr"
+"web": "",
+"web_dead": "saltware.co.kr"
 },
 "329180": {
 "corp": "01390344",
@@ -23409,7 +23498,8 @@
 "ksic": "47320",
 "name": "OA",
 "pref": false,
-"web": "www.oa-world.com"
+"web": "",
+"web_dead": "www.oa-world.com"
 },
 "344820": {
 "corp": "01428203",
@@ -23709,7 +23799,7 @@
 "ksic": "2622",
 "name": "Daeduck Electronics",
 "pref": false,
-"web": "www.daeduck.com"
+"web": "https://www.daeduck.com"
 },
 "35320K": {
 "corp": "01478712",
@@ -23719,7 +23809,7 @@
 "ksic": "2622",
 "name": "Daeduck Electronics (Pref.)",
 "pref": true,
-"web": "www.daeduck.com"
+"web": "https://www.daeduck.com"
 },
 "353590": {
 "corp": "01084294",
@@ -23829,7 +23919,8 @@
 "ksic": "6811",
 "name": "Koramco Life Infra Reit",
 "pref": false,
-"web": "www.koramcoenergyplus.co.kr"
+"web": "",
+"web_dead": "www.koramcoenergyplus.co.kr"
 },
 "357230": {
 "corp": "01068737",
@@ -24239,7 +24330,7 @@
 "ksic": "27199",
 "name": "Hancom Lifecare",
 "pref": false,
-"web": "www.hancomlifecare.com"
+"web": "https://www.hancomlifecare.com"
 },
 "373110": {
 "corp": "01492217",
@@ -24509,7 +24600,7 @@
 "ksic": "30399",
 "name": "Hwaseung R&A",
 "pref": false,
-"web": "www.hsrna.com"
+"web": "https://www.hsrna.com"
 },
 "380540": {
 "corp": "01506990",
@@ -24619,7 +24710,8 @@
 "ksic": "204",
 "name": "Ecopro HN",
 "pref": false,
-"web": "www.ecoprohn.co.kr"
+"web": "",
+"web_dead": "www.ecoprohn.co.kr"
 },
 "383800": {
 "corp": "01562589",
@@ -25489,7 +25581,7 @@
 "ksic": "70113",
 "name": "ImmuneOncia Therapeutics",
 "pref": false,
-"web": "www.immuneoncia.com/immun/"
+"web": "www.immuneoncia.com"
 },
 "424960": {
 "corp": "01555215",
@@ -26079,7 +26171,8 @@
 "ksic": "20499",
 "name": "ASTech",
 "pref": false,
-"web": "www.asteh.co.kr"
+"web": "",
+"web_dead": "www.asteh.co.kr"
 },
 "454910": {
 "corp": "01105153",
@@ -26789,7 +26882,8 @@
 "ksic": "639",
 "name": "MeatBox Global",
 "pref": false,
-"web": "www.meatbox.co.kr"
+"web": "",
+"web_dead": "www.meatbox.co.kr"
 },
 "475560": {
 "corp": "00968607",
@@ -27439,7 +27533,8 @@
 "ksic": "452",
 "name": "Phionx",
 "pref": false,
-"web": "www.phionx.com"
+"web": "",
+"web_dead": "www.phionx.com"
 },
 "900110": {
 "corp": "00799070",

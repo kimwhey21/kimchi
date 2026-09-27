@@ -31,7 +31,7 @@ OUT = Path(__file__).resolve().parent.parent / "output" / "site_crawl"
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"}
 PAUSE = 0.25
 SKIP = re.compile(r"/wp-admin|/wp-login|/xmlrpc|/wp-json/|/feed/?$|/comments/feed|\?replytocom=|/wp-content/|/wp-includes/")
-HANGUL_OK = {"/about/", "/contact/", "/privacy-policy/", "/privacy/"}   # 한국어 소개·연락처·개인정보(메뉴에서 뺀 페이지)
+HANGUL_OK = {"/about/", "/contact/", "/privacy-policy/"}   # 남겨 둔 한국어 소개·연락처·개인정보(697·698·226, 검색 제외·lang="ko")
 PHP_ERR = re.compile(r"(Fatal error|Parse error|Warning</b>:|Notice</b>:|Deprecated</b>:|Uncaught |on line <b>\d+)")
 
 

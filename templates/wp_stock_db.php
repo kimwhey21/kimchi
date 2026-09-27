@@ -114,7 +114,18 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 		. '<div class="fs-price">' . fs_krw( isset( $q['close'] ) ? $q['close'] : null ) . ' <small>' . fs_signed( isset( $q['chg'] ) ? $q['chg'] : null ) . ' (' . fs_pct( isset( $q['pct'] ) ? $q['pct'] : null, false ) . ')</small></div>'
 		. '<div class="fs-mute">At close: ' . fs_date( isset( $q['date'] ) ? $q['date'] : '' ) . ' · KRW · Korea Exchange</div></div>'
 		. '<div class="fs-btns"><a class="fs-btn" href="' . $guide . '">How to buy from abroad →</a></div></div>';
-	$h .= '<div class="fs-tabs"><a href="#overview">Overview</a><a href="#chart">Chart</a><a href="#flows">Foreign flows</a><a href="#financials">Financials</a><a href="#peers">Peers</a><a href="#about">About</a></div>';
+	// 이동 버튼은 그 칸이 있을 때만 — 재무·동종이 없는 종목에서 눌러도 아무 데도 안 가던 버튼이 14종목에 있었다(2026-09-27 전수 점검)
+	$chart = fs_chart( isset( $s['hist'] ) ? $s['hist'] : array() );
+	$peers = array_values( array_filter( isset( $s['peers'] ) ? $s['peers'] : array(), function ( $p ) use ( $index_by_code ) { return isset( $index_by_code[ $p['code'] ] ); } ) );   // 목록에 없는 종목(ETF 등)은 404라 뺀다
+	$tabs = array( 'overview' => 'Overview' );
+	if ( $chart ) { $tabs['chart'] = 'Chart'; }
+	if ( ! empty( $s['flows'] ) ) { $tabs['flows'] = 'Foreign flows'; }
+	if ( ! empty( $s['fin']['cols'] ) ) { $tabs['financials'] = 'Financials'; }
+	if ( $peers ) { $tabs['peers'] = 'Peers'; }
+	$tabs['about'] = 'About';
+	$h .= '<div class="fs-tabs">';
+	foreach ( $tabs as $id => $label ) { $h .= '<a href="#' . $id . '">' . $label . '</a>'; }
+	$h .= '</div>';
 	$rows1 = array(
 		array( 'Market cap', fs_big( isset( $q['mcap'] ) ? $q['mcap'] : null ) ),
 		array( 'PE ratio', fs_x( isset( $r['per'] ) ? $r['per'] : null ) ),
@@ -139,7 +150,7 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 	);
 	$tbl = function ( $rows ) { $o = '<table class="fs-kv">'; foreach ( $rows as $x ) { $o .= '<tr><td>' . $x[0] . '</td><td>' . $x[1] . '</td></tr>'; } return $o . '</table>'; };
 	$h .= '<section id="overview" class="fs-two"><div class="fs-stats">' . $tbl( $rows1 ) . $tbl( $rows2 ) . '</div>'
-		. '<div id="chart">' . fs_chart( isset( $s['hist'] ) ? $s['hist'] : array() ) . '</div></section>';
+		. ( $chart ? '<div id="chart">' . $chart . '</div>' : '<div></div>' ) . '</section>';
 	if ( ! empty( $s['flows'] ) ) {
 		$h .= '<section id="flows" class="fs-sec"><h2>Foreign, institutional and retail net buying <span class="fs-kr">KR data</span></h2>'
 			. '<p class="fs-note">Shares by trading day; positive means net buying. Korea publishes investor-type flows for every stock — global sites such as Yahoo or StockAnalysis do not show them.</p>'
@@ -171,9 +182,9 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 		$h .= '</table></div></section>';
 	}
 	$h .= '<div class="fs-two fs-sec">';
-	if ( ! empty( $s['peers'] ) ) {
+	if ( $peers ) {
 		$h .= '<section id="peers"><h2>Peers</h2><table class="fs-t">';
-		foreach ( $s['peers'] as $p ) {
+		foreach ( $peers as $p ) {
 			$i = isset( $index_by_code[ $p['code'] ] ) ? $index_by_code[ $p['code'] ] : null;
 			$h .= '<tr><td><a href="/stocks/' . fs_esc( $p['code'] ) . '/"><b>' . fs_esc( $p['name'] ) . '</b></a> <span class="fs-code">' . fs_esc( $p['code'] ) . '</span></td>'
 				. '<td class="fs-num">' . ( $i ? fs_krw( $i[3] ) : '–' ) . '</td><td class="fs-num">' . ( $i ? fs_pct( $i[4] ) : '–' ) . '</td></tr>';
@@ -182,7 +193,8 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 	}
 	$about = fs_esc( ! empty( $s['en'] ) ? $s['en'] : $name ) . ' is listed on the ' . $mkt . ' market of the Korea Exchange under the ticker ' . fs_esc( $code ) . '.'
 		. ( ! empty( $s['industry'] ) ? ' Industry: ' . fs_esc( $s['industry'] ) . '.' : '' ) . ( ! empty( $s['founded'] ) ? ' Founded in ' . fs_esc( $s['founded'] ) . '.' : '' );
-	$web = ! empty( $s['web'] ) ? ( preg_match( '#^https?://#', $s['web'] ) ? $s['web'] : 'https://' . $s['web'] ) : '';
+	// DART 주소는 대개 앞머리 없이 온다 — https://를 붙이면 옛 회사 사이트 다수가 인증서 오류였다(2026-09-27, 표본 40 중 32가 http://로 열림)
+	$web = ! empty( $s['web'] ) ? ( preg_match( '#^https?://#', $s['web'] ) ? $s['web'] : 'http://' . $s['web'] ) : '';
 	$h .= '<section id="about"><h2>About</h2><p>' . $about . '</p>' . ( $web ? '<p><a href="' . fs_esc( $web ) . '" rel="nofollow noopener" target="_blank">' . fs_esc( preg_replace( '#^https?://#', '', $web ) ) . '</a></p>' : '' );
 	if ( $related ) {
 		$h .= '<h3>' . fs_esc( $name ) . ' in our notes</h3><ul class="fs-rel">';
@@ -295,7 +307,9 @@ const FS_JS = <<<'JS'
 function load(cb){if(data)return cb();try{var c=sessionStorage.getItem('fs-idx');if(c){data=JSON.parse(c);return cb();}}catch(e){}
 fetch('/wp-json/fermata/v1/stock-index').then(function(r){return r.json()}).then(function(j){data=j;try{sessionStorage.setItem('fs-idx',JSON.stringify(j))}catch(e){}cb()}).catch(function(){data=[];cb()});}
 function show(){var q=box.value.trim().toLowerCase();if(!q){res.hidden=true;return}var out=[];for(var i=0;i<data.length&&out.length<8;i++){var r=data[i];if(r[0].toLowerCase().indexOf(q)===0||r[1].toLowerCase().indexOf(q)>-1)out.push(r)}
-res.innerHTML=out.map(function(r,i){return '<li><a href="/stocks/'+r[0]+'/"'+(i===sel?' class="on"':'')+'><span><b>'+r[1].replace(/</g,'&lt;')+'</b></span><span style="color:#8b95a1">'+r[0]+' · '+r[2]+'</span></a></li>'}).join('')||'<li style="padding:9px 12px;color:#8b95a1">No match</li>';res.hidden=false}
+res.textContent='';if(!out.length){var e=document.createElement('li');e.style.cssText='padding:9px 12px;color:#8b95a1';e.textContent='No match';res.appendChild(e)}
+out.forEach(function(r,i){var li=document.createElement('li'),a=document.createElement('a'),b=document.createElement('b'),n=document.createElement('span'),c=document.createElement('span');
+a.setAttribute('href','/stocks/'+r[0]+'/');if(i===sel)a.className='on';b.textContent=r[1];n.appendChild(b);c.style.color='#8b95a1';c.textContent=r[0]+' · '+r[2];a.appendChild(n);a.appendChild(c);li.appendChild(a);res.appendChild(li)});res.hidden=false}
 box.addEventListener('input',function(){sel=-1;load(show)});box.addEventListener('focus',function(){load(function(){})});
 box.addEventListener('keydown',function(e){var a=res.querySelectorAll('a');if(e.key==='ArrowDown'){sel=Math.min(sel+1,a.length-1);show();e.preventDefault()}else if(e.key==='ArrowUp'){sel=Math.max(sel-1,0);show();e.preventDefault()}else if(e.key==='Enter'&&a.length){location.href=a[Math.max(sel,0)].getAttribute('href')}else if(e.key==='Escape'){res.hidden=true}});
 document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement!==box&&!/input|textarea/i.test(document.activeElement.tagName)){box.focus();e.preventDefault()}});
