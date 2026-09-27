@@ -727,6 +727,9 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
                 print(f"[정사각 썸네일 실패] 글 {en_result.get('id')}: {exc}")
         if publish_live:
             publish_wordpress.verify_published(en_result["id"], en["title"])
+            if status == "publish" and en_result.get("link"):
+                from src import indexnow   # 빙에 새 글을 바로 알린다(2026-09-28) — 실패해도 발행은 성공
+                indexnow.submit([en_result["link"]])
 
     if only_en:
         # 영어판만 다시 올린다(2026-09-26) — 9/9~9/25 영어 시황 24편에 그림을 채울 때 한국어 비공개 글은 건드리지 않으려고.

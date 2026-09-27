@@ -540,6 +540,7 @@ def push(items: list[dict], index: list, market: dict, *, pause: float = 1.5) ->
 
     sent = 0
     # 어제 목록에 있었는데 오늘 없는 종목(상장폐지·펀드 제외)은 페이지를 지운다 — 남겨 두면 멈춘 숫자가 계속 보인다
+    old = []
     try:
         old = requests.get(f"{base}/wp-json/fermata/v1/stock-index", headers=UA, timeout=60).json()
         gone = sorted({r[0] for r in old} - {i["code"] for i in items})
@@ -551,6 +552,10 @@ def push(items: list[dict], index: list, market: dict, *, pause: float = 1.5) ->
     if gone:
         post({"items": [], "delete": gone}, f"페이지 지우기 {gone}")
         print(f"[안내] 목록에서 빠진 종목 페이지를 지웠습니다: {gone}")
+    new = sorted({i["code"] for i in items} - {r[0] for r in old}) if old else []
+    if (new or gone) and len(new) <= 50:
+        from src import indexnow   # 새로 생기거나 사라진 종목 페이지를 빙에 알린다(2026-09-28)
+        indexnow.submit([f"{base}/stocks/{c}/" for c in new + gone])
     for chunk in batches(items):
         got = post({"items": chunk}, f"종목 {sent}~{sent + len(chunk)}")
         if got.get("saved") != len(chunk):

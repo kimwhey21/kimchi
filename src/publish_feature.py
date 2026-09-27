@@ -425,6 +425,9 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
         # 그 글의 알림은 맥의 동기화가 네이버에 올린 뒤 네이버 주소로 보낸다(scripts/notify_naver_post.py).
         notify_telegram.notify_post(base, result["id"], ko["title"], doc)
         notify_threads.notify_post(base, result["id"], ko["title"], doc)     # 스레드(2026-09-12, 홍보 2번)
+        if result.get("link"):
+            from src import indexnow   # 빙에 새·고친 글을 바로 알린다(2026-09-28) — 실패해도 발행은 성공
+            indexnow.submit([result["link"]])
     return result
 
 

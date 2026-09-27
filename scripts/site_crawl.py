@@ -111,7 +111,10 @@ def links(url: str, text: str) -> tuple[set[str], set[str]]:
 
 def sitemap_urls(session: requests.Session) -> list[str]:
     out = []
-    index = session.get(f"{SITE}/wp-sitemap.xml", timeout=30).text
+    r = session.get(f"{SITE}/wp-sitemap.xml", timeout=30, allow_redirects=False)
+    if r.status_code != 200 or "wp-sitemap-stocks-" not in r.text:   # Rank Math 사이트맵이 켜지면 돌려보낸다(2026-09-28)
+        raise SystemExit(f"/wp-sitemap.xml 이상: HTTP {r.status_code} {r.headers.get('Location', '')} — 종목 사이트맵이 없습니다.")
+    index = r.text
     for sub in re.findall(r"<loc>([^<]+)</loc>", index):
         time.sleep(PAUSE)
         out += re.findall(r"<loc>([^<]+)</loc>", session.get(sub, timeout=60).text)

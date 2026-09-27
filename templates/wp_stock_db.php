@@ -408,9 +408,16 @@ function fs_index_url() {
 
 add_action( 'init', function () {
 	add_rewrite_rule( '^stocks/([0-9][0-9A-Za-z]{5})/?$', 'index.php?pagename=stocks&fm_code=$matches[1]', 'top' );
-	if ( get_option( 'fm_stock_rewrite' ) !== '2' ) { flush_rewrite_rules( false ); update_option( 'fm_stock_rewrite', '2' ); }
+	if ( get_option( 'fm_stock_rewrite' ) !== '3' ) { flush_rewrite_rules( false ); update_option( 'fm_stock_rewrite', '3' ); }   // '3': Rank Math 사이트맵을 끈 뒤 한 번 더(2026-09-28)
 } );
 add_filter( 'query_vars', function ( $v ) { $v[] = 'fm_code'; return $v; } );
+// IndexNow(빙) 열쇠 파일 — 사이트 주인 확인용 공개 값(src/indexnow.py의 KEY와 같아야 한다, 2026-09-28)
+const FS_INDEXNOW_KEY = 'f388cd4cbbadc90870c3c0fb1dfdc730';
+add_action( 'parse_request', function () {
+	if ( isset( $_SERVER['REQUEST_URI'] ) && strtok( $_SERVER['REQUEST_URI'], '?' ) === '/' . FS_INDEXNOW_KEY . '.txt' ) {
+		status_header( 200 ); header( 'Content-Type: text/plain; charset=utf-8' ); echo FS_INDEXNOW_KEY; exit;
+	}
+}, 0 );
 // 워드프레스가 /stocks/000660/을 페이지 주소 /stocks/로 '바로잡아' 넘기지 않게
 add_filter( 'redirect_canonical', function ( $url ) { return fs_current_code() ? false : $url; } );
 
@@ -507,6 +514,13 @@ add_filter( 'rank_math/frontend/robots', function ( $r ) {
 }, 99 );
 add_filter( 'rank_math/frontend/canonical', function ( $u ) { $c = fs_current_code(); return ( $c && fs_stock( $c ) ) ? home_url( '/stocks/' . $c . '/' ) : $u; }, 99 );
 add_filter( 'get_canonical_url', function ( $u ) { $c = fs_current_code(); return ( $c && fs_stock( $c ) ) ? home_url( '/stocks/' . $c . '/' ) : $u; }, 99 );
+
+// Rank Math 사이트맵 기능은 언제나 끈다(2026-09-28) — 켜지면 /wp-sitemap.xml을 제 사이트맵으로 돌려보내 종목 사이트맵이 404가 된다.
+// 9/12에 껐는데 9/28 다시 켜져 있었다(누가·왜 켰는지는 확인 못 함). Rank Math는 켜진 기능을 옵션 rank_math_modules에 두고
+// 기능 이름은 'sitemap'이다(플러그인 1.0.279 소스 includes/helpers/class-conditional.php·module/class-manager.php에서 확인).
+add_filter( 'option_rank_math_modules', function ( $modules ) {
+	return is_array( $modules ) ? array_values( array_diff( $modules, array( 'sitemap' ) ) ) : $modules;
+} );
 
 // 사이트맵: 종목 페이지 전부
 add_action( 'wp_sitemaps_init', function ( $sitemaps ) {
