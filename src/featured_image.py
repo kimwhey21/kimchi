@@ -590,3 +590,94 @@ def create(market: str, date_str: str, price_data: dict, output_path: Path,
         "layout": layout,
         "photo_id": photo["id"] if photo else None,
     }
+
+
+# ── 목록용 정사각 썸네일 (2026-09-27, 사장님 "썸네일 4번 3색판으로 가자") ──────────────
+#
+# 본진 홈·목록은 토스피드 풍으로 **글자 왼쪽 · 네모 썸네일 오른쪽**이다. 1200×630 표지를 네모에
+# 넣으면 양쪽이 잘려 "+6.82%"가 "+6.82"로 보였다. 그래서 같은 데이터로 네모 그림을 따로 그린다.
+# 목록에서 약 110px로 보이므로 **큰 글자 한두 개만** 싣는다 — 지수 줄·날짜는 넣지 않는다(안 읽힌다).
+# 가로 표지는 그대로 대표 이미지(공유·디스커버용)로 남고, 네모 그림은 목록에서만 쓴다(코드 조각 14번).
+SQUARE = 600
+_SQ_PAD = 44
+
+
+def _render_square_lead(canvas: Image.Image, lead: dict, lang: str, *, dark: bool, photo: bool) -> None:
+    draw = ImageDraw.Draw(canvas)
+    ink = "#FFFFFF" if dark else "#111111"
+    sub = "#C6CDD6" if dark else "#8A9099"
+    width = SQUARE - 2 * _SQ_PAD
+    draw.text((_SQ_PAD, _SQ_PAD), "FERMATA", font=_font(26), fill=sub)
+    name = _name(lead, lang)
+    name_font = _fit(draw, name, 84, width)
+    change = _change(lead)
+    change_font = _fit(draw, change, 150, width)
+    y_change = SQUARE - _SQ_PAD - 150
+    y_name = y_change - 20 - name_font.size
+    color = _move_color(lead["change_pct"], dark=dark)
+    if photo:
+        _halo_text(canvas, (_SQ_PAD, y_name), name, name_font, ink)
+        _halo_text(canvas, (_SQ_PAD, y_change), change, change_font, color, radius=16)
+    else:
+        draw.text((_SQ_PAD, y_name), name, font=name_font, fill=ink)
+        draw.text((_SQ_PAD, y_change), change, font=change_font, fill=color)
+
+
+def _render_square_trio(canvas: Image.Image, top3: list[dict], lang: str) -> None:
+    draw = ImageDraw.Draw(canvas)
+    ink, sub, tile = "#FFFFFF", "#8A93A0", "#1C2029"
+    draw.text((_SQ_PAD, _SQ_PAD - 6), "FERMATA", font=_font(26), fill=sub)
+    rows = top3[:3]
+    row_h, gap = 138, 18
+    top = SQUARE - _SQ_PAD - len(rows) * row_h - (len(rows) - 1) * gap
+    for entry in rows:
+        accent = _move_color(entry["change_pct"], dark=True)
+        draw.rounded_rectangle((_SQ_PAD - 14, top, SQUARE - _SQ_PAD + 14, top + row_h), radius=18, fill=tile)
+        draw.rounded_rectangle((_SQ_PAD - 14, top, _SQ_PAD - 6, top + row_h), radius=4, fill=accent)
+        change = _change(entry)
+        change_font = _font(58)
+        cw = draw.textlength(change, font=change_font)
+        draw.text((SQUARE - _SQ_PAD - cw, top + 38), change, font=change_font, fill=accent)
+        name = _name(entry, lang)
+        draw.text((_SQ_PAD + 12, top + 44), name, font=_fit(draw, name, 46, SQUARE - 2 * _SQ_PAD - cw - 40), fill=ink)
+        top += row_h + gap
+
+
+def create_square(market: str, date_str: str, price_data: dict, output_path: Path,
+                  doc: dict | None = None, lang: str = "en") -> dict:
+    """`create`와 **같은 그날 판단**(레이아웃·주인공·사진)으로 600×600 목록 썸네일을 그린다.
+
+    레이아웃을 따로 고르면 가로 표지와 네모 썸네일이 다른 종목을 말하게 된다. 그래서 `choose_layout`·
+    `_lead_for`·`_photo_for`를 그대로 부른다(같은 날 다시 불러도 같은 사진이 나온다 — `cover_history`).
+    """
+    layout = choose_layout(price_data, doc, date_str)
+    photo = _photo_for(price_data, doc, date_str, market) if layout == "photo" else None
+    if layout == "photo" and photo is None:
+        layout = "single"
+    if layout == "trio":
+        drawn = _ranked(price_data)[:3]
+        canvas = Image.new("RGB", (SQUARE, SQUARE), "#12141A")
+        _render_square_trio(canvas, drawn, lang)
+    else:
+        lead = _lead_for(price_data, doc) or (_macro(price_data) or [{"name": "-", "name_en": "-", "price": 0, "change_pct": 0.0}])[0]
+        drawn = [lead]
+        if layout == "photo":
+            canvas = _cover_crop(photo_pool.resolve(photo), (SQUARE, SQUARE))
+            _scrim(canvas)
+            _render_square_lead(canvas, lead, lang, dark=True, photo=True)
+        else:
+            canvas = Image.new("RGB", (SQUARE, SQUARE), "#FBFBF9")
+            _render_square_lead(canvas, lead, lang, dark=False, photo=False)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(output_path, format="PNG", optimize=True)
+    market_label = "Korea Market Close" if market == "kr" else "U.S. Market Close"
+    moves = ", ".join(f"{e.get('name_en') or e.get('name')} {_change(e)}" for e in drawn if e)
+    alt = f"{market_label} {date_str} list thumbnail: {moves}"
+    if photo:
+        alt += f", photo background {photo['id']}"
+    caption = "List thumbnail generated from the figures in this article."
+    if photo:
+        credit = photo_pool.credit_en(photo["credit"]) if lang == "en" else photo["credit"]
+        caption = f"{credit}. Figures in the image are that day's closing data."
+    return {"local_path": str(output_path), "alt": f"{alt} [{lang}, square].", "caption": caption,
+            "layout": layout, "photo_id": photo["id"] if photo else None}

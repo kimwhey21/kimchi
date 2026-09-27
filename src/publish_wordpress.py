@@ -549,13 +549,52 @@ def set_focus_keyword(base_url: str, auth: tuple[str, str], post_id: int, keywor
         return False
 
 
+def _category_ids(base_url: str, auth: tuple[str, str], category, lang: str | None) -> list[int]:
+    """카테고리 하나(이름·id) 또는 여럿(목록)을 id 목록으로(2026-09-27, 시황에 Daily + 한국장/미국장 하위 분류).
+
+    숫자 id는 검색·생성하지 않고 그대로 쓴다. 이름은 전처럼 `_get_or_create_term_id`(같은 이름이 둘이면 멈춘다).
+    """
+    items = category if isinstance(category, (list, tuple)) else [category]
+    out: list[int] = []
+    for item in items:
+        cat_id = item if isinstance(item, int) else _get_or_create_term_id(base_url, auth, "categories", item, lang=lang)
+        if cat_id and cat_id not in out:
+            out.append(cat_id)
+    return out
+
+
+SQUARE_META = "fermata_square_thumb"
+
+
+def set_square_thumb(post_id: int, image: dict) -> int:
+    """목록용 정사각 썸네일을 올리고 글의 `fermata_square_thumb`(미디어 id)에 적는다(2026-09-27).
+
+    대표 이미지(1200×630, 공유·디스커버용)는 그대로 두고, 본진 홈·목록에서만 이 그림을 쓴다 — 코드 조각
+    14번이 이 값을 읽는다. 메타는 그 조각이 `register_post_meta`로 REST에 열어 둔다. 적은 값을 되읽어
+    다르면 예외로 올린다(조각이 꺼져 있으면 REST가 메타를 조용히 버린다 — 조용한 실패 금지).
+    """
+    base_url = os.environ["WORDPRESS_URL"].rstrip("/")
+    auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
+    media_id = upload_featured_image(base_url, auth, image)
+    if not media_id:
+        raise WordPressPublishError(f"정사각 썸네일 업로드 실패: {image.get('local_path')}")
+    response = _request("post", f"{base_url}/wp-json/wp/v2/posts/{post_id}", auth=auth,
+                        json={"meta": {SQUARE_META: media_id}}, timeout=TIMEOUT_SECONDS)
+    response.raise_for_status()
+    got = (response.json().get("meta") or {}).get(SQUARE_META)
+    if got != media_id:
+        raise WordPressPublishError(f"정사각 썸네일 메타가 저장되지 않았습니다(글 {post_id}, 받은 값 {got!r}) — "
+                                    "코드 조각 14번(목록 썸네일)이 켜져 있는지 확인하십시오.")
+    return media_id
+
+
 def publish_draft(
     title: str,
     html_content: str,
     lang: str | None = None,
     excerpt: str | None = None,
     tags: list[str] | None = None,
-    category: str | int | None = None,
+    category: str | int | list | None = None,
     image: dict | None = None,
     featured_media_id: int | None = None,
     slug: str | None = None,
@@ -702,9 +741,9 @@ def publish_draft(
     if category:
         # 가이드 발행기는 이름으로 새 카테고리를 만들지 않고 확정 id만 넘긴다.
         # 기존 범용 호출의 호환성은 유지하되, 숫자 id는 절대 검색·생성하지 않는다.
-        cat_id = category if isinstance(category, int) else _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
-        if cat_id:
-            payload["categories"] = [cat_id]
+        cat_ids = _category_ids(base_url, auth, category, lang)
+        if cat_ids:
+            payload["categories"] = cat_ids
     if featured_media_id:
         payload["featured_media"] = featured_media_id
     elif image:
@@ -756,7 +795,7 @@ def update_draft(
     lang: str | None = None,
     excerpt: str | None = None,
     tags: list[str] | None = None,
-    category: str | int | None = None,
+    category: str | int | list | None = None,
     image: dict | None = None,
     featured_media_id: int | None = None,
     focus_keyword: str | None = None,
@@ -785,9 +824,9 @@ def update_draft(
     if tags:
         payload["tags"] = _get_or_create_tag_ids(base_url, auth, tags)
     if category:
-        cat_id = category if isinstance(category, int) else _get_or_create_term_id(base_url, auth, "categories", category, lang=lang)
-        if cat_id:
-            payload["categories"] = [cat_id]
+        cat_ids = _category_ids(base_url, auth, category, lang)
+        if cat_ids:
+            payload["categories"] = cat_ids
     if featured_media_id:
         payload["featured_media"] = featured_media_id
     elif image:

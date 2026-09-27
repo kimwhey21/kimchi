@@ -260,6 +260,25 @@ LIVE_STATUS = {"프리뷰": "private", "기준표": "private",
 KO_TO_WORDPRESS = False
 
 
+def _square_thumb(doc: dict, output: Path) -> dict | None:
+    """본진 목록용 정사각 썸네일(2026-09-27). 영어 글이고 대표 그래픽이 `cover`·`guide_cover`일 때만 그린다.
+
+    본진에 공개로 올라가는 글은 영어뿐이다(한국어는 `_skips_wordpress`). 사진 표지·아이콘 표지는 아직 네모 판이
+    없어 None — 목록은 가로 표지를 틀 안에 통째로 넣어 보여 준다(코드 조각 14번). 이유는 찍는다.
+    """
+    if str(doc.get("lang") or "ko") != "en":
+        return None
+    spec = next((g for g in doc.get("graphics") or [] if g.get("featured")), None)
+    if not spec or spec.get("kind") not in feature_graphics.SQUARE_OF:
+        why = "사진 표지" if doc.get("featured_photo") else f"표지 종류 {spec.get('kind') if spec else '없음'}"
+        print(f"(참고) 정사각 썸네일 없음 — {why}. 목록은 가로 표지를 틀 안에 넣어 보여 줍니다.")
+        return None
+    path = output / "square.png"
+    feature_graphics.SQUARE_OF[spec["kind"]](path, **dict(spec.get("args") or {}))
+    return {"local_path": str(path), "alt": f"{spec.get('alt') or (doc.get('ko') or {}).get('title', '')} (list thumbnail)",
+            "caption": "List thumbnail generated from the figures in this article."}
+
+
 def _skips_wordpress(doc: dict) -> bool:
     return not KO_TO_WORDPRESS and _live_status(doc) == "private"
 
@@ -393,6 +412,13 @@ def publish(path: Path, *, upload: bool = True, live: bool = False) -> dict:
         result["id"], ko["title"], expected_status=expected,
         expected_featured_media=featured_id, expected_category_id=category_id,
     )
+    square = _square_thumb(doc, output)
+    if square:
+        try:
+            media = publish_wordpress.set_square_thumb(result["id"], square)
+            print(f"정사각 썸네일: 미디어 {media}")
+        except Exception as exc:  # noqa: BLE001 - 알림과 같은 곁가지 — 크게 찍고 발행은 계속
+            print(f"[정사각 썸네일 실패] 글 {result.get('id')}: {exc}")
     if live and wanted == "publish":
         # 텔레그램 채널 알림(2026-09-12, 홍보 1번). 다시 올린 글은 notify_post가 스스로 거른다. 실패해도 발행은 성공이다.
         # 비공개로 올리는 글(프리뷰)은 여기서 알리지 않는다 — 링크가 독자에게 404다.

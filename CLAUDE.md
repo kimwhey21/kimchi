@@ -339,7 +339,13 @@
 - **본진은 영어 사이트다**(2026-09-26, 사장님: "온전히 영어사이트로 탈바꿈하자" → "남기고 1~5번 진행해"). 탭은 All·Daily·Guides
   셋이고, 탭 줄이 복제돼 있는 곳은 **페이지 3개(76 daily·77 guides·105 all) + `twentytwentyfive//home` 템플릿** 넷이다(네이버로 가던
   Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은 없앴다). `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
-  줄로 접혀야 가로가 넘치지 않는다. **사이트 언어는 영어다 — REST로는 `"language": ""`(빈 값)로 보낸다.** 워드프레스는 영어를 빈 값으로
+  줄로 접혀야 가로가 넘치지 않는다. **홈·목록(76·77·105·분류)의 겉모습은 토스피드 A안 3색 판이다**(2026-09-27, 사장님 "썸네일 4번
+  3색판으로 가자") — 원본은 `templates/wp_list_toss.php`, `python -m scripts.deploy_list_style`로 Code Snippets 14번에 올린다(관리
+  화면에서 고치지 말 것). 이름표 색은 분류다: 영어 시황은 Daily(121) **그대로 두고** 하위 분류 Korea Close(684)·Wall Street
+  Close(685)를 더한다(`publish_editorial.MARKET_CATEGORY_IDS`), 가이드는 Guides(153). 목록 썸네일은 **정사각 그림을 따로**
+  그린다(`featured_image.create_square`·`feature_graphics.cover_square`, 글 메타 `fermata_square_thumb`) — 가로 표지(1200×630)는
+  공유·디스커버용 대표 이미지로 그대로다. 네모 그림이 없는 글은 가로 표지를 틀 안에 통째로 넣는다. Daily 분류 주소는
+  `/category/daily/`다(전에는 한국어 '시황'). **사이트 언어는 영어다 — REST로는 `"language": ""`(빈 값)로 보낸다.** 워드프레스는 영어를 빈 값으로
   저장하고 `"en_US"`는 설치된 언어 목록에 없다며 옛 값으로 되돌린다(200이 오고도 안 바뀐다). 사장님 계정 언어는 `ko_KR`로 고정해
   관리자 화면은 한국어다. **Code Snippets 12번**이 방문자 화면의 `locale`→`en_US`와 태그라인을 한 번 더 못박는다. 영어 글의 출처 칸은
   한국 매체를 영어 이름(모르면 주소)과 `Korean-language article`로 그리고(`src/english_sources.py`), 영어 이름을 못 찾은 편입 종목은

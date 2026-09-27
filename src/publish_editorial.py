@@ -506,6 +506,11 @@ def _previous_daily_post(market: str, date_str: str, lang: str) -> dict | None:
 # 네이버가 원고를 빠짐없이 옮기게 되면서(test_naver_completeness·naver_audit) 사라졌다. 한국어 그림도 올리지 않는다 —
 # 다만 본문·인사이트 **사진**은 영어판이 같은 것을 쓰므로 그대로 올린다. 되돌리려면 True로.
 KO_DAILY_TO_WORDPRESS = False
+# 본진 영어 시황의 분류(2026-09-27, 사장님 "썸네일 4번 3색판으로 가자"). Daily(121) 아래 하위 분류로 시장을 나눠
+# 목록 이름표가 한국장(초록)·미국장(주황)·가이드(파랑) 세 색이 된다. Daily는 그대로 붙인다 — /daily/ 목록·탭·
+# 색인 요청 순서가 121을 읽는다. 숫자 id라 이름 검색·생성을 하지 않는다.
+DAILY_CATEGORY_ID = 121
+MARKET_CATEGORY_IDS = {"kr": 684, "us": 685}   # Korea Close · Wall Street Close
 KO_DAILY_STATUS = "private"
 
 
@@ -658,6 +663,15 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
             print(f"대표 이미지(영어) 생성: {image_meta_en['local_path']}")
     except Exception as exc:  # noqa: BLE001 - 이미지 실패로 발행을 막지 않음
         print(f"[경고] 대표 이미지 생성 실패, 이미지 없이 계속합니다: {exc!r}")
+    # 본진 목록용 정사각 썸네일(2026-09-27) — 같은 그날 판단(레이아웃·주인공·사진)으로 그린다.
+    square_en = None
+    if en:
+        try:
+            square_en = featured_image.create_square(
+                market, date_str, price_data, OUTPUT_DIR / f"{market}_{date_str}_square_en.png", ko, lang="en")
+            print(f"정사각 썸네일(영어) 생성: {square_en['local_path']} ({square_en['layout']})")
+        except Exception as exc:  # noqa: BLE001 - 썸네일 실패로 발행을 막지 않음(목록은 가로 표지를 틀 안에 넣어 보여 준다)
+            print(f"[정사각 썸네일 실패] 생성하지 못했습니다: {exc!r}")
 
     if not publish_wordpress.is_configured():
         # **이 경로는 `editorial_publish.yml`이 자동으로 돌립니다.** 조용히
@@ -696,7 +710,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
             lang="en",
             excerpt=_excerpt(en, lead=_seo_lead(market, date_str, "en")),
             tags=_EN_TAGS,
-            category="Daily",
+            category=[DAILY_CATEGORY_ID, MARKET_CATEGORY_IDS[market]],   # Daily + Korea Close/Wall Street Close(2026-09-27)
             image=image_meta_en,
             slug=f"editorial-{market}-{date_str}-en",
             focus_keyword="Kospi close" if market == "kr" else "US stocks close",
@@ -704,6 +718,12 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
             post_id=(doc.get("wp_post_ids") or {}).get("en"),
         )
         print(f"영어 {status}: id={en_result.get('id')} {en_result.get('link','')}")
+        if square_en and en_result.get("id"):
+            try:
+                media = publish_wordpress.set_square_thumb(en_result["id"], square_en)
+                print(f"정사각 썸네일: 미디어 {media}")
+            except Exception as exc:  # noqa: BLE001 - 알림과 같은 곁가지 — 크게 찍고 발행은 계속
+                print(f"[정사각 썸네일 실패] 글 {en_result.get('id')}: {exc}")
         if publish_live:
             publish_wordpress.verify_published(en_result["id"], en["title"])
 

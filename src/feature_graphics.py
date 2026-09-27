@@ -270,6 +270,75 @@ def cover(output_path: Path, kicker: str, subject: str,
     return output_path
 
 
+def cover_square(output_path: Path, kicker: str, subject: str,
+                 left: dict | None = None, right: dict | None = None,
+                 note: str = "", size: int = 600) -> Path:
+    """`cover`와 같은 재료로 그리는 **목록용 정사각 썸네일**(2026-09-27, 사장님 "썸네일 4번 3색판으로 가자").
+
+    본진 홈·목록은 글자 왼쪽 · 네모 썸네일 오른쪽(토스피드 풍)이다. 1200×630 표지를 네모에 넣으면 오른쪽
+    숫자가 잘렸다. 목록에서 약 110px로 보이므로 위는 남색 판에 제목, 아래는 크림 바탕에 **숫자 하나**(`left`,
+    없으면 `right`)만 크게 싣는다. 가로 표지는 그대로 대표 이미지로 남는다. `kicker`·`note`는 받기만 한다(안 읽힌다).
+    """
+    ensure_korean_font()
+    image = Image.new("RGB", (size, size), BG)
+    draw = ImageDraw.Draw(image)
+    pad = 44
+    split = int(size * 0.56)
+    draw.rectangle([0, 0, size, split], fill=INK)
+    draw.text((pad, pad - 6), "FERMATA", font=korean_font(24, bold=True), fill="#AEB6C2")
+
+    def wrap(text: str, font, max_width: int) -> list[str]:
+        lines, current = [], ""
+        for word in text.split(" "):
+            trial = f"{current} {word}".strip()
+            if current and draw.textlength(trial, font=font) > max_width:
+                lines.append(current)
+                current = word
+            else:
+                current = trial
+        return lines + ([current] if current else [])
+
+    for font_size in (58, 52, 46, 40, 34):
+        title_font = korean_font(font_size, bold=True)
+        lines = wrap(subject, title_font, size - 2 * pad)
+        if len(lines) <= 3 and all(draw.textlength(line, font=title_font) <= size - 2 * pad for line in lines):
+            break
+    line_height = int(font_size * 1.22)
+    y = split - pad + 6 - len(lines) * line_height
+    for line in lines:
+        draw.text((pad, y), line, font=title_font, fill="#FFFFFF")
+        y += line_height
+
+    side = left or right
+    if side:
+        value = str(side["value"])
+        colour = DOWN if side.get("down") else UP
+        for value_size in (112, 96, 84, 72, 60, 50):
+            value_font = korean_font(value_size, bold=True)
+            if draw.textlength(value, font=value_font) <= size - 2 * pad:
+                break
+        label_font = korean_font(24)
+        label = str(side.get("label") or "")
+        while label and draw.textlength(label, font=label_font) > size - 2 * pad:
+            label = label[:-2].rstrip() + "…"
+        bottom = size - pad
+        draw.text((pad, bottom - value_size - 6), value, font=value_font, fill=colour)
+        draw.text((pad, bottom - value_size - 48), label, font=label_font, fill=SUB)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    image.save(output_path)
+    return output_path
+
+
+def guide_cover_square(output_path: Path, kicker: str, subject: str,
+                       up: dict | None = None, down: dict | None = None, note: str = "") -> Path:
+    """`guide_cover`(옛 인자 up·down)의 정사각 판."""
+    return cover_square(output_path, kicker, subject, left=up,
+                        right=({**down, "down": True} if down else None), note=note)
+
+
+SQUARE_OF = {"cover": cover_square, "guide_cover": guide_cover_square}
+
+
 def sector_breadth(rows: list[dict], output_path: Path,
                    title: str = "업종별 등락", subtitle: str = "") -> Path:
     """업종 등락률과 **그 안에서 몇 종목이 올랐는지**를 함께 그립니다.
