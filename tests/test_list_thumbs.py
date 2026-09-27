@@ -69,7 +69,7 @@ class ListStyleSourceTest(unittest.TestCase):
     def test_three_colours_and_the_daily_chip_hidden_under_a_market(self):
         for needle in ("li.category-korea-close", "li.category-wall-street-close", "li.category-guides",
                        'a[href$="/category/daily/"]', "register_post_meta", "fermata_square_thumb",
-                       "has-fm-sq", "is_page( array( 76, 77, 105 ) )"):
+                       "has-fm-sq", "is_page( array( 76, 77, 105, 'stocks' ) )"):
             self.assertIn(needle, self.SOURCE, needle)
 
     def test_tab_row_still_wraps_on_phones(self):

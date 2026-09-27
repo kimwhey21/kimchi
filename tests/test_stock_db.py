@@ -143,7 +143,14 @@ class SnippetTest(unittest.TestCase):
     def test_page_is_widened_not_shifted(self):
         # left:50%+translateX(-50%)로 넓히면 테마의 auto 여백과 겹쳐 1280px보다 넓은 화면에서 오른쪽으로 밀렸다(2026-09-27)
         self.assertNotIn("translateX(-50%)", PHP)
-        self.assertIn(".fs-page{max-width:1180px!important", PHP)
+        self.assertIn(".fs-page{max-width:1200px!important", PHP)   # 다른 목록 페이지와 같은 폭
+
+    def test_stocks_page_gets_the_list_style(self):
+        # 목록 스타일(흰 배경·글꼴·메뉴 높이)이 Stocks에도 걸려야 네 메뉴 화면이 같다(2026-09-27 크림 배경·319px로 달랐다)
+        toss = (ROOT / "templates" / "wp_list_toss.php").read_text(encoding="utf-8")
+        self.assertIn("is_page( array( 76, 77, 105, 'stocks' ) )", toss)
+        self.assertIn("body.page main>.wp-block-group.alignfull:first-child{padding-top:0!important}", toss)
+        self.assertNotIn(".fs-navwrap div>a{", PHP, "메뉴 버튼 모양은 14번 조각 한 곳에서만 정한다")
 
     def test_nav_keeps_flex_wrap(self):
         self.assertIn("display:flex;flex-wrap:wrap;gap:12px 20px", PHP)

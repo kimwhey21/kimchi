@@ -252,12 +252,11 @@ const FS_CSS = <<<'CSS'
 .fs-kr{background:var(--fs-gb);color:var(--fs-green);font-size:11px;font-weight:700;border-radius:6px;padding:2px 6px;vertical-align:middle}.fs-kr.fs-ipo{background:#fff4e6;color:#d9480f}
 .fs-page,.fs-strip,.fs-cards,.fs-search{font-family:Pretendard,-apple-system,"Segoe UI",sans-serif;color:var(--fs-ink)}
 /* 테마가 본문을 약 650px로 묶는다 — 최대 폭만 넓히고 가운데 정렬은 테마의 auto 여백에 맡긴다(옮기기로 넓히면 1280px 밖에서 오른쪽으로 밀렸다, 2026-09-27) */
-.fs-page{max-width:1180px!important;width:auto;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box}
+.fs-page{max-width:1200px!important;width:auto;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box}
 .fs-page p,.fs-page li{font-size:15px;line-height:1.6}.fs-page h1,.fs-page h2,.fs-page h3{font-family:Pretendard,-apple-system,sans-serif;letter-spacing:-.01em;line-height:1.3}.fs-page h3{font-size:16px;font-weight:800;margin:18px 0 6px}
 .fs-page a,.fs-cards a{color:inherit;text-decoration:none}.fs-page a:hover,.fs-cards a:hover{text-decoration:underline}
-.fs-navwrap{padding:0 0 16px;border-bottom:1px solid var(--fs-line);margin:0 0 18px}
-.fs-navwrap div>a{background:var(--fs-pill);border:0!important;border-radius:999px;padding:9px 16px!important;font:600 14px/1 Pretendard,sans-serif!important;color:var(--fs-sub)!important;text-decoration:none!important}
-.fs-navwrap div>a[style*="font-weight:700"]{background:var(--fs-ink);color:#fff!important}
+/* 메뉴 줄은 Daily·Guides 페이지의 메뉴 묶음과 같은 여백(위아래 20px·아래 선) — 네 화면에서 같은 높이에 온다 */
+.fs-navwrap{padding:20px 0;border-bottom:1px solid var(--fs-line);margin:0 0 22px}
 .fs-crumb{font-size:13px;color:var(--fs-mute);margin:0 0 10px}
 .fs-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end;margin:0 0 6px}.fs-head h1{margin:0;font-size:30px;font-weight:800;letter-spacing:-.01em}
 .fs-tick{color:var(--fs-mute);font-size:13.5px;margin:4px 0 6px}.fs-price{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.1}.fs-price small{font-size:18px;font-weight:700;margin-left:6px}
@@ -274,7 +273,9 @@ table.fs-kv,table.fs-t{width:100%;border-collapse:collapse;font-size:14px;margin
 .fs-src{color:var(--fs-mute);font-size:12.5px;margin-top:22px}
 .fs-pills{display:flex;gap:8px;margin:14px 0}.fs-pills a{background:var(--fs-pill);border-radius:999px;padding:7px 14px;font-weight:600;font-size:13.5px;color:var(--fs-sub)}.fs-pills a.on{background:var(--fs-ink);color:#fff}
 .fs-pager{display:flex;gap:16px;justify-content:center;align-items:center;margin:18px 0}.fs-pager a{background:#3182f6;color:#fff!important;border-radius:999px;padding:8px 16px;font-weight:600}
-.fs-search{position:relative;display:flex;align-items:center;gap:10px;background:var(--fs-pill);border-radius:999px;padding:4px 18px;margin:14px auto 16px;max-width:680px}
+.fs-search{position:relative;display:flex;align-items:center;gap:10px;background:var(--fs-pill);border-radius:999px;padding:4px 18px;margin:14px auto 16px!important;max-width:680px!important;box-sizing:border-box}
+/* 홈 템플릿의 'main .is-layout-constrained>:not(.alignfull):not(.alignwide){max-width:1200px!important}'보다 구체적이어야 680px가 먹는다 */
+main div.fs-search.fs-search:not(.alignfull):not(.alignwide){max-width:680px!important}
 .fs-search input{flex:1;border:0;background:transparent;font:15px Pretendard,sans-serif;padding:10px 0;color:var(--fs-ink);outline:none}.fs-search kbd{border:1px solid #d7dbe2;border-radius:6px;padding:1px 7px;font-size:12px;color:var(--fs-mute);font-family:inherit}
 .fs-search ul{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--fs-line);border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.08);list-style:none;margin:0;padding:6px;z-index:50}
 .fs-search li a{display:flex;justify-content:space-between;padding:9px 12px;border-radius:10px;color:var(--fs-ink);text-decoration:none}.fs-search li a:hover,.fs-search li a.on{background:var(--fs-pill)}

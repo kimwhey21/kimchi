@@ -338,7 +338,9 @@
 - **본진은 영어 사이트다**(2026-09-26, 사장님: "온전히 영어사이트로 탈바꿈하자" → "남기고 1~5번 진행해"). 메뉴는 Market(`/`)·Stocks(`/stocks/`)·Daily·Guides
   넷이고(2026-09-27, 그전엔 All·Daily·Guides — 105 all 페이지는 남아 있고 메뉴에서만 빠졌다), 탭 줄이 복제돼 있는 곳은 **페이지 3개(76 daily·77
   guides·105 all) + `twentytwentyfive//home` 템플릿 + `templates/wp_stock_db.php`의 `fs_nav`** 다섯이다(네이버로 가던
-  Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은 없앴다). 바꾸기 전 원본은 `~/.market-brief-backups/home_nav_before_20260927.json`. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
+  Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은 없앴다). 바꾸기 전 원본은 `~/.market-brief-backups/home_nav_before_20260927.json`. **네 메뉴 화면의 모양(메뉴 높이·폭·배경·글꼴)은 14번 조각이
+  맞춘다** — Stocks도 목록 화면(`fermata_list_view`)에 들고, 일반 페이지 틀의 윗칸을 없애 홈과 같은 자리에 둔다. 메뉴·목록 스타일을
+  고친 뒤에는 **`python -m scripts.nav_check`**(1440·390px 실측, 다르면 실패)를 돌린다 — 한 폭 캡처만 보고 "됐다"고 하지 말 것. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
   줄로 접혀야 가로가 넘치지 않는다. **홈·목록(76·77·105·분류)의 겉모습은 토스피드 A안 3색 판이다**(2026-09-27, 사장님 "썸네일 4번
   3색판으로 가자") — 원본은 `templates/wp_list_toss.php`, `python -m scripts.deploy_list_style`로 Code Snippets 14번에 올린다(관리
   화면에서 고치지 말 것). 이름표 색은 분류다: 영어 시황은 Daily(121) **그대로 두고** 하위 분류 Korea Close(684)·Wall Street

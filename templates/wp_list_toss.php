@@ -16,7 +16,7 @@ add_action( 'init', function () {
 } );
 
 function fermata_list_view() {
-	return is_front_page() || is_home() || is_page( array( 76, 77, 105 ) ) || is_category() || is_tag() || is_search();
+	return is_front_page() || is_home() || is_page( array( 76, 77, 105, 'stocks' ) ) || is_category() || is_tag() || is_search();   // stocks: 종목 데이터베이스(2026-09-27) — 메뉴 네 화면의 배경·글꼴을 같게
 }
 
 add_filter( 'render_block_core/post-featured-image', function ( $html, $block, $instance ) {
@@ -61,6 +61,10 @@ main div[style*="flex-wrap:wrap"]>a[style*="font-weight:700"],
 .page-id-77 main div[style*="flex-wrap:wrap"]>a[href="/guides/"]{background:var(--fa-ink);color:#fff!important}
 /* Guides 목록(77)만 탭 줄에 "지금 보는 탭" 표시가 빠져 있다(원래부터) — 페이지 본문 대신 여기서 칠한다 */
 main div[style*="border-bottom-width:1px"]{border-bottom-color:var(--fa-line)!important}
+/* 메뉴 네 화면(홈·Stocks·Daily·Guides)의 메뉴 줄 높이를 같게 — 일반 페이지 틀은 본문 위에 70px 빈칸을 더 둬서
+   메뉴가 홈보다 89px 아래에 있었다(2026-09-27 실측 272·319·361). 홈과 같은 자리로 올린다 */
+body.page main>.wp-block-group.alignfull:first-child{padding-top:0!important}
+body.page .wp-block-post-content>div.wp-block-group:first-of-type{margin-top:0!important}   /* 본문 맨 앞에 style 태그가 있어 :first-child가 안 걸린다 */
 /* 글 목록: 글자 왼쪽, 네모 썸네일 오른쪽, 두 줄 */
 .wp-block-post-template.is-layout-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:36px 56px!important}
 .wp-block-post-template>li>.wp-block-group{display:grid!important;grid-template-columns:minmax(0,1fr) 124px;column-gap:22px;
