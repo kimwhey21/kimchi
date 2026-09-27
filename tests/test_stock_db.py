@@ -113,9 +113,13 @@ class DailyRunTest(unittest.TestCase):
             self.assertIsNone(sdb.web_alive("www.dead.com"))
 
     def test_first_day_listing_is_flagged(self):
-        m = sdb.market_summary([_row("000001", 5e12, pct=280.83), _row("000002", 4e12, pct=5.0)], {}, {}, {}, None, None)
-        self.assertTrue(m["gainers"][0].get("ipo"), "하루 상한 30%를 넘는 등락은 상장 첫날 — 표시가 붙어야 한다")
+        details = {"000003": {"hist": {"c": [6090.0] * 50 + [202.0]}}}
+        m = sdb.market_summary([_row("000001", 5e12, pct=280.83), _row("000002", 4e12, pct=5.0), _row("000003", 3e12, pct=-96.68)],
+                               details, {}, {}, None, None)
+        self.assertTrue(m["gainers"][0].get("ipo"), "이력이 하루뿐이고 30%를 넘으면 상장 첫날")
         self.assertNotIn("ipo", m["gainers"][1])
+        self.assertTrue(m["losers"][0].get("nolimit"), "이력이 긴데 30%를 넘으면 정리매매 등 — New listing이 아니다")
+        self.assertNotIn("ipo", m["losers"][0])
 
     def test_hangul_is_caught_except_korean_name_field(self):
         self.assertEqual(sdb.hangul_problems({"name_ko": "삼성전자", "q": {}}), [])

@@ -193,11 +193,12 @@ def _num(text) -> float | None:
 def list_market(session: requests.Session, market: str) -> list[dict]:
     """전 종목 목록(주식만 — ETF·ETN 제외). 시가총액 순."""
     rows, page = [], 1
+    fund = re.compile(r"X클래스|클래스$")      # 'X클래스'는 회사가 아니라 펀드 상품(0106J0 대신 KOSPI200인덱스 X클래스) — 2026-09-27
     while True:
         data = _get(session, f"{NAVER}/stocks/marketValue/{market}", params={"page": page, "pageSize": 100}).json()
         stocks = data.get("stocks") or []
         for s in stocks:
-            if s.get("stockEndType") != "stock":
+            if s.get("stockEndType") != "stock" or fund.search(s.get("stockName") or ""):
                 continue
             rows.append({
                 "code": s["itemCode"], "market": market, "name_ko": s.get("stockName"),
@@ -475,8 +476,13 @@ def market_summary(listing: list[dict], details: dict[str, dict], meta: dict, id
     buys = sorted([f for f in flows if f["value"] > 0], key=lambda f: -f["value"])[:5]
     sells = sorted([f for f in flows if f["value"] < 0], key=lambda f: f["value"])[:5]
     # 하루 상한은 30% — 넘는 것은 상장 첫날(공모가 대비)뿐이다(2026-09-23 Wise Planet +280.83%). 틀린 숫자로 보이지 않게 표시한다
-    pick = lambda r: {"code": r["code"], "name": name(r["code"]), "close": r["close"], "pct": r["pct"],  # noqa: E731
-                      **({"ipo": True} if abs(r["pct"] or 0) > 30.5 else {})}
+    # 정리매매(DA Technology 2026-09-23 −96.68%)도 30%를 넘는다 — 이력이 하루뿐일 때만 상장 첫날로 본다
+    def pick(r):
+        out = {"code": r["code"], "name": name(r["code"]), "close": r["close"], "pct": r["pct"]}
+        if abs(r["pct"] or 0) > 30.5:
+            days = len(((details.get(r["code"]) or {}).get("hist") or {}).get("c") or [])
+            out["ipo" if days <= 1 else "nolimit"] = True
+        return out
     return {"date": date, "index": idx, "usdkrw": fx, "skhy": skhy, "flow_universe": len(flows), "flow_date": flow_date,
             "largest": [pick(r) for r in big[:7]], "gainers": [pick(r) for r in gain], "losers": [pick(r) for r in lose],
             "foreign_buy": buys, "foreign_sell": sells, "counts": {"KOSPI": sum(r["market"] == "KOSPI" for r in listing),
@@ -533,6 +539,18 @@ def push(items: list[dict], index: list, market: dict, *, pause: float = 1.5) ->
         raise StockDBError(f"워드프레스 저장 실패({what}): {last}")
 
     sent = 0
+    # 어제 목록에 있었는데 오늘 없는 종목(상장폐지·펀드 제외)은 페이지를 지운다 — 남겨 두면 멈춘 숫자가 계속 보인다
+    try:
+        old = requests.get(f"{base}/wp-json/fermata/v1/stock-index", headers=UA, timeout=60).json()
+        gone = sorted({r[0] for r in old} - {i["code"] for i in items})
+    except (requests.RequestException, ValueError) as error:
+        print(f"[경고] 어제 목록을 못 받아 지울 종목을 못 셉니다: {error!r}")
+        gone = []
+    if len(gone) > 50:
+        raise StockDBError(f"하루에 {len(gone)}종목이 사라졌습니다 — 목록 수집이 잘못됐을 수 있어 멈춥니다.")
+    if gone:
+        post({"items": [], "delete": gone}, f"페이지 지우기 {gone}")
+        print(f"[안내] 목록에서 빠진 종목 페이지를 지웠습니다: {gone}")
     for chunk in batches(items):
         got = post({"items": chunk}, f"종목 {sent}~{sent + len(chunk)}")
         if got.get("saved") != len(chunk):

@@ -147,7 +147,8 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 		array( 'Volume', ( isset( $q['volume'] ) && $q['volume'] !== null ) ? number_format( $q['volume'] ) : '–' ),
 		array( 'Trading value', fs_big( isset( $q['value'] ) ? $q['value'] : null ) ),
 		array( 'Day’s range', ( isset( $r['low'] ) && $r['low'] ) ? fs_krw( $r['low'] ) . ' – ' . fs_krw( $r['high'] ) : '–' ),
-		array( '52-week range', ( isset( $r['low52'] ) && $r['low52'] ) ? fs_krw( $r['low52'] ) . ' – ' . fs_krw( $r['high52'] ) : '–' ),
+		// 액면병합 뒤 52주 값이 조정되지 않은 종목이 있다(009310: 가격 5,330 vs 864~1,705) — 가격과 모순되면 숨긴다
+		array( '52-week range', ( ! empty( $r['low52'] ) && ! empty( $r['high52'] ) && ! empty( $q['close'] ) && $q['close'] >= $r['low52'] * 0.7 && $q['close'] <= $r['high52'] * 1.3 ) ? fs_krw( $r['low52'] ) . ' – ' . fs_krw( $r['high52'] ) : '–' ),
 		array( 'Foreign ownership <span class="fs-kr">KR</span>', fs_x( isset( $r['foreign_ratio'] ) ? $r['foreign_ratio'] : null, '%' ) ),
 		array( 'Foreign net buy' . ( $last_flow ? ' (' . date( 'M j', strtotime( $last_flow['d'] ) ) . ')' : '' ) . ' <span class="fs-kr">KR</span>',
 		       $last_flow && $last_flow['foreign'] !== null ? fs_signed( $last_flow['foreign'] ) . ' sh' : '–' ),
@@ -255,10 +256,10 @@ function fs_market_html( $m ) {
 	$h .= '<div class="fs-card"><h2>Largest companies<a class="fs-more" href="/stocks/">All ' . number_format( array_sum( $m['counts'] ) ) . ' →</a></h2><table class="fs-t">';
 	foreach ( $m['largest'] as $r ) { $h .= '<tr><td><a href="/stocks/' . $r['code'] . '/"><b>' . fs_esc( $r['name'] ) . '</b></a> <span class="fs-code">' . $r['code'] . '</span></td><td class="fs-num">' . fs_krw( $r['close'] ) . '</td><td class="fs-num">' . fs_pct( $r['pct'] ) . '</td></tr>'; }
 	$h .= '</table></div><div class="fs-card"><h2>Movers</h2><ul class="fs-mv"><li class="fs-sep">Gainers</li>';
-	foreach ( array_slice( $m['gainers'], 0, 4 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . ( ! empty( $r['ipo'] ) ? ' <span class="fs-kr fs-ipo">New listing</span>' : '' ) . '</a>' . fs_pct( $r['pct'] ) . '</li>'; }
+	foreach ( array_slice( $m['gainers'], 0, 4 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . ( ! empty( $r['ipo'] ) ? ' <span class="fs-kr fs-ipo">New listing</span>' : ( ! empty( $r['nolimit'] ) ? ' <span class="fs-kr fs-ipo">No price limit</span>' : '' ) ) . '</a>' . fs_pct( $r['pct'] ) . '</li>'; }
 	$h .= '<li class="fs-sep">Losers</li>';
 	foreach ( array_slice( $m['losers'], 0, 4 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . '</a>' . fs_pct( $r['pct'] ) . '</li>'; }
-	$h .= '</ul><p class="fs-mute fs-small">Stocks with at least ₩5B traded. Moves beyond the 30% daily limit are first-day listings, measured from the IPO price.</p></div><div class="fs-card"><h2>Foreign investors <span class="fs-kr">KR data</span></h2><ul class="fs-mv"><li class="fs-sep">Bought most</li>';
+	$h .= '</ul><p class="fs-mute fs-small">Stocks with at least ₩5B traded. Moves beyond the 30% daily limit happen only without a price limit — a first day of trading (from the IPO price) or a delisting sale.</p></div><div class="fs-card"><h2>Foreign investors <span class="fs-kr">KR data</span></h2><ul class="fs-mv"><li class="fs-sep">Bought most</li>';
 	foreach ( array_slice( $m['foreign_buy'], 0, 3 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . '</a><b class="fs-up">+' . fs_big( $r['value'] ) . '</b></li>'; }
 	$h .= '<li class="fs-sep">Sold most</li>';
 	foreach ( array_slice( $m['foreign_sell'], 0, 3 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . '</a><b class="fs-dn">' . fs_big( $r['value'] ) . '</b></li>'; }
@@ -373,6 +374,10 @@ add_action( 'rest_api_init', function () {
 				update_option( 'fm_s_' . $code, $data, false ); $saved++;
 			}
 			$out = array( 'saved' => $saved );
+			if ( isset( $body['delete'] ) && is_array( $body['delete'] ) ) {   // 상장폐지·제외 종목
+				$out['deleted'] = 0;
+				foreach ( $body['delete'] as $code ) { $code = strtoupper( (string) $code ); if ( preg_match( '/^[0-9A-Z]{6}$/', $code ) && delete_option( 'fm_s_' . $code ) ) { $out['deleted']++; } }
+			}
 			// 목록은 한 번에 못 보낸다(카페24가 큰 요청을 끊는다) — 나눠 받아 _next에 쌓고, 마지막 조각의 index_total과 줄 수가 맞을 때만 바꾼다
 			if ( isset( $body['index_part'] ) && is_array( $body['index_part'] ) ) {
 				$next = ! empty( $body['index_reset'] ) ? array() : get_option( 'fm_stock_index_next', array() );
