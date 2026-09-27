@@ -140,6 +140,11 @@ class SnippetTest(unittest.TestCase):
     def test_content_filter_runs_after_wpautop(self):
         self.assertIn("}, 99 );   // wpautop(10) 뒤", PHP)
 
+    def test_page_is_widened_not_shifted(self):
+        # left:50%+translateX(-50%)로 넓히면 테마의 auto 여백과 겹쳐 1280px보다 넓은 화면에서 오른쪽으로 밀렸다(2026-09-27)
+        self.assertNotIn("translateX(-50%)", PHP)
+        self.assertIn(".fs-page{max-width:1180px!important", PHP)
+
     def test_nav_keeps_flex_wrap(self):
         self.assertIn("display:flex;flex-wrap:wrap;gap:12px 20px", PHP)
 

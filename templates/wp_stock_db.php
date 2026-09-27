@@ -251,7 +251,8 @@ const FS_CSS = <<<'CSS'
 .fs-mute{color:var(--fs-mute)}.fs-small{font-size:12.5px;margin:10px 0 0}.fs-code{color:var(--fs-mute);font-size:11.5px;margin-left:4px}
 .fs-kr{background:var(--fs-gb);color:var(--fs-green);font-size:11px;font-weight:700;border-radius:6px;padding:2px 6px;vertical-align:middle}.fs-kr.fs-ipo{background:#fff4e6;color:#d9480f}
 .fs-page,.fs-strip,.fs-cards,.fs-search{font-family:Pretendard,-apple-system,"Segoe UI",sans-serif;color:var(--fs-ink)}
-.fs-page{width:min(1180px,calc(100vw - 32px));max-width:none!important;position:relative;left:50%;transform:translateX(-50%)}
+/* 테마가 본문을 약 650px로 묶는다 — 최대 폭만 넓히고 가운데 정렬은 테마의 auto 여백에 맡긴다(옮기기로 넓히면 1280px 밖에서 오른쪽으로 밀렸다, 2026-09-27) */
+.fs-page{max-width:1180px!important;width:auto;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box}
 .fs-page p,.fs-page li{font-size:15px;line-height:1.6}.fs-page h1,.fs-page h2,.fs-page h3{font-family:Pretendard,-apple-system,sans-serif;letter-spacing:-.01em;line-height:1.3}.fs-page h3{font-size:16px;font-weight:800;margin:18px 0 6px}
 .fs-page a,.fs-cards a{color:inherit;text-decoration:none}.fs-page a:hover,.fs-cards a:hover{text-decoration:underline}
 .fs-navwrap{padding:0 0 16px;border-bottom:1px solid var(--fs-line);margin:0 0 18px}
