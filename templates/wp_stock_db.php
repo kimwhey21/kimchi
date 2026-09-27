@@ -462,6 +462,10 @@ add_action( 'rest_api_init', function () {
 				'rank_math_db_version' => get_option( 'rank_math_db_version' ),
 				'rank_math_install_date' => get_option( 'rank_math_install_date' ),
 				'wp_sitemaps_enabled' => (bool) apply_filters( 'wp_sitemaps_enabled', (bool) get_option( 'blog_public' ) ),
+				'rank_math_tables' => $wpdb->get_results( $wpdb->prepare( "SELECT table_name AS t, table_rows AS n, ROUND((data_length+index_length)/1048576,1) AS mb FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name LIKE %s", $wpdb->esc_like( $wpdb->prefix . 'rank_math' ) . '%' ) ),
+				'rank_math_option_names' => $wpdb->get_col( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE 'rank\\_math\\_%' ORDER BY option_name" ),
+				'rank_math_redirections' => $wpdb->get_results( "SELECT id, sources, url_to, header_code, status, hits FROM {$wpdb->prefix}rank_math_redirections" ),
+				'db_total_mb' => $wpdb->get_var( "SELECT ROUND(SUM(data_length+index_length)/1048576,1) FROM information_schema.tables WHERE table_schema = DATABASE()" ),
 			);
 		} ) );
 	register_rest_route( 'fermata/v1', '/stock-index', array( 'methods' => 'GET', 'permission_callback' => '__return_true',

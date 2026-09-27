@@ -308,7 +308,9 @@
   같은 목록을 쓴다. 이름은 낱말 경계로 찾는다. 이미 올라간 글은 `python -m scripts.retag_wordpress --apply`(워드프레스)와
   `~/.market-brief-naver/retag_post.py`(네이버)로 고친다.
 - **사이트맵은 워드프레스 기본(`/wp-sitemap.xml`)이다.** Rank Math 사이트맵 모듈은 꺼 두었고 옛 `/sitemap_index.xml`은 404다.
-  **다시 켜지 말 것** — 켜져도 16번 조각의 `option_rank_math_modules` 필터가 늘 끈다(켜지면 종목 사이트맵이 404가 된다). 네이버 서치어드바이저에는 새 주소를 제출했고, 구글 서치콘솔은 사용자 계정으로 제출한다. 새 글마다
+  **다시 켜지 말 것** — 켜져도 16번 조각의 `option_rank_math_modules` 필터가 늘 끈다(켜지면 종목 사이트맵이 404가 된다). Rank Math에서 켜 둔 기능은
+  링크 집계·SEO 분석·구조화 데이터·Instant Indexing(글 수정도 빙에 알림)·지역 SEO·리디렉션(옛 `/en/` 주소 5개)·404 기록 일곱뿐이다(2026-09-28). 켜고 끌 때는
+  Rank Math 자체 주소 `rankmath/v1/saveModule`(플러그인 소스에서 확인)로 하고, 상태는 관리자 진단 주소 `fermata/v1/diag`로 본다. 네이버 서치어드바이저에는 새 주소를 제출했고, 구글 서치콘솔은 사용자 계정으로 제출한다. 새 글마다
   `~/.market-brief-naver/nsa_request.py`가 네이버 수집 요청을 넣는다(10분 동기화에 붙어 있음).
 - **홈 제목·설명·언어 표시와 검색 제외 페이지는 Code Snippets 11번("SEO: 홈·영어 목록 영어 표시…")이 정한다**(2026-09-26).
   관리자 Rank Math '홈페이지' 칸의 한국어 값은 이 조각이 덮어쓰므로 **홈 제목은 조각의 문구를 고친다.** 홈·Daily(76)·Guides(77)·
