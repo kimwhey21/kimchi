@@ -336,6 +336,55 @@ document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeE
 document.addEventListener('click',function(e){if(!e.target.closest('.fs-search'))res.hidden=true});})();
 JS;
 
+// ── 글 속 종목 이름 → 종목 페이지 (2026-09-28, 사장님 "종목 이름 연결부터 진행해") ─────────────────────
+// 영어 시황·가이드 본문에 나온 종목 이름을 처음 한 번만 /stocks/<코드>/로 잇는다. 워드프레스가 글을 그릴 때 붙이므로 이미 올라간
+// 글에도 다시 발행 없이 걸린다. 엉뚱한 연결이 가장 큰 위험이다 — 영어 낱말과 같은 이름(Solid·Union·Russell 2000의 Russell)과
+// 그룹 이름(Lotte·Hanwha·Doosan — 글에서는 대개 그룹 전체를 말한다)은 잇지 않는다. 한 낱말 이름은 시가총액 300위 안만.
+const FS_LINK_EXCLUDE = array( 'acryl', 'alchera', 'alt', 'artist', 'asta', 'auk', 'auto', 'barrel', 'biodyne', 'booster', 'caelum', 'cap', 'carry', 'daewoo', 'dap', 'device', 'di', 'dit', 'doosan', 'dual', 'ecopro', 'encell', 'episode', 'esteem', 'eugene', 'finger', 'flask', 'freet', 'genic', 'genome', 'graphy', 'handsome', 'hankook', 'hanwha', 'hyosung', 'hyper', 'hyundai', 'ich', 'igloo', 'incross', 'kolon', 'kumbi', 'lemon', 'linked', 'lotte', 'mercury', 'mico', 'mot', 'nable', 'neptune', 'nexus', 'nine', 'orion', 'paradise', 'pavonine', 'photon', 'pie', 'posco', 'ray', 'refine', 'russell', 'samsung', 'sec', 'shinsegae', 'solid', 'solum', 'sphere', 'union', 'unison', 'ust', 'vessel', 'wiz', 'wot', 'yas', 'yest', 'ym', 'zeus' );
+const FS_LINK_SHORT_OK = array( 'Kia', 'HMM' );   // 4자 미만인데 글에 자주 나오고 헷갈릴 일이 없는 이름
+const FS_LINK_MAX = 15;
+
+function fs_link_build( $index ) {
+	$map = array();
+	foreach ( array_values( $index ) as $rank => $r ) {
+		$name = trim( (string) $r[1] );
+		if ( '' === $name || false !== strpos( $name, '(' ) || isset( $map[ $name ] ) ) { continue; }   // 우선주는 잇지 않는다
+		$single = false === strpos( $name, ' ' );
+		if ( in_array( strtolower( $name ), FS_LINK_EXCLUDE, true ) ) { continue; }
+		if ( $single && ! in_array( $name, FS_LINK_SHORT_OK, true ) && ( $rank >= 300 || strlen( $name ) < 4 ) ) { continue; }
+		if ( ! $single && strlen( $name ) < 5 ) { continue; }
+		$map[ $name ] = $r[0];
+	}
+	$names = array_keys( $map );
+	usort( $names, function ( $a, $b ) { return strlen( $b ) - strlen( $a ); } );   // 긴 이름 먼저 — "Ecopro BM"이 "Ecopro"보다 먼저
+	$alts = array_map( function ( $n ) { return preg_quote( $n, '/' ); }, $names );
+	return array( 're' => $alts ? '/(?<![\\w&\\-])(' . implode( '|', $alts ) . ')(?![\\w&\\-])(?! Group\\b)/u' : '', 'map' => $map );
+}
+
+function fs_link_apply( $html, $built, $max = FS_LINK_MAX ) {
+	if ( empty( $built['re'] ) ) { return $html; }
+	$parts = preg_split( '/(<[^>]+>)/', $html, -1, PREG_SPLIT_DELIM_CAPTURE );
+	$skip = 0; $done = array(); $count = 0;
+	foreach ( $parts as $i => $part ) {
+		if ( '' === $part ) { continue; }
+		if ( '<' === $part[0] ) {
+			if ( preg_match( '#^<(/?)(a|h[1-6]|script|style|svg|button|figcaption|title|textarea)\b#i', $part, $m ) ) {
+				$skip += ( '/' === $m[1] ) ? -1 : 1;
+				if ( $skip < 0 ) { $skip = 0; }
+			}
+			continue;
+		}
+		if ( $skip > 0 || $count >= $max ) { continue; }
+		$parts[ $i ] = preg_replace_callback( $built['re'], function ( $m ) use ( $built, &$done, &$count, $max ) {
+			$code = $built['map'][ $m[1] ];
+			if ( isset( $done[ $code ] ) || $count >= $max ) { return $m[0]; }
+			$done[ $code ] = true; $count++;
+			return '<a class="fs-stock-link" href="/stocks/' . $code . '/">' . $m[1] . '</a>';
+		}, $part );
+	}
+	return implode( '', $parts );
+}
+
 // ── 워드프레스에 붙이기 ──────────────────────────────────────────────────────────────
 if ( ! function_exists( 'add_action' ) ) { return; }   // 이 맥의 PHP 검사에서는 여기까지만 읽는다
 
@@ -388,7 +437,7 @@ add_action( 'rest_api_init', function () {
 				update_option( 'fm_stock_index_next', $next, false );
 				$out['index_next'] = count( $next );
 				$total = isset( $body['index_total'] ) ? (int) $body['index_total'] : 0;
-				if ( $total && $total === count( $next ) ) { update_option( 'fm_stock_index', $next, false ); delete_option( 'fm_stock_index_next' ); $out['index'] = $total; $out['index_file'] = fs_index_write( $next ); }
+				if ( $total && $total === count( $next ) ) { update_option( 'fm_stock_index', $next, false ); delete_option( 'fm_stock_index_next' ); $out['index'] = $total; $out['index_file'] = fs_index_write( $next ); delete_transient( 'fs_link_v1' ); }
 			}
 			if ( isset( $body['market'] ) && is_array( $body['market'] ) ) { update_option( 'fm_market', $body['market'], false ); $out['market'] = true; }
 			return $out;
@@ -420,6 +469,14 @@ add_filter( 'the_content', function ( $content ) {
 	$pg = isset( $_GET['pg'] ) ? (int) $_GET['pg'] : 1;
 	return $index ? fs_index_html( $index, in_array( $m, array( 'kospi', 'kosdaq' ), true ) ? $m : '', $pg ) : '<p>Stock data is loading. Please check back after the next Korean market close.</p>';
 }, 99 );   // wpautop(10) 뒤 — 앞에 두면 그린 표에 <p>·<br>이 끼어든다
+
+// 영어 시황(121·684·685)과 가이드(153) 본문에서 종목 이름을 잇는다 — 목록이 바뀌면 다시 만든다(REST가 transient를 지운다)
+add_filter( 'the_content', function ( $content ) {
+	if ( is_admin() || ! is_singular( 'post' ) || ! in_the_loop() || ! is_main_query() || ! in_category( array( 121, 684, 685, 153 ) ) ) { return $content; }
+	$built = get_transient( 'fs_link_v1' );
+	if ( ! is_array( $built ) ) { $built = fs_link_build( fs_index() ); set_transient( 'fs_link_v1', $built, DAY_IN_SECONDS ); }
+	return fs_link_apply( $content, $built );
+}, 98 );
 
 add_shortcode( 'fermata_market', function () { return fs_market_html( get_option( 'fm_market' ) ); } );
 add_shortcode( 'fermata_search', function () { return fs_search_box( count( fs_index() ) ); } );

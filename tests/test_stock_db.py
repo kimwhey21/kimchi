@@ -205,6 +205,15 @@ class SnippetTest(unittest.TestCase):
         toss = (ROOT / "templates" / "wp_list_toss.php").read_text(encoding="utf-8")
         self.assertIn("const FERMATA_BASE_CSS", toss)
 
+    def test_stock_name_links_are_guarded(self):
+        # 2026-09-28 글 속 종목 이름 연결 — 영어 낱말과 같은 이름(Russell 2000의 Russell·Solid·Union)과 그룹 이름은 잇지 않는다
+        for word in ("'russell'", "'solid'", "'union'", "'lotte'", "'hanwha'", "'doosan'"):
+            self.assertIn(word, PHP)
+        self.assertIn("(?! Group\\\\b)", PHP, "Hyundai Motor Group 같은 그룹 표현은 잇지 않는다")
+        self.assertIn("$rank >= 300", PHP)
+        self.assertIn("in_category( array( 121, 684, 685, 153 ) )", PHP)
+        self.assertIn("delete_transient( 'fs_link_v1' )", PHP, "목록이 바뀌면 연결 표를 다시 만든다")
+
     def test_nav_keeps_flex_wrap(self):
         self.assertIn("display:flex;flex-wrap:wrap;gap:12px 20px", PHP)
 

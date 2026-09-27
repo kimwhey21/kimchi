@@ -373,7 +373,7 @@
   올리지 않는다**(`stock_db.hangul_problems`) — 이름은 DART 영문명을 다듬고(`clean_name`), 틀린 대형주 이름은 `NAME_FIX`에 사람이 적는다;
   규칙을 고치면 `python -m src.stock_db rename`. 카페24가 큰 요청을 502로 끊으므로 **한 번에 50KB 이하로** 보내고 목록은 나눠 보내 다 모인
   뒤에만 바꾼다. 조각에 글자로 script 태그를 쓰면 NinjaFirewall이 저장을 403으로 막는다(`wp_print_inline_script_tag`를 쓴다).
-  `tests/test_stock_db.py`가 이것들을 고정한다.
+  **영어 시황·가이드 본문의 종목 이름은 워드프레스가 글을 그릴 때 종목 페이지로 잇는다**(`fs_link_apply`, 글마다 첫 언급만·15개까지, 제목·기존 링크 안은 건드리지 않음) — 영어 낱말과 같은 이름·그룹 이름(`FS_LINK_EXCLUDE`)과 300위 밖 한 낱말 이름은 잇지 않는다. 원고에 링크를 손으로 넣지 말 것. `tests/test_stock_db.py`가 이것들을 고정한다.
 - **한국어 글은 전부 본진에 없고 네이버 전문이다**(2026-09-22 비공개로, 2026-09-26부터는 아예 올리지 않는다 — 사장님 결정:
   네이버가 한국어 주력, 올려 두던 비공개 85편은 휴지통). 시황·프리뷰·Checkpoint에
   이어 **한국어 가이드·주간 결산·다음 주 일정·이벤트**도 같은 처리다 — `publish_feature.LIVE_STATUS`에 네 줄, `naver_post`는 잡지를
