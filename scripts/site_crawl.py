@@ -194,6 +194,9 @@ def main(argv: list[str] | None = None) -> int:
         if internal(src):
             time.sleep(PAUSE)
         asset_status[src] = check_status(s, src)
+        if asset_status[src] != 200:          # 카페24가 가끔 502를 낸다(2026-09-28 그림 21개, 다시 열면 정상) — 5초 뒤 한 번 더
+            time.sleep(5)
+            asset_status[src] = check_status(s, src)
     ext_status = {}
     if a.external:
         print(f"바깥 링크 {len(external)}개(동시 16)", flush=True)
