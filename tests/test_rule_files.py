@@ -1,26 +1,17 @@
-"""규칙 파일이 실제 저장소와 어긋나면 잡습니다.
+"""규칙 파일(CLAUDE.md)이 실제 저장소와 어긋나면 잡습니다.
 
 왜 필요한가
 -----------
-2026-09-06에 규칙 파일 두 개를 대조해 봤더니 이랬습니다.
+2026-09-06에 그날 만든 도구 여섯 개(`publish_feature`, `feature_gate`, `source_check`,
+`photo_search`, `title_helper`, `bench_watch`)가 규칙 파일에 **0회** 나왔습니다. 도구를 만들어
+놓고 규칙에 적지 않으면 다음 세션은 그 도구가 있는 줄도 모르고 처음부터 헤맵니다.
 
-    CLAUDE.md에만    자동 발행·워치리스트·사진 출처 규칙 15개
-    AGENTS.md에만    "디버깅할 때 원인을 추측만으로 단정하지 말 것" 외 24개
+그래서 두 가지를 확인합니다.
 
-머리말은 "내용은 거의 동일"이라고 적혀 있었습니다. **그 '거의'가 문제입니다** —
-Codex가 AGENTS.md를 읽고 Claude가 CLAUDE.md를 읽는데 둘이 다르면, 한쪽이 이미
-배운 교훈을 다른 쪽이 그대로 다시 겪습니다.
+1. 규칙이 이름을 댄 모듈·스크립트가 실제로 있을 것
+2. 발행 도구를 규칙이 실제로 가리킬 것
 
-같은 날 더 나쁜 것도 찾았습니다. 그날 만든 도구 여섯 개(`publish_feature`,
-`feature_gate`, `source_check`, `photo_search`, `title_helper`, `bench_watch`)가
-규칙 파일에 **0회** 나왔습니다. 도구를 만들어 놓고 규칙에 적지 않으면 다음
-세션은 그 도구가 있는 줄도 모르고 처음부터 헤맵니다.
-
-그래서 세 가지를 확인합니다.
-
-1. 공유하는 네 절은 두 파일이 글자까지 같을 것
-2. 규칙이 이름을 댄 모듈·스크립트가 실제로 있을 것
-3. 발행 도구를 규칙이 실제로 가리킬 것
+(예전에는 다른 도구용 사본과 네 절이 같은지도 봤습니다 — 2026-09-28에 그 도구를 쓰지 않기로 하며 사본을 지웠습니다.)
 """
 from __future__ import annotations
 
@@ -30,36 +21,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CLAUDE = ROOT / "CLAUDE.md"
-AGENTS = ROOT / "AGENTS.md"
-
-# 두 파일이 **글자까지** 같아야 하는 절.
-#
-# 2026-09-06에는 앞의 두 절(「검증 규칙」·「비용/자동 발행 원칙」)을 일부러 뺐습니다 — AGENTS.md가
-# 도구를 특정하지 않으려고 표현만 달리 써 두었고, 틀리게 우는 검사는 곧 무시당하기 때문입니다.
-# 2026-09-25에 내력을 결정 기록(지금은 비공개 kimchi-notes/decisions.md)으로 갈라 내며 두 파일의 네 절을 같은 문장으로 통일했습니다
-# (AGENTS.md에만 있던 규칙 둘 — "예문을 늘린다"·featured_tickers 편성 — 은 CLAUDE.md에 합쳤습니다).
-# 이제 네 절 전부를 글자 대조합니다. 도구 이름(`Read` 툴·WebSearch)은 AGENTS.md 머리말이
-# "같은 일을 하는 자기 도구로 읽는다"로 풀어 둡니다.
-_SHARED = ("## 검증 규칙 (반드시 지킬 것)", "## 비용/자동 발행 원칙", "## 기준표(feature) 글", "## 발행 워크플로우")
-
-
-def _section(text: str, heading: str) -> str:
-    start = text.index(heading)
-    nxt = text.find("\n## ", start + len(heading))
-    return text[start:nxt if nxt != -1 else len(text)].strip()
-
-
-class SharedSectionsTest(unittest.TestCase):
-    def test_shared_sections_are_identical(self) -> None:
-        claude, agents = CLAUDE.read_text(encoding="utf-8"), AGENTS.read_text(encoding="utf-8")
-        for heading in _SHARED:
-            with self.subTest(section=heading):
-                self.assertIn(heading, claude)
-                self.assertIn(heading, agents)
-                self.assertEqual(
-                    _section(claude, heading), _section(agents, heading),
-                    f"{heading} 절이 두 파일에서 다릅니다. 한쪽만 고치면 다른 도구가 "
-                    f"옛 규칙을 읽습니다 — 양쪽에 같이 반영하십시오.")
 
 
 class RulesPointAtRealCodeTest(unittest.TestCase):
@@ -75,7 +36,7 @@ class RulesPointAtRealCodeTest(unittest.TestCase):
     _MODULE = re.compile(r"python3? -m ((?:src|scripts)\.[\w.]+)")
 
     def test_named_files_exist(self) -> None:
-        for path in (CLAUDE, AGENTS):
+        for path in (CLAUDE,):
             text = path.read_text(encoding="utf-8")
             for named in sorted(set(self._PATH.findall(text))):
                 if "<" in named or "*" in named:
@@ -86,7 +47,7 @@ class RulesPointAtRealCodeTest(unittest.TestCase):
 
     def test_named_modules_import(self) -> None:
         import importlib
-        for path in (CLAUDE, AGENTS):
+        for path in (CLAUDE,):
             text = path.read_text(encoding="utf-8")
             for module in sorted(set(self._MODULE.findall(text))):
                 with self.subTest(rule_file=path.name, module=module):
@@ -108,7 +69,7 @@ class TodaysToolsAreDocumentedTest(unittest.TestCase):
                     "photo_search", "title_helper", "story_engines")
 
     def test_publishing_tools_are_named(self) -> None:
-        for path in (CLAUDE, AGENTS):
+        for path in (CLAUDE,):
             text = path.read_text(encoding="utf-8")
             for tool in self._MUST_APPEAR:
                 with self.subTest(rule_file=path.name, tool=tool):

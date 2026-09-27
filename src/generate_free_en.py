@@ -145,7 +145,7 @@ def _english_ready(price_data: dict) -> dict:
 
     영어판에서 종목 하나가 빠지는 것과 그날 발행 전체가 멈추는 것 중에는
     전자가 낫다. 한국어판은 그대로 그 종목을 쓴다 — 여기서만 걸러낸다.
-    (AGENTS.md: "이름도 모르는 종목 하나가 그날 발행 전체를 멈추게 하면 안 된다")
+    (CLAUDE.md: "이름도 모르는 종목 하나가 그날 발행 전체를 멈추게 하면 안 된다")
     """
     watchlist = {}
     for ticker, entry in (price_data.get("watchlist") or {}).items():
