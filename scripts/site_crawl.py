@@ -125,8 +125,15 @@ def check_status(session: requests.Session, url: str) -> int | str:
             r = session.get(url, timeout=20, allow_redirects=True, stream=True)
             r.close()
         return r.status_code
-    except requests.RequestException as error:
+    except Exception as error:  # noqa: BLE001 — 깨진 돌려보내기 주소(UnicodeDecodeError)로 점검 전체가 죽었다(2026-09-27). 세어서 보고한다
         return type(error).__name__
+
+
+def external_status(url: str) -> int | str:
+    """바깥 링크는 curl로 — 파이썬 SSL은 브라우저가 여는 옛 사이트를 못 연다(gabia.com). 봇 차단(401·403·429·999)은 사람에겐 열린다."""
+    from src.stock_db import _curl_status
+    code = _curl_status(url)
+    return 200 if (200 <= code < 400 or code in (401, 403, 405, 429, 999)) else (code or "안 열림")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -191,7 +198,7 @@ def main(argv: list[str] | None = None) -> int:
     if a.external:
         print(f"바깥 링크 {len(external)}개(동시 16)", flush=True)
         with cf.ThreadPoolExecutor(16) as pool:
-            for url, st in zip(external, pool.map(lambda u: check_status(requests.Session(), u), external)):
+            for url, st in zip(external, pool.map(external_status, external)):
                 ext_status[url] = st
     bad_links = {u: st for u, st in status.items() if not (st == 200 or str(st).startswith(("301", "302", "308")))}
     bad_assets = {u: st for u, st in asset_status.items() if st != 200}
