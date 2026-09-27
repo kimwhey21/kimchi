@@ -24,8 +24,11 @@ WIDTHS = (390, 768, 1024, 1440, 1920)
 PAGES = [
     ("/", "Market"), ("/stocks/", "Stocks"), ("/stocks/?m=kospi", "Stocks"), ("/stocks/?m=kosdaq&pg=5", "Stocks"),
     ("/stocks/000660/", "Stocks"), ("/stocks/005930/", "Stocks"), ("/stocks/005387/", "Stocks"), ("/stocks/0010S0/", "Stocks"),
-    ("/daily/", "Daily"), ("/guides/", "Guides"), ("/all/", None), ("/category/daily/", None), ("/category/korea-close/", None),
-    ("/category/wall-street-close/", None), ("/category/guides/", None),
+    ("/daily/", "Daily"), ("/guides/", "Guides"), ("/all/", None), ("/category/daily/", "Daily"), ("/category/korea-close/", "Daily"),
+    ("/category/wall-street-close/", "Daily"), ("/category/guides/", "Guides"),
+    # 2026-09-28 템플릿 통일 — 글·작성자·개인정보에도 메뉴가 있고 글은 자기 갈래를 칠한다
+    ("/editorial-us-2026-09-24-en/", "Daily"), ("/editorial-kr-2026-09-23-en/", "Daily"), ("/sk-hynix-vs-micron/", "Guides"),
+    ("/converting-dollars-to-won-the-fx-math-behind-buying-korean-stocks/", "Guides"), ("/author/kimwhey21/", None), ("/privacy/", None),
     ("/about-en/", None), ("/contact-en/", None), ("/no-such-page-xyz/", None), ("/stocks/999999/", None), ("/?s=samsung", None),
 ]
 PROBE = """() => {
@@ -72,7 +75,7 @@ def check_static(browser, problems):
                 problems.append(f"{tag}: 주소 없는 링크 {got['empty_links']}개")
             if active and got["nav_on"] != [active]:
                 problems.append(f"{tag}: 메뉴 표시 {got['nav_on']} (기대 {active})")
-            if path in ("/", "/stocks/", "/daily/", "/guides/") and got["nav_count"] != 4:
+            if got["nav_count"] != 4:   # 모든 화면에 메뉴 네 버튼
                 problems.append(f"{tag}: 메뉴 버튼 {got['nav_count']}개")
             if expect_404:   # 404 쪽은 문서 자체가 404라 브라우저가 콘솔에 적는다 — 그것만 뺀다
                 errors = [e for e in errors if "status of 404" not in e]

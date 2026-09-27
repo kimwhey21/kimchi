@@ -53,7 +53,10 @@ function fs_rating( $r ) {
 // 'fermata-hub' 틀이 [fermata_nav]로 부른다. 지금 어느 화면인지는 스스로 안다($active가 비면).
 function fs_nav( $active = '' ) {
 	if ( '' === $active && function_exists( 'is_front_page' ) ) {
-		$active = is_front_page() ? 'market' : ( is_page( 'stocks' ) ? 'stocks' : ( is_page( 76 ) ? 'daily' : ( is_page( 77 ) ? 'guides' : '' ) ) );
+		// 글·분류 화면도 자기 갈래를 칠한다(2026-09-28 템플릿 통일) — 시황 121·684·685는 Daily, 가이드 153은 Guides
+		$daily = array( 121, 684, 685 );
+		$in = function ( $cats ) { return is_category( $cats ) || ( is_singular( 'post' ) && in_category( $cats ) ); };
+		$active = is_front_page() ? 'market' : ( is_page( 'stocks' ) ? 'stocks' : ( ( is_page( 76 ) || $in( $daily ) ) ? 'daily' : ( ( is_page( 77 ) || $in( array( 153 ) ) ) ? 'guides' : '' ) ) );
 	}
 	$items = array( 'market' => array( '/', 'Market' ), 'stocks' => array( '/stocks/', 'Stocks' ),
 	                'daily' => array( '/daily/', 'Daily' ), 'guides' => array( '/guides/', 'Guides' ) );
@@ -466,7 +469,7 @@ add_action( 'wp_sitemaps_init', function ( $sitemaps ) {
 
 // 모양 + 검색창 스크립트
 add_action( 'wp_head', function () {
-	if ( ! fs_hub_view() ) { return; }   // 글꼴(Pretendard)은 14번 조각이 같은 화면에 싣는다
+	// 메뉴 줄은 이제 모든 화면에 있다(2026-09-28 템플릿 통일) — 모양도 모든 화면에 싣는다. 글꼴(Pretendard)은 14번 조각이 싣는다
 	echo '<style id="fermata-stock-db">' . FS_CSS . '</style>' . "\n";
 }, 21 );
 add_action( 'wp_footer', function () {

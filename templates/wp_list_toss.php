@@ -16,7 +16,7 @@ add_action( 'init', function () {
 } );
 
 function fermata_list_view() {
-	return is_front_page() || is_home() || is_page( array( 76, 77, 105, 'stocks' ) ) || is_category() || is_tag() || is_search();   // stocks: 종목 데이터베이스(2026-09-27) — 메뉴 네 화면의 배경·글꼴을 같게
+	return is_front_page() || is_home() || is_page( array( 76, 77, 105, 'stocks' ) ) || is_archive() || is_search();   // 분류·태그·작성자·날짜 목록 포함(2026-09-28)
 }
 
 add_filter( 'render_block_core/post-featured-image', function ( $html, $block, $instance ) {
@@ -40,24 +40,36 @@ add_filter( 'render_block_core/post-featured-image', function ( $html, $block, $
 	return preg_replace( '/class="wp-block-post-featured-image/', 'class="wp-block-post-featured-image has-fm-sq', $html, 1 );
 }, 10, 3 );
 
+// 배경·글꼴·헤더·메뉴 버튼은 모든 화면에(2026-09-28 사장님 "1번 템플릿 통일 진행해" — 글·소개·404가 크림 배경·명조·메뉴 없음이었다),
+// 글 목록 모양(두 줄·네모 썸네일·첫 글 카드)은 목록 화면에만
 add_action( 'wp_head', function () {
-	if ( ! fermata_list_view() ) {
+	if ( is_admin() ) {
 		return;
 	}
 	echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">' . "\n";
-	echo '<style id="fermata-list-toss">' . FERMATA_LIST_CSS . '</style>' . "\n";
+	echo '<style id="fermata-base">' . FERMATA_BASE_CSS . '</style>' . "\n";
+	if ( fermata_list_view() ) {
+		echo '<style id="fermata-list-toss">' . FERMATA_LIST_CSS . '</style>' . "\n";
+	}
 }, 20 );
 
-const FERMATA_LIST_CSS = <<<'CSS'
+const FERMATA_BASE_CSS = <<<'CSS'
 :root{--fa-ink:#191f28;--fa-sub:#4e5968;--fa-mute:#8b95a1;--fa-line:#eef0f3;--fa-pill:#f2f4f6}
 body{background:#fff!important;font-family:Pretendard,-apple-system,"Segoe UI",sans-serif!important;color:var(--fa-ink)}
+body p,body li,body td,body th,body h1,body h2,body h3,body h4,body input,body button,.wp-block-post-title,.wp-block-query-title{font-family:Pretendard,-apple-system,"Segoe UI",sans-serif!important}
 header .wp-block-site-title a{font-family:Pretendard,sans-serif!important;letter-spacing:.02em;color:var(--fa-ink)!important}
 header .wp-block-site-tagline{font-family:Pretendard,sans-serif!important;color:var(--fa-mute)!important;font-size:14px!important}
-/* 탭 → 알약 */
+/* 메뉴 → 알약 */
 main div[style*="flex-wrap:wrap"]{gap:8px!important}
 main div[style*="flex-wrap:wrap"]>a{background:var(--fa-pill);border:0!important;border-radius:999px;padding:9px 16px!important;
   font:600 14px/1 Pretendard,sans-serif!important;color:var(--fa-sub)!important;text-decoration:none!important}
 main div[style*="flex-wrap:wrap"]>a[style*="font-weight:700"]{background:var(--fa-ink);color:#fff!important}
+.wp-block-query-title{font-weight:800!important;letter-spacing:-.01em;margin:6px 0 22px!important}
+main h1.wp-block-heading,main h1.wp-block-post-title{font-weight:800!important;letter-spacing:-.01em}   /* 화면 제목 굵기를 모든 화면에 같게(404·개인정보가 가늘었다) */
+@media (max-width:781px){main div[style*="flex-wrap:wrap"]>a{padding:7px 13px!important;font-size:13px!important}}
+CSS;
+
+const FERMATA_LIST_CSS = <<<'CSS'
 main div[style*="border-bottom-width:1px"]{border-bottom-color:var(--fa-line)!important}
 /* 메뉴 네 화면의 높이·폭은 틀이 같아서 같다 — 홈 템플릿과 'fermata-hub' 틀이 [fermata_nav](wp_stock_db.php) 하나를 부른다(2026-09-27).
    여기서 여백을 덧대 맞추지 말 것(그렇게 맞췄다가 틀을 합쳤다) */
@@ -118,6 +130,5 @@ li.category-wall-street-close{--lb:#fff0e5;--lf:#d9480f;--tile:#fff0e5}
   .wp-block-post-template>li:first-child .has-accent-4-color{margin-top:0!important}
   .wp-block-post-template>li:first-child .wp-block-post-title a{font-size:22px!important}
   .wp-block-post-template>li:nth-child(3)::before{display:none}
-  main div[style*="flex-wrap:wrap"]>a{padding:7px 13px!important;font-size:13px!important}
 }
 CSS;

@@ -1,4 +1,4 @@
-"""본진 메뉴 네 화면(Market·Stocks·Daily·Guides)이 같은 모양인지 실제 화면에서 잰다 (2026-09-27).
+"""본진 모든 화면(메뉴 네 화면·글·분류·검색·소개·404)의 메뉴가 같은 모양인지 실제 화면에서 잰다 (2026-09-27).
 
     python -m scripts.nav_check          # 1440·390px에서 재고, 다르면 0이 아닌 값으로 끝난다
 
@@ -13,7 +13,10 @@ import sys
 from playwright.sync_api import sync_playwright
 
 SITE = "https://fermata.it.kr"
-PAGES = ["/", "/stocks/", "/daily/", "/guides/", "/stocks/000660/"]
+PAGES = ["/", "/stocks/", "/daily/", "/guides/", "/stocks/000660/",
+         # 2026-09-28 템플릿 통일 — 글·분류·검색·작성자·소개·404도 같은 자리에 같은 메뉴
+         "/editorial-us-2026-09-24-en/", "/sk-hynix-vs-micron/", "/category/korea-close/", "/category/guides/",
+         "/?s=samsung", "/author/kimwhey21/", "/about-en/", "/privacy/", "/no-such-page-xyz/"]
 WIDTHS = (1440, 390)
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
 JS = """() => {

@@ -191,6 +191,20 @@ class SnippetTest(unittest.TestCase):
         self.assertIn("is_page( 'stocks' ) ? 'stocks'", PHP)
         self.assertNotIn("fs_nav( 'stocks' )", PHP, "종목 페이지 안에 메뉴를 따로 넣지 않는다 — 틀이 넣는다")
 
+    def test_every_template_calls_the_one_nav(self):
+        # 2026-09-28 템플릿 통일 — 모든 블록 템플릿이 메뉴를 [fermata_nav] 한 줄로 부른다. 손으로 쓴 메뉴 줄이 되살아나면 다시 어긋난다
+        import re
+        files = sorted((ROOT / "templates" / "wp_site").glob("*.html"))
+        self.assertGreaterEqual(len(files), 10)
+        for f in files:
+            text = f.read_text(encoding="utf-8")
+            with self.subTest(template=f.name):
+                self.assertEqual(text.count("[fermata_nav]"), 1)
+                self.assertNotIn('<a href="/stocks/" style="white-space:nowrap', text, "메뉴를 템플릿에 손으로 쓰지 않는다")
+                self.assertFalse(re.search(r"[가-힣]", re.sub(r'"(name|description)":"[^"]*"', "", text)), "영어 사이트 템플릿에 한글")
+        toss = (ROOT / "templates" / "wp_list_toss.php").read_text(encoding="utf-8")
+        self.assertIn("const FERMATA_BASE_CSS", toss)
+
     def test_nav_keeps_flex_wrap(self):
         self.assertIn("display:flex;flex-wrap:wrap;gap:12px 20px", PHP)
 

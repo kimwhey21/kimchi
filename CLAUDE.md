@@ -338,12 +338,15 @@
   `"기준표": "private"` 줄이 한국어 글 표시이고 `KO_TO_WORDPRESS`가 업로드를 건너뛴다.
 - **본진은 영어 사이트다**(2026-09-26, 사장님: "온전히 영어사이트로 탈바꿈하자" → "남기고 1~5번 진행해"). 메뉴는 Market(`/`)·Stocks(`/stocks/`)·Daily·Guides
   넷이고(2026-09-27, 그전엔 All·Daily·Guides — 105 all 페이지는 남아 있고 메뉴에서만 빠졌다), **메뉴 줄은 한 곳에서만 그린다** — `templates/wp_stock_db.php`의
-  `fs_nav`(`[fermata_nav]`, 지금 화면을 스스로 알아 버튼을 칠한다)를 홈 템플릿과 **`fermata-hub` 틀**(페이지 76 daily·77 guides·105 all·3228
-  stocks가 쓴다, 헤더→메뉴→본문→푸터)이 부른다(2026-09-27 구조 통일 — 그전엔 다섯 곳에 손으로 복제돼 높이가 272·319·361px로
-  달랐다). 네이버로 가던 Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은
+  `fs_nav`(`[fermata_nav]`, 지금 화면을 스스로 알아 버튼을 칠한다 — 시황 글·분류는 Daily, 가이드는 Guides)를 **사이트의 모든 블록
+  템플릿**이 main 맨 앞에서 부른다(2026-09-28 사장님 "1번 템플릿 통일 진행해" — 글·분류·검색·소개·404에는 메뉴가 없고 크림 배경·명조였다;
+  2026-09-27엔 메뉴 네 화면이 다섯 곳에 손으로 복제돼 높이가 272·319·361px로 달랐다). **템플릿 원본은 `templates/wp_site/*.html`이고
+  `python -m scripts.deploy_templates`로 올린다**(사이트 편집기에서 고치면 다음 배포가 덮어쓴다). 목록 페이지(76·77·105·3228)는
+  `fermata-hub` 틀, 분류·태그·작성자·검색은 Daily 목록과 같은 두 줄 목록이다. 흰 배경·Pretendard·메뉴 버튼은 14번 조각의
+  `FERMATA_BASE_CSS`가 모든 화면에, 글 목록 모양은 `FERMATA_LIST_CSS`가 목록 화면에만 싣는다. 네이버로 가던 Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은
   없앴다. 페이지 본문에 메뉴 줄을 다시 쓰지 말 것. 소개·연락처는 `page-no-title` 그대로다(메뉴 없음). 원본 백업은
   `~/.market-brief-backups/home_nav_before_20260927.json`·`hub_template_before_20260927.json`. 배경·글꼴·버튼 모양은 14번 조각
-  (`fermata_list_view`에 Stocks 포함)이 정하고, 여백을 덧대 높이를 맞추지 않는다. 메뉴·목록 스타일을
+  (`fermata_list_view`에 Stocks 포함)이 정하고, 여백을 덧대 높이를 맞추지 않는다. 템플릿·메뉴를 고친 뒤에는 `python -m scripts.nav_check`(14화면×2폭)를 돌린다. 메뉴·목록 스타일을
   고친 뒤에는 **`python -m scripts.nav_check`**(1440·390px 실측, 다르면 실패)를 돌린다 — 한 폭 캡처만 보고 "됐다"고 하지 말 것. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
   줄로 접혀야 가로가 넘치지 않는다. **홈·목록(76·77·105·분류)의 겉모습은 토스피드 A안 3색 판이다**(2026-09-27, 사장님 "썸네일 4번
   3색판으로 가자") — 원본은 `templates/wp_list_toss.php`, `python -m scripts.deploy_list_style`로 Code Snippets 14번에 올린다(관리
