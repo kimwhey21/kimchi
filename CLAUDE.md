@@ -346,8 +346,8 @@
   `FERMATA_BASE_CSS`가 모든 화면에, 글 목록 모양은 `FERMATA_LIST_CSS`가 목록 화면에만 싣는다. 네이버로 가던 Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은
   없앴다. 페이지 본문에 메뉴 줄을 다시 쓰지 말 것. 소개·연락처는 `page-no-title` 그대로다(메뉴 없음). 원본 백업은
   `~/.market-brief-backups/home_nav_before_20260927.json`·`hub_template_before_20260927.json`. 배경·글꼴·버튼 모양은 14번 조각
-  (`fermata_list_view`에 Stocks 포함)이 정하고, 여백을 덧대 높이를 맞추지 않는다. 템플릿·메뉴를 고친 뒤에는 `python -m scripts.nav_check`(14화면×2폭)를 돌린다. 메뉴·목록 스타일을
-  고친 뒤에는 **`python -m scripts.nav_check`**(1440·390px 실측, 다르면 실패)를 돌린다 — 한 폭 캡처만 보고 "됐다"고 하지 말 것. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
+  (`fermata_list_view`에 Stocks 포함)이 정하고, 여백을 덧대 높이를 맞추지 않는다. 템플릿·메뉴·목록 스타일을
+  고친 뒤에는 **`python -m scripts.nav_check`**(14화면 × 1440·390px 실측, 다르면 실패)를 돌린다 — 한 폭 캡처만 보고 "됐다"고 하지 말 것. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
   줄로 접혀야 가로가 넘치지 않는다. **홈·목록(76·77·105·분류)의 겉모습은 토스피드 A안 3색 판이다**(2026-09-27, 사장님 "썸네일 4번
   3색판으로 가자") — 원본은 `templates/wp_list_toss.php`, `python -m scripts.deploy_list_style`로 Code Snippets 14번에 올린다(관리
   화면에서 고치지 말 것). 이름표 색은 분류다: 영어 시황은 Daily(121) **그대로 두고** 하위 분류 Korea Close(684)·Wall Street
