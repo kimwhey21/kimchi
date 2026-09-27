@@ -273,8 +273,8 @@
   주제 60개를 아홉 갈래로 나눠 어제와 다른 갈래에서 고른다), **이벤트**(일요일 다음 주 일정 루틴이 그 주의 큰 이벤트 하나를
   `editorial/events/<날짜>_<slug>.json`으로 더 쓴다, 분류 Weekly, 머리말은 `event_date`). 한 목록에 두 언어를 섞지 않는다.
   `guide_publish.yml`·`weekly_publish.yml`이 자동화 스위치대로 공개한다. 문턱은 가이드 절 5·시각자료 2·출처 2, Guide 절 5·2·2, 이벤트
-  절 4·2·2. 한국어 가이드·이벤트는 네이버에 전문, 본진에는 올리지 않는다(아래 「발행 워크플로우」). **종목 허브 페이지(`/stocks/`)는
-  2026-09-26 사장님 결정으로 없앴다**(코드·워크플로·월간 루틴·홈 탭·페이지 38개, 내력은 `docs/decisions.md`).
+  절 4·2·2. 한국어 가이드·이벤트는 네이버에 전문, 본진에는 올리지 않는다(아래 「발행 워크플로우」). 옛 한국어 종목 허브
+  (`/stocks/<영어 slug>/`, 38개)는 2026-09-26에 없앴고 옛 주소는 13번 조각이 301로 넘긴다. 그 자리는 아래 「본진 종목 데이터베이스」다.
 - 그림을 그린 뒤에는 **`Read` 툴로 직접 본다.** 축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은 코드만 봐서는 안 보인다.
   `src/graphic_checks.py`가 그림의 데이터와 제목이 어긋나는 것을 잡지만 전부는 아니다.
 
@@ -336,9 +336,10 @@
   Take를 두 문장만 뽑아 맨 위 인용구로 올리는 것은 **요약본**의 규칙이다. `tests/test_naver_post.py`가 양쪽을 다 고정한다.
 - **Checkpoint도 본진에는 올리지 않고 네이버에 본문 전문이 나간다.** 프리뷰와 같은 처리다 — `publish_feature.LIVE_STATUS`의
   `"기준표": "private"` 줄이 한국어 글 표시이고 `KO_TO_WORDPRESS`가 업로드를 건너뛴다.
-- **본진은 영어 사이트다**(2026-09-26, 사장님: "온전히 영어사이트로 탈바꿈하자" → "남기고 1~5번 진행해"). 탭은 All·Daily·Guides
-  셋이고, 탭 줄이 복제돼 있는 곳은 **페이지 3개(76 daily·77 guides·105 all) + `twentytwentyfive//home` 템플릿** 넷이다(네이버로 가던
-  Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은 없앴다). `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
+- **본진은 영어 사이트다**(2026-09-26, 사장님: "온전히 영어사이트로 탈바꿈하자" → "남기고 1~5번 진행해"). 메뉴는 Market(`/`)·Stocks(`/stocks/`)·Daily·Guides
+  넷이고(2026-09-27, 그전엔 All·Daily·Guides — 105 all 페이지는 남아 있고 메뉴에서만 빠졌다), 탭 줄이 복제돼 있는 곳은 **페이지 3개(76 daily·77
+  guides·105 all) + `twentytwentyfive//home` 템플릿 + `templates/wp_stock_db.php`의 `fs_nav`** 다섯이다(네이버로 가던
+  Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은 없앴다). 바꾸기 전 원본은 `~/.market-brief-backups/home_nav_before_20260927.json`. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
   줄로 접혀야 가로가 넘치지 않는다. **홈·목록(76·77·105·분류)의 겉모습은 토스피드 A안 3색 판이다**(2026-09-27, 사장님 "썸네일 4번
   3색판으로 가자") — 원본은 `templates/wp_list_toss.php`, `python -m scripts.deploy_list_style`로 Code Snippets 14번에 올린다(관리
   화면에서 고치지 말 것). 이름표 색은 분류다: 영어 시황은 Daily(121) **그대로 두고** 하위 분류 Korea Close(684)·Wall Street
@@ -353,6 +354,17 @@
   날짜 형식은 `F j, Y`, 템플릿에 글자로 저장된 문구(Previous·Next·By 등)도 영어다. 한국어 소개·연락처·개인정보처리방침(697·698·226)은
   페이지는 남기고 메뉴에서만 뺐다. 네이버 카테고리 번호는 추측하지 말고 `PostList.naver?blogId=fermata49`를 받아 `categoryNo=`로
   확인한다(시황 1·Checkpoint 6·가이드 7·Weekly 8).
+- **본진 종목 데이터베이스**(2026-09-27, 사장님 "바로 정식버전으로 구현하자 시험페이지는 필요없다"): 코스피·코스닥 전 종목(주식만,
+  2,765개)을 영어 데이터 페이지 `/stocks/<종목코드>/`로, 목록 `/stocks/`(시가총액 순 100개씩), 홈 첫 화면에 검색창·시장 띠·카드 셋을 둔다.
+  **종목마다 글·페이지를 만들지 않는다** — 실제 페이지는 slug `stocks`(id 3228) 하나이고 Code Snippets 16번(원본 `templates/wp_stock_db.php`,
+  `python -m scripts.deploy_stock_db`로 올린다)이 주소를 받아 워드프레스 옵션(`fm_s_<코드>`·`fm_stock_index`·`fm_market`)으로 그 자리에서
+  그린다. 사이트맵은 기본 사이트맵에 `stocks` 묶음이 붙는다. 데이터는 `python -m src.stock_db run --push`(`stock_db.yml`, 17:05 KST 시세·다음 날
+  08:40 KST 수급)가 REST `fermata/v1/stocks`로 넣는다 — 상세는 시가총액 상위 300 + 나머지의 7분의 1(요일 순번). 원천은 네이버 모바일 증권
+  API(비공식)와 DART(`DART_API_KEY`: 이 맥 `.env`와 깃허브 시크릿) 영문명·업종(`data/stock_meta.json`, 커밋한다). **화면 글자에 한글이 들어가면
+  올리지 않는다**(`stock_db.hangul_problems`) — 이름은 DART 영문명을 다듬고(`clean_name`), 틀린 대형주 이름은 `NAME_FIX`에 사람이 적는다;
+  규칙을 고치면 `python -m src.stock_db rename`. 카페24가 큰 요청을 502로 끊으므로 **한 번에 50KB 이하로** 보내고 목록은 나눠 보내 다 모인
+  뒤에만 바꾼다. 조각에 글자로 script 태그를 쓰면 NinjaFirewall이 저장을 403으로 막는다(`wp_print_inline_script_tag`를 쓴다).
+  `tests/test_stock_db.py`가 이것들을 고정한다.
 - **한국어 글은 전부 본진에 없고 네이버 전문이다**(2026-09-22 비공개로, 2026-09-26부터는 아예 올리지 않는다 — 사장님 결정:
   네이버가 한국어 주력, 올려 두던 비공개 85편은 휴지통). 시황·프리뷰·Checkpoint에
   이어 **한국어 가이드·주간 결산·다음 주 일정·이벤트**도 같은 처리다 — `publish_feature.LIVE_STATUS`에 네 줄, `naver_post`는 잡지를

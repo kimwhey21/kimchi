@@ -21,28 +21,32 @@ NAME = "홈·목록 토스피드 3색 + 정사각 썸네일"
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"}
 
 
-def code() -> str:
-    text = SOURCE.read_text(encoding="utf-8")
+def code(source: Path = SOURCE) -> str:
+    text = source.read_text(encoding="utf-8")
     return text.split("<?php", 1)[1].lstrip("\n") if text.startswith("<?php") else text
 
 
 def main(argv: list[str] | None = None) -> int:
-    load_dotenv(ROOT / ".env")
     dry = "--dry" in (argv if argv is not None else sys.argv[1:])
+    return deploy(SOURCE, NAME, "templates/wp_list_toss.php가 원본. scripts/deploy_list_style.py로 올린다.", dry=dry)
+
+
+def deploy(source: Path, name: str, desc: str, *, dry: bool = False) -> int:
+    """조각 하나를 이름으로 찾아 올린다 — 종목 데이터베이스 조각(scripts/deploy_stock_db.py)도 이 함수를 쓴다."""
+    load_dotenv(ROOT / ".env")
     base = os.environ["WORDPRESS_URL"].rstrip("/")
     auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
-    body = code()
+    body = code(source)
     snippets = requests.get(f"{base}/wp-json/code-snippets/v1/snippets", auth=auth, headers=UA, timeout=60)
     snippets.raise_for_status()
-    mine = [s for s in snippets.json() if s.get("name") == NAME]
+    mine = [s for s in snippets.json() if s.get("name") == name]
     print(f"조각: {'#' + str(mine[0]['id']) if mine else '새로 만듦'} · 코드 {len(body)}자")
     if dry:
         return 0
     if mine and mine[0].get("code", "").strip() == body.strip() and mine[0].get("active"):
         print("바뀐 것 없음 — 올리지 않음")
         return 0
-    payload = {"name": NAME, "code": body, "scope": "global", "active": True, "priority": 10,
-               "desc": "templates/wp_list_toss.php가 원본. scripts/deploy_list_style.py로 올린다."}
+    payload = {"name": name, "code": body, "scope": "global", "active": True, "priority": 10, "desc": desc}
     url = f"{base}/wp-json/code-snippets/v1/snippets" + (f"/{mine[0]['id']}" if mine else "")
     response = requests.post(url, json=payload, auth=auth, headers=UA, timeout=90)
     response.raise_for_status()
