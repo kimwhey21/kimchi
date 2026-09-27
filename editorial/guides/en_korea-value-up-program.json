@@ -130,10 +130,10 @@
         "rows": [
           ["2026 YTD gain (through Aug 2026)", "+80.3%", "+61.8%", "+76.9%"],
           ["Level, end of August 2026", "3,240.84", "—", "—"],
-          ["Record high in 2026", "4,276.72 (Jun 22)", "~9,385 (Jun 2026)", "—"],
-          ["Constituents", "100 (67 KOSPI / 33 KOSDAQ)", "—", "200"]
+          ["Record high in 2026", "4,276.72 (Jun 22)", "—", "—"],
+          ["Constituents", "100", "—", "200"]
         ],
-        "note": "Value-Up Index and KOSPI/KOSPI 200 gains from the Korea Exchange's monthly corporate value enhancement report, published Sept 3, 2026.",
+        "note": "Value-Up Index constituents: 67 KOSPI and 33 KOSDAQ stocks. Value-Up Index and KOSPI/KOSPI 200 gains from the Korea Exchange's monthly corporate value enhancement report, published Sept 3, 2026.",
         "source": "Korea Exchange (KRX), via Seoul Economic Daily and Businesskorea, Sept 3, 2026"
       },
       "section": 6
