@@ -337,8 +337,12 @@ def build_meta(session: requests.Session, codes: list[str], existing: dict, key:
         full = clean_name(src["en"]) if src and src["en"] else ""
         name = override.get(code) or (override.get(base_code(code)) and f"{override[base_code(code)]} (Pref.)") \
             or (short_name(full) + (" (Pref.)" if pref else "") if full else "")
-        row.update({"en": full or row.get("en", ""), "name": name or row.get("name", ""), "pref": pref,
-                    "corp": (src or {}).get("corp", row.get("corp"))})
+        if row.get("name"):
+            # 이미 이름이 있는 종목은 두다 — 다듬기 규칙은 `rename`으로만 다시 적용한다. 원문을 매번 다시 다듬으면
+            # 규칙이 두 번 적용된 이름과 한 번 적용된 이름이 오가며 119개가 바뀌었다(2026-09-27 깃허브 첫 실행)
+            row.setdefault("corp", (src or {}).get("corp"))
+        else:
+            row.update({"en": full, "name": name, "pref": pref, "corp": (src or {}).get("corp")})
         if src and "industry" not in row and calls < max_company_calls:
             info = _get(session, f"{DART}/company.json", params={"crtfc_key": key, "corp_code": src["corp"]}).json()
             calls += 1

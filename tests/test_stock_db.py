@@ -49,6 +49,20 @@ class NamesTest(unittest.TestCase):
         self.assertEqual(sdb.display_name("005387", "현대차2우B", meta), "Hyundai Motor (Pref. 2B)")
         self.assertEqual(sdb.display_name("005935", "삼성전자우", meta), "Samsung Electronics (Pref.)")
 
+    def test_meta_refresh_keeps_existing_names(self):
+        from unittest import mock
+        xml = ("<result><list><corp_code>1</corp_code><corp_eng_name>SAMSUNG PHARMACEUTICAL.CO.,LTD</corp_eng_name>"
+               "<stock_code>001360</stock_code></list></result>")
+        import io, zipfile
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w") as z:
+            z.writestr("CORPCODE.xml", xml)
+        resp = mock.Mock(content=buf.getvalue())
+        existing = {"001360": {"name": "Samsung Pharmaceutical", "en": "Samsung Pharmaceutical Co., Ltd.", "industry": "x"}}
+        with mock.patch.object(sdb, "_get", return_value=resp):
+            meta = sdb.build_meta(mock.Mock(), ["001360"], existing, "k")
+        self.assertEqual(meta["001360"]["name"], "Samsung Pharmaceutical")
+
     def test_committed_meta_is_english(self):
         meta = json.loads(sdb.META.read_text(encoding="utf-8"))
         self.assertGreater(len(meta), 2500)
