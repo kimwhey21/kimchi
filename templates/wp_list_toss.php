@@ -57,14 +57,10 @@ header .wp-block-site-tagline{font-family:Pretendard,sans-serif!important;color:
 main div[style*="flex-wrap:wrap"]{gap:8px!important}
 main div[style*="flex-wrap:wrap"]>a{background:var(--fa-pill);border:0!important;border-radius:999px;padding:9px 16px!important;
   font:600 14px/1 Pretendard,sans-serif!important;color:var(--fa-sub)!important;text-decoration:none!important}
-main div[style*="flex-wrap:wrap"]>a[style*="font-weight:700"],
-.page-id-77 main div[style*="flex-wrap:wrap"]>a[href="/guides/"]{background:var(--fa-ink);color:#fff!important}
-/* Guides 목록(77)만 탭 줄에 "지금 보는 탭" 표시가 빠져 있다(원래부터) — 페이지 본문 대신 여기서 칠한다 */
+main div[style*="flex-wrap:wrap"]>a[style*="font-weight:700"]{background:var(--fa-ink);color:#fff!important}
 main div[style*="border-bottom-width:1px"]{border-bottom-color:var(--fa-line)!important}
-/* 메뉴 네 화면(홈·Stocks·Daily·Guides)의 메뉴 줄 높이를 같게 — 일반 페이지 틀은 본문 위에 70px 빈칸을 더 둬서
-   메뉴가 홈보다 89px 아래에 있었다(2026-09-27 실측 272·319·361). 홈과 같은 자리로 올린다 */
-body.page main>.wp-block-group.alignfull:first-child{padding-top:0!important}
-body.page .wp-block-post-content>div.wp-block-group:first-of-type{margin-top:0!important}   /* 본문 맨 앞에 style 태그가 있어 :first-child가 안 걸린다 */
+/* 메뉴 네 화면의 높이·폭은 틀이 같아서 같다 — 홈 템플릿과 'fermata-hub' 틀이 [fermata_nav](wp_stock_db.php) 하나를 부른다(2026-09-27).
+   여기서 여백을 덧대 맞추지 말 것(그렇게 맞췄다가 틀을 합쳤다) */
 /* 글 목록: 글자 왼쪽, 네모 썸네일 오른쪽, 두 줄 */
 .wp-block-post-template.is-layout-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:36px 56px!important}
 .wp-block-post-template>li>.wp-block-group{display:grid!important;grid-template-columns:minmax(0,1fr) 124px;column-gap:22px;

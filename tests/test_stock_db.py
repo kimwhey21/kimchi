@@ -149,8 +149,16 @@ class SnippetTest(unittest.TestCase):
         # 목록 스타일(흰 배경·글꼴·메뉴 높이)이 Stocks에도 걸려야 네 메뉴 화면이 같다(2026-09-27 크림 배경·319px로 달랐다)
         toss = (ROOT / "templates" / "wp_list_toss.php").read_text(encoding="utf-8")
         self.assertIn("is_page( array( 76, 77, 105, 'stocks' ) )", toss)
-        self.assertIn("body.page main>.wp-block-group.alignfull:first-child{padding-top:0!important}", toss)
         self.assertNotIn(".fs-navwrap div>a{", PHP, "메뉴 버튼 모양은 14번 조각 한 곳에서만 정한다")
+
+    def test_nav_has_one_source(self):
+        # 메뉴 네 화면은 같은 틀에서 [fermata_nav] 하나로 그린다(2026-09-27 구조 통일) — 여백 덧대기 규칙이 되살아나면 안 된다
+        toss = (ROOT / "templates" / "wp_list_toss.php").read_text(encoding="utf-8")
+        self.assertNotIn("body.page main>.wp-block-group.alignfull", toss)
+        self.assertNotIn(".page-id-77", toss)
+        self.assertIn("function fs_nav( $active = '' )", PHP)
+        self.assertIn("is_page( 'stocks' ) ? 'stocks'", PHP)
+        self.assertNotIn("fs_nav( 'stocks' )", PHP, "종목 페이지 안에 메뉴를 따로 넣지 않는다 — 틀이 넣는다")
 
     def test_nav_keeps_flex_wrap(self):
         self.assertIn("display:flex;flex-wrap:wrap;gap:12px 20px", PHP)

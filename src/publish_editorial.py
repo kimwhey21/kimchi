@@ -484,7 +484,8 @@ def _previous_daily_post(market: str, date_str: str, lang: str) -> dict | None:
         post = publish_wordpress._find_existing_post_by_slug(base, auth, slug)
         if not post or post.get("status") != "publish":
             return None
-        return {"title": post["title"]["rendered"], "url": post["link"]}
+        # rendered는 이미 HTML 이스케이프된 제목(We&#8217;re) — 템플릿이 한 번 더 이스케이프하면 화면에 글자 그대로 나온다(2026-09-27 전수 점검)
+        return {"title": html_lib.unescape(post["title"]["rendered"]).strip(), "url": post["link"]}
     except Exception as exc:  # noqa: BLE001 - 링크 하나 때문에 발행을 막지 않음
         print(f"[안내] 이전 글 링크 조회 실패, 링크 없이 계속합니다: {exc!r}", file=sys.stderr)
         return None

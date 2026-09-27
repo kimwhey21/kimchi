@@ -337,10 +337,13 @@
 - **Checkpoint도 본진에는 올리지 않고 네이버에 본문 전문이 나간다.** 프리뷰와 같은 처리다 — `publish_feature.LIVE_STATUS`의
   `"기준표": "private"` 줄이 한국어 글 표시이고 `KO_TO_WORDPRESS`가 업로드를 건너뛴다.
 - **본진은 영어 사이트다**(2026-09-26, 사장님: "온전히 영어사이트로 탈바꿈하자" → "남기고 1~5번 진행해"). 메뉴는 Market(`/`)·Stocks(`/stocks/`)·Daily·Guides
-  넷이고(2026-09-27, 그전엔 All·Daily·Guides — 105 all 페이지는 남아 있고 메뉴에서만 빠졌다), 탭 줄이 복제돼 있는 곳은 **페이지 3개(76 daily·77
-  guides·105 all) + `twentytwentyfive//home` 템플릿 + `templates/wp_stock_db.php`의 `fs_nav`** 다섯이다(네이버로 가던
-  Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은 없앴다). 바꾸기 전 원본은 `~/.market-brief-backups/home_nav_before_20260927.json`. **네 메뉴 화면의 모양(메뉴 높이·폭·배경·글꼴)은 14번 조각이
-  맞춘다** — Stocks도 목록 화면(`fermata_list_view`)에 들고, 일반 페이지 틀의 윗칸을 없애 홈과 같은 자리에 둔다. 메뉴·목록 스타일을
+  넷이고(2026-09-27, 그전엔 All·Daily·Guides — 105 all 페이지는 남아 있고 메뉴에서만 빠졌다), **메뉴 줄은 한 곳에서만 그린다** — `templates/wp_stock_db.php`의
+  `fs_nav`(`[fermata_nav]`, 지금 화면을 스스로 알아 버튼을 칠한다)를 홈 템플릿과 **`fermata-hub` 틀**(페이지 76 daily·77 guides·105 all·3228
+  stocks가 쓴다, 헤더→메뉴→본문→푸터)이 부른다(2026-09-27 구조 통일 — 그전엔 다섯 곳에 손으로 복제돼 높이가 272·319·361px로
+  달랐다). 네이버로 가던 Weekly·Checkpoint·가이드 탭과 그 목록 페이지 1047·1439·1610은
+  없앴다. 페이지 본문에 메뉴 줄을 다시 쓰지 말 것. 소개·연락처는 `page-no-title` 그대로다(메뉴 없음). 원본 백업은
+  `~/.market-brief-backups/home_nav_before_20260927.json`·`hub_template_before_20260927.json`. 배경·글꼴·버튼 모양은 14번 조각
+  (`fermata_list_view`에 Stocks 포함)이 정하고, 여백을 덧대 높이를 맞추지 않는다. 메뉴·목록 스타일을
   고친 뒤에는 **`python -m scripts.nav_check`**(1440·390px 실측, 다르면 실패)를 돌린다 — 한 폭 캡처만 보고 "됐다"고 하지 말 것. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
   줄로 접혀야 가로가 넘치지 않는다. **홈·목록(76·77·105·분류)의 겉모습은 토스피드 A안 3색 판이다**(2026-09-27, 사장님 "썸네일 4번
   3색판으로 가자") — 원본은 `templates/wp_list_toss.php`, `python -m scripts.deploy_list_style`로 Code Snippets 14번에 올린다(관리

@@ -49,7 +49,12 @@ function fs_rating( $r ) {
 }
 
 // ── 조각들 ───────────────────────────────────────────────────────────────────────────
-function fs_nav( $active ) {
+// 메뉴 네 화면(Market·Stocks·Daily·Guides)의 메뉴 줄은 여기 한 곳에서만 그린다(2026-09-27 구조 통일) — 홈 템플릿과
+// 'fermata-hub' 틀이 [fermata_nav]로 부른다. 지금 어느 화면인지는 스스로 안다($active가 비면).
+function fs_nav( $active = '' ) {
+	if ( '' === $active && function_exists( 'is_front_page' ) ) {
+		$active = is_front_page() ? 'market' : ( is_page( 'stocks' ) ? 'stocks' : ( is_page( 76 ) ? 'daily' : ( is_page( 77 ) ? 'guides' : '' ) ) );
+	}
 	$items = array( 'market' => array( '/', 'Market' ), 'stocks' => array( '/stocks/', 'Stocks' ),
 	                'daily' => array( '/daily/', 'Daily' ), 'guides' => array( '/guides/', 'Guides' ) );
 	$out = '<div class="fs-navwrap"><div style="display:flex;flex-wrap:wrap;gap:12px 20px">';
@@ -103,8 +108,7 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 	$r = isset( $s['r'] ) ? $s['r'] : array(); $c = isset( $s['c'] ) ? $s['c'] : array();
 	$guide = isset( FS_GUIDES[ $code ] ) ? FS_GUIDES[ $code ] : FS_GUIDE_DEFAULT;
 	$mkt = $s['market'] === 'KOSDAQ' ? 'KOSDAQ' : 'KOSPI';
-	$h  = fs_nav( 'stocks' );
-	$h .= '<nav class="fs-crumb"><a href="/stocks/">Stocks</a> › <a href="/stocks/?m=' . strtolower( $mkt ) . '">' . $mkt . '</a> › ' . fs_esc( $name ) . '</nav>';
+	$h  = '<nav class="fs-crumb"><a href="/stocks/">Stocks</a> › <a href="/stocks/?m=' . strtolower( $mkt ) . '">' . $mkt . '</a> › ' . fs_esc( $name ) . '</nav>';
 	$h .= '<div class="fs-head"><div><h1>' . fs_esc( $name ) . '</h1><div class="fs-tick">KRX: ' . fs_esc( $code ) . ' · ' . $mkt
 		. ( ! empty( $s['industry'] ) ? ' · ' . fs_esc( $s['industry'] ) : '' ) . '</div>'
 		. '<div class="fs-price">' . fs_krw( isset( $q['close'] ) ? $q['close'] : null ) . ' <small>' . fs_signed( isset( $q['chg'] ) ? $q['chg'] : null ) . ' (' . fs_pct( isset( $q['pct'] ) ? $q['pct'] : null, false ) . ')</small></div>'
@@ -199,8 +203,7 @@ function fs_index_html( $index, $market, $page, $per = 100 ) {
 	}
 	$total = count( $rows ); $pages = max( 1, (int) ceil( $total / $per ) ); $page = max( 1, min( $pages, (int) $page ) );
 	$slice = array_slice( $rows, ( $page - 1 ) * $per, $per );
-	$h  = fs_nav( 'stocks' );
-	$h .= '<div class="fs-head"><div><h1>Korean Stocks</h1><p class="fs-mute">All ' . number_format( count( $index ) ) . ' stocks listed on the KOSPI and KOSDAQ, ranked by market capitalization. Updated after each close.</p></div></div>';
+	$h  = '<div class="fs-head"><div><h1>Korean Stocks</h1><p class="fs-mute">All ' . number_format( count( $index ) ) . ' stocks listed on the KOSPI and KOSDAQ, ranked by market capitalization. Updated after each close.</p></div></div>';
 	$h .= fs_search_box( count( $index ) );
 	$h .= '<div class="fs-pills">';
 	foreach ( array( '' => 'All', 'kospi' => 'KOSPI', 'kosdaq' => 'KOSDAQ' ) as $k => $label ) {
@@ -255,8 +258,8 @@ const FS_CSS = <<<'CSS'
 .fs-page{max-width:1200px!important;width:auto;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box}
 .fs-page p,.fs-page li{font-size:15px;line-height:1.6}.fs-page h1,.fs-page h2,.fs-page h3{font-family:Pretendard,-apple-system,sans-serif;letter-spacing:-.01em;line-height:1.3}.fs-page h3{font-size:16px;font-weight:800;margin:18px 0 6px}
 .fs-page a,.fs-cards a{color:inherit;text-decoration:none}.fs-page a:hover,.fs-cards a:hover{text-decoration:underline}
-/* 메뉴 줄은 Daily·Guides 페이지의 메뉴 묶음과 같은 여백(위아래 20px·아래 선) — 네 화면에서 같은 높이에 온다 */
-.fs-navwrap{padding:20px 0;border-bottom:1px solid var(--fs-line);margin:0 0 22px}
+/* 메뉴 줄 — 네 화면이 같은 틀(홈 템플릿·fermata-hub)에서 이것 하나로 그려진다. 폭은 목록과 같은 1200px */
+main .fs-navwrap.fs-navwrap:not(.alignfull):not(.alignwide){max-width:1200px!important;margin:0 auto 22px!important;padding:20px 0;border-bottom:1px solid var(--fs-line);box-sizing:border-box}
 .fs-crumb{font-size:13px;color:var(--fs-mute);margin:0 0 10px}
 .fs-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end;margin:0 0 6px}.fs-head h1{margin:0;font-size:30px;font-weight:800;letter-spacing:-.01em}
 .fs-tick{color:var(--fs-mute);font-size:13.5px;margin:4px 0 6px}.fs-price{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.1}.fs-price small{font-size:18px;font-weight:700;margin-left:6px}
@@ -370,6 +373,8 @@ add_filter( 'the_content', function ( $content ) {
 add_shortcode( 'fermata_market', function () { return fs_market_html( get_option( 'fm_market' ) ); } );
 add_shortcode( 'fermata_search', function () { return fs_search_box( count( fs_index() ) ); } );
 add_shortcode( 'fermata_nav', function ( $a ) { $a = shortcode_atts( array( 'active' => '' ), $a ); return fs_nav( $a['active'] ); } );
+// 'fermata-hub' 틀을 쓰는 페이지 — 메뉴 줄 CSS가 여기에 필요하다
+function fs_hub_view() { return is_front_page() || is_page( array( 'stocks', 76, 77, 105 ) ); }
 
 // 제목·설명·주소(Rank Math가 그리는 머리)
 function fs_meta_title() {
@@ -413,8 +418,7 @@ add_action( 'wp_sitemaps_init', function ( $sitemaps ) {
 
 // 모양 + 검색창 스크립트
 add_action( 'wp_head', function () {
-	if ( ! ( is_front_page() || is_page( 'stocks' ) ) ) { return; }
-	if ( is_page( 'stocks' ) ) { echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">' . "\n"; }
+	if ( ! fs_hub_view() ) { return; }   // 글꼴(Pretendard)은 14번 조각이 같은 화면에 싣는다
 	echo '<style id="fermata-stock-db">' . FS_CSS . '</style>' . "\n";
 }, 21 );
 add_action( 'wp_footer', function () {
