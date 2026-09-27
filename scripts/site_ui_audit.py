@@ -74,12 +74,28 @@ def check_static(browser, problems):
                 problems.append(f"{tag}: 메뉴 표시 {got['nav_on']} (기대 {active})")
             if path in ("/", "/stocks/", "/daily/", "/guides/") and got["nav_count"] != 4:
                 problems.append(f"{tag}: 메뉴 버튼 {got['nav_count']}개")
+            if expect_404:   # 404 쪽은 문서 자체가 404라 브라우저가 콘솔에 적는다 — 그것만 뺀다
+                errors = [e for e in errors if "status of 404" not in e]
+            # 구글 분석이 띄우는 google.com 틀에 대한 '보고 전용' 보안 경고 — 우리 코드가 아니고 가끔만 뜬다
+            errors = [e for e in errors if "report-only Content Security Policy" not in e]
             problems.extend(f"{tag}: {e}" for e in dict.fromkeys(errors))
             if w in (390, 1440):
                 name = re.sub(r"[^a-z0-9]+", "_", path.lower()).strip("_") or "home"
                 page.screenshot(path=str(OUT / f"{name}_{w}.png"), full_page=True)
             page.close()
             print(f"  {tag} 상태 {status} 넘침 {got['overflow']} 메뉴 {got['nav_on']}", flush=True)
+
+
+def fetch_status(page, url: str) -> int | str:
+    """링크 목적지 상태 — 한 번 끊겨도(카페24가 가끔 연결을 끊는다) 두 번 더 해 보고 판단한다."""
+    last = ""
+    for _ in range(3):
+        try:
+            return page.request.get(url, timeout=30000).status
+        except Exception as error:  # noqa: BLE001 — 세 번 다 끊기면 그 이유를 문제로 적는다
+            last = str(error).splitlines()[0][:60]
+            page.wait_for_timeout(2000)
+    return last
 
 
 def check_clicks(browser, problems):
@@ -100,7 +116,10 @@ def check_clicks(browser, problems):
         p.keyboard.press("ArrowDown")
         target = p.locator("#fs-res a.on").get_attribute("href") if p.locator("#fs-res a.on").count() else None
         p.keyboard.press("Enter")
-        p.wait_for_load_state("networkidle")
+        try:
+            p.wait_for_url(f"**{target}", timeout=15000)
+        except Exception:  # noqa: BLE001 — 안 넘어가면 아래에서 문제로 적는다
+            pass
         if not target or not p.url.endswith(target):
             problems.append(f"{w}px 홈: 화살표 두 번 + Enter가 두 번째 결과로 안 간다 ({target} → {p.url})")
         p.goto(SITE + "/", wait_until="networkidle")
@@ -124,9 +143,9 @@ def check_clicks(browser, problems):
         # 홈 카드의 링크(시가총액·상승·외국인)와 'All →'
         for sel in (".fs-card a.fs-more", ".fs-card table a", ".fs-mv a"):
             href = p.locator(sel).first.get_attribute("href")
-            r = p.request.get(SITE + href)
-            if r.status != 200:
-                problems.append(f"{w}px 홈 카드 링크 {href}: {r.status}")
+            st = fetch_status(p, SITE + href)
+            if st != 200:
+                problems.append(f"{w}px 홈 카드 링크 {href}: {st}")
         # 목록: 필터·쪽 넘김
         p.goto(SITE + "/stocks/", wait_until="networkidle")
         p.locator(".fs-pills a", has_text="KOSDAQ").click()
@@ -166,9 +185,9 @@ def check_clicks(browser, problems):
                 href = link.get_attribute("href")
                 url = href if href.startswith("http") else SITE + href
                 if "fermata.it.kr" in url:
-                    r = p.request.get(url)
-                    if r.status != 200:
-                        problems.append(f"{w}px 종목 {sel} {href}: {r.status}")
+                    st = fetch_status(p, url)
+                    if st != 200:
+                        problems.append(f"{w}px 종목 {sel} {href}: {st}")
         # 글 목록 쪽 넘김
         p.goto(SITE + "/daily/", wait_until="networkidle")
         nxt = p.locator(".wp-block-query-pagination-next")

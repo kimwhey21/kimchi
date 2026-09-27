@@ -145,6 +145,17 @@ class SnippetTest(unittest.TestCase):
         self.assertIn(": 'http://' . $s['web']", PHP)
         self.assertNotIn("href=\"/stocks/'+", PHP, "검색 결과 링크를 글자로 조립하면 검색엔진이 가짜 주소로 읽는다")
 
+    def test_preferred_shares_do_not_compare_common_targets(self):
+        # 우선주 화면에 보통주 목표주가를 우선주 값과 비교해 +290.77%가 나왔다(2026-09-27, 005387)
+        self.assertIn("$pref_of ? array( 'Price target', 'See <a", PHP)
+
+    def test_search_list_is_a_static_file_and_waits_for_it(self):
+        # REST로 받으면 첫 검색이 비고, 목록이 오기 전 화살표를 누르면 스크립트 오류가 났다(2026-09-27 버튼 점검)
+        self.assertIn("function fs_index_write(", PHP)
+        self.assertIn("$out['index_file'] = fs_index_write( $next )", PHP)
+        self.assertIn("if(!data){note('Loading…');return}", PHP)
+        self.assertIn("if(e.key==='Escape'){res.hidden=true;return}if(!data)return;", PHP)
+
     def test_rewrite_only_takes_krx_codes(self):
         # 숫자로 시작하는 6자리만 — 'nvidia' 같은 옛 영어 주소는 13번 조각의 301로 가야 한다
         self.assertIn("^stocks/([0-9][0-9A-Za-z]{5})/?$", PHP)

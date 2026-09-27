@@ -68,9 +68,10 @@ function fs_nav( $active = '' ) {
 
 function fs_search_box( $count = null ) {
 	$GLOBALS['fs_need_search_js'] = true;
-	$ph = 'Search ' . ( $count ? number_format( $count ) . ' ' : '' ) . 'Korean stocks — Samsung, SK Hynix, HYBE, 005930…';
-	return '<div class="fs-search"><span aria-hidden="true">⌕</span><input type="search" id="fs-q" autocomplete="off" placeholder="'
-		. fs_esc( $ph ) . '" aria-label="Search Korean stocks"><kbd>/</kbd><ul id="fs-res" hidden></ul></div>';
+	$ph = 'Search ' . ( $count ? number_format( $count ) . ' ' : '' ) . 'Korean stocks';   // 긴 예시는 휴대폰에서 잘렸다(2026-09-27) — 예시는 aria 설명으로
+	$src = function_exists( 'fs_index_url' ) ? fs_index_url() : '/wp-json/fermata/v1/stock-index';
+	return '<div class="fs-search"><span aria-hidden="true">⌕</span><input type="search" id="fs-q" autocomplete="off" data-src="' . fs_esc( $src ) . '" placeholder="'
+		. fs_esc( $ph ) . '" aria-label="Search Korean stocks by name or code, e.g. Samsung, SK Hynix, 005930"><kbd>/</kbd><ul id="fs-res" hidden></ul></div>';
 }
 
 function fs_chart( $hist ) {
@@ -107,6 +108,8 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 	$code = $s['code']; $name = $s['name']; $q = isset( $s['q'] ) ? $s['q'] : array();
 	$r = isset( $s['r'] ) ? $s['r'] : array(); $c = isset( $s['c'] ) ? $s['c'] : array();
 	$guide = isset( FS_GUIDES[ $code ] ) ? FS_GUIDES[ $code ] : FS_GUIDE_DEFAULT;
+	$common = substr( $code, 0, 5 ) . '0';
+	$pref_of = ( ! empty( $s['pref'] ) && $common !== $code && isset( $index_by_code[ $common ] ) ) ? $common : '';
 	$mkt = $s['market'] === 'KOSDAQ' ? 'KOSDAQ' : 'KOSPI';
 	$h  = '<nav class="fs-crumb"><a href="/stocks/">Stocks</a> › <a href="/stocks/?m=' . strtolower( $mkt ) . '">' . $mkt . '</a> › ' . fs_esc( $name ) . '</nav>';
 	$h .= '<div class="fs-head"><div><h1>' . fs_esc( $name ) . '</h1><div class="fs-tick">KRX: ' . fs_esc( $code ) . ' · ' . $mkt
@@ -133,8 +136,11 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 		array( 'PB ratio', fs_x( isset( $r['pbr'] ) ? $r['pbr'] : null ) ),
 		array( 'EPS', fs_krw( isset( $r['eps'] ) ? $r['eps'] : null ) ),
 		array( 'Dividend (yield)', ( isset( $r['dps'] ) && $r['dps'] !== null ? fs_krw( $r['dps'] ) . ' (' . fs_x( isset( $r['div_yield'] ) ? $r['div_yield'] : null, '%' ) . ')' : '–' ) ),
-		array( 'Analysts (1–5)', fs_rating( isset( $c['rating'] ) ? $c['rating'] : null ) ),
-		array( 'Price target', ( ! empty( $c['target'] ) && ! empty( $q['close'] ) ) ? fs_krw( $c['target'] ) . ' (' . fs_pct( ( $c['target'] / $q['close'] - 1 ) * 100, false ) . ')' : '–' ),
+		// 우선주 화면의 컨센서스는 보통주 것이다 — 우선주 값과 비교하면 +290%처럼 틀린 숫자가 된다(2026-09-27 전수 점검, 005387)
+		$pref_of ? array( 'Analysts (1–5)', 'See <a href="/stocks/' . $pref_of . '/">common shares</a>' )
+		         : array( 'Analysts (1–5)', fs_rating( isset( $c['rating'] ) ? $c['rating'] : null ) ),
+		$pref_of ? array( 'Price target', 'See <a href="/stocks/' . $pref_of . '/">common shares</a>' )
+		         : array( 'Price target', ( ! empty( $c['target'] ) && ! empty( $q['close'] ) ) ? fs_krw( $c['target'] ) . ' (' . fs_pct( ( $c['target'] / $q['close'] - 1 ) * 100, false ) . ')' : '–' ),
 	);
 	$last_flow = ! empty( $s['flows'] ) ? $s['flows'][0] : null;
 	$rows2 = array(
@@ -299,19 +305,29 @@ main div.fs-search.fs-search:not(.alignfull):not(.alignwide){max-width:680px!imp
 .fs-cards{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px;margin:0 0 10px}.fs-card{border:1px solid var(--fs-line);border-radius:16px;padding:16px 18px}
 .fs-card h2{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:8px}.fs-more{margin-left:auto;font-size:12.5px;color:var(--fs-blue)!important;font-weight:600}
 .fs-mv{list-style:none;margin:0;padding:0}.fs-mv li{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--fs-line);font-size:14px}.fs-mv li.fs-sep{color:var(--fs-mute);font-size:12.5px;font-weight:700;padding-top:10px;border-top:0}
+@media (max-width:600px){.fs-list th:nth-child(3),.fs-list td:nth-child(3),.fs-list th:nth-child(6),.fs-list td:nth-child(6){display:none}
+.fs-scroll .fs-list td:nth-child(2){white-space:normal}.fs-search kbd{display:none}.fs-tabs{flex-wrap:wrap;overflow:visible}.fs-tabs a{padding:7px 9px}}
 @media (max-width:820px){.fs-two,.fs-stats,.fs-cards{grid-template-columns:1fr}.fs-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.fs-price{font-size:30px}.fs-head h1{font-size:25px}}
 CSS;
 
 const FS_JS = <<<'JS'
-(function(){var box=document.getElementById('fs-q'),res=document.getElementById('fs-res');if(!box||!res)return;var data=null,sel=-1;
-function load(cb){if(data)return cb();try{var c=sessionStorage.getItem('fs-idx');if(c){data=JSON.parse(c);return cb();}}catch(e){}
-fetch('/wp-json/fermata/v1/stock-index').then(function(r){return r.json()}).then(function(j){data=j;try{sessionStorage.setItem('fs-idx',JSON.stringify(j))}catch(e){}cb()}).catch(function(){data=[];cb()});}
-function show(){var q=box.value.trim().toLowerCase();if(!q){res.hidden=true;return}var out=[];for(var i=0;i<data.length&&out.length<8;i++){var r=data[i];if(r[0].toLowerCase().indexOf(q)===0||r[1].toLowerCase().indexOf(q)>-1)out.push(r)}
-res.textContent='';if(!out.length){var e=document.createElement('li');e.style.cssText='padding:9px 12px;color:#8b95a1';e.textContent='No match';res.appendChild(e)}
+(function(){var box=document.getElementById('fs-q'),res=document.getElementById('fs-res');if(!box||!res)return;
+var src=box.getAttribute('data-src')||'/wp-json/fermata/v1/stock-index',key='fs-idx:'+src,data=null,loading=false,waiting=[],sel=-1;
+function note(t){res.textContent='';var e=document.createElement('li');e.style.cssText='padding:9px 12px;color:#8b95a1';e.textContent=t;res.appendChild(e);res.hidden=false}
+function load(cb){if(data)return cb();try{var c=sessionStorage.getItem(key);if(c){data=JSON.parse(c);if(data)return cb();}}catch(e){}
+waiting.push(cb);if(loading)return;loading=true;
+fetch(src).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(j){data=Array.isArray(j)?j:[];try{sessionStorage.setItem(key,JSON.stringify(data))}catch(e){}})
+.catch(function(){data=null}).then(function(){loading=false;var w=waiting;waiting=[];if(!data){note('Search is unavailable right now — try again');return}w.forEach(function(f){f()})})}
+function show(){var q=box.value.trim().toLowerCase();if(!q){res.hidden=true;return}if(!data){note('Loading…');return}
+var out=[];for(var i=0;i<data.length&&out.length<8;i++){var r=data[i];if(r[0].toLowerCase().indexOf(q)===0||r[1].toLowerCase().indexOf(q)>-1)out.push(r)}
+sel=Math.min(sel,out.length-1);res.textContent='';if(!out.length){note('No match');return}
 out.forEach(function(r,i){var li=document.createElement('li'),a=document.createElement('a'),b=document.createElement('b'),n=document.createElement('span'),c=document.createElement('span');
 a.setAttribute('href','/stocks/'+r[0]+'/');if(i===sel)a.className='on';b.textContent=r[1];n.appendChild(b);c.style.color='#8b95a1';c.textContent=r[0]+' · '+r[2];a.appendChild(n);a.appendChild(c);li.appendChild(a);res.appendChild(li)});res.hidden=false}
-box.addEventListener('input',function(){sel=-1;load(show)});box.addEventListener('focus',function(){load(function(){})});
-box.addEventListener('keydown',function(e){var a=res.querySelectorAll('a');if(e.key==='ArrowDown'){sel=Math.min(sel+1,a.length-1);show();e.preventDefault()}else if(e.key==='ArrowUp'){sel=Math.max(sel-1,0);show();e.preventDefault()}else if(e.key==='Enter'&&a.length){location.href=a[Math.max(sel,0)].getAttribute('href')}else if(e.key==='Escape'){res.hidden=true}});
+function warm(){load(function(){})}
+box.addEventListener('input',function(){sel=-1;show();load(show)});box.addEventListener('focus',warm);box.addEventListener('pointerenter',warm);
+box.addEventListener('keydown',function(e){if(e.key==='Escape'){res.hidden=true;return}if(!data)return;var a=res.querySelectorAll('a');
+if(e.key==='ArrowDown'){sel=Math.min(sel+1,a.length-1);show();e.preventDefault()}else if(e.key==='ArrowUp'){sel=Math.max(sel-1,0);show();e.preventDefault()}
+else if(e.key==='Enter'&&a.length){e.preventDefault();location.href=a[Math.max(sel,0)].getAttribute('href')}});
 document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement!==box&&!/input|textarea/i.test(document.activeElement.tagName)){box.focus();e.preventDefault()}});
 document.addEventListener('click',function(e){if(!e.target.closest('.fs-search'))res.hidden=true});})();
 JS;
@@ -323,6 +339,19 @@ function fs_page_id() { $p = get_page_by_path( 'stocks' ); return $p ? (int) $p-
 function fs_current_code() { $c = strtoupper( (string) get_query_var( 'fm_code' ) ); return preg_match( '/^[0-9][0-9A-Z]{5}$/', $c ) ? $c : ''; }
 function fs_stock( $code ) { $s = get_option( 'fm_s_' . $code ); return is_array( $s ) ? $s : null; }
 function fs_index() { $i = get_option( 'fm_stock_index' ); return is_array( $i ) ? $i : array(); }
+// 검색창이 받는 목록은 고정 파일로 — REST로 받으면 방문자마다 워드프레스가 돌고(0.5~0.8초) 첫 검색이 비었다(2026-09-27 버튼 점검)
+function fs_index_file() { $u = wp_upload_dir(); return array( $u['basedir'] . '/fermata/stock-index.json', $u['baseurl'] . '/fermata/stock-index.json' ); }
+function fs_index_write( $index ) {
+	list( $path ) = fs_index_file();
+	wp_mkdir_p( dirname( $path ) );
+	$rows = array(); foreach ( $index as $r ) { $rows[] = array( $r[0], $r[1], $r[2] ); }
+	return false !== file_put_contents( $path, wp_json_encode( $rows ) );
+}
+function fs_index_url() {
+	list( $path, $url ) = fs_index_file();
+	if ( ! file_exists( $path ) && fs_index() ) { fs_index_write( fs_index() ); }
+	return file_exists( $path ) ? set_url_scheme( $url, 'relative' ) . '?v=' . filemtime( $path ) : '/wp-json/fermata/v1/stock-index';
+}
 
 add_action( 'init', function () {
 	add_rewrite_rule( '^stocks/([0-9][0-9A-Za-z]{5})/?$', 'index.php?pagename=stocks&fm_code=$matches[1]', 'top' );
@@ -351,7 +380,7 @@ add_action( 'rest_api_init', function () {
 				update_option( 'fm_stock_index_next', $next, false );
 				$out['index_next'] = count( $next );
 				$total = isset( $body['index_total'] ) ? (int) $body['index_total'] : 0;
-				if ( $total && $total === count( $next ) ) { update_option( 'fm_stock_index', $next, false ); delete_option( 'fm_stock_index_next' ); $out['index'] = $total; }
+				if ( $total && $total === count( $next ) ) { update_option( 'fm_stock_index', $next, false ); delete_option( 'fm_stock_index_next' ); $out['index'] = $total; $out['index_file'] = fs_index_write( $next ); }
 			}
 			if ( isset( $body['market'] ) && is_array( $body['market'] ) ) { update_option( 'fm_market', $body['market'], false ); $out['market'] = true; }
 			return $out;
