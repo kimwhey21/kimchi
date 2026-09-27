@@ -1,5 +1,5 @@
 {
- "date": "2026-09-26",
+ "date": "2026-09-27",
  "window": "3개월",
  "total_clicks": 25,
  "total_impressions": 4,
@@ -167,6 +167,13 @@
   },
   {
    "query": "dart korea",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0.0,
+   "position": 8.0
+  },
+  {
+   "query": "krx kospi pbr per 차이",
    "clicks": 0,
    "impressions": 2,
    "ctr": 0.0,
@@ -426,13 +433,6 @@
   },
   {
    "query": "kospi and kosdaq difference",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0.0,
-   "position": 8.0
-  },
-  {
-   "query": "krx kospi pbr per 차이",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0.0,
