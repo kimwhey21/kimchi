@@ -449,6 +449,21 @@ add_action( 'rest_api_init', function () {
 			if ( isset( $body['market'] ) && is_array( $body['market'] ) ) { update_option( 'fm_market', $body['market'], false ); $out['market'] = true; }
 			return $out;
 		} ) );
+	// 진단(관리자만): 필터를 거치지 않은 DB 값 — Rank Math 기능 목록·플러그인 자동 업데이트·Rank Math 버전(2026-09-28 Rank Math 사이트맵이 다시 켜진 일)
+	register_rest_route( 'fermata/v1', '/diag', array( 'methods' => 'GET', 'permission_callback' => function () { return current_user_can( 'manage_options' ); },
+		'callback' => function () {
+			global $wpdb;
+			$raw = $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", 'rank_math_modules' ) );
+			return array(
+				'rank_math_modules_raw' => maybe_unserialize( $raw ),
+				'rank_math_modules_filtered' => get_option( 'rank_math_modules' ),
+				'auto_update_plugins' => get_site_option( 'auto_update_plugins', array() ),
+				'rank_math_version' => defined( 'RANK_MATH_VERSION' ) ? RANK_MATH_VERSION : null,
+				'rank_math_db_version' => get_option( 'rank_math_db_version' ),
+				'rank_math_install_date' => get_option( 'rank_math_install_date' ),
+				'wp_sitemaps_enabled' => (bool) apply_filters( 'wp_sitemaps_enabled', (bool) get_option( 'blog_public' ) ),
+			);
+		} ) );
 	register_rest_route( 'fermata/v1', '/stock-index', array( 'methods' => 'GET', 'permission_callback' => '__return_true',
 		'callback' => function () {
 			$rows = array(); foreach ( fs_index() as $r ) { $rows[] = array( $r[0], $r[1], $r[2] ); }
