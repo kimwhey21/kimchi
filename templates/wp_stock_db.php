@@ -234,10 +234,10 @@ function fs_market_html( $m ) {
 	$h .= '<div class="fs-card"><h2>Largest companies<a class="fs-more" href="/stocks/">All ' . number_format( array_sum( $m['counts'] ) ) . ' →</a></h2><table class="fs-t">';
 	foreach ( $m['largest'] as $r ) { $h .= '<tr><td><a href="/stocks/' . $r['code'] . '/"><b>' . fs_esc( $r['name'] ) . '</b></a> <span class="fs-code">' . $r['code'] . '</span></td><td class="fs-num">' . fs_krw( $r['close'] ) . '</td><td class="fs-num">' . fs_pct( $r['pct'] ) . '</td></tr>'; }
 	$h .= '</table></div><div class="fs-card"><h2>Movers</h2><ul class="fs-mv"><li class="fs-sep">Gainers</li>';
-	foreach ( array_slice( $m['gainers'], 0, 4 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . '</a>' . fs_pct( $r['pct'] ) . '</li>'; }
+	foreach ( array_slice( $m['gainers'], 0, 4 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . ( ! empty( $r['ipo'] ) ? ' <span class="fs-kr fs-ipo">New listing</span>' : '' ) . '</a>' . fs_pct( $r['pct'] ) . '</li>'; }
 	$h .= '<li class="fs-sep">Losers</li>';
 	foreach ( array_slice( $m['losers'], 0, 4 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . '</a>' . fs_pct( $r['pct'] ) . '</li>'; }
-	$h .= '</ul><p class="fs-mute fs-small">Stocks with at least ₩5B traded.</p></div><div class="fs-card"><h2>Foreign investors <span class="fs-kr">KR data</span></h2><ul class="fs-mv"><li class="fs-sep">Bought most</li>';
+	$h .= '</ul><p class="fs-mute fs-small">Stocks with at least ₩5B traded. Moves beyond the 30% daily limit are first-day listings, measured from the IPO price.</p></div><div class="fs-card"><h2>Foreign investors <span class="fs-kr">KR data</span></h2><ul class="fs-mv"><li class="fs-sep">Bought most</li>';
 	foreach ( array_slice( $m['foreign_buy'], 0, 3 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . '</a><b class="fs-up">+' . fs_big( $r['value'] ) . '</b></li>'; }
 	$h .= '<li class="fs-sep">Sold most</li>';
 	foreach ( array_slice( $m['foreign_sell'], 0, 3 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . '</a><b class="fs-dn">' . fs_big( $r['value'] ) . '</b></li>'; }
@@ -249,7 +249,7 @@ const FS_CSS = <<<'CSS'
 :root{--fs-ink:#191f28;--fs-sub:#4e5968;--fs-mute:#8b95a1;--fs-line:#eef0f3;--fs-pill:#f2f4f6;--fs-blue:#1b64da;--fs-up:#d9480f;--fs-dn:#1b64da;--fs-green:#2b8a3e;--fs-gb:#e9f8ec;--fs-bb:#e7f5ff}
 .fs-up{color:var(--fs-up)}.fs-dn{color:var(--fs-dn)}.fs-fl{color:var(--fs-mute)}.fs-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .fs-mute{color:var(--fs-mute)}.fs-small{font-size:12.5px;margin:10px 0 0}.fs-code{color:var(--fs-mute);font-size:11.5px;margin-left:4px}
-.fs-kr{background:var(--fs-gb);color:var(--fs-green);font-size:11px;font-weight:700;border-radius:6px;padding:2px 6px;vertical-align:middle}
+.fs-kr{background:var(--fs-gb);color:var(--fs-green);font-size:11px;font-weight:700;border-radius:6px;padding:2px 6px;vertical-align:middle}.fs-kr.fs-ipo{background:#fff4e6;color:#d9480f}
 .fs-page,.fs-strip,.fs-cards,.fs-search{font-family:Pretendard,-apple-system,"Segoe UI",sans-serif;color:var(--fs-ink)}
 .fs-page{width:min(1180px,calc(100vw - 32px));max-width:none!important;position:relative;left:50%;transform:translateX(-50%)}
 .fs-page p,.fs-page li{font-size:15px;line-height:1.6}.fs-page h1,.fs-page h2,.fs-page h3{font-family:Pretendard,-apple-system,sans-serif;letter-spacing:-.01em;line-height:1.3}.fs-page h3{font-size:16px;font-weight:800;margin:18px 0 6px}

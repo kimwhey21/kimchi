@@ -424,7 +424,9 @@ def market_summary(listing: list[dict], details: dict[str, dict], meta: dict, id
             flows.append({"code": code, "name": name(code), "value": f["foreign"] * f["close"]})
     buys = sorted([f for f in flows if f["value"] > 0], key=lambda f: -f["value"])[:5]
     sells = sorted([f for f in flows if f["value"] < 0], key=lambda f: f["value"])[:5]
-    pick = lambda r: {"code": r["code"], "name": name(r["code"]), "close": r["close"], "pct": r["pct"]}  # noqa: E731
+    # 하루 상한은 30% — 넘는 것은 상장 첫날(공모가 대비)뿐이다(2026-09-23 Wise Planet +280.83%). 틀린 숫자로 보이지 않게 표시한다
+    pick = lambda r: {"code": r["code"], "name": name(r["code"]), "close": r["close"], "pct": r["pct"],  # noqa: E731
+                      **({"ipo": True} if abs(r["pct"] or 0) > 30.5 else {})}
     return {"date": date, "index": idx, "usdkrw": fx, "skhy": skhy, "flow_universe": len(flows), "flow_date": flow_date,
             "largest": [pick(r) for r in big[:7]], "gainers": [pick(r) for r in gain], "losers": [pick(r) for r in lose],
             "foreign_buy": buys, "foreign_sell": sells, "counts": {"KOSPI": sum(r["market"] == "KOSPI" for r in listing),

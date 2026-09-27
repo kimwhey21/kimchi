@@ -90,6 +90,11 @@ class DailyRunTest(unittest.TestCase):
         self.assertEqual([f["code"] for f in m["foreign_buy"]], ["000002"])
         self.assertEqual([f["code"] for f in m["foreign_sell"]], ["000003"])
 
+    def test_first_day_listing_is_flagged(self):
+        m = sdb.market_summary([_row("000001", 5e12, pct=280.83), _row("000002", 4e12, pct=5.0)], {}, {}, {}, None, None)
+        self.assertTrue(m["gainers"][0].get("ipo"), "하루 상한 30%를 넘는 등락은 상장 첫날 — 표시가 붙어야 한다")
+        self.assertNotIn("ipo", m["gainers"][1])
+
     def test_hangul_is_caught_except_korean_name_field(self):
         self.assertEqual(sdb.hangul_problems({"name_ko": "삼성전자", "q": {}}), [])
         self.assertTrue(sdb.hangul_problems({"industry": "반도체"}))
