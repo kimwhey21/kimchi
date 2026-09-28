@@ -52,8 +52,11 @@ def date_issues(home: str, flows: str, dates: list[str], now: dt.datetime) -> li
     got = home_kospi_date(home, int(dates[-1][:4]))
     if got is None:
         out.append("홈에서 KOSPI 날짜를 못 찾았습니다(시장 띠가 비었을 수 있음)")
-    elif got != dates[-1]:
-        out.append(f"홈의 KOSPI 날짜 {got} ≠ 마지막 한국장 시세 {dates[-1]} — 17:05 종목 수집이 안 돌았을 수 있습니다")
+    elif got < dates[-1]:
+        out.append(f"홈의 KOSPI 날짜 {got} < 마지막 한국장 시세 {dates[-1]} — 17:05 종목 수집(stock_db.yml)이 안 돌았을 수 있습니다")
+    elif got > dates[-1]:
+        out.append(f"홈의 KOSPI 날짜 {got} > 마지막 한국장 시세 {dates[-1]} — 16:20 한국장 시세 수집(market_brief.yml)이 멈춰 "
+                   f"한국장 시황이 안 나갔을 수 있습니다(15:32 종가 사진 krx_close.yml부터 확인)")
     fd = flows_date(flows)
     # 종목별 수급은 다음 날 아침 07:50에 들어온다 — 오전 점검은 마지막 거래일, 저녁 점검은 그 전 거래일까지면 된다
     need = dates[-1] if now.hour < 15 else (dates[-2] if len(dates) > 1 else dates[-1])

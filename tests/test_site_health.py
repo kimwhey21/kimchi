@@ -24,6 +24,12 @@ class DateTest(unittest.TestCase):
         home = HOME.replace("Sep 28", "Sep 23")
         self.assertTrue(any("KOSPI" in x for x in sh.date_issues(home, FLOWS, DATES, dt.datetime(2026, 9, 28, 19, tzinfo=KST))))
 
+    def test_missing_price_file_points_at_the_price_run(self):
+        """2026-09-28 실제: 종목 수집은 9/28로 돌았는데 16:20 시세 수집이 멈춰 시세 파일은 9/23에 머물렀다."""
+        issues = sh.date_issues(HOME, FLOWS.replace("Monday, Sep 28", "Wednesday, Sep 23"), ["2026-09-22", "2026-09-23"],
+                                dt.datetime(2026, 9, 28, 19, tzinfo=KST))
+        self.assertTrue(any("market_brief" in x for x in issues), issues)
+
     def test_flows_one_day_behind_is_fine_in_the_evening_not_the_morning(self):
         flows = FLOWS.replace("Monday, Sep 28", "Wednesday, Sep 23")
         self.assertEqual(sh.date_issues(HOME, flows, DATES, dt.datetime(2026, 9, 28, 19, tzinfo=KST)), [])
