@@ -56,6 +56,8 @@ def deploy(source: Path, name: str, desc: str, *, dry: bool = False, scope: str 
     print(f"조각 #{got['id']} {'갱신' if mine else '생성'} · {'켜짐' if active else '꺼짐'}")
     requests.post(f"{base}/wp-json/wp-super-cache/v1/cache", json={"delete_cache": True}, auth=auth, headers=UA, timeout=60)
     print("캐시 지움")
+    from src.cloudflare import purge_all
+    purge_all()
     return 0
 
 

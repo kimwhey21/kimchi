@@ -313,6 +313,9 @@ def verify_published(post_id: int, expected_title: str, expected_status: str | N
             ". 스크립트는 성공이라고 했지만 사이트에는 반영되지 않았습니다."
         )
     print(f"[확인] id={post_id} 사이트 반영 확인 (상태 {status}, 제목 일치)")
+    if status == "publish" and "fermata.it.kr" in base_url:   # 실제 사이트의 공개 글은 목록·홈이 바뀐다 — Cloudflare 창고도 비운다(2026-09-28, 실패해도 멈추지 않는다)
+        from src.cloudflare import purge_all
+        purge_all()
 
 
 def _normalize_title(title: str) -> str:

@@ -919,6 +919,9 @@ def push(items: list[dict], index: list, market: dict, lists: dict | None = None
         time.sleep(pause)
     # 홈·목록은 캐시된 화면이라 비워야 새 숫자가 보인다
     c = requests.post(f"{base}/wp-json/wp-super-cache/v1/cache", json={"delete_cache": True}, auth=auth, headers=UA, timeout=60)
+    if "fermata.it.kr" in base:    # 실제 사이트일 때만(테스트는 가짜 주소)
+        from src.cloudflare import purge_all
+        purge_all()
     if c.status_code != 200:
         print(f"[경고] 캐시를 못 비웠습니다: HTTP {c.status_code} — 새 숫자가 늦게 보일 수 있습니다.")
     return sent
@@ -1037,6 +1040,8 @@ def main(argv: list[str] | None = None) -> int:
             if r:
                 batch.append(r); size += n
         requests.post(f"{base}/wp-json/wp-super-cache/v1/cache", json={"delete_cache": True}, auth=auth, headers=UA, timeout=60)
+        from src.cloudflare import purge_all
+        purge_all()
         print(f"소개 {sent}/{len(rows)}종목 저장")
         return 0 if sent == len(rows) else 1
     if a.command == "webcheck":

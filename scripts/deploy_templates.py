@@ -52,6 +52,8 @@ def main(argv: list[str] | None = None) -> int:
     if changed and not dry:
         requests.post(f"{base}/wp-json/wp-super-cache/v1/cache", json={"delete_cache": True}, auth=auth, headers=UA, timeout=60)
         print("캐시 지움")
+        from src.cloudflare import purge_all
+        purge_all()
     return 0
 
 
