@@ -31,7 +31,7 @@ def main(argv: list[str] | None = None) -> int:
     return deploy(SOURCE, NAME, "templates/wp_list_toss.php가 원본. scripts/deploy_list_style.py로 올린다.", dry=dry)
 
 
-def deploy(source: Path, name: str, desc: str, *, dry: bool = False) -> int:
+def deploy(source: Path, name: str, desc: str, *, dry: bool = False, scope: str = "global") -> int:
     """조각 하나를 이름으로 찾아 올린다 — 종목 데이터베이스 조각(scripts/deploy_stock_db.py)도 이 함수를 쓴다."""
     load_dotenv(ROOT / ".env")
     base = os.environ["WORDPRESS_URL"].rstrip("/")
@@ -46,7 +46,7 @@ def deploy(source: Path, name: str, desc: str, *, dry: bool = False) -> int:
     if mine and mine[0].get("code", "").strip() == body.strip() and mine[0].get("active"):
         print("바뀐 것 없음 — 올리지 않음")
         return 0
-    payload = {"name": name, "code": body, "scope": "global", "active": True, "priority": 10, "desc": desc}
+    payload = {"name": name, "code": body, "scope": scope, "active": True, "priority": 10, "desc": desc}
     url = f"{base}/wp-json/code-snippets/v1/snippets" + (f"/{mine[0]['id']}" if mine else "")
     response = requests.post(url, json=payload, auth=auth, headers=UA, timeout=90)
     response.raise_for_status()

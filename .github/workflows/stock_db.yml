@@ -10,7 +10,7 @@ name: Stock DB
 on:
   schedule:
     - cron: "5 8 * * 1-5"      # 17:05 KST 월~금 — 한국장 시세(market_brief의 16:20 수집·루틴과 겹치지 않게)
-    - cron: "50 22 * * 0-4"    # 07:50 KST 월~금 — 전 거래일 수급(일~목 UTC = 월~금 KST 아침)
+    - cron: "50 22 * * 0-5"    # 07:50 KST 월~토 — 전 거래일 수급(일~금 UTC = 월~토 KST 아침; 토요일은 금요일 수급)
   workflow_dispatch:
 
 concurrency:

@@ -81,6 +81,13 @@ KRX_HOLIDAYS = {
     "2026-07-17": "Constitution Day", "2026-08-17": "Liberation Day (observed)", "2026-09-24": "Chuseok",
     "2026-09-25": "Chuseok", "2026-10-05": "National Foundation Day (observed)", "2026-10-09": "Hangul Day",
     "2026-12-25": "Christmas Day", "2026-12-31": "Year-end closing",
+    # 2027은 계산값(python-holidays 0.105 — 2026년은 위 표와 전부 일치했다)에 근로자의 날·연말 폐장일을 더한 것이다.
+    # 거래소가 12월에 내는 휴장일 공고와 대조할 것 — 특히 노동절·제헌절 대체휴일(5/3·7/19)과 임시공휴일.
+    "2027-01-01": "New Year's Day", "2027-02-08": "Lunar New Year", "2027-02-09": "Lunar New Year (observed)",
+    "2027-03-01": "Independence Movement Day", "2027-05-03": "Labor Day (observed)", "2027-05-05": "Children's Day",
+    "2027-05-13": "Buddha's Birthday", "2027-07-19": "Constitution Day (observed)", "2027-08-16": "Liberation Day (observed)",
+    "2027-09-14": "Chuseok", "2027-09-15": "Chuseok", "2027-09-16": "Chuseok", "2027-10-04": "National Foundation Day (observed)",
+    "2027-10-11": "Hangul Day (observed)", "2027-12-27": "Christmas Day (observed)", "2027-12-31": "Year-end closing",
 }
 _ACRONYM_KEEP = {"SK", "LG", "KB", "GS", "CJ", "HD", "LS", "DB", "KT", "NH", "BNK", "DGB", "JB", "KCC", "OCI", "SKC",
                  "SPC", "HMM", "KG", "SM", "YG", "JYP", "CNH", "KTB", "DL", "HL", "HK", "SNT", "KPX", "KISCO", "POSCO",

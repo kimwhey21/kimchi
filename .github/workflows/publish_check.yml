@@ -48,6 +48,11 @@ jobs:
         if: always()
         run: python -m scripts.site_audit --english
 
+      - name: 본진 점검 (사이트맵·핵심 페이지·데이터 날짜)
+        # 2026-09-28: 종목 사이트맵이 Rank Math 때문에 404가 된 것을 사람이 찾았다. 매일 두 번 기계가 본다.
+        if: always()
+        run: python -m scripts.site_health
+
       - name: 실패 알림 (텔레그램 운영 대화)
         # 2026-09-12: 어떤 워크플로가 왜 죽었는지 휴대폰으로. 토큰이 없으면 조용히 넘어간다(curl이라 앞 단계가 어디서 죽었든 된다).
         if: failure()
