@@ -48,3 +48,22 @@ class SnippetSourcesTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MonthlyAuditTest(unittest.TestCase):
+    def test_runs_all_three_in_order_and_reports_failures(self):
+        import tempfile
+        from unittest import mock
+        from scripts import monthly_audit as ma
+        calls = []
+
+        def fake_run(args, cwd, stdout, stderr, timeout):
+            calls.append(args[-1]); stdout.write("끝줄 " + args[-1] + "\n")
+            return mock.Mock(returncode=1 if args[-1] == "scripts.site_ui_audit" else 0)
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(ma, "OUT", Path(tmp)), \
+                mock.patch.object(ma.subprocess, "run", fake_run), mock.patch.object(ma.alert, "send") as send:
+            self.assertEqual(ma.main(), 1)
+        self.assertEqual(calls, ["scripts.site_crawl", "scripts.site_ui_audit", "scripts.nav_check"])
+        text, level = send.call_args[0]
+        self.assertEqual(level, "fail")
+        self.assertIn("❌ 모든 화면·버튼", text)
