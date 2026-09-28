@@ -126,7 +126,7 @@ function fs_foreign_cell( $s ) {
 	return $cell;
 }
 
-function fs_stock_html( $s, $index_by_code, $related = array(), $lists = array() ) {
+function fs_stock_html( $s, $index_by_code, $related = array(), $lists = array(), $skhy = null ) {
 	$code = $s['code']; $name = $s['name']; $q = isset( $s['q'] ) ? $s['q'] : array();
 	$r = isset( $s['r'] ) ? $s['r'] : array(); $c = isset( $s['c'] ) ? $s['c'] : array();
 	$guide = isset( FS_GUIDES[ $code ] ) ? FS_GUIDES[ $code ] : FS_GUIDE_DEFAULT;
@@ -149,6 +149,10 @@ function fs_stock_html( $s, $index_by_code, $related = array(), $lists = array()
 	if ( $peers ) { $tabs['peers'] = 'Peers'; }
 	$tabs['about'] = 'About';
 	$h .= fs_in_lists( $code, $lists );
+	if ( '000660' === $code && $skhy ) {
+		$lp = $skhy['rows'][ count( $skhy['rows'] ) - 1 ]['prem'];
+		$h .= '<div class="fs-inlists"><a href="/stocks/skhy-premium/">Also on the Nasdaq as SKHY: ' . ( $lp >= 0 ? '+' : '−' ) . number_format( abs( $lp ), 1 ) . '% vs Seoul →</a></div>';
+	}
 	$h .= '<div class="fs-tabs">';
 	foreach ( $tabs as $id => $label ) { $h .= '<a href="#' . $id . '">' . $label . '</a>'; }
 	$h .= '</div>';
@@ -238,7 +242,7 @@ function fs_stock_html( $s, $index_by_code, $related = array(), $lists = array()
 	return '<div class="fs-page">' . $h . '</div>';
 }
 
-function fs_index_html( $index, $market, $page, $per = 100, $lists = array(), $flows = null ) {
+function fs_index_html( $index, $market, $page, $per = 100, $lists = array(), $flows = null, $skhy = null ) {
 	$rows = $index;
 	if ( $market === 'kospi' || $market === 'kosdaq' ) {
 		$rows = array_values( array_filter( $index, function ( $r ) use ( $market ) { return strtolower( $r[2] ) === $market; } ) );
@@ -251,7 +255,7 @@ function fs_index_html( $index, $market, $page, $per = 100, $lists = array(), $f
 	foreach ( array( '' => 'All', 'kospi' => 'KOSPI', 'kosdaq' => 'KOSDAQ' ) as $k => $label ) {
 		$h .= '<a href="/stocks/' . ( $k ? '?m=' . $k : '' ) . '"' . ( $market === $k ? ' class="on"' : '' ) . '>' . $label . '</a>';
 	}
-	$h .= '</div>' . ( 1 === (int) $page && '' === $market ? fs_list_cards( $lists, $flows ) : '' ) . '<div class="fs-scroll"><table class="fs-t fs-list"><tr><th>#</th><th>Company</th><th>Market</th><th class="fs-num">Price</th><th class="fs-num">Day</th><th class="fs-num">Market cap</th></tr>';
+	$h .= '</div>' . ( 1 === (int) $page && '' === $market ? fs_list_cards( $lists, $flows, $skhy ) : '' ) . '<div class="fs-scroll"><table class="fs-t fs-list"><tr><th>#</th><th>Company</th><th>Market</th><th class="fs-num">Price</th><th class="fs-num">Day</th><th class="fs-num">Market cap</th></tr>';
 	foreach ( $slice as $n => $r ) {
 		$h .= '<tr><td class="fs-mute">' . ( ( $page - 1 ) * $per + $n + 1 ) . '</td><td><a href="/stocks/' . fs_esc( $r[0] ) . '/"><b>' . fs_esc( $r[1] ) . '</b></a> <span class="fs-code">' . fs_esc( $r[0] ) . '</span></td>'
 			. '<td>' . fs_esc( $r[2] ) . '</td><td class="fs-num">' . fs_krw( $r[3] ) . '</td><td class="fs-num">' . fs_pct( $r[4] ) . '</td><td class="fs-num">' . fs_big( $r[5] ) . '</td></tr>';
@@ -315,12 +319,50 @@ function fs_list_html( $slug, $l, $lists ) {
 		: 'Data: Korea Exchange closing prices, ratios and foreign ownership via Naver Finance; latest annual results for ROE.';
 	return '<div class="fs-page">' . $h . '<p class="fs-src">' . $src . ' Updated after each Korean market close. Delayed data, not investment advice.</p></div>';
 }
-function fs_list_cards( $lists, $flows = null ) {
-	if ( ! $lists && ! $flows ) { return ''; }
+function fs_list_cards( $lists, $flows = null, $skhy = null ) {
+	if ( ! $lists && ! $flows && ! $skhy ) { return ''; }
 	$h = '<div class="fs-listcards" id="lists">';
 	foreach ( $lists as $k => $x ) { $h .= '<a href="/stocks/lists/' . $k . '/"><b>' . fs_esc( $x['short'] ) . '</b><span>' . fs_esc( $x['blurb'] ) . '</span></a>'; }
 	if ( $flows ) { $h .= '<a href="/stocks/foreign-flows/"><b>Foreign flows</b><span>What foreigners bought and sold on ' . date( 'M j', strtotime( $flows['date'] ) ) . '</span></a>'; }
+	if ( $skhy ) { $h .= '<a href="/stocks/skhy-premium/"><b>SKHY premium</b><span>SK Hynix on the Nasdaq vs Seoul, every day</span></a>'; }
 	return $h . '</div>';
+}
+
+// ── SKHY 프리미엄 /stocks/skhy-premium/ (2026-09-28) ──────────────────────────────────
+// src/stock_db.build_skhy가 나스닥 SKHY와 서울 SK하이닉스를 같은 날짜끼리 짝지어 fm_skhy에 넣는다(ADR 1주 = 원주 10분의 1주).
+function fs_skhy_chart( $rows ) {
+	$n = count( $rows ); $max = 1; $neg = false; foreach ( $rows as $r ) { $max = max( $max, abs( $r['prem'] ) ); $neg = $neg || $r['prem'] < 0; }
+	$bw = 100 / $n; $base = $neg ? 50 : 100; $span = $neg ? 48 : 96;   // 할인(음수)이 한 번이라도 있으면 0선을 가운데로
+	$svg = '<svg class="fs-fchart" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label="SKHY premium to Seoul shares by day">' . ( $neg ? '<line x1="0" x2="100" y1="50" y2="50" stroke="#d7dbe2" stroke-width="1" vector-effect="non-scaling-stroke"/>' : '' );
+	foreach ( $rows as $i => $r ) {
+		$v = (float) $r['prem']; $bh = max( 0.5, abs( $v ) / $max * $span );
+		$svg .= '<rect x="' . round( $i * $bw + $bw * 0.15, 2 ) . '" y="' . round( $v >= 0 ? $base - $bh : $base, 2 ) . '" width="' . round( $bw * 0.7, 2 ) . '" height="' . round( $bh, 2 ) . '" fill="' . ( $v >= 0 ? '#d9480f' : '#1b64da' ) . '"><title>' . date( 'M j', strtotime( $r['d'] ) ) . ': ' . ( $v > 0 ? '+' : '' ) . number_format( $v, 1 ) . '%</title></rect>';
+	}
+	return '<div class="fs-fax"><span>' . ( $max > 0 ? '+' : '' ) . number_format( $max, 0 ) . '%</span></div>' . $svg . '</svg><div class="fs-fax"><span>' . date( 'M j', strtotime( $rows[0]['d'] ) ) . '</span><span>' . date( 'M j', strtotime( $rows[ $n - 1 ]['d'] ) ) . '</span></div>';
+}
+function fs_skhy_html( $p ) {
+	$last = $p['rows'][ count( $p['rows'] ) - 1 ]; $day = date( 'M j', strtotime( $last['d'] ) );
+	$signed = function ( $v ) { return ( $v > 0 ? '+' : ( $v < 0 ? '−' : '' ) ) . number_format( abs( $v ), 1 ) . '%'; };
+	$cell = function ( $label, $value, $small ) { return '<div class="fs-cell"><span>' . $label . '</span><b>' . $value . '</b><small class="fs-mute">' . $small . '</small></div>'; };
+	$h  = '<nav class="fs-crumb"><a href="/stocks/">Stocks</a> › <a href="/stocks/000660/">SK Hynix</a> › SKHY premium</nav>';
+	$h .= '<div class="fs-head"><div><h1>SKHY vs SK Hynix: The Nasdaq Premium to Seoul</h1><p class="fs-lead">How much more SK Hynix costs on the Nasdaq (SKHY) than in Seoul, every trading day since the ADR listed on ' . date( 'F j, Y', strtotime( $p['rows'][0]['d'] ) ) . '. One SKHY ADR represents one-tenth of an SK Hynix common share.</p></div></div>';
+	$h .= '<div class="fs-strip fs-strip4">';
+	$h .= $cell( 'SKHY premium · ' . $day, '<span class="' . ( $last['prem'] >= 0 ? 'fs-up' : 'fs-dn' ) . '">' . $signed( $last['prem'] ) . '</span>', 'over the Seoul price' );
+	$h .= $cell( 'SKHY close (Nasdaq)', '$' . number_format( $last['usd'], 2 ), $day . ', New York' );
+	$h .= $cell( 'Seoul price per ADR', '$' . number_format( $last['seoul_usd'], 2 ), '₩' . number_format( $last['krw'] ) . ' ÷ 10 at ₩' . number_format( $last['fx'], 1 ) . '/$' );
+	$h .= $cell( 'Average since listing', $signed( $p['avg'] ), $p['days'] . ' trading days' );
+	$h .= '</div>';
+	$h .= '<div class="fs-sec"><h2>The premium, day by day</h2><p class="fs-note">SKHY closing price over the Seoul closing price converted to dollars per ADR. Highest ' . $signed( $p['high']['prem'] ) . ' (' . date( 'M j', strtotime( $p['high']['d'] ) ) . '), lowest ' . $signed( $p['low']['prem'] ) . ' (' . date( 'M j', strtotime( $p['low']['d'] ) ) . ').</p>' . fs_skhy_chart( $p['rows'] ) . '</div>';
+	$h .= '<div class="fs-sec"><h2>Last 20 trading days</h2><div class="fs-scroll"><table class="fs-t fs-skhytab"><tr><th>Date</th><th class="fs-num">SKHY</th><th class="fs-num">Seoul close</th><th class="fs-num">USD/KRW</th><th class="fs-num">Seoul per ADR</th><th class="fs-num">Premium</th></tr>';
+	foreach ( array_reverse( array_slice( $p['rows'], -20 ) ) as $r ) {
+		$h .= '<tr><td>' . date( 'M j, Y', strtotime( $r['d'] ) ) . '</td><td class="fs-num">$' . number_format( $r['usd'], 2 ) . '</td><td class="fs-num">₩' . number_format( $r['krw'] ) . '</td><td class="fs-num">' . number_format( $r['fx'], 1 ) . '</td><td class="fs-num">$' . number_format( $r['seoul_usd'], 2 ) . '</td><td class="fs-num"><b class="' . ( $r['prem'] >= 0 ? 'fs-up' : 'fs-dn' ) . '">' . $signed( $r['prem'] ) . '</b></td></tr>';
+	}
+	$h .= '</table></div></div>';
+	$h .= '<div class="fs-two fs-sec"><div><h2>How we calculate it</h2><p class="fs-note">Premium = SKHY close × 10 × USD/KRW ÷ SK Hynix Seoul close − 1. Both closes are from the same calendar day, so the Nasdaq close comes about 13 hours after the Seoul close — news in between moves one and not the other. Days when either market was shut are left out.</p></div>';
+	$h .= '<div><h2>Why the two prices can differ</h2><p class="fs-note">An ADR only tracks its home share as closely as investors can swap one for the other. New ADRs are created by depositing Seoul shares with the depositary bank, which takes time, fees and access to the Korean market. When US demand for SKHY outruns that process, the ADR can trade above the Seoul price for long stretches.</p></div></div>';
+	$h .= '<div class="fs-cta"><div><b>Buying SK Hynix from abroad?</b><br><span>Seoul shares, the SKHY ADR and Korea ETFs compared.</span></div><a class="fs-btn" href="/korean-adrs-for-us-investors/">Korean ADRs explained →</a></div>';
+	$h .= '<p class="fs-src">Data: SKHY and USD/KRW closing prices from Yahoo Finance; SK Hynix closing prices via Naver Finance. Each ADR = 0.1 common share. Updated after each Korean close. Delayed data, not investment advice. See also <a href="/sk-hynix-vs-micron/">SK Hynix vs Micron</a>.</p>';
+	return '<div class="fs-page">' . $h . '</div>';
 }
 
 // ── 외국인 수급 /stocks/foreign-flows/ (2026-09-28) ───────────────────────────────────
@@ -400,7 +442,7 @@ function fs_in_lists( $code, $lists ) {   // 종목 페이지 "이 종목이 든
 	return $out ? '<div class="fs-inlists">' . implode( '', $out ) . '</div>' : '';
 }
 
-function fs_market_html( $m, $lists = array(), $flows = null ) {
+function fs_market_html( $m, $lists = array(), $flows = null, $skhy = null ) {
 	if ( ! is_array( $m ) || empty( $m['index'] ) ) { return ''; }
 	$cell = function ( $label, $value ) { return '<div class="fs-cell"><span>' . $label . '</span><b>' . $value . '</b></div>'; };
 	$k = $m['index']['KOSPI']; $q = $m['index']['KOSDAQ'];
@@ -408,7 +450,7 @@ function fs_market_html( $m, $lists = array(), $flows = null ) {
 	$h .= $cell( 'KOSPI · ' . date( 'M j', strtotime( $k['date'] ) ) . ' close', number_format( $k['close'], 2 ) . ' <small>' . fs_pct( $k['pct'], false ) . '</small>' );
 	$h .= $cell( 'KOSDAQ', number_format( $q['close'], 2 ) . ' <small>' . fs_pct( $q['pct'], false ) . '</small>' );
 	if ( ! empty( $m['usdkrw']['close'] ) ) { $h .= $cell( 'USD/KRW', number_format( $m['usdkrw']['close'], 1 ) . ' <small>' . fs_pct( $m['usdkrw']['pct'], false ) . '</small>' ); }
-	if ( ! empty( $m['skhy'] ) ) { $h .= $cell( 'SKHY (Nasdaq) vs Seoul', fs_pct( $m['skhy']['premium_pct'], false ) . ' <small>premium</small>' ); }
+	if ( ! empty( $m['skhy'] ) ) { $h .= $cell( $skhy ? '<a href="/stocks/skhy-premium/">SKHY (Nasdaq) vs Seoul →</a>' : 'SKHY (Nasdaq) vs Seoul', fs_pct( $m['skhy']['premium_pct'], false ) . ' <small>premium</small>' ); }
 	if ( isset( $k['foreign_net_eok'] ) ) { $h .= $cell( 'Foreign net, KOSPI', '<span class="' . ( $k['foreign_net_eok'] >= 0 ? 'fs-up' : 'fs-dn' ) . '">' . fs_eok( $k['foreign_net_eok'] ) . '</span>' ); }
 	if ( ! empty( $m['next_holiday'] ) ) { $h .= $cell( 'Next KRX holiday', date( 'M j', strtotime( $m['next_holiday']['date'] ) ) . ' <small>' . fs_esc( $m['next_holiday']['name'] ) . '</small>' ); }
 	$h .= '</div><div class="fs-cards">';
@@ -427,6 +469,7 @@ function fs_market_html( $m, $lists = array(), $flows = null ) {
 		$h .= '<div class="fs-morelists"><span>Stock lists</span>';
 		foreach ( $lists as $k => $x ) { $h .= '<a href="/stocks/lists/' . $k . '/">' . fs_esc( $x['short'] ) . '</a>'; }
 		if ( $flows ) { $h .= '<a href="/stocks/foreign-flows/">Foreign flows</a>'; }
+		if ( $skhy ) { $h .= '<a href="/stocks/skhy-premium/">SKHY premium</a>'; }
 		$h .= '</div>';
 	}
 	return $h;
@@ -480,6 +523,8 @@ main div.fs-search.fs-search:not(.alignfull):not(.alignwide){max-width:680px!imp
 .fs-scroll .fs-flowtab td:nth-child(2){white-space:normal;min-width:170px}.fs-owntab td:first-child{min-width:0}.fs-barcell{width:34%;white-space:nowrap}.fs-bar{display:inline-block;height:9px;border-radius:5px;vertical-align:middle;margin-right:6px;max-width:62%}.fs-fchart{display:block;width:100%;height:210px}.fs-fax{display:flex;justify-content:space-between;font-size:12px;color:var(--fs-mute);margin:4px 0}.fs-bup{background:#ffd8c2}.fs-bdn{background:#cfe0ff}.fs-barcell b{font-size:12.5px}
 @media (max-width:600px){.fs-flowtab:not(.fs-streak) th:nth-child(4),.fs-flowtab:not(.fs-streak) td:nth-child(4),.fs-flowtab:not(.fs-streak) th:nth-child(5),.fs-flowtab:not(.fs-streak) td:nth-child(5),.fs-owntab th:nth-child(2),.fs-owntab td:nth-child(2){display:none}.fs-flowtab td,.fs-flowtab th,.fs-owntab td,.fs-owntab th{padding-left:4px!important;padding-right:4px!important}.fs-scroll .fs-flowtab td:nth-child(2){min-width:0}.fs-streak td:nth-child(4){font-size:13px}.fs-from{display:none}.fs-streak th{white-space:normal!important}.fs-fchart{height:150px}.fs-barcell{width:auto}.fs-bar{display:none}}
 @media (max-width:340px){.fs-flowtab .fs-code,.fs-owntab .fs-code{display:none}}
+@media (max-width:600px){.fs-skhytab th:nth-child(3),.fs-skhytab td:nth-child(3),.fs-skhytab th:nth-child(4),.fs-skhytab td:nth-child(4){display:none}.fs-skhytab td,.fs-skhytab th{padding-left:4px!important;padding-right:4px!important}}
+.fs-cell>span a{color:inherit;text-decoration:none}
 @media (max-width:380px){.fs-lt-most-foreign-owned th:nth-child(4),.fs-lt-most-foreign-owned td:nth-child(4),.fs-lt-largest-kosdaq th:nth-child(4),.fs-lt-largest-kosdaq td:nth-child(4){display:none}}
 @media (max-width:600px){.fs-listtab td,.fs-listtab th{padding-left:4px!important;padding-right:4px!important}.fs-listtab .fs-ind{white-space:normal}.fs-listtab td.fs-num{font-size:13px}}
 @media (max-width:600px){.fs-lt-highest-dividend-yield th:nth-child(3),.fs-lt-highest-dividend-yield td:nth-child(3),.fs-lt-highest-dividend-yield th:nth-child(5),.fs-lt-highest-dividend-yield td:nth-child(5),.fs-lt-highest-dividend-yield th:nth-child(6),.fs-lt-highest-dividend-yield td:nth-child(6),.fs-lt-highest-dividend-yield th:nth-child(7),.fs-lt-highest-dividend-yield td:nth-child(7),.fs-lt-most-foreign-owned th:nth-child(5),.fs-lt-most-foreign-owned td:nth-child(5),.fs-lt-cheapest-by-pb th:nth-child(4),.fs-lt-cheapest-by-pb td:nth-child(4),.fs-lt-cheapest-by-pb th:nth-child(6),.fs-lt-cheapest-by-pb td:nth-child(6),.fs-lt-largest-kosdaq th:nth-child(3),.fs-lt-largest-kosdaq td:nth-child(3){display:none}.fs-listtab td:nth-child(2){min-width:0!important}}
@@ -568,6 +613,8 @@ function fs_stock( $code ) { $s = get_option( 'fm_s_' . $code ); return is_array
 function fs_index() { $i = get_option( 'fm_stock_index' ); return is_array( $i ) ? $i : array(); }
 function fs_lists() { $l = get_option( 'fm_lists' ); return is_array( $l ) ? $l : array(); }
 function fs_flows() { $f = get_option( 'fm_flows' ); return ( is_array( $f ) && ! empty( $f['date'] ) ) ? $f : null; }
+function fs_skhy() { $p = get_option( 'fm_skhy' ); return ( is_array( $p ) && ! empty( $p['rows'] ) ) ? $p : null; }
+function fs_is_skhy() { return '1' === (string) get_query_var( 'fm_skhy' ); }
 function fs_is_flows() { return '1' === (string) get_query_var( 'fm_flows' ); }
 function fs_current_list() { $l = (string) get_query_var( 'fm_list' ); $all = fs_lists(); return ( preg_match( '/^[a-z0-9-]+$/', $l ) && isset( $all[ $l ] ) ) ? $l : ''; }
 // 검색창이 받는 목록은 고정 파일로 — REST로 받으면 방문자마다 워드프레스가 돌고(0.5~0.8초) 첫 검색이 비었다(2026-09-27 버튼 점검)
@@ -587,10 +634,11 @@ function fs_index_url() {
 add_action( 'init', function () {
 	add_rewrite_rule( '^stocks/lists/([a-z0-9-]+)/?$', 'index.php?pagename=stocks&fm_list=$matches[1]', 'top' );
 	add_rewrite_rule( '^stocks/foreign-flows/?$', 'index.php?pagename=stocks&fm_flows=1', 'top' );
+	add_rewrite_rule( '^stocks/skhy-premium/?$', 'index.php?pagename=stocks&fm_skhy=1', 'top' );
 	add_rewrite_rule( '^stocks/([0-9][0-9A-Za-z]{5})/?$', 'index.php?pagename=stocks&fm_code=$matches[1]', 'top' );
-	if ( get_option( 'fm_stock_rewrite' ) !== '5' ) { flush_rewrite_rules( false ); update_option( 'fm_stock_rewrite', '5' ); }   // '5': 외국인 수급 주소 // '4': 순위표 주소(2026-09-28)   // '3': Rank Math 사이트맵을 끈 뒤 한 번 더(2026-09-28)
+	if ( get_option( 'fm_stock_rewrite' ) !== '6' ) { flush_rewrite_rules( false ); update_option( 'fm_stock_rewrite', '6' ); }   // '6': SKHY 프리미엄 주소 // '5': 외국인 수급 주소 // '4': 순위표 주소(2026-09-28)   // '3': Rank Math 사이트맵을 끈 뒤 한 번 더(2026-09-28)
 } );
-add_filter( 'query_vars', function ( $v ) { $v[] = 'fm_code'; $v[] = 'fm_list'; $v[] = 'fm_flows'; return $v; } );
+add_filter( 'query_vars', function ( $v ) { $v[] = 'fm_code'; $v[] = 'fm_list'; $v[] = 'fm_flows'; $v[] = 'fm_skhy'; return $v; } );
 // IndexNow(빙) 열쇠 파일 — 사이트 주인 확인용 공개 값(src/indexnow.py의 KEY와 같아야 한다, 2026-09-28)
 const FS_INDEXNOW_KEY = 'f388cd4cbbadc90870c3c0fb1dfdc730';
 add_action( 'parse_request', function () {
@@ -599,7 +647,7 @@ add_action( 'parse_request', function () {
 	}
 }, 0 );
 // 워드프레스가 /stocks/000660/을 페이지 주소 /stocks/로 '바로잡아' 넘기지 않게
-add_filter( 'redirect_canonical', function ( $url ) { return ( fs_current_code() || get_query_var( 'fm_list' ) || fs_is_flows() ) ? false : $url; } );
+add_filter( 'redirect_canonical', function ( $url ) { return ( fs_current_code() || get_query_var( 'fm_list' ) || fs_is_flows() || fs_is_skhy() ) ? false : $url; } );
 
 add_action( 'rest_api_init', function () {
 	register_rest_route( 'fermata/v1', '/stocks', array( 'methods' => 'POST', 'permission_callback' => function () { return current_user_can( 'edit_posts' ); },
@@ -630,6 +678,7 @@ add_action( 'rest_api_init', function () {
 				$all = fs_lists(); $all[ $body['list']['slug'] ] = $body['list']['data'];
 				update_option( 'fm_lists', $all, false ); $out['list'] = $body['list']['slug'];
 			}
+			if ( isset( $body['skhy']['rows'] ) && is_array( $body['skhy']['rows'] ) ) { update_option( 'fm_skhy', $body['skhy'], false ); $out['skhy'] = $body['skhy']['date']; }
 			if ( isset( $body['flows']['date'] ) && is_array( $body['flows'] ) ) { update_option( 'fm_flows', $body['flows'], false ); $out['flows'] = $body['flows']['date']; }
 			if ( isset( $body['market'] ) && is_array( $body['market'] ) ) { update_option( 'fm_market', $body['market'], false ); $out['market'] = true; }
 			return $out;
@@ -663,7 +712,7 @@ add_action( 'rest_api_init', function () {
 // 없는 종목 코드는 404
 add_action( 'template_redirect', function () {
 	$code = fs_current_code();
-	$bad_list = ( get_query_var( 'fm_list' ) && ! fs_current_list() ) || ( fs_is_flows() && ! fs_flows() );
+	$bad_list = ( get_query_var( 'fm_list' ) && ! fs_current_list() ) || ( fs_is_flows() && ! fs_flows() ) || ( fs_is_skhy() && ! fs_skhy() );
 	if ( ( $code && ! fs_stock( $code ) ) || $bad_list ) { global $wp_query; $wp_query->set_404(); status_header( 404 ); nocache_headers(); }
 } );
 
@@ -672,16 +721,17 @@ add_filter( 'the_content', function ( $content ) {
 	$code = fs_current_code(); $index = fs_index(); $lists = fs_lists();
 	if ( $slug = fs_current_list() ) { return fs_list_html( $slug, $lists[ $slug ], $lists ); }
 	if ( fs_is_flows() && ( $f = fs_flows() ) ) { return fs_flows_html( $f ); }
+	if ( fs_is_skhy() && ( $k = fs_skhy() ) ) { return fs_skhy_html( $k ); }
 	if ( $code && ( $s = fs_stock( $code ) ) ) {
 		$by = array(); foreach ( $index as $r ) { $by[ $r[0] ] = $r; }
 		$related = array();
 		$qry = new WP_Query( array( 'post_type' => 'post', 'post_status' => 'publish', 's' => $s['name'], 'posts_per_page' => 5, 'category__in' => array( 121, 153 ), 'no_found_rows' => true ) );
 		foreach ( $qry->posts as $p ) { $related[] = array( 'title' => html_entity_decode( get_the_title( $p ), ENT_QUOTES, 'UTF-8' ), 'url' => get_permalink( $p ) ); }
-		return fs_stock_html( $s, $by, $related, $lists );
+		return fs_stock_html( $s, $by, $related, $lists, '000660' === $code ? fs_skhy() : null );
 	}
 	$m = isset( $_GET['m'] ) ? strtolower( sanitize_text_field( wp_unslash( $_GET['m'] ) ) ) : '';
 	$pg = isset( $_GET['pg'] ) ? (int) $_GET['pg'] : 1;
-	return $index ? fs_index_html( $index, in_array( $m, array( 'kospi', 'kosdaq' ), true ) ? $m : '', $pg, 100, $lists, fs_flows() ) : '<p>Stock data is loading. Please check back after the next Korean market close.</p>';
+	return $index ? fs_index_html( $index, in_array( $m, array( 'kospi', 'kosdaq' ), true ) ? $m : '', $pg, 100, $lists, fs_flows(), fs_skhy() ) : '<p>Stock data is loading. Please check back after the next Korean market close.</p>';
 }, 99 );   // wpautop(10) 뒤 — 앞에 두면 그린 표에 <p>·<br>이 끼어든다
 
 // 영어 시황(121·684·685)과 가이드(153) 본문에서 종목 이름을 잇는다 — 목록이 바뀌면 다시 만든다(REST가 transient를 지운다)
@@ -692,7 +742,7 @@ add_filter( 'the_content', function ( $content ) {
 	return fs_link_apply( $content, $built );
 }, 98 );
 
-add_shortcode( 'fermata_market', function () { return fs_market_html( get_option( 'fm_market' ), fs_lists(), fs_flows() ); } );
+add_shortcode( 'fermata_market', function () { return fs_market_html( get_option( 'fm_market' ), fs_lists(), fs_flows(), fs_skhy() ); } );
 add_shortcode( 'fermata_search', function () { return fs_search_box( count( fs_index() ) ); } );
 add_shortcode( 'fermata_nav', function ( $a ) { $a = shortcode_atts( array( 'active' => '' ), $a ); return fs_nav( $a['active'] ); } );
 // 'fermata-hub' 틀을 쓰는 페이지 — 메뉴 줄 CSS가 여기에 필요하다
@@ -700,12 +750,17 @@ function fs_hub_view() { return is_front_page() || is_page( array( 'stocks', 76,
 
 // 제목·설명·주소(Rank Math가 그리는 머리)
 function fs_meta_title() {
+	if ( fs_is_skhy() && ( $k = fs_skhy() ) ) { return 'SKHY vs SK Hynix: Nasdaq ADR Premium to Seoul Shares (' . date( 'M j', strtotime( $k['date'] ) ) . ') | Fermata'; }
 	if ( fs_is_flows() && ( $f = fs_flows() ) ) { return 'What Foreign Investors Bought and Sold in Korean Stocks (' . date( 'M j', strtotime( $f['date'] ) ) . ') | Fermata'; }
 	if ( $l = fs_current_list() ) { $x = fs_lists()[ $l ]; return $x['title'] . ' (' . date( 'Y', strtotime( $x['date'] ) ) . ') | Fermata'; }
 	$code = fs_current_code(); if ( ! $code || ! ( $s = fs_stock( $code ) ) ) { return is_page( 'stocks' ) ? 'Korean Stocks: All KOSPI and KOSDAQ Companies by Market Cap | Fermata' : null; }
 	return $s['name'] . ' (' . $code . ') Stock Price, Foreign Ownership & Financials | Fermata';
 }
 function fs_meta_desc() {
+	if ( fs_is_skhy() && ( $k = fs_skhy() ) ) {
+		$l = $k['rows'][ count( $k['rows'] ) - 1 ];
+		return 'SKHY closed at $' . number_format( $l['usd'], 2 ) . ' on ' . fs_date( $l['d'] ) . ', ' . number_format( abs( $l['prem'] ), 1 ) . '% ' . ( $l['prem'] >= 0 ? 'above' : 'below' ) . ' SK Hynix\'s Seoul price per ADR. Daily premium since the Nasdaq listing, with the math.';
+	}
 	if ( fs_is_flows() && ( $f = fs_flows() ) ) {
 		$nm = function ( $rows ) { return implode( ', ', array_map( function ( $r ) { return $r['name']; }, array_slice( $rows, 0, 3 ) ) ); };
 		return 'Foreign net buying in Korean stocks on ' . fs_date( $f['date'] ) . ( null !== $f['kospi_eok'] ? ': KOSPI foreign net ' . ( $f['kospi_eok'] > 0 ? '+' : '' ) . fs_eok( $f['kospi_eok'] ) : '' ) . '. Bought most: ' . $nm( $f['buy'] ) . '. Sold most: ' . $nm( $f['sell'] ) . '. Updated every trading day.';
@@ -729,6 +784,7 @@ add_filter( 'rank_math/frontend/robots', function ( $r ) {
 function fs_canonical( $u ) {
 	if ( $l = fs_current_list() ) { return home_url( '/stocks/lists/' . $l . '/' ); }
 	if ( fs_is_flows() && fs_flows() ) { return home_url( '/stocks/foreign-flows/' ); }
+	if ( fs_is_skhy() && fs_skhy() ) { return home_url( '/stocks/skhy-premium/' ); }
 	$c = fs_current_code(); return ( $c && fs_stock( $c ) ) ? home_url( '/stocks/' . $c . '/' ) : $u;
 }
 add_filter( 'rank_math/frontend/canonical', 'fs_canonical', 99 );
@@ -751,6 +807,7 @@ add_action( 'wp_sitemaps_init', function ( $sitemaps ) {
 				if ( 1 === (int) $page_num ) {
 					foreach ( array_keys( fs_lists() ) as $k ) { $out[] = array( 'loc' => home_url( '/stocks/lists/' . $k . '/' ) ); }
 					if ( fs_flows() ) { $out[] = array( 'loc' => home_url( '/stocks/foreign-flows/' ) ); }
+					if ( fs_skhy() ) { $out[] = array( 'loc' => home_url( '/stocks/skhy-premium/' ) ); }
 				}
 				foreach ( $rows as $r ) { $out[] = array( 'loc' => home_url( '/stocks/' . $r[0] . '/' ) ); }
 				return $out;

@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://fermata.it.kr"
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"}
 LISTS = ("highest-dividend-yield", "most-foreign-owned", "cheapest-by-pb", "largest-kosdaq")
-PAGES = ["/", "/stocks/", "/stocks/005930/", "/stocks/foreign-flows/", *[f"/stocks/lists/{s}/" for s in LISTS], "/category/daily/"]
+PAGES = ["/", "/stocks/", "/stocks/005930/", "/stocks/foreign-flows/", "/stocks/skhy-premium/", *[f"/stocks/lists/{s}/" for s in LISTS], "/category/daily/"]
 KST = dt.timezone(dt.timedelta(hours=9))
 
 
@@ -78,7 +78,7 @@ def check(session: requests.Session | None = None, now: dt.datetime | None = Non
         sm, n = maps[0], sum(m.count("<loc>") for m in maps)
         if n < 2000:
             issues.append(f"종목 사이트맵 주소가 {n}개뿐입니다")
-        for path in ["/stocks/foreign-flows/", *[f"/stocks/lists/{x}/" for x in LISTS]]:
+        for path in ["/stocks/foreign-flows/", "/stocks/skhy-premium/", *[f"/stocks/lists/{x}/" for x in LISTS]]:
             if f"{BASE}{path}</loc>" not in sm:
                 issues.append(f"종목 사이트맵에 {path}가 없습니다")
     bodies = {}

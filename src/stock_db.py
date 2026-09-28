@@ -308,21 +308,40 @@ def usdkrw() -> dict | None:
     return None
 
 
-def skhy_premium(hynix_close: float | None, fx: float | None) -> dict | None:
-    """SKHY(나스닥 ADR, 10주 = 원주 1주)와 서울 원주의 가격 차이. 받지 못하면 None — 칸을 비운다."""
-    if not hynix_close or not fx:
-        return None
+SKHY_RATIO = 10          # SKHY ADR 1주 = SK하이닉스 보통주 10분의 1주(영어 가이드 korean-adrs-for-us-investors의 출처)
+SKHY_START = "2026-07-10"   # 나스닥 첫 거래일(야후 이력의 첫 날)
+
+
+def build_skhy(session: requests.Session) -> dict | None:
+    """SKHY(나스닥)와 서울 원주의 가격 차이를 **같은 날짜끼리** 짝지어 상장일부터 늘어놓는다 (2026-09-28).
+
+    프리미엄 = SKHY 종가 × 10 × 그날 원달러 ÷ 그날 서울 종가 − 1. 서울은 종목 페이지와 같은 네이버 일봉 종가, 환율은 야후
+    KRW=X 일봉(SKHY 종가와 같은 날). 서울이 쉰 날·나스닥이 쉰 날은 짝이 없어 빠진다. 받지 못하면 None — 페이지와 홈 칸을 비운다."""
     try:
         import yfinance as yf
-        hist = yf.Ticker("SKHY").history(period="5d")
-        if hist.empty:
-            return None
-        usd = float(hist["Close"].iloc[-1])
-        return {"usd": round(usd, 2), "date": str(hist.index[-1].date()),
-                "premium_pct": round((usd * 10 * fx / hynix_close - 1) * 100, 1)}
-    except Exception as error:  # noqa: BLE001 — 칸 하나 때문에 전체를 멈추지 않는다. 이유는 찍는다
-        print(f"[경고] SKHY 괴리율을 못 구했습니다: {error!r}")
+        usd = {str(i.date()): float(v) for i, v in yf.Ticker("SKHY").history(period="1y")["Close"].items()}
+        fxs = {str(i.date()): float(v) for i, v in yf.Ticker("KRW=X").history(period="1y")["Close"].items()}
+        start = SKHY_START.replace("-", "")
+        rows = _get(session, f"https://api.stock.naver.com/chart/domestic/item/000660/day?startDateTime={start}0000"
+                             f"&endDateTime={dt.date.today():%Y%m%d}2359").json()
+        seoul = {f"{r['localDate'][:4]}-{r['localDate'][4:6]}-{r['localDate'][6:]}": float(r["closePrice"]) for r in rows}
+    except Exception as error:  # noqa: BLE001 — 페이지 하나 때문에 전체를 멈추지 않는다. 이유는 찍는다
+        print(f"[경고] SKHY 괴리율 이력을 못 구했습니다: {error!r}")
         return None
+    out = []
+    for day in sorted(set(usd) & set(seoul)):
+        if day < SKHY_START or day not in fxs:
+            continue
+        per_adr = seoul[day] / SKHY_RATIO / fxs[day]              # 서울 1주를 ADR 한 주 크기의 달러로
+        out.append({"d": day, "usd": round(usd[day], 2), "krw": seoul[day], "fx": round(fxs[day], 2),
+                    "seoul_usd": round(per_adr, 2), "prem": round((usd[day] / per_adr - 1) * 100, 2)})
+    if len(out) < 5:
+        print(f"[경고] SKHY 짝이 {len(out)}일뿐입니다 — 페이지를 올리지 않습니다.")
+        return None
+    prems = [r["prem"] for r in out]
+    hi = max(out, key=lambda r: r["prem"]); lo = min(out, key=lambda r: r["prem"])
+    return {"date": out[-1]["d"], "ratio": SKHY_RATIO, "rows": out, "avg": round(sum(prems) / len(prems), 2),
+            "high": {"d": hi["d"], "prem": hi["prem"]}, "low": {"d": lo["d"], "prem": lo["prem"]}, "days": len(out)}
 
 
 # ── 메타(영문명·업종) ────────────────────────────────────────────────────────────────
@@ -586,7 +605,8 @@ def build_flows(listing: list[dict], details: dict[str, dict], meta: dict, idx: 
         fl = firsts[c]
         if fl and fl[0].get("d") == day and fl[0].get("foreign") is not None and fl[0].get("close"):
             f0 = fl[0]
-            # 등락률은 KRX 정규장 기준인 목록 값만 — 수급 줄·일봉의 종가는 장 뒤 거래(넥스트레이드)가 섞여 다를 때가 있다. 날짜가 다르면 비운다
+            # 등락률은 종목 페이지와 같은 목록 값만 — 네이버의 종가와 '전일 대비'는 기준이 다른 날이 있어(9/22 종가 277,500인데
+            # 9/23 전일 대비는 276,500 기준) 종가끼리 나누면 종목 페이지와 어긋난다. 원인은 확인하지 못했다. 날짜가 다르면 비운다
             pct = by_code[c].get("pct") if by_code.get(c, {}).get("date") == day else None
             rows.append({"code": c, "name": name(c), "val": f0["foreign"] * f0["close"], "sh": f0["foreign"], "pct": pct, "own": f0.get("fratio")})
         if len(fl) == 5 and fl[0].get("d") == day and all((f.get("foreign") or 0) > 0 and f.get("close") for f in fl):
@@ -773,7 +793,8 @@ def batches(rows: list, limit: int = BATCH_BYTES) -> list[list]:
     return out
 
 
-def push(items: list[dict], index: list, market: dict, lists: dict | None = None, flows: dict | None = None, *, pause: float = 1.5) -> int:
+def push(items: list[dict], index: list, market: dict, lists: dict | None = None, flows: dict | None = None,
+         skhy: dict | None = None, *, pause: float = 1.5) -> int:
     """종목 → 목록(나눠 보내고 서버가 다 받은 뒤 한 번에 바꾼다) → 시장 요약 → 캐시 비우기."""
     base = os.environ["WORDPRESS_URL"].rstrip("/")
     auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
@@ -833,6 +854,8 @@ def push(items: list[dict], index: list, market: dict, lists: dict | None = None
     post({"items": [], "market": market}, "시장 요약")
     if flows:
         post({"items": [], "flows": flows}, "외국인 수급")
+    if skhy:
+        post({"items": [], "skhy": skhy}, "SKHY 프리미엄")
     for slug, data in (lists or {}).items():          # 순위표는 하나씩(한 번에 보내면 50KB를 넘을 수 있다)
         post({"items": [], "list": {"slug": slug, "data": data}}, f"순위표 {slug}")
         time.sleep(pause)
@@ -876,8 +899,9 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
         raise StockDBError(f"상세 실패가 {len(failed)}/{len(targets)}건 — 네이버가 막혔을 수 있습니다. 올리지 않습니다.")
     idx = market_index(session)
     fx = usdkrw()
-    hynix = next((r for r in listing if r["code"] == "000660"), None)
-    skhy = skhy_premium(hynix and hynix["close"], fx and fx.get("close"))
+    skhy_page = build_skhy(session) if not limit else None
+    last = skhy_page["rows"][-1] if skhy_page else None     # 홈 칸도 페이지와 같은 날짜 짝으로
+    skhy = {"usd": last["usd"], "date": last["d"], "premium_pct": round(last["prem"], 1)} if last else None
     items, index, _ = assemble(listing, details, meta)
     market = market_summary(listing, details, meta, idx, fx, skhy)
     metrics = json.loads(METRICS.read_text(encoding="utf-8")) if METRICS.exists() else {}
@@ -888,7 +912,7 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     fhist = json.loads(FOREIGN_HISTORY.read_text(encoding="utf-8")) if FOREIGN_HISTORY.exists() else {}
     flows_page = build_flows(listing, details, meta, idx, fhist) if not limit else None
     market["next_holiday"] = next_holiday(today)
-    bad = hangul_problems({"items": [i["data"] for i in items], "index": index, "market": market, "lists": lists, "flows": flows_page})
+    bad = hangul_problems({"items": [i["data"] for i in items], "index": index, "market": market, "lists": lists, "flows": flows_page, "skhy": skhy_page})
     if bad:
         raise StockDBError(f"영어 페이지에 한글이 {len(bad)}곳 — 예: {bad[:5]}")
     report = {"stocks": len(listing), "detailed": len(details), "failed": failed, "date": market["date"]}
@@ -903,11 +927,12 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     if out:
         (out / "lists.json").write_text(json.dumps(lists, ensure_ascii=False, indent=1), encoding="utf-8")
         (out / "flows.json").write_text(json.dumps(flows_page, ensure_ascii=False, indent=1), encoding="utf-8")
+        (out / "skhy.json").write_text(json.dumps(skhy_page, ensure_ascii=False, indent=1), encoding="utf-8")
     if do_push:
         # 종목 수급은 다음 날 아침에 나온다 — 목록(등락률)과 날짜가 같은 아침 실행만 페이지를 바꾸고, 저녁 실행은 코스피 합계만 기록한다
         same_day = bool(flows_page) and all(r.get("date") == flows_page["date"] for r in listing if r["code"] in {x["code"] for x in flows_page["buy"] + flows_page["sell"]})
         report["flows"] = flows_page["date"] if same_day else None
-        report["pushed"] = push(items, index, market, lists, flows_page if same_day else None)
+        report["pushed"] = push(items, index, market, lists, flows_page if same_day else None, skhy_page)
     return report
 
 

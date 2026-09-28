@@ -276,7 +276,7 @@ class SnippetTest(unittest.TestCase):
         self.assertIn("'^stocks/lists/([a-z0-9-]+)/?$'", PHP)
         self.assertIn("if ( $slug = fs_current_list() ) { return fs_list_html(", PHP)
         self.assertIn("home_url( '/stocks/lists/' . $k . '/' )", PHP, "순위표도 사이트맵에")
-        self.assertIn("$bad_list = ( get_query_var( 'fm_list' ) && ! fs_current_list() ) || ( fs_is_flows() && ! fs_flows() );", PHP, "없는 순위표는 404")
+        self.assertIn("$bad_list = ( get_query_var( 'fm_list' ) && ! fs_current_list() ) || ( fs_is_flows() && ! fs_flows() ) || ( fs_is_skhy() && ! fs_skhy() );", PHP, "없는 순위표는 404")
 
     def test_nav_keeps_flex_wrap(self):
         self.assertIn("display:flex;flex-wrap:wrap;gap:12px 20px", PHP)
@@ -333,10 +333,36 @@ class ForeignFlowsTest(unittest.TestCase):
         self.assertEqual([p["d"] for p in f["series"]], ["2026-09-23"])     # 종목 수급 날짜보다 뒤인 날은 그래프에 넣지 않는다
 
     def test_page_is_wired(self):
-        for needle in ("'^stocks/foreign-flows/?$'", "fm_flows", "home_url( '/stocks/foreign-flows/' )", "fs_list_cards( $lists, $flows )",
-                       "href=\"/stocks/foreign-flows/\">See all", "fs_flows_html( $f )", "fm_stock_rewrite' ) !== '5'"):
+        for needle in ("'^stocks/foreign-flows/?$'", "fm_flows", "home_url( '/stocks/foreign-flows/' )", "fs_list_cards( $lists, $flows, $skhy )",
+                       "href=\"/stocks/foreign-flows/\">See all", "fs_flows_html( $f )", "fm_stock_rewrite' ) !== '6'"):
             self.assertIn(needle, PHP)
         self.assertIn("flows_page", Path(ROOT / "src" / "stock_db.py").read_text(encoding="utf-8"))
+
+
+class SkhyTest(unittest.TestCase):
+    """/stocks/skhy-premium/ (2026-09-28): 같은 날짜끼리만 짝짓는다."""
+
+    def test_pairs_same_day_only_and_uses_ratio(self):
+        from unittest import mock
+        import pandas as pd
+        idx = pd.to_datetime(["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-18", "2026-09-17"])
+        usd = pd.Series([150.0, 150.0, 150.0, 999.0, 999.0, 150.0, 150.0], index=idx)
+        fx = pd.Series([1400.0] * 7, index=idx)
+        tick = lambda sym: mock.Mock(history=lambda period: pd.DataFrame({"Close": usd if sym == "SKHY" else fx}))   # noqa: E731
+        seoul = [{"localDate": d, "closePrice": 1_400_000.0} for d in ("20260917", "20260918", "20260921", "20260922", "20260923")]
+        fake_yf = mock.Mock(Ticker=tick)
+        with mock.patch.dict("sys.modules", {"yfinance": fake_yf}), mock.patch.object(sdb, "_get", return_value=mock.Mock(json=lambda: seoul)):
+            p = sdb.build_skhy(mock.Mock())
+        self.assertEqual([r["d"] for r in p["rows"]], ["2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23"])  # 서울이 쉰 9/24·25는 빠진다
+        self.assertEqual(p["rows"][0]["seoul_usd"], 100.0)          # 1,400,000 ÷ 10 ÷ 1,400
+        self.assertEqual(p["rows"][0]["prem"], 50.0)
+
+    def test_page_is_wired(self):
+        for needle in ("'^stocks/skhy-premium/?$'", "fm_skhy", "home_url( '/stocks/skhy-premium/' )", "fs_skhy_html( $k )",
+                       "fm_stock_rewrite' ) !== '6'", "fs_list_cards( $lists, $flows, $skhy )"):
+            self.assertIn(needle, PHP)
+        src = Path(ROOT / "src" / "stock_db.py").read_text(encoding="utf-8")
+        self.assertIn("skhy = {\"usd\": last[\"usd\"], \"date\": last[\"d\"]", src)   # 홈 칸도 페이지와 같은 짝
 
 
 if __name__ == "__main__":
