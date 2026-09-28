@@ -39,7 +39,7 @@ class DateTest(unittest.TestCase):
 class SnippetSourcesTest(unittest.TestCase):
     def test_every_snippet_source_exists_and_has_no_script_tag(self):
         from scripts.deploy_snippets import DIR, SNIPPETS
-        for file, _name, scope in SNIPPETS:
+        for file, _name, scope, *_on in SNIPPETS:
             text = (DIR / file).read_text(encoding="utf-8")
             self.assertTrue(text.startswith("<?php"), file)
             self.assertNotIn("<script", text.lower(), file)     # NinjaFirewall이 저장을 403으로 막는다

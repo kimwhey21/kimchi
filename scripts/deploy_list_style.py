@@ -31,7 +31,7 @@ def main(argv: list[str] | None = None) -> int:
     return deploy(SOURCE, NAME, "templates/wp_list_toss.php가 원본. scripts/deploy_list_style.py로 올린다.", dry=dry)
 
 
-def deploy(source: Path, name: str, desc: str, *, dry: bool = False, scope: str = "global") -> int:
+def deploy(source: Path, name: str, desc: str, *, dry: bool = False, scope: str = "global", active: bool = True) -> int:
     """조각 하나를 이름으로 찾아 올린다 — 종목 데이터베이스 조각(scripts/deploy_stock_db.py)도 이 함수를 쓴다."""
     load_dotenv(ROOT / ".env")
     base = os.environ["WORDPRESS_URL"].rstrip("/")
@@ -43,17 +43,17 @@ def deploy(source: Path, name: str, desc: str, *, dry: bool = False, scope: str 
     print(f"조각: {'#' + str(mine[0]['id']) if mine else '새로 만듦'} · 코드 {len(body)}자")
     if dry:
         return 0
-    if mine and mine[0].get("code", "").strip() == body.strip() and mine[0].get("active"):
+    if mine and mine[0].get("code", "").strip() == body.strip() and bool(mine[0].get("active")) == active:
         print("바뀐 것 없음 — 올리지 않음")
         return 0
-    payload = {"name": name, "code": body, "scope": scope, "active": True, "priority": 10, "desc": desc}
+    payload = {"name": name, "code": body, "scope": scope, "active": active, "priority": 10, "desc": desc}
     url = f"{base}/wp-json/code-snippets/v1/snippets" + (f"/{mine[0]['id']}" if mine else "")
     response = requests.post(url, json=payload, auth=auth, headers=UA, timeout=90)
     response.raise_for_status()
     got = response.json()
-    if got.get("code_error") or not got.get("active"):
-        raise RuntimeError(f"조각이 켜지지 않았습니다: {got.get('code_error')}")
-    print(f"조각 #{got['id']} {'갱신' if mine else '생성'} · 켜짐")
+    if got.get("code_error") or bool(got.get("active")) != active:
+        raise RuntimeError(f"조각 상태가 기대({'켜짐' if active else '꺼짐'})와 다릅니다: {got.get('code_error')}")
+    print(f"조각 #{got['id']} {'갱신' if mine else '생성'} · {'켜짐' if active else '꺼짐'}")
     requests.post(f"{base}/wp-json/wp-super-cache/v1/cache", json={"delete_cache": True}, auth=auth, headers=UA, timeout=60)
     print("캐시 지움")
     return 0

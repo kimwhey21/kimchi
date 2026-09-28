@@ -37,25 +37,25 @@ function fermata_is_english_post() {
 }
 add_filter( 'rank_math/frontend/title', function ( $title ) {
 	if ( is_front_page() || is_home() ) {
-		return 'Fermata - KOSPI and Wall Street Close, Every Trading Day';
+		return 'Korean Stocks in English: Prices, Foreign Flows & Guides | Fermata';
 	}
 	return $title;
 } );
 add_filter( 'rank_math/frontend/description', function ( $description ) {
 	if ( is_front_page() || is_home() ) {
-		return 'End-of-day notes on the KOSPI and Wall Street every trading day, plus plain-English guides for foreign investors in Korean stocks: trading hours, taxes, brokers and ETFs.';
+		return 'Every KOSPI and KOSDAQ stock in English: prices, foreign ownership and daily foreign flows, plus market notes and guides for foreign investors.';
 	}
 	return $description;
 } );
 add_filter( 'rank_math/opengraph/facebook/og_title', function ( $content ) {
 	if ( is_front_page() || is_home() ) {
-		return 'Fermata - KOSPI and Wall Street Close, Every Trading Day';
+		return 'Korean Stocks in English: Prices, Foreign Flows & Guides | Fermata';
 	}
 	return $content;
 } );
 add_filter( 'rank_math/opengraph/facebook/og_description', function ( $content ) {
 	if ( is_front_page() || is_home() ) {
-		return 'End-of-day notes on the KOSPI and Wall Street every trading day, plus plain-English guides for foreign investors in Korean stocks.';
+		return 'Every KOSPI and KOSDAQ stock in English: prices, foreign ownership and daily foreign flows, plus market notes and guides for foreign investors.';
 	}
 	return $content;
 } );

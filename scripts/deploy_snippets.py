@@ -14,11 +14,11 @@ import sys
 from scripts.deploy_list_style import ROOT, deploy
 
 DIR = ROOT / "templates" / "wp_snippets"
-# (파일, 조각 이름, 적용 범위) — 이름은 관리 화면의 이름 그대로여야 한다
+# (파일, 조각 이름, 적용 범위, 켬) — 이름은 관리 화면의 이름 그대로여야 한다. 끈 조각도 원본은 남겨 표에서 켜고 끈다
 SNIPPETS = [
     ("05_sitemap_no_taxonomies.php", "사이트맵에서 태그·분류 아카이브 빼기", "front-end"),
-    ("06_hreflang_ko_en.php", "한국어·영어 시황 hreflang 연결", "front-end"),
-    ("07_english_post_lang.php", "영어 글은 html lang을 en으로", "front-end"),
+    ("06_hreflang_ko_en.php", "한국어·영어 시황 hreflang 연결", "front-end", False),   # 2026-09-28 끔: 본진에 한국어 글이 없어 짝이 없다
+    ("07_english_post_lang.php", "영어 글은 html lang을 en으로", "front-end", False),   # 2026-09-28 끔: #12가 사이트 전체를 en-US로 둔다
     ("08_ads_txt.php", "ads.txt", "front-end"),
     ("09_adsense_head.php", "애드센스 코드 (head)", "front-end"),
     ("10_hide_korean_blocks_on_english.php", "영어 글에서 한국어 텔레그램 안내·더 많은 게시물 감추기", "front-end"),
@@ -29,9 +29,10 @@ SNIPPETS = [
 
 def main(argv: list[str] | None = None) -> int:
     dry = "--dry" in (argv if argv is not None else sys.argv[1:])
-    for file, name, scope in SNIPPETS:
+    for file, name, scope, *on in SNIPPETS:
         print(f"— {file}")
-        deploy(DIR / file, name, f"templates/wp_snippets/{file}가 원본. scripts/deploy_snippets.py로 올린다.", dry=dry, scope=scope)
+        deploy(DIR / file, name, f"templates/wp_snippets/{file}가 원본. scripts/deploy_snippets.py로 올린다.", dry=dry, scope=scope,
+               active=on[0] if on else True)
     return 0
 
 
