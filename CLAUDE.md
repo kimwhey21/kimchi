@@ -370,7 +370,7 @@
   **종목마다 글·페이지를 만들지 않는다** — 실제 페이지는 slug `stocks`(id 3228) 하나이고 Code Snippets 16번(원본 `templates/wp_stock_db.php`,
   `python -m scripts.deploy_stock_db`로 올린다)이 주소를 받아 워드프레스 옵션(`fm_s_<코드>`·`fm_stock_index`·`fm_market`)으로 그 자리에서
   그린다. 사이트맵은 기본 사이트맵에 `stocks` 묶음이 붙는다. 데이터는 `python -m src.stock_db run --push`(`stock_db.yml`, 17:05 KST 시세·다음 날
-  08:40 KST 수급)가 REST `fermata/v1/stocks`로 넣는다 — 상세는 시가총액 상위 300 + 나머지의 7분의 1(요일 순번). 원천은 네이버 모바일 증권
+  07:50 KST 수급; 장중 09:00~15:30에는 스스로 멈추고, 목록이 어제보다 3% 넘게 적으면 다시 받고, 목록에서 빠진 종목은 네이버에 하나씩 물어 아직 있으면 지우지 않는다)가 REST `fermata/v1/stocks`로 넣는다 — 상세는 시가총액 상위 300 + 나머지의 7분의 1(요일 순번). 원천은 네이버 모바일 증권
   API(비공식)와 DART(`DART_API_KEY`: 이 맥 `.env`와 깃허브 시크릿) 영문명·업종(`data/stock_meta.json`, 커밋한다). **화면 글자에 한글이 들어가면
   올리지 않는다**(`stock_db.hangul_problems`) — 이름은 DART 영문명을 다듬고(`clean_name`), 틀린 대형주 이름은 `NAME_FIX`에 사람이 적는다;
   규칙을 고치면 `python -m src.stock_db rename`. 카페24가 큰 요청을 502로 끊으므로 **한 번에 50KB 이하로** 보내고 목록은 나눠 보내 다 모인

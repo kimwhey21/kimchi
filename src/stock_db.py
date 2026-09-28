@@ -411,6 +411,46 @@ def next_holiday(today: dt.date) -> dict | None:
     return None
 
 
+KST = dt.timezone(dt.timedelta(hours=9))
+
+
+def in_krx_session(now: dt.datetime | None = None) -> bool:
+    """평일 09:00~15:30(한국 시각)이면 True — 장중에 받으면 장중 가격이 '종가'로 올라간다."""
+    now = (now or dt.datetime.now(KST)).astimezone(KST)
+    return now.weekday() < 5 and dt.time(9, 0) <= now.time() < dt.time(15, 30)
+
+
+def list_all(session: requests.Session, expected: int, tries: int = 3, wait: int = 120) -> list[dict]:
+    """코스피·코스닥 전 종목. 어제 목록보다 3% 넘게 적으면 기다렸다 다시 받는다 — 2026-09-28 08:48 실행이 2,490개만 받았다
+    (정상 2,763). 같은 종목이 두 번 잡히면(쪽 사이에 순위가 바뀌면 생긴다) 하나로 합친다."""
+    need = max(2500, int(expected * 0.97))
+    rows: list[dict] = []
+    for attempt in range(1, tries + 1):
+        got = list_market(session, "KOSPI") + list_market(session, "KOSDAQ")
+        rows = list({r["code"]: r for r in got}.values())
+        if len(rows) >= need:
+            return rows
+        print(f"[안내] 종목 목록 {len(rows)}개 — 기대 {need}개 이상, {attempt}/{tries}번째. {wait}초 뒤 다시 받습니다.", flush=True)
+        if attempt < tries:
+            time.sleep(wait)
+    raise StockDBError(f"종목 목록이 {len(rows)}개뿐입니다(기대 {need}개 이상) — 네이버가 막혔거나 목록을 채우는 중입니다.")
+
+
+def still_listed(session: requests.Session, code: str) -> bool:
+    """목록에서 빠진 종목이 정말 없어졌는지 네이버에 하나씩 묻는다. 조회되면 지우지 않는다(2026-09-28: 목록에서 빠진 6종목이 모두
+    정상 거래 중이었다 — 쪽을 넘기는 사이 순위가 바뀌어 빠진 것). 물어보다 실패해도 지우지 않는 쪽으로 판단한다."""
+    try:
+        r = session.get(f"{NAVER}/stock/{code}/basic", timeout=20)
+    except requests.RequestException:
+        return True
+    if r.status_code != 200:
+        return r.status_code >= 500          # 서버 오류는 '모름' — 지우지 않는다. 404 등은 없어진 것으로 본다
+    try:
+        return bool(r.json().get("stockName"))
+    except ValueError:
+        return True
+
+
 def detail_targets(listing: list[dict], today: dt.date, all_: bool, top: int = DETAIL_TOP) -> list[str]:
     """상세를 새로 받을 종목 — 시가총액 상위 `top` + 나머지 가운데 오늘 차례(코드 순번 % 7 == 요일)."""
     if all_:
@@ -550,6 +590,13 @@ def push(items: list[dict], index: list, market: dict, *, pause: float = 1.5) ->
     if len(gone) > 50:
         raise StockDBError(f"하루에 {len(gone)}종목이 사라졌습니다 — 목록 수집이 잘못됐을 수 있어 멈춥니다.")
     if gone:
+        check = requests.Session()
+        check.headers.update(UA)
+        kept = [c for c in gone if still_listed(check, c)]
+        if kept:
+            print(f"[안내] 목록에서 빠졌지만 네이버에 아직 있는 종목은 지우지 않습니다: {kept}")
+        gone = [c for c in gone if c not in kept]
+    if gone:
         post({"items": [], "delete": gone}, f"페이지 지우기 {gone}")
         print(f"[안내] 목록에서 빠진 종목 페이지를 지웠습니다: {gone}")
     new = sorted({i["code"] for i in items} - {r[0] for r in old}) if old else []
@@ -577,14 +624,18 @@ def push(items: list[dict], index: list, market: dict, *, pause: float = 1.5) ->
     return sent
 
 
-def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None = None) -> dict:
+def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None = None, force: bool = False) -> dict:
     from dotenv import load_dotenv
     load_dotenv(ROOT / ".env")
+    if in_krx_session() and not force:
+        raise StockDBError("지금은 한국장 장중입니다 — 장중 가격이 '종가'로 올라가므로 멈춥니다(굳이 돌리려면 --force).")
     session = requests.Session()
     session.headers.update(UA)
-    listing = list_market(session, "KOSPI") + list_market(session, "KOSDAQ")
-    if len(listing) < 2500:
-        raise StockDBError(f"종목 목록이 {len(listing)}개뿐입니다 — 네이버가 막혔거나 화면이 바뀌었습니다.")
+    try:
+        expected = len(requests.get("https://fermata.it.kr/wp-json/fermata/v1/stock-index", headers=UA, timeout=60).json())
+    except (requests.RequestException, ValueError):
+        expected = 2500
+    listing = list_all(session, expected)
     if limit:
         listing = sorted(listing, key=lambda r: -(r["mcap"] or 0))[:limit]
     meta = json.loads(META.read_text(encoding="utf-8")) if META.exists() else {}
@@ -632,6 +683,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--push", action="store_true")
     ap.add_argument("--out", type=Path)
     ap.add_argument("--limit", type=int, help="시가총액 상위 N종목만(점검용)")
+    ap.add_argument("--force", action="store_true", help="장중에도 돌린다(장중 가격이 종가로 올라가니 점검용으로만)")
     a = ap.parse_args(argv)
     if a.command == "webcheck":
         meta = json.loads(META.read_text(encoding="utf-8"))
@@ -667,7 +719,7 @@ def main(argv: list[str] | None = None) -> int:
         named = sum(1 for v in meta.values() if v.get("name"))
         print(f"메타 {len(meta)}종목 저장 — 영문 이름 {named}, 업종 {sum(1 for v in meta.values() if v.get('industry'))}")
         return 0
-    report = run(detail_all=a.detail_all, do_push=a.push, out=a.out, limit=a.limit)
+    report = run(detail_all=a.detail_all, do_push=a.push, out=a.out, limit=a.limit, force=a.force)
     print(json.dumps(report, ensure_ascii=False))
     return 0
 

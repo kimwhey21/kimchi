@@ -121,6 +121,31 @@ class DailyRunTest(unittest.TestCase):
         self.assertTrue(m["losers"][0].get("nolimit"), "이력이 긴데 30%를 넘으면 정리매매 등 — New listing이 아니다")
         self.assertNotIn("ipo", m["losers"][0])
 
+    def test_krx_session_guard(self):
+        kst = sdb.KST
+        self.assertTrue(sdb.in_krx_session(dt.datetime(2026, 9, 28, 10, 0, tzinfo=kst)))     # 월 10:00 장중
+        self.assertFalse(sdb.in_krx_session(dt.datetime(2026, 9, 28, 17, 5, tzinfo=kst)))    # 17:05 정규 실행
+        self.assertFalse(sdb.in_krx_session(dt.datetime(2026, 9, 29, 7, 50, tzinfo=kst)))    # 07:50 정규 실행
+        self.assertFalse(sdb.in_krx_session(dt.datetime(2026, 9, 27, 11, 0, tzinfo=kst)))    # 일요일
+
+    def test_short_listing_is_retried_then_refused(self):
+        from unittest import mock
+        short = [_row(f"{i:06d}", 1e9) for i in range(2490)]
+        full = short + [_row(f"9{i:05d}", 1e9) for i in range(273)]
+        with mock.patch.object(sdb, "list_market", side_effect=[short, [], full, []]), mock.patch.object(sdb.time, "sleep"):
+            self.assertEqual(len(sdb.list_all(mock.Mock(), 2763)), 2763, "모자라면 다시 받아 정상 목록을 쓴다")
+        with mock.patch.object(sdb, "list_market", side_effect=[short, []] * 3), mock.patch.object(sdb.time, "sleep"):
+            with self.assertRaises(sdb.StockDBError):
+                sdb.list_all(mock.Mock(), 2763)
+
+    def test_missing_stock_still_on_naver_is_not_deleted(self):
+        from unittest import mock
+        ok = mock.Mock(status_code=200); ok.json.return_value = {"stockName": "송원산업"}
+        gone = mock.Mock(status_code=404)
+        sess = mock.Mock(); sess.get.side_effect = [ok, gone]
+        self.assertTrue(sdb.still_listed(sess, "004430"))
+        self.assertFalse(sdb.still_listed(sess, "999990"))
+
     def test_hangul_is_caught_except_korean_name_field(self):
         self.assertEqual(sdb.hangul_problems({"name_ko": "삼성전자", "q": {}}), [])
         self.assertTrue(sdb.hangul_problems({"industry": "반도체"}))
