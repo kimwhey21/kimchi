@@ -1,4 +1,4 @@
-"""IndexNow — 본진의 새·바뀐·지운 주소를 빙(과 IndexNow를 받는 검색엔진)에 바로 알린다 (2026-09-28, 사장님 "둘 다 진행해").
+"""IndexNow — 본진의 새·바뀐·지운 주소를 빙(과 IndexNow를 받는 검색엔진)에 바로 알린다 (2026-09-28).
 
     python -m src.indexnow --sitemap          # 사이트맵의 모든 주소를 한 번에(처음 한 번)
     python -m src.indexnow <주소> [<주소>…]    # 몇 개만

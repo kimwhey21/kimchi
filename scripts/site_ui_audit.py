@@ -25,7 +25,7 @@ PAGES = [
     ("/", "Market"), ("/stocks/", "Stocks"), ("/stocks/?m=kospi", "Stocks"), ("/stocks/?m=kosdaq&pg=5", "Stocks"),
     ("/stocks/000660/", "Stocks"), ("/stocks/005930/", "Stocks"), ("/stocks/005387/", "Stocks"), ("/stocks/0010S0/", "Stocks"),
     ("/stocks/lists/highest-dividend-yield/", "Stocks"), ("/stocks/lists/most-foreign-owned/", "Stocks"),
-    ("/stocks/lists/cheapest-by-pb/", "Stocks"), ("/stocks/lists/largest-kosdaq/", "Stocks"), ("/stocks/lists/nope/", None),
+    ("/stocks/lists/cheapest-by-pb/", "Stocks"), ("/stocks/lists/largest-kosdaq/", "Stocks"), ("/stocks/foreign-flows/", "Stocks"), ("/stocks/lists/nope/", None),
     ("/daily/", "Daily"), ("/guides/", "Guides"), ("/all/", None), ("/category/daily/", "Daily"), ("/category/korea-close/", "Daily"),
     ("/category/wall-street-close/", "Daily"), ("/category/guides/", "Guides"),
     # 2026-09-28 템플릿 통일 — 글·작성자·개인정보에도 메뉴가 있고 글은 자기 갈래를 칠한다

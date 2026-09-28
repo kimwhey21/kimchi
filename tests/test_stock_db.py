@@ -147,7 +147,7 @@ class DailyRunTest(unittest.TestCase):
         self.assertFalse(sdb.still_listed(sess, "999990"))
 
     def test_dividends_come_from_filings_with_facts_flagged(self):
-        # 2026-09-28 사장님 "배당은 정확하게" — DART 공시값, 반기 결산은 두 번 합, 튄 배당·이익보다 많은 배당은 사실로 표시
+        # 2026-09-28 — DART 공시값, 반기 결산은 두 번 합, 튄 배당·이익보다 많은 배당은 사실로 표시
         reit = [{"stlm_dt": "2025-07-31", "se": "주당 현금배당금(원)", "stock_knd": "보통주", "thstrm": "170", "frmtrm": "180", "lwfr": "170"},
                 {"stlm_dt": "2026-01-31", "se": "주당 현금배당금(원)", "stock_knd": "보통주", "thstrm": "170", "frmtrm": "170", "lwfr": "180"}]
         self.assertEqual(sdb.parse_dividends(reit)["ttm"], 340.0)
@@ -276,10 +276,67 @@ class SnippetTest(unittest.TestCase):
         self.assertIn("'^stocks/lists/([a-z0-9-]+)/?$'", PHP)
         self.assertIn("if ( $slug = fs_current_list() ) { return fs_list_html(", PHP)
         self.assertIn("home_url( '/stocks/lists/' . $k . '/' )", PHP, "순위표도 사이트맵에")
-        self.assertIn("$bad_list = get_query_var( 'fm_list' ) && ! fs_current_list();", PHP, "없는 순위표는 404")
+        self.assertIn("$bad_list = ( get_query_var( 'fm_list' ) && ! fs_current_list() ) || ( fs_is_flows() && ! fs_flows() );", PHP, "없는 순위표는 404")
 
     def test_nav_keeps_flex_wrap(self):
         self.assertIn("display:flex;flex-wrap:wrap;gap:12px 20px", PHP)
+
+
+class ForeignFlowsTest(unittest.TestCase):
+    """/stocks/foreign-flows/ (2026-09-28)."""
+
+    def _detail(self, day, foreign, close, fr, pct, pref_hist=None):
+        flows = [{"d": day, "close": close, "foreign": foreign, "fratio": fr}] + [
+            {"d": f"2026-09-{22 - i:02d}", "close": close * 0.97, "foreign": foreign, "fratio": fr} for i in range(4)]
+        dates = [f"2026-{m:02d}-01" for m in range(4, 10)] * 12
+        return {"flows": flows, "hist": {"d": sorted(dates), "fr": [fr - 5] + [fr] * (len(dates) - 1)}}
+
+    def setUp(self):
+        day = "2026-09-23"
+        self.listing = [_row("005930", 3e14, 3.62), _row("005935", 2e14, 4.96), _row("000660", 1e14, 1.25)]
+        self.details = {"005930": self._detail(day, 100, 1000.0, 46.6, 3.62), "005935": self._detail(day, 50, 800.0, 75.0, 4.96),
+                        "000660": self._detail(day, -300, 2000.0, 50.0, 1.25)}
+        self.meta = {"005930": {"name": "Samsung Electronics"}, "005935": {"name": "Samsung Electronics (Pref.)", "pref": True},
+                     "000660": {"name": "SK Hynix"}}
+        self.idx = {"KOSPI": {"foreign_net_eok": -4942.0, "flow_date": "20260923"}}
+
+    def test_day_change_is_the_exchange_figure(self):
+        f = sdb.build_flows(self.listing, self.details, self.meta, self.idx, {})
+        self.assertEqual(f["buy"][0]["pct"], 3.62)          # 수급 줄의 종가끼리 나누면 +3.09%가 나온다
+        self.assertEqual(f["buy_total"], 100 * 1000 + 50 * 800)
+        self.assertEqual(f["sell"][0]["name"], "SK Hynix")
+        self.assertEqual(f["kospi_eok"], -4942.0)
+
+    def test_day_change_is_blank_when_listing_is_another_day(self):
+        listing = [dict(r, date="2026-09-28") for r in self.listing]
+        f = sdb.build_flows(listing, self.details, self.meta, self.idx, {})
+        self.assertIsNone(f["buy"][0]["pct"])
+        self.assertIn("flows_page if same_day else None", Path(ROOT / "src" / "stock_db.py").read_text(encoding="utf-8"))
+
+    def test_streak_needs_all_five_days(self):
+        f = sdb.build_flows(self.listing, self.details, self.meta, self.idx, {})
+        self.assertEqual([r["code"] for r in f["streak"]], ["005930", "005935"])
+
+    def test_ownership_change_skips_preferred(self):
+        f = sdb.build_flows(self.listing, self.details, self.meta, self.idx, {})
+        self.assertNotIn("005935", [r["code"] for r in f["up"] + f["down"]])
+        self.assertEqual(f["up"][0]["diff"], 5.0)
+
+    def test_history_merges_by_date(self):
+        # 저녁 실행은 지수 수급이 그날, 종목 수급은 전날 — 아침 실행이 적은 전날 코스피 값을 지우면 안 된다
+        hist = {"2026-09-23": {"kospi_eok": -4942.0}}
+        evening = {"KOSPI": {"foreign_net_eok": 1200.0, "flow_date": "20260924"}}
+        f = sdb.build_flows(self.listing, self.details, self.meta, evening, hist)
+        self.assertEqual(hist["2026-09-23"]["kospi_eok"], -4942.0)
+        self.assertEqual(hist["2026-09-24"], {"kospi_eok": 1200.0})
+        self.assertEqual(f["kospi_eok"], -4942.0)
+        self.assertEqual([p["d"] for p in f["series"]], ["2026-09-23"])     # 종목 수급 날짜보다 뒤인 날은 그래프에 넣지 않는다
+
+    def test_page_is_wired(self):
+        for needle in ("'^stocks/foreign-flows/?$'", "fm_flows", "home_url( '/stocks/foreign-flows/' )", "fs_list_cards( $lists, $flows )",
+                       "href=\"/stocks/foreign-flows/\">See all", "fs_flows_html( $f )", "fm_stock_rewrite' ) !== '5'"):
+            self.assertIn(needle, PHP)
+        self.assertIn("flows_page", Path(ROOT / "src" / "stock_db.py").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

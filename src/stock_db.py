@@ -1,4 +1,4 @@
-"""본진 한국 종목 데이터베이스 — 코스피·코스닥 전 종목을 영어 데이터 페이지로 (2026-09-27, 사장님 "바로 정식버전으로 구현하자").
+"""본진 한국 종목 데이터베이스 — 코스피·코스닥 전 종목을 영어 데이터 페이지로 (2026-09-27).
 
     python -m src.stock_db webcheck                 # 회사 홈페이지가 아직 열리는지 다시 보고, 닫힌 것은 링크를 뺀다
     python -m src.stock_db rename                   # 이름 다듬기 규칙을 고친 뒤 메타 이름만 다시 짓기(DART 호출 없음)
@@ -402,8 +402,8 @@ def build_meta(session: requests.Session, codes: list[str], existing: dict, key:
 
 
 # ── 배당(DART 공시) ─────────────────────────────────────────────────────────────────
-# 순위표의 배당은 네이버 값이 아니라 DART 사업보고서 '배당에 관한 사항'(alotMatter)의 보통주 주당 현금배당금이다(2026-09-28,
-# 사장님 "배당은 정확하게 조사해서 올려야해"). 연 1회 결산은 최근 사업연도 값, 반기 결산(리츠 등)은 최근 두 번을 더한 1년치.
+# 순위표의 배당은 네이버 값이 아니라 DART 사업보고서 '배당에 관한 사항'(alotMatter)의 보통주 주당 현금배당금이다(2026-09-28).
+# 연 1회 결산은 최근 사업연도 값, 반기 결산(리츠 등)은 최근 두 번을 더한 1년치.
 # 공시로 확인되지 않는 배당은 순위표에 넣지 않는다.
 DIVIDENDS = ROOT / "data" / "stock_dividends.json"
 
@@ -464,7 +464,7 @@ def fetch_dividends(session: requests.Session, key: str, meta: dict, codes: list
 
 
 # ── 순위표(/stocks/lists/…) ──────────────────────────────────────────────────────────
-# 2026-09-28 사장님 "이 모양으로 진행하고 배당은 정확하게". 매일 상세를 새로 받는 종목은 650개뿐이라, 전 종목 순위에 필요한 지표는
+# 2026-09-28. 매일 상세를 새로 받는 종목은 650개뿐이라, 전 종목 순위에 필요한 지표는
 # data/stock_metrics.json에 이어 쓴다(상세를 받은 종목만 그날 값으로 바뀐다). 순위표마다 50위까지.
 METRICS = ROOT / "data" / "stock_metrics.json"
 LIST_SIZE = 50
@@ -557,6 +557,55 @@ def build_lists(listing: list[dict], metrics: dict, dividends: dict, meta: dict,
     for v in out.values():
         v["date"] = date
     return out
+
+
+# ── 외국인 수급 페이지(/stocks/foreign-flows/) ────────────────────────────────────────
+# 2026-09-28. 종목별 수급은 다음 날 아침에 확정되므로 가장 최근 수급 날짜 기준으로 만든다(07:50 실행이 어제로).
+# 순위는 상세를 매일 받는 시가총액 상위 300종목(시가총액의 약 94%) 안에서. 하루 합계는 data/foreign_history.json에 쌓아 20일 그래프를 그린다.
+FOREIGN_HISTORY = ROOT / "data" / "foreign_history.json"
+FLOW_TOP = 20
+
+
+def build_flows(listing: list[dict], details: dict[str, dict], meta: dict, idx: dict, history: dict) -> dict | None:
+    name = lambda c: (meta.get(c) or {}).get("name") or c                  # noqa: E731
+    top = [r["code"] for r in sorted(listing, key=lambda r: -(r.get("mcap") or 0))[:DETAIL_TOP]]
+    firsts = {c: (details.get(c) or {}).get("flows") or [] for c in top}
+    day = max((f[0]["d"] for f in firsts.values() if f and f[0].get("d")), default="")
+    if not day:
+        return None
+    rows, streak, change = [], [], []
+    by_code = {r["code"]: r for r in listing}
+    for c in top:
+        fl = firsts[c]
+        if fl and fl[0].get("d") == day and fl[0].get("foreign") is not None and fl[0].get("close"):
+            f0 = fl[0]
+            # 등락률은 KRX 정규장 기준인 목록 값만 — 수급 줄·일봉의 종가는 장 뒤 거래(넥스트레이드)가 섞여 다를 때가 있다. 날짜가 다르면 비운다
+            pct = by_code[c].get("pct") if by_code.get(c, {}).get("date") == day else None
+            rows.append({"code": c, "name": name(c), "val": f0["foreign"] * f0["close"], "sh": f0["foreign"], "pct": pct, "own": f0.get("fratio")})
+        if len(fl) == 5 and fl[0].get("d") == day and all((f.get("foreign") or 0) > 0 and f.get("close") for f in fl):
+            streak.append({"code": c, "name": name(c), "val": sum(f["foreign"] * f["close"] for f in fl),
+                           "from": fl[-1].get("fratio"), "to": fl[0].get("fratio"), "since": fl[-1]["d"]})
+        hist = (details.get(c) or {}).get("hist") or {}
+        fr = [(d, x) for d, x in zip(hist.get("d") or [], hist.get("fr") or []) if isinstance(x, (int, float))]
+        if len(fr) > 60 and not (meta.get(c) or {}).get("pref"):
+            change.append({"code": c, "name": name(c), "industry": (meta.get(c) or {}).get("industry", ""),
+                           "from": fr[0][1], "to": fr[-1][1], "diff": round(fr[-1][1] - fr[0][1], 2), "since": fr[0][0]})
+    buys = [r for r in rows if r["val"] > 0]
+    sells = [r for r in rows if r["val"] < 0]
+    # 지수 수급(시장 전체)은 그날 저녁에, 종목 수급은 다음 날 아침에 나온다 — 날짜별로 따로 적고 합친다(한쪽 실행이 다른 쪽 값을 지우지 않게)
+    kospi = (idx.get("KOSPI") or {})
+    fd = str(kospi.get("flow_date") or "")
+    if len(fd) == 8 and kospi.get("foreign_net_eok") is not None:
+        history.setdefault(f"{fd[:4]}-{fd[4:6]}-{fd[6:]}", {})["kospi_eok"] = kospi["foreign_net_eok"]
+    history.setdefault(day, {}).update({"buy": sum(r["val"] for r in buys), "sell": sum(r["val"] for r in sells)})
+    kospi_net = history[day].get("kospi_eok")
+    series = [{"d": d, "kospi_eok": history[d]["kospi_eok"]} for d in sorted(history) if d <= day and history[d].get("kospi_eok") is not None][-20:]
+    return {"date": day, "kospi_eok": kospi_net, "universe": len(top), "covered": len(rows),
+            "buy_total": sum(r["val"] for r in buys), "sell_total": sum(r["val"] for r in sells), "n_buy": len(buys), "n_sell": len(sells),
+            "buy": sorted(buys, key=lambda r: -r["val"])[:FLOW_TOP], "sell": sorted(sells, key=lambda r: r["val"])[:FLOW_TOP],
+            "streak": sorted(streak, key=lambda r: -r["val"]),
+            "up": sorted(change, key=lambda r: -r["diff"])[:10], "down": sorted(change, key=lambda r: r["diff"])[:10],
+            "since": min((x["since"] for x in change), default=""), "series": series}
 
 
 # ── 한 번 돌리기 ─────────────────────────────────────────────────────────────────────
@@ -717,7 +766,7 @@ def batches(rows: list, limit: int = BATCH_BYTES) -> list[list]:
     return out
 
 
-def push(items: list[dict], index: list, market: dict, lists: dict | None = None, *, pause: float = 1.5) -> int:
+def push(items: list[dict], index: list, market: dict, lists: dict | None = None, flows: dict | None = None, *, pause: float = 1.5) -> int:
     """종목 → 목록(나눠 보내고 서버가 다 받은 뒤 한 번에 바꾼다) → 시장 요약 → 캐시 비우기."""
     base = os.environ["WORDPRESS_URL"].rstrip("/")
     auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
@@ -775,6 +824,8 @@ def push(items: list[dict], index: list, market: dict, lists: dict | None = None
     if got.get("index") != len(index):
         raise StockDBError(f"목록 {len(index)}줄을 보냈는데 서버가 {got.get('index')}줄로 받았습니다 — 바꾸지 않았습니다.")
     post({"items": [], "market": market}, "시장 요약")
+    if flows:
+        post({"items": [], "flows": flows}, "외국인 수급")
     for slug, data in (lists or {}).items():          # 순위표는 하나씩(한 번에 보내면 50KB를 넘을 수 있다)
         post({"items": [], "list": {"slug": slug, "data": data}}, f"순위표 {slug}")
         time.sleep(pause)
@@ -827,8 +878,10 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     metrics = update_metrics(metrics, details, date_now)
     dividends = (json.loads(DIVIDENDS.read_text(encoding="utf-8")).get("stocks") or {}) if DIVIDENDS.exists() else {}
     lists = build_lists(listing, metrics, dividends, meta, date_now) if not limit else {}
+    fhist = json.loads(FOREIGN_HISTORY.read_text(encoding="utf-8")) if FOREIGN_HISTORY.exists() else {}
+    flows_page = build_flows(listing, details, meta, idx, fhist) if not limit else None
     market["next_holiday"] = next_holiday(today)
-    bad = hangul_problems({"items": [i["data"] for i in items], "index": index, "market": market, "lists": lists})
+    bad = hangul_problems({"items": [i["data"] for i in items], "index": index, "market": market, "lists": lists, "flows": flows_page})
     if bad:
         raise StockDBError(f"영어 페이지에 한글이 {len(bad)}곳 — 예: {bad[:5]}")
     report = {"stocks": len(listing), "detailed": len(details), "failed": failed, "date": market["date"]}
@@ -838,11 +891,16 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
         (out / "index.json").write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
         (out / "market.json").write_text(json.dumps(market, ensure_ascii=False, indent=1), encoding="utf-8")
     if not limit:
+        FOREIGN_HISTORY.write_text(json.dumps(fhist, ensure_ascii=False, indent=0, sort_keys=True) + "\n", encoding="utf-8")
         METRICS.write_text(json.dumps(metrics, ensure_ascii=False, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
     if out:
         (out / "lists.json").write_text(json.dumps(lists, ensure_ascii=False, indent=1), encoding="utf-8")
+        (out / "flows.json").write_text(json.dumps(flows_page, ensure_ascii=False, indent=1), encoding="utf-8")
     if do_push:
-        report["pushed"] = push(items, index, market, lists)
+        # 종목 수급은 다음 날 아침에 나온다 — 목록(등락률)과 날짜가 같은 아침 실행만 페이지를 바꾸고, 저녁 실행은 코스피 합계만 기록한다
+        same_day = bool(flows_page) and all(r.get("date") == flows_page["date"] for r in listing if r["code"] in {x["code"] for x in flows_page["buy"] + flows_page["sell"]})
+        report["flows"] = flows_page["date"] if same_day else None
+        report["pushed"] = push(items, index, market, lists, flows_page if same_day else None)
     return report
 
 
