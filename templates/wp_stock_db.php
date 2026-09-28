@@ -107,6 +107,25 @@ function fs_chart( $hist ) {
 	return $svg . '<p class="fs-legend"><span class="fs-key" style="background:' . $col . '"></span>Close (KRW) <span class="fs-key fs-dash"></span>Foreign ownership, % of shares (right axis)</p>';
 }
 
+// 외국인 지분율 — 네이버 '외인소진율'(foreign_ratio)은 한도 대비 사용률이라 한도가 있는 종목에서 지분율과 다르다
+// (2026-09-28: KT가 100%로 나왔다 — 실제 지분 49.0%, 한도 49%를 다 채운 것). 실제 지분은 차트 이력(foreignRetentionRate)·5일 수급의 보유율.
+function fs_foreign_own( $s ) {
+	$fr = isset( $s['hist']['fr'] ) ? array_values( array_filter( $s['hist']['fr'], 'is_numeric' ) ) : array();
+	if ( $fr ) { return (float) end( $fr ); }
+	if ( ! empty( $s['flows'][0]['fratio'] ) ) { return (float) $s['flows'][0]['fratio']; }
+	return null;   // 소진율은 지분율로 쓰지 않는다
+}
+function fs_foreign_cell( $s ) {
+	$own = fs_foreign_own( $s );
+	if ( null === $own ) { return '–'; }
+	$used = isset( $s['r']['foreign_ratio'] ) ? $s['r']['foreign_ratio'] : null;
+	$cell = fs_x( $own, '%' );
+	if ( null !== $used && abs( (float) $used - $own ) > 1 ) {   // 외국인 한도가 있는 종목(통신·전력·항공 등)
+		$cell .= '<br><span class="fs-mute fs-small">' . number_format( (float) $used, 0 ) . '% of foreign limit used</span>';
+	}
+	return $cell;
+}
+
 function fs_stock_html( $s, $index_by_code, $related = array() ) {
 	$code = $s['code']; $name = $s['name']; $q = isset( $s['q'] ) ? $s['q'] : array();
 	$r = isset( $s['r'] ) ? $s['r'] : array(); $c = isset( $s['c'] ) ? $s['c'] : array();
@@ -152,7 +171,7 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 		array( 'Day’s range', ( isset( $r['low'] ) && $r['low'] ) ? fs_krw( $r['low'] ) . ' – ' . fs_krw( $r['high'] ) : '–' ),
 		// 액면병합 뒤 52주 값이 조정되지 않은 종목이 있다(009310: 가격 5,330 vs 864~1,705) — 가격과 모순되면 숨긴다
 		array( '52-week range', ( ! empty( $r['low52'] ) && ! empty( $r['high52'] ) && ! empty( $q['close'] ) && $q['close'] >= $r['low52'] * 0.7 && $q['close'] <= $r['high52'] * 1.3 ) ? fs_krw( $r['low52'] ) . ' – ' . fs_krw( $r['high52'] ) : '–' ),
-		array( 'Foreign ownership <span class="fs-kr">KR</span>', fs_x( isset( $r['foreign_ratio'] ) ? $r['foreign_ratio'] : null, '%' ) ),
+		array( 'Foreign ownership <span class="fs-kr">KR</span>', fs_foreign_cell( $s ) ),
 		array( 'Foreign net buy' . ( $last_flow ? ' (' . date( 'M j', strtotime( $last_flow['d'] ) ) . ')' : '' ) . ' <span class="fs-kr">KR</span>',
 		       $last_flow && $last_flow['foreign'] !== null ? fs_signed( $last_flow['foreign'] ) . ' sh' : '–' ),
 		array( 'Book value / share', fs_krw( isset( $r['bps'] ) ? $r['bps'] : null ) ),
@@ -517,7 +536,7 @@ function fs_meta_title() {
 }
 function fs_meta_desc() {
 	$code = fs_current_code(); if ( ! $code || ! ( $s = fs_stock( $code ) ) ) { return is_page( 'stocks' ) ? 'Every stock on the Korea Exchange in English: prices, market caps, foreign ownership and investor flows, updated after each close.' : null; }
-	$q = $s['q']; $fr = isset( $s['r']['foreign_ratio'] ) ? $s['r']['foreign_ratio'] : null;
+	$q = $s['q']; $fr = fs_foreign_own( $s );
 	return $s['name'] . ' (KRX: ' . $code . ') closed at ₩' . number_format( (float) $q['close'] ) . ' on ' . fs_date( $q['date'] ) . '. Market cap ' . fs_big( $q['mcap'] )
 		. ( $fr !== null ? ', foreign ownership ' . number_format( $fr, 2 ) . '%' : '' ) . '. Daily foreign and institutional flows, financials and peers.';
 }

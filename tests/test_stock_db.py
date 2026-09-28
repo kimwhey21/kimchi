@@ -185,6 +185,12 @@ class SnippetTest(unittest.TestCase):
         self.assertIn("if(!data){note('Loading…');return}", PHP)
         self.assertIn("if(e.key==='Escape'){res.hidden=true;return}if(!data)return;", PHP)
 
+    def test_foreign_ownership_is_not_the_limit_usage(self):
+        # 2026-09-28: 외인소진율(한도 대비)을 지분율로 보여 KT가 100%였다(실제 49.0%)
+        self.assertIn("array( 'Foreign ownership <span class=\"fs-kr\">KR</span>', fs_foreign_cell( $s ) )", PHP)
+        self.assertIn("$fr = fs_foreign_own( $s );", PHP)
+        self.assertIn("of foreign limit used", PHP)
+
     def test_rewrite_only_takes_krx_codes(self):
         # 숫자로 시작하는 6자리만 — 'nvidia' 같은 옛 영어 주소는 13번 조각의 301로 가야 한다
         self.assertIn("^stocks/([0-9][0-9A-Za-z]{5})/?$", PHP)
