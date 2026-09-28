@@ -144,6 +144,20 @@ NAME_FIX = {
     "180640": "Hanjin KAL", "282330": "BGF Retail", "089860": "Lotte Rental", "281820": "KC Tech",
     "064350": "Hyundai Rotem", "071970": "HD Hyundai Marine Engine", "036460": "Korea Gas", "377300": "KakaoPay",
     "326030": "SK Biopharmaceuticals", "097950": "CJ CheilJedang", "051900": "LG H&H", "036570": "NCSoft",
+    # 2026-09-28 소개 작성 중 발견: DART 영문명이 낱말이 붙거나(Hanilcement) 법인 꼬리가 남거나(Innoxcorporation) 기호가 끼었다
+    "023450": "Dongnam Chemical", "003070": "Kolon Global", "036200": "Union Semiconductor Equipment", "058970": "EMRO",
+    "053300": "Korea Information Certificate Authority", "049950": "meerecompany", "199800": "ToolGen", "317690": "QuantaMatrix",
+    "039440": "Systems Technology", "075180": "Saeron Automotive", "080160": "Modetour Network", "088390": "Innox",
+    "064550": "Bioneer", "064480": "Bridgetec", "025770": "Korea Information & Communication", "025950": "Dongshin Engineering & Construction",
+    "060540": "System and Application Technologies", "043910": "Nature and Environment", "101160": "Worldex Industry & Trading", "001290": "Sangsangin Investment & Securities",
+    "091580": "Sangsin Energy Display Precision", "085670": "Newflex Technology", "006880": "Singsong Holdings", "051780": "Curo Holdings",
+    "092300": "Hyunwoo Industrial", "081580": "Sungwoo Electronics", "100700": "Sewoon Medical", "099390": "Brainz Company",
+    "068050": "Pan Entertainment", "124500": "Itcen Global", "300720": "Hanil Cement", "023000": "Samwon Steel",
+    "362320": "Chungdam Global", "393210": "Tomato System", "398120": "SG Healthcare", "225430": "KM Pharmaceutical",
+    "208350": "Jiran Security", "200780": "BC World Pharm", "388720": "Yuil Robotics", "389650": "Next Biomedical",
+    "459510": "Nau Robotics", "476040": "Organoid Sciences", "005710": "Daewon Sanup", "000430": "Daewon Kang Up",
+    "001420": "Taewon Mulsan", "024940": "PN Poongnyun", "005420": "Cosmo Chemical", "016380": "KG Dongbu Steel",
+    "037710": "Gwangju Shinsegae",
 }
 
 
@@ -604,9 +618,15 @@ def about_issues(text: str, name: str, source: str) -> list[str]:
     if not text.startswith(name):
         out.append("표시 이름으로 시작하지 않음")
     have = {n.replace(",", "") for n in _NUM.findall(source)}
-    for n in _NUM.findall(text):
+    # 만·억·조가 붙은 숫자는 영어로 옮기면 자릿수가 바뀐다(920만 → 9.2 million) — 그대로 쓰면 틀린 숫자다(2026-09-28 작성 중 실제로 나왔다)
+    # 조는 trillion과 자릿수가 같아 그대로 써도 맞다. 같은 숫자가 단위 없이도 나오면(계열사 15개·15억 불) 넘긴다
+    korean_unit = {m.replace(",", "") for m in re.findall(r"(\d[\d,.]*)\s*(?:만|억)", source)}
+    korean_unit -= {m.replace(",", "") for m in re.findall(r"(\d[\d,.]*)(?!\s*(?:만|억|[\d,.]))", source)}
+    for n in _NUM.findall(text.replace(name, " ")):      # 이름 속 숫자(Y2 Solution·S-1)는 숫자가 아니다
         if n.replace(",", "") not in have:
             out.append(f"근거에 없는 숫자 {n}")
+        elif n.replace(",", "") in korean_unit:
+            out.append(f"한국어 단위(만·억·조) 숫자 {n} — 빼십시오")
     return out
 
 
