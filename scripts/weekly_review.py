@@ -164,6 +164,20 @@ def naver_milestones(latest_json: Path | None) -> list[str]:
     return lines
 
 
+def missing_abouts(root: Path | None = None) -> list[str]:
+    """본진 종목 페이지 가운데 회사 소개가 없는 종목(새 상장 등) — 세션에서 모아 쓴다(2026-09-28, 루틴이 쓰지 않는다)."""
+    root = root or Path(__file__).resolve().parent.parent
+    meta_p, about_p = root / "data" / "stock_meta.json", root / "data" / "stock_about.json"
+    if not meta_p.exists() or not about_p.exists():
+        return []
+    meta, about = json.loads(meta_p.read_text(encoding="utf-8")), json.loads(about_p.read_text(encoding="utf-8"))
+    miss = sorted(c for c, v in meta.items() if v.get("name") and not v.get("pref") and c not in about)
+    if not miss:
+        return ["- 소개가 없는 종목 없음"]
+    names = ", ".join(f"{meta[c]['name']}({c})" for c in miss[:15])
+    return [f"- 소개가 없는 종목 {len(miss)}개: {names}{' 외' if len(miss) > 15 else ''} — 세션에서 근거를 받아 쓰고 `python -m src.stock_db about-push`"]
+
+
 def render(data: dict) -> tuple[str, str]:
     """(보고서 markdown, 알림용 요약 8줄 안팎)."""
     d, f = data["daily"], data["features"]
@@ -202,6 +216,7 @@ def render(data: dict) -> tuple[str, str]:
     for r in sorted(d + f, key=lambda r: r["date"]):
         lines.append(f"| {r['date']} | {r['market']} | {r['title'][:40]} | {r['sections']} | {r['visuals']} | {'○' if r['has_check'] else '—'} |")
     lines += ["", "## 검색 성적", ""] + (latest_search_report() or ["- 검색·네이버 수치는 비공개 기록(kimchi-notes/reports)에만 있다 — 이 보고에는 싣지 않는다"]) + [""]
+    lines += ["## 본진 종목 소개", ""] + missing_abouts() + [""]
     lines += ["## 사장님께", "", "이번 주 가장 좋았던 글 하나와 가장 아쉬웠던 글 하나를 짚어 주세요. 그 판단을 규칙에 넣습니다.", ""]
     summary = [f"지난 한 주({data['start']}~{data['end']}): 시황 {len(d)}편, 기준표·프리뷰 {len(f)}편, 빠진 거래일 {len(data['missed'])}일.",
                f"절 수 {_med(d, 'sections')}(재테크농부 {b('소제목 수')}), 시각자료 {_med(d, 'visuals')}(10), 제목 등락률 {_med(d, 'title_pct')}개(0)."]

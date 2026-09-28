@@ -157,7 +157,7 @@ NAME_FIX = {
     "208350": "Jiran Security", "200780": "BC World Pharm", "388720": "Yuil Robotics", "389650": "Next Biomedical",
     "459510": "Nau Robotics", "476040": "Organoid Sciences", "005710": "Daewon Sanup", "000430": "Daewon Kang Up",
     "001420": "Taewon Mulsan", "024940": "PN Poongnyun", "005420": "Cosmo Chemical", "016380": "KG Dongbu Steel",
-    "037710": "Gwangju Shinsegae", "044990": "H&S High Tech", "246250": "SLS Bio",
+    "037710": "Gwangju Shinsegae", "044990": "H&S High Tech", "246250": "SLS Bio", "475240": "Hana 32 Special Purpose Acquisition",
 }
 
 
