@@ -67,6 +67,8 @@ main div[style*="flex-wrap:wrap"]>a[style*="font-weight:700"]{background:var(--f
 .wp-block-query-title{font-weight:800!important;letter-spacing:-.01em;margin:6px 0 22px!important}
 main h1.wp-block-heading,main h1.wp-block-post-title{font-weight:800!important;letter-spacing:-.01em}   /* 화면 제목 굵기를 모든 화면에 같게(404·개인정보가 가늘었다) */
 @media (max-width:781px){main div[style*="flex-wrap:wrap"]>a{padding:7px 13px!important;font-size:13px!important}}
+/* 글 밑 More posts(2026-09-28): 휴대폰에서 날짜가 두 줄로 꺾이지 않게 */
+@media (max-width:600px){.single .wp-block-query .wp-block-post-date{white-space:nowrap;font-size:13px}}
 CSS;
 
 const FERMATA_LIST_CSS = <<<'CSS'

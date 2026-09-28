@@ -21,7 +21,7 @@ SNIPPETS = [
     ("07_english_post_lang.php", "영어 글은 html lang을 en으로", "front-end", False),   # 2026-09-28 끔: #12가 사이트 전체를 en-US로 둔다
     ("08_ads_txt.php", "ads.txt", "front-end"),
     ("09_adsense_head.php", "애드센스 코드 (head)", "front-end"),
-    ("10_hide_korean_blocks_on_english.php", "영어 글에서 한국어 텔레그램 안내·더 많은 게시물 감추기", "front-end"),
+    ("10_hide_korean_blocks_on_english.php", "영어 글에서 한국어 텔레그램 안내·더 많은 게시물 감추기", "front-end", False),   # 2026-09-28 끔: 글 밑 More posts(영어)를 보인다
     ("11_seo_home_english.php", "SEO: 홈·영어 목록 영어 표시, 빈 페이지 검색 제외", "front-end"),
     ("12_visitor_locale_en.php", "영어 사이트: 방문자 화면 언어 en_US·태그라인", "front-end"),
 ]
