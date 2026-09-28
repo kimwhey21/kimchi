@@ -3,10 +3,10 @@
   "series": "Guide",
   "lang": "en",
   "date": "2026-09-15",
-  "checked": "2026-09-15",
+  "checked": "2026-09-28",
   "slug": "how-to-research-a-korean-company-in-english-dart-kind-and-what-the-translation-leaves-out",
   "category_id": 153,
-  "radar_origin": "search queue: englishdart",
+  "radar_origin": "search queue: dart korean (12.5위, 전용 글 있음) 및 englishdart (6.2위, 이미 제목에 있음) — 'Korean'이 제목·첫 소제목에 없어 추가",
   "tags": [
     "english dart",
     "korea dart",
@@ -46,10 +46,10 @@
     }
   ],
   "ko": {
-    "title": "English DART: How to Use englishdart.fss.or.kr",
+    "title": "English DART: How to Research Korean Company Filings",
     "narrative": [
       {
-        "heading": "The short answer: the English site is a different address",
+        "heading": "The short answer: Korean filings live at a different English address",
         "body": "Korea's corporate filings all land in one place, DART, run by the Financial Supervisory Service (FSS). The English version lives at englishdart.fss.or.kr — a separate host, not a language toggle on the Korean site. Adding a language parameter to dart.fss.or.kr does not switch it; we tried, and the page still renders in Korean.\n\nBefore you rely on anything you read there, know the sentence the FSS puts at the top of its own English site: \"Because disclosures in English are made voluntarily with no legal effect and may not correspond to the original disclosures in Korean due to mistranslation, the user is advised to refer to the original filings in Korean for specific details.\"\n\nThat one line is the whole game. English filings on DART are a courtesy translation. They are not the legal document, companies are not obliged to produce them, and where the English and the Korean differ, the Korean governs. Everything below is written around that constraint rather than pretending it does not exist."
       },
       {
