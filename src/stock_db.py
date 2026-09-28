@@ -660,8 +660,8 @@ def build_flows(listing: list[dict], details: dict[str, dict], meta: dict, idx: 
         fl = firsts[c]
         if fl and fl[0].get("d") == day and fl[0].get("foreign") is not None and fl[0].get("close"):
             f0 = fl[0]
-            # 등락률은 종목 페이지와 같은 목록 값만 — 네이버의 종가와 '전일 대비'는 기준이 다른 날이 있어(9/22 종가 277,500인데
-            # 9/23 전일 대비는 276,500 기준) 종가끼리 나누면 종목 페이지와 어긋난다. 원인은 확인하지 못했다. 날짜가 다르면 비운다
+            # 등락률은 종목 페이지와 같은 목록 값(KRX 기준)만 — 네이버 일봉·수급 줄의 종가는 넥스트레이드 애프터마켓까지 합친 값이라
+            # (9/22 일봉 277,500 · KRX 276,500) 종가끼리 나누면 틀린다(삼성전자 9/23 +3.24% vs KRX +3.62%). 날짜가 다르면 비운다
             pct = by_code[c].get("pct") if by_code.get(c, {}).get("date") == day else None
             rows.append({"code": c, "name": name(c), "val": f0["foreign"] * f0["close"], "sh": f0["foreign"], "pct": pct, "own": f0.get("fratio")})
         if len(fl) == 5 and fl[0].get("d") == day and all((f.get("foreign") or 0) > 0 and f.get("close") for f in fl):

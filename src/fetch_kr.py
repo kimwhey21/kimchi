@@ -89,7 +89,9 @@ def _fetch_naver_item_quotes(codes: list[str]) -> dict[str, dict]:
     왜 필요한가: FinanceDataReader(네이버 fchart) 일봉의 오늘 행은 15:30 이후에도 NXT 애프터마켓(~20:00)을 따라
     계속 움직입니다. 16:20~16:40에 세 번 수집한 9/23 파일은 27종목 중 14종목이 서로 달랐고, 발행된 등락률은
     KRX 기준(삼성전자 3.62%)도 NXT 확정 기준(3.24%)도 아닌 제3의 값(2.70%)이었습니다. 폴링 응답의 ``nv``는
-    15:30 확정 뒤 고정되고(``ms=CLOSE``), ``pcv``는 KRX 전일 종가, ``cr``은 언론·HTS가 쓰는 그 등락률입니다.
+    15:30~16:00에는 정규장 종가로 멈춰 있지만 **16:00부터 KRX 시간외 단일가를 따라 다시 움직이고**, 넥스트레이드 애프터마켓
+    때문에 ``ms``는 20:00까지 OPEN입니다(2026-09-28 확인) — 그래서 그 창에 찍어 둔 사진(_krx_close_snapshot)을 먼저 씁니다.
+    ``pcv``는 KRX 전일 종가, ``cr``은 언론·HTS가 쓰는 그 등락률입니다.
     한 요청에 여러 종목을 묶어 보냅니다.
     """
     quotes: dict[str, dict] = {}
@@ -141,12 +143,24 @@ def _apply_krx_close(entry: dict, quote: dict | None, today: str) -> dict:
             "data_source": "Naver Finance realtime item (KRX regular-session close)"}
 
 
+def _krx_close_snapshot(today: str, data_dir: Path | None = None) -> dict[str, dict]:
+    path = (data_dir or Path(__file__).resolve().parent.parent / "data") / "krx_close" / f"{today}.json"
+    if not path.exists():
+        return {}
+    return (json.loads(path.read_text(encoding="utf-8")).get("quotes") or {})
+
+
 def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str) -> dict[str, dict]:
     """워치리스트 전체(코어+편입)에 KRX 확정 종가를 적용합니다. 코어가 실패하면 전체를 멈추고, 편입 종목은 뺍니다."""
     today = dt.date.today().isoformat()
     if trading_date != today:
         return watchlist
     quotes = _fetch_naver_item_quotes(list(watchlist))
+    # 15:31~15:59에 찍어 둔 정규장 종가 사진이 있으면 그것을 쓴다(scripts/krx_close_snapshot.py) — 16:00부터 nv는 시간외 단일가를
+    # 따라 움직이고 ms는 넥스트레이드 때문에 20:00까지 OPEN이라, 16:20에 받은 폴링으로는 정규장 종가를 확인할 수 없다(2026-09-28).
+    snap = _krx_close_snapshot(today)
+    for code, q in snap.items():
+        quotes[code] = {**q, "ms": "CLOSE", "snapshot": True}
     out: dict[str, dict] = {}
     for ticker, entry in watchlist.items():
         try:

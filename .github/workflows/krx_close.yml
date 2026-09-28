@@ -1,0 +1,55 @@
+name: KRX Close Snapshot
+
+# KRX 정규장 종가 사진 (2026-09-28). 네이버 폴링의 nv는 15:30~16:00에만 정규장 종가이고 16:00부터 시간외 단일가를 따라 움직인다
+# (넥스트레이드 때문에 상태 ms도 20:00까지 OPEN). 16:20 한국장 수집(market_brief.yml → fetch_kr)이 이 사진을 쓴다.
+# 깃허브 예약은 늦게 시작할 때가 있어 세 번 건다 — 이미 찍었으면 건너뛰고, 16:00이 넘으면 찍지 않는다(스크립트가 판단).
+on:
+  schedule:
+    - cron: "32 6 * * 1-5"   # 15:32 KST
+    - cron: "40 6 * * 1-5"   # 15:40 KST
+    - cron: "48 6 * * 1-5"   # 15:48 KST
+  workflow_dispatch:
+
+concurrency:
+  group: krx-close
+  cancel-in-progress: false
+
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 정규장 종가 사진
+        run: python -m scripts.krx_close_snapshot
+
+      - name: 사진 커밋
+        run: |
+          git add data/krx_close
+          git diff --cached --quiet && { echo "새 사진 없음"; exit 0; }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "KRX 정규장 종가 사진: $(TZ=Asia/Seoul date +%F)"
+          for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 10; done
+          exit 1
+
+      - name: 실패 알림 (텔레그램 운영 대화)
+        if: failure()
+        run: |
+          [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_ADMIN_CHAT_ID" ] || exit 0
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_ADMIN_CHAT_ID}" -d disable_web_page_preview=true \
+            --data-urlencode text="❌ ${{ github.workflow }} 실패 — ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >/dev/null || true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}

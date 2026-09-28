@@ -271,3 +271,39 @@ class KrxCloseForStocksTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 fetch_kr._apply_krx_closes({"005930": self._entry()}, self.TODAY)   # 코어는 멈춘다
         self.assertEqual(fetch_kr._apply_krx_closes(wl, "2026-09-23"), wl)          # 오늘 거래일이 아니면 그대로
+
+
+class KrxCloseSnapshotTest(unittest.TestCase):
+    """정규장 종가 사진(2026-09-28): 16:00부터 폴링 nv는 시간외 단일가를 따라 움직이고 ms는 넥스트레이드 때문에 OPEN이다."""
+
+    def test_window(self) -> None:
+        from scripts import krx_close_snapshot as snap
+        kst = snap.KST
+        self.assertTrue(snap.in_window(fetch_kr.dt.datetime(2026, 9, 28, 15, 35, tzinfo=kst)))
+        self.assertFalse(snap.in_window(fetch_kr.dt.datetime(2026, 9, 28, 16, 0, tzinfo=kst)))     # 시간외 단일가 시작
+        self.assertFalse(snap.in_window(fetch_kr.dt.datetime(2026, 9, 28, 15, 29, tzinfo=kst)))    # 정규장 중
+        self.assertFalse(snap.in_window(fetch_kr.dt.datetime(2026, 9, 27, 15, 35, tzinfo=kst)))    # 일요일
+
+    def test_snapshot_beats_the_live_quote(self) -> None:
+        """카카오 9/28 실제 값: 15:4x 사진 33,950(+1.49%) · 17:40 폴링 34,000(ms OPEN, 시간외 단일가) — 사진을 쓴다."""
+        from unittest import mock
+        today = fetch_kr.dt.date.today().isoformat()
+        entry = {"ticker": "035720", "name": "카카오", "price": 34000.0, "change_pct": 1.64, "trading_date": today,
+                 "series": [33450.0, 34000.0], "history": {"dates": ["2026-09-23", today], "close": [33450.0, 34000.0]}, "source": "core"}
+        live = {"035720": {"nv": 34000, "pcv": 33450, "cr": 1.64, "ms": "OPEN"}}
+        snap = {"035720": {"nv": 33950, "pcv": 33450, "cr": 1.49, "cv": 500, "rf": "2"}}
+        with mock.patch.object(fetch_kr, "_fetch_naver_item_quotes", return_value=live), \
+                mock.patch.object(fetch_kr, "_krx_close_snapshot", return_value=snap):
+            out = fetch_kr._apply_krx_closes({"035720": entry}, today)
+        self.assertEqual(out["035720"]["price"], 33950.0)
+        self.assertEqual(out["035720"]["change_pct"], 1.49)
+
+    def test_without_snapshot_an_open_quote_still_stops(self) -> None:
+        from unittest import mock
+        today = fetch_kr.dt.date.today().isoformat()
+        entry = {"ticker": "035720", "name": "카카오", "price": 34000.0, "trading_date": today, "source": "core",
+                 "series": [34000.0], "history": {"dates": [today], "close": [34000.0]}}
+        with mock.patch.object(fetch_kr, "_fetch_naver_item_quotes", return_value={"035720": {"nv": 34000, "pcv": 33450, "cr": 1.64, "ms": "OPEN"}}), \
+                mock.patch.object(fetch_kr, "_krx_close_snapshot", return_value={}):
+            with self.assertRaises(ValueError):
+                fetch_kr._apply_krx_closes({"035720": entry}, today)
