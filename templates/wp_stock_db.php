@@ -227,6 +227,7 @@ function fs_stock_html( $s, $index_by_code, $related = array(), $lists = array()
 	}
 	$about = fs_esc( ! empty( $s['en'] ) ? $s['en'] : $name ) . ' is listed on the ' . $mkt . ' market of the Korea Exchange under the ticker ' . fs_esc( $code ) . '.'
 		. ( ! empty( $s['industry'] ) ? ' Industry: ' . fs_esc( $s['industry'] ) . '.' : '' ) . ( ! empty( $s['founded'] ) ? ' Founded in ' . fs_esc( $s['founded'] ) . '.' : '' );
+	if ( ! empty( $s['about'] ) ) { $about = fs_esc( $s['about'] ) . '</p><p class="fs-mute fs-small">' . $about; }   // 회사 소개(2026-09-28) 뒤에 상장 정보 한 줄
 	// DART 주소는 대개 앞머리 없이 온다 — https://를 붙이면 옛 회사 사이트 다수가 인증서 오류였다(2026-09-27, 표본 40 중 32가 http://로 열림)
 	$web = ! empty( $s['web'] ) ? ( preg_match( '#^https?://#', $s['web'] ) ? $s['web'] : 'http://' . $s['web'] ) : '';
 	$h .= '<section id="about"><h2>About</h2><p>' . $about . '</p>' . ( $web ? '<p><a href="' . fs_esc( $web ) . '" rel="nofollow noopener" target="_blank">' . fs_esc( preg_replace( '#^https?://#', '', $web ) ) . '</a></p>' : '' );

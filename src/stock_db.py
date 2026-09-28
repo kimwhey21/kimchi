@@ -585,6 +585,41 @@ def build_lists(listing: list[dict], metrics: dict, dividends: dict, meta: dict,
     return out
 
 
+# ── 회사 소개(About) ────────────────────────────────────────────────────────────────
+# 2026-09-28. 종목 페이지 About 칸의 영어 소개 두세 문장. 근거는 데이터 제공처의 한국어 기업개요(기준일 asof)이고 문장은 새로 쓴다
+# (옮겨 쓰지 않는다) — 규칙은 output/about/WRITING_RULES.md, 근거 원문은 저장소에 넣지 않는다. 사람이 쓴 것을 about_issues가 기계로
+# 본다: 한글, 길이, 근거에 없는 숫자(지어낸 연도·비율), 표시 이름으로 시작. 새 상장 종목은 소개가 없으면 예전 한 줄 그대로 나간다.
+ABOUT = ROOT / "data" / "stock_about.json"
+ABOUT_DATA: dict = json.loads(ABOUT.read_text(encoding="utf-8")) if ABOUT.exists() else {}
+_HANGUL = re.compile(r"[\uac00-\ud7a3\u3131-\u318e]")
+_NUM = re.compile(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?")
+
+
+def about_issues(text: str, name: str, source: str) -> list[str]:
+    out = []
+    if _HANGUL.search(text):
+        out.append("한글")
+    if not 120 <= len(text) <= 650:
+        out.append(f"길이 {len(text)}")
+    if not text.startswith(name):
+        out.append("표시 이름으로 시작하지 않음")
+    have = {n.replace(",", "") for n in _NUM.findall(source)}
+    for n in _NUM.findall(text):
+        if n.replace(",", "") not in have:
+            out.append(f"근거에 없는 숫자 {n}")
+    return out
+
+
+def about_text(code: str, meta: dict, about: dict) -> str | None:
+    """종목의 소개. 우선주는 보통주 소개에 한 문장을 붙인다(보통주 코드는 끝자리 0)."""
+    m = meta.get(code) or {}
+    if m.get("pref"):
+        base = (about.get(code[:5] + "0") or {}).get("text")
+        common = (meta.get(code[:5] + "0") or {}).get("name")
+        return f"{base} These are its preferred shares, which usually carry no voting rights and trade separately from the common stock." if base and common else None
+    return (about.get(code) or {}).get("text")
+
+
 # ── 외국인 수급 페이지(/stocks/foreign-flows/) ────────────────────────────────────────
 # 2026-09-28. 종목별 수급은 다음 날 아침에 확정되므로 가장 최근 수급 날짜 기준으로 만든다(07:50 실행이 어제로).
 # 순위는 상세를 매일 받는 시가총액 상위 300종목(시가총액의 약 94%) 안에서. 하루 합계는 data/foreign_history.json에 쌓아 20일 그래프를 그린다.
@@ -722,6 +757,9 @@ def assemble(listing: list[dict], details: dict[str, dict], meta: dict) -> tuple
         full = row["code"] in details
         if full:
             data.update(details[row["code"]])
+            text = about_text(row["code"], meta, ABOUT_DATA)
+            if text:     # 상세 항목은 통째로 바뀌므로 소개를 같이 싣는다(시세만 가는 항목은 워드프레스가 옛 값에 합친다)
+                data["about"] = text
             # 네이버 동종 업종에 ETF·목록 밖 종목이 섞여 온다 — 우리 페이지가 없는 코드로 링크하면 404(2026-09-27 전수 점검 9곳)
             data["peers"] = [{"code": p, "name": (meta.get(p) or {}).get("name") or p} for p in data.get("peers", []) if p in listed]
             data["detail_date"] = row.get("date")
@@ -938,7 +976,7 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("command", choices=["meta", "rename", "webcheck", "dividends", "run"])
+    ap.add_argument("command", choices=["meta", "rename", "webcheck", "dividends", "run", "about-push"])
     ap.add_argument("--detail-all", action="store_true")
     ap.add_argument("--push", action="store_true")
     ap.add_argument("--out", type=Path)
@@ -959,6 +997,28 @@ def main(argv: list[str] | None = None) -> int:
         DIVIDENDS.write_text(json.dumps({"fetched": dt.date.today().isoformat(), "stocks": divs}, ensure_ascii=False, indent=0, sort_keys=True) + "\n", encoding="utf-8")
         print(f"배당 공시 {len(divs)}종목 저장")
         return 0
+    if a.command == "about-push":   # 소개를 새로 썼을 때 한 번 — 모든 종목 페이지에 about만 합쳐 넣는다(시세는 건드리지 않는다)
+        from dotenv import load_dotenv
+        load_dotenv(ROOT / ".env")
+        meta = json.loads(META.read_text(encoding="utf-8"))
+        rows = [{"code": c, "merge": True, "data": {"about": t}} for c in sorted(meta) if (t := about_text(c, meta, ABOUT_DATA))]
+        bad = hangul_problems([r["data"] for r in rows])
+        if bad:
+            raise SystemExit(f"소개에 한글이 있습니다: {bad[:3]}")
+        base = os.environ["WORDPRESS_URL"].rstrip("/")
+        auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
+        batch, size, sent = [], 0, 0
+        for r in rows + [None]:
+            n = len(json.dumps(r, ensure_ascii=False).encode()) if r else 0
+            if batch and (r is None or size + n > 45_000):
+                res = requests.post(f"{base}/wp-json/fermata/v1/stocks", json={"items": batch}, auth=auth, headers=UA, timeout=90)
+                res.raise_for_status(); sent += res.json().get("saved", 0); batch, size = [], 0
+                time.sleep(1.5)
+            if r:
+                batch.append(r); size += n
+        requests.post(f"{base}/wp-json/wp-super-cache/v1/cache", json={"delete_cache": True}, auth=auth, headers=UA, timeout=60)
+        print(f"소개 {sent}/{len(rows)}종목 저장")
+        return 0 if sent == len(rows) else 1
     if a.command == "webcheck":
         meta = json.loads(META.read_text(encoding="utf-8"))
         dead = web_check(meta)

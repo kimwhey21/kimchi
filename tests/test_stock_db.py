@@ -367,3 +367,30 @@ class SkhyTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AboutTest(unittest.TestCase):
+    """회사 소개(2026-09-28): 사람이 쓴 문장을 기계가 본다."""
+
+    def test_issues_catch_hangul_invented_numbers_and_name(self):
+        src = "동사는 2002년 설립되어 2008년 코스닥에 상장. 매출 비중 95% 이상. 3개의 종속회사"
+        ok = "Tes makes chip equipment. Chip tools are more than 95% of sales. Founded in 2002, it listed on the KOSDAQ in 2008 and has 3 subsidiaries."
+        self.assertEqual(sdb.about_issues(ok, "Tes", src), [])
+        self.assertIn("근거에 없는 숫자 1999", sdb.about_issues(ok.replace("2002", "1999"), "Tes", src))
+        self.assertIn("한글", sdb.about_issues(ok + " 반도체", "Tes", src))
+        self.assertIn("표시 이름으로 시작하지 않음", sdb.about_issues("The company " + ok, "Tes", src))
+
+    def test_preferred_shares_borrow_the_common_text(self):
+        meta = {"005930": {"name": "Samsung Electronics"}, "005935": {"name": "Samsung Electronics (Pref.)", "pref": True}}
+        about = {"005930": {"text": "Samsung Electronics makes chips."}}
+        self.assertTrue(sdb.about_text("005935", meta, about).startswith("Samsung Electronics makes chips. These are its preferred shares"))
+        self.assertIsNone(sdb.about_text("005935", meta, {}))
+
+    def test_committed_abouts_are_clean(self):
+        if not sdb.ABOUT.exists():
+            self.skipTest("소개 파일 없음")
+        meta = json.loads((ROOT / "data" / "stock_meta.json").read_text(encoding="utf-8"))
+        for code, row in json.loads(sdb.ABOUT.read_text(encoding="utf-8")).items():
+            self.assertFalse(sdb._HANGUL.search(row["text"]), code)
+            self.assertTrue(row["text"].startswith(meta[code]["name"]), code)
+            self.assertTrue(120 <= len(row["text"]) <= 650, code)
