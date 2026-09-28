@@ -200,7 +200,7 @@ class RoutinesUseTheRadarTest(unittest.TestCase):
 
 
 class ScreenQualityTest(unittest.TestCase):
-    """주제를 고를 수 있는 화면인지 본다(2026-09-14, 사용자: "일 대충하지 마").
+    """주제를 고를 수 있는 화면인지 본다(2026-09-14).
 
     한국 매체를 열두 곳까지 넣은 첫 판은 14시간에 118줄이었고, 증시 갈래 96줄 가운데 서른 줄
     넘게가 같은 지수 마감 기사였다. 줄 수가 아니라 **고를 수 있는지**가 이 도구의 품질이다.
@@ -266,7 +266,7 @@ class ScreenQualityTest(unittest.TestCase):
 
 
 class BlockedFeedsTest(unittest.TestCase):
-    """RSS가 막힌 매체를 버리지 않는다(2026-09-14, 사용자: "rss가 안되면 직접 찾아보고 조사하면 안되니?").
+    """RSS가 막힌 매체를 버리지 않는다(2026-09-14).
 
     한국경제(403)·이데일리(연결 거부)·서울경제(404)는 구글뉴스 `site:` 우회로 되살렸다. 같은 날 실측으로
     셋 다 100건·날짜 전부 읽힘. 이 셋이 목록에서 사라지면 "RSS가 죽었으니 어쩔 수 없다"로 되돌아간 것이다.

@@ -1,4 +1,4 @@
-"""블로그스팟(fermata49.blogspot.com)용 HTML 렌더 (2026-09-25, 사장님 "진행해").
+"""블로그스팟(fermata49.blogspot.com)용 HTML 렌더 (2026-09-25).
 
 원고 JSON을 네이버와 같은 차례의 블록(`scripts.naver_post.build`)으로 만든 뒤 HTML로 바꾼다. 새로 쓰는 문장은 없다 —
 네이버에 올라간 글과 같은 본문이 블로그스팟에도 올라간다.
@@ -173,11 +173,10 @@ def render(path: Path | str, graphics_dir: Path | None = None, upload: bool = Tr
     photo = doc.get("featured_photo") or {}
     unresolved: list[str] = []
     blocks = list(post["blocks"])
-    # 표지 사진은 잡지만이 아니라 원고에 `featured_photo.url`이 있는 모든 글이다(2026-09-26, 사장님: "사진이 안 보이는데 …
-    # 다양하게 다채롭게 돌려쓰기로 한 거 아니었냐"). 그전에는 Checkpoint·프리뷰·가이드가 전부 같은 남색·베이지 cover 그래픽이었다.
+    # 표지 사진은 잡지만이 아니라 원고에 `featured_photo.url`이 있는 모든 글이다(2026-09-26). 그전에는 Checkpoint·프리뷰·가이드가 전부 같은 남색·베이지 cover 그래픽이었다.
     if photo.get("url"):
         # 네이버 동기화는 표지를 파일로 내려받아 붙이지만 여기서는 원본 주소를 쓴다 — 그림 폴더가 없어도 표지는 붙는다.
-        # 남색·베이지 cover 그래픽은 사진 **다음에** 그대로 간다(사장님 2026-09-26: "엄선했던 작품, 함부로 버릴 수 없다").
+        # 남색·베이지 cover 그래픽은 사진 **다음에** 그대로 간다(2026-09-26).
         if blocks and blocks[0][0] == "img" and "photo-cover" in Path(str(blocks[0][1])).name:
             blocks[0] = ("img", str(photo["url"]))      # 맥이 내려받은 사본 대신 원본 주소
         elif not (blocks and blocks[0][0] == "img" and str(blocks[0][1]).startswith("http")):

@@ -16,7 +16,7 @@ def _check(doc: dict, graphics: int | None = None, notes_out: list[str] | None =
             + feature_checks.collect_issues(doc, graphics, notes_out=notes_out))
 
 
-# 2026-09-18 "a진행": 후보 셋 이상이 있어야 관문을 지난다. 견본 제목이 늘 1등이 되도록 점수 0·1짜리 후보 둘을 붙인다.
+# 2026-09-18: 후보 셋 이상이 있어야 관문을 지난다. 견본 제목이 늘 1등이 되도록 점수 0·1짜리 후보 둘을 붙인다.
 FILLERS = ["지수만 보면 하락장, 종목을 보면 다른 이야기", "반등의 이유와 반등이 이어지려면 필요한 것"]
 
 
@@ -144,7 +144,7 @@ class RealArticleTest(unittest.TestCase):
 
 
 class RadarOriginTest(unittest.TestCase):
-    """원고에 "레이더에서 골랐는지"를 남긴다(2026-09-14, 사용자 "넣어라").
+    """원고에 "레이더에서 골랐는지"를 남긴다(2026-09-14).
 
     이 한 줄이 없으면 몇 주 뒤에 **레이더로 고른 글이 더 읽혔는지 셀 수 없다.** 붙인 장치의
     효과를 못 재면 지울지 늘릴지도 근거 없이 정하게 된다.

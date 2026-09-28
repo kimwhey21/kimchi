@@ -114,7 +114,7 @@ def _med(rows: list[dict], key: str):
 
 
 def latest_search_report(reports_dir: Path | None = None) -> list[str]:
-    """가장 최근 `reports/search_<날짜>.md`의 표 (2026-09-12, 사용자 승인 "주간 검색 성적 기록").
+    """가장 최근 `reports/search_<날짜>.md`의 표 (2026-09-12).
 
     구글·네이버 색인 수와 노출·클릭은 관리자 화면에서만 읽히므로, 이 맥의 일요일 22:00 작업
     (`~/.market-brief-google/search_snapshot.py`)이 읽어 저장소에 남기고 여기서는 그 파일을 싣는다.
@@ -141,7 +141,7 @@ def latest_search_report(reports_dir: Path | None = None) -> list[str]:
 
 
 def naver_milestones(latest_json: Path | None) -> list[str]:
-    """네이버 블로그 성장 조건(2026-09-12, 사용자 "네이버도 애드포스트, 본진만큼 중요"): 글 50편이 되면 인플루언서 신청,
+    """네이버 블로그 성장 조건(2026-09-12): 글 50편이 되면 인플루언서 신청,
     개설 90일(2026-12-09)이 지나면 애드포스트 신청 — 사람이 할 일이라 보고서가 시점을 알려 준다."""
     if not latest_json:
         return []

@@ -125,7 +125,7 @@ class GraphicsGoUnderTheirOwnSectionTest(unittest.TestCase):
 
 
 class SummaryPostsAreUnchangedTest(unittest.TestCase):
-    """가이드도 전문·링크 없음이다(2026-09-22, 사장님: "링크를 모두 빼고 본문을 공개하고 본진에서는 비공개").
+    """가이드도 전문·링크 없음이다(2026-09-22).
 
     2026-09-15에는 본진에 공개된 쌍둥이가 있어 요약 + 링크로 뒀었다. 본진이 비공개가 되면서 그 이유가 없어졌다.
     """

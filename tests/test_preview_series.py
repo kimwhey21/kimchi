@@ -40,7 +40,7 @@ def _preview_full() -> dict:
 
 
 class PreviewThresholdsTest(unittest.TestCase):
-    """프리뷰는 2026-09-17부터 그날 미국장의 메인 글이다(사장님: "1번2번3번 진행").
+    """프리뷰는 2026-09-17부터 그날 미국장의 메인 글이다.
 
     절 10·시각자료 8·출처 4, 그리고 9/15 합본 실험에서 드러난 셋 — 절당 400자, 같은 그래픽 2장,
     초보자 상자 둘. 2026-09-08의 "3절·600~900자" 프리뷰는 표에서 가장 얇은 글이었다.
@@ -128,7 +128,7 @@ class PreviewPrivateTest(unittest.TestCase):
 
     def test_every_korean_series_goes_out_private_but_the_english_guide(self) -> None:
         """2026-09-15 프리뷰·Checkpoint에 이어 2026-09-22부터 한국어 가이드·주간 결산·다음 주 일정·이벤트도 비공개다
-        (사장님: "본진에서는 비공개 처리해라, 네이버는 한글 컨텐츠를 주력으로"). **영어 가이드("Guide")만 공개** —
+        . **영어 가이드("Guide")만 공개** —
         구글 유입의 전부가 거기서 나온다(2026-09-22: 28일 클릭 21건 전부 영어). 이 줄을 바꾸지 말 것.
         """
         from src import publish_feature

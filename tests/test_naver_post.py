@@ -1,8 +1,7 @@
 """네이버용 원고 — 2026-09-10 사용자 결정을 고정한다.
 
 2026-09-15에 시황이 먼저 **본문 전문, 링크 없음**이 됐고(본진 비공개), 2026-09-22에 가이드·주간·이벤트까지
-같은 꼴이 됐다(사장님: "워드프레스 링크가 붙는 컨텐츠에 링크를 모두 빼고 본문을 공개하고, 본진에서는 비공개
-처리해라"). 이제 한국어 글은 전부 본진 글 그대로이고 본진 링크는 어디에도 없다. 잡지는 원래부터 그랬다.
+같은 꼴이 됐다. 이제 한국어 글은 전부 본진 글 그대로이고 본진 링크는 어디에도 없다. 잡지는 원래부터 그랬다.
 """
 from __future__ import annotations
 
@@ -20,17 +19,17 @@ class BuildTest(unittest.TestCase):
         글을 좋게 보지 않는다. 이 검사가 풀리면 요약본 시절로 조용히 되돌아간다.
         """
         post = naver_post.build(Path("editorial/kr_2026-09-10.json"), Path("output/gate/kr_2026-09-10"))
-        # 네이버 제목은 본진 제목 그대로다(2026-09-17, 사장님: "날짜 시황 제목 앞에 쓰는거 삭제").
+        # 네이버 제목은 본진 제목 그대로다(2026-09-17).
         import json as _json
         self.assertEqual(post["title"], _json.loads(Path("editorial/kr_2026-09-10.json").read_text(encoding="utf-8"))["ko"]["title"])
         self.assertEqual(post["category"], "시황")
         self.assertEqual(post["url"], "")
         heads = [b[1] for b in post["blocks"] if b[0] == "h"]
         # 전문을 싣는 글은 본진(`templates/post.html.j2`)과 같은 차례다 — Fermata's Take가 맨 아래,
-        # 그 뒤가 다음 확인 지점이다(2026-09-15, 사용자: "본문 형식으로 바꾸면 테이크가 맨 아래로 가는거 아니었니").
+        # 그 뒤가 다음 확인 지점이다(2026-09-15).
         # 맨 위로 올리면 요약본 꼴로 되돌아간다.
         self.assertNotEqual(heads[0], "Fermata's Take")
-        # 본진 `templates/post.html.j2`와 같은 차례다(2026-09-16, 사용자: "본진 글을 똑같이 옮기기만 해라").
+        # 본진 `templates/post.html.j2`와 같은 차례다(2026-09-16).
         self.assertEqual(heads[-3:], ["Fermata's Take", "다음 확인 지점", "자료 확인"])
         self.assertGreater(len(heads), 5)                       # 전문이라 절이 다 들어온다
         self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]), post["blocks"][-4:])
@@ -42,7 +41,7 @@ class BuildTest(unittest.TestCase):
         """2026-09-12: 모바일에서 문단이 벽처럼 읽혀 2~3문장으로 자른다.
 
         인용구(q) Take는 요약본 시절의 규칙이었다. 2026-09-22부터 가이드·주간·이벤트도 전문이라 인용구 Take가
-        없고, Fermata's Take는 본진 차례대로 맨 아래다(사장님: "링크를 모두 빼고 본문을 공개").
+        없고, Fermata's Take는 본진 차례대로 맨 아래다.
         """
         post = naver_post.build(Path("editorial/guides/ko_isa-vs-pension-accounts.json"))
         kinds = [b[0] for b in post["blocks"]]
@@ -75,7 +74,7 @@ class BuildTest(unittest.TestCase):
         import json as _json
         base = _json.loads(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json").read_text(encoding="utf-8"))["ko"]["title"]
         self.assertEqual(post["title"], base)          # 꼬리표 `| 투자 체크포인트`를 붙이지 않는다(2026-09-17)
-        # Checkpoint도 2026-09-15부터 본문 전문·링크 없음이다(사용자: "체크포인트는 2번") — 본진 글을
+        # Checkpoint도 2026-09-15부터 본문 전문·링크 없음이다 — 본진 글을
         # 비공개로 돌렸으니 가리킬 공개 주소가 없다. 2026-09-22부터 텔레그램 안내도 없다 — 외부 링크 0.
         self.assertEqual(post["url"], "")
         self.assertFalse(any("fermata.it.kr" in b[1] for b in post["blocks"]), post["blocks"][-4:])
@@ -127,7 +126,7 @@ class PreviewFullBodyTest(unittest.TestCase):
         self.assertGreaterEqual(len([h for h in heads if h.endswith("절")]), 5)
 
     def test_no_external_link_at_all(self) -> None:
-        """2026-09-22 "a b 진행해": 텔레그램 안내도 뺐다 — 네이버 글에 외부 링크가 하나도 없어야 한다.
+        """2026-09-22: 텔레그램 안내도 뺐다 — 네이버 글에 외부 링크가 하나도 없어야 한다.
 
         2026-09-15에는 본진 링크를 빼면서 텔레그램은 남겼다. 9/22 조사에서 52편 전부가 같은 문장 + t.me 링크로
         끝나는 것이 잡지(외부 링크 0, 검색됨)와 다른 점이라 뺐다.
@@ -170,5 +169,5 @@ class PhotoCoverTest(unittest.TestCase):
         post = naver_post.build(Path("editorial/features/kr_2026-09-08_foreign_buying_reversal.json"), tmp)
         imgs = [b[1] for b in post["blocks"] if b[0] == "img"]
         self.assertEqual(imgs[0], str(tmp / "00-photo-cover.jpg"))
-        self.assertEqual(imgs[1], str(tmp / "01-cover.png"))       # 남색·베이지 틀은 사진 다음에 그대로 간다(사장님 2026-09-26)
+        self.assertEqual(imgs[1], str(tmp / "01-cover.png"))       # 남색·베이지 틀은 사진 다음에 그대로 간다(2026-09-26)
         self.assertEqual(imgs.count(str(tmp / "01-cover.png")), 1)

@@ -1,6 +1,6 @@
 name: Guide Publish
 
-# 유입 편성(2026-09-12, 사용자 승인 "1번 2번 4번 진행"): 검색 유입을 만드는 상시 가이드.
+# 유입 편성(2026-09-12): 검색 유입을 만드는 상시 가이드.
 #   화·목 09:00 KST 한국어 가이드  editorial/guides/ko_<slug>.json  (docs/routine_guide_ko.md, series "가이드")
 #   수    09:00 KST 영어 가이드    editorial/guides/en_<slug>.json  (docs/routine_guide_en.md, series "Guide", lang "en")
 # 근거: 2026-09-12 서치콘솔 실측 — 구글 노출 710건 중 700건이 영어 가이드 9편에서 나왔고 한국어 시황 43편은 0건.

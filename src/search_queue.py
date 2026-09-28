@@ -42,7 +42,7 @@ def feasibility(position: float, has_post: bool) -> float:
 STOP = {"vs", "the", "a", "an", "to", "in", "of", "for", "is", "how", "what", "and", "or",
         "on", "at", "do", "does", "can", "are", "with", "my", "you", "your", "it", "site"}
 
-# 검색 의도(2026-09-18, 사장님 "2번 진행" — 행동 의도 검색어로 재편). '정의형'(what is·meaning·difference)은
+# 검색 의도(2026-09-18 — 행동 의도 검색어로 재편). '정의형'(what is·meaning·difference)은
 # 구글 AI 개요가 답을 화면에 먼저 써 줘서 1위여도 클릭이 적고, '행동형'(how to·buy·broker·account·etf·tax·hours·
 # holiday)은 사람이 결국 페이지를 열어야 하며 제휴가 붙는 자리다. 둘 다 걸리면 행동형으로 본다.
 # 이 값도 판단이지 잰 수가 아니다 — 순서를 매기는 데만 쓴다.

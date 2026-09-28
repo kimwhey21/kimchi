@@ -1,5 +1,5 @@
 <?php
-// 본진 홈·목록 토스피드 A안 3색 판 + 목록용 정사각 썸네일 (2026-09-27, 사장님 "썸네일 4번 3색판으로 가자").
+// 본진 홈·목록 토스피드 A안 3색 판 + 목록용 정사각 썸네일 (2026-09-27).
 // 이 파일이 원본이다 — 워드프레스 Code Snippets 14번에 `python -m scripts.deploy_list_style`로 올린다(관리 화면에서 고치지 말 것).
 // 하는 일 셋: 1) 글 메타 fermata_square_thumb(정사각 썸네일 미디어 id)를 REST에 연다(발행 코드가 적는다)
 // 2) 목록 화면에서만 대표 이미지 옆에 네모 그림을 끼운다(가로 표지는 공유·디스커버용으로 그대로) 3) 목록 화면에만 스타일.
@@ -40,7 +40,7 @@ add_filter( 'render_block_core/post-featured-image', function ( $html, $block, $
 	return preg_replace( '/class="wp-block-post-featured-image/', 'class="wp-block-post-featured-image has-fm-sq', $html, 1 );
 }, 10, 3 );
 
-// 배경·글꼴·헤더·메뉴 버튼은 모든 화면에(2026-09-28 사장님 "1번 템플릿 통일 진행해" — 글·소개·404가 크림 배경·명조·메뉴 없음이었다),
+// 배경·글꼴·헤더·메뉴 버튼은 모든 화면에(2026-09-28 — 글·소개·404가 크림 배경·명조·메뉴 없음이었다),
 // 글 목록 모양(두 줄·네모 썸네일·첫 글 카드)은 목록 화면에만
 add_action( 'wp_head', function () {
 	if ( is_admin() ) {

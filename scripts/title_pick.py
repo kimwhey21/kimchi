@@ -1,4 +1,4 @@
-"""제목 후보 셋의 점수를 매겨 가장 먼 것을 고른다 (2026-09-18, 사장님 "a진행").
+"""제목 후보 셋의 점수를 매겨 가장 먼 것을 고른다 (2026-09-18).
 
     python -m scripts.title_pick us "후보1" "후보2" "후보3"              # 쓰기 전: 지금 피드 기준
     python -m scripts.title_pick preview "후보1" "후보2" "후보3" --price data/price_us_2026-09-17.json

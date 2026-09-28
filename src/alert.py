@@ -2,8 +2,8 @@
 
 왜
 --
-루틴의 휴대폰 알림은 Claude 앱으로만 가고, GitHub Actions 실패는 메일로만 온다. 사용자: "어떤 게 실패했는지 어떤
-상황인지 모니터링도 가능하면서 알림을 받아보고 싶다." 그래서 채널(`@fermata_kr`, 독자용)과 별개로 봇과 사장님의
+루틴의 휴대폰 알림은 Claude 앱으로만 가고, GitHub Actions 실패는 메일로만 온다. 무엇이 어떤
+상황으로 실패했는지 한곳에서 받아 보려고 채널(`@fermata_kr`, 독자용)과 별개로 봇과 사장님의
 1:1 대화(`TELEGRAM_ADMIN_CHAT_ID`)에 운영 소식을 보낸다.
 
     python -m src.alert "<메시지>" [--level ok|warn|fail]     # 워크플로의 실패 단계·맥 작업이 부른다

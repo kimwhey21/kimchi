@@ -1,4 +1,4 @@
-"""문서·지시문을 다시 쓸 때 **사라진 규칙 줄**을 찾아낸다 (2026-09-17, 사장님: "니맘대로 누락이 되고 생략하고").
+"""문서·지시문을 다시 쓸 때 **사라진 규칙 줄**을 찾아낸다 (2026-09-17).
 
     python -m scripts.rule_diff docs/routine_preview.md            # 작업 사본 vs HEAD
     python -m scripts.rule_diff docs/routine_preview.md --ref 91d4b24^

@@ -1,4 +1,4 @@
-"""2026-09-26 점검의 작은 구멍들 — 사장님 "9번 제외 모두 고쳐"."""
+"""2026-09-26 점검의 작은 구멍들."""
 import unittest
 from pathlib import Path
 from unittest import mock

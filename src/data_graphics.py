@@ -415,7 +415,7 @@ MOVERS_STYLES = ("bars", "tiles", "table")
 
 
 def _movers_style(picked: list[dict], price_data: dict) -> str:
-    """상황에 맞게 고른다(2026-09-09, 사용자: "다채롭게 상황에 맞게 번갈아").
+    """상황에 맞게 고른다(2026-09-09).
     오르고 내린 종목이 섞인 날은 막대(방향이 보인다), 한쪽으로만 움직인 날은 타일과 표를
     날짜로 번갈아 쓴다. 같은 날 다시 그리면 같은 그림이 나온다."""
     ups = sum(1 for e in picked if float(e["change_pct"]) > 0)
@@ -513,7 +513,7 @@ def movers_list(price_data: dict, output_path: Path, top_n: int = 6,
     picked = movers_picked(price_data, top_n, period_days, period)
     if style and style not in MOVERS_STYLES:
         # 틀린 이름으로 발행이 죽거나 그림이 빠지지 않게 — 상황으로 고른 모양으로 그리고 알린다
-        # (2026-09-09, 사용자: "루틴이 잘못된 그림을 그리지 않게 해서 발행 실패를 막아라").
+        # (2026-09-09).
         # 관문(editorial_gate)은 같은 경우를 막아서 커밋 전에 고치게 한다.
         print(f"[안내] movers_list: 모르는 style {style!r} — {MOVERS_STYLES} 중 상황에 맞는 것으로 그립니다.", file=sys.stderr)
         style = None
@@ -680,8 +680,8 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
     """한 종목만 크게 세웁니다 — 이름·등락률에 오른쪽은 세 가지 모양 중 하나.
 
     numbers(종가·5거래일·3개월 최고·최저 대비), history(3개월 선), daily_bars(최근 8거래일
-    일별 막대, 오늘 진하게). 2026-09-09 사용자가 옛 8거래일 꺾은선을 "마음에 안 든다"고
-    해 바꿨고, `style`이 없으면 `_spotlight_style`이 상황으로 고른다.
+    일별 막대, 오늘 진하게). 2026-09-09에 옛 8거래일 꺾은선을
+    바꿨고, `style`이 없으면 `_spotlight_style`이 상황으로 고른다.
     """
     ensure_korean_font()
     rows = [e for e in (price_data.get("watchlist") or {}).values() if e.get("change_pct") is not None]

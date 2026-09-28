@@ -111,7 +111,7 @@ class DeclineVerbExclusionTest(unittest.TestCase):
 
 
 class RulerPhraseTest(unittest.TestCase):
-    """2026-09-26 — 사장님: "'같은 잣대를 댔습니다'는 표현이 아주 어색해, 다시는 쓰지 마라". 벤치마크 155편에 0회."""
+    """2026-09-26 — '같은 잣대를 댔습니다'는 어색한 표현이다. 벤치마크 155편에 0회."""
 
     def test_ruler_verb_is_blocked_in_heading_and_body(self) -> None:
         for text in ("BNK는 SK하이닉스에도 같은 잣대를 댔습니다", "같은 잣대를 대면", "같은 잣대를 댄 리포트"):

@@ -46,8 +46,7 @@ class PublishOrderTest(unittest.TestCase):
 
 
 class KoreanOffWordPressTest(unittest.TestCase):
-    """2026-09-26부터 한국어 글은 본진에 올리지 않는다(사장님: "워드프레스에 비공개로 올라가는 한국어 컨탠츠를 지워도 되냐?" →
-    "확인못한거 확인하고 문제없으면 둘다 진행해"). 비공개로 두던 이유(9/16, 네이버 사본이 세 절을 빠뜨림)는 네이버가 원고를
+    """2026-09-26부터 한국어 글은 본진에 올리지 않는다(사장님 결정). 비공개로 두던 이유(9/16, 네이버 사본이 세 절을 빠뜨림)는 네이버가 원고를
     빠짐없이 옮기게 되며 사라졌다. 영어 시황은 그대로 공개로 올라가야 한다."""
 
     def test_default_is_off_and_english_still_goes_out(self) -> None:

@@ -118,7 +118,7 @@ def pick(entry: dict | None, date_str: str, photos: list[dict] | None = None,
         return None
     hits = sorted(hits, key=lambda p: p["id"])
     if history is not None:
-        # 2026-09-26 — 사장님: "다양하게 다채롭게 돌려쓰기로 한 거 아니었냐". 날짜÷장수 나머지는 사흘 연속만 다르고
+        # 2026-09-26 — 다양하게 돌려 쓴다. 날짜÷장수 나머지는 사흘 연속만 다르고
         # 닷새 뒤엔 같은 사진이 돌아왔다(인텔 9/17·SK하이닉스 9/22가 같은 남색 기판). `history`는 이 묶음이 지금까지
         # 표지로 쓴 사진 id를 오래된 순으로 늘어놓은 것(featured_image.cover_history가 커밋된 원고에서 다시 만든다).
         # **가장 오래 안 쓴 사진**을 고른다 — 한 번도 안 쓴 것이 먼저(id 순), 그다음 마지막으로 쓴 지 오래된 순.

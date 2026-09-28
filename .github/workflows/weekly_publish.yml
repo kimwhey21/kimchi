@@ -1,6 +1,6 @@
 name: Weekly Publish
 
-# 주말 편성(2026-09-12, 사용자 결정 "1번 2번 해주고 … 바로 오늘부터"):
+# 주말 편성(2026-09-12):
 #   토 10:00 KST 「주간 결산」  editorial/weekly/review_<토요일>.json  (docs/routine_week_review.md)
 #   일 20:00 KST 「다음 주 일정」 editorial/weekly/ahead_<일요일>.json   (docs/routine_week_ahead.md)
 #   같은 루틴이 그 주의 큰 이벤트 하나를 골라 「이벤트」 글도 씁니다 — editorial/events/<날짜>_<slug>.json

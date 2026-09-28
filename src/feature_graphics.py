@@ -273,7 +273,7 @@ def cover(output_path: Path, kicker: str, subject: str,
 def cover_square(output_path: Path, kicker: str, subject: str,
                  left: dict | None = None, right: dict | None = None,
                  note: str = "", size: int = 600) -> Path:
-    """`cover`와 같은 재료로 그리는 **목록용 정사각 썸네일**(2026-09-27, 사장님 "썸네일 4번 3색판으로 가자").
+    """`cover`와 같은 재료로 그리는 **목록용 정사각 썸네일**(2026-09-27).
 
     본진 홈·목록은 글자 왼쪽 · 네모 썸네일 오른쪽(토스피드 풍)이다. 1200×630 표지를 네모에 넣으면 오른쪽
     숫자가 잘렸다. 목록에서 약 110px로 보이므로 위는 남색 판에 제목, 아래는 크림 바탕에 **숫자 하나**(`left`,

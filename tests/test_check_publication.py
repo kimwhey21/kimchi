@@ -21,7 +21,7 @@ DOC = {"ko": {"title": "제목"}, "en": {"title": "Title"}}
 class CheckPublicationTest(unittest.TestCase):
     @staticmethod
     def _posts(modified: str) -> dict:
-        """언어별 조회 결과. 한국어 시황은 본진에 비공개로 올라간다(2026-09-16, 사용자 지시)."""
+        """언어별 조회 결과. 한국어 시황은 본진에 비공개로 올라간다(2026-09-16)."""
         return {"ko": {"id": 1, "status": "private", "modified_gmt": modified},
                 "en": {"id": 2, "status": "publish", "modified_gmt": modified}}
 
@@ -70,7 +70,7 @@ class CheckPublicationTest(unittest.TestCase):
 
     @mock.patch.object(cp.publish_editorial, "KO_DAILY_TO_WORDPRESS", True)   # 스위치를 켰을 때의 동작(2026-09-26부터 기본은 꺼짐)
     def test_korean_daily_is_looked_for_again(self) -> None:
-        """한국어 시황은 다시 본진에 올라간다(2026-09-16, 사용자 지시) — 없으면 잡아야 한다.
+        """한국어 시황은 다시 본진에 올라간다(2026-09-16) — 없으면 잡아야 한다.
 
         2026-09-15 하루 동안은 이 검사를 꺼 뒀고, 그사이 스위치가 막은 두 편(kr 9/16·us 9/15)이
         본진에 올라가지 않았는데 아무 경보도 울리지 않았다. 검사를 끄면 빠진 것이 안 보인다.
@@ -83,7 +83,7 @@ class CheckPublicationTest(unittest.TestCase):
         self.assertFalse(any("[ko]" in p for p in off), off)
 
     def test_korean_daily_is_not_on_wordpress_by_default(self) -> None:
-        """2026-09-26부터 한국어 시황은 본진에 올리지 않는다(사장님 "둘다 진행해") — 한국어는 찾지 않고 영어만 본다."""
+        """2026-09-26부터 한국어 시황은 본진에 올리지 않는다 — 한국어는 찾지 않고 영어만 본다."""
         self.assertFalse(cp.publish_editorial.KO_DAILY_TO_WORDPRESS)
         problems = self._check("2026-09-04", None)
         self.assertFalse(any("[ko]" in p for p in problems), problems)

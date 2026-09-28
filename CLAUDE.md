@@ -334,15 +334,15 @@
   막는다 — 기준표 계열은 `feature_gate`, 시황은 `editorial_gate`. 루틴 지시문은 `docs/routine_common.md`의 「네이버용 본문」 절이고,
   규칙을 바꾸면 그 문서도 같이 고친다. **전문이 가는 글은 본진과 같은 차례다 — 표지 → 본문 → Fermata's Take → 다음 확인 지점.** **표지는 원고에 `featured_photo.url`
   사진이 있으면 그 사진이 먼저 가고, 남색·베이지 cover 그래픽은 그 다음에 그대로 간다**(Checkpoint·프리뷰·가이드·주간·이벤트 전부,
-  2026-09-26 사장님 "1번으로 해, 사진 다음에 틀" — 그전에는 잡지만 사진이고 나머지는 전부 틀뿐이었다. 틀은 9/8에 사장님이 여섯 안 중
+  2026-09-26 — 그전에는 잡지만 사진이고 나머지는 전부 틀뿐이었다. 틀은 9/8에 사장님이 여섯 안 중
   고른 것이라 빼지 않는다). 맥의 `naver_sync.render`가 `00-photo-cover.jpg`로 내려받고 `blogger_post`는 원본 주소를 쓴다.
   Take를 두 문장만 뽑아 맨 위 인용구로 올리는 것은 **요약본**의 규칙이다. `tests/test_naver_post.py`가 양쪽을 다 고정한다.
 - **Checkpoint도 본진에는 올리지 않고 네이버에 본문 전문이 나간다.** 프리뷰와 같은 처리다 — `publish_feature.LIVE_STATUS`의
   `"기준표": "private"` 줄이 한국어 글 표시이고 `KO_TO_WORDPRESS`가 업로드를 건너뛴다.
-- **본진은 영어 사이트다**(2026-09-26, 사장님: "온전히 영어사이트로 탈바꿈하자" → "남기고 1~5번 진행해"). 메뉴는 Market(`/`)·Stocks(`/stocks/`)·Daily·Guides
+- **본진은 영어 사이트다**(2026-09-26). 메뉴는 Market(`/`)·Stocks(`/stocks/`)·Daily·Guides
   넷이고(2026-09-27, 그전엔 All·Daily·Guides — 105 all 페이지는 남아 있고 메뉴에서만 빠졌다), **메뉴 줄은 한 곳에서만 그린다** — `templates/wp_stock_db.php`의
   `fs_nav`(`[fermata_nav]`, 지금 화면을 스스로 알아 버튼을 칠한다 — 시황 글·분류는 Daily, 가이드는 Guides)를 **사이트의 모든 블록
-  템플릿**이 main 맨 앞에서 부른다(2026-09-28 사장님 "1번 템플릿 통일 진행해" — 글·분류·검색·소개·404에는 메뉴가 없고 크림 배경·명조였다;
+  템플릿**이 main 맨 앞에서 부른다(2026-09-28 — 글·분류·검색·소개·404에는 메뉴가 없고 크림 배경·명조였다;
   2026-09-27엔 메뉴 네 화면이 다섯 곳에 손으로 복제돼 높이가 272·319·361px로 달랐다). **템플릿 원본은 `templates/wp_site/*.html`이고
   `python -m scripts.deploy_templates`로 올린다**(사이트 편집기에서 고치면 다음 배포가 덮어쓴다). 목록 페이지(76·77·105·3228)는
   `fermata-hub` 틀, 분류·태그·작성자·검색은 Daily 목록과 같은 두 줄 목록이다. 흰 배경·Pretendard·메뉴 버튼은 14번 조각의
@@ -351,8 +351,7 @@
   `~/.market-brief-backups/home_nav_before_20260927.json`·`hub_template_before_20260927.json`. 배경·글꼴·버튼 모양은 14번 조각
   (`fermata_list_view`에 Stocks 포함)이 정하고, 여백을 덧대 높이를 맞추지 않는다. 템플릿·메뉴·목록 스타일을
   고친 뒤에는 **`python -m scripts.nav_check`**(14화면 × 1440·390px 실측, 다르면 실패)를 돌린다 — 한 폭 캡처만 보고 "됐다"고 하지 말 것. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
-  줄로 접혀야 가로가 넘치지 않는다. **홈·목록(76·77·105·분류)의 겉모습은 토스피드 A안 3색 판이다**(2026-09-27, 사장님 "썸네일 4번
-  3색판으로 가자") — 원본은 `templates/wp_list_toss.php`, `python -m scripts.deploy_list_style`로 Code Snippets 14번에 올린다(관리
+  줄로 접혀야 가로가 넘치지 않는다. **홈·목록(76·77·105·분류)의 겉모습은 토스피드 A안 3색 판이다**(2026-09-27) — 원본은 `templates/wp_list_toss.php`, `python -m scripts.deploy_list_style`로 Code Snippets 14번에 올린다(관리
   화면에서 고치지 말 것). 이름표 색은 분류다: 영어 시황은 Daily(121) **그대로 두고** 하위 분류 Korea Close(684)·Wall Street
   Close(685)를 더한다(`publish_editorial.MARKET_CATEGORY_IDS`), 가이드는 Guides(153). 목록 썸네일은 **정사각 그림을 따로**
   그린다(`featured_image.create_square`·`feature_graphics.cover_square`, 글 메타 `fermata_square_thumb`) — 가로 표지(1200×630)는
@@ -365,7 +364,7 @@
   날짜 형식은 `F j, Y`, 템플릿에 글자로 저장된 문구(Previous·Next·By 등)도 영어다. 한국어 소개·연락처·개인정보처리방침(697·698·226)은
   페이지는 남기고 메뉴에서만 뺐다. 네이버 카테고리 번호는 추측하지 말고 `PostList.naver?blogId=fermata49`를 받아 `categoryNo=`로
   확인한다(시황 1·Checkpoint 6·가이드 7·Weekly 8).
-- **본진 종목 데이터베이스**(2026-09-27, 사장님 "바로 정식버전으로 구현하자 시험페이지는 필요없다"): 코스피·코스닥 전 종목(주식만,
+- **본진 종목 데이터베이스**(2026-09-27): 코스피·코스닥 전 종목(주식만,
   2,765개)을 영어 데이터 페이지 `/stocks/<종목코드>/`로, 목록 `/stocks/`(시가총액 순 100개씩), 홈 첫 화면에 검색창·시장 띠·카드 셋을 둔다.
   **종목마다 글·페이지를 만들지 않는다** — 실제 페이지는 slug `stocks`(id 3228) 하나이고 Code Snippets 16번(원본 `templates/wp_stock_db.php`,
   `python -m scripts.deploy_stock_db`로 올린다)이 주소를 받아 워드프레스 옵션(`fm_s_<코드>`·`fm_stock_index`·`fm_market`)으로 그 자리에서
@@ -377,7 +376,7 @@
   뒤에만 바꾼다. 조각에 글자로 script 태그를 쓰면 NinjaFirewall이 저장을 403으로 막는다(`wp_print_inline_script_tag`를 쓴다).
   **영어 시황·가이드 본문의 종목 이름은 워드프레스가 글을 그릴 때 종목 페이지로 잇는다**(`fs_link_apply`, 글마다 첫 언급만·15개까지, 제목·기존 링크 안은 건드리지 않음) — 영어 낱말과 같은 이름·그룹 이름(`FS_LINK_EXCLUDE`)과 300위 밖 한 낱말 이름은 잇지 않는다. 원고에 링크를 손으로 넣지 말 것. **외국인 수급 페이지**(`/stocks/foreign-flows/`)는 `stock_db.build_flows`가 가장 최근 **종목 수급 날짜**(다음 날 아침 확정)로 만들어 옵션 `fm_flows`로 넣는다 — 순위는 상세를 받는 시가총액 상위 300종목 안, 금액은 외국인 순매수 주식 수×그날 종가, **등락률은 거래소 발표값만**(수급 줄의 종가로 나누지 말 것), 지분 변화에서 우선주는 뺀다. 코스피 외국인 합계는 `data/foreign_history.json`에 **날짜별로 합쳐** 쌓고(지수 수급과 종목 수급은 날짜가 다르다 — 덮어쓰지 말 것) 5일 이상 모이면 20거래일 그래프를 그린다. 들어가는 문은 `/stocks/` 카드 줄 다섯 번째·홈 외국인 카드의 See all·"Stock lists" 줄이고 맨 위 메뉴는 그대로다. **순위표 네 개**(`/stocks/lists/<slug>/`: 배당수익률·외국인 지분·P/B·코스닥 시가총액, 각 50위)는 `stock_db.build_lists`가 매일 만들어 옵션 `fm_lists`로 넣는다 — 전 종목 지표는 `data/stock_metrics.json`에 이어 쓴다(상세를 받은 종목만 그날 값으로). **배당은 DART 사업보고서 공시값**(`data/stock_dividends.json`, 한 달에 한 번 `python -m src.stock_db dividends`; 최근 1년 안의 결산을 모두 더한다)이고 **네이버 값과 15% 안으로 맞을 때만 싣는다**(공시는 결산 뒤 액면분할을 반영하지 않고 가끔 총액이 잘못 들어간다). 튄 배당·이익보다 많은 배당·적자 배당은 숨기지 않고 공시 숫자로 표시한다. 외국인 지분은 실제 지분율(차트 이력)이고, 네이버 '외인소진율'은 한도 대비 사용률이라 따로 보인다. **새 주소는 빙에 IndexNow로 알린다**(`src/indexnow.py`, 영어 글 공개 직후·종목이 새로 생기거나 빠질 때 자동, 전체는 `python -m src.indexnow --sitemap`; 열쇠 파일은 16번 조각이 내놓는다). 구글 색인 요청은 이 맥의 `~/.market-brief-google/gsc_daily_index.py`(launchd `kr.it.fermata.gscindex`, 매일 15:10, 종목 10개, 10/31까지). `tests/test_stock_db.py`가 이것들을 고정한다.
 - **한국어 글은 전부 본진에 없고 네이버 전문이다**(2026-09-22 비공개로, 2026-09-26부터는 아예 올리지 않는다 — 사장님 결정:
-  네이버가 한국어 주력, 올려 두던 비공개 85편은 휴지통). 시황·프리뷰·Checkpoint에
+  한국어는 네이버가 주력, 올려 두던 비공개 글은 휴지통). 시황·프리뷰·Checkpoint에
   이어 **한국어 가이드·주간 결산·다음 주 일정·이벤트**도 같은 처리다 — `publish_feature.LIVE_STATUS`에 네 줄, `naver_post`는 잡지를
   뺀 모든 글을 `ko.narrative` 전문·링크 없음으로 옮기고, `feature_checks.NAVER_FULL_ENDED`(2026-09-23)부터 네이버용 본문(`naver`)을
   요구하지 않는다. **영어 가이드("Guide")만 본진에 공개다.** 본진의 가이드·Weekly·Checkpoint 탭은 2026-09-26에 뺐다(위
@@ -401,7 +400,7 @@
   게시, 같은 크롬 프로필을 쓰는 작업이 돌면 건너뜀). 블로거 설정은 맞춤 robots.txt·자료실/검색 페이지
   noindex·공식 테마(Contempo)다 — **맞춤 robots.txt를 바꾸지 말 것**(이유는 비공개 기록). 네이버에 올리는 시각은
   바꾸지 않는다. 판정은 11월 30일 서치콘솔(검색·디스커버 따로)과 애드센스로 하고, 잡지의 네이버 노출이 떨어지면 그날 멈춘다.
-  `tests/test_blogger_post.py`가 렌더를 고정한다. **테마 겉모습은 토스피드 풍 + C안(크림 바탕·검은 테두리 카드·코너 색 이름표)이다**(2026-09-26, 사장님 "토스피드처럼 만들어줘" → "C로 가자") —
+  `tests/test_blogger_post.py`가 렌더를 고정한다. **테마 겉모습은 토스피드 풍 + C안(크림 바탕·검은 테두리 카드·코너 색 이름표)이다**(2026-09-26) —
   Contempo 위에 스타일·Pretendard 글꼴·메뉴(매거진·가이드·Checkpoint·Weekly·시황)를 얹은 것이고, 이 맥의
   `~/.market-brief-google/blogger_theme_toss.py`가 넣는다(스타일만 `--update-css`, 되돌리기 `--restore`, 원본은
   `blogger_tmp/theme_before_toss_20260926.xml`). **글머리 한 줄과 표지 사진 출처는 글 끝에 둔다** — 블로거는 본문 첫 글자로 홈

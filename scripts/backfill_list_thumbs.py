@@ -1,4 +1,4 @@
-"""이미 올라간 영어 글에 3색 분류와 목록용 정사각 썸네일을 소급한다 (2026-09-27, 사장님 "썸네일 4번 3색판으로 가자").
+"""이미 올라간 영어 글에 3색 분류와 목록용 정사각 썸네일을 소급한다 (2026-09-27).
 
     python -m scripts.backfill_list_thumbs --dry   # 무엇을 할지만
     python -m scripts.backfill_list_thumbs         # 실제로

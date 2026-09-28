@@ -134,7 +134,7 @@ if __name__ == "__main__":
 
 
 class HistoryRotationTest(unittest.TestCase):
-    """2026-09-26 — 사장님: "다양하게 다채롭게 돌려쓰기로 한 거 아니었냐". 가장 오래 안 쓴 사진을 고르면 다 쓰기 전엔 안 겹친다."""
+    """2026-09-26 — 다양하게 돌려 쓴다. 가장 오래 안 쓴 사진을 고르면 다 쓰기 전엔 안 겹친다."""
 
     def setUp(self) -> None:
         self.photos = photo_pool.load()
