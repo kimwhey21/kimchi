@@ -401,6 +401,164 @@ def build_meta(session: requests.Session, codes: list[str], existing: dict, key:
     return meta
 
 
+# ── 배당(DART 공시) ─────────────────────────────────────────────────────────────────
+# 순위표의 배당은 네이버 값이 아니라 DART 사업보고서 '배당에 관한 사항'(alotMatter)의 보통주 주당 현금배당금이다(2026-09-28,
+# 사장님 "배당은 정확하게 조사해서 올려야해"). 연 1회 결산은 최근 사업연도 값, 반기 결산(리츠 등)은 최근 두 번을 더한 1년치.
+# 공시로 확인되지 않는 배당은 순위표에 넣지 않는다.
+DIVIDENDS = ROOT / "data" / "stock_dividends.json"
+
+
+def _alot(session: requests.Session, key: str, corp: str, year: int) -> list[dict]:
+    r = _get(session, f"{DART}/alotMatter.json", params={"crtfc_key": key, "corp_code": corp, "bsns_year": str(year), "reprt_code": "11011"})
+    j = r.json()
+    return j.get("list", []) if j.get("status") == "000" else []
+
+
+def parse_dividends(rows: list[dict]) -> dict | None:
+    """alotMatter 줄들 → {'end': 결산일, 'ttm': 최근 1년 주당배당금, 'prev': 그 전 1년, 'payout': 배당성향, 'periods': 1|2}. 없으면 None."""
+    per: dict[str, dict] = {}
+    for it in rows:
+        end, se, knd = it.get("stlm_dt") or "", it.get("se") or "", it.get("stock_knd") or ""
+        p = per.setdefault(end, {})
+        if "주당 현금배당금" in se and knd == "보통주":
+            p["dps"] = [_num(it.get(k)) for k in ("thstrm", "frmtrm", "lwfr")]
+        elif "현금배당성향" in se and "payout" not in p:
+            p["payout"] = _num(it.get("thstrm"))
+    ends = sorted(e for e, p in per.items() if p.get("dps") and p["dps"][0] is not None)
+    if not ends:
+        return None
+    last = per[ends[-1]]
+    # 최근 1년 안의 결산을 모두 더한다 — 연 1회·반기(리츠)·분기(SK리츠) 모두 같은 식(2026-09-28: 분기 리츠가 절반만 잡혔다)
+    latest = dt.date.fromisoformat(ends[-1])
+    window = [e for e in ends if (latest - dt.date.fromisoformat(e)).days < 360]
+    ttm = sum(per[e]["dps"][0] or 0 for e in window)
+    prevs = [per[e]["dps"][1] for e in window]
+    prev = sum(prevs) if all(v is not None for v in prevs) else None
+    periods = len(window)
+    return {"end": ends[-1], "ttm": ttm, "prev": prev, "payout": last.get("payout"), "periods": periods}
+
+
+def fetch_dividends(session: requests.Session, key: str, meta: dict, codes: list[str], today: dt.date) -> dict:
+    """전 종목 배당 공시. 12월 결산이면 작년 사업보고서 하나, 아니면(리츠 등) 올해 것도 받는다. 우선주는 보통주 회사 공시를 쓴다."""
+    out, errors = {}, 0
+    for n, code in enumerate(codes, 1):
+        corp = (meta.get(code) or {}).get("corp")
+        if not corp or (meta.get(code) or {}).get("pref"):
+            continue
+        try:
+            rows = _alot(session, key, corp, today.year - 1)
+            ends = {r.get("stlm_dt") for r in rows}
+            if not rows or any(e and not e.endswith("-12-31") for e in ends):
+                rows += _alot(session, key, corp, today.year)
+            got = parse_dividends(rows)
+            if got:
+                out[code] = got
+        except StockDBError:
+            errors += 1
+        time.sleep(0.1)
+        if n % 300 == 0:
+            print(f"  배당 공시 {n}/{len(codes)} (있음 {len(out)}, 실패 {errors})", flush=True)
+    if errors > max(30, len(codes) * 0.05):
+        raise StockDBError(f"배당 공시 실패가 {errors}건 — DART가 막혔을 수 있습니다.")
+    return out
+
+
+# ── 순위표(/stocks/lists/…) ──────────────────────────────────────────────────────────
+# 2026-09-28 사장님 "이 모양으로 진행하고 배당은 정확하게". 매일 상세를 새로 받는 종목은 650개뿐이라, 전 종목 순위에 필요한 지표는
+# data/stock_metrics.json에 이어 쓴다(상세를 받은 종목만 그날 값으로 바뀐다). 순위표마다 50위까지.
+METRICS = ROOT / "data" / "stock_metrics.json"
+LIST_SIZE = 50
+
+
+def metrics_from_detail(d: dict) -> dict:
+    """상세 한 종목 → 순위에 쓰는 지표. 외국인 지분은 실제 지분율(차트 이력) — 외인소진율은 한도 대비라 따로 둔다."""
+    r = d.get("r") or {}
+    fr = [x for x in ((d.get("hist") or {}).get("fr") or []) if isinstance(x, (int, float))]
+    own = fr[-1] if fr else ((d.get("flows") or [{}])[0].get("fratio"))
+    roe = None
+    fin = d.get("fin") or {}
+    cols, roes = fin.get("cols") or [], ((fin.get("rows") or {}).get("roe") or [])
+    for col, v in reversed(list(zip(cols, roes))):
+        if not col.endswith("E") and v is not None:
+            roe = v
+            break
+    return {"pbr": r.get("pbr"), "per": r.get("per"), "fown": own, "fused": r.get("foreign_ratio"), "roe": roe, "dps_nv": r.get("dps")}
+
+
+def update_metrics(metrics: dict, details: dict[str, dict], date: str) -> dict:
+    for code, d in details.items():
+        metrics[code] = {**metrics_from_detail(d), "d": date}
+    return metrics
+
+
+def _is_reit(name: str, industry: str) -> bool:
+    return "reit" in name.lower() or "infrastructure fund" in name.lower()
+
+
+def build_lists(listing: list[dict], metrics: dict, dividends: dict, meta: dict, date: str) -> dict:
+    """순위표 넷. 우선주는 뺀다(보통주와 같은 회사). 행에는 화면에 그릴 값만 싣는다."""
+    name = lambda c: (meta.get(c) or {}).get("name") or c            # noqa: E731
+    ind = lambda c: (meta.get(c) or {}).get("industry") or ""       # noqa: E731
+    base = [r for r in listing if r.get("close") and r.get("mcap") and not (meta.get(r["code"]) or {}).get("pref")]
+    row = lambda r, **kw: {"code": r["code"], "name": name(r["code"]), "market": r["market"], "industry": ind(r["code"]),  # noqa: E731
+                           "close": r["close"], "pct": r.get("pct"), "mcap": r["mcap"], **kw}
+    out = {}
+    divs, doubtful = [], []
+    for r in base:
+        dv = dividends.get(r["code"])
+        if r["mcap"] < 1e11 or not dv or not dv.get("ttm"):
+            continue
+        # 공시 주당배당금은 결산 뒤 액면분할을 반영하지 않고(미원화학 4,500 vs 450), 가끔 총액이 잘못 들어간다(Y-entec 18억 원).
+        # 네이버 값(분할 반영)과 15% 안으로 맞을 때만 싣는다. 네이버 값이 없으면(리츠 등) 공시값으로 — 주가보다 크면 오류로 뺀다.
+        nv = (metrics.get(r["code"]) or {}).get("dps_nv")
+        if dv["ttm"] >= r["close"] or (nv and abs(dv["ttm"] / nv - 1) > 0.15):
+            doubtful.append({"code": r["code"], "dart": dv["ttm"], "naver": nv})
+            continue
+        flags = []
+        if dv.get("prev") and dv["ttm"] >= 2 * dv["prev"]:
+            flags.append(f"Dividend {dv['ttm'] / dv['prev']:.1f}× the year before")
+        p = dv.get("payout")
+        if p is not None and p < 0:
+            flags.append("Paid out despite a loss")
+        elif p is not None and p > 100:
+            flags.append(f"Paid out {p:.0f}% of earnings")
+        m = metrics.get(r["code"]) or {}
+        divs.append(row(r, yld=round(dv["ttm"] / r["close"] * 100, 2), dps=dv["ttm"], prev=dv.get("prev"), end=dv.get("end"),
+                        npay=dv.get("periods") or 1, reit=_is_reit(name(r["code"]), ind(r["code"])), flags=flags, fown=m.get("fown")))
+    out["highest-dividend-yield"] = {
+        "title": "Korean Stocks With the Highest Dividend Yield", "short": "Highest dividend yield",
+        "blurb": "Top payers worth ₩100B+, with the yield and dividend per share",
+        "lead": "KOSPI and KOSDAQ companies worth at least ₩100 billion, ranked by trailing dividend yield: the cash dividend per common share "
+                "reported in each company's latest annual filing (DART), divided by the latest closing price. Companies that pay more than once a year (mostly REITs) use every payout "
+                "from the latest 12 months. Only dividends that match across two sources (the filing and Naver Finance) are listed.",
+        "count": len(divs), "rows": sorted(divs, key=lambda x: -x["yld"])[:LIST_SIZE], "doubtful": doubtful}
+    fo = [row(r, fown=round((metrics.get(r["code"]) or {})["fown"], 2), fused=(metrics.get(r["code"]) or {}).get("fused"))
+          for r in base if r["mcap"] >= 1e11 and (metrics.get(r["code"]) or {}).get("fown") is not None]
+    out["most-foreign-owned"] = {
+        "title": "Most Foreign-Owned Korean Stocks", "short": "Most foreign-owned",
+        "blurb": "Where overseas investors hold the biggest share",
+        "lead": "Share of each company's stock held by overseas investors, for KOSPI and KOSDAQ companies worth at least ₩100 billion. "
+                "Some sectors cap foreign ownership by law (telecoms, utilities, airlines, media); for those, the share of the cap already used is shown.",
+        "count": len(fo), "rows": sorted(fo, key=lambda x: -x["fown"])[:LIST_SIZE]}
+    pb = [row(r, pbr=(metrics.get(r["code"]) or {})["pbr"], per=(metrics.get(r["code"]) or {}).get("per"), roe=(metrics.get(r["code"]) or {}).get("roe"))
+          for r in base if r["mcap"] >= 5e11 and ((metrics.get(r["code"]) or {}).get("pbr") or 0) > 0]
+    out["cheapest-by-pb"] = {
+        "title": "Korean Stocks Trading Furthest Below Book Value", "short": "Cheapest by P/B",
+        "blurb": "Lowest price-to-book ratios — the Value-Up question",
+        "lead": "Companies worth at least ₩500 billion with the lowest price-to-book ratios. A P/B under 1 means the market values the company below "
+                "its net assets — the gap Korea's Value-Up program is trying to close. Return on equity is from the latest annual results.",
+        "count": len(pb), "rows": sorted(pb, key=lambda x: x["pbr"])[:LIST_SIZE]}
+    kq = [row(r) for r in base if r["market"] == "KOSDAQ"]
+    out["largest-kosdaq"] = {
+        "title": "Largest KOSDAQ Companies by Market Cap", "short": "Largest KOSDAQ companies",
+        "blurb": "Korea's growth board, ranked by market cap",
+        "lead": "The biggest companies on the KOSDAQ, Korea's growth and technology board, ranked by market capitalization at the latest close.",
+        "count": len(kq), "rows": sorted(kq, key=lambda x: -x["mcap"])[:LIST_SIZE]}
+    for v in out.values():
+        v["date"] = date
+    return out
+
+
 # ── 한 번 돌리기 ─────────────────────────────────────────────────────────────────────
 def next_holiday(today: dt.date) -> dict | None:
     """오늘 이후 첫 휴장일. 목록이 끝나면 None — 칸을 비운다(지어내지 않는다)."""
@@ -559,7 +717,7 @@ def batches(rows: list, limit: int = BATCH_BYTES) -> list[list]:
     return out
 
 
-def push(items: list[dict], index: list, market: dict, *, pause: float = 1.5) -> int:
+def push(items: list[dict], index: list, market: dict, lists: dict | None = None, *, pause: float = 1.5) -> int:
     """종목 → 목록(나눠 보내고 서버가 다 받은 뒤 한 번에 바꾼다) → 시장 요약 → 캐시 비우기."""
     base = os.environ["WORDPRESS_URL"].rstrip("/")
     auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
@@ -617,6 +775,9 @@ def push(items: list[dict], index: list, market: dict, *, pause: float = 1.5) ->
     if got.get("index") != len(index):
         raise StockDBError(f"목록 {len(index)}줄을 보냈는데 서버가 {got.get('index')}줄로 받았습니다 — 바꾸지 않았습니다.")
     post({"items": [], "market": market}, "시장 요약")
+    for slug, data in (lists or {}).items():          # 순위표는 하나씩(한 번에 보내면 50KB를 넘을 수 있다)
+        post({"items": [], "list": {"slug": slug, "data": data}}, f"순위표 {slug}")
+        time.sleep(pause)
     # 홈·목록은 캐시된 화면이라 비워야 새 숫자가 보인다
     c = requests.post(f"{base}/wp-json/wp-super-cache/v1/cache", json={"delete_cache": True}, auth=auth, headers=UA, timeout=60)
     if c.status_code != 200:
@@ -661,8 +822,13 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     skhy = skhy_premium(hynix and hynix["close"], fx and fx.get("close"))
     items, index, _ = assemble(listing, details, meta)
     market = market_summary(listing, details, meta, idx, fx, skhy)
+    metrics = json.loads(METRICS.read_text(encoding="utf-8")) if METRICS.exists() else {}
+    date_now = max((r.get("date") or "" for r in listing), default="")
+    metrics = update_metrics(metrics, details, date_now)
+    dividends = (json.loads(DIVIDENDS.read_text(encoding="utf-8")).get("stocks") or {}) if DIVIDENDS.exists() else {}
+    lists = build_lists(listing, metrics, dividends, meta, date_now) if not limit else {}
     market["next_holiday"] = next_holiday(today)
-    bad = hangul_problems({"items": [i["data"] for i in items], "index": index, "market": market})
+    bad = hangul_problems({"items": [i["data"] for i in items], "index": index, "market": market, "lists": lists})
     if bad:
         raise StockDBError(f"영어 페이지에 한글이 {len(bad)}곳 — 예: {bad[:5]}")
     report = {"stocks": len(listing), "detailed": len(details), "failed": failed, "date": market["date"]}
@@ -671,20 +837,38 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
         (out / "items.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
         (out / "index.json").write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
         (out / "market.json").write_text(json.dumps(market, ensure_ascii=False, indent=1), encoding="utf-8")
+    if not limit:
+        METRICS.write_text(json.dumps(metrics, ensure_ascii=False, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
+    if out:
+        (out / "lists.json").write_text(json.dumps(lists, ensure_ascii=False, indent=1), encoding="utf-8")
     if do_push:
-        report["pushed"] = push(items, index, market)
+        report["pushed"] = push(items, index, market, lists)
     return report
 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("command", choices=["meta", "rename", "webcheck", "run"])
+    ap.add_argument("command", choices=["meta", "rename", "webcheck", "dividends", "run"])
     ap.add_argument("--detail-all", action="store_true")
     ap.add_argument("--push", action="store_true")
     ap.add_argument("--out", type=Path)
     ap.add_argument("--limit", type=int, help="시가총액 상위 N종목만(점검용)")
     ap.add_argument("--force", action="store_true", help="장중에도 돌린다(장중 가격이 종가로 올라가니 점검용으로만)")
     a = ap.parse_args(argv)
+    if a.command == "dividends":
+        from dotenv import load_dotenv
+        load_dotenv(ROOT / ".env")
+        key = os.environ.get("DART_API_KEY")
+        if not key:
+            raise SystemExit("DART_API_KEY가 없습니다.")
+        session = requests.Session()
+        session.headers.update(UA)
+        meta = json.loads(META.read_text(encoding="utf-8"))
+        codes = [r["code"] for r in list_all(session, 2500)] if not a.limit else sorted(meta)[: a.limit]
+        divs = fetch_dividends(session, key, meta, codes, dt.date.today())
+        DIVIDENDS.write_text(json.dumps({"fetched": dt.date.today().isoformat(), "stocks": divs}, ensure_ascii=False, indent=0, sort_keys=True) + "\n", encoding="utf-8")
+        print(f"배당 공시 {len(divs)}종목 저장")
+        return 0
     if a.command == "webcheck":
         meta = json.loads(META.read_text(encoding="utf-8"))
         dead = web_check(meta)

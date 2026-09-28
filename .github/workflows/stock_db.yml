@@ -41,6 +41,20 @@ jobs:
         env:
           DART_API_KEY: ${{ secrets.DART_API_KEY }}
 
+      - name: 배당 공시 새로 받기(한 달에 한 번)
+        # 순위표의 배당은 DART 사업보고서 값이다(2026-09-28). 공시는 1년에 한두 번 바뀌므로 파일이 30일 넘으면 다시 받는다(40분 안팎).
+        run: |
+          [ -n "$DART_API_KEY" ] || { echo "::warning::DART_API_KEY가 없어 배당 공시를 새로 받지 못합니다"; exit 0; }
+          python - <<'PY' || exit 0
+          import json, datetime as dt, pathlib, sys
+          p = pathlib.Path("data/stock_dividends.json")
+          if p.exists() and (dt.date.today() - dt.date.fromisoformat(json.loads(p.read_text())["fetched"])).days < 30:
+              print("배당 공시는 30일 안에 받은 것이 있습니다"); sys.exit(1)
+          PY
+          python -m src.stock_db dividends || echo "::warning::배당 공시 받기 실패 — 지난 파일로 순위표를 만듭니다"
+        env:
+          DART_API_KEY: ${{ secrets.DART_API_KEY }}
+
       - name: 시세·상세 받아 워드프레스로
         run: python -m src.stock_db run --push
         env:
@@ -48,14 +62,14 @@ jobs:
           WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
           WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
 
-      - name: 메타 커밋
+      - name: 종목 파일 커밋
         if: success()
         run: |
-          git diff --quiet data/stock_meta.json && { echo "메타 변화 없음"; exit 0; }
+          git add data/stock_meta.json data/stock_metrics.json data/stock_dividends.json
+          git diff --cached --quiet && { echo "바뀐 파일 없음"; exit 0; }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/stock_meta.json
-          git commit -m "종목 메타: 새 상장 종목 영문명 채움"
+          git commit -m "종목 데이터: 순위표 지표·메타·배당 공시 갱신"
           for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 10; done
           exit 1
 

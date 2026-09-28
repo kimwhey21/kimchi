@@ -146,6 +146,33 @@ class DailyRunTest(unittest.TestCase):
         self.assertTrue(sdb.still_listed(sess, "004430"))
         self.assertFalse(sdb.still_listed(sess, "999990"))
 
+    def test_dividends_come_from_filings_with_facts_flagged(self):
+        # 2026-09-28 사장님 "배당은 정확하게" — DART 공시값, 반기 결산은 두 번 합, 튄 배당·이익보다 많은 배당은 사실로 표시
+        reit = [{"stlm_dt": "2025-07-31", "se": "주당 현금배당금(원)", "stock_knd": "보통주", "thstrm": "170", "frmtrm": "180", "lwfr": "170"},
+                {"stlm_dt": "2026-01-31", "se": "주당 현금배당금(원)", "stock_knd": "보통주", "thstrm": "170", "frmtrm": "170", "lwfr": "180"}]
+        self.assertEqual(sdb.parse_dividends(reit)["ttm"], 340.0)
+        self.assertIsNone(sdb.parse_dividends([{"stlm_dt": "2025-12-31", "se": "현금배당성향(%)", "thstrm": "30"}]), "배당금 줄이 없으면 싣지 않는다")
+        listing = [_row("017800", 2.9e12), _row("005930", 1.6e15), _row("999990", 5e10)]
+        listing[0]["close"] = 74000.0
+        listing[1]["close"] = 286500.0
+        divs = {"017800": {"ttm": 14010.0, "prev": 5500.0, "payout": 193.0, "periods": 1, "end": "2025-12-31"},
+                "005930": {"ttm": 1668.0, "prev": 1446.0, "payout": 25.1, "periods": 1, "end": "2025-12-31"},
+                "999990": {"ttm": 500.0, "prev": 500.0, "payout": 50.0, "periods": 1}}
+        meta = {"017800": {"name": "Hyundai Elevator"}, "005930": {"name": "Samsung Electronics"}, "999990": {"name": "Tiny"}}
+        lists = sdb.build_lists(listing, {}, divs, meta, "2026-09-23")
+        rows = lists["highest-dividend-yield"]["rows"]
+        self.assertEqual([r["code"] for r in rows], ["017800", "005930"], "시가총액 1,000억 미만은 뺀다")
+        self.assertEqual(rows[0]["yld"], round(14010 / 74000 * 100, 2))
+        self.assertIn("Dividend 2.5× the year before", rows[0]["flags"])
+        self.assertIn("Paid out 193% of earnings", rows[0]["flags"])
+        self.assertEqual(rows[1]["flags"], [])
+
+    def test_foreign_list_uses_real_ownership(self):
+        listing = [_row("030200", 1.3e13), _row("000660", 1.3e15)]
+        metrics = {"030200": {"fown": 49.0, "fused": 100.0}, "000660": {"fown": 50.15, "fused": 50.15}}
+        rows = sdb.build_lists(listing, metrics, {}, {}, "2026-09-23")["most-foreign-owned"]["rows"]
+        self.assertEqual([(r["code"], r["fown"]) for r in rows], [("000660", 50.15), ("030200", 49.0)])
+
     def test_hangul_is_caught_except_korean_name_field(self):
         self.assertEqual(sdb.hangul_problems({"name_ko": "삼성전자", "q": {}}), [])
         self.assertTrue(sdb.hangul_problems({"industry": "반도체"}))
@@ -244,6 +271,12 @@ class SnippetTest(unittest.TestCase):
         self.assertIn("$rank >= 300", PHP)
         self.assertIn("in_category( array( 121, 684, 685, 153 ) )", PHP)
         self.assertIn("delete_transient( 'fs_link_v1' )", PHP, "목록이 바뀌면 연결 표를 다시 만든다")
+
+    def test_list_pages_are_wired(self):
+        self.assertIn("'^stocks/lists/([a-z0-9-]+)/?$'", PHP)
+        self.assertIn("if ( $slug = fs_current_list() ) { return fs_list_html(", PHP)
+        self.assertIn("home_url( '/stocks/lists/' . $k . '/' )", PHP, "순위표도 사이트맵에")
+        self.assertIn("$bad_list = get_query_var( 'fm_list' ) && ! fs_current_list();", PHP, "없는 순위표는 404")
 
     def test_nav_keeps_flex_wrap(self):
         self.assertIn("display:flex;flex-wrap:wrap;gap:12px 20px", PHP)

@@ -72,7 +72,7 @@ function fs_nav( $active = '' ) {
 function fs_search_box( $count = null ) {
 	$GLOBALS['fs_need_search_js'] = true;
 	$ph = 'Search ' . ( $count ? number_format( $count ) . ' ' : '' ) . 'Korean stocks';   // 긴 예시는 휴대폰에서 잘렸다(2026-09-27) — 예시는 aria 설명으로
-	$src = function_exists( 'fs_index_url' ) ? fs_index_url() : '/wp-json/fermata/v1/stock-index';
+	$src = function_exists( 'wp_upload_dir' ) ? fs_index_url() : '/wp-json/fermata/v1/stock-index';
 	return '<div class="fs-search"><span aria-hidden="true">⌕</span><input type="search" id="fs-q" autocomplete="off" data-src="' . fs_esc( $src ) . '" placeholder="'
 		. fs_esc( $ph ) . '" aria-label="Search Korean stocks by name or code, e.g. Samsung, SK Hynix, 005930"><kbd>/</kbd><ul id="fs-res" hidden></ul></div>';
 }
@@ -126,7 +126,7 @@ function fs_foreign_cell( $s ) {
 	return $cell;
 }
 
-function fs_stock_html( $s, $index_by_code, $related = array() ) {
+function fs_stock_html( $s, $index_by_code, $related = array(), $lists = array() ) {
 	$code = $s['code']; $name = $s['name']; $q = isset( $s['q'] ) ? $s['q'] : array();
 	$r = isset( $s['r'] ) ? $s['r'] : array(); $c = isset( $s['c'] ) ? $s['c'] : array();
 	$guide = isset( FS_GUIDES[ $code ] ) ? FS_GUIDES[ $code ] : FS_GUIDE_DEFAULT;
@@ -148,6 +148,7 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 	if ( ! empty( $s['fin']['cols'] ) ) { $tabs['financials'] = 'Financials'; }
 	if ( $peers ) { $tabs['peers'] = 'Peers'; }
 	$tabs['about'] = 'About';
+	$h .= fs_in_lists( $code, $lists );
 	$h .= '<div class="fs-tabs">';
 	foreach ( $tabs as $id => $label ) { $h .= '<a href="#' . $id . '">' . $label . '</a>'; }
 	$h .= '</div>';
@@ -237,7 +238,7 @@ function fs_stock_html( $s, $index_by_code, $related = array() ) {
 	return '<div class="fs-page">' . $h . '</div>';
 }
 
-function fs_index_html( $index, $market, $page, $per = 100 ) {
+function fs_index_html( $index, $market, $page, $per = 100, $lists = array() ) {
 	$rows = $index;
 	if ( $market === 'kospi' || $market === 'kosdaq' ) {
 		$rows = array_values( array_filter( $index, function ( $r ) use ( $market ) { return strtolower( $r[2] ) === $market; } ) );
@@ -250,7 +251,7 @@ function fs_index_html( $index, $market, $page, $per = 100 ) {
 	foreach ( array( '' => 'All', 'kospi' => 'KOSPI', 'kosdaq' => 'KOSDAQ' ) as $k => $label ) {
 		$h .= '<a href="/stocks/' . ( $k ? '?m=' . $k : '' ) . '"' . ( $market === $k ? ' class="on"' : '' ) . '>' . $label . '</a>';
 	}
-	$h .= '</div><div class="fs-scroll"><table class="fs-t fs-list"><tr><th>#</th><th>Company</th><th>Market</th><th class="fs-num">Price</th><th class="fs-num">Day</th><th class="fs-num">Market cap</th></tr>';
+	$h .= '</div>' . ( 1 === (int) $page && '' === $market ? fs_list_cards( $lists ) : '' ) . '<div class="fs-scroll"><table class="fs-t fs-list"><tr><th>#</th><th>Company</th><th>Market</th><th class="fs-num">Price</th><th class="fs-num">Day</th><th class="fs-num">Market cap</th></tr>';
 	foreach ( $slice as $n => $r ) {
 		$h .= '<tr><td class="fs-mute">' . ( ( $page - 1 ) * $per + $n + 1 ) . '</td><td><a href="/stocks/' . fs_esc( $r[0] ) . '/"><b>' . fs_esc( $r[1] ) . '</b></a> <span class="fs-code">' . fs_esc( $r[0] ) . '</span></td>'
 			. '<td>' . fs_esc( $r[2] ) . '</td><td class="fs-num">' . fs_krw( $r[3] ) . '</td><td class="fs-num">' . fs_pct( $r[4] ) . '</td><td class="fs-num">' . fs_big( $r[5] ) . '</td></tr>';
@@ -263,7 +264,72 @@ function fs_index_html( $index, $market, $page, $per = 100 ) {
 	return '<div class="fs-page">' . $h . '</nav></div>';
 }
 
-function fs_market_html( $m ) {
+// ── 순위표 /stocks/lists/<slug>/ (2026-09-28) ─────────────────────────────────────────
+const FS_LIST_GUIDE = array(
+	'highest-dividend-yield' => array( '/korea-us-tax-treaty-forms/', 'Holding these from abroad?', 'Korea withholds 22% on dividends unless your broker has your treaty paperwork on file.', 'Dividend tax guide' ),
+	'most-foreign-owned' => array( FS_GUIDE_DEFAULT, 'Want to own Korean stocks from abroad?', 'Global brokers, US-listed ADRs and Korea ETFs compared.', 'How to buy' ),
+	'cheapest-by-pb' => array( '/korea-value-up-program/', 'Why so many Korean stocks trade below book', 'The Value-Up program, in plain English.', 'Value-Up guide' ),
+	'largest-kosdaq' => array( '/kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you/', 'KOSPI or KOSDAQ?', 'What the board a Korean stock trades on actually tells you.', 'Read the guide' ),
+);
+function fs_list_rows( $slug, $rows ) {
+	$h = '';
+	foreach ( $rows as $i => $r ) {
+		$name = '<a href="/stocks/' . fs_esc( $r['code'] ) . '/"><b>' . fs_esc( $r['name'] ) . '</b></a>' . ( ! empty( $r['reit'] ) ? ' <span class="fs-kr fs-reit">REIT</span>' : '' )
+			. '<span class="fs-code">' . fs_esc( $r['code'] ) . '</span>' . ( ! empty( $r['industry'] ) ? '<div class="fs-ind">' . fs_esc( $r['industry'] ) . '</div>' : '' );
+		if ( ! empty( $r['flags'] ) ) { foreach ( $r['flags'] as $f ) { $name .= '<span class="fs-flag">' . fs_esc( $f ) . '</span>'; } }
+		$h .= '<tr><td class="fs-mute">' . ( $i + 1 ) . '</td><td>' . $name . '</td>';
+		if ( 'highest-dividend-yield' === $slug ) {
+			$h .= '<td class="fs-num">' . fs_krw( $r['close'] ) . '</td><td class="fs-num"><b>' . fs_x( $r['yld'], '%' ) . '</b></td><td class="fs-num">' . fs_krw( $r['dps'] ) . ( ! empty( $r['npay'] ) && $r['npay'] > 1 ? '<div class="fs-ind">' . (int) $r['npay'] . ' payouts in last 12 months</div>' : '' )
+				. '</td><td class="fs-num">' . ( isset( $r['prev'] ) && $r['prev'] ? fs_krw( $r['prev'] ) : '–' ) . '</td><td class="fs-num">' . fs_big( $r['mcap'] ) . '</td>';
+		} elseif ( 'most-foreign-owned' === $slug ) {
+			$cap = ( isset( $r['fused'] ) && null !== $r['fused'] && abs( $r['fused'] - $r['fown'] ) > 1 ) ? '<div class="fs-ind">' . number_format( $r['fused'], 0 ) . '% of cap used</div>' : '';
+			$h .= '<td class="fs-num"><b>' . fs_x( $r['fown'], '%' ) . '</b>' . $cap . '</td><td class="fs-num">' . fs_pct( $r['pct'] ) . '</td><td class="fs-num">' . fs_big( $r['mcap'] ) . '</td>';
+		} elseif ( 'cheapest-by-pb' === $slug ) {
+			$h .= '<td class="fs-num"><b>' . fs_x( $r['pbr'] ) . '</b></td><td class="fs-num">' . fs_x( isset( $r['per'] ) ? $r['per'] : null ) . '</td><td class="fs-num">' . fs_x( isset( $r['roe'] ) ? $r['roe'] : null, '%' ) . '</td><td class="fs-num">' . fs_big( $r['mcap'] ) . '</td>';
+		} else {
+			$h .= '<td class="fs-num">' . fs_krw( $r['close'] ) . '</td><td class="fs-num">' . fs_pct( $r['pct'] ) . '</td><td class="fs-num"><b>' . fs_big( $r['mcap'] ) . '</b></td>';
+		}
+		$h .= '</tr>';
+	}
+	return $h;
+}
+function fs_list_html( $slug, $l, $lists ) {
+	$heads = array(
+		'highest-dividend-yield' => '<th class="fs-num">Price</th><th class="fs-num">Yield</th><th class="fs-num">Dividend / share</th><th class="fs-num">Year before</th><th class="fs-num">Market cap</th>',
+		'most-foreign-owned' => '<th class="fs-num">Foreign-owned</th><th class="fs-num">Day</th><th class="fs-num">Market cap</th>',
+		'cheapest-by-pb' => '<th class="fs-num">P/B</th><th class="fs-num">P/E</th><th class="fs-num">ROE</th><th class="fs-num">Market cap</th>',
+		'largest-kosdaq' => '<th class="fs-num">Price</th><th class="fs-num">Day</th><th class="fs-num">Market cap</th>',
+	);
+	$h  = '<nav class="fs-crumb"><a href="/stocks/">Stocks</a> › <a href="/stocks/#lists">Lists</a> › ' . fs_esc( $l['short'] ) . '</nav>';
+	$h .= '<div class="fs-head"><div><h1>' . fs_esc( $l['title'] ) . '</h1><p class="fs-lead">' . fs_esc( $l['lead'] ) . '</p></div></div>';
+	$h .= '<div class="fs-chips"><span>' . number_format( $l['count'] ) . ' stocks qualify</span><span>Top ' . count( $l['rows'] ) . ' shown</span><span>Data as of ' . fs_date( $l['date'] ) . '</span></div>';
+	$h .= '<div class="fs-scroll"><table class="fs-t fs-listtab fs-lt-' . fs_esc( $slug ) . '"><tr><th>#</th><th>Company</th>' . $heads[ $slug ] . '</tr>' . fs_list_rows( $slug, $l['rows'] ) . '</table></div>';
+	if ( isset( FS_LIST_GUIDE[ $slug ] ) ) {
+		$g = FS_LIST_GUIDE[ $slug ];
+		$h .= '<div class="fs-cta"><div><b>' . fs_esc( $g[1] ) . '</b><br><span>' . fs_esc( $g[2] ) . '</span></div><a class="fs-btn" href="' . $g[0] . '">' . fs_esc( $g[3] ) . ' →</a></div>';
+	}
+	$other = '';
+	foreach ( $lists as $k => $x ) { if ( $k !== $slug ) { $other .= '<a href="/stocks/lists/' . $k . '/">' . fs_esc( $x['short'] ) . '</a>'; } }
+	$h .= '<div class="fs-sec"><h2>Other lists</h2><div class="fs-pills">' . $other . '</div></div>';
+	$src = 'highest-dividend-yield' === $slug ? 'Dividends: each company\'s latest annual filing on DART (Financial Supervisory Service), cash dividend per common share. Prices: Korea Exchange close via Naver Finance.'
+		: 'Data: Korea Exchange closing prices, ratios and foreign ownership via Naver Finance; latest annual results for ROE.';
+	return '<div class="fs-page">' . $h . '<p class="fs-src">' . $src . ' Updated after each Korean market close. Delayed data, not investment advice.</p></div>';
+}
+function fs_list_cards( $lists ) {
+	if ( ! $lists ) { return ''; }
+	$h = '<div class="fs-listcards" id="lists">';
+	foreach ( $lists as $k => $x ) { $h .= '<a href="/stocks/lists/' . $k . '/"><b>' . fs_esc( $x['short'] ) . '</b><span>' . fs_esc( $x['blurb'] ) . '</span></a>'; }
+	return $h . '</div>';
+}
+function fs_in_lists( $code, $lists ) {   // 종목 페이지 "이 종목이 든 순위표"
+	$out = array();
+	foreach ( $lists as $k => $x ) {
+		foreach ( $x['rows'] as $i => $r ) { if ( $r['code'] === $code ) { $out[] = '<a href="/stocks/lists/' . $k . '/">#' . ( $i + 1 ) . ' in ' . fs_esc( $x['short'] ) . '</a>'; break; } }
+	}
+	return $out ? '<div class="fs-inlists">' . implode( '', $out ) . '</div>' : '';
+}
+
+function fs_market_html( $m, $lists = array() ) {
 	if ( ! is_array( $m ) || empty( $m['index'] ) ) { return ''; }
 	$cell = function ( $label, $value ) { return '<div class="fs-cell"><span>' . $label . '</span><b>' . $value . '</b></div>'; };
 	$k = $m['index']['KOSPI']; $q = $m['index']['KOSDAQ'];
@@ -286,6 +352,11 @@ function fs_market_html( $m ) {
 	$h .= '<li class="fs-sep">Sold most</li>';
 	foreach ( array_slice( $m['foreign_sell'], 0, 3 ) as $r ) { $h .= '<li><a href="/stocks/' . $r['code'] . '/">' . fs_esc( $r['name'] ) . '</a><b class="fs-dn">' . fs_big( $r['value'] ) . '</b></li>'; }
 	$h .= '</ul><p class="fs-mute fs-small">Net buying by foreign investors in KRW, ' . date( 'M j', strtotime( ! empty( $m['flow_date'] ) ? $m['flow_date'] : $m['date'] ) ) . ' — ' . number_format( isset( $m['flow_universe'] ) ? $m['flow_universe'] : 0 ) . ' stocks with flow data that day.</p></div></div>';
+	if ( $lists ) {   // 홈 카드 밑 순위표 링크(2026-09-28)
+		$h .= '<div class="fs-morelists"><span>Stock lists</span>';
+		foreach ( $lists as $k => $x ) { $h .= '<a href="/stocks/lists/' . $k . '/">' . fs_esc( $x['short'] ) . '</a>'; }
+		$h .= '</div>';
+	}
 	return $h;
 }
 
@@ -313,6 +384,11 @@ table.fs-kv,table.fs-t{width:100%;border-collapse:collapse;font-size:14px;margin
 .fs-key{display:inline-block;width:14px;height:3px;vertical-align:middle;margin:0 6px 0 0}.fs-dash{background:repeating-linear-gradient(90deg,var(--fs-green) 0 4px,transparent 4px 7px);margin-left:14px}
 .fs-sec{margin-top:30px}.fs-sec h2,.fs-two h2{font-size:18px;font-weight:800;margin:0 0 6px}.fs-note{color:var(--fs-sub);font-size:13.5px;margin:0 0 10px}
 .fs-scroll{overflow-x:auto}.fs-rel{padding-left:18px;margin:6px 0 0}.fs-rel li{margin:4px 0}
+.fs-listcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:4px 0 18px}.fs-listcards a{border:1px solid var(--fs-line);border-radius:14px;padding:12px 14px;display:block}.fs-listcards a b{display:block;font-size:14.5px;margin-bottom:3px}.fs-listcards a span{font-size:12.5px;color:var(--fs-mute);line-height:1.45}.fs-listcards a:hover{border-color:var(--fs-blue);text-decoration:none!important}
+.fs-lead{color:var(--fs-sub);font-size:14.5px;line-height:1.6;max-width:75ch;margin:6px 0 0}.fs-chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 14px}.fs-chips span{background:var(--fs-pill);border-radius:8px;padding:4px 9px;font-size:12.5px;color:var(--fs-sub)}
+.fs-ind{color:var(--fs-mute);font-size:11.5px;margin-top:2px}.fs-flag{display:inline-block;background:#fff4e6;color:#b35c00;border-radius:6px;font-size:11px;font-weight:600;padding:2px 6px;margin:4px 4px 0 0}.fs-kr.fs-reit{background:#e7f5ff;color:#1864ab}
+.fs-scroll .fs-listtab td:nth-child(2){white-space:normal;min-width:190px}.fs-inlists{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}.fs-inlists a{background:#e7f5ff;color:#1864ab!important;border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600}
+.fs-morelists{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 8px;font-size:13.5px}.fs-morelists span{color:var(--fs-mute);font-weight:700;margin-right:4px}.fs-morelists a,.fs-listcards a,.fs-inlists a{text-decoration:none!important}.fs-morelists a{background:var(--fs-pill);border-radius:999px;padding:6px 12px;font-weight:600;color:var(--fs-sub)}
 .fs-cta{background:var(--fs-bb);border-radius:14px;padding:16px 18px;margin-top:28px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.fs-cta span{color:var(--fs-sub);font-size:13.5px}
 .fs-src{color:var(--fs-mute);font-size:12.5px;margin-top:22px}
 .fs-pills{display:flex;gap:8px;margin:14px 0}.fs-pills a{background:var(--fs-pill);border-radius:999px;padding:7px 14px;font-weight:600;font-size:13.5px;color:var(--fs-sub)}.fs-pills a.on{background:var(--fs-ink);color:#fff}
@@ -328,6 +404,9 @@ main div.fs-search.fs-search:not(.alignfull):not(.alignwide){max-width:680px!imp
 .fs-cards{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px;margin:0 0 10px}.fs-card{border:1px solid var(--fs-line);border-radius:16px;padding:16px 18px}
 .fs-card h2{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:8px}.fs-more{margin-left:auto;font-size:12.5px;color:var(--fs-blue)!important;font-weight:600}
 .fs-mv{list-style:none;margin:0;padding:0}.fs-mv li{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--fs-line);font-size:14px}.fs-mv li.fs-sep{color:var(--fs-mute);font-size:12.5px;font-weight:700;padding-top:10px;border-top:0}
+@media (max-width:380px){.fs-lt-most-foreign-owned th:nth-child(4),.fs-lt-most-foreign-owned td:nth-child(4),.fs-lt-largest-kosdaq th:nth-child(4),.fs-lt-largest-kosdaq td:nth-child(4){display:none}}
+@media (max-width:600px){.fs-listtab td,.fs-listtab th{padding-left:4px!important;padding-right:4px!important}.fs-listtab .fs-ind{white-space:normal}.fs-listtab td.fs-num{font-size:13px}}
+@media (max-width:600px){.fs-lt-highest-dividend-yield th:nth-child(3),.fs-lt-highest-dividend-yield td:nth-child(3),.fs-lt-highest-dividend-yield th:nth-child(5),.fs-lt-highest-dividend-yield td:nth-child(5),.fs-lt-highest-dividend-yield th:nth-child(6),.fs-lt-highest-dividend-yield td:nth-child(6),.fs-lt-highest-dividend-yield th:nth-child(7),.fs-lt-highest-dividend-yield td:nth-child(7),.fs-lt-most-foreign-owned th:nth-child(5),.fs-lt-most-foreign-owned td:nth-child(5),.fs-lt-cheapest-by-pb th:nth-child(4),.fs-lt-cheapest-by-pb td:nth-child(4),.fs-lt-cheapest-by-pb th:nth-child(6),.fs-lt-cheapest-by-pb td:nth-child(6),.fs-lt-largest-kosdaq th:nth-child(3),.fs-lt-largest-kosdaq td:nth-child(3){display:none}.fs-listtab td:nth-child(2){min-width:0!important}}
 @media (max-width:600px){.fs-list th:nth-child(3),.fs-list td:nth-child(3),.fs-list th:nth-child(6),.fs-list td:nth-child(6){display:none}
 .fs-scroll .fs-list td:nth-child(2){white-space:normal}.fs-search kbd{display:none}.fs-tabs{flex-wrap:wrap;overflow:visible}.fs-tabs a{padding:7px 9px}}
 @media (max-width:820px){.fs-two,.fs-stats,.fs-cards{grid-template-columns:1fr}.fs-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.fs-price{font-size:30px}.fs-head h1{font-size:25px}}
@@ -411,6 +490,8 @@ function fs_page_id() { $p = get_page_by_path( 'stocks' ); return $p ? (int) $p-
 function fs_current_code() { $c = strtoupper( (string) get_query_var( 'fm_code' ) ); return preg_match( '/^[0-9][0-9A-Z]{5}$/', $c ) ? $c : ''; }
 function fs_stock( $code ) { $s = get_option( 'fm_s_' . $code ); return is_array( $s ) ? $s : null; }
 function fs_index() { $i = get_option( 'fm_stock_index' ); return is_array( $i ) ? $i : array(); }
+function fs_lists() { $l = get_option( 'fm_lists' ); return is_array( $l ) ? $l : array(); }
+function fs_current_list() { $l = (string) get_query_var( 'fm_list' ); $all = fs_lists(); return ( preg_match( '/^[a-z0-9-]+$/', $l ) && isset( $all[ $l ] ) ) ? $l : ''; }
 // 검색창이 받는 목록은 고정 파일로 — REST로 받으면 방문자마다 워드프레스가 돌고(0.5~0.8초) 첫 검색이 비었다(2026-09-27 버튼 점검)
 function fs_index_file() { $u = wp_upload_dir(); return array( $u['basedir'] . '/fermata/stock-index.json', $u['baseurl'] . '/fermata/stock-index.json' ); }
 function fs_index_write( $index ) {
@@ -426,10 +507,11 @@ function fs_index_url() {
 }
 
 add_action( 'init', function () {
+	add_rewrite_rule( '^stocks/lists/([a-z0-9-]+)/?$', 'index.php?pagename=stocks&fm_list=$matches[1]', 'top' );
 	add_rewrite_rule( '^stocks/([0-9][0-9A-Za-z]{5})/?$', 'index.php?pagename=stocks&fm_code=$matches[1]', 'top' );
-	if ( get_option( 'fm_stock_rewrite' ) !== '3' ) { flush_rewrite_rules( false ); update_option( 'fm_stock_rewrite', '3' ); }   // '3': Rank Math 사이트맵을 끈 뒤 한 번 더(2026-09-28)
+	if ( get_option( 'fm_stock_rewrite' ) !== '4' ) { flush_rewrite_rules( false ); update_option( 'fm_stock_rewrite', '4' ); }   // '4': 순위표 주소(2026-09-28)   // '3': Rank Math 사이트맵을 끈 뒤 한 번 더(2026-09-28)
 } );
-add_filter( 'query_vars', function ( $v ) { $v[] = 'fm_code'; return $v; } );
+add_filter( 'query_vars', function ( $v ) { $v[] = 'fm_code'; $v[] = 'fm_list'; return $v; } );
 // IndexNow(빙) 열쇠 파일 — 사이트 주인 확인용 공개 값(src/indexnow.py의 KEY와 같아야 한다, 2026-09-28)
 const FS_INDEXNOW_KEY = 'f388cd4cbbadc90870c3c0fb1dfdc730';
 add_action( 'parse_request', function () {
@@ -438,7 +520,7 @@ add_action( 'parse_request', function () {
 	}
 }, 0 );
 // 워드프레스가 /stocks/000660/을 페이지 주소 /stocks/로 '바로잡아' 넘기지 않게
-add_filter( 'redirect_canonical', function ( $url ) { return fs_current_code() ? false : $url; } );
+add_filter( 'redirect_canonical', function ( $url ) { return ( fs_current_code() || get_query_var( 'fm_list' ) ) ? false : $url; } );
 
 add_action( 'rest_api_init', function () {
 	register_rest_route( 'fermata/v1', '/stocks', array( 'methods' => 'POST', 'permission_callback' => function () { return current_user_can( 'edit_posts' ); },
@@ -464,6 +546,10 @@ add_action( 'rest_api_init', function () {
 				$out['index_next'] = count( $next );
 				$total = isset( $body['index_total'] ) ? (int) $body['index_total'] : 0;
 				if ( $total && $total === count( $next ) ) { update_option( 'fm_stock_index', $next, false ); delete_option( 'fm_stock_index_next' ); $out['index'] = $total; $out['index_file'] = fs_index_write( $next ); delete_transient( 'fs_link_v1' ); }
+			}
+			if ( isset( $body['list']['slug'], $body['list']['data'] ) && preg_match( '/^[a-z0-9-]+$/', $body['list']['slug'] ) && is_array( $body['list']['data'] ) ) {
+				$all = fs_lists(); $all[ $body['list']['slug'] ] = $body['list']['data'];
+				update_option( 'fm_lists', $all, false ); $out['list'] = $body['list']['slug'];
 			}
 			if ( isset( $body['market'] ) && is_array( $body['market'] ) ) { update_option( 'fm_market', $body['market'], false ); $out['market'] = true; }
 			return $out;
@@ -497,22 +583,24 @@ add_action( 'rest_api_init', function () {
 // 없는 종목 코드는 404
 add_action( 'template_redirect', function () {
 	$code = fs_current_code();
-	if ( $code && ! fs_stock( $code ) ) { global $wp_query; $wp_query->set_404(); status_header( 404 ); nocache_headers(); }
+	$bad_list = get_query_var( 'fm_list' ) && ! fs_current_list();
+	if ( ( $code && ! fs_stock( $code ) ) || $bad_list ) { global $wp_query; $wp_query->set_404(); status_header( 404 ); nocache_headers(); }
 } );
 
 add_filter( 'the_content', function ( $content ) {
 	if ( ! is_page( 'stocks' ) || get_the_ID() !== get_queried_object_id() ) { return $content; }
-	$code = fs_current_code(); $index = fs_index();
+	$code = fs_current_code(); $index = fs_index(); $lists = fs_lists();
+	if ( $slug = fs_current_list() ) { return fs_list_html( $slug, $lists[ $slug ], $lists ); }
 	if ( $code && ( $s = fs_stock( $code ) ) ) {
 		$by = array(); foreach ( $index as $r ) { $by[ $r[0] ] = $r; }
 		$related = array();
 		$qry = new WP_Query( array( 'post_type' => 'post', 'post_status' => 'publish', 's' => $s['name'], 'posts_per_page' => 5, 'category__in' => array( 121, 153 ), 'no_found_rows' => true ) );
 		foreach ( $qry->posts as $p ) { $related[] = array( 'title' => html_entity_decode( get_the_title( $p ), ENT_QUOTES, 'UTF-8' ), 'url' => get_permalink( $p ) ); }
-		return fs_stock_html( $s, $by, $related );
+		return fs_stock_html( $s, $by, $related, $lists );
 	}
 	$m = isset( $_GET['m'] ) ? strtolower( sanitize_text_field( wp_unslash( $_GET['m'] ) ) ) : '';
 	$pg = isset( $_GET['pg'] ) ? (int) $_GET['pg'] : 1;
-	return $index ? fs_index_html( $index, in_array( $m, array( 'kospi', 'kosdaq' ), true ) ? $m : '', $pg ) : '<p>Stock data is loading. Please check back after the next Korean market close.</p>';
+	return $index ? fs_index_html( $index, in_array( $m, array( 'kospi', 'kosdaq' ), true ) ? $m : '', $pg, 100, $lists ) : '<p>Stock data is loading. Please check back after the next Korean market close.</p>';
 }, 99 );   // wpautop(10) 뒤 — 앞에 두면 그린 표에 <p>·<br>이 끼어든다
 
 // 영어 시황(121·684·685)과 가이드(153) 본문에서 종목 이름을 잇는다 — 목록이 바뀌면 다시 만든다(REST가 transient를 지운다)
@@ -523,7 +611,7 @@ add_filter( 'the_content', function ( $content ) {
 	return fs_link_apply( $content, $built );
 }, 98 );
 
-add_shortcode( 'fermata_market', function () { return fs_market_html( get_option( 'fm_market' ) ); } );
+add_shortcode( 'fermata_market', function () { return fs_market_html( get_option( 'fm_market' ), fs_lists() ); } );
 add_shortcode( 'fermata_search', function () { return fs_search_box( count( fs_index() ) ); } );
 add_shortcode( 'fermata_nav', function ( $a ) { $a = shortcode_atts( array( 'active' => '' ), $a ); return fs_nav( $a['active'] ); } );
 // 'fermata-hub' 틀을 쓰는 페이지 — 메뉴 줄 CSS가 여기에 필요하다
@@ -531,10 +619,12 @@ function fs_hub_view() { return is_front_page() || is_page( array( 'stocks', 76,
 
 // 제목·설명·주소(Rank Math가 그리는 머리)
 function fs_meta_title() {
+	if ( $l = fs_current_list() ) { $x = fs_lists()[ $l ]; return $x['title'] . ' (' . date( 'Y', strtotime( $x['date'] ) ) . ') | Fermata'; }
 	$code = fs_current_code(); if ( ! $code || ! ( $s = fs_stock( $code ) ) ) { return is_page( 'stocks' ) ? 'Korean Stocks: All KOSPI and KOSDAQ Companies by Market Cap | Fermata' : null; }
 	return $s['name'] . ' (' . $code . ') Stock Price, Foreign Ownership & Financials | Fermata';
 }
 function fs_meta_desc() {
+	if ( $l = fs_current_list() ) { $x = fs_lists()[ $l ]; $top = array_slice( $x['rows'], 0, 3 ); return $x['short'] . ' among Korean stocks, updated after each close (' . fs_date( $x['date'] ) . '). Top: ' . implode( ', ', array_map( function ( $r ) { return $r['name']; }, $top ) ) . '.'; }
 	$code = fs_current_code(); if ( ! $code || ! ( $s = fs_stock( $code ) ) ) { return is_page( 'stocks' ) ? 'Every stock on the Korea Exchange in English: prices, market caps, foreign ownership and investor flows, updated after each close.' : null; }
 	$q = $s['q']; $fr = fs_foreign_own( $s );
 	return $s['name'] . ' (KRX: ' . $code . ') closed at ₩' . number_format( (float) $q['close'] ) . ' on ' . fs_date( $q['date'] ) . '. Market cap ' . fs_big( $q['mcap'] )
@@ -550,8 +640,12 @@ add_filter( 'rank_math/frontend/robots', function ( $r ) {
 	if ( is_page( 'stocks' ) && ! fs_current_code() && ( ! empty( $_GET['pg'] ) || ! empty( $_GET['m'] ) ) ) { $r['index'] = 'noindex'; $r['follow'] = 'follow'; }
 	return $r;
 }, 99 );
-add_filter( 'rank_math/frontend/canonical', function ( $u ) { $c = fs_current_code(); return ( $c && fs_stock( $c ) ) ? home_url( '/stocks/' . $c . '/' ) : $u; }, 99 );
-add_filter( 'get_canonical_url', function ( $u ) { $c = fs_current_code(); return ( $c && fs_stock( $c ) ) ? home_url( '/stocks/' . $c . '/' ) : $u; }, 99 );
+function fs_canonical( $u ) {
+	if ( $l = fs_current_list() ) { return home_url( '/stocks/lists/' . $l . '/' ); }
+	$c = fs_current_code(); return ( $c && fs_stock( $c ) ) ? home_url( '/stocks/' . $c . '/' ) : $u;
+}
+add_filter( 'rank_math/frontend/canonical', 'fs_canonical', 99 );
+add_filter( 'get_canonical_url', 'fs_canonical', 99 );
 
 // Rank Math 사이트맵 기능은 언제나 끈다(2026-09-28) — 켜지면 /wp-sitemap.xml을 제 사이트맵으로 돌려보내 종목 사이트맵이 404가 된다.
 // 9/12에 껐는데 9/28 다시 켜져 있었다(누가·왜 켰는지는 확인 못 함). Rank Math는 켜진 기능을 옵션 rank_math_modules에 두고
@@ -567,6 +661,7 @@ add_action( 'wp_sitemaps_init', function ( $sitemaps ) {
 			public function __construct() { $this->name = 'stocks'; $this->object_type = 'stocks'; }
 			public function get_url_list( $page_num, $object_subtype = '' ) {
 				$rows = array_slice( fs_index(), ( $page_num - 1 ) * 2000, 2000 ); $out = array();
+				if ( 1 === (int) $page_num ) { foreach ( array_keys( fs_lists() ) as $k ) { $out[] = array( 'loc' => home_url( '/stocks/lists/' . $k . '/' ) ); } }
 				foreach ( $rows as $r ) { $out[] = array( 'loc' => home_url( '/stocks/' . $r[0] . '/' ) ); }
 				return $out;
 			}

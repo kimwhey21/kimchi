@@ -24,6 +24,8 @@ WIDTHS = (390, 768, 1024, 1440, 1920)
 PAGES = [
     ("/", "Market"), ("/stocks/", "Stocks"), ("/stocks/?m=kospi", "Stocks"), ("/stocks/?m=kosdaq&pg=5", "Stocks"),
     ("/stocks/000660/", "Stocks"), ("/stocks/005930/", "Stocks"), ("/stocks/005387/", "Stocks"), ("/stocks/0010S0/", "Stocks"),
+    ("/stocks/lists/highest-dividend-yield/", "Stocks"), ("/stocks/lists/most-foreign-owned/", "Stocks"),
+    ("/stocks/lists/cheapest-by-pb/", "Stocks"), ("/stocks/lists/largest-kosdaq/", "Stocks"), ("/stocks/lists/nope/", None),
     ("/daily/", "Daily"), ("/guides/", "Guides"), ("/all/", None), ("/category/daily/", "Daily"), ("/category/korea-close/", "Daily"),
     ("/category/wall-street-close/", "Daily"), ("/category/guides/", "Guides"),
     # 2026-09-28 템플릿 통일 — 글·작성자·개인정보에도 메뉴가 있고 글은 자기 갈래를 칠한다
@@ -64,7 +66,7 @@ def check_static(browser, problems):
             page, status = open_page(browser, path, w, problems, errors)
             got = page.evaluate(PROBE)
             tag = f"{w}px {path}"
-            expect_404 = path in ("/no-such-page-xyz/", "/stocks/999999/")
+            expect_404 = path in ("/no-such-page-xyz/", "/stocks/999999/", "/stocks/lists/nope/")
             if (status == 404) != expect_404 or (status not in (200, 404)):
                 problems.append(f"{tag}: 상태 {status}")
             if got["overflow"] > 0:
