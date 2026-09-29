@@ -25,7 +25,18 @@ permissions:
   contents: write
 
 jobs:
+  # 깃허브 예약이 늦게 와서 Cloudflare가 이미 누른 일을 또 하지 않게 (skip_guard.yml, 2026-09-29)
+  guard:
+    uses: ./.github/workflows/skip_guard.yml
+    permissions:
+      actions: read
+    secrets: inherit
+    with:
+      mode: active
+
   material:
+    needs: guard
+    if: needs.guard.outputs.run == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

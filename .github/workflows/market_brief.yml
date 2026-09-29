@@ -64,7 +64,18 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # 깃허브 예약이 늦게 와서 Cloudflare가 이미 누른 일을 또 하지 않게 (skip_guard.yml, 2026-09-29)
+  guard:
+    uses: ./.github/workflows/skip_guard.yml
+    permissions:
+      actions: read
+    secrets: inherit
+    with:
+      mode: success
+
   run:
+    needs: guard
+    if: needs.guard.outputs.run == 'true'
     runs-on: ubuntu-latest
     # 수집한 시세를 data/ 아래로 커밋하기 위해 쓰기 권한이 필요합니다.
     permissions:

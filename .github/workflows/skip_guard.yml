@@ -1,0 +1,62 @@
+name: Skip Guard
+
+# 깃허브 예약 실행이 "이미 돌았으면 건너뛰기"를 판단하는 공용 단계 (2026-09-29).
+# 평소에는 Cloudflare 예비 예약(cloudflare/backup_cron)이 정시에 실행 버튼을 누르고, 깃허브 예약은 18~22분 늦게
+# 또 온다. 늦게 온 예약이 같은 일을 또 하면 종목 DB(25분)가 카페24에 두 번 들이치고 점검 실패 알림이 두 번 온다.
+# 그래서 예약(schedule)으로 온 실행만, 최근 60분 안에 같은 워크플로의 다른 실행이 있으면 건너뛴다.
+# 손으로 누른 실행·Cloudflare가 누른 실행은 늘 돈다. 조회가 실패하면 돈다(건너뛰다 하루를 잃는 것보다 두 번 도는 편이 낫다).
+#   mode: success — 성공한 실행만 센다(시세 수집: 앞 실행이 실패했으면 재시도가 돌아야 한다)
+#         active  — 성공했거나 아직 도는 실행을 센다(종목 DB·재료·종가 사진)
+#         any     — 실패한 실행도 센다(발행 점검: 다시 돌아도 같은 실패 알림만 한 번 더 온다)
+on:
+  workflow_call:
+    inputs:
+      mode:
+        type: string
+        default: active
+    outputs:
+      run:
+        value: ${{ jobs.check.outputs.run }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.g.outputs.run }}
+    steps:
+      - id: g
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          WF_REF: ${{ github.workflow_ref }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          go() { echo "run=$1" >> "$GITHUB_OUTPUT"; echo "$2"; exit 0; }
+          [ "$EVENT" = "schedule" ] || go true "예약 실행이 아니라 그대로 돕니다 ($EVENT)"
+          wf=$(basename "${WF_REF%@*}")
+          since=$(date -u -d '60 minutes ago' +%Y-%m-%dT%H:%M:%SZ)
+          case "$MODE" in
+            success) sel='.conclusion == "success"' ;;
+            any)     sel='true' ;;
+            *)       sel='.conclusion == "success" or .status != "completed"' ;;
+          esac
+          n=$(gh api "repos/$REPO/actions/workflows/$wf/runs?created=%3E%3D$since&per_page=30" \
+                --jq "[.workflow_runs[] | select(.id != $RUN_ID) | select($sel)] | length") \
+            || go true "최근 실행 조회에 실패해 그대로 돕니다"
+          [ "${n:-0}" -gt 0 ] && go false "최근 60분 안에 같은 작업이 이미 돌았습니다($MODE, ${n}건) — 이 예약 실행은 건너뜁니다"
+          go true "최근 60분 안에 같은 작업이 없어 돕니다"
+
+      - name: 실패 알림 (텔레그램 운영 대화)
+        # 이 단계가 죽으면 부른 쪽의 본 작업이 건너뛰어진다 — 조용히 하루를 잃지 않게 알린다
+        if: failure()
+        run: |
+          [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_ADMIN_CHAT_ID" ] || exit 0
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_ADMIN_CHAT_ID}" -d disable_web_page_preview=true \
+            --data-urlencode text="❌ ${{ github.workflow }} 건너뛰기 판단 실패 — 본 작업이 돌지 않았습니다 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >/dev/null || true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}
