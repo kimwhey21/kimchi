@@ -392,7 +392,7 @@
   `~/.market-brief-naver/fermata49_pause.json` 하나이고 `naver_sync`가 읽는다(잡지는 그대로 올라간다). 그동안 한국어 원고는
   블로그스팟에만 나가고, 텔레그램·스레드 알림은 **블로그스팟 주소로** 나간다 — 맥의 `blogger_sync`가 올린 직후
   `scripts/notify_blogger_post.py`를 부른다(멈춤 스위치가 켜져 있을 때만, 오늘·어제 원고만, 잡지·영어 제외). 다시 켤 때는 `"paused": false`와
-  `"resume_from"` 날짜를 적는다 — 멈춘 동안 쌓인 글을 한꺼번에 올리지 않는다.
+  `"resume_from"` 날짜를 적는다 — 멈춘 동안 쌓인 글을 한꺼번에 올리지 않는다. 멈춘 동안 이 계정에서는 자동 활동(서로이웃·공감·제보·올라간 글 고치기)을 하지 않고, 새 계정으로 우회하지 않는다. 이 맥의 `~/.market-brief-naver/weekly_expose.py`(launchd `kr.it.fermata.exposeweekly`, 월 08:30)가 두 블로그의 검색 노출을 대조군과 함께 재 운영 텔레그램으로 보낸다(판단선 10/10·10/24).
 - **블로그스팟(fermata49.blogspot.com, "Fermata 매거진")은 구글용 한국어 창구다**(2026-09-25). 새 글을 쓰지 않고 원고를 그대로
   옮긴다 — 잡지·한국어 가이드·Checkpoint(확인 날짜가 안 지난 것)·주간 결산·다음 주 일정·이벤트 전부, 시황·프리뷰는 2026-09-25
   이후 것만(디스커버 4주 시험). 영어 가이드는 본진과 겹치므로 올리지 않는다. 렌더는 `scripts/blogger_post.py`(네이버와 같은
