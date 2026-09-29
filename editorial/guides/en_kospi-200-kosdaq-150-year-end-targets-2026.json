@@ -3,11 +3,11 @@
   "series": "Guide",
   "lang": "en",
   "date": "2026-09-23",
-  "checked": "2026-09-23",
+  "checked": "2026-09-29",
   "slug": "kospi-200-kosdaq-150-year-end-targets-2026",
   "category_id": 153,
-  "tags": ["KOSPI target", "KOSPI 200", "KOSDAQ 150", "Korea stock market forecast", "KOSPI 2026"],
-  "radar_origin": "search queue: kospi200 kosdaq150 2026 year end target forecast (5.5위, 새 글 — 전용 글 없이도 이만큼 왔습니다). 이번 주 고치기 두 편(9/21 KOSPI vs KOSDAQ, 9/22 KOSPI 200 Explained)을 이미 써서 고치기 줄을 건너뛰고 새 글 줄로 내려왔습니다.",
+  "tags": ["KOSPI vs KOSDAQ", "KOSPI target", "KOSPI 200", "KOSDAQ 150", "Korea stock market forecast"],
+  "radar_origin": "search queue: kospi vs kosdaq (5.5위, gain 1.86) 및 kosdaq vs kospi (9.7위) — 이 글이 이미 이 URL로 두 검색어에 노출되고 있었지만 'KOSPI vs KOSDAQ' 문구가 제목·첫 소제목·첫 문장 어디에도 없어 추가. 첫 문단에 우리 보드 설명 가이드로 가는 링크도 넣어 그 질문으로 온 독자를 잘못 붙잡지 않게 했다.",
   "related": [
     {
       "title": "KOSPI 200 Explained: How Korea Picks 200 Stocks (2026)",
@@ -23,11 +23,11 @@
     }
   ],
   "ko": {
-    "title": "KOSPI 200 and KOSDAQ 150 in 2026: The Year-End Target Nobody Sets",
+    "title": "KOSPI vs KOSDAQ 2026: The Year-End Target Nobody Actually Sets",
     "narrative": [
       {
-        "heading": "The target you're reading about is for the KOSPI, not KOSPI 200",
-        "body": "If you searched for a KOSPI 200 or KOSDAQ 150 year-end target for 2026, the numbers you'll actually find in Korean financial media — 6,500, 10,500, 11,500 — are not KOSPI 200 or KOSDAQ 150 figures at all. They are targets for the <b>KOSPI Composite Index</b>, the broad, all-common-stock benchmark that Korea Exchange (KRX) headlines quote every trading day, currently trading around 7,000. KOSPI 200 is a separate, smaller number: a curated 200-stock subset of the same board, built by Korea Exchange for futures, options and index funds, and it closed at <b>1,126.18</b> on September 23, 2026 — a completely different scale from the Composite it is drawn from.\n\nKOSDAQ works the same way. \"The KOSDAQ\" in a headline means the KOSDAQ Composite, which closed at 834.38 on September 22, 2026. KOSDAQ 150 is Korea Exchange's curated large-cap subset of that board, the one KOSDAQ 150 futures and ETFs like KODEX KOSDAQ150 actually track, and it traded around <b>1,408</b> on September 23, 2026. None of the brokerage forecasts below are built around either 200-stock or 150-stock index level — they are Composite calls, and this guide is upfront about that gap before walking through what strategists actually said."
+        "heading": "KOSPI vs KOSDAQ, and why the 2026 target you found isn't KOSPI 200",
+        "body": "KOSPI and KOSDAQ are Korea's two separate stock exchanges — KOSPI lists the country's large, established companies, and KOSDAQ lists smaller, growth-oriented ones. If that board-to-board comparison is what you're after, our companion guide, <a href=\"https://fermata.it.kr/kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you/\">KOSPI vs KOSDAQ: Korea's Two Boards, Explained</a>, covers it directly. This guide answers a narrower version of the same question: KOSPI vs KOSDAQ when you're hunting for a 2026 year-end target, where each market actually carries two different numbers, not one.\n\nIf you searched for a KOSPI 200 or KOSDAQ 150 year-end target for 2026, the numbers you'll actually find in Korean financial media — 6,500, 10,500, 11,500 — are not KOSPI 200 or KOSDAQ 150 figures at all. They are targets for the <b>KOSPI Composite Index</b>, the broad, all-common-stock benchmark that Korea Exchange (KRX) headlines quote every trading day, currently trading around 7,000. KOSPI 200 is a separate, smaller number: a curated 200-stock subset of the same board, built by Korea Exchange for futures, options and index funds, and it closed at <b>1,126.18</b> on September 23, 2026 — a completely different scale from the Composite it is drawn from.\n\nKOSDAQ works the same way. \"The KOSDAQ\" in a headline means the KOSDAQ Composite, which closed at 834.38 on September 22, 2026. KOSDAQ 150 is Korea Exchange's curated large-cap subset of that board, the one KOSDAQ 150 futures and ETFs like KODEX KOSDAQ150 actually track, and it traded around <b>1,408</b> on September 23, 2026. None of the brokerage forecasts below are built around either 200-stock or 150-stock index level — they are Composite calls, and this guide is upfront about that gap before walking through what strategists actually said."
       },
       {
         "heading": "Why nobody publishes a standalone KOSPI 200 or KOSDAQ 150 target",
@@ -53,7 +53,8 @@
     "closing": {
       "heading": "The takeaway",
       "body": "Every widely quoted \"2026 KOSPI target\" is a forecast for the Composite, not for KOSPI 200 or KOSDAQ 150 — the two indices that actually underlie Korea's index funds, ETFs and futures moved on their own, closing at 1,126.18 and around 1,408 respectively on September 23, 2026. The Composite targets themselves have been revised upward almost every time the market has tested them in 2026, from Korea Investment & Securities' 5,650 in January to Daishin Securities' 11,500 in June, and the index closed at 7,017.91 in September still working through that range.\n\nTreat these numbers as a read on how fast sell-side earnings estimates are rising, not as a price you should plan around — targets that get revised this often are describing a rally already in progress more than predicting one. If you hold a position tied specifically to KOSPI 200 or KOSDAQ 150, check that index's own current level rather than scaling a Composite headline. This guide reflects brokerage research notes and index levels as reported and cross-checked in September 2026; all figures change, and this is not investment advice."
-    }
+    },
+    "excerpt": "KOSPI vs KOSDAQ: the 2026 targets in the headlines — 6,500 to 11,500 — are KOSPI Composite forecasts, not KOSPI 200 or KOSDAQ 150 levels."
   },
   "graphics": [
     {
