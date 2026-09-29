@@ -398,7 +398,7 @@
   이후 것만(디스커버 4주 시험). 영어 가이드는 본진과 겹치므로 올리지 않는다. 렌더는 `scripts/blogger_post.py`(네이버와 같은
   블록 → HTML, 그림은 본진 미디어에 멱등 업로드, 잡지 표지는 Unsplash 주소, 글 끝 고정 줄: 텔레그램(시황 블로그 이웃 추가 줄은 게시 멈춤과 함께 뺐다),
   잡지는 퍼플썸 네이버로만 안내하고 페르마타 이름을 쓰지 않는다), 올리기는 이 맥의 `~/.market-brief-google/blogger_sync.py`
-  (launchd `kr.it.fermata.bloggersync`, 10분, 하루 10편 상한(그중 3편은 그날 새 시황·프리뷰 몫 — 밀린 옛 글은 7편까지, 2026-09-29), 공개 스위치 `~/.market-brief-google/blogger_publish_on`이 있을 때만
+  (launchd `kr.it.fermata.bloggersync`, 10분, 하루 10편 상한(밀린 옛 글·잡지는 7편까지, 그날 새 시황·프리뷰는 옛 글과 따로 3편까지 — 자정에 옛 글이 상한을 다 써도 그날 글은 제때 올라간다, 2026-09-29), 공개 스위치 `~/.market-brief-google/blogger_publish_on`이 있을 때만
   게시, 같은 크롬 프로필을 쓰는 작업이 돌면 건너뜀). 블로거 설정은 맞춤 robots.txt·자료실/검색 페이지
   noindex·공식 테마(Contempo)다 — **맞춤 robots.txt를 바꾸지 말 것**(이유는 비공개 기록). 네이버에 올리는 시각은
   바꾸지 않는다. 판정은 11월 30일 서치콘솔(검색·디스커버 따로)과 애드센스로 하고, 잡지의 네이버 노출이 떨어지면 그날 멈춘다.
