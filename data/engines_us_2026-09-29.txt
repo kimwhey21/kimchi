@@ -1,49 +1,55 @@
 [밸류에이션] US · 2026-09-29 · FWD PER 중앙값 23.5
   종목            FWD PER     목표가 대비     52주고점 대비    애널
-  마이크론              6.5     +44.3%       -16.0%    46
-  엔비디아             14.6     +43.2%        -3.2%    59
-  머크               15.6      +3.3%        -5.2%    26
-  메타               20.5     +10.9%        -8.2%    57
-  마이크로소프트          21.5     +13.4%        -8.0%    52
-  알파벳              22.7     +25.3%       -16.1%    54
-  아마존              23.5     +33.9%       -14.3%    57
-  디어               30.2      +0.3%        -4.4%    23
-  월마트              33.7     +17.2%       -19.6%    40
-  애플               35.3      -3.0%        -2.0%    39
-  인텔               56.3      +0.3%       -18.5%    43
-  코인베이스            67.6      +8.0%       -52.3%    31
-  테슬라             164.5     +10.7%       -28.3%    38
+  마이크론              6.6     +42.8%       -15.1%    46
+  엔비디아             14.5     +44.2%        -3.9%    59
+  머크               15.7      +3.6%        -4.9%    26
+  메타               21.1      +7.5%        -5.3%    57
+  마이크로소프트          21.5     +13.4%        -8.1%    52
+  알파벳              22.6     +25.9%       -16.6%    54
+  아마존              23.5     +33.6%       -14.1%    57
+  디어               29.8      +1.7%        -5.6%    23
+  월마트              33.1     +19.3%       -21.0%    40
+  애플               34.4      -0.4%        -4.6%    39
+  인텔               56.2      +0.4%       -18.6%    43
+  코인베이스            67.0      +9.1%       -52.8%    32
+  테슬라             162.4     +12.2%       -29.3%    38
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 12건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 16건은 뺐습니다)
   2026-09-23 ▲ 마이크로소프트      Stifel: Hold → Buy
 
-[월가 리포트] US · 오늘 · 24건 (상향 2 하향 8 신규 4 목표가 상향 0 하향 0) · 출처 marketbeat
+[월가 리포트] US · 오늘 · 217건 (상향 11 하향 15 신규 31 목표가 상향 32 하향 63) · 출처 marketbeat
   ALFVY  ▼ 하향     Danske                    Hold                     
   AXGN   ▼ 하향     Morgan Stanley            Hold                     
   AZO    ▼ 하향     Morgan Stanley            Overweight → Market Perform 
+  BLMN   ▲ 상향     JPMorgan Chase & Co.      Underweight → Neutral    $6.00 → $13.00
   CRPJY  ▼ 하향     Deutsche Bank Aktiengese  Hold                     
+  CRZBY  ▼ 하향     Deutsche Bank Aktiengese  Buy → Hold               
   ERFSF  ▼ 하향     Sanford C. Bernstein      Outperform → Market Perform 
-  FSK    ▼ 하향     Wells Fargo & Company     Sector Perform → Underweight 
+  FICO   ▼ 하향     Huber Research            Underweight              
+  FMS    ▼ 하향     Berenberg Bank            Buy → Hold               
+  FSK    ▼ 하향     Wells Fargo & Company     Sector Perform → Underweight $10.00
+  HAFN   ▲ 상향     Pareto Securities         Hold → Buy               
   HOOD   ▼ 하향     Morgan Stanley            Overweight → Outperform  
   IBDRY  ▲ 상향     Deutsche Bank Aktiengese  Buy                      
-  RDY    ▲ 상향     Citigroup                 Buy                      
+  INSE   ▼ 하향     BWS Financial             Buy → Neutral            
+  MAIN   ▲ 상향     Wells Fargo & Company     Equal Weight → Overweight $55.00 → $60.00
+  MNDY   ▼ 하향     JPMorgan Chase & Co.      Overweight → Neutral     $90.00 → $87.00
+  NFLX   ▲ 상향     Deutsche Bank Aktiengese  Hold → Buy               $100.00 → $95.00
+  RDY    ▲ 상향     Citigroup                 Sell → Buy               $1,040.00 → $1,450.00
+  RTO    ▼ 하향     Morgan Stanley            Overweight → Equal Weight 
+  RZLT   ▲ 상향     Craig Hallum              Hold → Buy               $4.00 → $7.00
+  SANG   ▼ 하향     TD Securities             Buy → Sell               C$8.00 → C$7.35
+  SFIX   ▲ 상향     Mizuho                    Underperform → Neutral   $3.00 → $2.50
   SMMT   ▼ 하향     Morgan Stanley            Outperform               
-  AZO    · 신규     Sanford C. Bernstein      Outperform               
-  NAUT   · 신규     Roth Capital              Buy                      $3.50
-  ORLY   · 신규     Sanford C. Bernstein      Market Perform           
-  RPID   · 신규     Roth Capital              Buy                      
-  BKR    · 목표가    Jefferies Financial Grou                           $77.00
-  BLMN   · 목표가    Veritas Investment Resea                           $13.00
-  CVNA   · 목표가    Jefferies Financial Grou  Buy                      $88.00
-  FMS    · 목표가    Berenberg Bank                                     $24.00
-  MAIN   · 목표가    Wells Fargo & Company     Overweight               $60.00
-  PEP    · 목표가    Jefferies Financial Grou                           $138.00
-  R      · 목표가    Robert W. Baird                                    $245.00
-  SMMT   · 목표가    The Goldman Sachs Group   Buy                      $41.00
-  STAA   · 목표가    Veritas Investment Resea                           $31.00
-  UNIT   · 목표가    Raymond James Financial   Strong-Buy               $16.00
+  STAA   ▲ 상향     Stifel Nicolaus           Hold → Buy               $28.00 → $31.00
+  SUOPY  ▲ 상향     UBS Group                 Buy                      
+  TCPC   ▲ 상향     Wells Fargo & Company     Underweight → Equal Weight $3.50 → $4.00
+  ABCL   · 신규     JPMorgan Chase & Co.      Overweight               $17.00
+  ADPT   · 신규     The Goldman Sachs Group   Buy                      $35.00
+  AEE    · 신규     Scotiabank                Sector Perform           $104.00
+  AESI   · 신규     Scotiabank                Sector Outperform        $14.00
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
@@ -53,41 +59,39 @@
 [내부자 매수] 최근 14일 · 0건
   금액과 직위를 함께 보십시오. 같은 '내부자 매수'라도 4만 달러와 300만 달러는 다른 신호입니다.
 
-  ⚠ 5건을 받지 못했습니다. 아래 결과는 **일부입니다** — `0건`을 '그런 일이 없었다'로 읽지 마십시오.
-[기관 보유 변동] 펀드 3곳 · 13F 2025-09-30 기준
-  ※ 받지 못한 곳: 브리지워터(달리오), 르네상스 테크놀로지, 퍼싱스퀘어(애크먼), 버크셔 해서웨이(버핏), 코튜 매니지먼트
+[기관 보유 변동] 펀드 8곳 · 13F 2026-06-30 기준
   늘린 쪽
-    사이언(버리)        PALANTIR TECHNOLOGIES INC     +5,000,000주 (신규)
-    타이거 글로벌        CORPAY INC COM SHS              +397,731주 (+23%)
-    타이거 글로벌        CEREBRAS SYSTEMS INC COM C    +2,999,000주 (신규)
-    타이거 글로벌        COUPANG INC CL A              +1,872,565주 (+5%)
-    타이거 글로벌        INTEL CORP COM                +2,613,990주 (+160%)
-    타이거 글로벌        REDDIT INC CL A                  +28,819주 (+1%)
-    타이거 글로벌        ADVANCED MICRO DEVICES INC      +674,727주 (신규)
-    타이거 글로벌        BLOCK INC CL A                  +576,007주 (+14%)
-    타이거 글로벌        SEAGATE TECHNOLOGY HLDNGS       +285,100주 (신규)
-    타이거 글로벌        VISA INC COM CL A               +798,697주 (신규)
-    타이거 글로벌        MERCADOLIBRE INC COM             +18,120주 (+13%)
-    사이언(버리)        NVIDIA CORPORATION COM        +1,000,000주 (신규)
+    버크셔 해서웨이(버핏)   ALPHABET INC CAP STK CL A    +24,541,369주 (+45%)
+    버크셔 해서웨이(버핏)   ALPHABET INC CAP STK CL C    +23,603,218주 (+658%)
+    버크셔 해서웨이(버핏)   DELTA AIR LINES INC COM NE   +17,510,544주 (+44%)
+    브리지워터(달리오)     STATE STR SPDR S&P 500 ETF      +955,446주 (+22%)
+    코튜 매니지먼트       MICRON TECHNOLOGY INC COM     +2,976,338주 (+1794%)
+    코튜 매니지먼트       SPACE EXPLORATION TECHN CO   +18,561,780주 (신규)
+    코튜 매니지먼트       AMAZON COM INC COM            +3,904,033주 (+49%)
+    퍼싱스퀘어(애크먼)     AMAZON COM INC COM            +1,844,157주 (+19%)
+    브리지워터(달리오)     ISHARES TR CORE S&P500 ETF      +323,202주 (+12%)
+    코튜 매니지먼트       BROADCOM INC COM                +342,979주 (+6%)
+    코튜 매니지먼트       EATON CORP PLC SHS              +219,917주 (+5%)
+    퍼싱스퀘어(애크먼)     MICROSOFT CORP COM            +5,654,078주 (신규)
   줄인 쪽
+    버크셔 해서웨이(버핏)   BANK OF AMER CORP COM        -30,230,150주 (-6%)
+    르네상스 테크놀로지     PLUG PWR INC COM NEW         -15,958,700주 (-58%)
+    르네상스 테크놀로지     NU HLDGS LTD ORD SHS CL A    -13,441,744주 (-83%)
+    버크셔 해서웨이(버핏)   KROGER CO COM                -11,000,000주 (-22%)
+    르네상스 테크놀로지     NOKIA CORP SPONSORED ADR     -10,828,400주 (-81%)
+    코튜 매니지먼트       CHIME FINL INC COM SHS CL    -10,071,992주 (전량매도)
+    르네상스 테크놀로지     AMERICAN AIRLINES GROUP IN    -9,687,232주 (전량매도)
+    르네상스 테크놀로지     VALE S A SPONSORED ADS        -9,601,178주 (-68%)
+    르네상스 테크놀로지     BITFARMS LTD COM              -7,767,131주 (전량매도)
+    르네상스 테크놀로지     T1 ENERGY INC COM NEW         -7,645,400주 (-64%)
     타이거 글로벌        ZILLOW GROUP INC CL C CAP     -7,368,957주 (전량매도)
-    타이거 글로벌        CHIME FINL INC COM SHS CL     -5,797,735주 (-52%)
-    타이거 글로벌        ALPHABET INC CAP STK CL A     -4,825,715주 (-45%)
-    타이거 글로벌        SEA LTD SPONSORD ADS          -2,856,683주 (-18%)
-    타이거 글로벌        PONY AI INC SPONSORED ADS     -2,589,713주 (-89%)
-    타이거 글로벌        NETFLIX INC. COM              -2,439,000주 (전량매도)
-    타이거 글로벌        PROCORE TECHNOLOGIES INC C    -2,339,500주 (전량매도)
-    듀케인(드러켄밀러)     Option Care Health Inc COM    -1,868,550주 (전량매도)
-    타이거 글로벌        BROADCOM INC COM              -1,830,752주 (-51%)
-    듀케인(드러켄밀러)     Teva Pharmaceutical Inds L    -1,752,286주 (-74%)
-    타이거 글로벌        ZSCALER INC COM               -1,579,766주 (전량매도)
-    타이거 글로벌        COSTAR GROUP INC COM          -1,500,000주 (전량매도)
+    르네상스 테크놀로지     QUANTUMSCAPE CORP COM CL A    -7,010,500주 (-87%)
   13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 지금의 포지션이 아닙니다.
 
 [미 거시] 최근 90일
-  미 10년물 국채금리           5.17  (+0.69) 기간 최저 4.48(2026-07-01) 최고 5.18(2026-09-24)
-  미 2년물 국채금리            4.81  (+0.64) 기간 최저 4.13(2026-07-06) 최고 4.87(2026-09-24)
-  장단기 금리차(10년-2년)       0.32  (+0.01) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
+  미 10년물 국채금리           5.24  (+0.76) 기간 최저 4.48(2026-07-01) 최고 5.24(2026-09-28)
+  미 2년물 국채금리            4.92  (+0.75) 기간 최저 4.13(2026-07-06) 최고 4.92(2026-09-28)
+  장단기 금리차(10년-2년)       0.37  (+0.06) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
   연방기금금리                3.63  (+0.00) 기간 최저 3.63(2026-07-01) 최고 3.63(2026-07-01)
   미 소비자물가지수           334.13  (+1.32) 기간 최저 332.81(2026-07-01) 최고 334.13(2026-08-01)
 
@@ -100,7 +104,7 @@
    6월  평균  +0.11%  중앙  +0.29%  상승확률  60%  (n=20)
    7월  평균  +2.41%  중앙  +2.07%  상승확률  75%  (n=20)
    8월  평균  +0.18%  중앙  +1.25%  상승확률  60%  (n=20)
-   9월  평균  -0.63%  중앙  +0.20%  상승확률  50%  (n=20)  ←이번 달
+   9월  평균  -0.64%  중앙  +0.15%  상승확률  50%  (n=20)  ←이번 달
   10월  평균  +0.88%  중앙  +2.04%  상승확률  58%  (n=19)
   11월  평균  +2.09%  중앙  +2.12%  상승확률  75%  (n=20)
   12월  평균  +0.59%  중앙  +0.92%  상승확률  65%  (n=20)
