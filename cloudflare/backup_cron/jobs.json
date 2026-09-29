@@ -1,0 +1,17 @@
+{
+  "_": "Cloudflare 예비 예약(worker.js)이 읽는 표. 시각·요일은 UTC이고 깃허브 cron과 같은 뜻이다. tests/test_backup_cron.py가 워크플로의 cron과 맞는지 본다.",
+  "direct": [
+    {"workflow": "krx_close.yml", "utc": ["06:31", "06:39", "06:47"], "days": "1-5",
+     "why": "종가 사진은 15:31~15:59 KST 안에 찍어야 한다 — 깃허브 예약을 기다리지 않고 정시에 직접 누른다"}
+  ],
+  "watch": [
+    {"workflow": "market_brief.yml", "inputs": {"market": "us"}, "due": "22:20", "check": "22:45", "days": "1-5"},
+    {"workflow": "stock_db.yml", "due": "22:50", "check": "23:15", "days": "0-5"},
+    {"workflow": "publish_check.yml", "due": "01:00", "check": "01:25", "days": "2-6"},
+    {"workflow": "market_brief.yml", "inputs": {"market": "kr"}, "due": "07:20", "check": "07:45", "days": "1-5"},
+    {"workflow": "stock_db.yml", "due": "08:05", "check": "08:30", "days": "1-5"},
+    {"workflow": "publish_check.yml", "due": "10:00", "check": "10:25", "days": "1-5"},
+    {"workflow": "story_material.yml", "due": "11:40", "check": "12:05", "days": "1-5"},
+    {"workflow": "story_material.yml", "due": "23:10", "check": "23:35", "days": "5,6"}
+  ]
+}
