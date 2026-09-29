@@ -2244,10 +2244,14 @@
 "web": "www.hlbglobal.co.kr"
 },
 "0035S0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01722066",
+"en": "Bigwave Robotics Corp",
+"founded": "2020",
+"industry": "Software & game publishing",
+"ksic": "58222",
+"name": "Bigwave Robotics",
+"pref": false,
+"web": "bigwaverobotics.com"
 },
 "003610": {
 "corp": "00122348",
@@ -27252,10 +27256,14 @@
 "web": "www.mncsolution.com"
 },
 "486510": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01564514",
+"en": "Global Technologies Co., Ltd.",
+"founded": "2013",
+"industry": "Semiconductors & electronic components",
+"ksic": "26112",
+"name": "Global Technologies",
+"pref": false,
+"web": "www.glbltech.com"
 },
 "486630": {
 "corp": "01851650",
