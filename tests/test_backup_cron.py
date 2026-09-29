@@ -69,6 +69,13 @@ class BackupCronTest(unittest.TestCase):
         text = (ROOT / ".github" / "workflows" / "skip_guard.yml").read_text(encoding="utf-8")
         self.assertIn('[ "$EVENT" = "schedule" ] || go true', text)
         self.assertIn('|| go true "최근 실행 조회에 실패해 그대로 돕니다"', text)
+        # 몇 시간 늦게 몰려온 예약은 건너뛴다(2026-09-29: 15:32 예약이 22:16에 와서 실패 알림 셋)
+        self.assertIn('[ "$late" -gt 120 ] && go false', text)
+        self.assertIn("CRON: ${{ github.event.schedule }}", text)
+
+    def test_krx_commit_survives_missing_folder(self):
+        text = (ROOT / ".github" / "workflows" / "krx_close.yml").read_text(encoding="utf-8")
+        self.assertLess(text.index("[ -d data/krx_close ] ||"), text.index("git add data/krx_close"))
 
     def test_krx_direct_inside_close_window(self):
         job = next(j for j in JOBS["direct"] if j["workflow"] == "krx_close.yml")

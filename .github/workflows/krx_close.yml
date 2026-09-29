@@ -46,6 +46,7 @@ jobs:
 
       - name: 사진 커밋
         run: |
+          [ -d data/krx_close ] || { echo "사진 폴더가 아직 없음 — 커밋할 것 없음"; exit 0; }
           git add data/krx_close
           git diff --cached --quiet && { echo "새 사진 없음"; exit 0; }
           git config user.name "github-actions[bot]"
