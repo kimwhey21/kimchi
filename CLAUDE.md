@@ -354,7 +354,7 @@
   없앴다. 페이지 본문에 메뉴 줄을 다시 쓰지 말 것. 소개·연락처는 `page-no-title` 그대로다(메뉴 없음). 원본 백업은
   `~/.market-brief-backups/home_nav_before_20260927.json`·`hub_template_before_20260927.json`. 배경·글꼴·버튼 모양은 14번 조각
   (`fermata_list_view`에 Stocks 포함)이 정하고, 여백을 덧대 높이를 맞추지 않는다. 템플릿·메뉴·목록 스타일을
-  고친 뒤에는 **`python -m scripts.nav_check`**(14화면 × 1440·390px 실측, 다르면 실패)를 돌린다 — 한 폭 캡처만 보고 "됐다"고 하지 말 것. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
+  고친 뒤에는 **`python -m scripts.nav_check`**(14화면 × 1440·390px 실측, 다르면 실패)를 돌린다 — 한 폭 캡처만 보고 "됐다"고 하지 말 것. **점검 브라우저(`nav_check`·`site_ui_audit`)는 구글 태그·광고 요청을 끊는다**(`src/quiet_browser.block_trackers`, 2026-09-30 — 점검이 GA4 방문자·애드센스 조회로 잡혀 이틀에 1,600명이 쌓였다). 브라우저로 본진을 여는 새 스크립트도 같은 함수를 부른다. 태그가 실려 있는지는 `site_health`가 HTML로 본다. `flex-wrap`을 건드리지 말 것 — 모바일에서 탭 줄이 두
   줄로 접혀야 가로가 넘치지 않는다. **홈·목록(76·77·105·분류)의 겉모습은 토스피드 A안 3색 판이다**(2026-09-27) — 원본은 `templates/wp_list_toss.php`, `python -m scripts.deploy_list_style`로 Code Snippets 14번에 올린다(관리
   화면에서 고치지 말 것). 이름표 색은 분류다: 영어 시황은 Daily(121) **그대로 두고** 하위 분류 Korea Close(684)·Wall Street
   Close(685)를 더한다(`publish_editorial.MARKET_CATEGORY_IDS`), 가이드는 Guides(153). 목록 썸네일은 **정사각 그림을 따로**

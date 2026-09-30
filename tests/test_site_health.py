@@ -91,3 +91,17 @@ class AdminAccessRule(unittest.TestCase):
         self.assertIn("카페24", sh.admin_issues("KR", 200, "<html>login", 403)[0])
         self.assertIn("Cloudflare 차단", sh.admin_issues("KR", 403, self.CF, 403)[0])
 
+
+class TagPresence(unittest.TestCase):
+    """2026-09-30: 점검 브라우저가 태그를 끊으므로, 태그가 빠진 것은 HTML 검사로만 잡힌다."""
+
+    HOME = '<script src="https://www.googletagmanager.com/gtag/js?id=GT-KVMKTFFJ"></script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4531037537218466"></script>'
+
+    def test_home_with_both_tags_passes(self):
+        self.assertEqual(sh.tag_issues(self.HOME), [])
+
+    def test_missing_tags_are_named(self):
+        got = sh.tag_issues("<html>no tags</html>")
+        self.assertEqual(len(got), 2)
+        self.assertIn("GA4", got[0]); self.assertIn("애드센스", got[1])
+

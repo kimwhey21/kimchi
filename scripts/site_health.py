@@ -12,6 +12,8 @@ publish_check.yml이 평일 19:00(17:05 종목 수집 뒤)과 다음 날 10:00(0
      한국 밖에서 막는다(카페24의 옛 /wp-admin 한국만 규칙은 Cloudflare 경유를 해외로 봐서 사장님까지 막았다 — 그 규칙은 지웠다).
      실행 장소를 /cdn-cgi/trace의 loc으로 읽어, 해외(깃허브 러너)면 로그인 화면이 Cloudflare에 막혀야 하고,
      한국(이 맥)이면 로그인 화면 200·/wp-admin/ 302여야 한다. 403인데 Cloudflare 차단 페이지가 아니면 카페24 규칙이 되살아난 것.
+  6. 홈 HTML에 GA4 태그(Site Kit)와 애드센스 스크립트(Code Snippets 9번)가 실려 있는가 — 점검 브라우저는 태그 요청을
+     끊으므로(`src/quiet_browser`) 태그가 빠진 것은 여기서만 보인다(2026-09-30).
 """
 from __future__ import annotations
 
@@ -71,6 +73,16 @@ def date_issues(home: str, flows: str, dates: list[str], now: dt.datetime) -> li
     return out
 
 
+def tag_issues(home_html: str) -> list[str]:
+    """홈에 방문자 집계·광고 태그가 실려 있는가(JS를 실행하지 않고 HTML만 본다)."""
+    issues = []
+    if not re.search(r"googletagmanager\.com/gtag/js\?id=G[T]?-[A-Z0-9]+", home_html):
+        issues.append("홈에 GA4 태그(gtag/js?id=GT-…)가 없습니다 — Site Kit 애널리틱스 스니펫을 보십시오")
+    if not re.search(r"adsbygoogle\.js\?client=ca-pub-\d+", home_html):
+        issues.append("홈에 애드센스 스크립트(adsbygoogle.js?client=ca-pub-…)가 없습니다 — Code Snippets 9번을 보십시오")
+    return issues
+
+
 def admin_issues(loc: str, login_status: int, login_body: str, admin_status: int) -> list[str]:
     """관리자 화면 접근 규칙 판정. loc은 Cloudflare가 본 실행 장소의 나라 코드."""
     cf_block = "have been blocked" in login_body or "error code: 1020" in login_body
@@ -120,6 +132,7 @@ def check(session: requests.Session | None = None, now: dt.datetime | None = Non
     if r.status_code != 200 or r.text.strip() != KEY:
         issues.append(f"IndexNow 열쇠 파일 HTTP {r.status_code}")
     issues += date_issues(bodies.get("/", ""), bodies.get("/stocks/foreign-flows/", ""), kr_dates(), now)
+    issues += tag_issues(bodies.get("/", ""))
     trace = get("/cdn-cgi/trace").text
     loc = (re.search(r"^loc=(\w+)", trace, re.M) or [None, "??"])[1]
     login = get("/wp-login.php", allow_redirects=False)

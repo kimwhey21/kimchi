@@ -16,6 +16,8 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
+from src.quiet_browser import block_trackers, is_tracker_console
+
 SITE = "https://fermata.it.kr"
 OUT = Path(__file__).resolve().parent.parent / "output" / "site_ui_audit"
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
@@ -48,7 +50,8 @@ PROBE = """() => {
 
 def open_page(browser, path, width, problems, errors):
     page = browser.new_page(viewport={"width": width, "height": 900}, user_agent=UA)
-    page.on("console", lambda m: m.type == "error" and errors.append(f"콘솔 오류: {m.text[:120]}"))
+    block_trackers(page)   # 점검이 방문자·광고 조회로 잡히지 않게(2026-09-30) — 끊긴 태그의 콘솔 오류는 세지 않는다
+    page.on("console", lambda m: m.type == "error" and not is_tracker_console(m) and errors.append(f"콘솔 오류: {m.text[:120]}"))
     page.on("pageerror", lambda e: errors.append(f"스크립트 오류: {str(e)[:120]}"))
 
     def on_response(r):

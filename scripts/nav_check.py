@@ -12,6 +12,8 @@ import sys
 
 from playwright.sync_api import sync_playwright
 
+from src.quiet_browser import block_trackers
+
 SITE = "https://fermata.it.kr"
 PAGES = ["/", "/stocks/", "/daily/", "/guides/", "/stocks/000660/",
          # 2026-09-28 템플릿 통일 — 글·분류·검색·작성자·소개·404도 같은 자리에 같은 메뉴
@@ -37,6 +39,7 @@ def main() -> int:
             seen = {}
             for path in PAGES:
                 page = browser.new_page(viewport={"width": width, "height": 900}, user_agent=UA)
+                block_trackers(page)   # 점검이 방문자·광고 조회로 잡히지 않게(2026-09-30)
                 page.goto(SITE + path, wait_until="networkidle", timeout=60000)
                 seen[path] = page.evaluate(JS)
                 page.close()
