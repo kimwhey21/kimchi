@@ -1,0 +1,186 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-09-30",
+  "checked": "2026-09-30",
+  "slug": "korea-vs-taiwan-semiconductors",
+  "category_id": 153,
+  "tags": [
+    "korea vs taiwan semiconductor",
+    "TSMC stock",
+    "Samsung Electronics stock",
+    "SK Hynix stock",
+    "MSCI emerging markets"
+  ],
+  "radar_origin": "list order (Category I: comparison) — search queue's fix quota was already used twice this week (2026-09-28 english-dart-guide fix, 2026-09-29 kospi-200-kosdaq-150-year-end-targets-2026 fix). Its two remaining 'new' lines both duplicated already-published guides ('englishdart' vs our existing English DART guide; 'kospi200 kosdaq150 2026 year end target forecast' vs the kospi-200-kosdaq-150-year-end-targets-2026 guide just fixed 09-29), so fell back to the topic list. Category I (comparison) had zero published guides so far — picked its top item, korea-vs-taiwan-semiconductors, distinct from the last list-order category (B, tax, 09-27).",
+  "related": [
+    {
+      "title": "How to Buy Samsung Electronics Stock From the US (2026)",
+      "url": "https://fermata.it.kr/how-to-buy-samsung-electronics-abroad/"
+    },
+    {
+      "title": "SK Hynix Stock vs Micron: How to Actually Buy HBM Exposure",
+      "url": "https://fermata.it.kr/sk-hynix-vs-micron/"
+    },
+    {
+      "title": "MSCI Korea 2026: Why Korea Is Still an Emerging Market",
+      "url": "https://fermata.it.kr/korea-is-still-an-emerging-market-what-mscis-2026-decision-means-for-foreign-investors/"
+    }
+  ],
+  "ko": {
+    "title": "Korea vs Taiwan Semiconductors: Same AI Boom, Very Different Stocks",
+    "narrative": [
+      {
+        "heading": "The short answer: one country makes chips for everyone, the other makes memory",
+        "body": "Type \"Korea vs Taiwan semiconductor\" into a search box and the honest answer is that you are not comparing two versions of the same business. Taiwan's semiconductor industry is built around <b>TSMC</b>, a foundry that manufactures advanced logic chips designed by other companies — Nvidia, Apple, AMD — and does not sell products under its own name. Korea's is built around <b>Samsung Electronics</b> and <b>SK Hynix</b>, which mostly make memory: DRAM and the high-bandwidth memory (HBM) that sits next to Nvidia's AI processors. Samsung also runs a foundry business, but it is a distant second to TSMC, not a rival on equal footing.\n\nThe numbers make the split concrete. In the foundry market, <b>TrendForce</b> put TSMC at 70.4% of global revenue in the fourth quarter of 2025, against 7.1% for Samsung's foundry unit — a gap of more than 63 percentage points, out of a top-ten industry worth roughly $46.3 billion that quarter. In memory, the picture flips: TrendForce's most recent count, covering the second quarter of 2026, had Samsung leading global DRAM revenue with a 39.4% share, SK Hynix second at 24.9%, and Micron close behind at 23.3% — Taiwan does not field a top-three DRAM maker at all.\n\nSo the real question behind \"Korea vs Taiwan\" is not which country's chip industry is bigger. It is which of two different businesses — the foundry that makes AI chips, or the memory that feeds them — you actually want exposure to, and that answer runs through different companies, different tickers, and a different stock market entirely."
+      },
+      {
+        "heading": "Two economies that just leaned harder into the same bet",
+        "body": "Both countries have made themselves more dependent on chips, not less, as the AI buildout has run through 2026. According to Korea's own customs data, semiconductors made up 47.1% of the country's total exports in the first ten days of September 2026 — $16.48 billion of $34.97 billion in total shipments — a concentration that Korean officials themselves have flagged as a risk rather than a success, since it ties the economy's export health to the capital-spending decisions of a handful of American hyperscalers.\n\nTaiwan's concentration looks similar when measured the same way. A <b>Nikkei</b> Asia analysis, built from trade data collected with Mitsubishi UFJ Research and Consulting, found that in the first half of 2026 both Korea and Taiwan overtook Japan in total exports for the first time — Korea at $496.3 billion, Taiwan at $416.6 billion, Japan at $384.4 billion — and that integrated-circuit exports accounted for roughly 30% of the total in both Korea ($149.0 billion) and Taiwan ($133.2 billion). Japan's IC exports, by contrast, were $21.2 billion, about 5% of its total.\n\nNeither country diversified its way into this AI cycle. Both rode a narrower export base to a bigger number, and both are now more exposed to the same customer base — a handful of US AI chip buyers — than they were three years ago."
+      },
+      {
+        "heading": "Why Wall Street prices the memory makers so much cheaper than the foundry",
+        "body": "If Samsung and SK Hynix are growing profits faster than TSMC, you would expect their stocks to trade at a premium, not a discount. The opposite is true. As of early September 2026, TSMC's forward price-to-earnings ratio stood at 19.6, according to <b>GuruFocus</b>. Samsung and SK Hynix, by contrast, have both been trading with forward P/E ratios below 6 — even as their expected 2026 net profit growth runs to roughly 400% for Samsung and nearly 300% for SK Hynix, versus around 50% projected for TSMC, according to reporting in September 2026 that also put Nvidia's own forward multiple at roughly 22.\n\nThe gap reflects how investors read the two businesses, not how fast they are growing. TSMC's foundry revenue comes from long-term manufacturing contracts across an entire industry of chip designers, which reads as structurally durable. Memory revenue at Samsung and SK Hynix is priced off DRAM and HBM contract prices that have swung sharply before and, in most analysts' framing, eventually will again — so the market discounts today's profit surge on the assumption that a chip glut, not a chip shortage, has historically followed one.\n\nFor a foreign investor, that discount is either the case for owning the Korean names — you are buying triple-digit profit growth at single-digit multiples — or the reason to stay in TSMC, depending entirely on how much of that cyclical risk you are willing to hold."
+      },
+      {
+        "heading": "Same 'emerging market' label, very different weight inside it",
+        "body": "Here is a fact that surprises people who assume Taiwan's chip dominance would have earned it a developed-market upgrade: <b>MSCI</b> classifies both Korea and Taiwan as emerging markets, and neither has moved to developed status in 2026. <b>Bloomberg</b> and <b>CNBC</b> both reported that MSCI's June 2026 annual review kept Korea in the Emerging Markets Index, extending a wait that has already run more than a decade.\n\nWhat has changed is the weight each country carries inside that same emerging-markets basket. MSCI's own data show Taiwan's share of the MSCI Emerging Markets Index rising to 23.76% after a rebalance that took effect May 29, 2026 — making Taiwan the single largest country weight in the index, a position it had not held in 19 years, according to Seoul Economic Daily's reporting on the rebalance. Korea's own weight more than doubled over the same eight months, from 10.97% to 21%, narrowing its gap with China's weight to roughly one percentage point.\n\nThe two countries do split on one classification that gets less attention: under <b>FTSE Russell</b>'s separate scheme, Korea has been rated a Developed market since September 2009, while Taiwan remains Advanced Emerging. Two index providers, two different answers for Korea, and only MSCI's answer has mattered for the passive money that tracks its emerging-markets benchmarks."
+      },
+      {
+        "heading": "What you can actually buy looks nothing alike",
+        "body": "This is the part a comparison of \"the two countries' semiconductor industries\" usually skips, and it matters more than the market-share numbers for anyone deciding where to put money. <b>TSM</b>, Taiwan Semiconductor's American Depositary Receipt, has traded as an ordinary New York Stock Exchange listing since 1997 — buyable through any standard US brokerage account like any US stock, with no special account setup required.\n\nSK Hynix used to be the harder of the Korean pair to reach, but that changed on July 10, 2026, when the company listed its own Nasdaq ADR under the ticker <b>SKHY</b>, in an offering described at the time as the largest US share sale ever completed by a foreign company. As of September 2026, SK Hynix trades as easily as TSMC does for a US-based investor.\n\nSamsung Electronics is the odd one out. It has no sponsored US ADR as of September 2026. Reaching it from a US brokerage means one of three routes instead: the unsponsored OTC pink-sheet quote <b>SSNLF</b>, the London-listed GDR <b>SMSN</b>, or the Korea Exchange common shares (ticker 005930) through a broker with direct KRX access — each with its own liquidity and pricing tradeoffs, which our separate guide to buying Samsung stock from abroad walks through. The practical takeaway: \"Korea vs Taiwan\" is really \"two plain US listings (TSM, SKHY) vs one that still is not.\""
+      },
+      {
+        "heading": "The risk both bets share, whichever stock you pick",
+        "body": "Beginner's note: when a country's exports concentrate this heavily in one product line, the risk economists worry about is not the product itself failing — it is that the whole economy's fortunes come to depend on decisions made somewhere else. In this case, that somewhere else is the capital-expenditure budgets of a small number of US hyperscalers buying AI chips.\n\nKorean coverage of the customs data above has been explicit that a 47.1% export share in semiconductors is being read domestically as a dependency warning, not a diversification success — the same handful of American buyers that are driving Samsung's and SK Hynix's record profits today could just as easily cut orders in a future downturn. Taiwan carries an equivalent version of the same exposure through TSMC, whose foundry revenue is likewise concentrated in AI-chip demand from the same set of customers.\n\nNeither country's stock market has hedged this by diversifying into other industries in 2026 — if anything, both went the other way, letting semiconductors pull a larger share of exports and index weight than before. Owning Korea, Taiwan, or both together is a bet on the same AI capital-spending cycle continuing, just routed through different companies and a different point in the supply chain."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "Confirmed directly against the cited pages: TSMC's and Samsung's fourth-quarter-2025 foundry revenue and share figures, and Samsung/SK Hynix/Micron's second-quarter-2026 DRAM figures, from TrendForce's own press releases and TrendForce-sourced reporting; the 47.1% Korean semiconductor export-share figure and underlying dollar totals, from Korea Customs Service data as reported in September 2026; the H1 2026 export and IC-export totals for Korea, Taiwan and Japan, from the Nikkei Asia analysis built with Mitsubishi UFJ Research and Consulting; TSMC's forward P/E, from GuruFocus's own listing page; MSCI's Taiwan weighting after the May 2026 rebalance, from MSCI's own visualization and Focus Taiwan's reporting of the same change; Korea's weighting progression, from Seoul Economic Daily; Korea's Developed-market status and Taiwan's Advanced-Emerging status under FTSE Russell, from FTSE Russell's own country-classification materials; and SK Hynix's July 2026 Nasdaq ADR listing and Samsung's lack of a sponsored US ADR, cross-checked against our own earlier reporting on each stock.\n\nNot independently verified: exact high-bandwidth-memory (HBM) market-share splits between SK Hynix, Samsung and Micron for the second quarter of 2026 — different research aggregators quoted meaningfully different ranges for the same period, so we have described SK Hynix's HBM position qualitatively rather than with a specific percentage. Forward P/E figures for Samsung Electronics specifically also varied widely across data providers, likely reflecting how differently Samsung's various depositary-receipt tickers convert share counts and earnings; we have therefore reported the below-6 range that multiple September 2026 sources agreed on for Samsung and SK Hynix together, rather than a single disaggregated Samsung number."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "\"Korea vs Taiwan semiconductors\" is not one comparison — it is at least three. On foundry manufacturing, Taiwan's TSMC dominates and Korea is a distant second through Samsung. On memory, Korea's Samsung and SK Hynix dominate and Taiwan has no real presence at all. And on what you can actually buy, TSMC and SK Hynix now both trade as ordinary US-listed ADRs, while Samsung Electronics still does not — the access question splits along different lines than the market-share question does.\n\nBoth economies have leaned harder into semiconductor concentration in 2026, not less, and both remain classified as emerging markets by MSCI even as their weight inside that index has surged. None of that tells you whether either stock is a good buy at today's price — it tells you what kind of bet each one actually is, and that the two are less substitutable for each other than the phrase \"Asian chip stocks\" suggests.\n\nThis guide reflects market-share, valuation and index data published through September 2026. Market share, valuations and index weightings change every quarter — confirm current figures before acting on any number here. This is not investment advice."
+    }
+  },
+  "sources": [
+    {
+      "name": "TrendForce",
+      "title": "AI Demand Drives 4Q25 Global Top 10 Foundries Revenue Up 2.6% QoQ",
+      "url": "https://www.trendforce.com/presscenter/news/20260312-12965.html"
+    },
+    {
+      "name": "TrendForce",
+      "title": "DRAM Industry Revenue Rises 59.5% QoQ in 2Q26",
+      "url": "https://www.trendforce.com/presscenter/news/20260907-13219.html"
+    },
+    {
+      "name": "Nikkei Asia",
+      "title": "South Korea, Taiwan top Japan in exports for first time on AI boom",
+      "url": "https://asia.nikkei.com/business/tech/semiconductors/south-korea-taiwan-top-japan-in-exports-for-first-time-on-ai-boom"
+    },
+    {
+      "name": "GuruFocus",
+      "title": "Taiwan Semiconductor Manufacturing Co Forward PE Ratio",
+      "url": "https://www.gurufocus.com/term/forward-pe-ratio/TSM"
+    },
+    {
+      "name": "MSCI",
+      "title": "Taiwan at the Top: MSCI EM Weight Breakdown",
+      "url": "https://www.msci.com/indexes/markets-in-motion/visualizations/taiwan-at-the-top-msci-em-weight-breakdown"
+    },
+    {
+      "name": "Focus Taiwan",
+      "title": "MSCI raises Taiwan's weighting in 3 indexes",
+      "url": "https://focustaiwan.tw/business/202605130009"
+    },
+    {
+      "name": "Seoul Economic Daily",
+      "title": "Korea's MSCI Weighting Doubles in 8 Months, Closing In on China",
+      "url": "https://en.sedaily.com/finance/2026/05/20/koreas-msci-weighting-doubles-in-8-months-closing-in-on"
+    },
+    {
+      "name": "FTSE Russell",
+      "title": "FTSE Equity Country Classification — matrix of markets",
+      "url": "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/country-classification/matrix-of-markets.pdf"
+    }
+  ],
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea vs Taiwan semiconductors: TSMC's forward P/E against SK Hynix's and Samsung's",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea vs Taiwan Semiconductors",
+        "left": {
+          "label": "TSMC forward P/E",
+          "value": "19.6x"
+        },
+        "right": {
+          "label": "SK Hynix forward P/E",
+          "value": "Under 6x"
+        }
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 1,
+      "alt": "Foundry and DRAM market share compared: TSMC, Samsung and SK Hynix",
+      "args": {
+        "title": "Two different markets, two different leaders",
+        "subtitle": "Foundry (4Q25) vs DRAM (2Q26), by revenue share",
+        "columns": [
+          "Market",
+          "Leader",
+          "Share",
+          "Runner-up",
+          "Share"
+        ],
+        "rows": [
+          [
+            "Foundry (4Q25)",
+            "TSMC",
+            "70.4%",
+            "Samsung",
+            "7.1%"
+          ],
+          [
+            "DRAM (2Q26)",
+            "Samsung",
+            "39.4%",
+            "SK Hynix",
+            "24.9%"
+          ]
+        ],
+        "source": "TrendForce, foundry data published March 2026 and DRAM data published September 2026",
+        "note": "SMIC held roughly 5.4% of foundry revenue in 4Q25; Micron held 23.3% of DRAM revenue in 2Q26."
+      }
+    },
+    {
+      "kind": "checklist",
+      "section": 5,
+      "alt": "How US investors actually reach TSMC, SK Hynix and Samsung Electronics",
+      "args": {
+        "title": "How you actually buy each one",
+        "subtitle": "TSM · SKHY · Samsung's three routes",
+        "items": [
+          {
+            "label": "TSM — Taiwan Semiconductor ADR",
+            "why": "Ordinary NYSE listing since 1997. Buyable through any standard US brokerage account."
+          },
+          {
+            "label": "SKHY — SK Hynix ADR",
+            "why": "Listed on Nasdaq July 10, 2026 — described as the largest US share sale ever by a foreign company."
+          },
+          {
+            "label": "Samsung Electronics — no US ADR",
+            "why": "Reached via OTC pink-sheet SSNLF, London GDR SMSN, or KRX shares (005930) as of September 2026."
+          }
+        ]
+      }
+    }
+  ]
+}
