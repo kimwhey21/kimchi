@@ -209,6 +209,44 @@ def _prior_change_pct(prior: dict) -> float | None:
         return round((float(closes[-1]) / float(closes[-2]) - 1) * 100, 2)
     return None
 
+def _fetch_naver_index_daily(code: str) -> list[tuple[str, float]]:
+    """네이버 지수 일별 종가(최근 10거래일, 오래된 것부터). 지수 일봉과 우리 파일이 며칠 비었을 때 빈 날을 채운다."""
+    response = requests.get(f"https://m.stock.naver.com/api/index/{code}/price", params={"pageSize": 10, "page": 1},
+                            headers=_NAVER_HEADERS, timeout=_NAVER_TIMEOUT_SECONDS)
+    response.raise_for_status()
+    rows = []
+    for row in response.json():
+        date, close = str(row.get("localTradedAt") or "")[:10], str(row.get("closePrice") or "").replace(",", "")
+        if date and close:
+            rows.append((date, float(close)))
+    return sorted(rows)
+
+
+def _fill_gap_from_naver_daily(entry: dict, code: str, today: str, price: float, change: float,
+                               daily: list[tuple[str, float]]) -> dict | None:
+    """일봉·우리 파일이 오늘보다 이틀 이상 비었을 때(2026-09-30: 9/28·9/29를 건너뛰어 마지막이 9/23) 네이버 일별 목록으로 채운다.
+
+    조건은 기존 등식과 같다 — 목록의 **직전 거래일 종가 + 오늘 등락폭 = 오늘 확정 종가**. 목록의 오늘 줄도 확정값과 같아야 한다.
+    휴장일에는 목록에 오늘 줄이 없어 성립하지 않는다. 맞으면 마지막 날 뒤의 빈 날과 오늘을 이력에 덧붙인다.
+    """
+    last = str(entry.get("trading_date") or "")
+    by_date = dict(daily)
+    if abs(by_date.get(today, -1) - price) > 0.02:
+        return None
+    before = [d for d, _ in daily if d < today]
+    if not before or abs(round(by_date[before[-1]] + change, 2) - price) > 0.02:
+        return None
+    missing = [d for d in before if d > last]
+    history, series = entry.get("history"), list(entry.get("series") or [])
+    for d in missing + [today]:
+        history = price_history.append(history, d, by_date[d])
+        series = (series + [by_date[d]])[-len(series):] if len(series) >= 2 else series + [by_date[d]]
+    print(f"[안내] {code}: 일봉·우리 파일이 {last}에 멈춰 있어 네이버 일별 종가로 {', '.join(missing) or '없음'}를 채우고 "
+          f"오늘({today}) {price:,.2f}를 덧붙입니다.")
+    return {**entry, "price": price, "series": series, "history": history, "trading_date": today,
+            "data_source": "Naver Finance realtime index + daily list (gap filled)"}
+
+
 def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None,
                              prior: dict | None = None) -> dict:
     """오늘 거래일 행을 네이버의 장마감 확정값으로 교체하거나, 아직 없으면 덧붙입니다.
@@ -276,8 +314,15 @@ def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None,
         bases.append(float(prior["price"]))
     matched = next((b for b in bases if change != 0 and abs(round(b + change, 2) - price) <= 0.02), None)
     if matched is None:
-        # 등식이 안 맞으면 오늘 장이 없었거나(휴장) 응답이 다른 날 것입니다.
-        return entry
+        # 등식이 안 맞으면 오늘 장이 없었거나(휴장) 응답이 다른 날 것이거나, 일봉·우리 파일이 며칠 비었습니다(2026-09-30).
+        try:
+            filled = _fill_gap_from_naver_daily(entry, code, today, price, change, _fetch_naver_index_daily(code))
+        except (requests.RequestException, ValueError) as exc:
+            print(f"[안내] {code}: 네이버 지수 일별 목록을 받지 못했습니다 — {exc}")
+            filled = None
+        if filled is None:
+            return entry
+        return {**filled, "change_pct": round(float(quote["cr"]), 2)}
     if matched != prev_close:
         print(f"[안내] {code}: 일봉의 전일 종가 {prev_close:,.2f}와 우리 파일의 {matched:,.2f}가 달라 "
               "우리 파일(네이버 기준)로 등식을 맞췄습니다.")

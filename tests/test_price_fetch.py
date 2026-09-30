@@ -310,3 +310,23 @@ class KrxCloseSnapshotTest(unittest.TestCase):
                 mock.patch.object(fetch_kr, "_krx_close_snapshot", return_value={}):
             with self.assertRaises(ValueError):
                 fetch_kr._apply_krx_closes({"035720": entry}, today)
+
+
+class IndexGapFillTest(unittest.TestCase):
+    """2026-09-30: 9/28·9/29를 건너뛰어 지수 마지막이 9/23 — 네이버 일별 목록으로 빈 날을 채운다."""
+    DAILY = [("2026-09-23", 7080.92), ("2026-09-28", 6889.74), ("2026-09-29", 6870.81), ("2026-09-30", 6838.04)]
+    ENTRY = {"trading_date": "2026-09-23", "price": 7080.92, "series": [7000.0, 7080.92],
+             "history": {"dates": ["2026-09-22", "2026-09-23"], "close": [7000.0, 7080.92]}}
+
+    def test_fills_missing_days_when_equation_holds(self) -> None:
+        out = fetch_kr._fill_gap_from_naver_daily(self.ENTRY, "KOSPI", "2026-09-30", 6838.04, -32.77, self.DAILY)
+        self.assertEqual(out["trading_date"], "2026-09-30")
+        self.assertEqual(out["history"]["dates"][-4:], ["2026-09-23", "2026-09-28", "2026-09-29", "2026-09-30"])
+        self.assertEqual(out["history"]["close"][-1], 6838.04)
+
+    def test_holiday_has_no_today_row(self) -> None:
+        daily = self.DAILY[:-1]      # 휴장일 — 목록에 오늘 줄이 없다
+        self.assertIsNone(fetch_kr._fill_gap_from_naver_daily(self.ENTRY, "KOSPI", "2026-09-30", 6870.81, -18.93, daily))
+
+    def test_equation_must_hold_against_previous_row(self) -> None:
+        self.assertIsNone(fetch_kr._fill_gap_from_naver_daily(self.ENTRY, "KOSPI", "2026-09-30", 6838.04, -10.0, self.DAILY))
