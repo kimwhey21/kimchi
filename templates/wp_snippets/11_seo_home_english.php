@@ -74,3 +74,9 @@ add_filter( 'language_attributes', function ( $output ) {
 	}
 	return preg_replace( '/lang="[^"]*"/', 'lang="en"', $output );
 } );
+
+// 구글 서치콘솔 소유권 확인(URL 접두어 https://fermata.it.kr/, HTML 태그 방식, 2026-09-30).
+// 소유권이 풀려 서치콘솔이 '이 속성에 액세스할 수 없습니다'를 냈다 — 태그를 지우면 다시 풀린다.
+add_action( 'wp_head', function () {
+	echo '<meta name="google-site-verification" content="JIeASdJsofbK9544PedRfBXTPt0Ps6bICTsmrUki38E" />' . "\n";
+}, 1 );
