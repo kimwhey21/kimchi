@@ -526,7 +526,10 @@
       "source": "core",
       "sector": "반도체",
       "prev_close_krx": 272500.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -3191284,
+      "institution_net": -1409182,
+      "foreign_ratio": 46.41
     },
     "000660": {
       "ticker": "000660",
@@ -695,7 +698,10 @@
       "source": "core",
       "sector": "반도체",
       "prev_close_krx": 1765000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -342688,
+      "institution_net": -135488,
+      "foreign_ratio": 49.78
     },
     "009150": {
       "ticker": "009150",
@@ -864,7 +870,10 @@
       "source": "core",
       "sector": "반도체",
       "prev_close_krx": 1528000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -109324,
+      "institution_net": -16781,
+      "foreign_ratio": 37.52
     },
     "042700": {
       "ticker": "042700",
@@ -1033,7 +1042,10 @@
       "source": "core",
       "sector": "반도체",
       "prev_close_krx": 252000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 15953,
+      "institution_net": 108489,
+      "foreign_ratio": 7.79
     },
     "105560": {
       "ticker": "105560",
@@ -1202,7 +1214,10 @@
       "source": "core",
       "sector": "금융",
       "prev_close_krx": 173500.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -48758,
+      "institution_net": -69397,
+      "foreign_ratio": 78.68
     },
     "055550": {
       "ticker": "055550",
@@ -1371,7 +1386,10 @@
       "source": "core",
       "sector": "금융",
       "prev_close_krx": 110500.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -244457,
+      "institution_net": 97572,
+      "foreign_ratio": 61.55
     },
     "032830": {
       "ticker": "032830",
@@ -1540,7 +1558,10 @@
       "source": "core",
       "sector": "금융",
       "prev_close_krx": 290500.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -34264,
+      "institution_net": -51376,
+      "foreign_ratio": 23.1
     },
     "005380": {
       "ticker": "005380",
@@ -1709,7 +1730,10 @@
       "source": "core",
       "sector": "자동차",
       "prev_close_krx": 350000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -86461,
+      "institution_net": -10169,
+      "foreign_ratio": 24.21
     },
     "000270": {
       "ticker": "000270",
@@ -1878,7 +1902,10 @@
       "source": "core",
       "sector": "자동차",
       "prev_close_krx": 116000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -113782,
+      "institution_net": -69957,
+      "foreign_ratio": 39.12
     },
     "329180": {
       "ticker": "329180",
@@ -2047,7 +2074,10 @@
       "source": "core",
       "sector": "조선·방산",
       "prev_close_krx": 429000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 36300,
+      "institution_net": -35658,
+      "foreign_ratio": 13.77
     },
     "012450": {
       "ticker": "012450",
@@ -2216,7 +2246,10 @@
       "source": "core",
       "sector": "조선·방산",
       "prev_close_krx": 1012000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -10877,
+      "institution_net": -201,
+      "foreign_ratio": 45.23
     },
     "034020": {
       "ticker": "034020",
@@ -2385,7 +2418,10 @@
       "source": "core",
       "sector": "발전·원전",
       "prev_close_krx": 79700.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 12346,
+      "institution_net": -19517,
+      "foreign_ratio": 22.71
     },
     "373220": {
       "ticker": "373220",
@@ -2554,7 +2590,10 @@
       "source": "core",
       "sector": "2차전지",
       "prev_close_krx": 352500.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -1834,
+      "institution_net": 15357,
+      "foreign_ratio": 5.59
     },
     "247540": {
       "ticker": "247540",
@@ -2723,7 +2762,10 @@
       "source": "core",
       "sector": "2차전지",
       "prev_close_krx": 106100.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 22169,
+      "institution_net": 2245,
+      "foreign_ratio": 15.12
     },
     "207940": {
       "ticker": "207940",
@@ -2892,7 +2934,10 @@
       "source": "core",
       "sector": "바이오",
       "prev_close_krx": 1385000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 2311,
+      "institution_net": -240,
+      "foreign_ratio": 13.23
     },
     "196170": {
       "ticker": "196170",
@@ -3061,7 +3106,10 @@
       "source": "core",
       "sector": "바이오",
       "prev_close_krx": 253500.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 41422,
+      "institution_net": 16230,
+      "foreign_ratio": 15.53
     },
     "068270": {
       "ticker": "068270",
@@ -3230,7 +3278,10 @@
       "source": "core",
       "sector": "바이오",
       "prev_close_krx": 178900.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -47726,
+      "institution_net": -35500,
+      "foreign_ratio": 25.37
     },
     "035420": {
       "ticker": "035420",
@@ -3399,7 +3450,10 @@
       "source": "core",
       "sector": "플랫폼",
       "prev_close_krx": 194800.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -1310,
+      "institution_net": -95755,
+      "foreign_ratio": 35.66
     },
     "035720": {
       "ticker": "035720",
@@ -3568,7 +3622,10 @@
       "source": "core",
       "sector": "플랫폼",
       "prev_close_krx": 33700.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -23960,
+      "institution_net": -66110,
+      "foreign_ratio": 28.82
     },
     "278470": {
       "ticker": "278470",
@@ -3737,7 +3794,10 @@
       "source": "core",
       "sector": "소비재",
       "prev_close_krx": 362500.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 20673,
+      "institution_net": -9819,
+      "foreign_ratio": 38.27
     },
     "277810": {
       "ticker": "277810",
@@ -3906,7 +3966,10 @@
       "source": "core",
       "sector": "로봇",
       "prev_close_krx": 416500.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -58,
+      "institution_net": 5580,
+      "foreign_ratio": 5.66
     },
     "402340": {
       "ticker": "402340",
@@ -4075,7 +4138,10 @@
       "source": "dynamic",
       "trading_value": 492875000000,
       "prev_close_krx": 1118000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 29397,
+      "institution_net": -2345,
+      "foreign_ratio": 46.76
     },
     "036930": {
       "ticker": "036930",
@@ -4244,7 +4310,10 @@
       "source": "dynamic",
       "trading_value": 285925000000,
       "prev_close_krx": 222000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 81989,
+      "institution_net": 78489,
+      "foreign_ratio": 9.72
     },
     "267260": {
       "ticker": "267260",
@@ -4413,7 +4482,10 @@
       "source": "dynamic",
       "trading_value": 248742000000,
       "prev_close_krx": 681000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -29041,
+      "institution_net": -14632,
+      "foreign_ratio": 33.89
     },
     "403870": {
       "ticker": "403870",
@@ -4582,7 +4654,10 @@
       "source": "dynamic",
       "trading_value": 212509000000,
       "prev_close_krx": 61000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 40658,
+      "institution_net": 206438,
+      "foreign_ratio": 34.26
     },
     "009830": {
       "ticker": "009830",
@@ -4751,7 +4826,10 @@
       "source": "dynamic",
       "trading_value": 195644000000,
       "prev_close_krx": 32500.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": 314481,
+      "institution_net": 496324,
+      "foreign_ratio": 12.88
     },
     "011070": {
       "ticker": "011070",
@@ -4920,7 +4998,10 @@
       "source": "dynamic",
       "trading_value": 157912000000,
       "prev_close_krx": 585000.0,
-      "data_source": "Naver Finance realtime item (KRX regular-session close)"
+      "data_source": "Naver Finance realtime item (KRX regular-session close)",
+      "foreign_net": -46160,
+      "institution_net": -5563,
+      "foreign_ratio": 26.99
     }
   },
   "trading_date": "2026-09-30",
