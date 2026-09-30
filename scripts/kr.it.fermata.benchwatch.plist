@@ -21,7 +21,7 @@
         <string>scripts.bench_nightly</string>
     </array>
     <key>WorkingDirectory</key>
-    <string>/Users/mac/Downloads/market-brief</string>
+    <string>/Users/mac/market-brief</string>
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
