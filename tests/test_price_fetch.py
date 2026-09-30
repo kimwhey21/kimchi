@@ -264,6 +264,9 @@ class KrxCloseForStocksTest(unittest.TestCase):
         from unittest.mock import patch
         wl = {"005930": self._entry(), "999999": {**self._entry(), "ticker": "999999", "name": "편입", "source": "dynamic"}}
         quotes = {"005930": {"nv": 286500, "cr": 3.62, "pcv": 276500, "ms": "CLOSE"}}
+        # 저장소의 실제 사진(data/krx_close/<오늘>.json)을 읽지 않게 — 사진이 커밋된 날에만 실패했다(2026-09-30)
+        nosnap = patch.object(fetch_kr, "_krx_close_snapshot", return_value={})
+        nosnap.start(); self.addCleanup(nosnap.stop)
         with patch.object(fetch_kr, "_fetch_naver_item_quotes", return_value=quotes):
             out = fetch_kr._apply_krx_closes(wl, self.TODAY)
         self.assertEqual(set(out), {"005930"})                        # 편입 종목은 조용히 빠진다

@@ -394,3 +394,58 @@ class AboutTest(unittest.TestCase):
             self.assertFalse(sdb._HANGUL.search(row["text"]), code)
             self.assertTrue(row["text"].startswith(meta[code]["name"]), code)
             self.assertTrue(120 <= len(row["text"]) <= 650, code)
+
+
+class _Resp:
+    def __init__(self, data):
+        self.status_code, self._data = 200, data
+
+    def json(self):
+        return self._data
+
+
+class _Session:
+    """네이버 지수 주소별 가짜 응답 — 2026-09-30 07:50(장 전) 실측 모양."""
+    def __init__(self, basic_date, basic_close, biz, foreign):
+        self.basic_date, self.basic_close, self.biz, self.foreign = basic_date, basic_close, biz, foreign
+
+    def get(self, url, params=None, timeout=None):
+        if url.endswith("/basic"):
+            return _Resp({"localTradedAt": f"{self.basic_date}T07:50:00+09:00", "closePrice": self.basic_close,
+                          "compareToPreviousClosePrice": "0.00", "compareToPreviousPrice": {"name": "UNCHANGED"}, "fluctuationsRatio": "0.00"})
+        if url.endswith("/price"):
+            return _Resp([{"localTradedAt": "2026-09-29", "closePrice": "6,870.81", "compareToPreviousClosePrice": "18.52",
+                           "compareToPreviousPrice": {"name": "FALLING"}, "fluctuationsRatio": "-0.27"},
+                          {"localTradedAt": "2026-09-28", "closePrice": "6,889.33", "compareToPreviousClosePrice": "10",
+                           "compareToPreviousPrice": {"name": "RISING"}, "fluctuationsRatio": "0.15"}])
+        if url.endswith("/trend"):
+            return _Resp({"bizdate": self.biz, "foreignValue": self.foreign})
+        raise AssertionError(url)
+
+
+class MarketIndexPreOpenTest(unittest.TestCase):
+    def setUp(self):
+        self._pause, sdb.PAUSE = sdb.PAUSE, 0
+
+    def tearDown(self):
+        sdb.PAUSE = self._pause
+
+    def test_pre_open_uses_the_listing_day_and_drops_todays_zero_flow(self):
+        idx = sdb.market_index(_Session("2026-09-30", "6,870.81", "20260930", "0"), "2026-09-29")
+        self.assertEqual(idx["KOSPI"]["date"], "2026-09-29")
+        self.assertEqual(idx["KOSPI"]["close"], 6870.81)
+        self.assertEqual(idx["KOSPI"]["chg"], -18.52)
+        self.assertEqual(idx["KOSPI"]["pct"], -0.27)
+        self.assertIsNone(idx["KOSPI"]["foreign_net_eok"])
+        self.assertIsNone(idx["KOSPI"]["flow_date"])
+
+    def test_after_close_uses_basic_and_todays_flow(self):
+        idx = sdb.market_index(_Session("2026-09-30", "6,838.04", "20260930", "-20,529"), "2026-09-30")
+        self.assertEqual(idx["KOSPI"]["date"], "2026-09-30")
+        self.assertEqual(idx["KOSPI"]["close"], 6838.04)
+        self.assertEqual(idx["KOSPI"]["foreign_net_eok"], -20529)
+        self.assertEqual(idx["KOSPI"]["flow_date"], "20260930")
+
+    def test_missing_day_row_stops_instead_of_mixing_dates(self):
+        with self.assertRaises(sdb.StockDBError):
+            sdb.market_index(_Session("2026-09-30", "6,870.81", "20260930", "0"), "2026-09-25")

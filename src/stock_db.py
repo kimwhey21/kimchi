@@ -294,19 +294,39 @@ def detail(session: requests.Session, code: str) -> dict:
             "flows": flows, "peers": peers, "fin": fin, "hist": hist}
 
 
-def market_index(session: requests.Session) -> dict:
+def _index_row(b: dict) -> dict:
+    chg = _num(b.get("compareToPreviousClosePrice")) or 0.0
+    if (b.get("compareToPreviousPrice") or {}).get("name") in ("FALLING", "LOWER_LIMIT"):
+        chg = -abs(chg)
+    return {"close": _num(b.get("closePrice")), "chg": chg, "pct": _num(b.get("fluctuationsRatio")),
+            "date": str(b.get("localTradedAt") or "")[:10]}
+
+
+def market_index(session: requests.Session, day: str = "") -> dict:
+    """코스피·코스닥 지수와 코스피 외국인 합계. `day`는 종목 목록의 거래일이다.
+
+    장 시작 전(07:50 실행)에는 네이버 지수 basic이 날짜만 오늘로 넘기고 값은 전일 종가·등락 0이며, 수급(trend)도 오늘 날짜에 0을
+    준다(2026-09-30 홈에 'KOSPI · Sep 30 close 6,870.81 0.00%'·'KOSPI ₩0', 외국인 기록에 9/30 0). 그래서 날짜가 종목 목록과 다르면
+    지수는 일별 목록에서 그날 줄을 쓰고, 수급은 버린다(부른 쪽이 기록의 그날 값으로 채운다).
+    """
     out = {}
     for name in ("KOSPI", "KOSDAQ"):
-        b = _get(session, f"{NAVER}/index/{name}/basic").json()
-        chg = _num(b.get("compareToPreviousClosePrice")) or 0.0
-        if (b.get("compareToPreviousPrice") or {}).get("name") in ("FALLING", "LOWER_LIMIT"):
-            chg = -abs(chg)
-        out[name] = {"close": _num(b.get("closePrice")), "chg": chg, "pct": _num(b.get("fluctuationsRatio")),
-                     "date": str(b.get("localTradedAt") or "")[:10]}
+        row = _index_row(_get(session, f"{NAVER}/index/{name}/basic").json())
+        if day and row["date"] != day:
+            daily = _get(session, f"{NAVER}/index/{name}/price", params={"pageSize": 5, "page": 1}).json()
+            hit = next((r for r in daily if str(r.get("localTradedAt") or "")[:10] == day), None)
+            if hit is None:
+                raise StockDBError(f"{name} 지수의 {day} 줄이 없습니다(basic {row['date']}) — 날짜가 다른 지수를 싣지 않습니다")
+            row = _index_row(hit)
+        out[name] = row
         time.sleep(PAUSE)
     trend = _get(session, f"{NAVER}/index/KOSPI/trend").json()
-    out["KOSPI"]["foreign_net_eok"] = _num(trend.get("foreignValue"))       # 억 원
-    out["KOSPI"]["flow_date"] = trend.get("bizdate")
+    biz = str(trend.get("bizdate") or "")
+    if day and biz > day.replace("-", ""):
+        out["KOSPI"]["foreign_net_eok"], out["KOSPI"]["flow_date"] = None, None   # 장 전·장중 값 — 쓰지 않는다
+    else:
+        out["KOSPI"]["foreign_net_eok"] = _num(trend.get("foreignValue"))       # 억 원
+        out["KOSPI"]["flow_date"] = biz or None
     return out
 
 
@@ -958,7 +978,12 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
             print(f"  상세 {n}/{len(targets)} (실패 {len(failed)})", flush=True)
     if len(failed) > max(20, len(targets) * 0.1):
         raise StockDBError(f"상세 실패가 {len(failed)}/{len(targets)}건 — 네이버가 막혔을 수 있습니다. 올리지 않습니다.")
-    idx = market_index(session)
+    day_now = max((r.get("date") or "" for r in listing), default="")
+    idx = market_index(session, day_now)
+    if idx["KOSPI"].get("foreign_net_eok") is None and FOREIGN_HISTORY.exists():   # 장 전 실행 — 기록된 그날 값으로
+        kept = (json.loads(FOREIGN_HISTORY.read_text(encoding="utf-8")).get(day_now) or {}).get("kospi_eok")
+        if kept is not None:
+            idx["KOSPI"]["foreign_net_eok"], idx["KOSPI"]["flow_date"] = kept, day_now.replace("-", "")
     fx = usdkrw()
     skhy_page = build_skhy(session) if not limit else None
     last = skhy_page["rows"][-1] if skhy_page else None     # 홈 칸도 페이지와 같은 날짜 짝으로
