@@ -8,6 +8,10 @@ publish_check.yml이 평일 19:00(17:05 종목 수집 뒤)과 다음 날 10:00(0
   2. 종목 사이트맵에 종목 2,000개 이상·순위표·외국인 수급 주소가 있는가
   3. 홈·목록·종목·순위표·외국인 수급·Daily·ads.txt·IndexNow 열쇠가 열리는가
   4. 홈의 KOSPI 날짜가 우리가 커밋한 마지막 한국장 시세 날짜와 같은가, 외국인 수급 날짜가 밀리지 않았는가
+  5. 관리자 화면 접근 규칙(2026-09-30): Cloudflare 사용자 지정 규칙 「관리자 화면 한국만」이 /wp-admin·/wp-login.php를
+     한국 밖에서 막는다(카페24의 옛 /wp-admin 한국만 규칙은 Cloudflare 경유를 해외로 봐서 사장님까지 막았다 — 그 규칙은 지웠다).
+     실행 장소를 /cdn-cgi/trace의 loc으로 읽어, 해외(깃허브 러너)면 로그인 화면이 Cloudflare에 막혀야 하고,
+     한국(이 맥)이면 로그인 화면 200·/wp-admin/ 302여야 한다. 403인데 Cloudflare 차단 페이지가 아니면 카페24 규칙이 되살아난 것.
 """
 from __future__ import annotations
 
@@ -67,6 +71,25 @@ def date_issues(home: str, flows: str, dates: list[str], now: dt.datetime) -> li
     return out
 
 
+def admin_issues(loc: str, login_status: int, login_body: str, admin_status: int) -> list[str]:
+    """관리자 화면 접근 규칙 판정. loc은 Cloudflare가 본 실행 장소의 나라 코드."""
+    cf_block = "have been blocked" in login_body or "error code: 1020" in login_body
+    if loc != "KR":
+        if login_status == 403 and cf_block:
+            return []
+        if login_status == 403:
+            return [f"해외에서 /wp-login.php가 Cloudflare가 아니라 서버(카페24)에 막혔습니다 — 카페24 /wp-admin 한국만 규칙이 되살아났는지 보십시오"]
+        return [f"해외에서 /wp-login.php가 HTTP {login_status}로 열립니다 — Cloudflare 「관리자 화면 한국만」 규칙이 꺼졌습니다"]
+    issues = []
+    if login_status != 200:
+        issues.append(f"한국에서 /wp-login.php HTTP {login_status}" + (" — Cloudflare 차단 페이지입니다(규칙의 나라 조건을 보십시오)" if cf_block else ""))
+    if admin_status == 403:
+        issues.append("한국에서 /wp-admin/ HTTP 403 — 카페24 /wp-admin 한국만 규칙이 되살아났습니다(Cloudflare 경유는 해외로 보입니다)")
+    elif admin_status not in (200, 302):
+        issues.append(f"한국에서 /wp-admin/ HTTP {admin_status}")
+    return issues
+
+
 def check(session: requests.Session | None = None, now: dt.datetime | None = None) -> list[str]:
     s = session or requests.Session()
     now = now or dt.datetime.now(KST)
@@ -97,6 +120,11 @@ def check(session: requests.Session | None = None, now: dt.datetime | None = Non
     if r.status_code != 200 or r.text.strip() != KEY:
         issues.append(f"IndexNow 열쇠 파일 HTTP {r.status_code}")
     issues += date_issues(bodies.get("/", ""), bodies.get("/stocks/foreign-flows/", ""), kr_dates(), now)
+    trace = get("/cdn-cgi/trace").text
+    loc = (re.search(r"^loc=(\w+)", trace, re.M) or [None, "??"])[1]
+    login = get("/wp-login.php", allow_redirects=False)
+    admin = get("/wp-admin/", allow_redirects=False)
+    issues += admin_issues(loc, login.status_code, login.text, admin.status_code)
     return issues
 
 

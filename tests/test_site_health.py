@@ -73,3 +73,21 @@ class MonthlyAuditTest(unittest.TestCase):
         text, level = send.call_args[0]
         self.assertEqual(level, "fail")
         self.assertIn("❌ 모든 화면·버튼", text)
+
+
+class AdminAccessRule(unittest.TestCase):
+    """2026-09-30: 관리자 화면은 Cloudflare 「관리자 화면 한국만」 규칙이 지키고, 카페24 규칙은 지웠다."""
+
+    CF = "Sorry, you have been blocked ... error code: 1020"
+    CAFE = "403 Forbidden - You don't have permission to access this resource."
+
+    def test_abroad_must_be_blocked_by_cloudflare(self):
+        self.assertEqual(sh.admin_issues("US", 403, self.CF, 403), [])
+        self.assertIn("규칙이 꺼졌습니다", sh.admin_issues("US", 200, "<html>login", 302)[0])
+        self.assertIn("카페24", sh.admin_issues("US", 403, self.CAFE, 403)[0])
+
+    def test_korea_must_get_in(self):
+        self.assertEqual(sh.admin_issues("KR", 200, "<html>login", 302), [])
+        self.assertIn("카페24", sh.admin_issues("KR", 200, "<html>login", 403)[0])
+        self.assertIn("Cloudflare 차단", sh.admin_issues("KR", 403, self.CF, 403)[0])
+
