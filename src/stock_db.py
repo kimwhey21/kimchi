@@ -302,22 +302,47 @@ def _index_row(b: dict) -> dict:
             "date": str(b.get("localTradedAt") or "")[:10]}
 
 
+def _index_from_price_file(name: str, day: str, root: Path | None = None) -> dict | None:
+    """그날 한국장 시세 파일(`data/price_kr_<day>.json`)의 지수 — KRX 확정 종가와 등락률(`fetch_kr`가 등식으로 확인한 값)."""
+    path = (root or ROOT) / "data" / f"price_kr_{day}.json"
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("trading_date") not in (None, day):
+        return None
+    macro = data.get("macro") or {}
+    for entry in (macro.values() if isinstance(macro, dict) else macro):
+        if isinstance(entry, dict) and str(entry.get("name_en") or "").upper() == name:
+            close, pct = _num(entry.get("price")), _num(entry.get("change_pct"))
+            if close is None or pct is None:
+                return None
+            chg = entry.get("change")
+            chg = _num(chg) if chg is not None else round(close - close / (1 + pct / 100), 2)
+            return {"close": close, "chg": chg, "pct": pct, "date": day}
+    return None
+
+
 def market_index(session: requests.Session, day: str = "") -> dict:
     """코스피·코스닥 지수와 코스피 외국인 합계. `day`는 종목 목록의 거래일이다.
 
     장 시작 전(07:50 실행)에는 네이버 지수 basic이 날짜만 오늘로 넘기고 값은 전일 종가·등락 0이며, 수급(trend)도 오늘 날짜에 0을
     준다(2026-09-30 홈에 'KOSPI · Sep 30 close 6,870.81 0.00%'·'KOSPI ₩0', 외국인 기록에 9/30 0). 그래서 날짜가 종목 목록과 다르면
-    지수는 일별 목록에서 그날 줄을 쓰고, 수급은 버린다(부른 쪽이 기록의 그날 값으로 채운다).
+    지수는 그날 한국장 시세 파일(없으면 네이버 일별 목록)에서 쓰고, 수급은 버린다(부른 쪽이 기록의 그날 값으로 채운다).
     """
     out = {}
     for name in ("KOSPI", "KOSDAQ"):
         row = _index_row(_get(session, f"{NAVER}/index/{name}/basic").json())
         if day and row["date"] != day:
-            daily = _get(session, f"{NAVER}/index/{name}/price", params={"pageSize": 5, "page": 1}).json()
-            hit = next((r for r in daily if str(r.get("localTradedAt") or "")[:10] == day), None)
-            if hit is None:
-                raise StockDBError(f"{name} 지수의 {day} 줄이 없습니다(basic {row['date']}) — 날짜가 다른 지수를 싣지 않습니다")
-            row = _index_row(hit)
+            # 2026-10-01: 네이버 지수 일별 목록(`/price`)은 9/17에서 멈춰 있어 장 전 실행이 "9/30 줄이 없다"로 죽었다.
+            # 그날 지수는 우리가 16:20에 KRX 확정 종가로 커밋한 한국장 시세 파일이 기준이다 — 그것을 먼저 쓰고, 없을 때만 목록을 본다.
+            got = _index_from_price_file(name, day)
+            if got is None:
+                daily = _get(session, f"{NAVER}/index/{name}/price", params={"pageSize": 5, "page": 1}).json()
+                hit = next((r for r in daily if str(r.get("localTradedAt") or "")[:10] == day), None)
+                got = _index_row(hit) if hit is not None else None
+            if got is None:
+                raise StockDBError(f"{name} 지수의 {day} 값이 시세 파일에도 네이버 목록에도 없습니다(basic {row['date']}) — 날짜가 다른 지수를 싣지 않습니다")
+            row = got
         out[name] = row
         time.sleep(PAUSE)
     trend = _get(session, f"{NAVER}/index/KOSPI/trend").json()

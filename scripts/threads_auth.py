@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import os
 import re
+import shutil
 import subprocess
 import sys
 import urllib.parse
@@ -42,9 +43,20 @@ def _env_set(key: str, value: str) -> None:
     os.environ[key] = value
 
 
+def _gh_path() -> str:
+    """launchd의 PATH(/usr/local/bin:/usr/bin:/bin)에는 gh가 없다 — 2026-09-27 갱신이 비밀값 저장에서 FileNotFoundError로 죽었다."""
+    for cand in (shutil.which("gh"), str(Path.home() / ".local/bin/gh"), "/opt/homebrew/bin/gh", "/usr/local/bin/gh"):
+        if cand and Path(cand).exists():
+            return cand
+    raise SystemExit("gh 명령을 찾지 못했습니다 — GitHub 시크릿을 저장할 수 없습니다")
+
+
 def _gh_secret(key: str, value: str) -> None:
-    result = subprocess.run(["gh", "secret", "set", key, "--body", value], cwd=ROOT, capture_output=True, text=True)
+    result = subprocess.run([_gh_path(), "secret", "set", key, "--body", value], cwd=ROOT, capture_output=True, text=True)
     print(f"GitHub 시크릿 {key}: {'설정' if result.returncode == 0 else '실패 ' + result.stderr[-200:]}")
+    if result.returncode != 0:   # 조용한 실패 금지 — .env만 새 토큰이고 깃허브는 옛 토큰인 채로 남는다
+        from src import alert
+        alert.send(f"스레드 토큰: GitHub 시크릿 {key} 저장 실패 — {result.stderr[-150:]}", "fail")
 
 
 def cmd_url() -> None:

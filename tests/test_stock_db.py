@@ -9,6 +9,7 @@ import datetime as dt
 import json
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from src import stock_db as sdb
 
@@ -447,5 +448,29 @@ class MarketIndexPreOpenTest(unittest.TestCase):
         self.assertEqual(idx["KOSPI"]["flow_date"], "20260930")
 
     def test_missing_day_row_stops_instead_of_mixing_dates(self):
-        with self.assertRaises(sdb.StockDBError):
+        with mock.patch.object(sdb, "_index_from_price_file", return_value=None), self.assertRaises(sdb.StockDBError):
             sdb.market_index(_Session("2026-09-30", "6,870.81", "20260930", "0"), "2026-09-25")
+
+    def test_pre_open_prefers_our_committed_price_file(self):
+        """2026-10-01 07:50: 네이버 일별 목록이 9/17에서 멈춰 '9/30 줄이 없다'로 죽었다 — 커밋한 시세 파일이 먼저다."""
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); (root / "data").mkdir()
+            (root / "data" / "price_kr_2026-09-30.json").write_text(json.dumps({"trading_date": "2026-09-30", "macro": [
+                {"name_en": "KOSPI", "price": 6838.04, "change": None, "change_pct": -0.48},
+                {"name_en": "KOSDAQ", "price": 855.91, "change": None, "change_pct": 0.72}]}), encoding="utf-8")
+            with mock.patch.object(sdb, "ROOT", root):
+                idx = sdb.market_index(_Session("2026-10-01", "6,838.04", "20261001", "0"), "2026-09-30")
+        self.assertEqual(idx["KOSPI"]["date"], "2026-09-30")
+        self.assertEqual(idx["KOSPI"]["close"], 6838.04)
+        self.assertEqual(idx["KOSPI"]["pct"], -0.48)
+        self.assertAlmostEqual(idx["KOSPI"]["chg"], -32.98, places=1)
+        self.assertEqual(idx["KOSDAQ"]["pct"], 0.72)
+        self.assertIsNone(idx["KOSPI"]["foreign_net_eok"])
+
+    def test_real_price_file_has_both_indices(self):
+        """실제 커밋된 9/30 파일로 — 가짜 응답만으로 통과하던 것(어제 실수)을 되풀이하지 않는다."""
+        for name in ("KOSPI", "KOSDAQ"):
+            got = sdb._index_from_price_file(name, "2026-09-30")
+            self.assertIsNotNone(got, name)
+            self.assertEqual(got["date"], "2026-09-30")

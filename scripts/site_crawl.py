@@ -25,12 +25,14 @@ from urllib.parse import urljoin, urlsplit, urlunsplit
 
 import requests
 
+from src.site_block import MESSAGE as BLOCKED, is_bot_challenge
+
 SITE = "https://fermata.it.kr"
 HOST = "fermata.it.kr"
 OUT = Path(__file__).resolve().parent.parent / "output" / "site_crawl"
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"}
 PAUSE = 0.25
-SKIP = re.compile(r"/wp-admin|/wp-login|/xmlrpc|/wp-json/|/feed/?$|/comments/feed|\?replytocom=|/wp-content/|/wp-includes/")
+SKIP = re.compile(r"/wp-admin|/wp-login|/xmlrpc|/wp-json/|/feed/?$|/comments/feed|\?replytocom=|/wp-content/|/wp-includes/|/cdn-cgi/")   # /cdn-cgi/: Cloudflare가 만드는 주소(이메일 가림 등, 2026-10-01)
 HANGUL_OK = {"/about/", "/contact/", "/privacy-policy/"}   # 남겨 둔 한국어 소개·연락처·개인정보(697·698·226, 검색 제외·lang="ko")
 PHP_ERR = re.compile(r"(Fatal error|Parse error|Warning</b>:|Notice</b>:|Deprecated</b>:|Uncaught |on line <b>\d+)")
 
@@ -65,9 +67,12 @@ def page_checks(url: str, text: str) -> list[str]:
     leftover = re.findall(r"&(?:#\d+|#x[0-9a-f]+|[a-z]{2,8});", raw_vis, re.I)
     if leftover:
         issues.append(f"깨진 글자 {leftover[0]} ({len(leftover)}곳)")
-    for bad in ("undefined", "NaN", "Array", "{{", "}}"):
+    for bad in ("undefined", "NaN", "{{", "}}"):
         if re.search(rf"(?<![\w-]){re.escape(bad)}(?![\w-])", raw_vis):
             issues.append(f"이상한 값 '{bad}'")
+    # PHP가 배열을 글자로 찍으면 칸 하나에 'Array'만 남는다 — 문장 속 낱말(“Array Testers”, 2026-10-01 079810)은 세지 않는다
+    if re.search(r">\s*Array\s*<", text):
+        issues.append("이상한 값 'Array'")
     if PHP_ERR.search(text):
         issues.append("PHP 오류 문구")
     if re.search(r'<img[^>]+src=""', text):
@@ -112,6 +117,8 @@ def links(url: str, text: str) -> tuple[set[str], set[str]]:
 def sitemap_urls(session: requests.Session) -> list[str]:
     out = []
     r = session.get(f"{SITE}/wp-sitemap.xml", timeout=30, allow_redirects=False)
+    if is_bot_challenge(r.text):
+        raise SystemExit(BLOCKED)
     if r.status_code != 200 or "wp-sitemap-stocks-" not in r.text:   # Rank Math 사이트맵이 켜지면 돌려보낸다(2026-09-28)
         raise SystemExit(f"/wp-sitemap.xml 이상: HTTP {r.status_code} {r.headers.get('Location', '')} — 종목 사이트맵이 없습니다.")
     index = r.text
@@ -156,16 +163,30 @@ def main(argv: list[str] | None = None) -> int:
     assets: dict[str, set[str]] = defaultdict(set)
     external: dict[str, set[str]] = defaultdict(set)
     n = 0
+    blocked = 0
     while queue and (not a.limit or n < a.limit):
         url = queue.popleft()
         n += 1
         time.sleep(PAUSE)
-        try:
-            r = s.get(url, timeout=60, allow_redirects=False)
-        except requests.RequestException as error:
-            status[url] = type(error).__name__
+        r = None
+        for attempt in range(2):    # 카페24가 가끔 끊거나 502를 낸다(2026-10-01 새벽 종목 3쪽, 다시 열면 정상) — 5초 뒤 한 번 더
+            try:
+                r = s.get(url, timeout=60, allow_redirects=False)
+            except requests.RequestException as error:
+                status[url] = type(error).__name__
+                r = None
+            if r is not None and r.status_code < 500:
+                break
+            time.sleep(5)
+        if r is None:
             continue
         status[url] = r.status_code
+        if is_bot_challenge(r.text):
+            status[url] = "봇 검사 화면"
+            blocked += 1
+            if blocked >= 3 and blocked == n:     # 처음부터 연달아 막히면 3천 쪽을 다 돌 필요가 없다
+                raise SystemExit(BLOCKED)
+            continue
         if r.status_code in (301, 302, 307, 308):
             target = norm(urljoin(url, r.headers.get("Location", "")))
             status[url] = f"{r.status_code}→{target}"

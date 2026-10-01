@@ -12,6 +12,7 @@ publish_check.yml이 평일 19:00(17:05 종목 수집 뒤)과 다음 날 10:00(0
      한국 밖에서 막는다(카페24의 옛 /wp-admin 한국만 규칙은 Cloudflare 경유를 해외로 봐서 사장님까지 막았다 — 그 규칙은 지웠다).
      실행 장소를 /cdn-cgi/trace의 loc으로 읽어, 해외(깃허브 러너)면 로그인 화면이 Cloudflare에 막혀야 하고,
      한국(이 맥)이면 로그인 화면 200·/wp-admin/ 302여야 한다. 403인데 Cloudflare 차단 페이지가 아니면 카페24 규칙이 되살아난 것.
+  0. 먼저 홈이 카페24 봇 검사 화면(cupid.js)이나 403이면 그 한 줄만 알린다(`src/site_block`, 2026-10-01).
   6. 홈 HTML에 GA4 태그(Site Kit)와 애드센스 스크립트(Code Snippets 9번)가 실려 있는가 — 점검 브라우저는 태그 요청을
      끊으므로(`src/quiet_browser`) 태그가 빠진 것은 여기서만 보인다(2026-09-30).
 """
@@ -25,6 +26,7 @@ from pathlib import Path
 import requests
 
 from src.indexnow import KEY
+from src.site_block import MESSAGE as BLOCKED, is_bot_challenge
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://fermata.it.kr"
@@ -107,6 +109,10 @@ def check(session: requests.Session | None = None, now: dt.datetime | None = Non
     now = now or dt.datetime.now(KST)
     get = lambda path, **kw: s.get(BASE + path, headers=UA, timeout=60, **kw)   # noqa: E731
     issues: list[str] = []
+    # 2026-10-01: 카페24 봇 검사 화면이 200으로 오자 사이트맵·날짜·태그가 일곱 갈래로 엉뚱하게 실패했다 — 먼저 가려 한 줄로 말한다
+    home = get("/")
+    if is_bot_challenge(home.text) or home.status_code == 403:
+        return [f"홈 HTTP {home.status_code}: {BLOCKED}"]
     r = get("/wp-sitemap.xml", allow_redirects=False)
     parts = re.findall(r"<loc>(https://fermata\.it\.kr/wp-sitemap-stocks-\d+\.xml)</loc>", r.text) if r.status_code == 200 else []
     if not parts:
@@ -134,7 +140,12 @@ def check(session: requests.Session | None = None, now: dt.datetime | None = Non
     issues += date_issues(bodies.get("/", ""), bodies.get("/stocks/foreign-flows/", ""), kr_dates(), now)
     issues += tag_issues(bodies.get("/", ""))
     trace = get("/cdn-cgi/trace").text
-    loc = (re.search(r"^loc=(\w+)", trace, re.M) or [None, "??"])[1]
+    found = re.search(r"^loc=(\w+)", trace, re.M)
+    if not found:
+        # 프록시를 끄면(2026-10-01 카페24 봇 검사 막힘의 임시 조치) /cdn-cgi/trace가 없다 — 나라 규칙이 안 도는 것을 한 줄로 말한다
+        issues.append("Cloudflare 프록시가 꺼져 있습니다(/cdn-cgi/trace 없음) — 「관리자 화면 한국만」 규칙과 캐시가 작동하지 않습니다")
+        return issues
+    loc = found.group(1)
     login = get("/wp-login.php", allow_redirects=False)
     admin = get("/wp-admin/", allow_redirects=False)
     issues += admin_issues(loc, login.status_code, login.text, admin.status_code)
