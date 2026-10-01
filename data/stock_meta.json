@@ -26645,10 +26645,14 @@
 "web": ""
 },
 "468670": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01801026",
+"en": "Brils Corp.",
+"founded": "2026",
+"industry": "Machinery",
+"ksic": "29299",
+"name": "Brils",
+"pref": false,
+"web": "www.brils.co.kr"
 },
 "468760": {
 "corp": "01787072",
