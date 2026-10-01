@@ -1,0 +1,154 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-01",
+  "checked": "2026-10-01",
+  "slug": "korea-short-selling-rules",
+  "category_id": 153,
+  "tags": [
+    "korea short selling ban",
+    "naked short selling korea",
+    "NSDS",
+    "korea short selling rules",
+    "EWY short"
+  ],
+  "radar_origin": "list order (Category C: market structure) — search queue's top lines were already spoken for: the week's two-edit quota was used 2026-09-28 and 2026-09-29, and the remaining high-gain lines duplicated guides already fixed for that exact query ('kospi vs kosdaq' / 'kosdaq vs kospi' were already added to kospi-200-kosdaq-150-year-end-targets-2026 on 2026-09-23 and to kospi-vs-kosdaq-what-the-board... earlier; 'englishdart' and 'dart korea'/'dart filing' duplicate the English DART guide fixed 2026-09-15 and 2026-09-28; 'kospi holiday' was already added to korea-market-holidays-2026 on 2026-09-26 and just hasn't re-ranked yet). Fell back to the topic list, Category C (market structure), distinct from yesterday's Category I (comparison, korea-vs-taiwan-semiconductors). C's first item, kospi-200-explained, is already published, so this is the next one down.",
+  "related": [
+    {
+      "title": "Can Foreigners Buy Korean Stocks? What Changed in 2026",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    },
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "Korean Stock Taxes for Foreigners: 22%, 15%, 0.20%",
+      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
+    }
+  ],
+  "ko": {
+    "title": "Korea Short Selling Ban: What Changed for Foreign Investors (2026)",
+    "narrative": [
+      {
+        "heading": "The short answer: the ban is over, but shorting one stock isn't simple",
+        "body": "Korea's blanket short-selling ban ended on March 31, 2025, and as of this writing in September 2026 it has not come back — short selling is open on every stock listed on the <b>KOSPI</b> and <b>KOSDAQ</b>, roughly 2,700 names in total, for the first time since March 2020. That is the part most headlines covered. What they left out is that the rules governing who can actually do it, and what happens if you do it wrong, are tighter than before the ban, not looser: a Korea Exchange (<b>KRX</b>) surveillance system now checks every short sale against a trader's actual stock balance, position-disclosure thresholds are far lower than they used to be, and penalties for getting caught faking a borrow have gone up. For a foreign retail investor reading this from outside Korea, the practical question is not 'is short selling legal again' — it is whether you, specifically, with a non-Korean brokerage account, can actually place one. The honest answer is: probably not on an individual KRX ticker, but yes on Korea as a whole, through a different instrument. The rest of this guide walks through both halves."
+      },
+      {
+        "heading": "Why the ban existed, and why it took 17 months to lift",
+        "body": "The ban that ended in March 2025 began in November 2023, after Korean regulators found that several global investment banks had been placing naked short sales — selling shares they had not actually borrowed or confirmed access to — in violation of Korean law. The <b>Financial Services Commission</b> (<b>FSC</b>) initially framed the ban as temporary while it built the infrastructure to stop the practice going forward, but the target date slipped more than once; an earlier plan to lift it by March 30, 2025, held for institutional investors but needed new systems to be verified first. The ban was not partial — it covered both KOSPI and KOSDAQ entirely — and it was Korea's longest short-selling suspension on record. <b>CNBC</b> and Korea's own government news service both reported the March 31, 2025 resumption as a single, system-wide reopening rather than a phased one, timed to when the new detection and disclosure infrastructure described below was actually ready to run."
+      },
+      {
+        "heading": "The system built to stop a repeat: KRX's Naked Short-Selling Detection System",
+        "body": "The centerpiece of the reform is something Korea did not have before the ban: the <b>Naked Short-Selling Detection System (NSDS)</b>, operated by the <b>Korea Exchange</b>. Institutional and corporate short sellers — domestic and foreign alike — now have to feed the system their stock balances and over-the-counter transaction records, which KRX cross-checks against the order history it already holds, and the FSC's own description of the system says it is built to flag a suspected naked short sale within three business days of the order being placed, not months later in an audit. It has not been idle: Korean press reporting put the number of suspected illegal short-selling cases referred under the new system at 94 in the sixteen months to July 2026. Any institution placing a short sale is also now required to have its own internal control procedures in place specifically to prevent naked short orders from reaching the market in the first place — a compliance burden that sits on the seller, not just on KRX's after-the-fact monitoring."
+      },
+      {
+        "heading": "The reporting thresholds that apply if you hold a short position",
+        "body": "If you do hold a short position in a Korean stock, Korea's disclosure rules are stricter than most developed markets'. A net short position has to be reported once it reaches <b>0.01% of a company's total issued shares</b>, or once its value reaches <b>₩1 billion</b> (roughly $700,000–750,000 at recent won exchange rates) — whichever is hit first — a sharp drop from the 0.5%-of-shares threshold that applied before December 2024. Small positions are not exempt from paperwork entirely, but a position worth less than ₩100 million does not trigger the reporting requirement regardless of the percentage. Once a threshold is crossed, the report is due by the close of the second business day afterward. Separately, Korea equalized the mechanics of borrowing stock to short it: both retail and institutional short sellers now face the same 105% cash collateral ratio and the same 90-day loan term, renewable up to a maximum of 12 months — before the reform, retail investors had faced tighter terms than institutions on both counts."
+      },
+      {
+        "heading": "What happens if you get caught faking a borrow",
+        "body": "The penalty for intentional naked short selling — selling without a confirmed borrow in hand — went up, not down, when the ban lifted. The monetary fine rose from a range of three-to-five times the illicit profit to <b>four-to-six times</b> it, and Korea added an aggravated imprisonment penalty specifically for cases where the illegally gained profit reaches <b>₩500 million</b> or more, on top of administrative sanctions that can bar a violator from trading, or from serving as an executive of a financial firm or listed company, for up to ten years. None of this is aimed at ordinary covered short selling — borrowing shares first, then selling them, which is what every legitimate short seller does and what retail investors are now permitted to do on the same terms as institutions. It is aimed specifically at the naked-short practice that caused the 2023 ban, and it is the reason KRX's detection system and the lower disclosure thresholds above both exist."
+      },
+      {
+        "heading": "Can you, specifically, short a Korean stock from outside Korea?",
+        "body": "This is the question the rules above don't answer directly, because they describe what is legal in Korea, not what your brokerage will actually let you do. In May 2026, <b>Interactive Brokers</b> became the first major US-based broker to offer direct trading access to KRX-listed equities — more than 2,700 securities — open to international retail clients worldwide except residents of Korea, Japan and India, according to the company's own announcement. That access covers buying Korean shares outright. It is a materially different question whether that same access lets a non-resident retail client borrow and short an individual KRX stock, since Korea's rules above require short sellers to have internal control systems in place to prevent naked orders — a bar built with institutional compliance departments in mind, not a retail trading app. We could not confirm, from Interactive Brokers' own public materials, whether short selling or margin borrowing on individual KRX names is available through this access tier; if you want to actually do this, the only reliable way to find out is to ask your broker directly, in writing, before you try to place the order. For most foreign retail investors, the route that reliably works today runs through a US-listed instrument instead: shorting or buying puts on <b>EWY</b> (iShares MSCI South Korea ETF) or <b>FLKR</b> (Franklin FTSE South Korea ETF) through an ordinary US brokerage account, or buying a dedicated inverse product such as a -3x short South Korea exchange-traded product, which several providers list. None of those require a Korean broker, a stock-lending agreement with KRX, or the internal control systems Korea requires of a direct short seller — the tradeoff is that you are betting against the Korean market as a whole, concentrated in the same handful of large-cap names that dominate those funds, not against one company specifically."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "Confirmed against the cited sources: the March 31, 2025 lift of the short-selling ban for all KOSPI- and KOSDAQ-listed stocks, from the FSC's own press materials and CNBC's reporting of the same resumption; the Naked Short-Selling Detection System's three-business-day naked-short-detection window and its data inputs, from the FSC's description of the system; the 0.01%-of-shares or ₩1 billion disclosure threshold, the ₩100 million reporting waiver, and the second-business-day reporting deadline, cross-checked between the FSC's reform announcement and Clearstream's own market-disclosure reference for Korean equities; the 105% collateral ratio and 90-day (renewable to 12 months) loan term applying equally to retail and institutional short sellers; the fine increase to four-to-six times illicit profit and the ₩500 million aggravated-imprisonment threshold; and Interactive Brokers' May 2026 KRX access launch and its stated eligibility exclusions, from the company's own announcement. Not independently verified: the 94-case figure for suspected illegal short sales referred to the NSDS in the sixteen months to July 2026 rests on a single Korean press account we could not cross-check against a second source, so we have attributed it by name rather than treating it as confirmed; and we found no public statement from Interactive Brokers, or from any other non-Korean broker, confirming or denying that short selling or margin borrowing is available to foreign retail clients on individual KRX-listed stocks — we have reported this as unconfirmed rather than assuming either answer."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Korea's short-selling ban has been over since March 31, 2025, and the market it reopened into has tighter guardrails than the one that existed before November 2023 — a Korea Exchange detection system that checks short sales against actual stock balances within three business days, a disclosure threshold cut to 0.01% of shares or ₩1 billion, and higher penalties for anyone caught faking a borrow. None of that changes what a foreign retail investor without a Korean brokerage relationship can actually do: buying Korean shares got easier in 2026 with Interactive Brokers' direct KRX access, but shorting an individual Korean stock still runs into compliance requirements built for institutions, not retail accounts, and we could not confirm that any mainstream non-Korean broker currently offers it. If your goal is to bet against the Korean market rather than one company in it, EWY and FLKR — short, puts, or a dedicated inverse ETP — remain the route that does not require solving that problem first.\n\nThis guide reflects rules and figures as of September 2026. Short-selling regulations, disclosure thresholds and broker access all change — confirm current terms with KRX, the FSC, or your own broker before acting on any of them. This is not investment advice."
+    }
+  },
+  "sources": [
+    {
+      "name": "Financial Services Commission",
+      "title": "Korea Short Sale Reform Measures / NSDS Press Releases",
+      "url": "https://www.fsc.go.kr/eng/pr010101/82464"
+    },
+    {
+      "name": "CNBC",
+      "title": "South Korea ends its longest short-selling ban after systemic reforms",
+      "url": "https://www.cnbc.com/2025/03/31/south-korea-ends-its-longest-short-selling-ban-in-history-after-systemic-reforms.html"
+    },
+    {
+      "name": "Clearstream",
+      "title": "Disclosure Requirements — South Korea Equities and Corporate Bonds",
+      "url": "https://www.clearstream.com/clearstream-en/res-library/market-coverage/disclosure-requirements-south-korea-equities-and-corporate-bonds-1283192"
+    },
+    {
+      "name": "Korea Herald",
+      "title": "Illegal short selling suspicions reported to FSS rise",
+      "url": "https://www.koreaherald.com/article/10854694"
+    },
+    {
+      "name": "Interactive Brokers",
+      "title": "Interactive Brokers Launches Access to Korean Equities, Breaking New Ground for Global Investors",
+      "url": "https://www.interactivebrokers.com/en/general/about/mediaRelations/5-7-26.php"
+    },
+    {
+      "name": "Bloomberg",
+      "title": "Interactive Brokers Set to Give US Retail Investors Direct Access to South Korea",
+      "url": "https://www.bloomberg.com/news/articles/2026-05-07/world-s-best-performing-market-to-get-lift-from-us-retail-money"
+    }
+  ],
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea's short-selling ban ended March 31, 2025; naked short fines now run four to six times illicit gains",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea Short Selling Ban",
+        "left": {"label": "Ban lifted", "value": "Mar 31, 2025"},
+        "right": {"label": "Naked-short fine", "value": "4-6x gains"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 4,
+      "alt": "Korea's short-selling disclosure and borrowing rules at a glance",
+      "args": {
+        "title": "The rules that apply once you hold a short position",
+        "subtitle": "Disclosure and borrowing terms, 2025 reform",
+        "columns": ["Rule", "Threshold / term", "Applies to"],
+        "rows": [
+          ["Position disclosure", "0.01% of shares or ₩1 billion", "Due 2nd business day"],
+          ["Reporting waiver", "Under ₩100 million", "No report required"],
+          ["Stock loan term", "90 days, renews to 12 months", "Retail = institutional"],
+          ["Cash collateral ratio", "105%", "Retail = institutional"]
+        ],
+        "source": "Financial Services Commission reform announcement; Clearstream market-disclosure reference, 2024–2025",
+        "note": "The 0.01% / ₩1 billion threshold replaced a 0.5%-of-shares threshold effective December 1, 2024."
+      }
+    },
+    {
+      "kind": "checklist",
+      "section": 6,
+      "alt": "Three ways a foreign investor can actually bet against the Korean market",
+      "args": {
+        "title": "How to actually short Korea from outside the country",
+        "subtitle": "What each route requires",
+        "items": [
+          {
+            "label": "Short or buy puts on EWY / FLKR",
+            "why": "Ordinary US brokerage account. No Korean paperwork, no stock-lending agreement with KRX."
+          },
+          {
+            "label": "Buy a dedicated inverse ETP",
+            "why": "e.g. a -3x short South Korea product. Leveraged and daily-reset — built for short-term views, not holding."
+          },
+          {
+            "label": "Short an individual KRX stock directly",
+            "why": "Needs the internal control systems Korea requires of short sellers. Not confirmed as retail-available anywhere."
+          }
+        ]
+      }
+    }
+  ]
+}
