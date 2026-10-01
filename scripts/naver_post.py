@@ -25,7 +25,7 @@ import re
 import sys
 from pathlib import Path
 
-from src import post_tags
+from src import feature_checks, post_tags
 
 ROOT = Path(__file__).resolve().parent.parent
 FIXED_TAGS = {"kr": ["코스피", "주식시황", "코스피마감", "페르마타"],
@@ -325,12 +325,18 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         # 시황·프리뷰·Checkpoint는 네이버가 유일한 공개처다(2026-09-15). 축약본이 아니라 본문을 그대로
         # 싣는다 — 그전에는 900~2,200자 요약본이 갔고, 본진과 겹치지 않게 매번 다시 쓰는 일이 딸려 있었다.
         full = list(ko.get("narrative") or [])
+    pius = magazine and feature_checks.is_pius(doc)
     if magazine:
         # 참고 블로그(피우스의 책도둑 & 매거진) 실측 꼴은 제목 → 📌 간단 브리핑 → 본문 → 자료 출처인데, 브리핑과 Take는 사용자 결정으로 뺐다.
         # 본문은 `ko.narrative` 그대로가 네이버 본문이다(본진 쌍둥이가 없으니 naver.narrative를 따로 두지 않는다).
         full = list(ko.get("narrative") or [])
         # 간단 브리핑은 싣지 않는다(2026-09-13). 참고 블로그 꼴 중 남기는 것은
-        # 표지 → 본문 → 자료 출처뿐이다.
+        # 표지 → 본문 → 자료 출처뿐이다. **피우스형 시험 글(`form: pius`, 2026-10-01)만** 표지 다음에 브리핑을 인용구로 싣는다.
+        if pius:
+            brief = doc.get("brief")
+            lines = [str(x).strip() for x in brief] if isinstance(brief, list) else [l.strip() for l in str(brief or "").split("\n") if l.strip()]
+            if lines:
+                blocks.append(("q", "📌 간단 브리핑\n" + "\n".join(lines)))
     if full:
         # 절을 다 싣고 문단도 자르지 않는다(길이만 2~3문장으로 나눈다).
         # 그림은 **그 절의 것**을 붙인다(2026-09-16).
@@ -340,8 +346,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         leftovers = _graphics(graphics_dir, limit=4) if not by_section else []
         for i, section in enumerate(full):
             heading = re.sub(r"^\s*\d{1,2}\.\s*", "", str(section.get("heading", "")))
-            blocks.append(("h", heading))
-            blocks += [("p", p) for p in _chunks(_plain(section.get("body", "")))]
+            if heading or not pius:   # 피우스형은 소제목 없이 문단만(빈 소제목을 빈 줄로 찍지 않는다)
+                blocks.append(("h", heading))
+            paras = _plain(section.get("body", ""))
+            blocks += [("p", p) for p in (_chunks(paras, max_sentences=2, max_chars=170) if pius else _chunks(paras))]
             for media in by_section.get(i, []):
                 blocks.append(("img", media))
             if not by_section and i < len(leftovers):

@@ -346,6 +346,54 @@ MAGAZINE_CHARS = (2000, 4500)
 # 2026-09-13 참고 블로그 210편 실측: 투자·시장 37%, AI·기술 15%, 기업·경영 13%, 심리 6%, 거시 5%, 과학 2%. "다양한 분야"의
 # 실체는 금융 잡지에 과학·심리를 곁들인 것이다. 그래서 가장 큰 덩어리(해외 칼럼·리서치를 종합한 시장 이야기)를 코너로 둔다.
 MAGAZINE_GROUPS = ("시장 읽기", "시장의 역사", "투자 심리", "기업과 기술", "과학", "돈의 상식", "만약에")
+# 피우스형 시험(2026-10-01, 사장님: "피우스처럼 가보자 테스트로 … 3편만 … 가독성 부분 특히 신경쓰고").
+# 참고 블로그 실측(10/1 최근 6편): 2,400~4,900자(보통 3,900), 문단 44~68개(한두 문장), 📌 간단 브리핑 3~5줄, 소제목 없음.
+# 원고에 `"form": "pius"`를 적은 글만 이 잣대로 본다. 번역은 여전히 안 한다 — 꼴만 가져온다.
+PIUS_FORM = "pius"
+PIUS_CHARS = (3200, 4800)
+PIUS_BRIEF_LINES = (3, 5)
+PIUS_BRIEF_MAX = 120          # 브리핑 한 줄
+PIUS_PARA_MAX_CHARS = 170     # 문단 하나 — 피우스 평균 67자, 우리 문장 60자이면 두 문장
+PIUS_PARA_MAX_SENTENCES = 2
+_SENT_END = re.compile(r"[다요죠까]\.(?=\s|$)")
+
+
+def is_pius(doc: dict) -> bool:
+    return str(doc.get("form") or "") == PIUS_FORM
+
+
+def pius_issues(doc: dict) -> list[str]:
+    """피우스형 꼴 — 브리핑·분량·문단 호흡·소제목 없음. `magazine_issues`가 부른다."""
+    issues: list[str] = []
+    brief = doc.get("brief")
+    lines = [str(x).strip() for x in brief] if isinstance(brief, list) else [l.strip() for l in str(brief or "").split("\n") if l.strip()]
+    if not PIUS_BRIEF_LINES[0] <= len(lines) <= PIUS_BRIEF_LINES[1]:
+        issues.append(f"📌 간단 브리핑(`brief`)이 {len(lines)}줄입니다 — {PIUS_BRIEF_LINES[0]}~{PIUS_BRIEF_LINES[1]}줄, 줄마다 `핵심어 : 한 문장`.")
+    for line in lines:
+        if ":" not in line and "：" not in line:
+            issues.append(f"브리핑 줄에 `핵심어 : 한 문장` 꼴이 아닙니다 — '{line[:40]}'")
+        if len(line) > PIUS_BRIEF_MAX:
+            issues.append(f"브리핑 줄이 {len(line)}자입니다 — {PIUS_BRIEF_MAX}자 이하로.")
+    ko = doc.get("ko") or doc
+    sections = ko.get("narrative") or []
+    for index, section in enumerate(sections, start=1):
+        if str(section.get("heading") or "").strip():
+            issues.append(f"절 {index}에 소제목이 있습니다 — 피우스형은 소제목 없이 문단만 씁니다(`heading`을 비웁니다).")
+    long_paras, many_sents = [], []
+    for section in sections:
+        for para in str(section.get("body") or "").split("\n"):
+            para = para.strip()
+            if not para:
+                continue
+            if len(para) > PIUS_PARA_MAX_CHARS:
+                long_paras.append(para)
+            if len(_SENT_END.findall(para)) > PIUS_PARA_MAX_SENTENCES:
+                many_sents.append(para)
+    if long_paras:
+        issues.append(f"{PIUS_PARA_MAX_CHARS}자를 넘는 문단이 {len(long_paras)}개입니다 — 문단은 한두 문장(줄바꿈으로 나눕니다). 예: '{long_paras[0][:50]}…'")
+    if many_sents:
+        issues.append(f"세 문장 이상인 문단이 {len(many_sents)}개입니다 — 한 문단에 두 문장까지. 예: '{many_sents[0][:50]}…'")
+    return issues
 
 
 def magazine_issues(doc: dict) -> list[str]:
@@ -360,8 +408,11 @@ def magazine_issues(doc: dict) -> list[str]:
         issues.append(f"본문이 {len(sections)}절입니다 — {MAGAZINE_SECTIONS[0]}~{MAGAZINE_SECTIONS[1]}절.")
     body = " ".join(str(s.get("body", "")) for s in sections)
     length = len(re.sub(r"<[^>]+>", "", body))
-    if not MAGAZINE_CHARS[0] <= length <= MAGAZINE_CHARS[1]:
-        issues.append(f"본문이 {length:,}자입니다 — {MAGAZINE_CHARS[0]:,}~{MAGAZINE_CHARS[1]:,}자.")
+    lo, hi = PIUS_CHARS if is_pius(doc) else MAGAZINE_CHARS
+    if not lo <= length <= hi:
+        issues.append(f"본문이 {length:,}자입니다 — {lo:,}~{hi:,}자.")
+    if is_pius(doc):
+        issues += pius_issues(doc)
     if "**" in body:
         issues.append("본문에 마크다운 볼드(**)가 있습니다 — 네이버 편집기는 그대로 찍습니다.")
     if "번역" in body[:400]:
