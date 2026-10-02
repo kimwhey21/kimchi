@@ -1,0 +1,160 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-02",
+  "checked": "2026-10-02",
+  "slug": "korean-high-dividend-stocks",
+  "category_id": 153,
+  "tags": ["korean dividend stocks", "Korea high dividend yield", "Korea dividend withholding tax", "KOSPI High Dividend 50", "Korea Value-Up dividend tax"],
+  "radar_origin": "list order (Category D: dividends) — search queue's top lines were all fix candidates and the week's two-edit quota was already used (2026-09-28, 2026-09-29); the only two 'new' lines ('englishdart', 'kospi200 kosdaq150 2026 year end target forecast') duplicated already-published guides (english-dart-guide, kospi-200-kosdaq-150-year-end-targets-2026). Fell back to the topic list. Yesterday (2026-10-01) was Category C (market structure), so picked a different category. Category D's first unpublished item after korea-dividend-calendar is korean-high-dividend-stocks. Category G's 'korea-ftse-and-msci-classification' was skipped because the live site already has 'korea-is-still-an-emerging-market-what-mscis-2026-decision-means-for-foreign-investors' covering that exact topic.",
+  "sources": [
+    {
+      "name": "Korea Times",
+      "title": "Which Korean stocks offer highest dividend yields this year?",
+      "url": "https://www.koreatimes.co.kr/economy/20260921/which-korean-stocks-offer-highest-dividend-yields-this-year"
+    },
+    {
+      "name": "PwC",
+      "title": "Korea, Republic of - Individual - Income determination",
+      "url": "https://taxsummaries.pwc.com/republic-of-korea/individual/income-determination"
+    },
+    {
+      "name": "Khan.co.kr",
+      "title": "With dividend taxes cut, firms with high controlling shareholder stakes raised payouts first",
+      "url": "https://www.khan.co.kr/en/article/202607021754007/"
+    }
+  ],
+  "related": [
+    {
+      "title": "Korea Dividend Record Date: What Changed in 2026, and What Hasn't",
+      "url": "https://fermata.it.kr/korea-dividend-calendar/"
+    },
+    {
+      "title": "Korea's 2026 Dividend Tax Treaty Rules: Why W-8BEN Doesn't Cut It",
+      "url": "https://fermata.it.kr/korea-us-tax-treaty-forms/"
+    },
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    }
+  ],
+  "ko": {
+    "title": "Korean Dividend Stocks: Why the Highest Yields Aren't the Safest",
+    "narrative": [
+      {
+        "heading": "The short answer: a heating utility and brokerages top the list, not blue chips",
+        "body": "If you came here looking for Korean dividend stocks, the names that actually top the list in 2026 are probably not the ones you expected. According to FnGuide data reported by the Korea Times on September 21, 2026, 29 KOSPI and KOSDAQ companies covered by at least three brokerages are expected to yield 5% or more this year. The single highest is <b>Korea District Heating Corp.</b> at 8.69% (an estimated 6,520 won per share, up from 6,157 won), followed by <b>AJ Networks</b> at 8.33% (343 won per share), <b>NH Investment & Securities</b> at 7.99% (2,031 won, up 731 won from the prior year) and <b>Samsung Securities</b> at 7.98% (6,867 won, up 2,867 won). Webzen (7.96%), SOOP (7.27%), Cheil Worldwide (7.23%), Kiwoom Securities (7.15%) and Korea Investment Holdings (6.84%) round out the top ten.\n\nNone of those are Samsung Electronics or SK Hynix — the two stocks most foreign investors actually own through a broad Korea fund. That matters, because it means the fund you may already hold isn't a dividend play at all, which is the first thing this guide has to clear up before the rest of it is useful."
+      },
+      {
+        "heading": "What the 29 highest-yielding names have in common",
+        "body": "Look down FnGuide's list and a pattern shows up fast: brokerages (NH Investment & Securities, Samsung Securities, Kiwoom Securities, Korea Investment Holdings) make up four of the top ten by themselves, alongside a district heating utility, an equipment-leasing company, two gaming or streaming names and an advertising agency. That is not a random cross-section of the Korean market — it is a list tilted toward sectors whose 2026 profits got an unusual lift. Korea Times' reporting points to two specific tailwinds behind the 2026 numbers: a run of interest-rate increases from the US Federal Reserve and the Bank of Japan that widened trading activity and brokerage income, and the tax incentive described in the next section.\n\nA brokerage's dividend tracks its trading-commission income, which moves with market volume, not with a stable, repeatable business model the way a utility's or a telecom's dividend usually does. That doesn't make these yields fake — it means the yield you see for 2026 is a function of a strong trading year, and may not repeat at the same level if volumes cool."
+      },
+      {
+        "heading": "The catch: a 2026 tax law just rewired who counts as 'high dividend'",
+        "body": "Since January 1, 2026, Korea has run a separate taxation regime for dividend income that resident individual shareholders receive from qualifying \"high-dividend\" companies, confirmed through PwC's and Deloitte's Korea tax summaries and reported by the Korea Herald and Seoul Economic Daily. Instead of being swept into Korea's progressive comprehensive-income tax, which tops out at 45%, qualifying dividends are taxed on a separate tiered schedule: 14% on the first 20 million won of annual dividend income, 20% up to 300 million won, 25% up to 5 billion won, and 30% above that. The scheme runs through the fiscal year that includes December 31, 2028.\n\nTo qualify, a company's dividend payout ratio — dividends paid divided by net income — has to be at least 40% without falling below its FY2024 base-year dividend, or at least 25% with the dividend growing 10% or more year over year. Khan.co.kr reported in July 2026 that 617 listed companies met one of those bars in 2026 (280 on the KOSPI, 337 on the KOSDAQ), and that the qualification rate was highest — 45.6% — among companies where a single individual controlling shareholder holds a majority stake, versus 38.5% for more dispersed ownership and 34.9% for an intermediate group. That pattern is not a coincidence: a controlling shareholder who personally receives a large share of the dividend benefits directly from the lower separate-tax rate, which is exactly the incentive the law was built to create."
+      },
+      {
+        "heading": "This tax break is not yours — but it explains the list",
+        "body": "The separate taxation rate above applies only to Korean resident individual shareholders paying Korean income tax. It does not change what a US or other foreign investor owes on a Korean dividend, which is still governed by Korea's withholding rules, covered in the next section. What it does change is corporate behavior: a controlling shareholder who wants the lower tax rate on their own dividend income has a direct reason to push their company's payout ratio toward 40%, and 2026 is the first full year that incentive has been in place.\n\nThat is the real reason this is a useful year to screen Korean dividend stocks for the first time, or to re-screen a list you built a year or two ago. Companies that raised payouts specifically to clear the 40% or 25%-plus-growth bar are signaling something different than companies whose yield is simply high because their share price fell. Checking which is which is the subject of the next section."
+      },
+      {
+        "heading": "Dividend yield and payout ratio are not the same number, and the gap is the risk",
+        "body": "Dividend yield is dividend per share divided by share price. Payout ratio is dividend divided by net income. A stock can show a high trailing yield for two very different reasons: because a company is distributing a healthy, rising share of growing profits — the behavior Korea's 2026 tax law is trying to reward — or because its earnings fell while the won-amount dividend hasn't been cut yet, which pushes the payout ratio up for reasons that have nothing to do with generosity and everything to do with a dividend that may not survive the next earnings report. A high yield in that second case is a warning, not a bargain.\n\nThe FnGuide numbers Korea Times reported are forward-looking estimates for the current fiscal year, built from at least three brokerage forecasts, not a guaranteed, already-paid number. Before treating any of the names above as a holding rather than a headline, check whether the payout ratio has been climbing because profits are climbing too, or because profits are falling faster than the board has moved to cut the dividend."
+      },
+      {
+        "heading": "What a foreign investor actually keeps after withholding tax",
+        "body": "Every yield number in this guide so far is <b>gross</b> — before Korea's dividend withholding tax. Korea withholds 22% by default on dividends paid to foreign shareholders, or 15% for US residents who have the right tax-treaty paperwork on file (our guide to that paperwork walks through the forms). That gap matters more here than on an ordinary large-cap dividend, because these are the highest headline yields in the market, and the tax takes a proportionally larger bite in won terms. An 8.69% gross yield becomes roughly 7.39% net under the US treaty rate, or about 6.78% net at the 22% default rate — still high by global standards, but not the number printed in the headline.\n\nNone of this changes whether a given company qualifies for Korea's own 2026 separate-taxation break, discussed above — that benefit runs entirely through the Korean resident individual's own tax return and has no effect on what a foreign holder's broker withholds."
+      },
+      {
+        "heading": "How to screen for these stocks without a Korean brokerage account",
+        "body": "Korea Exchange maintains its own benchmark for this exact group, the <b>KOSPI High Dividend Yield 50 Index</b>, and one domestic fund tracks it: Mirae Asset's TIGER KOSPI High Dividend ETF, ticker 210780. As of October 2, 2026, stockanalysis.com showed it yielding roughly 4.7%, with a 0.29% expense ratio and about 77 billion won in assets. The catch is access — 210780 trades only in won, only on the Korea Exchange, so a standard US brokerage account cannot buy it directly; you would need the kind of Korea-linked or omnibus account access covered in our guide on buying Korean stocks from the US.\n\nWe could not find a Korea high-dividend fund listed on a US exchange. The two broad Korea ETFs most US investors can actually buy, EWY and FLKR, are not built for this screen — iShares' own fund page puts EWY's dividend yield at just 0.84%, far below even the broad KOSPI average, because the fund is concentrated in Samsung Electronics and SK Hynix, two reinvestment-heavy growth names that have no reason to chase the 2026 tax break. In practice, reaching the names in this guide from abroad means buying the individual KOSPI- or KOSDAQ-listed shares directly, through whichever access route applies to your broker, rather than through a single US-listed fund."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed FnGuide's September 2026 screen of companies covered by at least three brokerages and expected to yield 5% or more, and the specific per-share and percentage figures for the top ten names, through the Korea Times' September 21, 2026 report of that data. We confirmed the 2026 separate-taxation law's rate tiers, its 40% (or 25%-plus-10%-growth) payout-ratio threshold, and its run through fiscal 2028 through PwC's and Deloitte's Korea tax summaries, cross-checked against Korea Herald and Seoul Economic Daily reporting on the law. We confirmed the 617-company count and the ownership-structure breakdown through Khan.co.kr's July 2, 2026 report. We confirmed the TIGER KOSPI High Dividend ETF's yield, expense ratio and KRX-only listing through stockanalysis.com as of October 2, 2026, and EWY's dividend yield from iShares' own fund page.\n\nWe could not open Korea Exchange's own index page to confirm the KOSPI High Dividend Yield 50's current membership list or an official index return figure, so this guide describes the index and its ETF through third-party data rather than KRX's own numbers. We also could not confirm whether any of the individual high-yield names above carry a US-listed ADR or any other foreign-exchange line, so we make no claim either way for any single name — check the specific ticker yourself before assuming it's reachable only, or also, outside Korea. The net-of-withholding yields in this guide are our own calculation applied to FnGuide's gross figures, not a number published by any of the sources above."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "The highest dividend yields on the Korean market in 2026 don't belong to the companies most foreign investors already hold — they belong to a district-heating utility, a handful of brokerages having a strong trading year, and a scattering of smaller names, mostly because of a tax law that took effect this January and rewards companies for lifting their payout ratio toward 40% of earnings. That law is real and it is reshaping Korean corporate behavior, but the tax break itself belongs to Korean resident shareholders, not to you.\n\nWhat changes for a foreign investor is smaller but concrete: these yields are gross figures that get cut by Korea's 22% default withholding, or 15% with US treaty paperwork on file, and reaching most of these specific names means buying KOSPI- or KOSDAQ-listed shares directly rather than through a single US-listed fund, since neither EWY nor FLKR is built as a dividend screen.\n\nThis guide describes figures reported as of September and October 2026. Expected yields are brokerage estimates for the current fiscal year, not paid amounts, and payout ratios and tax-law qualification can change company by company before the dividend is actually declared. Confirm the current numbers on the company's own investor relations page or DART filing before trading around a dividend. This is not investment or tax advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea's highest 2026 expected dividend yield, Korea District Heating at 8.69%, against EWY's own 0.84% yield",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea's Highest-Yield Dividend Stocks",
+        "left": {"label": "Highest 2026E yield, Korea District Heating Corp.", "value": "8.69%"},
+        "right": {"label": "EWY's own dividend yield (Samsung + Hynix heavy)", "value": "0.84%"}
+      }
+    },
+    {
+      "kind": "checklist",
+      "alt": "How a Korean company qualifies for 2026's separate dividend tax rate",
+      "args": {
+        "title": "How a company qualifies as 'high dividend' under the 2026 tax law",
+        "subtitle": "617 companies met one of two payout-ratio tests in 2026",
+        "items": [
+          {
+            "label": "Payout ratio of at least 40%, dividend not below the FY2024 base year",
+            "why": "The more common qualifying path — net income paid out as dividends has to clear 40%."
+          },
+          {
+            "label": "Or payout ratio of at least 25%, with the dividend up 10%+ year over year",
+            "why": "A lower payout bar for companies that are actively raising their dividend."
+          },
+          {
+            "label": "280 KOSPI and 337 KOSDAQ companies qualified in 2026",
+            "why": "Khan.co.kr, July 2, 2026 — qualification was highest among majority-controlling-shareholder firms (45.6%)."
+          }
+        ]
+      },
+      "section": 3
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Gross dividend yield for Korea's top 2026 payers against what a US investor actually keeps after withholding tax",
+      "args": {
+        "title": "What's left after withholding, not what's printed in the headline",
+        "subtitle": "2026E gross yield vs. net yield at the US treaty and default withholding rates",
+        "columns": ["Company", "Gross yield (2026E)", "Net at 15% (US treaty)", "Net at 22% (default)"],
+        "rows": [
+          ["Korea District Heating Corp.", "8.69%", "7.39%", "6.78%"],
+          ["AJ Networks", "8.33%", "7.08%", "6.50%"],
+          ["NH Investment & Securities", "7.99%", "6.79%", "6.23%"],
+          ["Samsung Securities", "7.98%", "6.78%", "6.22%"]
+        ],
+        "source": "Gross yields: FnGuide via Korea Times, Sept. 21, 2026. Withholding: PwC Worldwide Tax Summaries. Net figures: Fermata's own calculation.",
+        "note": "15% applies to US residents with current tax-treaty paperwork on file; 22% is Korea's default rate with no paperwork filed."
+      },
+      "section": 6
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three checks before treating a Korean high-dividend headline as a holding",
+      "args": {
+        "title": "Before you treat a headline yield as a holding",
+        "subtitle": "The number on the screen is a forecast, not a payment",
+        "items": [
+          {
+            "label": "Check whether the payout ratio is rising with earnings, or without them",
+            "why": "A yield can look identical whether profits are growing or falling — the payout ratio tells you which."
+          },
+          {
+            "label": "Subtract your actual withholding rate, not the headline yield",
+            "why": "22% without treaty paperwork, 15% for US residents who've filed it — the gap is real money."
+          },
+          {
+            "label": "Expect to buy the KOSPI or KOSDAQ share directly, not a US-listed fund",
+            "why": "Neither EWY nor FLKR screens for dividends; the domestic ETF that does, 210780, trades only in won on the KRX."
+          }
+        ]
+      },
+      "section": 7
+    }
+  ]
+}
