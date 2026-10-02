@@ -348,11 +348,10 @@ MAGAZINE_CHARS = (2000, 4500)
 MAGAZINE_GROUPS = ("시장 읽기", "시장의 역사", "투자 심리", "기업과 기술", "과학", "돈의 상식", "만약에")
 # 피우스형 시험(2026-10-01, 사장님: "피우스처럼 가보자 테스트로 … 3편만 … 가독성 부분 특히 신경쓰고").
 # 참고 블로그 실측(10/1 최근 6편): 2,400~4,900자(보통 3,900), 문단 44~68개(한두 문장), 📌 간단 브리핑 3~5줄, 소제목 없음.
+# 브리핑은 2026-10-02 사장님 결정으로 뺐다("잡지에 간단브리핑은 하지말자") — 시험 첫 편에만 실렸다.
 # 원고에 `"form": "pius"`를 적은 글만 이 잣대로 본다. 번역은 여전히 안 한다 — 꼴만 가져온다.
 PIUS_FORM = "pius"
 PIUS_CHARS = (3200, 4800)
-PIUS_BRIEF_LINES = (3, 5)
-PIUS_BRIEF_MAX = 120          # 브리핑 한 줄
 PIUS_PARA_MAX_CHARS = 170     # 문단 하나 — 피우스 평균 67자, 우리 문장 60자이면 두 문장
 PIUS_PARA_MAX_SENTENCES = 2
 _SENT_END = re.compile(r"[다요죠까]\.(?=\s|$)")
@@ -363,17 +362,9 @@ def is_pius(doc: dict) -> bool:
 
 
 def pius_issues(doc: dict) -> list[str]:
-    """피우스형 꼴 — 브리핑·분량·문단 호흡·소제목 없음. `magazine_issues`가 부른다."""
+    """피우스형 꼴 — 분량·문단 호흡·소제목 없음. `magazine_issues`가 부른다. 브리핑은 없다(2026-10-02)."""
     issues: list[str] = []
-    brief = doc.get("brief")
-    lines = [str(x).strip() for x in brief] if isinstance(brief, list) else [l.strip() for l in str(brief or "").split("\n") if l.strip()]
-    if not PIUS_BRIEF_LINES[0] <= len(lines) <= PIUS_BRIEF_LINES[1]:
-        issues.append(f"📌 간단 브리핑(`brief`)이 {len(lines)}줄입니다 — {PIUS_BRIEF_LINES[0]}~{PIUS_BRIEF_LINES[1]}줄, 줄마다 `핵심어 : 한 문장`.")
-    for line in lines:
-        if ":" not in line and "：" not in line:
-            issues.append(f"브리핑 줄에 `핵심어 : 한 문장` 꼴이 아닙니다 — '{line[:40]}'")
-        if len(line) > PIUS_BRIEF_MAX:
-            issues.append(f"브리핑 줄이 {len(line)}자입니다 — {PIUS_BRIEF_MAX}자 이하로.")
+    # 간단 브리핑은 잡지 어디에도 싣지 않는다(2026-10-02 사장님 결정 — 피우스형 시험 첫 편 뒤). 있어도 보지 않는다.
     ko = doc.get("ko") or doc
     sections = ko.get("narrative") or []
     for index, section in enumerate(sections, start=1):
@@ -397,7 +388,7 @@ def pius_issues(doc: dict) -> list[str]:
 
 
 def magazine_issues(doc: dict) -> list[str]:
-    """브리핑 줄 수·본문 길이·절 수·출처 표기·코너 — 잡지 한 편의 꼴. 본진에 안 가는 글이라 여기서만 본다."""
+    """본문 길이·절 수·출처 표기·코너 — 잡지 한 편의 꼴. 본진에 안 가는 글이라 여기서만 본다(브리핑은 싣지 않는다)."""
     issues: list[str] = []
     # 간단 브리핑(`brief`)은 2026-09-13 저녁 사용자 결정으로 싣지 않는다 — 있어도 검사하지 않고 올리는 쪽도 무시한다.
     if str(doc.get("group") or "") not in MAGAZINE_GROUPS:

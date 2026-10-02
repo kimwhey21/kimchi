@@ -331,12 +331,7 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         # 본문은 `ko.narrative` 그대로가 네이버 본문이다(본진 쌍둥이가 없으니 naver.narrative를 따로 두지 않는다).
         full = list(ko.get("narrative") or [])
         # 간단 브리핑은 싣지 않는다(2026-09-13). 참고 블로그 꼴 중 남기는 것은
-        # 표지 → 본문 → 자료 출처뿐이다. **피우스형 시험 글(`form: pius`, 2026-10-01)만** 표지 다음에 브리핑을 인용구로 싣는다.
-        if pius:
-            brief = doc.get("brief")
-            lines = [str(x).strip() for x in brief] if isinstance(brief, list) else [l.strip() for l in str(brief or "").split("\n") if l.strip()]
-            if lines:
-                blocks.append(("q", "📌 간단 브리핑\n" + "\n".join(lines)))
+        # 표지 → 본문 → 자료 출처뿐이다. 피우스형 시험 글(`form: pius`)도 같다 — 첫 편(10/2 15:09)에만 브리핑이 실렸고 그 뒤 사장님이 뺐다.
     if full:
         # 절을 다 싣고 문단도 자르지 않는다(길이만 2~3문장으로 나눈다).
         # 그림은 **그 절의 것**을 붙인다(2026-09-16).

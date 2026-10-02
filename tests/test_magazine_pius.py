@@ -1,6 +1,7 @@
 """피우스형 시험(2026-10-01, 사장님: "피우스처럼 가보자 테스트로 … 3편만 해보고 다시 고민해보자 가독성 부분 특히 신경쓰고").
 
 참고 블로그 실측(10/1 최근 6편): 2,400~4,900자, 문단 44~68개(한두 문장), 📌 간단 브리핑 3~5줄, 소제목 없음, 사진 1장.
+브리핑은 2026-10-02 사장님 결정으로 뺐다("잡지에 간단브리핑은 하지말자").
 `form: pius`를 적은 잡지 원고만 이 꼴로 본다. 번역은 여전히 하지 않는다(출처 둘 이상 종합).
 """
 import copy
@@ -47,11 +48,10 @@ class PiusForm(unittest.TestCase):
         doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
         self.assertEqual(feature_checks.magazine_issues(doc), [])     # 2,000자대·소제목 있음·브리핑 없음 그대로 통과
 
-    def test_brief_is_required_three_to_five_lines(self) -> None:
-        doc = _pius_doc(); doc["brief"] = doc["brief"][:2]
-        self.assertTrue(any("브리핑" in i for i in feature_checks.magazine_issues(doc)))
-        doc = _pius_doc(); doc["brief"] = ["핵심어 없이 그냥 문장만 있습니다."] * 3
-        self.assertTrue(any("핵심어 : 한 문장" in i for i in feature_checks.magazine_issues(doc)))
+    def test_brief_is_not_required_or_rendered(self) -> None:
+        """2026-10-02 사장님: "잡지에 간단브리핑은 하지말자" — 피우스형에서도 요구하지 않고 싣지 않는다."""
+        doc = _pius_doc(); doc.pop("brief")
+        self.assertEqual(feature_checks.magazine_issues(doc), [])
 
     def test_headings_must_be_empty_and_paragraphs_short(self) -> None:
         doc = _pius_doc(); doc["ko"]["narrative"][0]["heading"] = "소제목"
@@ -64,7 +64,7 @@ class PiusForm(unittest.TestCase):
         doc = _pius_doc(); doc["ko"]["narrative"] = doc["ko"]["narrative"][:2]
         self.assertTrue(any("3,200" in i for i in feature_checks.magazine_issues(doc)))
 
-    def test_naver_post_renders_brief_then_paragraphs_without_headings(self) -> None:
+    def test_naver_post_has_paragraphs_without_headings_and_no_brief(self) -> None:
         doc = _pius_doc()
         tmp = ROOT / "output" / "_pius_test.json"; tmp.parent.mkdir(exist_ok=True)
         tmp.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
@@ -73,10 +73,8 @@ class PiusForm(unittest.TestCase):
         finally:
             tmp.unlink()
         kinds = [k for k, _ in post["blocks"]]
-        quotes = [t for k, t in post["blocks"] if k == "q"]
-        self.assertEqual(len(quotes), 1)
-        self.assertTrue(quotes[0].startswith("📌 간단 브리핑\n소금 급여 :"))
-        self.assertLess(kinds.index("q"), kinds.index("p"))                      # 브리핑이 본문 앞
+        self.assertNotIn("q", kinds)                                              # 원고에 brief가 있어도 싣지 않는다
+        self.assertNotIn("간단 브리핑", "\n".join(t for _, t in post["blocks"]))
         heads = [t for k, t in post["blocks"] if k == "h"]
         self.assertEqual(heads, ["자료 출처"])                                     # 본문 소제목은 하나도 없다
         paras = [t for k, t in post["blocks"] if k == "p"]
