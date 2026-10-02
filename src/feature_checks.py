@@ -351,18 +351,42 @@ MAGAZINE_GROUPS = ("시장 읽기", "시장의 역사", "투자 심리", "기업
 # 브리핑은 2026-10-02 사장님 결정으로 뺐다("잡지에 간단브리핑은 하지말자") — 시험 첫 편에만 실렸다.
 # 원고에 `"form": "pius"`를 적은 글만 이 잣대로 본다. 번역은 여전히 안 한다 — 꼴만 가져온다.
 PIUS_FORM = "pius"
-PIUS_CHARS = (3200, 4800)
+# 2026-10-03부터 잡지의 **기본 꼴**이다(사장님 "다 적용한 다음 글 뽑아서 보여줘봐"). 옛 꼴(소제목·400자 절)은 `form: classic`만.
+# 하한 3,200자는 루틴이 문단을 복사해 채우게 만들었다(10/2 핵심광물 편에 같은 문단 세 쌍) — 피우스 실측 최소 2,400자로 내렸다.
+PIUS_CHARS = (2400, 4800)
+PIUS_MIN_QUOTES = 1           # 사람의 말을 그대로 옮긴 문단(“…”로 시작) — 원문에서 확인한 말만
 PIUS_PARA_MAX_CHARS = 170     # 문단 하나 — 피우스 평균 67자, 우리 문장 60자이면 두 문장
 PIUS_PARA_MAX_SENTENCES = 2
 _SENT_END = re.compile(r"[다요죠까]\.(?=\s|$)")
 
 
 def is_pius(doc: dict) -> bool:
-    return str(doc.get("form") or "") == PIUS_FORM
+    """잡지의 기본 꼴(2026-10-03~). `form: classic`이라고 적은 옛 원고만 아니다."""
+    return str(doc.get("form") or "") != "classic"
+
+
+def _paragraphs(doc: dict) -> list[str]:
+    ko = doc.get("ko") or doc
+    return [p.strip() for s in (ko.get("narrative") or []) for p in str(s.get("body") or "").split("\n") if p.strip()]
+
+
+def duplicate_paragraph_issues(doc: dict) -> list[str]:
+    """같은 문단이 두 번 나오면 막는다(2026-10-03 — 10/2 핵심광물 편이 분량을 채우려고 문단 세 쌍을 되풀이한 채 올라갔다).
+    30자 넘는 문단이 다른 문단과 같거나 그 안에 통째로 들어 있으면 반복으로 본다."""
+    paras = [re.sub(r"\s+", " ", p) for p in _paragraphs(doc)]
+    seen: list[str] = []
+    dups: list[str] = []
+    for p in paras:
+        if len(p) > 30 and any(p == q or p in q or q in p for q in seen if len(q) > 30):
+            dups.append(p)
+        seen.append(p)
+    if dups:
+        return [f"같은 문단이 되풀이됩니다({len(dups)}개) — 분량을 채우려고 문단을 복사하지 않습니다. 예: '{dups[0][:50]}…'"]
+    return []
 
 
 def pius_issues(doc: dict) -> list[str]:
-    """피우스형 꼴 — 분량·문단 호흡·소제목 없음. `magazine_issues`가 부른다. 브리핑은 없다(2026-10-02)."""
+    """잡지 기본 꼴(피우스형) — 문단 호흡·소제목 없음·직접 인용. `magazine_issues`가 부른다. 브리핑은 없다(2026-10-02)."""
     issues: list[str] = []
     # 간단 브리핑은 잡지 어디에도 싣지 않는다(2026-10-02 사장님 결정 — 피우스형 시험 첫 편 뒤). 있어도 보지 않는다.
     ko = doc.get("ko") or doc
@@ -384,6 +408,10 @@ def pius_issues(doc: dict) -> list[str]:
         issues.append(f"{PIUS_PARA_MAX_CHARS}자를 넘는 문단이 {len(long_paras)}개입니다 — 문단은 한두 문장(줄바꿈으로 나눕니다). 예: '{long_paras[0][:50]}…'")
     if many_sents:
         issues.append(f"세 문장 이상인 문단이 {len(many_sents)}개입니다 — 한 문단에 두 문장까지. 예: '{many_sents[0][:50]}…'")
+    quotes = [p for p in _paragraphs(doc) if p.startswith(("“", '"'))]
+    if len(quotes) < PIUS_MIN_QUOTES:
+        issues.append("사람의 말을 그대로 옮긴 문단이 없습니다 — 원문에서 확인한 말을 “…”로 따로 한 문단 이상 옮깁니다"
+                      "(누가 어디서 한 말인지 앞 문단에 밝힙니다).")
     return issues
 
 
@@ -404,6 +432,7 @@ def magazine_issues(doc: dict) -> list[str]:
         issues.append(f"본문이 {length:,}자입니다 — {lo:,}~{hi:,}자.")
     if is_pius(doc):
         issues += pius_issues(doc)
+    issues += duplicate_paragraph_issues(doc)
     if "**" in body:
         issues.append("본문에 마크다운 볼드(**)가 있습니다 — 네이버 편집기는 그대로 찍습니다.")
     if "번역" in body[:400]:
