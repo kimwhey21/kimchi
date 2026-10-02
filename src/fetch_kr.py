@@ -91,7 +91,7 @@ def _fetch_naver_item_quotes(codes: list[str]) -> dict[str, dict]:
     KRX 기준(삼성전자 3.62%)도 NXT 확정 기준(3.24%)도 아닌 제3의 값(2.70%)이었습니다. 폴링 응답의 ``nv``는
     15:30~16:00에는 정규장 종가로 멈춰 있지만 **16:00부터 KRX 시간외 단일가를 따라 다시 움직이고**, 넥스트레이드 애프터마켓
     때문에 ``ms``는 20:00까지 OPEN입니다(2026-09-28 확인) — 그래서 그 창에 찍어 둔 사진(_krx_close_snapshot)을 먼저 씁니다.
-    ``pcv``는 KRX 전일 종가, ``cr``은 언론·HTS가 쓰는 그 등락률입니다.
+    ``pcv``는 KRX 전일 종가, ``sv``는 그날 기준가(배당락·권리락 날만 pcv와 다르다), ``cr``은 언론·HTS가 쓰는 그 등락률(기준가 대비)입니다.
     한 요청에 여러 종목을 묶어 보냅니다.
     """
     quotes: dict[str, dict] = {}
@@ -132,13 +132,17 @@ def _apply_krx_close(entry: dict, quote: dict | None, today: str) -> dict:
     # 직접 계산하고 cr은 크기 대조에만 쓴다 — 2026-09-25 실제 데이터로 시험하다 잡은 것.
     if not pcv:
         raise ValueError(f"{code}: 폴링에 전일 종가(pcv)가 없습니다.")
-    change_pct = (nv - pcv) / pcv * 100
+    # 거래소 등락률은 전일 종가가 아니라 **기준가**(`sv`)에 대한 비율이다. 보통은 둘이 같지만 배당락·권리락·분할처럼 기준가를
+    # 조정한 날은 다르다(2026-10-02 삼성바이오로직스: pcv 1,429,000 · sv 1,418,000 · nv 1,354,000 → 거래소 −4.51%, pcv로는 −5.25%;
+    # 크기 대조에 걸려 한국장 수집 전체가 멈췄다). sv가 있으면 그것을 기준으로 쓴다.
+    base = float(quote.get("sv") or 0) or pcv
+    change_pct = (nv - base) / base * 100
     if abs(abs(change_pct) - cr) > 0.05:
         raise ValueError(f"{code}: 계산한 등락률 {change_pct:.2f}%와 폴링 cr {cr}이 다릅니다 — 응답 형식 확인 필요.")
     series = list(entry.get("series") or [])
     if series:
         series[-1] = round(nv, 4)
-    return {**entry, "price": round(nv, 2), "change_pct": round(change_pct, 2), "prev_close_krx": round(pcv, 2),
+    return {**entry, "price": round(nv, 2), "change_pct": round(change_pct, 2), "prev_close_krx": round(base, 2),
             "series": series, "history": price_history.replace_last(entry.get("history"), nv),
             "data_source": "Naver Finance realtime item (KRX regular-session close)"}
 

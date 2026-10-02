@@ -246,6 +246,18 @@ class KrxCloseForStocksTest(unittest.TestCase):
         with self.assertRaises(ValueError):   # cr 크기가 계산값과 다르면 응답 형식이 바뀐 것
             fetch_kr._apply_krx_close(entry, {"nv": 174100, "cr": 5.0, "pcv": 175700, "ms": "CLOSE"}, self.TODAY)
 
+    def test_change_is_against_the_adjusted_base_price(self):
+        """2026-10-02 삼성바이오로직스 실제 사진: 기준가(sv)가 전일 종가(pcv)와 다른 날 — 거래소 등락률은 기준가 대비 −4.51%."""
+        entry = {**self._entry(), "ticker": "207940", "price": 1354000}
+        quote = {"cr": 4.51, "cv": 64000, "ms": "CLOSE", "nv": 1354000, "pcv": 1429000, "rf": "5", "sv": 1418000}
+        out = fetch_kr._apply_krx_close(entry, quote, self.TODAY)
+        self.assertEqual(out["change_pct"], -4.51)
+        self.assertEqual(out["prev_close_krx"], 1418000)
+
+    def test_without_sv_the_previous_close_is_the_base(self):
+        out = fetch_kr._apply_krx_close(self._entry(), {"nv": 286500, "cr": 3.62, "pcv": 276500, "ms": "CLOSE"}, self.TODAY)
+        self.assertEqual(out["change_pct"], 3.62)
+
     def test_not_today_is_left_alone(self) -> None:
         entry = self._entry(date="2026-09-23")
         self.assertEqual(fetch_kr._apply_krx_close(entry, None, self.TODAY), entry)
