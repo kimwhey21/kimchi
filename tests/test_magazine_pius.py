@@ -2,7 +2,7 @@
 
 참고 블로그 실측(10/1 최근 6편): 2,400~4,900자, 문단 44~68개(한두 문장), 소제목 없음, 사진 1장.
 간단 브리핑은 2026-10-02 사장님 결정으로 뺐다. 옛 꼴(소제목·400자 절)은 `form: classic` 원고만이다.
-고정 예시는 tests/fixtures/magazine_sample_v2.json(관문 통과본).
+고정 예시는 tests/fixtures/magazine_sample.json(관문 통과본, 루틴 프롬프트가 이 이름을 읽는다). 옛 꼴은 magazine_sample_classic.json.
 """
 import copy
 import json
@@ -13,8 +13,8 @@ from scripts import naver_post
 from src import feature_checks, feature_gate
 
 ROOT = Path(__file__).resolve().parent.parent
-FIXTURE = ROOT / "tests" / "fixtures" / "magazine_sample_v2.json"
-CLASSIC = ROOT / "tests" / "fixtures" / "magazine_sample.json"
+FIXTURE = ROOT / "tests" / "fixtures" / "magazine_sample.json"
+CLASSIC = ROOT / "tests" / "fixtures" / "magazine_sample_classic.json"
 
 
 def _doc() -> dict:

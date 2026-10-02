@@ -424,7 +424,7 @@
   `sources` 가운데 **본문에 이름이 실제로 나온 것**만 센다(`source_check.collect`), 첫머리에 '번역'이 있으면 막고, 사진 한
   장(`featured_photo.url`)을 요구한다(`feature_checks.magazine_issues`). 기준표용 '확인 날짜' 규칙은 잡지에 걸리지 않고, **간단
   브리핑도 Fermata's Take도 없다** — 표지 → 본문 → 자료 출처만. **브랜드는 퍼플썸이다** — 잡지 글의 태그·본문에 페르마타가 나가면
-  안 된다(고정 태그 `퍼플썸매거진`). 형식 예시는 `tests/fixtures/magazine_sample_v2.json`(관문 통과본; 옛 꼴은 `magazine_sample.json`). **2026-10-03부터 기본 꼴은 피우스형이다**(사장님 결정): 소제목 없이 한두 문장 문단(170자), 2,400~4,800자, 사람의 말을 그대로 옮긴 문단 하나 이상, **같은 문단 반복 금지**(`feature_checks.pius_issues`·`duplicate_paragraph_issues`; 옛 꼴은 `form: classic`만). 주제는 이름난 사람·회사의 결정·주장이 있는 기사를 먼저 고르고, 주장·근거·반론·숫자·독자의 돈으로 짜며 우리가 권하지는 않는다 — 지시문 「글의 꼴과 재미」, 견본 `tests/fixtures/magazine_sample_v2.json`. 간단 브리핑은 싣지 않는다.
+  안 된다(고정 태그 `퍼플썸매거진`). 형식 예시는 `tests/fixtures/magazine_sample.json`(관문 통과본, 루틴 프롬프트가 이 이름을 읽는다; 옛 꼴은 `magazine_sample_classic.json`). **2026-10-03부터 기본 꼴은 피우스형이다**(사장님 결정): 소제목 없이 한두 문장 문단(170자), 2,400~4,800자, 사람의 말을 그대로 옮긴 문단 하나 이상, **같은 문단 반복 금지**(`feature_checks.pius_issues`·`duplicate_paragraph_issues`; 옛 꼴은 `form: classic`만). 주제는 이름난 사람·회사의 결정·주장이 있는 기사를 먼저 고르고, 주장·근거·반론·숫자·독자의 돈으로 짜며 우리가 권하지는 않는다 — 지시문 「글의 꼴과 재미」, 견본 `tests/fixtures/magazine_sample.json`. 간단 브리핑은 싣지 않는다.
 - **고친 것이 있으면 곧바로 커밋·푸시한다.** 클라우드 루틴이 규칙과 관문 코드를 **깃허브에서** 받아 가기 때문이다 — 맥에서만 고쳐
   두면 루틴은 옛 규칙으로 계속 돈다. 대상은 `main`이다(작업 브랜치를 만들지 않는다 — 발행 워크플로가 `main` 푸시로만 돈다).
   - **푸시 전에 `python -m unittest discover -s tests`를 돌려 통과한 것만 올린다.** 실패하면 올리지 않고 보고한다.

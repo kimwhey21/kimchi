@@ -23,7 +23,7 @@
 ## 글의 꼴과 재미 — 2026-10-03부터 기본(사장님 결정: "다 적용한 다음 글 뽑아서 보여줘봐")
 
 잡지 글이 재미없던 이유는 문장이 아니라 **무엇을 고르고 어떻게 짜느냐**였습니다(사람의 말 0, 본문 속 물음 0, 숫자 과다,
-사실의 나열, 주장 없음). 아래가 기본입니다. 견본은 `tests/fixtures/magazine_sample_v2.json`(관문 통과본)입니다.
+사실의 나열, 주장 없음). 아래가 기본입니다. 견본은 `tests/fixtures/magazine_sample.json`(관문 통과본)입니다.
 
 **고르기**
 - 하루 세 편 중 **둘은 이름난 사람이나 회사의 결정·주장**이 있는 기사에서 고릅니다 — 유명 투자자가 산 것, 칼럼니스트의 반대 의견,
@@ -53,7 +53,7 @@
 
 ## 원고 형식
 
-파일: `editorial/magazine/<YYYY-MM-DD>_<slug>.json` (slug는 영문 소문자·하이픈). 형식 예시는 `tests/fixtures/magazine_sample_v2.json`(옛 꼴 예시 `magazine_sample.json`은 `form: classic`).
+파일: `editorial/magazine/<YYYY-MM-DD>_<slug>.json` (slug는 영문 소문자·하이픈). 형식 예시는 `tests/fixtures/magazine_sample.json`(옛 꼴 예시 `magazine_sample_classic.json`은 `form: classic` — 따라 쓰지 않습니다).
 
 ```json
 {

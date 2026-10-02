@@ -9,7 +9,7 @@ from pathlib import Path
 from scripts import blogger_post
 
 ROOT = Path(__file__).resolve().parents[1]
-MAGAZINE = ROOT / "tests" / "fixtures" / "magazine_sample.json"
+MAGAZINE = ROOT / "tests" / "fixtures" / "magazine_sample_classic.json"
 
 
 class BloggerPostTest(unittest.TestCase):

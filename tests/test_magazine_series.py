@@ -15,7 +15,7 @@ from scripts import naver_post, recent_titles
 from src import editorial_title, feature_checks, feature_gate, source_check
 
 ROOT = Path(__file__).resolve().parent.parent
-FIXTURE = ROOT / "tests" / "fixtures" / "magazine_sample.json"
+FIXTURE = ROOT / "tests" / "fixtures" / "magazine_sample_classic.json"
 
 
 def _doc() -> dict:
