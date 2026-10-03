@@ -1,0 +1,150 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-03",
+  "checked": "2026-10-03",
+  "slug": "korean-shipbuilders-explained",
+  "category_id": 153,
+  "tags": ["Korean shipbuilding stocks", "HD Hyundai Heavy Industries stock", "Hanwha Ocean stock", "Samsung Heavy Industries stock", "MASGA"],
+  "radar_origin": "list order (Category E: companies) — search queue's top lines this week were either the fix quota already spent (DART page fixed 9/28, KOSPI-vs-KOSDAQ page fixed 9/29, both for the exact queries now showing again) or near-duplicates of those same just-fixed pages ('englishdart', 'kospi200 kosdaq150 2026 year end target forecast') that the matcher reports as having no dedicated article when one already exists and was checked days ago. Moved to list order, Category E (unused this week; last E pick was sk-hynix-vs-micron on 2026-09-17), first unwritten topic.",
+  "related": [
+    {
+      "title": "SK Hynix Stock vs Micron: How to Actually Buy HBM Exposure",
+      "url": "https://fermata.it.kr/sk-hynix-vs-micron/"
+    },
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "How to Buy Korean Stocks From the US or Canada (2026)",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    }
+  ],
+  "ko": {
+    "title": "Korean Shipbuilding Stocks: Record Profits, Falling Shares (2026)",
+    "narrative": [
+      {
+        "heading": "The short answer: three separate stocks, no single ticker",
+        "body": "\"Korean shipbuilding stocks\" usually means one of three separately traded companies, not one. <b>HD Hyundai Heavy Industries</b> (Korea Exchange: 329180) is the largest by market value, <b>Hanwha Ocean</b> (042660) is the renamed former Daewoo Shipbuilding & Marine Engineering, and <b>Samsung Heavy Industries</b> (010140) is the smallest of the three. None of them sells an American Depositary Receipt, so there is no single US-listed ticker for \"Korea shipbuilding\" the way SK Hynix now has one for memory chips.\n\nWhat the three share is an order book that is unusually full. Korea's shipbuilders were working through roughly 3.5 years of secured backlog heading into 2026, with delivery slots already booked out through 2028, according to Hellenic Shipping News's review of the industry's 2026 outlook. That is the backdrop every number in this guide sits against — a sector with more work than it can build quickly, priced by investors as if the opposite were true."
+      },
+      {
+        "heading": "Why the shares are down close to half even as profits jumped",
+        "body": "All three stocks closed well off their 52-week highs as of the October 2, 2026 close, according to stockanalysis.com. HD Hyundai Heavy Industries closed at ₩426,000, down 44.3% from a 52-week high of ₩765,000, for a market capitalization of about ₩44.70 trillion (roughly $32.8 billion at the ₩1,361.6-per-dollar rate in our own October 1, 2026 price data). Hanwha Ocean closed at ₩78,800, down 49.1% from a high of ₩154,800, for a market cap of ₩24.14 trillion (about $17.7 billion) — a figure TipRanks' own quote page matched almost exactly the prior session. Samsung Heavy Industries closed at ₩19,960, down 43.5% from ₩35,350, for a market cap of ₩17.05 trillion (about $12.5 billion).\n\nNone of that reflects weak earnings. Hanwha Ocean's own Q2 2026 results, reported in July, showed consolidated revenue of ₩5.443 trillion, up 65% from the same quarter a year earlier, with operating profit of ₩736 billion. Trailing-twelve-month net income is up 138.8% at Hanwha Ocean, 169.4% at HD Hyundai Heavy Industries and 99.3% at Samsung Heavy Industries, per stockanalysis.com. The gap between rising profit and falling share prices is the real story in this sector right now, not a lack of demand."
+      },
+      {
+        "heading": "What's filling the order book: LNG carriers and naval ships",
+        "body": "The backlog is not spread evenly across ship types. Korean yards were targeting liquefied natural gas (LNG) carriers as roughly 33% of new orders across the major builders in 2026, and an industry outlook published in January 2026 forecast global LNG carrier orders would climb about 24% year over year to 115 vessels, with Korean builders expected to win the large majority, according to Hellenic Shipping News. Samsung Heavy Industries and Hanwha Ocean both reported LNG carrier wins through the year, including Samsung Heavy's roughly $1.2 billion order for four oversized LNG carriers and two tankers from an Oceania-based owner.\n\nThat picture shifted as the year went on. Separate reporting on the first half of 2026 described Chinese yards taking the majority of new global LNG carrier orders in that window — a reversal of the near-total Korean dominance the January outlook assumed. We flag this directly in the verification section below: the two figures describe different stretches of the year and do not agree, so we are not printing one precise market-share number as settled fact."
+      },
+      {
+        "heading": "The MASGA wildcard: Korea's bet on US Navy shipyards",
+        "body": "A second driver sits outside ordinary commercial shipbuilding. Make American Shipbuilding Great Again (MASGA) is a roughly $150 billion Korea-US shipbuilding cooperation framework, agreed alongside the two countries' 2025 tariff deal, covering Korean shipbuilders acquiring and modernizing US shipyards, building vessels, supplying parts, and handling maintenance and repair work for the US Navy, according to the Korea Herald. Hanwha Ocean, HD Hyundai and Samsung Heavy Industries are all named participants.\n\nThe clearest example is already running. Hanwha bought Philadelphia's Philly Shipyard for $100 million in December 2024 and has committed roughly $5 billion to expand it, aiming to raise annual output from one or two vessels today to as many as 20 in the medium-to-long term, according to the Korea JoongAng Daily. The Trump administration has separately named Hanwha as a potential partner for a new US Navy frigate class. None of this shows up in quarterly results yet — Philly Shipyard has not yet been certified to build US military vessels — but it is why these three stocks get discussed as a US industrial-policy story as much as a commercial shipping one."
+      },
+      {
+        "heading": "How US and European investors can actually buy in",
+        "body": "There is no shortcut here: none of the three — HD Hyundai Heavy Industries, Hanwha Ocean or Samsung Heavy Industries — trades as a Nasdaq- or NYSE-listed ADR, unlike SK Hynix, which listed one in July 2026. <a href=\"https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/\">Buying any of them</a> means a broker with direct Korea Exchange access — the same route covered in our guide to buying Samsung Electronics from abroad. Interactive Brokers and a handful of other international brokers support it; most US retail apps such as Robinhood do not.\n\nThe broad Korea ETFs US investors can buy on Nasdaq or NYSE, EWY and FLKR, are not a substitute. <a href=\"https://fermata.it.kr/kospi-etf-for-us-investors/\">Both funds are dominated by Samsung Electronics and SK Hynix</a>, which together make up roughly half of each fund's weight; shipbuilders are a small slice of either one, not a targeted way to own this specific story. If you want exposure to Korea's shipbuilders specifically, buying the Korea-listed shares directly, through a broker that supports it, is currently the only way to do it."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "Confirmed against two sources each: the MASGA framework's roughly $150 billion scope and its coverage of shipyard acquisition, vessel construction and maintenance work (the Korea Herald and the Korea JoongAng Daily both reported matching figures); Hanwha's $100 million Philly Shipyard purchase and its roughly $5 billion expansion plan (both outlets again agree); and Hanwha Ocean's Q2 2026 revenue and operating profit, which matched between a direct earnings-summary source and a separate financial-media report of the same quarter.\n\nWe could not independently verify one current global LNG-carrier market-share percentage for Korean builders. A January 2026 industry outlook forecast Korean builders would win the large majority of 2026's LNG carrier orders; separate reporting on the first half of 2026 described Chinese yards taking the majority of new LNG orders in that same window. Both come from secondary industry coverage rather than a single shipbuilders'-association dataset we could check ourselves, and they describe different stretches of the year — so we report the shift rather than one number. Stock prices, market capitalization, P/E ratios and the trailing-twelve-month earnings-growth figures here are from stockanalysis.com as of the October 2, 2026 close; we cross-checked Hanwha Ocean's market cap against TipRanks' own quote page, which matched almost exactly, but did not independently re-verify every figure for all three companies against a second source."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Korea's three listed shipbuilders — HD Hyundai Heavy Industries, Hanwha Ocean and Samsung Heavy Industries — are each reporting some of the strongest profit growth in their history, backed by a backlog that stretches into 2028 and a separate, policy-driven push into US naval shipbuilding under the MASGA framework. None of that has stopped all three stocks from trading 43-49% below their 52-week highs as of early October 2026.\n\nThat gap between operating performance and share price is the actual question for anyone looking at this sector, not a settled answer we can hand you — it could mean the market is pricing in a slowdown that has not yet shown up in the numbers, or it could mean the stocks re-rate once LNG and naval deliveries catch up with the order book. Either way, buying in means a broker with Korea Exchange access, not a US-listed ticker or an ETF shortcut.\n\nThis guide describes company results reported through July 2026 and stock prices as of the October 2, 2026 close, cross-checked where noted against a second source in late September and early October 2026. Stock prices, backlogs and trade-policy terms all change; confirm current figures before investing. This is not investment advice."
+    }
+  },
+  "sources": [
+    {
+      "name": "Hellenic Shipping News",
+      "title": "Korean shipbuilders secure 3.5-year backlog as LNG and defense orders lift prices",
+      "url": "https://www.hellenicshippingnews.com/korean-shipbuilders-secure-3-5-year-backlog-as-lng-and-defense-orders-lift-prices/"
+    },
+    {
+      "name": "Korea Herald",
+      "title": "$150b MASGA push gains momentum as Trump casts shipbuilding as strategic priority",
+      "url": "https://www.koreaherald.com/article/10642505"
+    },
+    {
+      "name": "Korea JoongAng Daily",
+      "title": "Hanwha mulls buying more U.S. shipyards as MASGA project gets underway",
+      "url": "https://www.koreajoongangdaily.com/business/hanwha-mulls-buying-more-us-shipyards-as-masga-project-gets-underway/12210059"
+    },
+    {
+      "name": "stockanalysis.com",
+      "title": "HD Hyundai Heavy Industries (329180), Hanwha Ocean (042660) and Samsung Heavy Industries (010140) stock quotes",
+      "url": "https://stockanalysis.com/quote/krx/329180/"
+    },
+    {
+      "name": "TipRanks",
+      "title": "Hanwha Ocean (KR:042660) stock chart and stats",
+      "url": "https://www.tipranks.com/stocks/kr:042660"
+    },
+    {
+      "name": "Quartr",
+      "title": "Hanwha Ocean Co (A042660) Q2 2026 earnings summary",
+      "url": "https://quartr.com/events/hanwha-ocean-co-ltd-a042660-q2-2026_F1Bqa2kN"
+    },
+    {
+      "name": "Baird Maritime",
+      "title": "Samsung Heavy wins $1.2b order for four oversized LNG carriers and two tankers",
+      "url": "https://www.bairdmaritime.com/shipping/tankers/gas/samsung-heavy-wins-12b-order-for-four-oversized-lng-carriers-and-two-tankers"
+    }
+  ],
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea's Big Three shipbuilders: backlog booked through 2028, HD Hyundai Heavy Industries 44% below its 52-week high",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea's Big Three Shipbuilders",
+        "left": {"label": "Backlog booked through", "value": "2028"},
+        "right": {"label": "HD Hyundai Heavy, off 52-wk high", "value": "-44.3%"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "HD Hyundai Heavy Industries, Hanwha Ocean and Samsung Heavy Industries compared on price, market cap and earnings growth",
+      "args": {
+        "title": "Korea's three listed shipbuilders, side by side",
+        "columns": ["Metric", "HD Hyundai Heavy", "Hanwha Ocean", "Samsung Heavy"],
+        "rows": [
+          ["Close, Oct 2, 2026", "₩426,000", "₩78,800", "₩19,960"],
+          ["Market cap", "₩44.70T (~$32.8B)", "₩24.14T (~$17.7B)", "₩17.05T (~$12.5B)"],
+          ["52-week range", "₩416,000-765,000", "₩71,300-154,800", "₩18,440-35,350"],
+          ["Off 52-week high", "-44.3%", "-49.1%", "-43.5%"],
+          ["Trailing P/E", "16.63", "13.89", "30.14"],
+          ["Net income growth (TTM)", "+169.4%", "+138.8%", "+99.3%"]
+        ],
+        "note": "Tickers: HD Hyundai Heavy 329180, Hanwha Ocean 042660, Samsung Heavy 010140. Prices and ratios from stockanalysis.com, Oct 2, 2026 close. Market cap converted to USD at ₩1,361.6/$1, our own Oct 1, 2026 price data.",
+        "source": "stockanalysis.com"
+      },
+      "section": 2
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before buying a Korean shipbuilder",
+      "args": {
+        "title": "Before you try to buy a Korean shipbuilder",
+        "subtitle": "What the ticker alone won't tell you",
+        "items": [
+          {
+            "label": "There's no US-listed ticker",
+            "why": "None of the three sells a Nasdaq or NYSE ADR — you need a broker with direct Korea Exchange access."
+          },
+          {
+            "label": "EWY and FLKR won't get you there",
+            "why": "Both Korea ETFs are dominated by Samsung Electronics and SK Hynix; shipbuilders are a minor slice of either fund."
+          },
+          {
+            "label": "Check which company you mean",
+            "why": "The three are separate stocks with different sizes and margins — not interchangeable, and not one ticker."
+          }
+        ]
+      },
+      "section": 5
+    }
+  ]
+}
