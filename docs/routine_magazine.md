@@ -148,12 +148,15 @@
 0. **오늘은 한국 시간 날짜입니다.** 첫 명령은 `TZ=Asia/Seoul date +%F`이고, 원고의 `date`·파일 이름 날짜·"오늘치가 이미 있는가"를 모두 이 값으로 봅니다.
    샌드박스 시계는 UTC라 02:00 KST에 그냥 `date`를 치면 **전날**이 나옵니다 — 전날 원고를 오늘치로 착각하고 쓰지 않고 끝내면 그날 게시가 빕니다.
    `ls editorial/magazine/$(TZ=Asia/Seoul date +%F)_*.json`이 셋이면 그때만 조용히 끝냅니다. 전날 날짜 원고는 오늘치가 아닙니다.
-1. `git pull`. `python -m scripts.recent_titles magazine`으로 최근 글과 코너를 보고, `python -m scripts.magazine_radar`로 오늘 나온 제목을 봅니다.
+1. `git pull origin main`. 샌드박스는 이름 없는 상태(detached HEAD)로 최신 코드를 받아 시작합니다 — 그대로 씁니다.
+   **`git checkout main`을 하지 않습니다.** 샌드박스에 남은 `main` 가지는 옛 사본이라 거기로 옮기면 지난 코드로 일하게 됩니다.
+   `python -m scripts.recent_titles magazine`으로 최근 글과 코너를 보고, `python -m scripts.magazine_radar`로 오늘 나온 제목을 봅니다.
 2. 레이더에서 코너 셋의 주제를 고르고(한 편은 시장 읽기), 주제마다 출처를 **먼저** 둘 이상 찾습니다(레이더에 뜬 글 + WebSearch·WebFetch). 출처가 둘이 안 되면 그 주제는 버립니다.
    완료 보고에 **어느 레이더 제목에서 출발했는지**를 적습니다.
 3. 사진: `python -m src.photo_search --sheet <이름> <검색어들>` → 대조표를 `Read`로 열어 봄 → 고른 Unsplash 주소를 `featured_photo.url`에.
 4. 원고 셋을 쓰고, 각각 `python -m src.feature_gate <원고> --graphics 0`. 막히면 고쳐서 다시. 통과한 것만 커밋합니다.
-5. 커밋·푸시(`main`). 커밋하는 것은 원고 JSON 셋뿐입니다(`output/` 커밋 금지).
+5. `git add editorial/magazine/<파일 셋> && git commit -m "잡지 원고 세 편: <제목들>" && git push origin HEAD:main`.
+   거부되면 `git pull --rebase origin main` 뒤 다시 push합니다. 커밋하는 것은 원고 JSON 셋뿐입니다(`output/` 커밋 금지).
 6. 완료 보고: 원고 경로 셋, 제목, 코너, 출처(무엇을 어디서), 사진(무엇이 보이는지), 관문 출력 전문, 커밋 해시. 버린 주제가 있으면 이유.
 
 환경은 `docs/routine_common.md`의 "이 샌드박스에서 할 수 있는 것" 절과 같습니다(`python`이 없으면 `python3`).

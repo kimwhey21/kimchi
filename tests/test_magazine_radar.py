@@ -182,6 +182,13 @@ class RoutinesUseTheRadarTest(unittest.TestCase):
         self.assertIn("TZ=Asia/Seoul date +%F", text)
         self.assertIn("editorial/magazine/$(TZ=Asia/Seoul date +%F)_*.json", text)
 
+    def test_the_magazine_stays_on_the_fetched_head(self) -> None:
+        """샌드박스의 `main` 가지는 옛 사본이다 — 받은 그대로 일하고 HEAD를 main에 올린다."""
+        text = (ROOT / "docs" / "routine_magazine.md").read_text(encoding="utf-8")
+        self.assertIn("git pull origin main", text)
+        self.assertIn("`git checkout main`을 하지 않습니다", text)
+        self.assertIn("git push origin HEAD:main", text)
+
     def test_the_korean_guide_keeps_the_variety_rule_above_the_radar(self) -> None:
         """레이더는 주제를 만들지 않는다 — 갈래 안에서 순서만 바꾼다.
 
