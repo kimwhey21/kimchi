@@ -1,0 +1,153 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-04",
+  "checked": "2026-10-04",
+  "slug": "buying-korean-stocks-from-europe",
+  "category_id": 153,
+  "radar_origin": "list order (Category A: access) — search queue's top lines this week ('kospi vs kosdaq', 'kosdaq vs kospi', 'englishdart', 'kospi200 kosdaq150 2026 year end target forecast', 'dart korean') all duplicated guides already fixed on 2026-09-28 and 2026-09-29, and the week's two-edit quota was spent on those same two dates, so every remaining fix-type line was out of scope for a new article this week. Fell back to the topic list. Yesterday (2026-10-03) was Category E (companies, korean-shipbuilders-explained), so picked a different category. Category A's first two items (how-to-buy-samsung-electronics-abroad, korean-adrs-for-us-investors) are already published; the next unwritten item is buying-korean-stocks-from-europe.",
+  "tags": ["buy korean stocks uk", "Korea UCITS ETF", "Interactive Brokers Korea", "EWY PRIIPs", "Korea dividend withholding UK"],
+  "related": [
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "How to Buy Korean Stocks From the US or Canada (2026)",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    },
+    {
+      "title": "Korean Stock Taxes for Foreigners: 22%, 15%, 0.20%",
+      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Interactive Brokers",
+      "title": "Launches Access to Korean Equities (press release, May 7, 2026)",
+      "url": "https://www.interactivebrokers.com/en/general/about/mediaRelations/5-7-26.php"
+    },
+    {
+      "name": "Interactive Brokers",
+      "title": "Expands Access to Korean Equities with Launch of Nextrade ATS (press release, June 30, 2026)",
+      "url": "https://www.interactivebrokers.com/en/general/about/mediaRelations/7-1-26.php"
+    },
+    {
+      "name": "Interactive Brokers",
+      "title": "KRX Exchange product page",
+      "url": "https://www.interactivebrokers.com/en/trading/krx-exchange.php"
+    },
+    {
+      "name": "Financial Services Commission",
+      "title": "Foreign Investor Registration Requirement to be Abolished in Korea (June 5, 2023)",
+      "url": "https://fsc.go.kr/eng/pr010101/80123"
+    },
+    {
+      "name": "European Parliament",
+      "title": "Restricted access to US ETFs for ordinary EU retail investors",
+      "url": "https://www.europarl.europa.eu/doceo/document/E-9-2021-004745_EN.html"
+    },
+    {
+      "name": "BlackRock / iShares",
+      "title": "iShares MSCI Korea UCITS ETF fact sheet and KIID",
+      "url": "https://www.blackrock.com/gls-download/literature/fact-sheet/ikor-ishares-msci-korea-ucits-etf-usd-dist-fund-fact-sheet-en-dk.pdf"
+    },
+    {
+      "name": "Hargreaves Lansdown",
+      "title": "iShares MSCI Korea UCITS ETF (Dist) share page",
+      "url": "https://www.hl.co.uk/shares/shares-search-results/i/ishares-msci-korea-usd-ucits-etf-dist"
+    },
+    {
+      "name": "HM Revenue & Customs",
+      "title": "DT11352 - South Korea: Treaty summary",
+      "url": "https://www.gov.uk/hmrc-internal-manuals/double-taxation-relief/dt11352"
+    }
+  ],
+  "ko": {
+    "title": "How to Buy Korean Stocks From the UK or Europe in 2026",
+    "narrative": [
+      {
+        "heading": "The short answer: two real routes work, and the obvious third one doesn't",
+        "body": "If you are based in the UK or the EU and want to buy Korean stocks, the move that works for US investors — buying the US-listed <b>EWY</b> (iShares MSCI South Korea ETF) through an ordinary brokerage account — does not work for you. UK and EU retail investors have effectively been locked out of buying most US-domiciled ETFs since the bloc's PRIIPs disclosure rules took hold, and EWY's issuer has never produced the document those rules require. That leaves two routes that do work as of October 2026: a UCITS-domiciled Korea fund listed in London or Dublin, or direct Korea Exchange (KRX) access through Interactive Brokers, which extended that access to clients worldwide — the UK and EU included — starting May 7, 2026. Neither existed in its current form two years ago, which is why older guides to this question are mostly wrong. The rest of this guide covers what each route actually costs, and which UK and EU brokers do not do what their marketing implies."
+      },
+      {
+        "heading": "Why your UK or EU broker won't show you EWY",
+        "body": "The reason is a specific EU rule, not broker caution. Under the EU's Packaged Retail and Insurance-based Investment Products (PRIIPs) regulation, any fund sold to retail investors in the EU or UK must publish a Key Information Document (KID) covering costs and four standardised future-performance scenarios. The European Parliament's own record of the rule notes that ordinary EU retail investors have restricted access to US-domiciled ETFs as a direct result. US issuers, including BlackRock, have not produced KIDs for funds like <b>EWY</b> — partly because US securities law does not let them make the kind of forward-looking performance projection the KID format demands. Because European retail money is a small share of the US ETF market, there has been little commercial reason for issuers to build that capability. The practical effect for you: search for EWY on a UK or EU brokerage platform and you will typically find it blocked from retail purchase, or missing from the platform's tradable list entirely, regardless of how liquid the fund is in New York."
+      },
+      {
+        "heading": "The UCITS workaround, and what the extra cost buys you",
+        "body": "The standard European substitute is a UCITS-domiciled fund tracking a similar Korean index. The <b>iShares MSCI Korea UCITS ETF</b> is the direct equivalent: an Ireland-domiciled fund tracking the MSCI Korea 20/35 Index, trading on the London Stock Exchange as IKOR (distributing share class, ISIN IE00B0M63391, launched November 2005) or CSKR (accumulating share class, ISIN IE00B5W4TY14). It is available inside a UK Stocks and Shares ISA, SIPP or Lifetime ISA — ordinary retail accounts, not a specialist platform.\n\nThe gap that matters is cost. The UCITS version's ongoing charge is 0.74% for the distributing share class and 0.65% for the accumulating one, against EWY's 0.59% expense ratio in the US. That half-a-point difference is the price of PRIIPs compliance, not a different index or a materially different portfolio — both funds hold the same concentrated pair of Samsung Electronics and SK Hynix at the top. Over a long holding period, that gap compounds the same way the EWY-versus-FLKR gap does in our US investor guide, just in the other direction: UK and EU investors pay more for the version of the trade Americans get cheaper."
+      },
+      {
+        "heading": "Interactive Brokers opened a direct KRX door from Europe in 2026",
+        "body": "The bigger change this year is not a fund at all. Interactive Brokers announced direct Korea Exchange access in a press release dated May 7, 2026, describing itself as the first major US-based broker to offer that access, and its own disclosure states the access is open to eligible clients worldwide. The specific exclusions IBKR names are residents of Korea, clients of Interactive Brokers Securities Japan Inc., and clients of Interactive Brokers India Pvt. Ltd. — the UK and the rest of Europe are not on that list, so a UK or EU-resident IBKR client can open the same KRX trading permission a US client does, through IBKR's own UK or EU-regulated entities. On June 30, 2026, IBKR extended the same access to Nextrade, Korea's first alternative trading system, adding roughly 650 KOSPI- and KOSDAQ-listed securities and an extended trading window running from 08:00 to 20:00 Korea time across three sessions.\n\nThe fee structure is the same tiered commission schedule — starting at 0.06% of trade value with a per-order minimum — that applies to IBKR clients everywhere; our guide to buying Korean stocks from the US or Canada works through exactly what that minimum costs on a small order. The thing that changes for a UK or EU-based account is currency: you are converting pounds or euros to Korean won rather than dollars, and IBKR's own FX conversion commission, quoted as low as 0.0020% of trade value, applies on top."
+      },
+      {
+        "heading": "Which UK and EU brokers actually get you there",
+        "body": "Most European retail platforms do not say, one way or the other, whether a client can place a buy order on a KRX-listed share — and a platform's silence on this is not the same as an offer. The table below separates what each platform has actually stated from what has not been confirmed either way, read from each platform's own pages in October 2026. Interactive Brokers is the only platform in this list with a direct, stated KRX buy route for UK and EU retail clients. DEGIRO's published exchange list does not name Korea, and Trading 212 settles client positions through a pooled account at Interactive Brokers but has not itself stated that this extends to KRX trading — so both are marked not confirmed rather than assumed either way. Every mainstream UK platform that offers European ETFs can buy the UCITS Korea fund described above, because it is a normal London-listed security, not a special permission."
+      },
+      {
+        "heading": "The withholding rate depends on your country, not just 'foreign'",
+        "body": "Korea's standard, non-treaty withholding rate on dividends paid to non-residents is 22%. Investors resident in a country with a tax treaty against Korea usually pay less, but the reduced rate is set by each country's own treaty, not by a single \"foreign investor\" rate. HM Revenue & Customs' own treaty summary puts the UK-Korea rate at 15% on portfolio dividends and 5% on direct investment holdings above the treaty's ownership threshold — the same 15% headline figure as the US-Korea treaty our tax guide covers, though the two are separate agreements that happen to land on the same number. Other EU countries have negotiated their own rates with Korea, and they are not all identical to the UK's, so check your own country's treaty rather than assuming the UK or US figure applies to you. Whether your broker actually applies the reduced rate automatically, or you need to file for it, depends on the broker and custodian — ask before you assume."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "What follows was read directly from each source, in October 2026. Interactive Brokers' own press releases (May 7 and June 30, 2026) and its KRX exchange page state the launch dates, the worldwide eligibility, and the named exclusions for Korea, Japan-entity and India-entity clients. The Financial Services Commission's June 2023 English-language release states the December 14, 2023 abolition of Korea's foreign-investor registration requirement. The iShares MSCI Korea UCITS ETF's ticker, ISIN, index and ongoing-charge figures came from BlackRock's own fact sheet and KIID and from Hargreaves Lansdown's share page, both read the same day; its ISA and SIPP eligibility is Hargreaves Lansdown's own account-type listing. The UK-Korea treaty rate is HMRC's own published treaty summary.\n\nWhat we could not settle: neither DEGIRO nor Trading 212 publishes a direct statement about KRX-listed share access on their own sites, so the broker table below marks both \"not confirmed\" rather than guessing from indirect evidence like Trading 212's use of an Interactive Brokers pooled account. We also did not independently confirm every EU country's individual treaty rate with Korea — only the UK's, which we could check against an official HMRC source. If your country of residence is elsewhere in the EU, confirm your own treaty rate before relying on the UK figure above."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "For most UK and EU investors who want ordinary index exposure to Korea, the UCITS-domiciled iShares MSCI Korea ETF is the straightforward route — an ISA- and SIPP-eligible fund at a 0.74% (or 0.65% accumulating) ongoing charge, about 0.15 points more than the US-listed EWY it mirrors, which is the price of PRIIPs compliance rather than a different product.\n\nIf you want to hold a specific Korean company rather than the index, 2026 is the first year that has been realistically possible from Europe without a Korean brokerage account: Interactive Brokers' direct KRX access, opened in May and extended to Nextrade in June, is open to UK and EU clients on the same terms as US clients, with the same per-order minimum that makes small, frequent orders expensive relative to larger ones.\n\nThis is information, not tax or investment advice. Fund terms, broker availability and treaty rates all change; the figures here were read from the funds', brokers' and regulators' own pages in October 2026 and should be confirmed against the current version before you invest."
+    },
+    "excerpt": "EWY is blocked for UK and EU retail accounts under PRIIPs rules. The workarounds: a UCITS Korea ETF at a higher cost, or direct KRX access through Interactive Brokers since May 2026."
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Buying Korean stocks from the UK or Europe: the UCITS Korea ETF costs 0.74%, and Interactive Brokers opened direct KRX access to Europe in May 2026",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Buying Korean Stocks From the UK and Europe",
+        "left": {"label": "UCITS Korea ETF (IKOR) ongoing charge", "value": "0.74%"},
+        "right": {"label": "IBKR direct KRX access from Europe", "value": "Since May 2026"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 3,
+      "alt": "EWY versus the iShares MSCI Korea UCITS ETF: domicile, cost and whether UK or EU retail investors can actually buy it",
+      "args": {
+        "title": "EWY vs. the UCITS alternative",
+        "subtitle": "Read from each issuer's own fact sheet, October 2026",
+        "columns": ["Fund", "Domicile", "Cost", "UK/EU retail?"],
+        "rows": [
+          ["EWY - iShares MSCI South Korea ETF", "United States", "0.59%", "No - PRIIPs blocked"],
+          ["IKOR - iShares MSCI Korea UCITS (Dist)", "Ireland", "0.74%", "Yes - ISA/SIPP"],
+          ["CSKR - iShares MSCI Korea UCITS (Acc)", "Ireland", "0.65%", "Yes - ISA/SIPP"]
+        ],
+        "source": "BlackRock/iShares fact sheets; Hargreaves Lansdown",
+        "note": "UCITS figures read October 2026; EWY figure as stated in our US investor guide, June 30, 2026 fact sheet."
+      }
+    },
+    {
+      "kind": "fact_table",
+      "section": 5,
+      "alt": "Which UK and EU brokers state direct KRX access versus only Korea UCITS ETF access, October 2026",
+      "args": {
+        "title": "Who actually gets you to a KRX buy order",
+        "subtitle": "Read from each platform's own pages, October 2026",
+        "columns": ["Broker / platform", "Direct KRX shares", "Korea UCITS ETF"],
+        "rows": [
+          ["Interactive Brokers (UK/EU entities)", "Yes - since May 7, 2026", "Yes"],
+          ["DEGIRO", "Not confirmed", "Yes"],
+          ["Trading 212", "Not confirmed", "Yes"],
+          ["HL / Interactive Investor / Freetrade", "No - not offered", "Yes"]
+        ],
+        "source": "Interactive Brokers; platform pages",
+        "note": "\"Not confirmed\" means the platform does not state this either way, not that it is unavailable."
+      }
+    }
+  ]
+}
