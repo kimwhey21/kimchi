@@ -145,6 +145,9 @@
 
 ## 절차
 
+0. **오늘은 한국 시간 날짜입니다.** 첫 명령은 `TZ=Asia/Seoul date +%F`이고, 원고의 `date`·파일 이름 날짜·"오늘치가 이미 있는가"를 모두 이 값으로 봅니다.
+   샌드박스 시계는 UTC라 02:00 KST에 그냥 `date`를 치면 **전날**이 나옵니다 — 전날 원고를 오늘치로 착각하고 쓰지 않고 끝내면 그날 게시가 빕니다.
+   `ls editorial/magazine/$(TZ=Asia/Seoul date +%F)_*.json`이 셋이면 그때만 조용히 끝냅니다. 전날 날짜 원고는 오늘치가 아닙니다.
 1. `git pull`. `python -m scripts.recent_titles magazine`으로 최근 글과 코너를 보고, `python -m scripts.magazine_radar`로 오늘 나온 제목을 봅니다.
 2. 레이더에서 코너 셋의 주제를 고르고(한 편은 시장 읽기), 주제마다 출처를 **먼저** 둘 이상 찾습니다(레이더에 뜬 글 + WebSearch·WebFetch). 출처가 둘이 안 되면 그 주제는 버립니다.
    완료 보고에 **어느 레이더 제목에서 출발했는지**를 적습니다.

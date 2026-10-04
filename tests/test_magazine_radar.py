@@ -176,6 +176,12 @@ class RoutinesUseTheRadarTest(unittest.TestCase):
             with self.subTest(doc=doc):
                 self.assertIn("radar_origin", text)
 
+    def test_the_magazine_reads_today_in_korean_time(self) -> None:
+        """잡지는 02:00 KST(= 전날 UTC)에 돈다 — '오늘'을 한국 시간으로 정하지 않으면 전날 원고를 오늘치로 본다."""
+        text = (ROOT / "docs" / "routine_magazine.md").read_text(encoding="utf-8")
+        self.assertIn("TZ=Asia/Seoul date +%F", text)
+        self.assertIn("editorial/magazine/$(TZ=Asia/Seoul date +%F)_*.json", text)
+
     def test_the_korean_guide_keeps_the_variety_rule_above_the_radar(self) -> None:
         """레이더는 주제를 만들지 않는다 — 갈래 안에서 순서만 바꾼다.
 
