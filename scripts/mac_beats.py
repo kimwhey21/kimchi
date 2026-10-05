@@ -48,6 +48,41 @@ def build(now: dt.datetime | None = None, beats: dict[str, str] | None = None,
             "posted": {"naver_today": posted_today(naver, now.date()), "blogger_today": posted_today(blogger, now.date())}}
 
 
+TOKEN = Path.home() / ".github_dispatch_token"
+
+
+def worker_presses_today(now: dt.datetime | None = None, token_path: Path = TOKEN) -> int | None:
+    """오늘(KST) Cloudflare 워커가 누른 실행(workflow_dispatch) 수. 조회하지 못하면 None.
+
+    워커는 모든 예약을 정시에 누르는 알람인데, 워커가 멈추면 증명서까지 함께 안 돌아 아무도 모른다(2026-10-06, 감사 F-037).
+    워커 밖에 있는 이 맥이 하루 한 번 센다 — 평일에 0이면 운영 대화로 알린다."""
+    import requests
+    now = now or dt.datetime.now(KST)
+    since = dt.datetime.combine(now.date(), dt.time(0), KST).astimezone(dt.timezone.utc)
+    try:
+        token = token_path.read_text(encoding="utf-8").strip()
+        r = requests.get("https://api.github.com/repos/kimwhey21/kimchi/actions/runs", timeout=30,
+                         headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
+                         params={"event": "workflow_dispatch", "created": f">={since:%Y-%m-%dT%H:%M:%SZ}", "per_page": 1})
+        r.raise_for_status()
+        return int(r.json().get("total_count") or 0)
+    except (OSError, ValueError, requests.RequestException) as exc:
+        print(f"[경고] 워커가 누른 실행 수를 세지 못했습니다: {exc}")
+        return None
+
+
+def check_worker(now: dt.datetime | None = None, count: int | None = -1) -> str | None:
+    """평일인데 워커가 오늘 한 번도 누르지 않았으면 경보 문장(주말도 증명서는 매일 누른다)."""
+    now = now or dt.datetime.now(KST)
+    count = worker_presses_today(now) if count == -1 else count
+    if count is None:
+        return "맥 신호: Cloudflare 워커가 오늘 누른 실행 수를 세지 못했습니다 — 깃허브 열쇠(~/.github_dispatch_token)를 확인하십시오"
+    if count == 0:
+        return ("❌ Cloudflare 워커(fermata-backup-cron)가 오늘 한 번도 실행을 누르지 않았습니다 — 워커가 멈췄을 수 있습니다. "
+                "`python -m scripts.deploy_backup_cron`으로 다시 올리고 Cloudflare 대시보드의 워커 로그를 보십시오")
+    return None
+
+
 def _run(*args: str) -> subprocess.CompletedProcess:
     return subprocess.run([GIT, *args], cwd=ROOT, text=True, capture_output=True)
 
@@ -57,6 +92,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args(argv)
     doc = build()
+    worker = check_worker()
+    doc["worker_ok"] = worker is None
+    if worker:
+        print(worker)
+        if not args.dry_run:
+            from src import alert
+            alert.send(worker, "fail")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(f"맥 신호 {len(doc['beats'])}개, 네이버 오늘 {doc['posted']['naver_today']}편, 블로그스팟 오늘 {doc['posted']['blogger_today']}편")

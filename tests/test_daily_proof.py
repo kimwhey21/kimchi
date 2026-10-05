@@ -294,3 +294,14 @@ class OwnerOverrideTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WorkerHeartbeatTest(unittest.TestCase):
+    """Cloudflare 워커가 멈추면 증명서도 함께 안 돈다 — 워커 밖의 맥이 하루 한 번 누른 실행 수를 센다(2026-10-06, 감사 F-037)."""
+
+    def test_zero_presses_is_an_alarm(self) -> None:
+        from scripts import mac_beats
+        now = dt.datetime(2026, 10, 6, 23, 22, tzinfo=daily_proof.KST)
+        self.assertIn("한 번도", mac_beats.check_worker(now, count=0))
+        self.assertIsNone(mac_beats.check_worker(now, count=12))
+        self.assertIn("세지 못했습니다", mac_beats.check_worker(now, count=None))
