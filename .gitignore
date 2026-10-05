@@ -16,3 +16,5 @@ state/*
 *service-account*.json
 *-seo-reader-*.json
 .google-service-account.json
+# 시험 덮음률 측정 결과(로컬)
+.coverage
