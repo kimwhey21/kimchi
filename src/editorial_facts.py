@@ -663,3 +663,36 @@ def validate_preview(doc: dict, price_files, *, notes_out: list[str] | None = No
     issues = collect_issues_for_preview(doc, price_files, notes_out=notes_out)
     if issues:
         raise EditorialFactError("프리뷰와 시세 대조 실패:\n- " + "\n- ".join(issues))
+
+
+# ── 원고 속 시세 사본 vs 커밋된 시세 파일(2026-10-06) ─────────────────────────────────────────────
+# 관문의 숫자 대조는 원고에 붙은 price_data로 한다. 그 사본이 커밋된 data/price_<시장>_<거래일>.json과 다르면(감사: 한국 9/17·9/21·9/23,
+# 미국 9/4·9/8·9/16·9/17·9/21·9/22 원고 12편) 파일은 맞아도 글은 틀린 숫자로 나가고, 아무 대조도 그것을 보지 못했다.
+# 가격·등락률·기준일만 본다 — 수급(foreign_net 등)은 다음 날 아침 파일에 채워지는 칸이라 다를 수 있다.
+_COPY_FIELDS = ("price", "change_pct", "trading_date")
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+
+
+def copy_issues(price_data: dict, market: str, data_dir: Path | None = None) -> list[str]:
+    """원고의 price_data가 커밋된 같은 거래일 시세 파일과 다른 칸. 파일이 없으면 그것도 문제다."""
+    day = str(price_data.get("trading_date") or "")
+    path = (data_dir or DATA_DIR) / f"price_{market}_{day}.json"
+    if not day or not path.exists():
+        return [f"원고의 시세 사본(기준일 {day or '없음'})에 해당하는 커밋된 시세 파일 {path.name}이 없습니다 — 시세 파일에서 그대로 옮기십시오"]
+    committed = json.loads(path.read_text(encoding="utf-8"))
+    out = []
+    for group in ("macro", "watchlist"):
+        mine, theirs = price_data.get(group) or {}, committed.get(group) or {}
+        for ticker, entry in mine.items():
+            ref = theirs.get(ticker)
+            if ref is None:
+                out.append(f"{entry.get('name', ticker)}({ticker}): 커밋된 시세 파일에 없는 종목입니다")
+                continue
+            for field in _COPY_FIELDS:
+                a, b = entry.get(field), ref.get(field)
+                if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+                    if abs(float(a) - float(b)) > 1e-9:
+                        out.append(f"{entry.get('name', ticker)}({ticker}) {field}: 원고 {a} / 시세 파일 {b}")
+                elif a != b:
+                    out.append(f"{entry.get('name', ticker)}({ticker}) {field}: 원고 {a} / 시세 파일 {b}")
+    return out

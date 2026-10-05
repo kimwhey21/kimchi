@@ -551,6 +551,10 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
         print("한국어 편집 기준·제목·구조 검사 통과")
     # 원고의 숫자를 시세와 대조합니다. 이것은 그대로 막습니다 — 검수 없이 공개되는
     # 경로에서 틀린 숫자는 글이 없는 것보다 나쁩니다.
+    copy_problems = editorial_facts.copy_issues(price_data, doc["market"])
+    if copy_problems:   # 원고 속 사본이 커밋된 시세 파일과 다르면 틀린 숫자가 나간다 — 막는다(2026-10-06)
+        raise ValueError(f"원고의 시세 사본이 커밋된 시세 파일과 다른 칸 {len(copy_problems)}개 — 발행하지 않습니다: "
+                         + " / ".join(copy_problems[:10]))
     editorial_facts.validate(ko, price_data, lang="ko")
     print("시세 대조 검사 통과 (한국어)")
     if en:

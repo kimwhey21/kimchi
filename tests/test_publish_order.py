@@ -31,6 +31,7 @@ class PublishOrderTest(unittest.TestCase):
         with patch.dict(os.environ, env), \
              patch.object(publish_wordpress, "publish_draft", side_effect=fake_publish_draft), \
              patch.object(publish_wordpress, "verify_published"), \
+             patch("src.editorial_facts.copy_issues", return_value=[]), \
              patch.object(publish_wordpress, "upload_image_url", return_value="https://example.com/g.png"), \
              patch.object(publish_wordpress, "_find_existing_post_by_slug", return_value=None):
             publish_editorial.publish(MANUSCRIPT, publish_live=True)

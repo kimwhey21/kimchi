@@ -67,7 +67,8 @@ class GateTest(unittest.TestCase):
         from src import title_feed
         with patch.object(editorial_judgment, "previous_manuscript", return_value=None), \
              patch.object(editorial_judgment, "previous_manuscripts", return_value=[]), \
-             patch.object(title_feed, "feed_titles", return_value=[]):   # 독자 피드 대조는 test_title_feed가 본다
+             patch.object(title_feed, "feed_titles", return_value=[]), \
+             patch("src.editorial_facts.copy_issues", return_value=[]):   # 독자 피드는 test_title_feed, 사본 대조는 아래 CopyTest가 본다
             return editorial_gate.run(_write(doc), render_dir=Path(tempfile.mkdtemp()))
 
     def test_numbered_title_and_thin_body_fail(self) -> None:
@@ -134,6 +135,22 @@ class PublishWarnsInsteadOfBlockingTest(unittest.TestCase):
         self.assertTrue(narrative[0]["photo"] and narrative[0]["photo"]["id"] in used)
         self.assertIsNone(narrative[1]["photo"])
         self.assertEqual(narrative[2]["photo"]["url"], "https://images.unsplash.com/x")
+
+class CopyTest(unittest.TestCase):
+    """원고 속 시세 사본이 커밋된 시세 파일과 다르면 막는다(2026-10-06 — 감사에서 그런 원고 12편이 그대로 나갔다)."""
+
+    def test_copy_must_match_the_committed_file(self) -> None:
+        from src import editorial_facts
+        committed = {"trading_date": "2026-10-06", "macro": {"KS11": {"name": "코스피", "price": 7000.0, "change_pct": 0.5,
+                     "trading_date": "2026-10-06"}}, "watchlist": {"005930": {"name": "삼성전자", "price": 280000.0,
+                     "change_pct": 1.2, "trading_date": "2026-10-06", "foreign_net": 10}}}
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "price_kr_2026-10-06.json").write_text(json.dumps(committed), encoding="utf-8")
+            same = json.loads(json.dumps(committed)); same["watchlist"]["005930"]["foreign_net"] = None   # 수급은 다음 날 채워진다
+            self.assertEqual(editorial_facts.copy_issues(same, "kr", Path(tmp)), [])
+            wrong = json.loads(json.dumps(committed)); wrong["watchlist"]["005930"]["change_pct"] = 1.4
+            self.assertEqual(len(editorial_facts.copy_issues(wrong, "kr", Path(tmp))), 1)
+            self.assertEqual(len(editorial_facts.copy_issues({**committed, "trading_date": "2026-10-07"}, "kr", Path(tmp))), 1)
 
 
 if __name__ == "__main__":
