@@ -74,7 +74,7 @@ def _fetch_naver_index_quotes() -> dict[str, dict]:
 
 
 
-def _fetch_naver_item_quotes(codes: list[str]) -> dict[str, dict]:
+def _fetch_naver_item_quotes(codes: list[str], failed: list[str] | None = None) -> dict[str, dict]:
     """종목의 **KRX 정규장 확정 종가**를 네이버 실시간 폴링에서 받습니다(2026-09-25).
 
     왜 필요한가: FinanceDataReader(네이버 fchart) 일봉의 오늘 행은 15:30 이후에도 NXT 애프터마켓(~20:00)을 따라
@@ -84,14 +84,30 @@ def _fetch_naver_item_quotes(codes: list[str]) -> dict[str, dict]:
     때문에 ``ms``는 20:00까지 OPEN입니다(2026-09-28 확인) — 그래서 그 창에 찍어 둔 사진(_krx_close_snapshot)을 먼저 씁니다.
     ``pcv``는 KRX 전일 종가, ``sv``는 그날 기준가(배당락·권리락 날만 pcv와 다르다), ``cr``은 언론·HTS가 쓰는 그 등락률(기준가 대비)입니다.
     한 요청에 여러 종목을 묶어 보냅니다.
+    한 묶음(20종목)이 실패하면 세 번까지 다시 묻는다. `failed`를 주면 끝내 실패한 묶음의 종목을 거기에 담고 나머지로 계속하고,
+    안 주면 예외로 멈춘다(2026-10-06 — 전에는 2,700종목 중 한 묶음만 실패해도 코어 종목 사진까지 통째로 사라졌다).
     """
     quotes: dict[str, dict] = {}
     for i in range(0, len(codes), 20):
         chunk = [str(c) for c in codes[i:i + 20]]
-        response = requests.get(_NAVER_INDEX_URL, params={"query": "SERVICE_ITEM:" + ",".join(chunk)},
-                                headers=_NAVER_HEADERS, timeout=_NAVER_TIMEOUT_SECONDS)
-        response.raise_for_status()
-        areas = (response.json().get("result") or {}).get("areas") or []
+        areas = None
+        for attempt, delay in enumerate((0, 2, 5)):
+            if delay:
+                time.sleep(delay)
+            try:
+                response = requests.get(_NAVER_INDEX_URL, params={"query": "SERVICE_ITEM:" + ",".join(chunk)},
+                                        headers=_NAVER_HEADERS, timeout=_NAVER_TIMEOUT_SECONDS)
+                response.raise_for_status()
+                areas = (response.json().get("result") or {}).get("areas") or []
+                break
+            except (requests.RequestException, ValueError) as exc:
+                last = exc
+                print(f"[안내] 네이버 폴링 묶음 {i // 20 + 1} 재시도 {attempt + 1}/3: {exc}")
+        if areas is None:
+            if failed is None:
+                raise ValueError(f"네이버 폴링 묶음 {i // 20 + 1}({', '.join(chunk[:3])}…)을 세 번 모두 받지 못했습니다 — {last}")
+            failed.extend(chunk)
+            continue
         for area in areas:
             for item in area.get("datas") or []:
                 if item.get("cd"):

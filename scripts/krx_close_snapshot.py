@@ -75,7 +75,14 @@ def main(now: dt.datetime | None = None) -> int:
         return 0
     wanted = codes()
     everything = list(dict.fromkeys(wanted + all_codes()))
-    quotes = fetch_kr._fetch_naver_item_quotes(everything)
+    # 코어·편입 후보를 먼저 따로 받는다 — 이것은 반드시 남아야 한다(실패하면 예외로 멈추고 다음 예약이 다시 찍는다).
+    # 나머지 전 종목은 묶음이 실패해도 세고 넘어간다(2026-10-06: 전에는 한 묶음 실패로 코어 사진까지 사라졌다).
+    quotes = fetch_kr._fetch_naver_item_quotes(wanted)
+    failed: list[str] = []
+    rest = [c for c in everything if c not in quotes]
+    quotes = {**fetch_kr._fetch_naver_item_quotes(rest, failed=failed), **quotes}
+    if failed:
+        print(f"[경고] 전 종목 사진 중 {len(failed)}종목(묶음 {len(failed) // 20 + 1}개 안팎)을 받지 못했습니다 — 다음 예약이 다시 찍습니다")
     from src.stock_db import close_window
     if dt.datetime.now(KST).time() >= close_window(now.date())[1]:   # 받는 사이 창이 닫혔으면 시간외 값이 섞일 수 있다
         print("받는 사이 사진 창이 닫혀 버립니다.")

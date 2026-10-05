@@ -436,13 +436,14 @@ class KrxCloseSnapshotTest(unittest.TestCase):
                 mock.patch.object(snap, "DIR", Path(tmp)), \
                 mock.patch.object(snap, "codes", return_value=["005930"]), \
                 mock.patch.object(snap, "all_codes", return_value=["005930", "207940", "900110"]), \
-                mock.patch.object(snap.fetch_kr, "_fetch_naver_item_quotes", return_value=quotes) as got, \
+                mock.patch.object(snap.fetch_kr, "_fetch_naver_item_quotes",
+                                  side_effect=lambda codes, failed=None: {c: quotes[c] for c in codes if c in quotes}) as got, \
                 mock.patch.object(snap.dt, "datetime", wraps=snap.dt.datetime) as fake:
             now = snap.dt.datetime(2026, 10, 6, 15, 32, tzinfo=snap.KST)
             fake.now.return_value = now
             self.assertEqual(snap.main(now), 0)
             doc = json.loads((Path(tmp) / "2026-10-06.json").read_text(encoding="utf-8"))
-        self.assertEqual(got.call_args[0][0], ["005930", "207940", "900110"])
+        self.assertEqual([c[0][0] for c in got.call_args_list], [["005930"], ["207940", "900110"]])   # 코어 먼저, 나머지 따로
         self.assertEqual(set(doc["quotes"]), {"005930"})                       # fetch_kr용은 코어·후보만
         self.assertEqual(doc["close"], {"005930": [276000, 276000], "207940": [1354000, 1418000], "900110": [1000, 990]})
 
@@ -456,14 +457,42 @@ class KrxCloseSnapshotTest(unittest.TestCase):
                 mock.patch.object(snap, "codes", return_value=["005930"]), \
                 mock.patch.object(snap, "all_codes", return_value=["005930", "000660"]), \
                 mock.patch.object(snap.fetch_kr, "_fetch_naver_item_quotes",
-                                  return_value={"005930": {"nv": 1, "pcv": 1}, "000660": {"nv": 2, "pcv": 2}}) as got, \
+                                  side_effect=lambda codes, failed=None: {c: {"005930": {"nv": 1, "pcv": 1}, "000660": {"nv": 2, "pcv": 2}}[c]
+                                                                          for c in codes}) as got, \
                 mock.patch.object(snap.dt, "datetime", wraps=snap.dt.datetime) as fake:
             fake.now.return_value = now
             (Path(tmp) / "2026-10-06.json").write_text(json.dumps({"quotes": {}, "close": {"005930": [1, 1]}}), encoding="utf-8")
             snap.main(now)                                    # 앞 사진은 전 종목이 모자랐다 — 다시 찍는다
             self.assertEqual(len(json.loads((Path(tmp) / "2026-10-06.json").read_text())["close"]), 2)
             snap.main(now)                                    # 이제 충분하다 — 묻지도 않는다
-        self.assertEqual(got.call_count, 1)
+        self.assertEqual(got.call_count, 2)                   # 첫 실행의 코어·나머지 두 번뿐
+
+    def test_a_failed_chunk_keeps_the_core_snapshot(self) -> None:
+        """2026-10-06: 전 종목 묶음 하나가 끝내 실패해도 코어 사진은 남기고 실패 종목을 센다(전에는 통째로 사라졌다)."""
+        import json, tempfile
+        from pathlib import Path
+        from scripts import krx_close_snapshot as snap
+        calls = []
+
+        def fake_get(url, params=None, **kw):
+            codes = params["query"].split(":")[1].split(",")
+            calls.append(codes)
+            if "000660" in codes:
+                raise fetch_kr.requests.ConnectionError("막힘")
+            r = mock.Mock(); r.raise_for_status = lambda: None
+            r.json.return_value = {"result": {"areas": [{"datas": [{"cd": c, "nv": 100, "pcv": 99} for c in codes]}]}}
+            return r
+        now = snap.dt.datetime(2026, 10, 6, 15, 35, tzinfo=snap.KST)
+        with tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.object(snap, "DIR", Path(tmp)), mock.patch.object(snap, "codes", return_value=["005930"]), \
+                mock.patch.object(snap, "all_codes", return_value=["005930", "000660"]), \
+                mock.patch.object(fetch_kr.requests, "get", side_effect=fake_get), mock.patch.object(fetch_kr.time, "sleep"), \
+                mock.patch.object(snap.dt, "datetime", wraps=snap.dt.datetime) as fake, mock.patch("builtins.print"):
+            fake.now.return_value = now
+            self.assertEqual(snap.main(now), 0)
+            doc = json.loads((Path(tmp) / "2026-10-06.json").read_text(encoding="utf-8"))
+        self.assertIn("005930", doc["quotes"])
+        self.assertNotIn("000660", doc["close"])
 
 
 class DaumSourceTest(unittest.TestCase):
