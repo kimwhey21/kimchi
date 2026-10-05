@@ -32,7 +32,9 @@ FULL_MARKET = 2000   # 전 종목 사진이 이보다 적으면(목록을 못 �
 
 
 def in_window(now: dt.datetime) -> bool:
-    return now.weekday() < 5 and WINDOW[0] <= now.time() < WINDOW[1]
+    # 휴장일엔 폴링이 전 거래일 값을 그대로 줘서 그 값이 오늘 날짜 파일로 남는다(2026-10-05 대체 휴일 시험) — 찍지 않는다
+    from src.stock_db import KRX_HOLIDAYS
+    return now.weekday() < 5 and now.date().isoformat() not in KRX_HOLIDAYS and WINDOW[0] <= now.time() < WINDOW[1]
 
 
 def codes() -> list[str]:
@@ -64,7 +66,7 @@ def all_codes() -> list[str]:
 def main(now: dt.datetime | None = None) -> int:
     now = now or dt.datetime.now(KST)
     if not in_window(now):
-        print(f"{now:%H:%M} — 정규장 종가를 읽을 수 있는 창(15:31~15:59, 평일) 밖이라 찍지 않습니다.")
+        print(f"{now:%Y-%m-%d %H:%M} — 정규장 종가를 읽을 수 있는 창(15:31~15:59, 평일·휴장일 제외) 밖이라 찍지 않습니다.")
         return 0
     path = DIR / f"{now.date().isoformat()}.json"
     before = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None

@@ -334,6 +334,7 @@ class KrxCloseSnapshotTest(unittest.TestCase):
         self.assertFalse(snap.in_window(fetch_kr.dt.datetime(2026, 9, 28, 16, 0, tzinfo=kst)))     # 시간외 단일가 시작
         self.assertFalse(snap.in_window(fetch_kr.dt.datetime(2026, 9, 28, 15, 29, tzinfo=kst)))    # 정규장 중
         self.assertFalse(snap.in_window(fetch_kr.dt.datetime(2026, 9, 27, 15, 35, tzinfo=kst)))    # 일요일
+        self.assertFalse(snap.in_window(fetch_kr.dt.datetime(2026, 10, 5, 15, 35, tzinfo=kst)))    # 평일 휴장일(대체 휴일)
 
     def test_snapshot_values_were_the_next_days_previous_close(self) -> None:
         """커밋된 사진이 KRX 종가였다는 증거: 9/30·10/1 사진의 nv가 다음 거래일 사진의 pcv(네이버 '전일')와 393건 모두 같았다(2026-10-05)."""
