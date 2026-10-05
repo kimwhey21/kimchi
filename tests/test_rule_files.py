@@ -21,6 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CLAUDE = ROOT / "CLAUDE.md"
+OPS = ROOT / "docs" / "ops.md"   # 운영 규칙(2026-10-05에 CLAUDE.md에서 옮김) — 같은 검사를 받는다
 
 
 class RulesPointAtRealCodeTest(unittest.TestCase):
@@ -36,7 +37,7 @@ class RulesPointAtRealCodeTest(unittest.TestCase):
     _MODULE = re.compile(r"python3? -m ((?:src|scripts)\.[\w.]+)")
 
     def test_named_files_exist(self) -> None:
-        for path in (CLAUDE,):
+        for path in (CLAUDE, OPS):
             text = path.read_text(encoding="utf-8")
             for named in sorted(set(self._PATH.findall(text))):
                 if "<" in named or "*" in named:
@@ -47,7 +48,7 @@ class RulesPointAtRealCodeTest(unittest.TestCase):
 
     def test_named_modules_import(self) -> None:
         import importlib
-        for path in (CLAUDE,):
+        for path in (CLAUDE, OPS):
             text = path.read_text(encoding="utf-8")
             for module in sorted(set(self._MODULE.findall(text))):
                 with self.subTest(rule_file=path.name, module=module):
@@ -80,3 +81,13 @@ class TodaysToolsAreDocumentedTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class OpsSplitTest(unittest.TestCase):
+    """2026-10-05: 운영 규칙을 docs/ops.md로 옮겼다. 규칙 파일이 그 문서를 가리키고, 세 절의 안내가 남아 있어야 한다."""
+
+    def test_rule_file_points_to_ops(self) -> None:
+        text = CLAUDE.read_text(encoding="utf-8")
+        self.assertIn("docs/ops.md", text)
+        self.assertGreaterEqual(text.count("`docs/ops.md` 「"), 3)
+        self.assertLess(len(text), 25000, "규칙 파일이 다시 커졌습니다 — 운영 규칙은 docs/ops.md에 적으십시오")
