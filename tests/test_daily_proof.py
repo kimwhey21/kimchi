@@ -123,6 +123,14 @@ class ExpectedArtifactsTest(unittest.TestCase):
         mon = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 12), set(), root)]
         self.assertIn("주간 점검", mon)
 
+    def test_us_holiday_expects_no_us_pieces(self) -> None:
+        """추수감사절(11/26 목): 그날 밤 프리뷰도, 다음 날 아침 미국장 시세·시황도 기대하지 않는다."""
+        root = self._root([])
+        thu = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 11, 26), set(), root)]
+        self.assertNotIn("미국장 프리뷰", thu); self.assertIn("한국장 시황", thu)
+        fri = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 11, 27), set(), root)]
+        self.assertFalse(any(n.startswith("미국장 시") for n in fri)); self.assertIn("미국장 프리뷰", fri)
+
 
 class MacBeatsTest(unittest.TestCase):
     NOW = dt.datetime(2026, 10, 6, 23, 30, tzinfo=daily_proof.KST)

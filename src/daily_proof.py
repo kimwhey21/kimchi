@@ -41,6 +41,14 @@ from src import alert, check_publication, close_check, fetch_kr, fetch_us
 from src.site_block import MESSAGE as BLOCKED, is_bot_challenge
 from src.stock_db import KRX_HOLIDAYS
 
+# 뉴욕증시 휴장일 — python-holidays 0.105 `financial_holidays("NYSE")`와 같다(2026-10-05; 2026-09-07 노동절엔 실제로 미국장 시세 파일이 없다).
+# 미국 휴장일에는 미국장 시세·시황(다음 날 아침)과 프리뷰(그날 밤)를 기대하지 않는다. 해가 바뀌기 전에 다음 해를 더한다.
+US_HOLIDAYS = {
+    "2026-11-26", "2026-12-25",
+    "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31", "2027-06-18", "2027-07-05",
+    "2027-09-06", "2027-11-25", "2027-12-24",
+}
+
 load_dotenv()
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -156,12 +164,12 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
     touched = lambda prefix, suffix="": any(p.startswith(prefix) and p.endswith(suffix) for p in changed)   # noqa: E731
     if wd < 5 and d not in KRX_HOLIDAYS:
         out.append(("한국장 시황", has(f"editorial/kr_{d}.json"), f"editorial/kr_{d}.json"))
-    if 1 <= wd <= 5:
+    if 1 <= wd <= 5 and prev not in US_HOLIDAYS:
         if has(f"data/price_us_{prev}.json"):
             out.append(("미국장 시황", has(f"editorial/us_{prev}.json"), f"editorial/us_{prev}.json"))
         else:
             out.append(("미국장 시세", False, f"data/price_us_{prev}.json 없음 — 미국 휴장이 아니면 수집 실패"))
-    if wd < 5:
+    if wd < 5 and d not in US_HOLIDAYS:
         out.append(("미국장 프리뷰", has(f"editorial/previews/us_{d}.json"), f"editorial/previews/us_{d}.json"))
     n_mag = len(list((root / "editorial" / "magazine").glob(f"{d}_*.json")))
     out.append(("잡지 3편", n_mag >= 3, f"editorial/magazine/{d}_* {n_mag}편"))
