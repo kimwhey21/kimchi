@@ -250,6 +250,18 @@ class PriorBranchCarriesChangePctTest(unittest.TestCase):
 
 
 
+class _YahooAgrees(float):
+    """시험용: 야후가 '하나 남은 원천'과 같은 값을 준 것으로 친다(어떤 값과 빼도 0)."""
+    def __sub__(self, other): return 0.0
+    def __rsub__(self, other): return 0.0
+
+
+def _agreeing_yahoo(test: unittest.TestCase) -> None:
+    patcher = patch.object(fetch_kr, "yahoo_close", return_value=_YahooAgrees(0))
+    patcher.start()
+    test.addCleanup(patcher.stop)
+
+
 class KrxCloseForStocksTest(unittest.TestCase):
     """종목 가격·등락률은 KRX 정규장 확정 종가 — 네이버 사진과 다음, 두 원천이 같아야 쓴다(2026-10-05).
 
@@ -257,6 +269,9 @@ class KrxCloseForStocksTest(unittest.TestCase):
     발행된 삼성전자 등락률 2.70%는 KRX 기준 3.62%도 NXT 확정 3.24%도 아니었다. 2026-10-05부터는 못 받은 종목을 빼지 않는다.
     """
     TODAY = fetch_kr.dt.date.today().isoformat()
+
+    def setUp(self) -> None:   # 원천이 하나만 남은 경우 야후가 같은 값을 준다고 친다(2026-10-06부터 야후 확인이 필요하다)
+        _agreeing_yahoo(self)
 
     def _entry(self, date=None):
         return {"ticker": "005930", "name": "삼성전자", "price": 285000.0, "change_pct": 2.7, "trading_date": date or self.TODAY,
@@ -309,14 +324,18 @@ class KrxCloseForStocksTest(unittest.TestCase):
         with patch.object(fetch_kr, "yahoo_close", return_value=None), self.assertRaises(ValueError):   # 둘 다 진짜 기준가인데 다르면 멈춘다
             fetch_kr._resolve_krx_close("084680", self.TODAY, {"nv": 2700, "sv": 2650, "pcv": 532}, self._daum(2700.0, 2660.0))
 
-    def test_one_source_is_enough_and_none_stops(self) -> None:
+    def test_one_source_needs_yahoo_and_none_stops(self) -> None:
+        """2026-10-06: 원천이 하나만 남으면 야후와 맞을 때만 쓴다(두 원천이 된다) — 전에는 하나로 통과했다(감사 F-039)."""
         only_daum = fetch_kr._resolve_krx_close("005930", self.TODAY, None, self._daum(286500.0, 276500.0))
-        self.assertEqual(only_daum["sources"], ["daum"])
+        self.assertEqual(only_daum["sources"], ["daum", "yahoo"])
         only_naver = fetch_kr._resolve_krx_close("005930", self.TODAY, {"nv": 286500, "cr": 3.62, "pcv": 276500},
                                                  self._daum(276500.0, 270000.0, date="2026-01-02"))   # 다음이 옛날 날짜면 안 센다
-        self.assertEqual(only_naver["sources"], ["naver_snapshot"])
+        self.assertEqual(only_naver["sources"], ["naver_snapshot", "yahoo"])
         with self.assertRaises(ValueError):
             fetch_kr._resolve_krx_close("005930", self.TODAY, None, None)
+        for yahoo in (None, 280000.0):        # 야후가 없거나 다르면 쓰지 않는다
+            with patch.object(fetch_kr, "yahoo_close", return_value=yahoo), self.assertRaises(ValueError):
+                fetch_kr._resolve_krx_close("005930", self.TODAY, None, self._daum(286500.0, 276500.0))
 
     def test_polling_cr_is_unsigned_so_the_sign_comes_from_the_prices(self) -> None:
         """KB금융 9/23 실제 응답: nv 174,100 · pcv 175,700 · cr 0.91 · rf '5'(하락) — cr을 그대로 쓰면 +0.91%가 된다."""
@@ -386,6 +405,9 @@ class KrxCloseForStocksTest(unittest.TestCase):
 
 class KrxCloseSnapshotTest(unittest.TestCase):
     """정규장 종가 사진(2026-09-28): 16:00부터 폴링 nv는 시간외 단일가를 따라 움직이고 ms는 넥스트레이드 때문에 OPEN이다."""
+
+    def setUp(self) -> None:   # 원천이 하나만 남은 경우 야후가 같은 값을 준다고 친다(2026-10-06부터 야후 확인이 필요하다)
+        _agreeing_yahoo(self)
 
     def test_window(self) -> None:
         from scripts import krx_close_snapshot as snap

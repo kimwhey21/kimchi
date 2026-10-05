@@ -173,11 +173,15 @@ def _fetch_stock(ticker: str, name: str, name_en: str = "", lookback: int = 7, u
         if len(rows) < 2:
             raise ValueError(f"{ticker}: 다음 일별 시세를 {len(rows)}개만 받았습니다.")
     except ValueError as exc:
-        # 다음이 막힌 날에도 종목을 빼지 않는다 — 이력만 FinanceDataReader(통합값)로 받고 그렇다고 적는다. 오늘 값은 여전히
-        # `_apply_krx_closes`가 KRX 사진으로 확인하고, close_check가 이 표시를 운영 대화로 알린다.
-        print(f"[경고] {ticker}: 다음 일별 시세를 못 받아 이력을 FinanceDataReader(KRX+넥스트레이드 통합)로 받습니다 — {exc}")
-        return {**_fetch_one(ticker=ticker, name=name, name_en=name_en, lookback=lookback, unit=unit),
-                "history_source": "FinanceDataReader (KRX+NXT combined; Daum unavailable)"}
+        # 다음이 막힌 날에도 종목을 빼지 않는다 — 이력은 야후의 조정하지 않은 일별 종가(KRX 정규장 값)로 받는다(2026-10-06).
+        # 전에는 FinanceDataReader(넥스트레이드 합산)로 채워 이력이 KRX 값이 아니게 됐다(감사 F-019). 야후도 안 되면 멈춘다.
+        rows = _fetch_yahoo_days(str(ticker))
+        if len(rows) < 2:
+            raise ValueError(f"{ticker}: 다음 일별 시세도 야후 일별 종가도 받지 못했습니다 — {exc}") from exc
+        print(f"[경고] {ticker}: 다음 일별 시세를 못 받아 이력을 야후 일별 종가(KRX 정규장)로 받습니다 — {exc}")
+        source = "Yahoo daily close (KRX regular session; Daum unavailable)"
+    else:
+        source = None
     closes = [c for _, c in rows]
     return {
         "ticker": ticker,
@@ -189,7 +193,23 @@ def _fetch_stock(ticker: str, name: str, name_en: str = "", lookback: int = 7, u
         "history": {"dates": [d for d, _ in rows], "close": [round(c, 4) for c in closes]},
         "unit": unit,
         "trading_date": rows[-1][0],
+        **({"history_source": source} if source else {}),
     }
+
+
+def _fetch_yahoo_days(code: str) -> list[tuple[str, float]]:
+    """야후 일별 종가(조정하지 않은 값 = KRX 정규장 종가), 오래된 것부터. 거래량 0인 날(거래정지 — 야후 값이 틀린다)은 뺀다."""
+    import yfinance as yf
+    for suffix in (".KS", ".KQ"):
+        try:
+            hist = yf.Ticker(code + suffix).history(period="6mo", auto_adjust=False)
+        except Exception as exc:  # noqa: BLE001 — 센다: 다른 시장 접미사를 묻고, 끝내 없으면 빈 목록(부른 쪽이 멈춘다)
+            print(f"[안내] 야후 {code}{suffix}: {exc}")
+            continue
+        rows = [(d.strftime("%Y-%m-%d"), float(c)) for d, c, v in zip(hist.index, hist["Close"], hist["Volume"]) if float(v or 0) > 0]
+        if len(rows) >= 2:
+            return rows[-price_history.DAYS:]
+    return []
 
 
 def yahoo_close(code: str, day: str) -> float | None:
@@ -246,6 +266,14 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
                          f"(다음 날짜 {daum.get('date') if daum else '응답 없음'}).")
     values = set(found.values())
     sources = sorted(found)
+    if len(found) == 1:
+        # 원천이 하나뿐이면(다음이 막혔거나 사진이 없다) 야후 종가와 맞을 때만 쓴다 — 두 원천이 된다(2026-10-06, 감사 F-039).
+        (only, (close_one, base_one)), = found.items()
+        third = yahoo_close(code, today)
+        if third is None or abs(third - close_one) >= 0.5:
+            raise ValueError(f"{code}: 오늘 종가를 {only} 하나로만 받았고 야후로 확인하지 못했습니다"
+                             f"({only} {close_one:,.0f} / 야후 {'없음' if third is None else f'{third:,.0f}'}) — 쓰지 않습니다.")
+        sources = sorted([only, "yahoo"])
     if len(values) > 1:
         # 두 원천이 다르다 — 셋째 근거로 맞는 값을 가린다(2026-10-05 사장님: 옛 값이 아니라 정확한 값). 종가는 야후와 같은 쪽,
         # 기준가는 pick_base. 가리지 못하면 아래에서 멈춘다.
