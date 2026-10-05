@@ -272,42 +272,96 @@ def _settle_futures(entries: dict[str, dict], trading_date: str | None = None) -
                             ", ".join(f"{k} {v}" for k, v in readings.items()))
             continue
         value = readings[best[0]]
+        # 등락률은 전일 결제가로 — 네이버 전일 값과 야후 이력의 같은 날 값(야후는 지난날을 결제가로 고쳐 둔다)이 같아야 쓴다
+        naver_all = naver_future_closes(ticker)
+        prior = [d for d in naver_all if d < day]
+        hist = dict(zip((entry.get("history") or {}).get("dates") or [], (entry.get("history") or {}).get("close") or []))
+        if prior and max(prior) in hist and abs(hist[max(prior)] - naver_all[max(prior)]) < 0.006:
+            prev_settle = naver_all[max(prior)]
+        else:
+            problems.append(f"{entry.get('name', ticker)}({ticker}): 전일 결제가를 두 곳에서 확인하지 못했습니다 — 네이버 "
+                            f"{max(prior) if prior else '-'} {naver_all.get(max(prior)) if prior else '-'} / 야후 {hist.get(max(prior)) if prior else '-'}")
+            continue
         if "yahoo" not in best:
-            prev = float(entry["series"][-2])
             print(f"[안내] {ticker}: 야후 {yahoo}가 결제가가 아니라 {'·'.join(best)} {value}로 바꿉니다")
             entry["series"] = list(entry["series"][:-1]) + [round(value, 4)]
             entry["history"] = price_history.replace_last(entry.get("history"), value)
             entry["price"] = round(value, 2)
-            entry["change_pct"] = round((value - prev) / prev * 100, 2)
+        entry["change_pct"] = round((value - prev_settle) / prev_settle * 100, 2)
         entry["close_sources"] = sorted(best)
     return problems
 
 
-def second_close(ticker: str, day: str) -> float | None:
-    """그날 두 번째 원천의 종가. 없거나(아직 안 올라옴·원천 없음) 못 받으면 None."""
+def second_series(ticker: str, day: str) -> dict[str, float]:
+    """두 번째 원천의 최근 일별 종가 {날짜: 값}(그날 포함, 없으면 빈 dict). 금·원유는 _settle_futures가 따로 맞춘다."""
     if ticker == "^DJI":
         try:
-            return fred_closes(ticker, day).get(day)
+            return fred_closes(ticker, (dt.date.fromisoformat(day) - dt.timedelta(days=14)).isoformat())
         except requests.RequestException as exc:
             print(f"[안내] FRED {ticker}: {exc}")
-            return None
+            return {}
     if ticker in _CBOE_SYMBOLS:
-        return cboe_closes(ticker).get(day)
+        return cboe_closes(ticker)
     if ticker in _FUTURES:
-        return None            # 금·원유는 _settle_futures가 맞춘다
-    return nasdaq_closes(ticker, day).get(day)
+        return {}
+    return nasdaq_closes(ticker, day)
+
+
+def second_close(ticker: str, day: str) -> float | None:
+    """그날 두 번째 원천의 종가. 없거나(아직 안 올라옴·원천 없음) 못 받으면 None."""
+    return second_series(ticker, day).get(day)
+
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+
+
+def _committed_close(ticker: str, day: str) -> float | None:
+    """우리가 그날 커밋한 미국장 시세 파일의 값(그날도 두 원천으로 확인된 값)."""
+    path = DATA_DIR / f"price_us_{day}.json"
+    if not path.exists():
+        return None
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    entry = (doc.get("macro") or {}).get(ticker) or (doc.get("watchlist") or {}).get(ticker) or {}
+    return float(entry["price"]) if entry.get("price") is not None else None
+
+
+def _check_change(ticker: str, entry: dict, series: dict[str, float], day: str) -> str | None:
+    """등락률도 공식 원천의 전일 종가로 맞춘다(2026-10-05). 2026-09-23: 수집 때 야후 이력에 9/22 줄이 빠져 다우 -1.03%(실제 -0.68%)·
+    나스닥 -0.69%(실제 -1.13%)처럼 이틀치 등락이 나갔다 — 가격은 맞아서 가격 대조로는 안 잡힌다.
+    공식 전일 종가를 우리가 그날 커밋한 파일이 확인해 주면(두 원천) 등락률을 고치고, 아니면 문제로 돌려준다."""
+    prior_days = [d for d in series if d < day]
+    if day not in series or not prior_days or entry.get("change_pct") is None:
+        return None
+    prev_day = max(prior_days)
+    official = round((series[day] / series[prev_day] - 1) * 100, 2)
+    if abs(official - float(entry["change_pct"])) <= 0.015:
+        return None
+    ours = _committed_close(ticker, prev_day)
+    if ours is not None and abs(ours - series[prev_day]) <= max(0.011, abs(ours) * 0.00001):
+        print(f"[안내] {ticker}: 등락률 {entry['change_pct']}%가 전일({prev_day}) 공식 종가 기준 {official}%와 달라 고칩니다 "
+              f"(야후 이력에 전일 줄이 빠졌거나 어긋났다)")
+        entry["change_pct"] = official
+        return None
+    return (f"{entry.get('name', ticker)}({ticker}): 등락률 야후 {entry['change_pct']}% / 공식 {official}%"
+            f"(전일 {prev_day} 공식 {series[prev_day]}, 우리 파일 {ours})")
 
 
 def _verify_second_source(entries: dict[str, dict]) -> list[str]:
-    """야후 종가를 두 번째 원천과 맞춘다. 다르면 문제 목록에, 같으면 close_sources에 둘 다 적는다."""
+    """야후 종가·등락률을 두 번째 원천과 맞춘다. 다르면 문제 목록에, 같으면 close_sources에 둘 다 적는다."""
     problems = []
     for ticker, entry in entries.items():
-        other = second_close(ticker, str(entry.get("trading_date")))
+        day = str(entry.get("trading_date"))
+        series = second_series(ticker, day)
+        other = series.get(day)
         if other is None:
             entry["close_sources"] = ["yahoo"]
             continue
         if abs(other - float(entry["price"])) > max(0.011, abs(other) * 0.00001):
             problems.append(f"{entry.get('name', ticker)}({ticker}): 야후 {entry['price']} / 공식 {other}")
+            continue
+        bad_change = _check_change(ticker, entry, series, day)
+        if bad_change:
+            problems.append(bad_change)
             continue
         entry["close_sources"] = ["yahoo", "fred" if ticker == "^DJI" else "cboe" if ticker in _CBOE_SYMBOLS else "nasdaq"]
     return problems

@@ -17,7 +17,8 @@ from src import fetch_kr, fetch_us
 
 def _entry(ticker: str, name: str, date: str = "2026-09-04") -> dict:
     return {"ticker": ticker, "name": name, "name_en": name, "price": 100.0,
-            "change_pct": 1.0, "series": [99.0, 100.0], "unit": "",
+            "change_pct": 1.01, "series": [99.0, 100.0], "unit": "",
+            "history": {"dates": ["2026-09-03", date], "close": [99.0, 100.0]},
             "trading_date": date}
 
 
@@ -49,9 +50,8 @@ class UsPartialFetchTest(unittest.TestCase):
 
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
-             mock.patch.object(fetch_us, "second_close", return_value=None), \
-             mock.patch.object(fetch_us, "naver_future_closes", side_effect=lambda t: {e["trading_date"]: float(e["series"][-1])
-                                                                                        for e in [_entry(t, "")]}), \
+             mock.patch.object(fetch_us, "second_series", return_value={}), \
+             mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-03": 99.0, "2026-09-04": 100.0}), \
              mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
             return fetch_us.fetch_all()
@@ -72,8 +72,8 @@ class UsPartialFetchTest(unittest.TestCase):
             return _entry(ticker, name)
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
-             mock.patch.object(fetch_us, "second_close", side_effect=lambda t, d: 101.0 if t == "NVDA" else 100.0), \
-             mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-04": 100.0}), \
+             mock.patch.object(fetch_us, "second_series", side_effect=lambda t, d: {d: 101.0 if t == "NVDA" else 100.0}), \
+             mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-03": 99.0, "2026-09-04": 100.0}), \
              mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
             with self.assertRaises(ValueError) as ctx:
@@ -85,8 +85,8 @@ class UsPartialFetchTest(unittest.TestCase):
             return _entry(ticker, name)
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
-             mock.patch.object(fetch_us, "second_close", side_effect=lambda t, d: None if t.startswith(("^G", "^I", "GC")) else 100.0), \
-             mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-04": 100.0}), \
+             mock.patch.object(fetch_us, "second_series", side_effect=lambda t, d: {} if t.startswith(("^G", "^I", "GC")) else {d: 100.0}), \
+             mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-03": 99.0, "2026-09-04": 100.0}), \
              mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
             data = fetch_us.fetch_all()
@@ -227,7 +227,7 @@ class UsSecondSourcesTest(unittest.TestCase):
     def test_yahoo_alone_is_replaced_by_the_settlement(self):
         """10/2 실측: 야후 4,172.1(결제 전 값) · 네이버 4,162.3 · CNBC 결제가 4,162.30 → 4,162.3, -0.95%."""
         entries = self._gold()
-        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-10-02": 4162.3}), \
+        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-10-01": 4202.3, "2026-10-02": 4162.3}), \
                 mock.patch.object(fetch_us, "cnbc_settle", return_value=("2026-10-02", 4162.3)), mock.patch("builtins.print"):
             self.assertEqual(fetch_us._settle_futures(entries), [])
         e = entries["GC=F"]
@@ -236,7 +236,7 @@ class UsSecondSourcesTest(unittest.TestCase):
 
     def test_agreeing_yahoo_is_kept(self):
         entries = self._gold(4162.3)
-        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-10-02": 4162.3}), \
+        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-10-01": 4202.3, "2026-10-02": 4162.3}), \
                 mock.patch.object(fetch_us, "cnbc_settle", return_value=None):
             self.assertEqual(fetch_us._settle_futures(entries), [])
         self.assertEqual(entries["GC=F"]["close_sources"], ["naver", "yahoo"])
@@ -252,12 +252,30 @@ class UsSecondSourcesTest(unittest.TestCase):
         entries = {"GC=F": {"ticker": "GC=F", "name": "국제 금", "price": 4450.0, "change_pct": -0.6, "trading_date": "2026-09-08",
                             "series": [4476.6, 4450.0], "history": {"dates": ["2026-09-03", "2026-09-04", "2026-09-08"],
                                                                     "close": [4440.0, 4476.6, 4450.0]}}}
-        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-04": 4476.6}), \
+        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-03": 4440.0, "2026-09-04": 4476.6}), \
                 mock.patch.object(fetch_us, "cnbc_settle", return_value=("2026-09-04", 4476.6)), mock.patch("builtins.print"):
             self.assertEqual(fetch_us._settle_futures(entries, "2026-09-04"), [])
         e = entries["GC=F"]
         self.assertEqual((e["trading_date"], e["price"], e["change_pct"], e["history"]["dates"][-1]), ("2026-09-04", 4476.6, 0.82, "2026-09-04"))
         self.assertEqual(e["close_sources"], ["cnbc_settle", "naver", "yahoo"])
+
+    def test_change_is_checked_against_the_official_previous_close(self):
+        """2026-09-23 실측: 야후 이력에 9/22 줄이 빠져 다우 등락률이 9/21 대비(-1.03%)로 나갔다 — 공식은 -0.68%.
+        공식 전일 종가를 우리가 그날 커밋한 파일이 확인해 주면 고치고, 아니면 멈춘다."""
+        entry = {"name": "다우존스", "price": 51511.59, "change_pct": -1.03, "trading_date": "2026-09-23"}
+        series = {"2026-09-21": 52048.83, "2026-09-22": 51862.87, "2026-09-23": 51511.59}
+        with mock.patch.object(fetch_us, "_committed_close", return_value=51862.87), mock.patch("builtins.print"):
+            self.assertIsNone(fetch_us._check_change("^DJI", entry, series, "2026-09-23"))
+        self.assertEqual(entry["change_pct"], -0.68)
+        entry["change_pct"] = -1.03
+        with mock.patch.object(fetch_us, "_committed_close", return_value=None):
+            self.assertIn("등락률", fetch_us._check_change("^DJI", entry, series, "2026-09-23"))
+
+    def test_futures_need_the_previous_settlement_from_two_places(self):
+        entries = self._gold(4162.3)
+        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-10-01": 4190.0, "2026-10-02": 4162.3}), \
+                mock.patch.object(fetch_us, "cnbc_settle", return_value=None):
+            self.assertEqual(len(fetch_us._settle_futures(entries)), 1)    # 네이버 전일 4,190 ≠ 야후 이력 4,202.3
 
     def test_cboe_indexes_go_to_cboe(self):
         with mock.patch.object(fetch_us, "cboe_closes", return_value={"2026-10-02": 5.277}) as cboe:
