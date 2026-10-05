@@ -231,13 +231,30 @@ def cnbc_settle(ticker: str) -> tuple[str, float] | None:
         return None
 
 
-def _settle_futures(entries: dict[str, dict]) -> list[str]:
+def _at_day(entry: dict, day: str) -> dict:
+    """선물 줄을 지수 기준일 `day`로 맞춘다 — 휴장일 저녁엔 야후 마지막 줄이 다음 거래일 장일 수 있다. 이력에서 day 뒤를 자른다."""
+    hist = entry.get("history") or {}
+    dates, closes = list(hist.get("dates") or []), list(hist.get("close") or [])
+    if str(entry.get("trading_date")) == day or day not in dates:
+        return entry
+    cut = dates.index(day) + 1
+    n = len(entry.get("series") or [])
+    out = {**entry, "history": {**hist, "dates": dates[:cut], "close": closes[:cut]}, "trading_date": day,
+           "series": [round(c, 4) for c in closes[:cut][-n:]] if n else entry.get("series"), "price": round(closes[cut - 1], 2)}
+    if cut >= 2:
+        out["change_pct"] = round((closes[cut - 1] - closes[cut - 2]) / closes[cut - 2] * 100, 2)
+    print(f"[안내] {entry.get('ticker')}: 야후 마지막 줄({entry.get('trading_date')})이 기준일({day}) 뒤라 기준일 값으로 맞춥니다")
+    return out
+
+
+def _settle_futures(entries: dict[str, dict], trading_date: str | None = None) -> list[str]:
     """금·원유: 야후·네이버·CNBC 결제가 중 둘이 같은 값을 쓴다. 야후가 혼자 다르면 결제가로 바꾸고 등락률을 다시 셈한다.
-    셋이 모두 다르거나 하나뿐이면(확인할 수 없으면) 문제로 돌려준다 — 부른 쪽이 멈춘다."""
+    날짜는 지수 기준일(`trading_date`)이다. 셋이 모두 다르거나 하나뿐이면(확인할 수 없으면) 문제로 돌려준다 — 부른 쪽이 멈춘다."""
     problems = []
-    for ticker, entry in entries.items():
+    for ticker in list(entries):
         if ticker not in _FUTURES:
             continue
+        entry = entries[ticker] = _at_day(entries[ticker], str(trading_date)) if trading_date else entries[ticker]
         day = str(entry.get("trading_date"))
         yahoo = float(entry["series"][-1]) if entry.get("series") else float(entry["price"])
         readings = {"yahoo": yahoo}
@@ -338,7 +355,7 @@ def fetch_all() -> dict:
     # 거래일은 필수 지수에서 읽습니다.
     trading_date = required_trading_date(macro)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
-    problems = _settle_futures(macro) + _settle_futures(watchlist)
+    problems = _settle_futures(macro, trading_date) + _settle_futures(watchlist, trading_date)
     problems += _verify_second_source({t: e for t, e in macro.items() if t not in _FUTURES}) + \
         _verify_second_source({t: e for t, e in watchlist.items() if t not in _FUTURES})
     # 몇 개를 실제로 대조했는지 찍는다 — 나스닥이 러너를 막으면 전부 '야후 하나'로 조용히 넘어가 대조가 장식이 된다(2026-10-05)

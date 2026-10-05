@@ -247,6 +247,18 @@ class UsSecondSourcesTest(unittest.TestCase):
                     mock.patch.object(fetch_us, "cnbc_settle", return_value=cnbc):
                 self.assertEqual(len(fetch_us._settle_futures(self._gold())), 1)
 
+    def test_futures_bar_after_the_index_day_is_brought_back(self):
+        """미국 휴장일 저녁: 지수 기준일은 금요일인데 야후 선물 마지막 줄이 다음 거래일 장이면 기준일 값으로 맞춘다."""
+        entries = {"GC=F": {"ticker": "GC=F", "name": "국제 금", "price": 4450.0, "change_pct": -0.6, "trading_date": "2026-09-08",
+                            "series": [4476.6, 4450.0], "history": {"dates": ["2026-09-03", "2026-09-04", "2026-09-08"],
+                                                                    "close": [4440.0, 4476.6, 4450.0]}}}
+        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-04": 4476.6}), \
+                mock.patch.object(fetch_us, "cnbc_settle", return_value=("2026-09-04", 4476.6)), mock.patch("builtins.print"):
+            self.assertEqual(fetch_us._settle_futures(entries, "2026-09-04"), [])
+        e = entries["GC=F"]
+        self.assertEqual((e["trading_date"], e["price"], e["change_pct"], e["history"]["dates"][-1]), ("2026-09-04", 4476.6, 0.82, "2026-09-04"))
+        self.assertEqual(e["close_sources"], ["cnbc_settle", "naver", "yahoo"])
+
     def test_cboe_indexes_go_to_cboe(self):
         with mock.patch.object(fetch_us, "cboe_closes", return_value={"2026-10-02": 5.277}) as cboe:
             self.assertEqual(fetch_us.second_close("^TNX", "2026-10-02"), 5.277)
