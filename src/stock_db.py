@@ -369,10 +369,16 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
     - 다음이 없으면 그날(다른 종목들의 날짜) 사진으로 — 거래량·거래대금은 네이버 통합값이 남는다고 알린다. 사진도 없으면 멈춘다.
     """
     problems, notes = [], []
-    day = max((rows[-1]["d"] for rows in daily.values() if rows), default=fallback_day)
+    # 기준일은 다음의 가장 늦은 날과 가장 최근 사진 중 늦은 쪽 — 다음이 오늘 줄을 아직 안 올린 종목이 옛 날짜로 섞이지 않게(2026-10-05)
+    day = max([rows[-1]["d"] for rows in daily.values() if rows] + ([fallback_day] if fallback_day else []), default="")
     one_source = 0
+    stale: list[str] = []
     for row in listing:
         code, rows = row["code"], daily.get(row["code"]) or []
+        if rows and rows[-1]["d"] < day and not (snaps.get(day) or {}).get(code):
+            stale.append(code)        # 오늘 줄도 사진도 없다(오래 멈춘 거래정지 등) — 빼지 않고 다음의 마지막 날짜 그대로, 개수를 알린다
+        elif rows and rows[-1]["d"] < day:
+            rows = []                 # 다음에 오늘 줄이 아직 없다 — 아래에서 그날 사진으로 쓰고 알린다
         if rows:
             last = rows[-1]
             snap = (snaps.get(last["d"]) or {}).get(code)
@@ -400,6 +406,8 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
         notes.append(code)
     if notes:
         notes = [f"다음 일별 시세를 못 받아 사진 하나로 쓴 종목 {len(notes)}개(거래량·거래대금은 네이버 통합값): {', '.join(notes[:15])}"]
+    if stale:
+        notes.append(f"다음 일별 시세가 {day}보다 이르고 그날 사진도 없어 마지막 날짜 값으로 나간 종목 {len(stale)}개: {', '.join(stale[:15])}")
     if one_source:
         notes.append(f"그날 사진이 없어 다음 하나로만 확인한 종목 {one_source}개 — 사진({day})을 확인하십시오")
     return problems, notes

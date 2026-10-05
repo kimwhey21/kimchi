@@ -516,6 +516,23 @@ class KrxPricesTest(unittest.TestCase):
         self.assertEqual((row["close"], row["pct"]), (1841000.0, 0.44))
         self.assertTrue(any("사진 하나로" in n for n in notes))
 
+    def test_daum_without_todays_row_uses_todays_snapshot(self):
+        """다음이 오늘 줄을 아직 안 올렸으면 옛 날짜 값이 섞이지 않게 그날 사진을 쓴다(사진이 기준일을 정한다)."""
+        row = dict(self.ROW)
+        daum = {"000660": self.DAUM[:1]}                                   # 10/1까지만
+        problems, notes = sdb.apply_krx([row], daum, {"2026-10-02": {"000660": [1841000, 1833000]}}, "2026-10-02")
+        self.assertEqual(problems, [])
+        self.assertEqual((row["close"], row["date"]), (1841000.0, "2026-10-02"))
+        self.assertTrue(any("사진 하나로" in n for n in notes))
+
+    def test_long_halted_stock_keeps_its_last_day_and_is_counted(self):
+        row = dict(self.ROW)
+        problems, notes = sdb.apply_krx([row], {"000660": self.DAUM[:1], "005930": [{"d": "2026-10-02", "c": 276000.0, "base": 276000.0}]},
+                                        {"2026-10-02": {"005930": [276000, 276000]}}, "2026-10-02")
+        self.assertEqual(problems, [])
+        self.assertEqual(row["date"], "2026-10-01")
+        self.assertTrue(any("마지막 날짜 값으로" in n for n in notes))
+
     def test_neither_source_stops(self):
         problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": []}, {}, "2026-10-02")
         self.assertEqual(len(problems), 1)
