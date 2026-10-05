@@ -333,7 +333,8 @@ def market_index(session: requests.Session, day: str = "") -> dict:
     for name in ("KOSPI", "KOSDAQ"):
         row = _index_row(_get(session, f"{NAVER}/index/{name}/basic").json())
         if day and row["date"] != day:
-            # 2026-10-01: 네이버 지수 일별 목록(`/price`)은 9/17에서 멈춰 있어 장 전 실행이 "9/30 줄이 없다"로 죽었다.
+            # 2026-10-01 08:02: 장 전 실행이 네이버 지수 일별 목록(`/price`)에서 9/30 줄을 찾지 못해 죽었다(9/30 16:27 수집 때는
+            # 그 줄이 있었다 — 장 전에 왜 없었는지는 확인 못 했다. 목록 자체는 멈추지 않았다: 10/5에 70거래일이 ECOS와 같았다).
             # 그날 지수는 우리가 16:20에 KRX 확정 종가로 커밋한 한국장 시세 파일이 기준이다 — 그것을 먼저 쓰고, 없을 때만 목록을 본다.
             got = _index_from_price_file(name, day)
             if got is None:

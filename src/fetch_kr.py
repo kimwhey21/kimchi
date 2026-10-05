@@ -1,7 +1,7 @@
 """한국 시장 시세 수집 스크립트.
 
-FinanceDataReader로 코스피/코스닥/환율과 관심 종목의 종가, 등락률,
-최근 며칠간의 종가 흐름(스파크라인용 시계열)을 가져옵니다.
+코스피·코스닥은 네이버 지수 일별 목록과 실시간 확정값, 환율은 하나은행 고시, 관심 종목은
+FinanceDataReader(네이버 일봉)와 KRX 정규장 확정 종가로 종가·등락률·최근 종가 흐름을 가져옵니다.
 
 주의:
     이 스크립트는 KRX/네이버 등 데이터 소스에 접속해야 동작합니다.
@@ -213,17 +213,75 @@ def _prior_change_pct(prior: dict) -> float | None:
         return round((float(closes[-1]) / float(closes[-2]) - 1) * 100, 2)
     return None
 
-def _fetch_naver_index_daily(code: str) -> list[tuple[str, float]]:
-    """네이버 지수 일별 종가(최근 10거래일, 오래된 것부터). 지수 일봉과 우리 파일이 며칠 비었을 때 빈 날을 채운다."""
-    response = requests.get(f"https://m.stock.naver.com/api/index/{code}/price", params={"pageSize": 10, "page": 1},
-                            headers=_NAVER_HEADERS, timeout=_NAVER_TIMEOUT_SECONDS)
-    response.raise_for_status()
-    rows = []
-    for row in response.json():
-        date, close = str(row.get("localTradedAt") or "")[:10], str(row.get("closePrice") or "").replace(",", "")
-        if date and close:
-            rows.append((date, float(close)))
-    return sorted(rows)
+_NAVER_INDEX_PAGE = 35   # 한 쪽에 60줄까지 준다(70은 빈 응답, 2026-10-05) — 70거래일은 35줄 두 쪽으로 받는다
+
+
+def _fetch_naver_index_daily(code: str, rows: int = 10) -> list[tuple[str, float]]:
+    """네이버 지수 일별 종가(최근 `rows`거래일, 오래된 것부터). 장 마감 뒤 16:27에는 그날 줄이 이미 있다(2026-09-30 실행 기록)."""
+    size = min(rows, _NAVER_INDEX_PAGE)
+    out: dict[str, float] = {}
+    for page in range(1, -(-rows // size) + 1):
+        response = requests.get(f"https://m.stock.naver.com/api/index/{code}/price", params={"pageSize": size, "page": page},
+                                headers=_NAVER_HEADERS, timeout=_NAVER_TIMEOUT_SECONDS)
+        response.raise_for_status()
+        for row in response.json():
+            date, close = str(row.get("localTradedAt") or "")[:10], str(row.get("closePrice") or "").replace(",", "")
+            if date and close:
+                out[date] = float(close)
+    return sorted(out.items())
+
+
+def _fetch_index(ticker: str, name: str, name_en: str = "", lookback: int = 7, unit: str = "", **_ignore) -> dict:
+    """코스피·코스닥 — 네이버 지수 일별 종가 70거래일(2026-10-05).
+
+    전에는 FinanceDataReader(KS11/KQ11)였다. 그 지수는 개인 개발자가 깃허브에 쌓아 두는 사본이고, 그 사람의 거래소
+    로그인이 실패한 9/17 낮부터 멈춰 있었다(9/17 행은 장중 값 6,724.34 — 확정 종가 6,715.41). 우리 수집은 빈 날을
+    네이버 확정값·우리 파일로 메워 글이 계속 나갔고, 실행 기록에 날마다 "일봉이 9/17에 머물러"가 찍혔지만 아무도 몰랐다.
+    네이버 목록은 70거래일 전부가 한국은행 ECOS(한국거래소 작성 통계)와 같았다(2026-10-05 대조). 목록에 오늘 줄이 아직
+    없거나 목록이 멈춘 날은 `_apply_final_index_quote`가 확정값·우리 파일로 잇고, `index_check`가 운영 대화로 알린다.
+    목록을 못 받으면 우리가 커밋한 마지막 파일을 밑바탕으로 쓴다(없으면 멈춘다).
+    """
+    try:
+        rows = _fetch_naver_index_daily(_NAVER_INDEX_CODES[ticker], rows=price_history.DAYS)
+        if len(rows) < 2:
+            raise ValueError(f"일별 종가를 {len(rows)}개만 받았습니다")
+    except (requests.RequestException, ValueError) as exc:
+        prior = _latest_committed_index(ticker, dt.date.today().isoformat())
+        if prior is None:
+            raise ValueError(f"{ticker}: 네이버 지수 일별 목록을 받지 못했고 우리 파일도 없습니다 — {exc}") from exc
+        print(f"[경고] {ticker}: 네이버 지수 일별 목록을 받지 못해 우리 파일({prior['trading_date']})을 밑바탕으로 씁니다 — {exc}")
+        return {**prior, "data_source": "our committed file (Naver index daily list unavailable)"}
+    closes = [close for _, close in rows]
+    return {
+        "ticker": ticker,
+        "name": name,
+        "name_en": name_en or name,
+        "price": round(closes[-1], 2),
+        "change_pct": round((closes[-1] / closes[-2] - 1) * 100, 2),
+        "series": [round(c, 4) for c in closes[-(lookback + 1):]],
+        "history": {"dates": [d for d, _ in rows], "close": [round(c, 4) for c in closes]},
+        "unit": unit,
+        "trading_date": rows[-1][0],
+        "data_source": "Naver Finance index daily list",
+    }
+
+
+def last_closed_trading_day(today: str | None = None) -> str:
+    """장이 끝난 마지막 거래일(코스피 기준) — 발행 점검(`check_publication`)이 쓴다(2026-10-05, 전에는 멈춘 FinanceDataReader).
+
+    목록에서 오늘 이전의 마지막 날을 고른다. 지수가 장마감(``ms=CLOSE``)이고 목록에 오늘 줄이 있거나 확정 종가가 그 마지막
+    날 종가와 다르면 오늘도 거래일이다(목록이 늦게 올라오는 날). 휴장일에는 확정값이 마지막 거래일 종가 그대로다(10/5 확인).
+    """
+    today = today or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date().isoformat()
+    rows = _fetch_naver_index_daily("KOSPI")
+    quote = _fetch_naver_index_quotes().get("KOSPI") or {}
+    closes = dict(rows)
+    before = [d for d, _ in rows if d < today]
+    if not before:
+        raise ValueError(f"네이버 코스피 일별 목록에 {today} 이전 날짜가 없습니다")
+    if quote.get("ms") == "CLOSE" and (today in closes or abs(float(quote["nv"]) / 100 - closes[before[-1]]) > 0.005):
+        return today
+    return before[-1]
 
 
 def _fill_gap_from_naver_daily(entry: dict, code: str, today: str, price: float, change: float,
@@ -500,12 +558,13 @@ def fetch_all() -> dict:
             if ticker == "USD/KRW":
                 macro[ticker] = _fetch_usdkrw_reference(**row)
                 continue
-            entry = _fetch_one(**row)
             if ticker in _NAVER_INDEX_CODES:
                 entry = _apply_final_index_quote(
-                    entry, ticker, index_quotes.get(_NAVER_INDEX_CODES[ticker]),
+                    _fetch_index(**row), ticker, index_quotes.get(_NAVER_INDEX_CODES[ticker]),
                     prior=_latest_committed_index(ticker, dt.date.today().isoformat()),
                 )
+            else:
+                entry = _fetch_one(**row)
             macro[ticker] = entry
         except Exception as exc:  # noqa: BLE001
             if ticker in _REQUIRED:

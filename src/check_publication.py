@@ -107,13 +107,19 @@ def _actual_trading_date(market: str) -> str | None:
     휴장일에 헛경보를 내지 않으려고 달력 대신 지수의 실제 마지막 거래일을
     씁니다. 조회에 실패하면 None을 돌려주고 이 검사만 건너뜁니다 — 점검 도구가
     네트워크 문제로 빨간 X를 내는 것은 도움이 되지 않습니다.
+
+    한국장은 네이버 지수 일별 목록에서 묻는다(2026-10-05). 전에는 FinanceDataReader KS11이었는데 그 원천이 9/17부터
+    멈춰 있어, 그 뒤로 이 검사는 한국장 시세 수집이 통째로 빠진 날을 잡지 못하는 상태였다.
     """
     try:
+        if market == "kr":
+            from src import fetch_kr
+
+            return fetch_kr.last_closed_trading_day()
         import FinanceDataReader as fdr
 
-        symbol = "KS11" if market == "kr" else "DJI"
         start = (dt.date.today() - dt.timedelta(days=10)).isoformat()
-        frame = fdr.DataReader(symbol, start)
+        frame = fdr.DataReader("DJI", start)
         if frame.empty:
             return None
         return frame.index[-1].date().isoformat()

@@ -120,6 +120,7 @@ class KrPartialFetchTest(unittest.TestCase):
             return _entry(ticker, name)
 
         with mock.patch.object(fetch_kr, "_fetch_one", side_effect=fake_one), \
+             mock.patch.object(fetch_kr, "_fetch_index", side_effect=fake_one), \
              mock.patch.object(fetch_kr, "_fetch_usdkrw_reference", side_effect=fake_fx), \
              mock.patch.object(fetch_kr, "_fetch_naver_index_quotes", return_value={}), \
              mock.patch.object(fetch_kr, "_apply_final_index_quote",

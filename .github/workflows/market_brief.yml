@@ -245,6 +245,18 @@ jobs:
             echo "::warning::루틴 호출 HTTP $CODE ($MARKET): $BODY — 루틴 자체 예약이 대신 돕니다."
           fi
 
+      - name: 지수 대조 (네이버 목록·한국은행 ECOS)
+        # 2026-10-05: 지수 원천(FinanceDataReader 사본)이 9/17부터 멈춰 있었는데 2주 넘게 몰랐다. 원천이 멈추거나 이력이
+        # ECOS와 다르면 운영 대화로 알린다(src/index_check.py). 거래일 파일이 처음 커밋된 실행에서 한 번만 돈다.
+        # 알리기만 하고 발행은 막지 않는다 — 시세 커밋·루틴 호출은 이미 끝났고, 실패해도 워크플로는 초록으로 남는다.
+        if: ${{ steps.commit.outputs.new_file != '' && steps.market.outputs.market == 'kr' }}
+        continue-on-error: true
+        run: python -m src.index_check
+        env:
+          ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}
+
       - name: 실패 알림 (텔레그램 운영 대화)
         # 2026-09-12: 어떤 워크플로가 왜 죽었는지 휴대폰으로. 토큰이 없으면 조용히 넘어간다(curl이라 앞 단계가 어디서 죽었든 된다).
         if: failure()
