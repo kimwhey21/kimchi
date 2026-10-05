@@ -210,8 +210,8 @@
   공식 일별 종가, 다우는 FRED(`FRED_API_KEY`) — 다르면 멈춘다. S&P500·VIX는 수집 시각(18:20 ET)에 FRED에 아직 없어 `close_check`가 그날
   19:00 KST에 맞추고, 금리·금·원유·러셀은 두 번째 원천이 없다(`close_sources`에 원천을 적는다). 대표 이미지의 LARGEST MOVE는 편입 종목도
   후보에 넣는다 — 데이터에서 텍스트를 그리는 것이라 틀린 그림이 붙을 위험이 없다.
-- GitHub Actions에는 **Anthropic·OpenAI 키를 전달하지 않는다.** 유료 생성 경로(`generate_post.py`, `translate_post.py`)를 자동
-  실행에 다시 연결하지 말 것. Unsplash 키는 Actions 어디에도 넘기지 않는다 — 사진 검색은 루틴 샌드박스에서 사람처럼 보고
+- GitHub Actions에는 **Anthropic·OpenAI 키를 전달하지 않는다.** 유료 생성 경로(옛 `generate_post.py`·`translate_post.py`, 2026-10-05에
+  지웠다)를 자동 실행에 다시 만들지 말 것. Unsplash 키는 Actions 어디에도 넘기지 않는다 — 사진 검색은 루틴 샌드박스에서 사람처럼 보고
   고르는 경로로만 한다.
 - **조사·집필은 클라우드 루틴이, 시세 수집은 GitHub Actions가 맡는다.** 예약 실행이 시세를 `data/price_<market>_<거래일>.json`으로
   커밋하고, 루틴이 그 파일을 읽어 원고를 쓴다. 루틴 프롬프트에서 `fetch_kr/fetch_us`를 직접 부르게 만들지 말 것 — 그렇게 두면
