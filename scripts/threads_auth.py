@@ -98,6 +98,8 @@ def cmd_refresh() -> None:
     _gh_secret("THREADS_ACCESS_TOKEN", result["access_token"])
     print(f"갱신 완료 — 유효 {result.get('expires_in', 0) // 86400}일")
     alert.send(f"스레드 토큰 갱신 완료 — 유효 {result.get('expires_in', 0) // 86400}일", "ok")
+    from src.beat import beat   # 맥 작업 신호(2026-10-05) — 밤 11시 반 증명서가 본다
+    beat("threads_refresh")
 
 
 def cmd_me() -> None:

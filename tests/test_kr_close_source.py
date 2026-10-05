@@ -219,15 +219,15 @@ class StockNextMorningTest(unittest.TestCase):
 
 
 class WorkflowRunsTheCheckOnceTest(unittest.TestCase):
-    def test_check_runs_in_the_morning_watchdog_and_cannot_block(self) -> None:
+    def test_close_check_lives_in_the_daily_proof_not_the_evening_check(self) -> None:
+        """2026-10-05: 저녁 종가 대조는 밤 11시 반 증명서(daily_proof.yml)로 합쳤다 — 같은 알림이 두 번 가지 않게."""
         from pathlib import Path
         root = Path(__file__).resolve().parent.parent / ".github/workflows"
-        text = (root / "publish_check.yml").read_text(encoding="utf-8")
-        at = text.index("python -m src.close_check")
-        step = text[at - 900:at + 300]
-        self.assertIn("continue-on-error: true", step)
-        self.assertIn("-ge 12", step)
-        self.assertIn("ECOS_API_KEY", step)
+        self.assertNotIn("close_check", (root / "publish_check.yml").read_text(encoding="utf-8"))
+        proof = (root / "daily_proof.yml").read_text(encoding="utf-8")
+        self.assertIn("python -m src.daily_proof", proof)
+        for key in ("ECOS_API_KEY", "FRED_API_KEY", "GITHUB_TOKEN", "TELEGRAM_BOT_TOKEN", "fetch-depth"):
+            self.assertIn(key, proof)
         self.assertNotIn("close_check", (root / "market_brief.yml").read_text(encoding="utf-8"))
 
 

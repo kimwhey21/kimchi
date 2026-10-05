@@ -85,4 +85,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    _rc = main()
+    if not _rc:
+        from src.beat import beat   # 맥 작업 신호(2026-10-05) — 밤 11시 반 증명서가 본다
+        beat("bench_nightly")
+    sys.exit(_rc)

@@ -15,6 +15,7 @@ import re
 import datetime as dt
 import json
 import math
+import os
 import time
 from pathlib import Path
 
@@ -197,6 +198,13 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
     values = set(found.values())
     if len(values) > 1:
         detail = ", ".join(f"{k} 종가 {c:,.0f}·기준가 {b:,.0f}" for k, (c, b) in found.items())
+        override = os.environ.get("KR_CLOSE_OVERRIDE", "").strip()
+        if override in found:
+            # 사장님 승인 경로(2026-10-05): 두 원천이 다른 날 "내보내"라고 하면 지목한 원천 값에 꼬리표를 달아 내보낸다
+            # (market_brief.yml 수동 실행의 close_override 입력). 자동 실행에는 이 값이 없다.
+            print(f"[경고] {code}: 두 원천이 달라 사장님 승인으로 {override} 값을 씁니다 — {detail}")
+            close, base = found[override]
+            return {"close": close, "base": base, "sources": [f"{override} (owner override)"]}
         raise ValueError(f"{code}: 두 원천의 KRX 종가가 다릅니다 — {detail}. 어느 쪽이 맞는지 확인할 때까지 쓰지 않습니다.")
     close, base = next(iter(values))
     if abs(close / base - 1) > _PRICE_LIMIT:

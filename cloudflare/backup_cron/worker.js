@@ -4,7 +4,7 @@
 // - direct: 예약 작업 전부를 깃허브 예약을 기다리지 않고 정시에 직접 누른다(2026-09-29부터; 처음엔 종가 사진만).
 //           누르기가 실패하면 운영 텔레그램으로 알린다. 깃허브 예약은 예비로 남고, 늦게 온 예약은 skip_guard.yml이 건너뛴다.
 // - watch : 예정 시각(due) 뒤 확인 시각(check)에 "due 5분 전부터 실행이 하나라도 생겼나"를 묻고, 없으면 대신 누르고 알린다.
-//           지금은 비어 있다(모두 direct) — 정시에 누르면 안 되는 작업이 생기면 여기에 둔다.
+//           `success: true`면 성공한 실행이 있어야 한다(증명서 daily_proof.yml, 2026-10-05) — 실패도 침묵도 `alarm` 문구로 울린다.
 // 표는 jobs.json이고 scripts/deploy_backup_cron.py가 여기 __JOBS__ 자리에 넣어 올린다.
 // 비밀값(GH_TOKEN·TELEGRAM_BOT_TOKEN·TELEGRAM_ADMIN_CHAT_ID)은 Worker 비밀로만 있다.
 
@@ -60,7 +60,10 @@ async function ranSince(env, job, since) {
   const created = encodeURIComponent(`>=${since.toISOString().slice(0, 19)}Z`);
   const r = await gh(env, `/actions/workflows/${job.workflow}/runs?created=${created}&per_page=5`);
   if (!r.ok) throw new Error(`${job.workflow} 실행 목록 조회 실패 (${r.status})`);
-  return (await r.json()).total_count > 0;
+  const body = await r.json();
+  // success: true 인 작업(증명서)은 실행이 있었다가 아니라 **성공한 실행**이 있어야 한다 — 실패도 침묵도 다 경보다(2026-10-05)
+  if (job.success) return (body.workflow_runs || []).some((run) => run.conclusion === "success");
+  return body.total_count > 0;
 }
 
 export async function run(env, now) {
@@ -84,7 +87,7 @@ export async function run(env, now) {
       await dispatch(env, job);
       done.push(`watch ${job.workflow}`);
       const label = job.inputs?.market ? `${job.workflow} (${job.inputs.market})` : job.workflow;
-      await telegram(env, `⚠️ 깃허브 예약이 빠져 ${label}을(를) 대신 실행했습니다 (예정 ${job.due} UTC).`);
+      await telegram(env, job.alarm || `⚠️ 깃허브 예약이 빠져 ${label}을(를) 대신 실행했습니다 (예정 ${job.due} UTC).`);
     } catch (e) {
       await telegram(env, `❌ 예비 예약: ${e.message}`);
     }

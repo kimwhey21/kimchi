@@ -138,6 +138,15 @@
 - **미국장 시황·프리뷰를 저녁 한 편으로 합치는 개편은 보류다**(사용자 결정, 되돌린 커밋은 `11c6ac6`의 revert). 다시 할 때는
   목표 5,500~6,500자 미달·`number_cards` 반복·19분 소요 셋부터 손본다.
 - **`publish_check.yml`은 예비 예약까지 끝난 뒤(19:00/10:00 KST)에 돈다.** 루틴보다 먼저 울리면 정상 발행일에도 실패 메일이 온다.
+- **밤 11시 반 증명서**(`daily_proof.yml` → `src/daily_proof.py`, 2026-10-05): 그날 독자가 본 것을 다른 원천으로 다시 계산해 운영 텔레그램에
+  한 줄로 보낸다 — 작업(클라우드플레어 표의 깃허브 작업 성공 여부·오늘 커밋된 원고·맥 신호 `state/mac_beats.json`), 숫자(`close_check`),
+  화면(종목 페이지 무작위 20개와 홈을 다음·네이버 목록과), 글(본진 `check_publication`, 네이버·블로그스팟 게시 수), 꼬리표(두 원천 확인 수).
+  **대조 0건은 성공이 아니다. 증명서가 안 오면 워커가 00:05 KST에 울린다**(`jobs.json` watch `success: true` — 실행 성공 = 텔레그램 전송
+  성공이라, 보내지 못하면 1로 끝난다). 저녁 종가 대조는 여기로 합쳤다(publish_check에서 뺐다). 맥 작업은 끝날 때 `~/.market-brief-state/beats/<이름>`을
+  만지고(`src/beat.py`, 맥 스크립트는 같은 세 줄 인라인) `scripts/mac_beats.py`(launchd `kr.it.fermata.macbeats`, 23:22)가 커밋한다 — 그 파일이
+  없거나 오늘 것이 아니면 맥이 죽은 것이다. **막힌 날 사장님이 "내보내"라고 하면** `gh workflow run market_brief.yml -f market=kr
+  -f close_override=naver_snapshot`(또는 `daum`)으로 지목한 원천 값에 `(owner override)` 꼬리표를 달아 내보낸다(`KR_CLOSE_OVERRIDE`, 자동 실행엔 없음).
+  새 예약 작업을 만들면 `jobs.json`에 넣는 것으로 증명서의 기대 목록에도 들어간다(따로 적는 표가 없다).
 - **코스피·코스닥의 원천은 네이버 지수 일별 목록이다**(`fetch_kr._fetch_index`, 70거래일을 35줄 두 쪽으로, 2026-10-05). FinanceDataReader의
   KS11/KQ11은 개인 개발자의 깃허브 사본이라 그 사람의 거래소 로그인이 끊기면 조용히 멈춘다 — **지수에 다시 쓰지 말 것**(종목 일봉은 그대로
   FinanceDataReader). 발행 점검의 한국장 '마지막 거래일'도 같은 목록에서 묻는다(`fetch_kr.last_closed_trading_day`, 장중에는 오늘을 치지 않는다).

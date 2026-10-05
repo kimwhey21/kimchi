@@ -38,6 +38,13 @@ on:
     - cron: "34 7 * * 1-5"
   workflow_dispatch:
     inputs:
+      close_override:
+        # 사장님 승인 경로(2026-10-05): 한국장 종가의 두 원천(네이버 사진·다음)이 다른 날 "내보내"라고 하면
+        # `gh workflow run market_brief.yml -f market=kr -f close_override=naver_snapshot`으로 지목한 원천 값에
+        # "(owner override)" 꼬리표를 달아 내보낸다. 자동 실행에는 비어 있다.
+        description: "한국장 종가 두 원천이 다를 때 쓸 원천 (naver_snapshot 또는 daum, 사장님 승인 때만)"
+        required: false
+        default: ""
       market:
         description: "수동 실행 시 대상 시장 (us 또는 kr)"
         required: true
@@ -116,6 +123,7 @@ jobs:
         env:
           # 미국장 다우 종가를 FRED 공식 값과 맞춘다(fetch_us.second_close, 2026-10-05). 생성형 AI 키가 아니다.
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          KR_CLOSE_OVERRIDE: ${{ github.event.inputs.close_override }}
 
       - name: 재료(이야기 엔진) 뽑기
         # 시황 루틴이 시세와 함께 읽는 재료(2026-09-08). 루틴 샌드박스는 야후가 막혀 밸류에이션·등급변경·실적일정·계절성
