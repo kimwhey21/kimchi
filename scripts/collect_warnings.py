@@ -36,7 +36,8 @@ def engine_failures(market: str, root: Path | None = None) -> tuple[str, list[st
 def compose(market: str, log_lines: list[str], engine_file: str, engine_lines: list[str]) -> str:
     parts = []
     if log_lines:
-        parts.append(f"{market} 시세 수집 경고 {len(log_lines)}줄:\n" + "\n".join(f"- {re.sub(r'^\[경고\]\s*', '', l)[:220]}" for l in log_lines[:15]))
+        cleaned = [re.sub(r"^\[경고\]\s*", "", l)[:220] for l in log_lines[:15]]   # f-문자열 안에 역슬래시를 넣으면 파이썬 3.11이 못 읽는다
+        parts.append(f"{market} 시세 수집 경고 {len(log_lines)}줄:\n" + "\n".join(f"- {c}" for c in cleaned))
     if engine_lines:
         parts.append(f"재료 엔진 실패 {len(engine_lines)}줄({engine_file}):\n" + "\n".join(f"- {l[:220]}" for l in engine_lines[:15]))
     return "\n\n".join(parts)
