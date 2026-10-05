@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       actions: read      # 오늘 돌았어야 할 작업의 실행 목록
-      contents: read
+      contents: write    # 전날 경고 기억(state/proof_issues.json)을 커밋한다(2026-10-06)
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,6 +49,19 @@ jobs:
           WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}
+
+      - name: 경고 기억 커밋
+        # 다음 날 증명서가 '🔁 N일째'를 붙이려고 오늘 경고 목록을 남긴다(2026-10-06, 감사 F-076). 실패해도 증명서는 이미 갔다.
+        if: always()
+        run: |
+          [ -f state/proof_issues.json ] || exit 0
+          git add -f state/proof_issues.json
+          git diff --cached --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -q -m "증명서 경고 기억: $(TZ=Asia/Seoul date +%F)"
+          for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0; git rebase --abort 2>/dev/null; sleep 10; done
+          echo "::warning::증명서 경고 기억을 올리지 못했습니다"
 
       - name: 실패 알림 (텔레그램 운영 대화)
         if: failure()

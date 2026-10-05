@@ -350,6 +350,36 @@ def source_tags(doc: dict | None) -> tuple[int, int]:
 
 
 # ── 한 장 ───────────────────────────────────────────────────────────────────────────
+PROOF_STATE = ROOT / "state" / "proof_issues.json"
+
+
+def _issue_key(issue: str) -> str:
+    """숫자만 다른 같은 경고를 같은 것으로 센다."""
+    return re.sub(r"[0-9][0-9,.:/%+\-]*", "#", issue)[:140]
+
+
+def mark_repeats(day: dt.date, issues: list[str], state_path: Path = PROOF_STATE) -> tuple[list[str], dict]:
+    """전날에도 있던 경고에 '🔁 N일째'를 붙여 맨 위로 올린다(2026-10-06, 감사 F-076 — 전에는 같은 경고가 매일 반복돼도 강조되지 않고
+    다음 날 사라졌다). 돌려주는 것: (표시한 경고 목록, 새 상태)."""
+    try:
+        prev = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    except (OSError, ValueError) as exc:
+        print(f"[경고] 지난 증명서 상태를 읽지 못했습니다: {exc}")
+        prev = {}
+    yesterday = (day - dt.timedelta(days=1)).isoformat()
+    streaks = (prev.get("issues") or {}) if prev.get("day") == yesterday else {}
+    if prev.get("day") == day.isoformat():          # 같은 날 다시 돌면(00:05 재실행) 어제 기준을 그대로 쓴다
+        streaks = prev.get("base") or {}
+    new, marked = {}, []
+    for issue in issues:
+        key = _issue_key(issue)
+        n = int(streaks.get(key, 0)) + 1
+        new[key] = n
+        marked.append((n, f"🔁 {n}일째 · {issue}" if n >= 2 else issue))
+    marked.sort(key=lambda pair: -pair[0])
+    return [text for _, text in marked], {"day": day.isoformat(), "issues": new, "base": streaks}
+
+
 def compose(day: dt.date, parts: dict, issues: list[str]) -> str:
     head = f"{day:%m/%d} 증명 — " + " · ".join(f"{k} {v}" for k, v in parts.items())
     if not issues:
@@ -474,6 +504,14 @@ def main(argv: list[str] | None = None) -> int:
         except (OSError, subprocess.SubprocessError):
             token = None
     text, issues, parts = build(day, now, token=token, screens=not args.no_screens)
+    if issues:
+        issues, state = mark_repeats(day, issues)
+        text = compose(day, parts, issues)
+    else:
+        state = {"day": day.isoformat(), "issues": {}, "base": {}}
+    if not args.dry_run:
+        PROOF_STATE.parent.mkdir(parents=True, exist_ok=True)
+        PROOF_STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(text)
     if args.dry_run:
         return 0

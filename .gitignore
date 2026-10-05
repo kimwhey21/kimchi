@@ -9,6 +9,8 @@ state/*
 !state/plugins_before_cleanup_*.json
 # 맥 작업 신호(scripts/mac_beats.py, 2026-10-05) — 증명서가 읽는다
 !state/mac_beats.json
+# 증명서가 전날 경고를 기억하는 파일(2026-10-06) — 반복 경고에 'N일째'를 붙인다
+!state/proof_issues.json
 .DS_Store
 .claude/
 

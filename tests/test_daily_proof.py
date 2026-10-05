@@ -305,3 +305,19 @@ class WorkerHeartbeatTest(unittest.TestCase):
         self.assertIn("한 번도", mac_beats.check_worker(now, count=0))
         self.assertIsNone(mac_beats.check_worker(now, count=12))
         self.assertIn("세지 못했습니다", mac_beats.check_worker(now, count=None))
+
+
+class RepeatedWarningTest(unittest.TestCase):
+    """같은 경고가 이어지면 '🔁 N일째'를 붙여 맨 위로(2026-10-06, 감사 F-076)."""
+
+    def test_streaks(self) -> None:
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            state = Path(tmp) / "s.json"
+            d1, d2 = dt.date(2026, 10, 6), dt.date(2026, 10, 7)
+            issues1, st = daily_proof.mark_repeats(d1, ["글 없음: 미국장 프리뷰 (x)", "숫자 192건 중 3건 다름"], state)
+            state.write_text(json.dumps(st), encoding="utf-8")
+            issues2, _ = daily_proof.mark_repeats(d2, ["새 경고", "숫자 200건 중 4건 다름"], state)
+        self.assertEqual(issues2[0], "🔁 2일째 · 숫자 200건 중 4건 다름")   # 숫자만 다른 같은 경고
+        self.assertEqual(issues2[1], "새 경고")
