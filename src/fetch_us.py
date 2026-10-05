@@ -185,10 +185,10 @@ def fred_closes(ticker: str, start: str) -> dict[str, float]:
     return {o["date"]: float(o["value"]) for o in body.get("observations") or [] if o.get("value") not in (None, ".", "")}
 
 
-# Cboe 공식 일별 종가(2026-10-05) — ^RUT·^TNX·^TYX·^VIX는 Cboe가 내는 지수다(^TNX·^TYX는 금리×10으로 준다). 지난 25거래일이
-# 야후와 모두 같았다(러셀은 소수 둘째 자리까지).
+# Cboe 공식 일별 종가(2026-10-05) — ^RUT·^TNX·^TYX·^VIX는 Cboe가 내는 지수고 S&P500(_SPX)도 있다(^TNX·^TYX는 금리×10으로 준다).
+# 지난 25거래일이 야후와 모두 같았다(러셀은 소수 둘째 자리까지; S&P500 10/2 7,722.72 일치).
 _CBOE = "https://cdn.cboe.com/api/global/delayed_quotes/charts/historical/{symbol}.json"
-_CBOE_SYMBOLS = {"^RUT": ("_RUT", 1), "^TNX": ("_TNX", 10), "^TYX": ("_TYX", 10), "^VIX": ("_VIX", 1)}
+_CBOE_SYMBOLS = {"^GSPC": ("_SPX", 1), "^RUT": ("_RUT", 1), "^TNX": ("_TNX", 10), "^TYX": ("_TYX", 10), "^VIX": ("_VIX", 1)}
 # 금·원유 선물은 결제가가 공식 종가다. 수집 시각의 야후 값은 결제가가 아닐 때가 있다(2026-10-02: 야후 금 4,172.1·원유 91.26,
 # 결제가 4,162.30·91.11 — 야후도 나중에 고쳤다). 네이버 시장지표(뉴욕 선물 연결물)와 CNBC 결제가를 같이 본다.
 _FUTURES = {"GC=F": ("metals/GCcv1", "@GC.1"), "CL=F": ("energy/CLcv1", "@CL.1")}
@@ -354,7 +354,9 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
         series = second_series(ticker, day)
         other = series.get(day)
         if other is None:
-            entry["close_sources"] = ["yahoo"]
+            # 공식 원천에 그날 값이 없으면 내보내지 않는다(2026-10-05) — 전에는 '야후 하나'로 조용히 통과했다(8/28·8/31 알파벳, 9/1 엔비디아가
+            # 그렇게 틀린 채 나갔다). 재시도 예약(:27·:34)이 다시 묻는다.
+            problems.append(f"{entry.get('name', ticker)}({ticker}): 공식 원천에 {day} 값이 없어 확인하지 못했습니다(야후 {entry['price']})")
             continue
         if abs(other - float(entry["price"])) > max(0.011, abs(other) * 0.00001):
             problems.append(f"{entry.get('name', ticker)}({ticker}): 야후 {entry['price']} / 공식 {other}")

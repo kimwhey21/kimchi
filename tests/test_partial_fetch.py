@@ -50,7 +50,7 @@ class UsPartialFetchTest(unittest.TestCase):
 
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
-             mock.patch.object(fetch_us, "second_series", return_value={}), \
+             mock.patch.object(fetch_us, "second_series", side_effect=lambda t, d: {d: 100.0}), \
              mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-03": 99.0, "2026-09-04": 100.0}), \
              mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
@@ -85,7 +85,7 @@ class UsPartialFetchTest(unittest.TestCase):
             return _entry(ticker, name)
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
-             mock.patch.object(fetch_us, "second_series", side_effect=lambda t, d: {} if t.startswith(("^G", "^I", "GC")) else {d: 100.0}), \
+             mock.patch.object(fetch_us, "second_series", side_effect=lambda t, d: {} if t.startswith("GC") else {d: 100.0}), \
              mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-03": 99.0, "2026-09-04": 100.0}), \
              mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
@@ -258,6 +258,14 @@ class UsSecondSourcesTest(unittest.TestCase):
         e = entries["GC=F"]
         self.assertEqual((e["trading_date"], e["price"], e["change_pct"], e["history"]["dates"][-1]), ("2026-09-04", 4476.6, 0.82, "2026-09-04"))
         self.assertEqual(e["close_sources"], ["cnbc_settle", "naver", "yahoo"])
+
+    def test_missing_official_value_stops(self):
+        """공식 원천에 그날 값이 없으면 '야후 하나'로 넘기지 않는다(2026-10-05 재검증: 8/28·8/31 알파벳이 그렇게 통과했다)."""
+        entry = {"name": "알파벳", "price": 339.13, "change_pct": -2.09, "trading_date": "2026-08-31"}
+        with mock.patch.object(fetch_us, "second_series", return_value={}):
+            problems = fetch_us._verify_second_source({"GOOGL": entry})
+        self.assertEqual(len(problems), 1); self.assertIn("확인하지 못했습니다", problems[0])
+        self.assertNotIn("close_sources", entry)
 
     def test_change_is_checked_against_the_official_previous_close(self):
         """2026-09-23 실측: 야후 이력에 9/22 줄이 빠져 다우 등락률이 9/21 대비(-1.03%)로 나갔다 — 공식은 -0.68%.
