@@ -38,18 +38,26 @@ jobs:
           go() { echo "run=$1" >> "$GITHUB_OUTPUT"; echo "$2"; exit 0; }
           [ "$EVENT" = "schedule" ] || go true "예약 실행이 아니라 그대로 돕니다 ($EVENT)"
           # 깃허브 예약이 몇 시간씩 늦게 몰려올 때가 있다(2026-09-29: 15:32 종가 사진 예약이 22:16에 왔다).
-          # 정시 실행은 Cloudflare가 하므로, 예약 시각보다 2시간 넘게 늦은 예비는 건너뛴다(늦은 수집·점검은 틀린 결과·거짓 알림만 낸다).
+          # 정시 실행은 Cloudflare가 한다. 2시간 넘게 늦은 예비는 '예약 시각 이후에 같은 작업이 돈 적이 있으면' 건너뛰고, 한 번도 안
+          # 돌았으면(워커가 멈춘 날) 늦게라도 돈다(2026-10-06, 감사 F-037 — 전에는 확인 없이 건너뛰어 워커가 멈추면 아무것도 안 돌았다).
+          # 시각이 지난 작업(종가 사진 등)은 스크립트가 스스로 '창 밖'으로 끝낸다.
+          since=$(date -u -d '60 minutes ago' +%Y-%m-%dT%H:%M:%SZ)
+          window="최근 60분"
           if [ -n "$CRON" ]; then
             set -f; set -- $CRON; set +f
             sched=$(date -u -d "$(date -u +%F) $(printf '%02d:%02d' "$2" "$1")" +%s) || go true "예약 시각을 못 읽어 그대로 돕니다"
             now=$(date -u +%s)
             [ "$sched" -gt "$now" ] && sched=$((sched - 86400))
             late=$(( (now - sched) / 60 ))
-            [ "$late" -gt 120 ] && go false "예약 시각($CRON)보다 ${late}분 늦게 왔습니다 — 정시 실행은 Cloudflare 몫이라 건너뜁니다"
-            echo "예약 시각보다 ${late}분 늦게 시작"
+            if [ "$late" -gt 120 ]; then
+              since=$(date -u -d "@$((sched - 600))" +%Y-%m-%dT%H:%M:%SZ)
+              window="예약 시각($CRON) 이후"
+              echo "예약 시각보다 ${late}분 늦게 왔습니다 — 그 뒤에 같은 작업이 돈 적이 있는지 봅니다"
+            else
+              echo "예약 시각보다 ${late}분 늦게 시작"
+            fi
           fi
           wf=$(basename "${WF_REF%@*}")
-          since=$(date -u -d '60 minutes ago' +%Y-%m-%dT%H:%M:%SZ)
           case "$MODE" in
             success) sel='.conclusion == "success"' ;;
             any)     sel='true' ;;
@@ -58,8 +66,8 @@ jobs:
           n=$(gh api "repos/$REPO/actions/workflows/$wf/runs?created=%3E%3D$since&per_page=30" \
                 --jq "[.workflow_runs[] | select(.id != $RUN_ID) | select($sel)] | length") \
             || go true "최근 실행 조회에 실패해 그대로 돕니다"
-          [ "${n:-0}" -gt 0 ] && go false "최근 60분 안에 같은 작업이 이미 돌았습니다($MODE, ${n}건) — 이 예약 실행은 건너뜁니다"
-          go true "최근 60분 안에 같은 작업이 없어 돕니다"
+          [ "${n:-0}" -gt 0 ] && go false "${window} 같은 작업이 이미 돌았습니다($MODE, ${n}건) — 이 예약 실행은 건너뜁니다"
+          go true "${window} 같은 작업이 없어 돕니다"
 
       - name: 실패 알림 (텔레그램 운영 대화)
         # 이 단계가 죽으면 부른 쪽의 본 작업이 건너뛰어진다 — 조용히 하루를 잃지 않게 알린다
