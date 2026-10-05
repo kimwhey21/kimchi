@@ -127,7 +127,10 @@ jobs:
         # 초안이 필요하면 손으로 `python -m src.main --market kr --en`을 돌리면
         # 됩니다 — 코드는 그대로 있고 자동 실행에서만 뺐습니다. 그래서 이 단계에는
         # 워드프레스 시크릿을 넘기지 않습니다.
-        run: python -m src.main --market ${{ steps.market.outputs.market }} --fetch-only ${{ (github.event.schedule == '50 7 * * 1-5' || github.event.inputs.late_close_only == 'true') && '--late-close-only' || '' }}
+        # 기록을 파일로도 남긴다 — 아래 '경고 모아 알리기'가 [경고] 줄을 운영 대화로 보낸다(2026-10-06, 감사 F-012).
+        run: |
+          set -o pipefail
+          python -m src.main --market ${{ steps.market.outputs.market }} --fetch-only ${{ (github.event.schedule == '50 7 * * 1-5' || github.event.inputs.late_close_only == 'true') && '--late-close-only' || '' }} 2>&1 | tee "$RUNNER_TEMP/fetch.log"
         env:
           # 미국장 다우 종가를 FRED 공식 값과 맞춘다(fetch_us.second_close, 2026-10-05). 생성형 AI 키가 아니다.
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
@@ -263,6 +266,15 @@ jobs:
           else
             echo "::warning::루틴 호출 HTTP $CODE ($MARKET): $BODY — 루틴 자체 예약이 대신 돕니다."
           fi
+
+      - name: 경고 모아 알리기
+        # 수집기의 [경고] 줄과 재료 엔진의 실패 표시는 실행 기록에만 남았다 — 9/17 지수 정체가 18일, 업종 엔진 실패가 25일 숨었다
+        # (2026-10-06, 감사 F-012·F-064). 그날 시세 파일이 처음 생긴 실행에서만 보낸다(재시도마다 같은 경고를 보내지 않게).
+        if: ${{ always() && steps.commit.outputs.new_file != '' }}
+        run: python -m scripts.collect_warnings "$RUNNER_TEMP/fetch.log" ${{ steps.market.outputs.market }} || echo "::warning::경고 알림을 보내지 못했습니다"
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}
 
       - name: 실패 알림 (텔레그램 운영 대화)
         # 2026-09-12: 어떤 워크플로가 왜 죽었는지 휴대폰으로. 토큰이 없으면 조용히 넘어간다(curl이라 앞 단계가 어디서 죽었든 된다).
