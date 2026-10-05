@@ -36,8 +36,16 @@ on:
     - cron: "20 7 * * 1-5"
     - cron: "27 7 * * 1-5"
     - cron: "34 7 * * 1-5"
+    # 16:50 KST — 정규장이 16:30에 끝나는 날(수능일, stock_db.KRX_LATE_CLOSE)에만 일한다(2026-10-05). 다른 날은
+    # `--late-close-only`가 바로 끝낸다. 그날 16:20·:27·:34 실행은 "정규장이 아직 끝나지 않았다"며 아무것도 받지 않는다.
+    - cron: "50 7 * * 1-5"
   workflow_dispatch:
     inputs:
+      late_close_only:
+        description: "마감이 늦은 날(수능일)에만 받기 — 16:50 예약용"
+        required: false
+        default: false
+        type: boolean
       close_override:
         # 사장님 승인 경로(2026-10-05): 한국장 종가의 두 원천(네이버 사진·다음)이 다른 날 "내보내"라고 하면
         # `gh workflow run market_brief.yml -f market=kr -f close_override=naver_snapshot`으로 지목한 원천 값에
@@ -119,7 +127,7 @@ jobs:
         # 초안이 필요하면 손으로 `python -m src.main --market kr --en`을 돌리면
         # 됩니다 — 코드는 그대로 있고 자동 실행에서만 뺐습니다. 그래서 이 단계에는
         # 워드프레스 시크릿을 넘기지 않습니다.
-        run: python -m src.main --market ${{ steps.market.outputs.market }} --fetch-only
+        run: python -m src.main --market ${{ steps.market.outputs.market }} --fetch-only ${{ (github.event.schedule == '50 7 * * 1-5' || github.event.inputs.late_close_only == 'true') && '--late-close-only' || '' }}
         env:
           # 미국장 다우 종가를 FRED 공식 값과 맞춘다(fetch_us.second_close, 2026-10-05). 생성형 AI 키가 아니다.
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}

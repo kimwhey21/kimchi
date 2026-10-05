@@ -102,7 +102,6 @@ def _fetch_naver_item_quotes(codes: list[str]) -> dict[str, dict]:
 _DAUM = "https://finance.daum.net/api"
 _DAUM_RETRY_DELAYS = (3, 10, 30)
 KST = dt.timezone(dt.timedelta(hours=9))
-_SNAPSHOT_WINDOW = (dt.time(15, 31), dt.time(16, 0))
 _PRICE_LIMIT = 0.30   # 거래소 가격제한폭 ±30% — 이보다 크게 움직였다면 종목 코드나 응답이 어긋난 것이다
 
 
@@ -252,7 +251,9 @@ def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: s
         return watchlist
     snap = _krx_close_snapshot(today)
     now = dt.datetime.now(KST).time()
-    if _SNAPSHOT_WINDOW[0] <= now < _SNAPSHOT_WINDOW[1]:
+    from src.stock_db import close_window
+    window = close_window(dt.date.today())     # 수능일은 16:31~16:59 (2026-10-05)
+    if window[0] <= now < window[1]:
         # 창 안에서 손으로 돌리면 지금 폴링이 곧 사진이다. 창 밖의 폴링은 시간외 단일가라 쓰지 않는다(2026-09-28).
         live = _fetch_naver_item_quotes([t for t in watchlist if str(t) not in snap])
         snap = {**live, **snap}

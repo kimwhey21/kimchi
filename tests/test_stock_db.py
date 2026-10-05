@@ -128,6 +128,10 @@ class DailyRunTest(unittest.TestCase):
         self.assertFalse(sdb.in_krx_session(dt.datetime(2026, 9, 28, 17, 5, tzinfo=kst)))    # 17:05 정규 실행
         self.assertFalse(sdb.in_krx_session(dt.datetime(2026, 9, 29, 7, 50, tzinfo=kst)))    # 07:50 정규 실행
         self.assertFalse(sdb.in_krx_session(dt.datetime(2026, 9, 27, 11, 0, tzinfo=kst)))    # 일요일
+        self.assertTrue(sdb.in_krx_session(dt.datetime(2026, 11, 19, 16, 0, tzinfo=kst)))    # 수능일은 16:30 마감
+        self.assertFalse(sdb.in_krx_session(dt.datetime(2026, 11, 19, 9, 30, tzinfo=kst)))   # 수능일은 10:00 개장
+        self.assertEqual(sdb.close_window(dt.date(2026, 10, 6)), (dt.time(15, 31), dt.time(16, 0)))
+        self.assertEqual(sdb.close_window(dt.date(2026, 11, 19)), (dt.time(16, 31), dt.time(17, 0)))
 
     def test_short_listing_is_retried_then_refused(self):
         from unittest import mock

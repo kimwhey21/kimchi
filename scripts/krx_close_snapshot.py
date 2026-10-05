@@ -26,15 +26,15 @@ from src import fetch_kr, fetch_movers
 ROOT = Path(__file__).resolve().parent.parent
 DIR = ROOT / "data" / "krx_close"
 KST = dt.timezone(dt.timedelta(hours=9))
-WINDOW = (dt.time(15, 31), dt.time(16, 0))
 KEEP = ("nv", "pcv", "cv", "cr", "rf", "ms", "sv")
 FULL_MARKET = 2000   # 전 종목 사진이 이보다 적으면(목록을 못 받은 실행) 다음 예약이 다시 찍는다
 
 
 def in_window(now: dt.datetime) -> bool:
     # 휴장일엔 폴링이 전 거래일 값을 그대로 줘서 그 값이 오늘 날짜 파일로 남는다(2026-10-05 대체 휴일 시험) — 찍지 않는다
-    from src.stock_db import KRX_HOLIDAYS
-    return now.weekday() < 5 and now.date().isoformat() not in KRX_HOLIDAYS and WINDOW[0] <= now.time() < WINDOW[1]
+    from src.stock_db import KRX_HOLIDAYS, close_window
+    start, end = close_window(now.date())     # 수능일은 16:31~16:59 (2026-10-05)
+    return now.weekday() < 5 and now.date().isoformat() not in KRX_HOLIDAYS and start <= now.time() < end
 
 
 def codes() -> list[str]:
@@ -66,7 +66,7 @@ def all_codes() -> list[str]:
 def main(now: dt.datetime | None = None) -> int:
     now = now or dt.datetime.now(KST)
     if not in_window(now):
-        print(f"{now:%Y-%m-%d %H:%M} — 정규장 종가를 읽을 수 있는 창(15:31~15:59, 평일·휴장일 제외) 밖이라 찍지 않습니다.")
+        print(f"{now:%Y-%m-%d %H:%M} — 정규장 종가를 읽을 수 있는 창(보통 15:31~15:59, 수능일 16:31~16:59, 평일·휴장일 제외) 밖이라 찍지 않습니다.")
         return 0
     path = DIR / f"{now.date().isoformat()}.json"
     before = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
@@ -76,8 +76,9 @@ def main(now: dt.datetime | None = None) -> int:
     wanted = codes()
     everything = list(dict.fromkeys(wanted + all_codes()))
     quotes = fetch_kr._fetch_naver_item_quotes(everything)
-    if dt.datetime.now(KST).time() >= WINDOW[1]:   # 받는 사이 16:00을 넘겼으면 시간외 값이 섞일 수 있다
-        print("받는 사이 16:00을 넘겨 버립니다.")
+    from src.stock_db import close_window
+    if dt.datetime.now(KST).time() >= close_window(now.date())[1]:   # 받는 사이 창이 닫혔으면 시간외 값이 섞일 수 있다
+        print("받는 사이 사진 창이 닫혀 버립니다.")
         return 1
     rows = {c: {k: quotes[c].get(k) for k in KEEP} for c in wanted if (quotes.get(c) or {}).get("nv")}
     close = {c: [q["nv"], q.get("sv") or q.get("pcv")] for c, q in quotes.items() if q.get("nv") and (q.get("sv") or q.get("pcv"))}

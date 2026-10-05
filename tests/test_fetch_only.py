@@ -21,11 +21,27 @@ from src import main as main_module
 
 
 class FetchOnlyTest(unittest.TestCase):
+    def test_kr_fetch_waits_for_the_close(self) -> None:
+        """정규장 중에는 받지 않는다 — 수능일(16:30 마감)엔 16:20 예약이 비켜서고 16:50 예약이 받는다(2026-10-05)."""
+        import datetime as dt
+        kst = dt.timezone(dt.timedelta(hours=9))
+        ok = lambda late, *when: main_module._krx_closed_or_say_why(late, dt.datetime(*when, tzinfo=kst))   # noqa: E731
+        with mock.patch("builtins.print"):
+            self.assertTrue(ok(False, 2026, 10, 6, 16, 20))       # 평일 16:20
+            self.assertFalse(ok(False, 2026, 10, 6, 15, 0))       # 장중 손 실행
+            self.assertFalse(ok(True, 2026, 10, 6, 16, 50))       # 평일의 16:50 예약은 아무것도 안 한다
+            self.assertFalse(ok(False, 2026, 11, 19, 16, 20))     # 수능일 16:20 — 아직 장중
+            self.assertTrue(ok(True, 2026, 11, 19, 16, 50))       # 수능일 16:50
+            self.assertTrue(ok(False, 2026, 10, 5, 14, 0))        # 휴장일
+            self.assertTrue(ok(False, 2026, 10, 6, 8, 0))         # 장 전
+
+
     def test_fetch_only_writes_price_file_and_stops(self) -> None:
         price = {"trading_date": "2026-09-07", "macro": {}, "watchlist": {}}
         with tempfile.TemporaryDirectory() as tmp:
             data_dir = Path(tmp)
             with mock.patch.object(main_module, "DATA_DIR", data_dir), \
+                 mock.patch.object(main_module, "_krx_closed_or_say_why", return_value=True), \
                  mock.patch("src.fetch_kr.fetch_all", return_value=price), \
                  mock.patch.object(main_module.data_quality, "validate_trading_dates"), \
                  mock.patch.object(main_module.generate_free, "generate",

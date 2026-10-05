@@ -8,6 +8,9 @@ on:
     - cron: "32 6 * * 1-5"   # 15:32 KST
     - cron: "40 6 * * 1-5"   # 15:40 KST
     - cron: "48 6 * * 1-5"   # 15:48 KST
+    # 수능일(정규장 16:30 마감, stock_db.KRX_LATE_CLOSE)용 — 다른 날은 스크립트가 "창 밖"으로 바로 끝낸다(2026-10-05)
+    - cron: "35 7 * * 1-5"   # 16:35 KST
+    - cron: "45 7 * * 1-5"   # 16:45 KST
   workflow_dispatch:
 
 concurrency:

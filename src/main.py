@@ -183,12 +183,29 @@ def _merge_price_file(existing: dict, fresh: dict) -> dict:
     return merged
 
 
+def _krx_closed_or_say_why(late_close_only: bool, now: dt.datetime | None = None) -> bool:
+    """한국장 수집을 지금 해도 되나. 정규장 중에는 받지 않는다 — 장중 가격이 종가로 나간다(2026-10-05: 수능일은 16:30에 닫는데
+    16:20 예약이 그대로 돌면 장중 값을 받았다). `late_close_only`(16:50 예약)는 마감이 늦은 날(`KRX_LATE_CLOSE`)에만 일한다."""
+    from src.stock_db import KRX_HOLIDAYS, KRX_LATE_CLOSE, close_window, krx_hours
+    now = now or dt.datetime.now(dt.timezone(dt.timedelta(hours=9)))
+    today = now.date()
+    if late_close_only and today.isoformat() not in KRX_LATE_CLOSE:
+        print("[안내] 오늘은 정규장이 15:30에 끝나 16:20 실행이 맡습니다 — 마감이 늦은 날(수능일)용 예약이라 아무것도 하지 않습니다.")
+        return False
+    if now.weekday() < 5 and today.isoformat() not in KRX_HOLIDAYS and krx_hours(today)[0] <= now.time() < close_window(today)[0]:
+        print(f"[안내] 정규장이 아직 끝나지 않았습니다({krx_hours(today)[1]:%H:%M} 마감) — 장중 값을 종가로 받지 않게 아무것도 하지 않습니다."
+              + (" 16:50 예약이 받습니다." if today.isoformat() in KRX_LATE_CLOSE else ""))
+        return False
+    return True
+
+
 def run(
     market: str,
     with_english: bool = False,
     publish: bool = True,
     publish_live: bool = False,
     fetch_only: bool = False,
+    late_close_only: bool = False,
 ) -> Path | None:
     """publish_live는 이 경로에서 쓸 수 없습니다. 값을 켜면 예외로 멈춥니다.
 
@@ -233,6 +250,9 @@ def run(
         raise ValueError("market은 'us' 또는 'kr' 이어야 합니다.")
     if with_english and market != "kr":
         raise ValueError("영어판 자동 생성은 한국장(--market kr)에서만 지원합니다.")
+
+    if market == "kr" and not _krx_closed_or_say_why(late_close_only):
+        return None
 
     print(f"[1/4] {market} 시세 수집 중...")
     price_data = _fetch_price_data(fetcher, market)
@@ -421,6 +441,11 @@ if __name__ == "__main__":
         action="store_true",
         help="시세만 받아 data/에 저장하고 끝냅니다. 자동 실행(market_brief.yml)이 쓰는 모드.",
     )
+    parser.add_argument(
+        "--late-close-only",
+        action="store_true",
+        help="마감이 늦은 날(수능일, stock_db.KRX_LATE_CLOSE)에만 받습니다 — 16:50 예약용.",
+    )
     args = parser.parse_args()
     run(
         args.market,
@@ -428,4 +453,5 @@ if __name__ == "__main__":
         publish=not args.dry_run,
         publish_live=args.publish_live,
         fetch_only=args.fetch_only,
+        late_close_only=args.late_close_only,
     )

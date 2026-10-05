@@ -91,6 +91,21 @@ KRX_HOLIDAYS = {
     "2027-09-14": "Chuseok", "2027-09-15": "Chuseok", "2027-09-16": "Chuseok", "2027-10-04": "National Foundation Day (observed)",
     "2027-10-11": "Hangul Day (observed)", "2027-12-27": "Christmas Day (observed)", "2027-12-31": "Year-end closing",
 }
+
+# 정규장이 15:30에 끝나지 않는 날(2026-10-05) — 수능일은 한 시간 늦게 열고 16:30에 닫는다(2025-11-13 수능일 거래소 운영: 정규장
+# 10:00~16:30, 시간외 16:40부터). 거래소가 수능 직전에 내는 공고로 다시 확인하고, 해마다 다음 수능일을 더한다.
+KRX_LATE_CLOSE = {"2026-11-19": (dt.time(10, 0), dt.time(16, 30))}
+
+
+def krx_hours(day: dt.date) -> tuple[dt.time, dt.time]:
+    """그날 정규장 (시작, 끝)."""
+    return KRX_LATE_CLOSE.get(day.isoformat(), (dt.time(9, 0), dt.time(15, 30)))
+
+
+def close_window(day: dt.date) -> tuple[dt.time, dt.time]:
+    """네이버 폴링 nv가 정규장 종가로 멈춰 있는 때 — 마감 1분 뒤부터 30분 뒤(시간외 단일가가 붙기 전)까지."""
+    end = dt.datetime.combine(day, krx_hours(day)[1])
+    return (end + dt.timedelta(minutes=1)).time(), (end + dt.timedelta(minutes=30)).time()
 _ACRONYM_KEEP = {"SK", "LG", "KB", "GS", "CJ", "HD", "LS", "DB", "KT", "NH", "BNK", "DGB", "JB", "KCC", "OCI", "SKC",
                  "SPC", "HMM", "KG", "SM", "YG", "JYP", "CNH", "KTB", "DL", "HL", "HK", "SNT", "KPX", "KISCO", "POSCO",
                  "KT&G", "BGF", "HDC", "SGC", "GKL", "KCTC", "AJ", "HLB", "NHN", "SOOP", "CJ", "KIWOOM", "DN", "TKG", "SBS", "KBS", "MBC"}
@@ -890,11 +905,12 @@ KST = dt.timezone(dt.timedelta(hours=9))
 
 
 def in_krx_session(now: dt.datetime | None = None) -> bool:
-    """평일 09:00~15:30(한국 시각)이면 True — 장중에 받으면 장중 가격이 '종가'로 올라간다."""
+    """평일 정규장(보통 09:00~15:30, 수능일은 `KRX_LATE_CLOSE`)이면 True — 장중에 받으면 장중 가격이 '종가'로 올라간다."""
     now = (now or dt.datetime.now(KST)).astimezone(KST)
     if now.date().isoformat() in KRX_HOLIDAYS:      # 휴장일 낮에 손으로 돌릴 때 장중으로 오인하지 않게(2026-10-05 개천절 대체 휴일)
         return False
-    return now.weekday() < 5 and dt.time(9, 0) <= now.time() < dt.time(15, 30)
+    start, end = krx_hours(now.date())
+    return now.weekday() < 5 and start <= now.time() < end
 
 
 def list_all(session: requests.Session, expected: int, tries: int = 3, wait: int = 120) -> list[dict]:
