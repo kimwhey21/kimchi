@@ -233,6 +233,20 @@ class WiringTest(unittest.TestCase):
         self.assertIn("actions: read", text)
 
 
+class CalendarTablesTest(unittest.TestCase):
+    """해마다 사람이 채워야 하는 표 — 때가 되면 증명서가 매일 경고한다(2026-10-05)."""
+
+    def test_reminders_come_at_the_right_time(self) -> None:
+        c = lambda s: daily_proof.calendar_issues(dt.date.fromisoformat(s))   # noqa: E731
+        self.assertEqual(c("2026-10-05"), [])
+        self.assertTrue(any("수능일 장 시간" in x for x in c("2026-11-10")))
+        self.assertTrue(any("2027년 휴장일(계산값)" in x for x in c("2026-12-01")))
+        late = c("2027-12-02")
+        self.assertTrue(any("2028년 휴장일이 stock_db" in x for x in late))
+        self.assertTrue(any("뉴욕증시 2028년" in x for x in late))
+        self.assertTrue(any("2027년 수능일이" in x for x in c("2027-07-01")))
+
+
 class OwnerOverrideTest(unittest.TestCase):
     """막힌 날 사장님이 '내보내'라고 하면 — 지목한 원천 값에 꼬리표를 달아 내보낸다(KR_CLOSE_OVERRIDE)."""
     NAVER = {"nv": 286500, "cr": 3.62, "pcv": 276500}

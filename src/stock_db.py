@@ -95,6 +95,9 @@ KRX_HOLIDAYS = {
 # 정규장이 15:30에 끝나지 않는 날(2026-10-05) — 수능일은 한 시간 늦게 열고 16:30에 닫는다(2025-11-13 수능일 거래소 운영: 정규장
 # 10:00~16:30, 시간외 16:40부터). 거래소가 수능 직전에 내는 공고로 다시 확인하고, 해마다 다음 수능일을 더한다.
 KRX_LATE_CLOSE = {"2026-11-19": (dt.time(10, 0), dt.time(16, 30))}
+# 거래소 공고와 대조를 마친 것(2026-10-05) — 밤 증명서(daily_proof.calendar_issues)가 비어 있는 해·날을 때맞춰 경고한다.
+KRX_HOLIDAYS_CONFIRMED = {"2026"}          # 2027은 계산값 — 12월 거래소 휴장일 공고와 대조한 뒤 더한다
+KRX_LATE_CLOSE_CONFIRMED: set[str] = set()   # 수능일 장 시간은 거래소가 수능 직전에 공고한다 — 확인한 날을 더한다
 
 
 def krx_hours(day: dt.date) -> tuple[dt.time, dt.time]:

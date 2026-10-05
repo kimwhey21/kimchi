@@ -171,8 +171,8 @@ def us_issues(doc: dict) -> list[str]:
         for ticker, entry in (doc.get(group) or {}).items():
             if ticker in fetch_us._FRED_SERIES:
                 other = fetch_us.fred_closes(ticker, day).get(day)
-            elif entry.get("close_sources") == ["yahoo"]:
-                other = fetch_us.nasdaq_closes(ticker, day).get(day)
+            elif entry.get("close_sources") == ["yahoo"]:     # 수집 때 공식 원천이 아직 없던 항목(나스닥·Cboe)
+                other = fetch_us.second_close(ticker, day)
             else:
                 continue
             if other is not None and abs(other - float(entry["price"])) > max(0.011, abs(other) * 0.00001):

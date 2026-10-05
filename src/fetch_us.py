@@ -185,6 +185,87 @@ def fred_closes(ticker: str, start: str) -> dict[str, float]:
     return {o["date"]: float(o["value"]) for o in body.get("observations") or [] if o.get("value") not in (None, ".", "")}
 
 
+# Cboe 공식 일별 종가(2026-10-05) — ^RUT·^TNX·^TYX·^VIX는 Cboe가 내는 지수다(^TNX·^TYX는 금리×10으로 준다). 지난 25거래일이
+# 야후와 모두 같았다(러셀은 소수 둘째 자리까지).
+_CBOE = "https://cdn.cboe.com/api/global/delayed_quotes/charts/historical/{symbol}.json"
+_CBOE_SYMBOLS = {"^RUT": ("_RUT", 1), "^TNX": ("_TNX", 10), "^TYX": ("_TYX", 10), "^VIX": ("_VIX", 1)}
+# 금·원유 선물은 결제가가 공식 종가다. 수집 시각의 야후 값은 결제가가 아닐 때가 있다(2026-10-02: 야후 금 4,172.1·원유 91.26,
+# 결제가 4,162.30·91.11 — 야후도 나중에 고쳤다). 네이버 시장지표(뉴욕 선물 연결물)와 CNBC 결제가를 같이 본다.
+_FUTURES = {"GC=F": ("metals/GCcv1", "@GC.1"), "CL=F": ("energy/CLcv1", "@CL.1")}
+
+
+def cboe_closes(ticker: str) -> dict[str, float]:
+    """Cboe 공식 일별 종가 {날짜: 값}(최근 40일). 못 받으면 빈 dict."""
+    symbol, scale = _CBOE_SYMBOLS[ticker]
+    try:
+        rows = requests.get(_CBOE.format(symbol=symbol), headers=_NASDAQ_HEADERS, timeout=30).json().get("data") or []
+    except (requests.RequestException, ValueError) as exc:
+        print(f"[안내] Cboe {symbol}: {exc}")
+        return {}
+    return {r["date"]: round(float(r["close"]) / scale, 4) for r in rows[-40:] if r.get("date") and r.get("close")}
+
+
+def naver_future_closes(ticker: str) -> dict[str, float]:
+    """네이버 시장지표의 뉴욕 선물 연결물 일별 종가 {날짜: 값}. 못 받으면 빈 dict."""
+    path = _FUTURES[ticker][0]
+    try:
+        rows = requests.get(f"https://api.stock.naver.com/marketindex/{path}/prices", headers=_NASDAQ_HEADERS,
+                            params={"page": 1, "pageSize": 10}, timeout=20).json()
+    except (requests.RequestException, ValueError) as exc:
+        print(f"[안내] 네이버 {path}: {exc}")
+        return {}
+    return {r["localTradedAt"][:10]: float(str(r["closePrice"]).replace(",", "")) for r in rows or []
+            if r.get("localTradedAt") and r.get("closePrice")}
+
+
+def cnbc_settle(ticker: str) -> tuple[str, float] | None:
+    """CNBC 시세의 최근 결제가 (결제일, 값). 못 받으면 None."""
+    try:
+        quote = requests.get("https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol",
+                             params={"symbols": _FUTURES[ticker][1], "requestMethod": "itv", "noform": 1, "partnerId": 2,
+                                     "fund": 1, "exthrs": 1, "output": "json", "events": 1},
+                             headers=_NASDAQ_HEADERS, timeout=20).json()["FormattedQuoteResult"]["FormattedQuote"][0]
+        return str(quote["settleDate"])[:10], float(str(quote["settlePrice"]).replace(",", ""))
+    except (requests.RequestException, ValueError, KeyError, IndexError, TypeError) as exc:
+        print(f"[안내] CNBC {_FUTURES[ticker][1]}: {exc}")
+        return None
+
+
+def _settle_futures(entries: dict[str, dict]) -> list[str]:
+    """금·원유: 야후·네이버·CNBC 결제가 중 둘이 같은 값을 쓴다. 야후가 혼자 다르면 결제가로 바꾸고 등락률을 다시 셈한다.
+    셋이 모두 다르거나 하나뿐이면(확인할 수 없으면) 문제로 돌려준다 — 부른 쪽이 멈춘다."""
+    problems = []
+    for ticker, entry in entries.items():
+        if ticker not in _FUTURES:
+            continue
+        day = str(entry.get("trading_date"))
+        yahoo = float(entry["series"][-1]) if entry.get("series") else float(entry["price"])
+        readings = {"yahoo": yahoo}
+        naver = naver_future_closes(ticker).get(day)
+        if naver is not None:
+            readings["naver"] = naver
+        settle = cnbc_settle(ticker)
+        if settle and settle[0] == day:
+            readings["cnbc_settle"] = settle[1]
+        same = lambda a, b: abs(a - b) < 0.006   # noqa: E731 — 선물 호가 단위(0.01)보다 작게
+        groups = [[k for k in readings if same(readings[k], v)] for v in readings.values()]
+        best = max(groups, key=len)
+        if len(best) < 2:
+            problems.append(f"{entry.get('name', ticker)}({ticker}): 확인할 수 없습니다 — " +
+                            ", ".join(f"{k} {v}" for k, v in readings.items()))
+            continue
+        value = readings[best[0]]
+        if "yahoo" not in best:
+            prev = float(entry["series"][-2])
+            print(f"[안내] {ticker}: 야후 {yahoo}가 결제가가 아니라 {'·'.join(best)} {value}로 바꿉니다")
+            entry["series"] = list(entry["series"][:-1]) + [round(value, 4)]
+            entry["history"] = price_history.replace_last(entry.get("history"), value)
+            entry["price"] = round(value, 2)
+            entry["change_pct"] = round((value - prev) / prev * 100, 2)
+        entry["close_sources"] = sorted(best)
+    return problems
+
+
 def second_close(ticker: str, day: str) -> float | None:
     """그날 두 번째 원천의 종가. 없거나(아직 안 올라옴·원천 없음) 못 받으면 None."""
     if ticker == "^DJI":
@@ -193,6 +274,10 @@ def second_close(ticker: str, day: str) -> float | None:
         except requests.RequestException as exc:
             print(f"[안내] FRED {ticker}: {exc}")
             return None
+    if ticker in _CBOE_SYMBOLS:
+        return cboe_closes(ticker).get(day)
+    if ticker in _FUTURES:
+        return None            # 금·원유는 _settle_futures가 맞춘다
     return nasdaq_closes(ticker, day).get(day)
 
 
@@ -207,7 +292,7 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
         if abs(other - float(entry["price"])) > max(0.011, abs(other) * 0.00001):
             problems.append(f"{entry.get('name', ticker)}({ticker}): 야후 {entry['price']} / 공식 {other}")
             continue
-        entry["close_sources"] = ["yahoo", "fred" if ticker == "^DJI" else "nasdaq"]
+        entry["close_sources"] = ["yahoo", "fred" if ticker == "^DJI" else "cboe" if ticker in _CBOE_SYMBOLS else "nasdaq"]
     return problems
 
 
@@ -253,7 +338,9 @@ def fetch_all() -> dict:
     # 거래일은 필수 지수에서 읽습니다.
     trading_date = required_trading_date(macro)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
-    problems = _verify_second_source(macro) + _verify_second_source(watchlist)
+    problems = _settle_futures(macro) + _settle_futures(watchlist)
+    problems += _verify_second_source({t: e for t, e in macro.items() if t not in _FUTURES}) + \
+        _verify_second_source({t: e for t, e in watchlist.items() if t not in _FUTURES})
     # 몇 개를 실제로 대조했는지 찍는다 — 나스닥이 러너를 막으면 전부 '야후 하나'로 조용히 넘어가 대조가 장식이 된다(2026-10-05)
     both = {**macro, **watchlist}
     checked = [t for t, e in both.items() if len(e.get("close_sources") or []) > 1]

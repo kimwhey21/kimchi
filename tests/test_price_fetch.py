@@ -69,7 +69,7 @@ class KoreanPriceFetchTests(unittest.TestCase):
 
         with patch.object(
             fetch_kr.requests, "get", side_effect=[detail_response, prices_response]
-        ):
+        ), patch.object(fetch_kr, "_daum_fx", return_value=None):
             result = fetch_kr._fetch_usdkrw_reference(
                 "USD/KRW", "원/달러 환율", name_en="USD/KRW", unit="원"
             )
@@ -80,6 +80,45 @@ class KoreanPriceFetchTests(unittest.TestCase):
         self.assertEqual(result["as_of_label"], "16:25 하나은행 고시")
         self.assertEqual(result["reference_label_en"], "2026-09-01 16:25 Hana Bank notice")
         self.assertEqual(result["quote_type"], "reference_rate")
+
+
+class UsdKrwSecondSourceTest(unittest.TestCase):
+    """원/달러 두 번째 원천(2026-10-05): 다음 금융의 같은 하나은행 고시(회차 번호)."""
+    KST = fetch_kr.KST
+
+    def _run(self, detail_count, detail_price, rows, daum):
+        detail = MagicMock(); detail.json.return_value = {"exchangeInfo": {
+            "priceDataType": "NOTICE_ROUND", "localTradedAt": "2026-10-06T15:31:00+09:00", "closePrice": detail_price,
+            "fluctuationsRatio": "-1.03", "degreeCount": detail_count}}
+        prices = MagicMock(); prices.json.return_value = rows
+        with patch.object(fetch_kr.requests, "get", side_effect=[detail, prices]), \
+                patch.object(fetch_kr, "_daum_fx", return_value=daum), patch("builtins.print"):
+            return fetch_kr._fetch_usdkrw_reference("USD/KRW", "원/달러 환율", name_en="USD/KRW", unit="원")
+
+    ROWS = [{"localTradedAt": "2026-10-06T16:18:00+09:00", "closePrice": "1,346.50"},
+            {"localTradedAt": "2026-10-05T21:30:00+09:00", "closePrice": "1,359.50"},
+            {"localTradedAt": "2026-10-02T21:30:00+09:00", "closePrice": "1,358.00"}]
+
+    def test_same_notice_agrees_and_takes_daum_time(self):
+        when = fetch_kr.dt.datetime(2026, 10, 6, 16, 18, tzinfo=self.KST)
+        got = self._run(2665, "1,346.50", self.ROWS, (2665, when, 1346.5))
+        self.assertEqual((got["price"], got["close_sources"], got["as_of_label"]), (1346.5, ["daum", "naver"], "16:18 하나은행 고시"))
+
+    def test_lagging_naver_detail_uses_the_notice_both_lists_show(self):
+        """10/5 실측: 네이버 상세 2663회 1,345.50 · 네이버 일별 목록과 다음은 2665회 1,346.50."""
+        when = fetch_kr.dt.datetime(2026, 10, 6, 16, 18, tzinfo=self.KST)
+        got = self._run(2663, "1,345.50", self.ROWS, (2665, when, 1346.5))
+        self.assertEqual((got["price"], got["change_pct"], got["close_sources"]), (1346.5, -0.96, ["daum", "naver_list"]))
+        self.assertEqual(got["series"][-1], 1346.5)
+
+    def test_no_two_sources_agree_stops(self):
+        when = fetch_kr.dt.datetime(2026, 10, 6, 16, 18, tzinfo=self.KST)
+        with self.assertRaises(ValueError):
+            self._run(2663, "1,345.50", self.ROWS, (2665, when, 1347.0))
+
+    def test_daum_down_is_naver_only_and_tagged(self):
+        got = self._run(2665, "1,346.50", self.ROWS, None)
+        self.assertEqual(got["close_sources"], ["naver"])
 
 
 class USPriceFetchTests(unittest.TestCase):

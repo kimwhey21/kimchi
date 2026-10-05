@@ -50,6 +50,9 @@ class UsPartialFetchTest(unittest.TestCase):
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
              mock.patch.object(fetch_us, "second_close", return_value=None), \
+             mock.patch.object(fetch_us, "naver_future_closes", side_effect=lambda t: {e["trading_date"]: float(e["series"][-1])
+                                                                                        for e in [_entry(t, "")]}), \
+             mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
             return fetch_us.fetch_all()
 
@@ -70,6 +73,8 @@ class UsPartialFetchTest(unittest.TestCase):
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
              mock.patch.object(fetch_us, "second_close", side_effect=lambda t, d: 101.0 if t == "NVDA" else 100.0), \
+             mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-04": 100.0}), \
+             mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
             with self.assertRaises(ValueError) as ctx:
                 fetch_us.fetch_all()
@@ -81,11 +86,13 @@ class UsPartialFetchTest(unittest.TestCase):
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
              mock.patch.object(fetch_us, "second_close", side_effect=lambda t, d: None if t.startswith(("^G", "^I", "GC")) else 100.0), \
+             mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-04": 100.0}), \
+             mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
             data = fetch_us.fetch_all()
         self.assertEqual(data["watchlist"]["NVDA"]["close_sources"], ["yahoo", "nasdaq"])
         self.assertEqual(data["macro"]["^DJI"]["close_sources"], ["yahoo", "fred"])
-        self.assertEqual(data["macro"]["GC=F"]["close_sources"], ["yahoo"])
+        self.assertEqual(data["macro"]["GC=F"]["close_sources"], ["naver", "yahoo"])   # 금은 결제가 셋 중 둘(2026-10-05)
 
     def test_required_index_failure_still_raises(self) -> None:
         """지수까지 없으면 그날 글은 성립하지 않습니다."""
@@ -209,6 +216,42 @@ class KrDynamicTierNoDropTest(unittest.TestCase):
                 mock.patch.object(fetch_kr, "_fetch_stock", side_effect=lambda ticker, name="", **kw: _entry(ticker, name, "2026-10-05")):
             added = fetch_kr._fetch_dynamic_tier(self.CONFIG, {}, "2026-10-06")
         self.assertEqual(set(added), {"111111", "222222"})
+
+class UsSecondSourcesTest(unittest.TestCase):
+    """금·원유 결제가 셋 중 둘, Cboe 공식 종가(2026-10-05)."""
+
+    def _gold(self, yahoo=4172.1):
+        return {"GC=F": {"name": "국제 금", "price": round(yahoo, 2), "change_pct": 0.0, "trading_date": "2026-10-02",
+                         "series": [4202.3, yahoo], "history": {"dates": ["2026-10-01", "2026-10-02"], "close": [4202.3, yahoo]}}}
+
+    def test_yahoo_alone_is_replaced_by_the_settlement(self):
+        """10/2 실측: 야후 4,172.1(결제 전 값) · 네이버 4,162.3 · CNBC 결제가 4,162.30 → 4,162.3, -0.95%."""
+        entries = self._gold()
+        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-10-02": 4162.3}), \
+                mock.patch.object(fetch_us, "cnbc_settle", return_value=("2026-10-02", 4162.3)), mock.patch("builtins.print"):
+            self.assertEqual(fetch_us._settle_futures(entries), [])
+        e = entries["GC=F"]
+        self.assertEqual((e["price"], e["change_pct"], e["series"][-1], e["history"]["close"][-1]), (4162.3, -0.95, 4162.3, 4162.3))
+        self.assertEqual(e["close_sources"], ["cnbc_settle", "naver"])
+
+    def test_agreeing_yahoo_is_kept(self):
+        entries = self._gold(4162.3)
+        with mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-10-02": 4162.3}), \
+                mock.patch.object(fetch_us, "cnbc_settle", return_value=None):
+            self.assertEqual(fetch_us._settle_futures(entries), [])
+        self.assertEqual(entries["GC=F"]["close_sources"], ["naver", "yahoo"])
+
+    def test_no_agreement_is_a_problem(self):
+        for naver, cnbc in (({}, None), ({"2026-10-02": 4150.0}, ("2026-10-02", 4160.0))):
+            with mock.patch.object(fetch_us, "naver_future_closes", return_value=naver), \
+                    mock.patch.object(fetch_us, "cnbc_settle", return_value=cnbc):
+                self.assertEqual(len(fetch_us._settle_futures(self._gold())), 1)
+
+    def test_cboe_indexes_go_to_cboe(self):
+        with mock.patch.object(fetch_us, "cboe_closes", return_value={"2026-10-02": 5.277}) as cboe:
+            self.assertEqual(fetch_us.second_close("^TNX", "2026-10-02"), 5.277)
+        cboe.assert_called_once_with("^TNX")
+        self.assertIsNone(fetch_us.second_close("GC=F", "2026-10-02"))
 
 
 if __name__ == "__main__":

@@ -578,6 +578,17 @@ def _retry(fn, what: str, delays: tuple[int, ...] = (10, 30, 60)):
     raise last
 
 
+def _daum_fx() -> tuple[int, dt.datetime, float] | None:
+    """다음 금융의 최신 하나은행 고시 (회차, 고시 시각, 매매기준율). 못 받으면 None — 부른 쪽이 네이버 하나로 쓰고 알린다."""
+    try:
+        body = requests.get(f"{_DAUM}/exchanges/FRX.KRWUSD", timeout=_NAVER_TIMEOUT_SECONDS,
+                            headers={**_NAVER_HEADERS, "Referer": "https://finance.daum.net/exchanges/FRX.KRWUSD"}).json()
+        return int(body["recurrenceCount"]), dt.datetime.fromisoformat(str(body["date"])).replace(tzinfo=KST), float(body["basePrice"])
+    except (requests.RequestException, ValueError, KeyError, TypeError) as exc:
+        print(f"[경고] 다음 환율을 받지 못해 원/달러를 네이버 하나로 확인합니다 — {exc}")
+        return None
+
+
 def _fetch_usdkrw_reference(
     ticker: str, name: str, name_en: str = "", lookback: int = 7, unit: str = "", **_ignore
 ) -> dict:
@@ -617,6 +628,28 @@ def _fetch_usdkrw_reference(
     # 상세 응답이 일별 목록보다 몇 초 더 최신일 수 있으므로 마지막 값은 상세
     # 응답으로 맞춥니다.
     series[-1] = price
+    change_pct = round(float(detail["fluctuationsRatio"]), 2)
+    # 두 번째 원천(2026-10-05): 다음 금융의 같은 하나은행 고시. 회차가 같으면 값이 같아야 하고, 네이버 상세가 회차가 늦으면
+    # (10/5 실측: 상세 2663회 1,345.50 · 네이버 일별 목록과 다음은 2665회 1,346.50) 일별 목록과 다음이 같은 최신 고시를 쓴다.
+    # 둘이 같은 값을 못 찾으면 멈춘다(_retry가 다시 묻는다).
+    sources = ["naver"]
+    daum = _daum_fx()
+    if daum:
+        d_count, d_when, d_price = daum
+        latest_day, latest = rows[0]["localTradedAt"][:10], float(rows[0]["closePrice"].replace(",", ""))
+        if str(detail.get("degreeCount")) == str(d_count) and abs(price - d_price) < 0.005:
+            sources = ["daum", "naver"]
+            traded_at = d_when     # 네이버 localTradedAt은 고시 시각이 아니다(10/5 휴장일에 '15:31'로 왔다; 마지막 고시는 10/2 21:30)
+        elif latest_day == d_when.date().isoformat() and abs(latest - d_price) < 0.005 and len(rows) >= 2:
+            prev = float(rows[1]["closePrice"].replace(",", ""))
+            print(f"[안내] USD/KRW: 네이버 상세({detail.get('degreeCount')}회 {price:,.2f})가 늦어 네이버 일별 목록·다음이 같은 "
+                  f"{d_count}회 {d_price:,.2f}를 씁니다")
+            price, traded_at, change_pct = d_price, d_when, round((d_price - prev) / prev * 100, 2)
+            series[-1] = price
+            sources = ["daum", "naver_list"]
+        else:
+            raise ValueError(f"USD/KRW: 네이버 {detail.get('degreeCount')}회 {price:,.2f}(일별 {latest_day} {latest:,.2f}) / "
+                             f"다음 {d_count}회 {d_price:,.2f} — 같은 고시를 두 곳에서 확인하지 못했습니다")
     reference_ko = f"{traded_at:%Y-%m-%d %H:%M} 하나은행 고시"
     reference_en = f"{traded_at:%Y-%m-%d %H:%M} Hana Bank notice"
     return {
@@ -624,7 +657,7 @@ def _fetch_usdkrw_reference(
         "name": name,
         "name_en": name_en or name,
         "price": round(price, 2),
-        "change_pct": round(float(detail["fluctuationsRatio"]), 2),
+        "change_pct": change_pct,
         "series": [round(value, 4) for value in series],
         "unit": unit,
         "trading_date": traded_at.date().isoformat(),
@@ -635,6 +668,7 @@ def _fetch_usdkrw_reference(
         "reference_label": reference_ko,
         "reference_label_en": reference_en,
         "data_source": "Naver Finance / Hana Bank notice rate",
+        "close_sources": sources,
     }
 
 

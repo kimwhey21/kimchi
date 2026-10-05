@@ -39,7 +39,7 @@ from dotenv import load_dotenv
 
 from src import alert, check_publication, close_check, fetch_kr, fetch_us
 from src.site_block import MESSAGE as BLOCKED, is_bot_challenge
-from src.stock_db import KRX_HOLIDAYS
+from src.stock_db import KRX_HOLIDAYS, KRX_HOLIDAYS_CONFIRMED, KRX_LATE_CLOSE, KRX_LATE_CLOSE_CONFIRMED
 
 # 뉴욕증시 휴장일 — python-holidays 0.105 `financial_holidays("NYSE")`와 같다(2026-10-05; 2026-09-07 노동절엔 실제로 미국장 시세 파일이 없다).
 # 미국 휴장일에는 미국장 시세·시황(다음 날 아침)과 프리뷰(그날 밤)를 기대하지 않는다. 해가 바뀌기 전에 다음 해를 더한다.
@@ -65,6 +65,28 @@ RUN_WINDOW = (dt.timedelta(minutes=10), dt.timedelta(minutes=150))   # 예약 �
 MAC_JOBS = {"naver_sync": 30, "blogger_sync": 30, "gsc_queries": "10:30", "gsc_daily_index": "15:10",
             "daily_summary": "22:30", "bench_nightly": "23:10"}
 MAC_WEEKLY = {"threads_refresh": (6, "21:30"), "expose_weekly": (0, "08:30"), "search_snapshot": (6, "22:00")}   # (weekday, 시각)
+
+
+def calendar_issues(today: dt.date) -> list[str]:
+    """해마다 사람이 채워야 하는 표가 비었으면 때맞춰 경고한다(2026-10-05) — 고칠 때까지 매일 뜬다.
+    한국·미국 휴장일은 12월 1일부터 다음 해, 수능일은 7월 1일부터 그해, 수능 장 시간은 그 2주 전부터 거래소 공고 확인."""
+    out = []
+    nxt = str(today.year + 1)
+    if today.month == 12:
+        if not any(d.startswith(nxt) for d in KRX_HOLIDAYS):
+            out.append(f"달력: 한국거래소 {nxt}년 휴장일이 stock_db.KRX_HOLIDAYS에 없습니다 — 거래소 공고로 넣으십시오")
+        elif nxt not in KRX_HOLIDAYS_CONFIRMED:
+            out.append(f"달력: 한국거래소 {nxt}년 휴장일(계산값)을 거래소 공고와 대조하고 KRX_HOLIDAYS_CONFIRMED에 더하십시오")
+        if not any(d.startswith(nxt) for d in US_HOLIDAYS):
+            out.append(f"달력: 뉴욕증시 {nxt}년 휴장일이 daily_proof.US_HOLIDAYS에 없습니다")
+    this_year = [d for d in KRX_LATE_CLOSE if d.startswith(str(today.year))]
+    if today.month >= 7 and not this_year:
+        out.append(f"달력: {today.year}년 수능일이 stock_db.KRX_LATE_CLOSE에 없습니다 — 그날 장이 16:30에 닫힙니다(평가원 발표 확인)")
+    for d in this_year:
+        days_left = (dt.date.fromisoformat(d) - today).days
+        if 0 <= days_left <= 14 and d not in KRX_LATE_CLOSE_CONFIRMED:
+            out.append(f"달력: {d} 수능일 장 시간을 거래소 공고로 확인하고 KRX_LATE_CLOSE_CONFIRMED에 더하십시오({days_left}일 남음)")
+    return out
 
 
 def cron_dow_ok(spec: str, cron_dow: int) -> bool:
@@ -339,6 +361,8 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
     mac_bad, mac_n, mac_ok = mac_issues(beats, now)
     issues += mac_bad
     parts["맥"] = f"{mac_ok}/{mac_n}"
+
+    issues += calendar_issues(day)
 
     # 2. 숫자
     n_numbers = 0
