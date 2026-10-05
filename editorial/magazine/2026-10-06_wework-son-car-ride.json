@@ -1,0 +1,50 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "기업과 기술",
+  "date": "2026-10-06",
+  "slug": "wework-son-car-ride",
+  "radar_origin": "Fortune: Adam Neumann says a half-hour car ride with Masayoshi Son is when his ego took over—and WeWork's $47 billion collapse began",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1604328727766-a151d1045ab4",
+    "credit": "Unsplash / Copernico"
+  },
+  "sources": [
+    {
+      "name": "포춘",
+      "title": "Adam Neumann says a half-hour car ride with Masayoshi Son is when his ego took over—and WeWork's $47 billion collapse began (2026-10-05)",
+      "url": "https://fortune.com/2026/10/05/adam-neumann-car-ride-with-masayoshi-son-wework-collapse/"
+    },
+    {
+      "name": "포브스",
+      "title": "WeWork's Neumann Loses Billionaire Status. It's Unlikely He'll Be Getting It Back. (2019-10-10)",
+      "url": "https://www.forbes.com/sites/samanthasharf/2019/10/10/weworks-neumann-loses--billionaire-status-getting-it-back-would-mean-gutting-the-company/"
+    }
+  ],
+  "tags": ["위워크", "손정의", "애덤뉴먼", "소프트뱅크"],
+  "ko": {
+    "title": "위워크 몰락의 시작점: 손정의와의 차 안 30분",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "2016년 말, 손정의는 뉴욕의 한 스타트업 로비에서 12분을 보냈습니다. 도널드 트럼프 당선인과의 면담을 앞두고 시간에 쫓기던 때였습니다.\n그 스타트업은 공유 오피스 업체 위워크, 창업자는 애덤 뉴먼이었습니다. 손정의는 대화를 끝내지 않고 뉴먼을 자신의 차에 태웠습니다.\n차 안에서 보낸 시간은 30분 남짓이었습니다. 포춘에 따르면 뉴먼은 최근 이 30분을 위워크 몰락의 진짜 시작으로 꼽았습니다."
+      },
+      {
+        "heading": "",
+        "body": "뉴먼은 팟캐스트 '다이어리 오브 어 씨이오'에 출연해 그날을 복기했습니다. 당시 위워크 이사회는 3~4억 달러 투자 유치, 성장 둔화 감수, 수익성 확보, 상장이라는 계획에 합의한 상태였습니다.\n손정의는 차 안에서 그 계획을 뒤집었습니다. 30분 만남에서 약 42억 달러를 제안했고, 이듬해 실제로 44억 달러가 집행됐습니다.\n뉴먼은 이렇게 말했습니다.\n“차에 탈 때는 사명감으로 일하는 창업자였습니다. 본사로 걸어 들어올 때는 우리가 뭘 하는 회사인지조차 잊어버렸습니다.”"
+      },
+      {
+        "heading": "",
+        "body": "그 뒤 2년, 위워크는 2019년 1월 소프트뱅크로부터 20억 달러를 추가로 받으며 기업가치 470억 달러를 찍었습니다.\n포브스는 그해 3월 뉴먼의 개인 재산을 41억 달러로 추산했습니다. 서른여덟 살에 억만장자 반열에 올린 숫자였습니다."
+      },
+      {
+        "heading": "",
+        "body": "하지만 그 안에는 2018년 한 해에만 19억 달러의 순손실을 낸 회사가 있었습니다. 상장을 추진하자 그 적자가 그대로 드러났습니다.\n투자자들은 외면했고 상장은 철회됐습니다. 기업가치는 몇 달 만에 470억 달러에서 80억 달러 아래로, 80% 넘게 증발했습니다.\n포브스는 그해 10월, 3개월 전 41억 달러였던 뉴먼의 재산을 6억 달러로 다시 낮춰 잡았습니다."
+      },
+      {
+        "heading": "",
+        "body": "위워크는 결국 2023년 11월, 약 190억 달러의 부채를 안고 파산을 신청했습니다.\n뉴먼은 지금도 그 30분을 후회처럼 이야기합니다. 완전히 다른 숫자를 들고 온 사람 앞에서, 원래 세웠던 계획을 그대로 지키기는 왜 그렇게 어려운 걸까요.\n470억 달러짜리 회사도 그 질문 앞에서 무너졌습니다. 당신이라면 그 차 안에서 어떤 결정을 내렸을까요?"
+      }
+    ]
+  }
+}

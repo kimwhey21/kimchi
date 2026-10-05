@@ -1,0 +1,55 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "시장 읽기",
+  "date": "2026-10-06",
+  "slug": "panmure-sp500-forecast",
+  "radar_origin": "Reuters (구글뉴스 경유): Panmure Liberum forecasts S&P 500 falling to 5,000, warns bull run nearing end - Reuters",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1664138481334-12626f0e8708",
+    "credit": "Unsplash / Juan Carlos Ramirez"
+  },
+  "sources": [
+    {
+      "name": "로이터",
+      "title": "Panmure Liberum forecasts S&P 500 falling to 5,000, warns bull run nearing end (2026-10-05)",
+      "url": "https://www.investing.com/news/economy-news/panmure-liberum-forecasts-sp-500-falling-to-5000-warns-bull-run-nearing-end-4931197"
+    },
+    {
+      "name": "야후파이낸스",
+      "title": "Wall Street's 2026 outlook for stocks",
+      "url": "https://finance.yahoo.com/news/wall-streets-2026-outlook-for-stocks-150650909.html"
+    },
+    {
+      "name": "뉴데일리경제",
+      "title": "'SOXL' 사고 단기채도 담는 서학개미 … 美주식 보관액 2000억달러 재근접 (2026-09-25)",
+      "url": "https://biz.newdaily.co.kr/site/data/html/2026/09/25/2026092500012.html"
+    }
+  ],
+  "tags": ["S&P500", "팬뮤어리버럼", "증시전망", "서학개미"],
+  "ko": {
+    "title": "S&P500 5,000 전망, 팬뮤어리버럼만 월가와 다른 이유",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "10월 5일 뉴욕증시는 또 기록을 썼습니다. 나스닥은 사상 최고치로 마감했고, 대형 기술주가 장을 끌어올렸습니다.\n그런데 같은 날 런던의 한 증권사가 정반대의 숫자를 내놨습니다. 지금부터 2027년 말까지 S&P500이 35% 넘게 떨어진다는 전망입니다."
+      },
+      {
+        "heading": "",
+        "body": "영국계 증권사 팬뮤어리버럼의 리서치 애널리스트 요아힘 클레멘트는 S&P500이 2027년 말 5,000까지 밀릴 것으로 내다봤습니다. 10월 5일 종가 7,722.72에서 35% 넘게 빠지는 수치입니다.\n로이터와의 인터뷰에서 그는 이렇게 말했습니다.\n“채권 금리와 기준금리가 계속 오른다면, 주식 강세장의 끝이 많은 투자자가 생각하는 것보다 가까울 수 있다고 봅니다.”\n금리가 오르면 채권이 주식보다 매력적인 자산이 되는데, 지금 주가는 그 위험을 충분히 반영하지 않았다는 논리입니다."
+      },
+      {
+        "heading": "",
+        "body": "하지만 월가 대다수는 반대쪽을 보고 있습니다. 골드만삭스·도이체방크·모건스탠리 등은 2026년 말 S&P500이 8,000을 넘을 것으로 전망합니다.\n야후파이낸스가 집계한 월가 전망치는 평균 7,490, 범위는 7,100~8,100입니다. 팬뮤어리버럼의 5,000은 이 범위 바깥에 있습니다.\n도이체방크는 근거로 '확산'을 꼽았습니다. 빅테크 일곱 종목에 몰렸던 이익 성장이 금융주·경기순환주로 번지고 있다는 것입니다."
+      },
+      {
+        "heading": "",
+        "body": "그렇다면 숫자는 어느 쪽 편일까요?\n팬뮤어리버럼도 당장의 근거는 약합니다. 3분기 실적 시즌과 기업들이 내놓을 2027년 전망이 진짜 시험대라고 클레멘트 스스로도 인정했습니다.\n다만 그가 짚은 금리는 이미 현실입니다. 미국 30년물 국채금리는 10월 들어 24년 만에 가장 높은 수준까지 올랐습니다."
+      },
+      {
+        "heading": "",
+        "body": "이 논쟁은 한국 투자자에게도 남의 일이 아닙니다. 뉴데일리경제에 따르면 9월 말 서학개미의 미국 주식 보관액은 약 1,975억 달러로 사상 최고치에 다시 근접했습니다.\n강세장이 꺾이면 가장 먼저 흔들리는 쪽은 자산을 미국 주식에 가장 많이 옮겨 놓은 계좌들입니다.\n팬뮤어리버럼이 보는 것은 금리이고, 월가 다수가 보는 것은 이익입니다. 여러분의 계좌는 지금 어느 쪽에 걸려 있습니까?"
+      }
+    ]
+  }
+}

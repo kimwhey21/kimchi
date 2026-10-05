@@ -1,0 +1,64 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "투자 심리",
+  "date": "2026-10-06",
+  "slug": "titanic-loss-aversion",
+  "radar_origin": "목록 순서",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1511316695145-4992006ffddb",
+    "credit": "Unsplash / Peter Hansen"
+  },
+  "sources": [
+    {
+      "name": "위키백과",
+      "title": "Normalcy bias",
+      "url": "https://en.wikipedia.org/wiki/Normalcy_bias"
+    },
+    {
+      "name": "엔사이클로피디아 타이타니카",
+      "title": "William Sloper's Account of the Titanic Disaster",
+      "url": "https://www.encyclopedia-titanica.org/slopers-account.html"
+    },
+    {
+      "name": "행동경제학닷컴",
+      "title": "Disposition effect - Mini-encyclopedia of BE",
+      "url": "https://www.behavioraleconomics.com/resources/mini-encyclopedia-of-be/disposition-effect/"
+    },
+    {
+      "name": "테런스 오딘(UC버클리)",
+      "title": "Are Investors Reluctant to Realize Their Losses? (1998)",
+      "url": "https://faculty.haas.berkeley.edu/odean/papers%20current%20versions/areinvestorsreluctant.pdf"
+    }
+  ],
+  "tags": ["행동경제학", "손실회피", "투자심리", "타이타닉"],
+  "ko": {
+    "title": "떨어진 종목을 못 파는 마음: 타이타닉 승객과 같은 이유",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "1912년 4월 15일 새벽, 타이타닉호의 일부 승객은 구명보트에 오르라는 말을 듣고도 움직이지 않았습니다.\n갑판은 여전히 환했고 엔진 소리도 평온했습니다. 기울기도 거의 느껴지지 않았습니다.\n그 큰 배가 정말로 가라앉는다는 것은 믿기지 않았습니다. 엔사이클로피디아 타이타니카에 실린 생존자 윌리엄 슬로퍼의 기록에 따르면, 그 역시 함께 있던 배우 도러시 깁슨이 붙잡지 않았다면 보트에 오르지 않았을 것이라고 훗날 밝혔습니다."
+      },
+      {
+        "heading": "",
+        "body": "슬로퍼의 기록에는 깁슨이 보트에 오른 뒤 겁에 질려 되뇌었다는 말도 남아 있습니다.\n“다시는 내 작은 회색 차를 타지 못하겠지.”\n수백 명이 탄 배가 가라앉는 순간에도, 사람의 머릿속은 눈앞의 위험보다 익숙한 일상을 먼저 떠올렸습니다."
+      },
+      {
+        "heading": "",
+        "body": "이런 반응에는 '정상성 편향'이라는 이름이 있습니다. 재난 경고를 받고도 그 위협과 영향을 과소평가하는 심리를 가리킵니다.\n위키백과는 타이타닉을 이 편향의 대표 사례로 꼽습니다. 화이트스타라인은 대피 준비를 충분히 갖추지 않았고, 승객들도 최악의 가능성을 그만큼 가볍게 여겼다는 것입니다.\n허리케인 카트리나, 9·11 테러 때도 같은 패턴이 보고됐습니다. 위험이 눈앞에 있어도 사람은 좀처럼 움직이지 않습니다."
+      },
+      {
+        "heading": "",
+        "body": "투자에도 같은 뿌리를 둔 습관이 있습니다. 행동경제학닷컴에 따르면 경제학자 허시 셰프린과 메이어 스태트먼이 1985년 처음 이름 붙인 처분 효과입니다.\n오른 종목은 서둘러 팔고, 떨어진 종목은 '다시 오르겠지' 하며 붙들고 있는 경향을 말합니다. 손실을 실제로 확정짓는 순간을 피하고 싶어 하는 마음입니다."
+      },
+      {
+        "heading": "",
+        "body": "그 마음이 실제로 얼마나 비싼지를 숫자로 보여준 연구가 있습니다. UC버클리의 테런스 오딘 교수가 1998년 미국 한 증권사 고객 1만 개 계좌를 분석한 결과입니다.\n투자자들은 오른 종목을 하락한 종목보다 거의 두 배 가까운 비율로 팔았습니다. 그렇게 판 '승자' 종목은 이후 1년간, 붙들고 있던 '패자' 종목보다 평균 3.4%포인트 더 높은 수익률을 냈습니다.\n침몰하는 배에서 보트를 외면한 심리와, 떨어지는 계좌를 외면하는 심리는 같은 뿌리에서 나옵니다."
+      },
+      {
+        "heading": "",
+        "body": "타이타닉의 구명보트는 결국 다 채워지지 못한 채 바다로 내려갔습니다. 위험이 현실이 됐을 땐 이미 자리가 모자랐습니다.\n여러분의 계좌에도 '언젠가 다시 오르겠지' 하며 붙들고 있는 종목이 있습니까? 그 믿음은 확인된 사실입니까, 아니면 아직 환하게 불이 켜진 갑판 위의 안도감입니까?"
+      }
+    ]
+  }
+}
