@@ -386,7 +386,6 @@ def two_day_compare(price_data: dict, output_path: Path, previous: dict | None =
                 d.rounded_rectangle([x0 - width, y + 8, x0, y + 30], 4, fill=color)
             label = f"{change:+.2f}%"
             d.text((x0 + 140, y + 10), label, font=_font(17, True), fill=color)
-        d.text((394, y + 10), "→", font=_font(18), fill=SUB) if False else None
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 

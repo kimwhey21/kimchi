@@ -64,8 +64,7 @@ def main() -> int:
     _run(GIT, "add", "data/benchmark_stats.json", check=True)
     message = (f"벤치마크 집계 갱신: {dt.date.today():%Y-%m-%d} (야간 자동, scripts/bench_nightly.py)\n\n"
                "Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n")
-    commit = _run(GIT, "commit", "-q", "-F", "-") if False else subprocess.run(
-        [GIT, "commit", "-q", "-F", "-"], cwd=ROOT, text=True, input=message, capture_output=True)
+    commit = subprocess.run([GIT, "commit", "-q", "-F", "-"], cwd=ROOT, text=True, input=message, capture_output=True)
     if commit.returncode != 0:
         print(f"[오류] 커밋 실패: {commit.stderr.strip()}", flush=True)
         return 1
