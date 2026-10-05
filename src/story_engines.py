@@ -815,13 +815,9 @@ def institutions(top: int = 12) -> dict:
 
 
 # ── 엔진 9. 업종별 등락 (네이버 금융, 키 불필요) ───────────────────────
-_UPJONG_URL = "https://finance.naver.com/sise/sise_group.naver"
-_UPJONG_ROW = re.compile(
-    r'sise_group_detail\.naver\?type=upjong&no=\d+">([^<]+)</a>.*?'
-    r'<span class="tah p11[^"]*">\s*([+\-]?[\d.]+)%\s*</span>.*?'
-    r'<td class="number">(\d+)</td>\s*<td class="number">(\d+)</td>\s*'
-    r'<td class="number">(\d+)</td>\s*<td class="number">(\d+)</td>',
-    re.S)
+# 2026-10-06: 옛 업종 페이지(finance.naver.com/sise/sise_group.naver)가 화면을 바꿔 9/10부터 25일 연속 한 줄도 못 읽었다(감사).
+# 네이버 모바일 업종 JSON으로 바꾼다 — 업종 이름·등락률·오른/내린/보합 종목 수가 그대로 온다.
+_UPJONG_URL = "https://m.stock.naver.com/api/stocks/industry"
 
 
 def sectors(top: int = 8) -> dict:
@@ -839,18 +835,21 @@ def sectors(top: int = 8) -> dict:
     바꾸면 깨집니다 — `fetch_foreign_flows`와 같은 성격입니다.
     """
     try:
-        response = requests.get(_UPJONG_URL, params={"type": "upjong"},
-                                headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
+        response = requests.get(_UPJONG_URL, params={"page": 1, "pageSize": 100},
+                                headers={"User-Agent": "Mozilla/5.0", "Accept": "application/json"}, timeout=20)
         response.raise_for_status()
-        html = response.content.decode("euc-kr", errors="replace")
+        groups = response.json().get("groups") or []
     except Exception as exc:
         return {"engine": "sectors", "error": f"업종 시세를 받지 못했습니다: {exc}"}
 
     rows = []
-    for name, change, total, up, flat, down in _UPJONG_ROW.findall(html):
-        rows.append({"name": name.strip(), "change_pct": float(change),
-                     "stocks": int(total), "up": int(up),
-                     "flat": int(flat), "down": int(down)})
+    for g in groups:
+        try:
+            rows.append({"name": str(g["name"]).strip(), "change_pct": float(g["changeRate"]),
+                         "stocks": int(g["totalCount"]), "up": int(g["riseCount"]),
+                         "flat": int(g.get("steadyCount") or 0), "down": int(g["fallCount"])})
+        except (KeyError, TypeError, ValueError) as exc:
+            return {"engine": "sectors", "error": f"업종 응답 형식이 바뀌었습니다: {exc} — {str(g)[:120]}"}
     if not rows:
         return {"engine": "sectors",
                 "error": "업종 행을 하나도 읽지 못했습니다 — 페이지 구조가 바뀌었을 수 있습니다."}

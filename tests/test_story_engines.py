@@ -302,30 +302,22 @@ class InstitutionsTest(unittest.TestCase):
 
 
 class SectorsTest(unittest.TestCase):
-    """업종별 등락 파싱. 실제 응답은 2026-09-06에 79개 업종으로 확인했습니다."""
+    """업종별 등락 — 네이버 모바일 업종 JSON(2026-10-06부터; 옛 페이지는 9/10에 바뀌어 25일 연속 0건이었다)."""
 
-    HTML = ('<tr><td><a href="/sise/sise_group_detail.naver?type=upjong&no=288">건강관리기술</a></td>'
-            '<td class="number"><span class="tah p11 red01">+21.80%</span></td>'
-            '<td class="number">13</td><td class="number">10</td>'
-            '<td class="number">0</td><td class="number">3</td></tr>'
-            '<tr><td><a href="/sise/sise_group_detail.naver?type=upjong&no=305">은행</a></td>'
-            '<td class="number"><span class="tah p11 nv01">-3.21%</span></td>'
-            '<td class="number">11</td><td class="number">2</td>'
-            '<td class="number">1</td><td class="number">8</td></tr>')
+    BODY = {"groups": [{"no": 288, "name": "건강관리기술", "totalCount": 13, "changeRate": "21.80", "riseCount": 10,
+                        "fallCount": 3, "steadyCount": 0},
+                       {"no": 305, "name": "은행", "totalCount": 11, "changeRate": "-3.21", "riseCount": 2,
+                        "fallCount": 8, "steadyCount": 1}]}
 
-    def _response(self, html: str):
+    def _response(self, body: dict):
         response = mock.Mock(status_code=200)
         response.raise_for_status = lambda: None
-        response.content = html.encode("euc-kr")
+        response.json = lambda: body
         return response
 
     def test_parses_change_and_breadth(self) -> None:
-        """등락률만이 아니라 업종 안의 상승·하락 종목 수도 읽습니다.
-
-        한 종목이 끌어올린 업종과 여럿이 함께 오른 업종은 다른 이야기입니다.
-        """
-        with mock.patch.object(story_engines.requests, "get",
-                               lambda *a, **k: self._response(self.HTML)):
+        """등락률만이 아니라 업종 안의 상승·하락 종목 수도 읽습니다."""
+        with mock.patch.object(story_engines.requests, "get", lambda *a, **k: self._response(self.BODY)):
             result = story_engines.sectors()
         self.assertEqual(result["count"], 2)
         top = result["gainers"][0]
@@ -334,10 +326,13 @@ class SectorsTest(unittest.TestCase):
         self.assertEqual((top["up"], top["down"]), (10, 3))
         self.assertEqual(result["losers"][0]["name"], "은행")
 
+    def test_changed_shape_is_an_error_not_zero(self) -> None:
+        with mock.patch.object(story_engines.requests, "get", lambda *a, **k: self._response({"groups": [{"name": "x"}]})):
+            self.assertIn("형식이 바뀌었습니다", story_engines.sectors()["error"])
+
     def test_layout_change_is_reported_not_silent(self) -> None:
         """한 행도 못 읽으면 '업종이 없다'가 아니라 구조가 바뀐 것입니다."""
-        with mock.patch.object(story_engines.requests, "get",
-                               lambda *a, **k: self._response("<html></html>")):
+        with mock.patch.object(story_engines.requests, "get", lambda *a, **k: self._response({"groups": []})):
             result = story_engines.sectors()
         self.assertIn("error", result)
         self.assertIn("구조", result["error"])
