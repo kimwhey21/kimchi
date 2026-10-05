@@ -726,3 +726,158 @@ def target_phrase_issues(doc: dict) -> list[str]:
                 out.append(f"'{m.group(0)}' — 목표주가와의 거리는 '목표주가가 주가보다 N% 높다'(엔진의 '목표가까지 +N%' 그대로)로만 "
                            "쓰십시오. '주가가 목표주가보다 N% 낮다'는 다른 숫자입니다(+73%는 42% 낮음)")
     return out
+
+
+# ── 값 수준·판단 낱말·금리 표기(2026-10-06) ──────────────────────────────────────────────────────
+# 대조는 '이름 ... N.NN%' 등락률뿐이었다(감사 F-031). 그래서 금 '온스당 N달러'·원유 '배럴당 N달러'·지수 'N로 마감'·VIX·금리 수준·
+# 환율 'N원'·종목 'N원(달러)으로 마감', 그리고 숫자 없이 쓴 '보합'·'급락·급등'은 아무것과도 맞춰 보지 않았다. 9/18 'WTI 6.32% 급락'
+# 같은 문장은 등락률 대조가 원고 사본과만 맞춰 통과했지만, 판단 낱말과 값은 따로 틀릴 수 있다.
+# 원칙은 그대로다 — 확실할 때만 실패시킨다: 값 앞에 '고점·저점·목표·전망·선·52주·평균·사상·연중' 같은 말이 있으면 그날 종가가
+# 아니므로 건너뛰고, 적힌 자릿수만큼 반올림(또는 버림)한 값과 맞으면 통과다.
+_LEVEL_SKIP = re.compile(r"고점|저점|목표|전망|예상|선(?:을|이|에|까지|으로|$)|52주|평균|사상|연중|최고|최저|지지|저항|이전|당시|작년|지난해|"
+                         r"장중|한때|개장|시초|출발|넘|돌파|회복|아래|위로|말\s|초\s|브렌트|만약|라면|면\s|"
+                         r"high|low|target|forecast|record|average|support|resistance|year-to-date|since|intraday|during|session|"
+                         r"open|touched|\bhit\b|near|around|above|below|past|would|from|Brent|if\b", re.I)
+_NUM = r"([0-9]{1,3}(?:,[0-9]{3})+(?:\.[0-9]+)?|[0-9]+(?:\.[0-9]+)?)"
+
+
+def _gap(n: int) -> str:
+    """이름과 값 사이 n자 — 문장을 넘지 않되 소수점(1.73%)의 점은 문장 끝으로 보지 않는다(2026-10-06: 그래서 보통 문장을 다 놓쳤다)."""
+    return r"(?:[^.。!?\n]|\.(?=\d)){0,%d}?" % n
+
+
+def _level_rules(lang: str) -> list[tuple[str, re.Pattern]]:
+    """(티커, 패턴) — 패턴의 마지막 그룹이 그날 종가 수준이다."""
+    if lang == "en":
+        return [
+            ("GC=F", re.compile(r"\bgold\b" + _gap(50) + r"\$" + _NUM + r"\s*(?:an|per|a|/)\s*(?:troy\s+)?ounce", re.I)),
+            ("CL=F", re.compile(r"\b(?:WTI|crude|oil)\b" + _gap(50) + r"\$" + _NUM + r"\s*(?:a|per|/)\s*barrel", re.I)),
+            ("^DJI", re.compile(r"\bDow(?: Jones)?\b" + _gap(50) + r"\b(?:to|at)\s+" + _NUM)),
+            ("^GSPC", re.compile(r"\bS&P\s?500\b" + _gap(50) + r"\b(?:to|at)\s+" + _NUM)),
+            ("^IXIC", re.compile(r"\bNasdaq(?: Composite)?\b" + _gap(50) + r"\b(?:to|at)\s+" + _NUM)),
+            ("^RUT", re.compile(r"\bRussell\s?2000\b" + _gap(50) + r"\b(?:to|at)\s+" + _NUM)),
+            ("KS11", re.compile(r"\bKOSPI\b" + _gap(50) + r"\b(?:to|at)\s+" + _NUM)),
+            ("KQ11", re.compile(r"\bKOSDAQ\b" + _gap(50) + r"\b(?:to|at)\s+" + _NUM)),
+            ("^TNX", re.compile(r"\b10-year\b" + _gap(50) + r"\b" + _NUM + r"%(?!\s*(?:points?|pp))", re.I)),
+            ("^TYX", re.compile(r"\b30-year\b" + _gap(50) + r"\b" + _NUM + r"%(?!\s*(?:points?|pp))", re.I)),
+            ("USD/KRW", re.compile(_NUM + r"\s*won\b", re.I)),
+        ]
+    return [
+        ("GC=F", re.compile(r"(?:국제\s*금|금값|금\s*선물|금은|금이|금도)" + _gap(40) + r"온스당\s*" + _NUM + r"\s*달러")),
+        ("CL=F", re.compile(r"(?:WTI|서부텍사스산\s*원유|국제\s*유가|원유|유가)" + _gap(40) + r"배럴당\s*" + _NUM + r"\s*달러")),
+        ("^DJI", re.compile(r"다우(?:존스)?" + _gap(40) + r"" + _NUM + r"\s*(?:로|으로|에)\s*(?:마감|마쳤|끝났|장을)")),
+        ("^GSPC", re.compile(r"S&P\s?500" + _gap(40) + r"" + _NUM + r"\s*(?:로|으로|에)\s*(?:마감|마쳤|끝났|장을)")),
+        ("^IXIC", re.compile(r"나스닥(?:종합)?" + _gap(40) + r"" + _NUM + r"\s*(?:로|으로|에)\s*(?:마감|마쳤|끝났|장을)")),
+        ("^RUT", re.compile(r"러셀\s?2000" + _gap(40) + r"" + _NUM + r"\s*(?:로|으로|에)\s*(?:마감|마쳤|끝났|장을)")),
+        ("KS11", re.compile(r"코스피" + _gap(40) + r"" + _NUM + r"\s*(?:로|으로|에)\s*(?:마감|마쳤|끝났|장을)")),
+        ("KQ11", re.compile(r"코스닥" + _gap(40) + r"" + _NUM + r"\s*(?:로|으로|에)\s*(?:마감|마쳤|끝났|장을)")),
+        ("^VIX", re.compile(r"VIX" + _gap(30) + r"" + _NUM + r"(?:\s*(?:로|으로|을|를|에|까지)|\)|$)")),
+        ("^TNX", re.compile(r"10년(?:물|\s*만기)" + _gap(40) + r"" + _NUM + r"\s*%(?!\s*(?:p|포인트|P))")),
+        ("^TYX", re.compile(r"30년(?:물|\s*만기)" + _gap(40) + r"" + _NUM + r"\s*%(?!\s*(?:p|포인트|P))")),
+        ("USD/KRW", re.compile(r"(?:원/달러|원·달러|원달러|환율)" + _gap(40) + r"" + _NUM + r"\s*원")),
+    ]
+
+
+def _num(text: str) -> tuple[float, int]:
+    clean = text.replace(",", "")
+    return float(clean), (len(clean.split(".")[1]) if "." in clean else 0)
+
+
+def _level_matches(written: str, actual: float) -> bool:
+    value, places = _num(written)
+    step = 10 ** -places
+    return abs(value - actual) <= step + 1e-9      # 그 자릿수로 반올림·버림한 값이면 맞다
+
+
+def _other_day_in_sentence(text: str, start: int, end: int) -> bool:
+    """같은 문장에 다른 날을 가리키는 말(어제·전날·지난·날짜…)이 있으면 그날 종가 문장이 아니다."""
+    lo, hi = _sentence_bounds(text, start)
+    return bool(_OTHER_DAY.search(text[lo:max(hi, end)]))
+
+
+def level_issues(doc: dict, price_data: dict, lang: str = "ko") -> list[str]:
+    """그날 종가 수준(지수·금·원유·VIX·금리·환율)이 시세와 맞는지."""
+    entries = {**(price_data.get("macro") or {}), **(price_data.get("watchlist") or {})}
+    out = []
+    for where, text in _texts(doc):
+        for ticker, pattern in _level_rules(lang):
+            entry = entries.get(ticker)
+            if not entry or entry.get("price") is None:
+                continue
+            actual = float(entry["price"])
+            for m in pattern.finditer(text):
+                written = m.group(m.lastindex)
+                between = text[m.start():m.start(m.lastindex)]
+                lo, hi = _sentence_bounds(text, m.start())
+                sentence = text[lo:max(hi, m.end())]
+                tail = text[m.end():m.end() + 10]
+                if (_LEVEL_SKIP.search(between) or _other_day_in_sentence(text, m.start(), m.end())
+                        or re.search(r"^\s*(?:을|를|이|가)?\s*(?:넘|돌파|웃|밑|하회|상회|선|이상|이하)", tail)
+                        or re.search(r"서울\s*외환|외환시장|15시\s*30분|오후\s*3시\s*30분|Seoul FX|3:30\s*p\.?m", sentence, re.I)):
+                    continue   # 조건·기준선, 또는 다른 기준(서울 외환시장 종가)을 밝힌 인용
+                value, places = _num(written)
+                if places == 0 or not (0.7 * actual <= value <= 1.3 * actual):   # 어림수(100달러·6,900선)와 전혀 다른 숫자는 대조하지 않는다
+                    continue
+                if not _level_matches(written, actual):
+                    out.append(f"{where}: {entry.get('name', ticker)} '{m.group(0)[-60:]}' — 그날 종가 {actual:g}와 다릅니다")
+    return out
+
+
+_JUDGE_WORDS = re.compile(r"보합|급락|급등|폭락|폭등|plunge|plummet|soar|surge|flat|unchanged", re.I)
+
+
+def judgment_word_issues(doc: dict, price_data: dict, lang: str = "ko") -> list[str]:
+    """이름 바로 뒤의 '보합'·'급락·급등'이 그날 등락과 맞는지 — 보합은 ±0.2% 안, 급락·급등은 방향이 같고 1% 이상."""
+    names = _names_by_length(price_data, lang)
+    out = []
+    for where, text in _texts(doc):
+        for m in _JUDGE_WORDS.finditer(text):
+            start = max(0, m.start() - 25)
+            window = text[start:m.start()]
+            if re.search(r"[.。!?]", window):
+                window = re.split(r"[.。!?]", window)[-1]
+            lo, hi = _sentence_bounds(text, m.start())
+            sentence = text[lo:max(hi, m.end())]
+            if (_other_day_in_sentence(text, m.start(), m.end())
+                    or re.search(r"장중|한때|intraday|earlier|최근|며칠|뒤\s|이후|후\s|recent|after", sentence, re.I)
+                    or text[max(0, m.start() - 1):m.start()] in ("강", "약")   # 강보합·약보합은 작은 상승·하락을 뜻하는 맞는 말
+                    or text[m.end():m.end() + 1] == "분" or re.search(r"되돌|만회|회복", sentence)):   # '급락분을 되돌렸다'는 장중 이야기
+                continue
+            hit = next(((n, e) for n, e in names if n and window.rfind(n) >= 0
+                        and not re.search(r"[0-9]", window[window.rfind(n) + len(n):])), None)
+            if not hit or hit[1].get("change_pct") is None:
+                continue
+            name, entry = hit
+            pct, word = float(entry["change_pct"]), m.group(0).lower()
+            if word in ("보합", "flat", "unchanged"):
+                if abs(pct) >= 0.2:
+                    out.append(f"{where}: {name} '{word}' — 그날 {pct:+.2f}%")
+            elif word in ("급락", "폭락", "plunge", "plummet"):
+                if pct > -1.0:
+                    out.append(f"{where}: {name} '{word}' — 그날 {pct:+.2f}%(방향이 다르거나 1% 미만)")
+            elif pct < 1.0:
+                out.append(f"{where}: {name} '{word}' — 그날 {pct:+.2f}%(방향이 다르거나 1% 미만)")
+    return out
+
+
+_NO_PCT_GAP = r"(?:[^.。!?\n%]|\.(?=\d)){0,40}?"   # 사이에 다른 %가 끼면 다른 숫자다('…4.81% as WTI jumped 3.16%')
+_YIELD_CHANGE = {
+    "ko": re.compile(r"(?:10년물|30년물|10년\s*만기|30년\s*만기|국채\s*금리)" + _NO_PCT_GAP + _NUM
+                     + r"\s*%(?!\s*(?:p|P|포인트))\s*(?:올|오르|오른|상승|내|내린|내리|하락|떨어|급등|급락|뛰|높아|낮아)"),
+    "en": re.compile(r"\b(?:10-year|30-year|Treasury)\b" + _NO_PCT_GAP
+                     + r"\b(?:rose|climbed|jumped|fell|dropped|slid|gained|added|eased|up|down)\s+(?:by\s+)?" + _NUM + r"%(?!\s*points?)", re.I),
+}
+
+
+def yield_change_issues(doc: dict, price_data: dict, lang: str = "ko") -> list[str]:
+    """금리 등락을 %로 쓴 곳 — 금리 등락은 %p(bp)로 쓴다(2026-10-06, 감사 F-035). 적힌 수가 그날 금리 수준이면 통과."""
+    macro = price_data.get("macro") or {}
+    levels = [float(e["price"]) for t, e in macro.items() if str(e.get("unit") or "").strip() == "%" and e.get("price") is not None]
+    out = []
+    for where, text in _texts(doc):
+        for m in _YIELD_CHANGE[lang].finditer(text):
+            written = m.group(m.lastindex)
+            if any(_level_matches(written, level) for level in levels):
+                continue
+            out.append(f"{where}: '{m.group(0)[-50:]}' — 금리 등락은 %p(또는 bp)로 쓰십시오(5.11% 금리가 '3.04% 올랐다'는 0.15%p)")
+    return out

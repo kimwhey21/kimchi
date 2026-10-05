@@ -183,6 +183,17 @@ def localized(price_data: dict | None, lang: str) -> dict | None:
     return out
 
 
+def change_label(entry: dict, change: float | None = None) -> str:
+    """등락 표기. 값 자체가 %인 항목(금리)은 %p 변동으로 — '5.11% 금리가 3.04% 올랐다'는 독자가 3%포인트로 읽는다(2026-10-06,
+    감사 F-035: 23편). %p = 오늘 값 − 오늘 값 ÷ (1 + 등락률)."""
+    pct = float(entry.get("change_pct") or 0) if change is None else float(change)
+    if str(entry.get("unit") or "").strip() == "%" and entry.get("price") is not None:
+        price = float(entry["price"])
+        pp = price - price / (1 + pct / 100)
+        return f"{pp:+.2f} pp" if _LANG == "en" else f"{pp:+.2f}%p"
+    return f"{pct:+.2f}%"
+
+
 def _fmt(value: float, unit: str = "") -> str:
     if abs(value) >= 1000:
         return f"{value:,.0f}{unit}"
@@ -241,7 +252,7 @@ def index_card(price_data: dict, output_path: Path, title: str = "오늘의 지�
         d.text((x + 22, 112), _fmt(entry["price"], unit), font=_font(33, True), fill=INK)
         d.text(
             (x + 22, 158),
-            f"{entry['change_pct']:+.2f}%",
+            change_label(entry),
             font=_font(22, True),
             fill=color,
         )
@@ -941,10 +952,10 @@ def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None 
                 raise ValueError(f"number_cards: {ticker}의 이력이 짧아 주간(기간) 등락을 셀 수 없습니다")
             change = float(over)
             change_text = (_t("주간 ") if period == "week" or int(period_days or 0) == 5
-                           else (f"{period_days}d " if _LANG == "en" else f"{period_days}일 ")) + f"{change:+.2f}%"
+                           else (f"{period_days}d " if _LANG == "en" else f"{period_days}일 ")) + change_label(entry, change)
         else:
             change = float(entry.get("change_pct") or 0)
-            change_text = f"{change:+.2f}%"
+            change_text = change_label(entry)
         price = float(entry["price"])
         # 지수는 소수점 둘째 자리까지가 관행(6,954.52)이고, 주가·환율은 정수로 읽는다.
         value = (f"{price:,.2f}" if entry.get("_group") == "macro" and not entry.get("unit")
@@ -957,7 +968,7 @@ def number_cards(price_data: dict, output_path: Path, tickers: list[str] | None 
     if not cards:
         macro = list((price_data.get("macro") or {}).values())[:3]
         cards = [(str(e.get("name")), _fmt(float(e["price"]), str(e.get("unit") or "")),
-                  f"{float(e.get('change_pct') or 0):+.2f}%", _color(float(e.get("change_pct") or 0)))
+                  change_label(e), _color(float(e.get("change_pct") or 0)))
                  for e in macro if e.get("price") is not None]
     if not 2 <= len(cards) <= 4:
         raise ValueError(f"number_cards: 카드는 2~4개입니다 (지금 {len(cards)}개)")

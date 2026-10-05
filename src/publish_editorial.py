@@ -555,6 +555,15 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
     if copy_problems:   # 원고 속 사본이 커밋된 시세 파일과 다르면 틀린 숫자가 나간다 — 막는다(2026-10-06)
         raise ValueError(f"원고의 시세 사본이 커밋된 시세 파일과 다른 칸 {len(copy_problems)}개 — 발행하지 않습니다: "
                          + " / ".join(copy_problems[:10]))
+    level_problems = [p for lang, part in (("ko", ko), ("en", en)) if part
+                      for p in editorial_facts.level_issues(part, price_data, lang)]
+    if level_problems:   # 그날 종가 수준(지수·금·원유·VIX·금리·환율)이 시세와 다르면 틀린 숫자다 — 막는다(2026-10-06)
+        raise ValueError("본문의 종가 수준이 시세와 다릅니다 — 발행하지 않습니다: " + " / ".join(level_problems[:10]))
+    for lang, part in (("ko", ko), ("en", en)):   # 표현 문제는 경고만(관문이 막는다)
+        if part:
+            for line in (editorial_facts.judgment_word_issues(part, price_data, lang)
+                         + editorial_facts.yield_change_issues(part, price_data, lang)):
+                print(f"[경고] 표현({lang}): {line}")
     editorial_facts.validate(ko, price_data, lang="ko")
     print("시세 대조 검사 통과 (한국어)")
     if en:

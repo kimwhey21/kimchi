@@ -97,7 +97,7 @@ def _name(entry: dict, lang: str = "ko") -> str:
 
 
 def _change(entry: dict) -> str:
-    return f"{entry['change_pct']:+.2f}%"
+    return data_graphics.change_label(entry)   # 금리는 %p(2026-10-06)
 
 
 def _price(entry: dict, lang: str = "ko") -> str:
