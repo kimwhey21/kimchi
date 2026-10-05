@@ -217,7 +217,7 @@ KEPCO 기사가 난 날에 쓴다고 더 오르지 않습니다.
      관문이 막습니다(2026-09-14부터) — 몇 주 뒤에 **큐로 고른 글이 더 읽혔는지**를 세려면 이 한 줄이 필요합니다.
    - `ko.title`(필드 이름은 `ko`지만 영어로 씁니다): 30~70자, **검색어가 앞에**, 연도 표기가 자연스러우면 `(2026)`.
      예: `KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)`.
-   - `ko.narrative` 5~7절, 절마다 300자 이상. 1절이 답. 소제목 80자 이하, 문장형 소제목 환영
+   - `ko.narrative` 5~7절(절당 글자 하한 없음 — 2026-10-05). 1절이 답. 소제목 80자 이하, 문장형 소제목 환영
      (`The cost most people miss: Korea taxes the sale, not the profit`).
    - `ko.closing`: heading `The takeaway`, 두세 문단. 마지막 문단에 "not tax/investment advice" 한 줄.
    - `sources`: 본문에 이름을 댄 곳을 **주소까지**. 이제 글 아래 `How we checked`에 링크로 실립니다

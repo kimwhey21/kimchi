@@ -39,9 +39,10 @@ MIN_GRAPHICS = 6          # 벤치마크 이미지 p25
 # 주말 편성(2026-09-12, 사용자 결정): 토요일 「주간 결산」은 숫자 글이라 표지 + 지수 카드 + 종목
 # 막대 + 흐름 넷, 일요일 「다음 주 일정」은 프리뷰처럼 셋이면 된다.
 # 프리뷰는 2026-09-17부터 **그날 미국장의 메인 글**이다. 12절·4,500~6,000자·
-# 그림 8~10장. 9/15 합본 실험에서 드러난 셋을 여기서 막는다 — 절당 얕음(13절에 5,884자) → 절당 400자,
-# `number_cards` 네 번 → 같은 종류 2장까지, 초보자 상자 하나 → 둘 이상. 시간(19분)은 지시문의 22:00 마감.
-SERIES_LIMITS = {"프리뷰": {"graphics": 8, "min_section_chars": 400, "max_same_kind": 2, "min_beginner": 2},
+# 그림 8~10장. 9/15 합본 실험에서 드러난 둘을 여기서 막는다 — `number_cards` 네 번 → 같은 종류 2장까지, 초보자 상자 하나 → 둘 이상.
+# **절당 400자 하한은 2026-10-05에 뺐다** — 최근 열 편의 가장 짧은 절이 전부 410~437자, 즉 짧은 절을 하한 넘길 때까지 늘린
+# 글이었다. 글자 수 하한은 늘리기를 만든다(CLAUDE.md). 시간(19분)은 지시문의 22:00 마감.
+SERIES_LIMITS = {"프리뷰": {"graphics": 8, "max_same_kind": 2, "min_beginner": 2},
                  "주간 결산": {"graphics": 4}, "다음 주 일정": {"graphics": 3},
                  # 유입 편성(2026-09-12): 상시 가이드는 표·차트 둘이면 되고
                  # 글의 힘은 질문에 바로 답하는 본문에 있다. 이벤트 글은 일정표 + 차트.
@@ -205,16 +206,9 @@ def collect_issues(doc: dict, graphics: int | None = None,
         issues.append(f"표지 사진 `featured_photo.local_path`={local!r}는 발행 러너에 없는 파일입니다(output/은 커밋하지 "
                       "않습니다). 고른 사진의 Unsplash 주소를 `featured_photo.url`에 적으세요(docs/routine_feature.md).")
 
-    # 시리즈별 부피 규칙(2026-09-17, 프리뷰 확대). 절당 글자·같은 그래픽 종류·초보자 상자 수.
-    min_chars = limits.get("min_section_chars")
-    if min_chars:
-        thin = [(i + 1, len(re.sub(r"<[^>]+>", "", str(sec.get("body") or "")).strip()))
-                for i, sec in enumerate(sections)]
-        thin = [(i, n) for i, n in thin if n < min_chars]
-        if thin:
-            issues.append(f"절이 얕습니다 — {', '.join(f'{i}절 {n}자' for i, n in thin)}. 이 시리즈는 절마다 "
-                          f"{min_chars}자 이상입니다(9/15 실험: 13절에 5,884자, 절당 450자라 얕았습니다). "
-                          "절을 줄이지 말고 근거·숫자·초보자 설명으로 채우십시오.")
+    # 시리즈별 부피 규칙(2026-09-17, 프리뷰 확대). 같은 그래픽 종류·초보자 상자 수. 절당 글자 하한은 2026-10-05에 뺐다(위 SERIES_LIMITS).
+    if limits.get("min_section_chars"):
+        raise ValueError("글자 수 하한은 관문에 두지 않습니다(2026-10-05) — SERIES_LIMITS에서 min_section_chars를 빼십시오.")
     max_same = limits.get("max_same_kind")
     if max_same:
         kinds = [str(g.get("kind")) for g in (doc.get("graphics") or []) if isinstance(g, dict) and g.get("kind") != "cover"]
@@ -352,7 +346,9 @@ MAGAZINE_GROUPS = ("시장 읽기", "시장의 역사", "투자 심리", "기업
 # 원고에 `"form": "pius"`를 적은 글만 이 잣대로 본다. 번역은 여전히 안 한다 — 꼴만 가져온다.
 PIUS_FORM = "pius"
 # 2026-10-03부터 잡지의 **기본 꼴**이다(사장님 "다 적용한 다음 글 뽑아서 보여줘봐"). 옛 꼴(소제목·400자 절)은 `form: classic`만.
-# 하한 3,200자는 루틴이 문단을 복사해 채우게 만들었다(10/2 핵심광물 편에 같은 문단 세 쌍) — 피우스 실측 최소 2,400자로 내렸다.
+# 하한 3,200자는 루틴이 문단을 복사해 채우게 만들었다(10/2 핵심광물 편에 같은 문단 세 쌍) — 2,400자로 내렸더니 10/3~10/5 아홉 편이
+# 전부 2,394~2,486자였고, 10/4 소비자심리 편은 1,296자를 강조어(전혀·더 굳게·이렇게까지)로 늘려 채웠다(관문 30번 재실행).
+# 그래서 **하한은 막지 않는다**(2026-10-05) — 아래 범위는 피우스 실측 참고값이고 상한만 막는다. 짧으면 사실을 더 찾고, 없으면 짧게 낸다.
 PIUS_CHARS = (2400, 4800)
 PIUS_MIN_QUOTES = 1           # 사람의 말을 그대로 옮긴 문단(“…”로 시작) — 원문에서 확인한 말만
 PIUS_PARA_MAX_CHARS = 170     # 문단 하나 — 피우스 평균 67자, 우리 문장 60자이면 두 문장
@@ -428,8 +424,8 @@ def magazine_issues(doc: dict) -> list[str]:
     body = " ".join(str(s.get("body", "")) for s in sections)
     length = len(re.sub(r"<[^>]+>", "", body))
     lo, hi = PIUS_CHARS if is_pius(doc) else MAGAZINE_CHARS
-    if not lo <= length <= hi:
-        issues.append(f"본문이 {length:,}자입니다 — {lo:,}~{hi:,}자.")
+    if length > hi:
+        issues.append(f"본문이 {length:,}자입니다 — {hi:,}자 이하(참고 범위 {lo:,}~{hi:,}자, 하한은 막지 않습니다).")
     if is_pius(doc):
         issues += pius_issues(doc)
     issues += duplicate_paragraph_issues(doc)
@@ -461,8 +457,6 @@ def collect_issues_en(doc: dict, graphics: int | None = None) -> list[str]:
         heading = str(section.get("heading") or "")
         if len(heading) > 80:
             issues.append(f"Heading {index} is {len(heading)} characters — keep headings under 80.")
-        if len(str(section.get("body") or "")) < 300:
-            issues.append(f"Section {index} is under 300 characters — answer the question, do not list it.")
     body = " ".join(str(s.get("body", "")) for s in sections) + str((ko.get("closing") or {}).get("body", ""))
     if not re.search(r"\b20\d\d\b", body):
         issues.append("The body never states a year — evergreen guides must say when the rules were checked "

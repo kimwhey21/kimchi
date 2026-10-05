@@ -60,10 +60,13 @@ class DefaultForm(unittest.TestCase):
         issues = feature_checks.magazine_issues(doc)
         self.assertTrue(any("자를 넘는 문단" in i for i in issues) or any("세 문장 이상" in i for i in issues))
 
-    def test_length_floor_is_2400_not_3200(self) -> None:
+    def test_length_floor_does_not_block_but_the_ceiling_does(self) -> None:
+        """2026-10-05: 하한 2,400자가 늘리기를 만들었다(아홉 편 전부 2,394~2,486자, 강조어로 채움) — 참고값으로만 둔다."""
         self.assertEqual(feature_checks.PIUS_CHARS, (2400, 4800))
         doc = _doc(); doc["ko"]["narrative"] = doc["ko"]["narrative"][:2]
-        self.assertTrue(any("2,400" in i for i in feature_checks.magazine_issues(doc)))
+        self.assertFalse(any("자입니다" in i for i in feature_checks.magazine_issues(doc)))
+        doc = _doc(); doc["ko"]["narrative"][0]["body"] = ("아주 긴 문장입니다. " * 9 + "\n") * 60
+        self.assertTrue(any("4,800자 이하" in i for i in feature_checks.magazine_issues(doc)))
 
     def test_brief_is_not_required_or_rendered(self) -> None:
         """2026-10-02 사장님: "잡지에 간단브리핑은 하지말자"."""

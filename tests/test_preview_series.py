@@ -27,7 +27,7 @@ def _doc(series: str, sections: int = 3, chars: int = 0) -> dict:
 
 
 def _preview_full() -> dict:
-    """2026-09-17 문턱을 다 채운 프리뷰 — 12절·절당 400자·초보자 설명 둘·그래픽 종류 골고루·출처 넷."""
+    """2026-09-17 문턱을 다 채운 프리뷰 — 12절·초보자 설명 둘·그래픽 종류 골고루·출처 넷(절당 400자는 2026-10-05에 뺐다)."""
     doc = _doc("프리뷰", sections=12, chars=420)
     doc["ko"]["narrative"][1]["body"] += " 초보자 설명: bp는 0.01%포인트입니다."
     doc["ko"]["narrative"][4]["body"] += " 초보자 설명: 점도표는 위원들의 금리 전망입니다."
@@ -51,7 +51,7 @@ class PreviewThresholdsTest(unittest.TestCase):
                   + feature_checks.collect_issues(_doc("프리뷰"), graphics=3))
         self.assertTrue(any("10개 이상" in i for i in issues), issues)
         self.assertTrue(any("시각자료" in i for i in issues), issues)
-        self.assertTrue(any("절이 얕습니다" in i for i in issues), issues)
+        self.assertFalse(any("얕습니다" in i for i in issues), issues)   # 절당 글자 하한은 2026-10-05에 뺐다 — 늘리기를 만들었다
         self.assertTrue(any("초보자 설명이" in i for i in issues), issues)
 
     def test_a_full_preview_passes_the_volume_rules(self) -> None:
@@ -109,7 +109,7 @@ class PreviewDocTest(unittest.TestCase):
         # 2026-09-17 밤: 12절 개정 때 「앞을 보는 제목」 줄이 빠져 어젯밤 요약형 제목이 나갔다. 사장님이 정한 규칙
         # 문구는 여기 바늘로 박아 둔다 — 문서를 다시 쓸 때 사라지면 이 테스트가 잡는다(scripts/rule_diff도 같이 쓴다).
         for needle in ('"프리뷰"', "휴장", "--graphics", "category_id` 121", "바로 공개", "예측하지 않습니다",
-                       "앞을 보는 제목", "시간 축", "22:00", "절마다 **400자", "초보자 설명 둘 이상", "월가 리포트",
+                       "앞을 보는 제목", "시간 축", "22:00", "글자 수를 채우지 않습니다", "초보자 설명 둘 이상", "월가 리포트",
                        "나올 수 있는 결과 셋", "대응 원칙", "핵심 내용", "지어내지 않습니다"):
             self.assertIn(needle, text, needle)
 
