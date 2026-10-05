@@ -133,6 +133,7 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
     # 유사문서로 걸리면 네이버 통로가 통째로 막힌다. 여기서 막아 처음부터 다른 문장으로 쓰게 한다.
     issues += [f"네이버 — {i}" for i in feature_checks.naver_issues(doc)]
     issues += [f"시세 사본 — {i}" for i in editorial_facts.copy_issues(price_data, market)]
+    issues += [f"목표주가 — {i}" for i in editorial_facts.target_phrase_issues(doc)]
     try:
         editorial_facts.validate(ko, price_data, lang="ko")
     except Exception as exc:  # noqa: BLE001 - 종류가 무엇이든 목록에 담는다

@@ -696,3 +696,33 @@ def copy_issues(price_data: dict, market: str, data_dir: Path | None = None) -> 
                 elif a != b:
                     out.append(f"{entry.get('name', ticker)}({ticker}) {field}: 원고 {a} / 시세 파일 {b}")
     return out
+
+
+# ── '목표주가보다 N% 낮다'(2026-10-06) ─────────────────────────────────────────────────────────
+# 엔진의 '목표가까지 +73%'는 목표주가가 주가보다 73% 높다는 뜻이다. 이것을 '주가가 목표주가보다 73% 낮다'로 옮기면 틀린다
+# (실제로는 42% 낮다) — 9/8~10/2 33편 83곳이 그렇게 나갔다. 한 가지 꼴만 쓰게 한다: "목표주가가 주가보다 N% 높다" /
+# "목표주가까지 N%". 반대 꼴은 숫자를 바르게 바꿔도 헷갈리므로 막는다.
+_TARGET_BELOW_KO = re.compile(r"목표\s*주?가[^.。\n]{0,15}?(?:보다|대비|에\s*비해)[^.。\n0-9]{0,15}?[0-9]+(?:\.[0-9]+)?\s*%?\s*대?\s*(?:가량|정도|가까이|이상|넘게|안팎|남짓)?\s*(?:이상\s*)?(?:낮|아래|밑|싸|저평가|할인)"
+                              r"|목표\s*주?가\s*대비\s*[-−–]\s*[0-9]")
+_TARGET_BELOW_EN = re.compile(r"[0-9]+(?:\.[0-9]+)?\s*%\s+(?:below|under|beneath|short of)\s+(?:its\s+|the\s+|their\s+)?(?:average\s+|consensus\s+|analysts?'?\s+)*(?:price\s+)?target", re.I)
+
+
+def _all_strings(node) -> list[str]:
+    if isinstance(node, str):
+        return [node]
+    if isinstance(node, dict):
+        return [s for k, v in node.items() if k not in ("price_data", "graphics_data") for s in _all_strings(v)]
+    if isinstance(node, list):
+        return [s for v in node for s in _all_strings(v)]
+    return []
+
+
+def target_phrase_issues(doc: dict) -> list[str]:
+    """원고 어디에서든 '주가가 목표주가보다 N% 낮다' 꼴을 찾는다."""
+    out = []
+    for text in _all_strings({k: v for k, v in doc.items() if k != "price_data"}):
+        for pattern in (_TARGET_BELOW_KO, _TARGET_BELOW_EN):
+            for m in pattern.finditer(text):
+                out.append(f"'{m.group(0)}' — 목표주가와의 거리는 '목표주가가 주가보다 N% 높다'(엔진의 '목표가까지 +N%' 그대로)로만 "
+                           "쓰십시오. '주가가 목표주가보다 N% 낮다'는 다른 숫자입니다(+73%는 42% 낮음)")
+    return out

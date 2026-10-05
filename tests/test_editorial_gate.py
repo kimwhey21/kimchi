@@ -136,6 +136,19 @@ class PublishWarnsInsteadOfBlockingTest(unittest.TestCase):
         self.assertIsNone(narrative[1]["photo"])
         self.assertEqual(narrative[2]["photo"]["url"], "https://images.unsplash.com/x")
 
+class TargetPhraseTest(unittest.TestCase):
+    """'목표가까지 +73%'를 '주가가 목표주가보다 73% 낮다'로 옮기는 꼴을 막는다(2026-10-06 — 33편 83곳)."""
+
+    def test_wrong_direction_is_blocked_and_right_ones_pass(self) -> None:
+        from src import editorial_facts
+        for bad in ("애널리스트 38명이 낸 목표주가 평균보다 현재 주가가 88% 낮습니다", "목표주가보다 90% 안팎 낮아",
+                    "증권가 평균 목표주가보다 80%대 낮은 수준", "6배(목표주가 대비 -88%)", "traded 42% below its price target"):
+            self.assertTrue(editorial_facts.target_phrase_issues({"ko": {"t": bad}}), bad)
+        for ok in ("애널리스트 목표주가(750~810달러)는 여전히 현재가보다 15~24% 높습니다", "목표주가를 38달러로 제시했습니다(현재가 대비 18% 하락 여지)",
+                   "목표주가를 기존 45만원에서 58만5,000원으로 30% 올리며", "증권사 목표주가가 지금 주가보다 78% 높습니다"):
+            self.assertFalse(editorial_facts.target_phrase_issues({"ko": {"t": ok}}), ok)
+
+
 class CopyTest(unittest.TestCase):
     """원고 속 시세 사본이 커밋된 시세 파일과 다르면 막는다(2026-10-06 — 감사에서 그런 원고 12편이 그대로 나갔다)."""
 

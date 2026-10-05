@@ -1017,16 +1017,21 @@ def _print(result: dict) -> None:
     if engine == "valuation":
         print(f"[밸류에이션] {result['market'].upper()} · {result['asof']} · "
               f"FWD PER 중앙값 {result['median_forward_pe']}")
-        print(f"  {'종목':<12}{'FWD PER':>9}{'목표가 대비':>11}{'52주고점 대비':>13}{'애널':>6}")
+        # '목표가까지 +73%'는 목표주가가 주가보다 73% 높다는 뜻이다. 이것을 '주가가 목표가보다 73% 낮다'로 옮기면 틀린다(실제 42%) —
+        # 9/8~10/2 33편 83곳이 그렇게 나갔다(2026-10-06). 그래서 두 숫자를 다 찍는다.
+        print("  (목표가까지 = 목표주가가 지금 주가보다 몇 % 높은가 · 주가 위치 = 지금 주가가 목표주가보다 몇 % 낮은가 — 둘은 다른 숫자)")
+        print(f"  {'종목':<12}{'FWD PER':>9}{'목표가까지':>11}{'주가 위치':>11}{'52주고점 대비':>13}{'애널':>6}")
         for row in result["rows"]:
             # f-string 안에 같은 따옴표를 중첩하는 것은 파이썬 3.12부터입니다.
             # 워크플로는 3.11로 돌아서 로컬(3.14)에서만 통과하는 문법이 됩니다.
             upside = ("-" if row["upside_pct"] is None
                       else f"{row['upside_pct']:+.1f}%")
+            below = ("-" if row["upside_pct"] is None or row["upside_pct"] <= -100
+                     else f"{(100 / (1 + row['upside_pct'] / 100) - 100):+.1f}%")
             off_high = ("-" if row["off_52w_high_pct"] is None
                         else f"{row['off_52w_high_pct']:+.1f}%")
             name = row["name"][:11]
-            print(f"  {name:<12}{row['forward_pe']:>9.1f}{upside:>11}"
+            print(f"  {name:<12}{row['forward_pe']:>9.1f}{upside:>11}{below:>11}"
                   f"{off_high:>13}{row['analysts'] or '-':>6}")
         if result.get("loss_making"):
             print(f"  (내년 적자 예상: {', '.join(result['loss_making'])})")

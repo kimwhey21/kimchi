@@ -94,6 +94,7 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
             blocking.append(f"숫자 — {exc}")
     # 오늘 이 글이 막힌 이유는 문장이 아니라 재료였습니다. 재료를 안 뽑고 쓴 글은
     # 여기서 멈춥니다 — 사람이 엔진 돌리기를 기억하는 데 기대지 않습니다.
+    blocking.extend(f"목표주가 — {i}" for i in editorial_facts.target_phrase_issues(doc))   # 2026-10-06: 뜻이 뒤집힌 문장 83곳
     blocking.extend(source_check.collect_issues(doc))
 
     benchmark_words = []
