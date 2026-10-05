@@ -501,26 +501,36 @@ class KrxPricesTest(unittest.TestCase):
         self.assertEqual(row["volume"], 1938753.0)                       # 거래소 거래량(네이버 2,893,258은 넥스트레이드 포함)
         self.assertEqual(row["mcap"], 1841000.0 * 730492365)
 
-    def test_disagreeing_stock_keeps_yesterday_and_is_reported(self):
-        """사장님 결정(2026-10-05): 두 원천이 다른 종목만 어제 확정값·어제 날짜로 두고 알린다 — 전 종목 갱신은 멈추지 않는다."""
+    def test_disagreement_is_settled_by_a_third_source(self):
+        """2026-10-05 사장님: 옛 값이 아니라 정확한 값 — 사진과 다음이 다르면 야후와 같은 쪽(실제 10/2: 야후 1,841,000 = 다음)."""
         row = dict(self.ROW)
-        daily = {"000660": list(self.DAUM)}
-        problems, notes = sdb.apply_krx([row], daily, {"2026-10-02": {"000660": [1842000, 1833000]}})
+        problems, notes = sdb.apply_krx([row], {"000660": list(self.DAUM)}, {"2026-10-02": {"000660": [1842000, 1833000]}},
+                                        third=lambda code, day: 1841000.0)
         self.assertEqual(problems, [])
-        self.assertEqual((row["close"], row["date"]), (1833000.0, "2026-10-01"))
-        self.assertEqual(daily["000660"][-1]["d"], "2026-10-01")             # 차트도 어제까지
-        self.assertTrue(any("어제 값·날짜로 둔 종목 1개" in n for n in notes))
+        self.assertEqual((row["close"], row["pct"], row["date"]), (1841000.0, 0.44, "2026-10-02"))
+        self.assertTrue(any("셋째 근거" in n for n in notes))
 
-    def test_many_disagreements_mean_a_broken_source_and_stop(self):
-        rows = [dict(self.ROW, code=f"{i:06d}") for i in range(sdb.HELD_MAX + 1)]
-        daily = {r["code"]: list(self.DAUM) for r in rows}
-        snaps = {"2026-10-02": {r["code"]: [1842000, 1833000] for r in rows}}
-        problems, _ = sdb.apply_krx(rows, daily, snaps)
-        self.assertEqual(len(problems), sdb.HELD_MAX + 1)
+    def test_unsettled_disagreement_stops(self):
+        for third in (lambda c, d: None, lambda c, d: 1800000.0):
+            problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": list(self.DAUM)},
+                                        {"2026-10-02": {"000660": [1842000, 1833000]}}, third=third)
+            self.assertEqual(len(problems), 1)
 
-    def test_disagreement_without_yesterday_stops(self):
-        problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": self.DAUM[1:]}, {"2026-10-02": {"000660": [1842000, 1833000]}})
-        self.assertEqual(len(problems), 1)
+    def test_base_only_dispute_uses_the_exchange_base(self):
+        """사진 기준가가 전일 종가 그대로(sv 없이 pcv)이고 다음 기준가가 다르면 다음(거래소 기준가)이 맞다 — 10/2 액면병합 종목들."""
+        row = {**self.ROW, "code": "084680"}
+        rows = [{"d": "2026-10-01", "c": 532.0, "base": 530.0}, {"d": "2026-10-02", "c": 2700.0, "base": 2660.0}]
+        problems, _ = sdb.apply_krx([row], {"084680": rows}, {"2026-10-02": {"084680": [2700, 532]}},
+                                    third=lambda c, d: (_ for _ in ()).throw(AssertionError("종가가 같으면 묻지 않는다")))
+        self.assertEqual(problems, [])
+        self.assertEqual(row["pct"], round((2700 / 2660 - 1) * 100, 2))
+
+    def test_many_disagreements_mean_a_broken_source(self):
+        rows = [dict(self.ROW, code=f"{i:06d}") for i in range(sdb.DISPUTE_MAX + 1)]
+        problems, _ = sdb.apply_krx(rows, {r["code"]: list(self.DAUM) for r in rows},
+                                    {"2026-10-02": {r["code"]: [1842000, 1833000] for r in rows}},
+                                    third=lambda c, d: (_ for _ in ()).throw(AssertionError("원천 고장이면 묻지 않는다")))
+        self.assertEqual(len(problems), sdb.DISPUTE_MAX + 1)
 
     def test_adjusted_base_price_day(self):
         """10/2 삼성바이오로직스: 기준가 1,418,000(전일 종가 1,429,000) — 거래소 등락률 −4.51%."""

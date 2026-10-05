@@ -180,25 +180,7 @@ def _merge_price_file(existing: dict, fresh: dict) -> dict:
         watchlist[ticker] = entry
     merged["watchlist"] = watchlist
     merged["missing"] = list(existing.get("missing") or fresh.get("missing") or [])
-    # 오늘 종가를 확인하지 못한 종목(2026-10-05) — 먼저 쓴 기록을 지킨다. 목록에 들어간 종목은 뺀다.
-    unverified = {**(fresh.get("unverified") or {}), **(existing.get("unverified") or {})}
-    unverified = {t: e for t, e in unverified.items() if t not in watchlist}
-    if unverified:
-        merged["unverified"] = unverified
-    else:
-        merged.pop("unverified", None)
     return merged
-
-
-def _alert_unverified(market: str, price_data: dict) -> None:
-    """오늘 종가를 두 원천으로 확인하지 못한 종목을 운영 대화로 알린다(2026-10-05 사장님 결정: 그 종목만 어제 값으로 두고 알린다)."""
-    unverified = price_data.get("unverified") or {}
-    if not unverified:
-        return
-    from src import alert
-    lines = [f"{e.get('name')}({t}): 어제({e.get('date')}) {e.get('price')} 그대로 — {e.get('reason')}" for t, e in unverified.items()]
-    alert.send(f"{market} {price_data.get('trading_date')} 오늘 종가 미확인 {len(lines)}종목 — 시황 목록에서 빼고 어제 값으로 남김\n"
-               + "\n".join(lines)[:3500], "warn")
 
 
 def _krx_closed_or_say_why(late_close_only: bool, now: dt.datetime | None = None) -> bool:
@@ -274,7 +256,6 @@ def run(
 
     print(f"[1/4] {market} 시세 수집 중...")
     price_data = _fetch_price_data(fetcher, market)
-    _alert_unverified(market, price_data)
     trading_date = price_data.get("trading_date")
     date_str = trading_date or dt.date.today().isoformat()
 

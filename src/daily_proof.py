@@ -353,9 +353,6 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
             n_numbers += sum(len(((kr_doc.get("macro") or {}).get(t) or {}).get("history", {}).get("dates") or []) for t in ("KS11", "KQ11"))
         except Exception as exc:  # noqa: BLE001
             issues.append(f"지수 대조 실패: {exc}")
-    if kr_doc and str(kr_doc.get("trading_date")) == day.isoformat():
-        for t, e in (kr_doc.get("unverified") or {}).items():   # 2026-10-05: 두 원천이 달라 어제 값으로 둔 종목
-            issues.append(f"오늘 종가 미확인: {e.get('name')}({t}) — 어제({e.get('date')}) 값으로 둠. {e.get('reason')}")
     try:
         pcv_day = close_check.pcv_day()
         issues += close_check.check_stocks(root)

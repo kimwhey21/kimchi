@@ -176,12 +176,46 @@ def _fetch_stock(ticker: str, name: str, name_en: str = "", lookback: int = 7, u
     }
 
 
+def yahoo_close(code: str, day: str) -> float | None:
+    """세 번째 원천(2026-10-05): 야후 일별 종가. KRX 정규장 값이다 — 10/2 무작위 300종목 중 거래가 있던 296개가 다음과 모두 같았고
+    (네이버 통합값과는 달랐다), 다른 셋은 거래정지 종목이라 거래량 0인 날은 쓰지 않는다. 두 원천이 다를 때만 묻는다. 못 받으면 None."""
+    import yfinance as yf
+    start = dt.date.fromisoformat(day)
+    for suffix in (".KS", ".KQ"):
+        try:
+            hist = yf.Ticker(code + suffix).history(start=day, end=(start + dt.timedelta(days=1)).isoformat(), auto_adjust=False)
+        except Exception as exc:  # noqa: BLE001 — 센다: 다른 시장 접미사를 묻고, 끝내 없으면 None(부른 쪽이 멈춘다)
+            print(f"[안내] 야후 {code}{suffix}: {exc}")
+            continue
+        rows = hist[hist.index.strftime("%Y-%m-%d") == day] if len(hist) else hist
+        if len(rows) and float(rows["Volume"].iloc[0] or 0) > 0:
+            return float(rows["Close"].iloc[0])
+    return None
+
+
+def pick_base(close: float, bases: dict[str, float], prev_close: float | None = None, rate: float | None = None) -> str | None:
+    """기준가가 원천마다 다를 때 맞는 쪽 — 다음 `basePrice`는 거래소 기준가다(배당락·액면병합 날엔 전일 종가와 다르다).
+    1) 다른 쪽이 전일 종가 그대로면(네이버 `sv`가 없어 `pcv`를 쓴 경우) 다음이 맞다. 2) 네이버가 준 등락률(`cr`, 기준가로 계산된
+    값)과 맞는 쪽이 하나뿐이면 그쪽. 셋째 근거가 없으면 None."""
+    if len(set(bases.values())) == 1:
+        return next(iter(bases))
+    others = [k for k in bases if k != "daum"]
+    if "daum" in bases and prev_close is not None and all(abs(bases[k] - prev_close) < 0.5 for k in others):
+        return "daum"
+    if rate is not None:
+        fit = [k for k, b in bases.items() if abs(abs(close / b - 1) * 100 - float(rate)) <= 0.05]
+        if len(fit) == 1:
+            return fit[0]
+    return None
+
+
 def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | None) -> dict:
     """오늘 KRX 정규장 종가를 **서로 다른 두 원천**으로 확인한다(2026-10-05). 빼지 않는다 — 받거나, 못 받으면 멈추고 이유를 말한다.
 
     - 네이버: 15:31~15:59에 찍은 사진(`nv`, 기준가 `sv`·없으면 `pcv`). 16:00부터 폴링 `nv`는 시간외 단일가를 따라 움직여 쓰지 않는다.
     - 다음: `regularTradePrice`·`basePrice`(날짜가 오늘일 때만).
-    둘 다 있으면 종가와 기준가가 같아야 한다 — 다르면 어느 쪽이 맞는지 모르므로 멈춘다. 하나만 있으면 그것을 쓰고(다음 날 아침
+    둘 다 있으면 종가와 기준가가 같아야 한다 — 다르면 셋째 근거로 가린다(종가는 야후 `yahoo_close`와 같은 쪽, 기준가는 `pick_base`).
+    가리지 못하면 멈춘다 — 옛 값이나 한 원천 값으로 내보내지 않는다(2026-10-05 사장님: 데이터가 정확해야 한다). 하나만 있으면 그것을 쓰고(다음 날 아침
     `close_check`가 네이버 '전일'과 한 번 더 대조한다), 둘 다 없으면 멈춘다. 기준가 대비 ±30%를 넘으면 응답이 어긋난 것이라 멈춘다.
     """
     found: dict[str, tuple[float, float]] = {}
@@ -195,6 +229,31 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
         raise ValueError(f"{code}: 오늘({today}) KRX 정규장 종가를 네이버 사진에서도 다음에서도 받지 못했습니다"
                          f"(다음 날짜 {daum.get('date') if daum else '응답 없음'}).")
     values = set(found.values())
+    sources = sorted(found)
+    if len(values) > 1:
+        # 두 원천이 다르다 — 셋째 근거로 맞는 값을 가린다(2026-10-05 사장님: 옛 값이 아니라 정확한 값). 종가는 야후와 같은 쪽,
+        # 기준가는 pick_base. 가리지 못하면 아래에서 멈춘다.
+        closes = {k: c for k, (c, _) in found.items()}
+        winner, third = None, None
+        if len(set(closes.values())) == 1:
+            winner = next(iter(closes.values()))
+        else:
+            third = yahoo_close(code, today)
+            agree = [k for k, c in closes.items() if third is not None and abs(c - third) < 0.5]
+            winner = closes[agree[0]] if agree else None
+        if winner is not None:
+            right = [k for k, c in closes.items() if abs(c - winner) < 0.5]
+            if len(right) == 1:            # 종가가 틀린 원천의 기준가는 믿지 않는다
+                pick = right[0]
+            else:                          # 종가는 같고 기준가만 다르다
+                pick = pick_base(winner, {k: b for k, (_, b) in found.items()},
+                                 prev_close=float(naver["pcv"]) if naver and naver.get("pcv") and not naver.get("sv") else None,
+                                 rate=naver.get("cr") if naver else None)
+            if pick is not None:
+                found = {"resolved": (winner, found[pick][1])}
+                values = {found["resolved"]}
+                sources = sorted(set(k for k, c in closes.items() if abs(c - winner) < 0.5) | ({"yahoo"} if third is not None else set()))
+                print(f"[안내] {code}: 두 원천이 달라 셋째 근거로 정했습니다 — 종가 {winner:,.0f}({'·'.join(sources)}), 기준가는 {pick}")
     if len(values) > 1:
         detail = ", ".join(f"{k} 종가 {c:,.0f}·기준가 {b:,.0f}" for k, (c, b) in found.items())
         override = os.environ.get("KR_CLOSE_OVERRIDE", "").strip()
@@ -204,16 +263,17 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
             print(f"[경고] {code}: 두 원천이 달라 사장님 승인으로 {override} 값을 씁니다 — {detail}")
             close, base = found[override]
             return {"close": close, "base": base, "sources": [f"{override} (owner override)"]}
-        raise ValueError(f"{code}: 두 원천의 KRX 종가가 다릅니다 — {detail}. 어느 쪽이 맞는지 확인할 때까지 쓰지 않습니다.")
+        raise ValueError(f"{code}: 두 원천의 KRX 종가가 다르고 야후로도 가리지 못했습니다 — {detail}. 맞는 값을 확인할 때까지 쓰지 않습니다.")
     close, base = next(iter(values))
     if abs(close / base - 1) > _PRICE_LIMIT:
         raise ValueError(f"{code}: 종가 {close:,.0f}가 기준가 {base:,.0f}에서 가격제한폭(±30%) 넘게 벗어났습니다 — 응답이 어긋났습니다.")
-    if naver and "naver_snapshot" in found and naver.get("cr") is not None:
+    if naver and naver.get("cr") is not None and abs(float(naver.get("nv") or 0) - close) < 0.5 and \
+            abs((float(naver.get("sv") or 0) or float(naver.get("pcv") or 0)) - base) < 0.5:
         # 폴링의 cr은 부호가 없다(KB금융 9/23: nv < pcv인데 cr 0.91). 크기만 대조해 응답 형식이 바뀐 것을 잡는다.
         pct = (close - base) / base * 100
         if abs(abs(pct) - float(naver["cr"])) > 0.05:
             raise ValueError(f"{code}: 계산한 등락률 {pct:.2f}%와 네이버 cr {naver['cr']}이 다릅니다 — 응답 형식 확인 필요.")
-    return {"close": close, "base": base, "sources": sorted(found)}
+    return {"close": close, "base": base, "sources": sources}
 
 
 def _apply_krx_close(entry: dict, resolved: dict, today: str) -> dict:
@@ -240,20 +300,7 @@ def _krx_close_snapshot(today: str, data_dir: Path | None = None) -> dict[str, d
     return (json.loads(path.read_text(encoding="utf-8")).get("quotes") or {})
 
 
-UNVERIFIED_MAX = 3   # 이보다 많은 종목이 확인되지 않으면 종목 문제가 아니라 원천 고장이다 — 전체를 멈춘다
-
-
-def _last_verified(entry: dict, today: str, why: str) -> dict:
-    """오늘 종가를 확인하지 못한 종목의 '어제 값' — 이력에서 오늘 전의 마지막 날 종가."""
-    hist = entry.get("history") or {}
-    rows = [(d, c) for d, c in zip(hist.get("dates") or [], hist.get("close") or []) if d < today]
-    day, price = rows[-1] if rows else (None, None)
-    return {"name": entry.get("name"), "name_en": entry.get("name_en"), "source": entry.get("source"),
-            "sector": entry.get("sector"), "price": price, "date": day, "reason": why}
-
-
-def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: str | None = None,
-                      unverified: dict | None = None) -> dict[str, dict]:
+def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: str | None = None) -> dict[str, dict]:
     """워치리스트 전체(코어+편입)의 오늘 값을 KRX 정규장 확정 종가로. **한 종목이라도 확인하지 못하면 멈춘다** — 빼지 않는다(2026-10-05).
 
     전에는 편입 종목은 조용히 빼고 코어는 80%까지 빠져도 글을 냈다. 데이터가 중요한 사이트에서 빼는 것은 누락이다.
@@ -271,7 +318,7 @@ def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: s
         live = _fetch_naver_item_quotes([t for t in watchlist if str(t) not in snap])
         snap = {**live, **snap}
     out: dict[str, dict] = {}
-    problems: list[tuple[str, str]] = []
+    problems: list[str] = []
     for ticker, entry in watchlist.items():
         code = str(ticker)
         try:
@@ -285,14 +332,9 @@ def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: s
                 daum = None
             out[ticker] = _apply_krx_close(entry, _resolve_krx_close(code, today, snap.get(code), daum), today)
         except ValueError as exc:
-            problems.append((ticker, f"{entry.get('name', ticker)}({code}): {exc}"))
-    if problems and (unverified is None or len(problems) > UNVERIFIED_MAX):
-        raise ValueError(f"KRX 종가를 확인하지 못한 종목 {len(problems)}개 — 빼지 않고 멈춥니다: " + " / ".join(p for _, p in problems))
-    # 몇 종목만 어긋나면(사장님 결정 2026-10-05) 그 종목은 시황용 오늘 목록에 넣지 않고 어제 값·이유와 함께 `unverified`에 남긴다 —
-    # 오늘 값을 모르는 종목의 등락을 글에 쓰면 안 되고, 한 종목 때문에 그날 시황 전체가 멈추면 안 된다. 알림은 main이 보낸다.
-    for ticker, why in problems:
-        unverified[ticker] = _last_verified(watchlist[ticker], today, why)
-        print(f"[경고] {why} — 오늘 시황 목록에서 빼고 어제 값으로 남깁니다(unverified).")
+            problems.append(f"{entry.get('name', ticker)}({code}): {exc}")
+    if problems:
+        raise ValueError(f"KRX 종가를 확인하지 못한 종목 {len(problems)}개 — 빼지 않고 멈춥니다: " + " / ".join(problems))
     return out
 
 
@@ -711,11 +753,10 @@ def fetch_all() -> dict:
     prev_day = next((d for d in reversed(index_dates) if d < trading_date), None)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
     # 오늘 값은 KRX 정규장 확정 종가 — 네이버 사진과 다음, 두 원천이 같아야 쓴다(2026-10-05).
-    unverified: dict[str, dict] = {}
-    watchlist = _apply_krx_closes(watchlist, trading_date, prev_day, unverified)
+    watchlist = _apply_krx_closes(watchlist, trading_date, prev_day)
     fetch_foreign_flows.attach_foreign_flows(watchlist, trading_date)
     return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date,
-            "missing": [], **({"unverified": unverified} if unverified else {})}
+            "missing": []}
 
 
 _YAHOO_SUFFIX = {"KOSPI": ".KS", "KOSDAQ": ".KQ"}

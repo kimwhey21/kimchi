@@ -238,6 +238,11 @@ class OwnerOverrideTest(unittest.TestCase):
     NAVER = {"nv": 286500, "cr": 3.62, "pcv": 276500}
     DAUM = {"date": "2026-10-06", "close": 286000.0, "base": 276500.0}
 
+    def setUp(self) -> None:   # 셋째 원천(야후)도 가리지 못한 날 — 시험은 바깥에 접속하지 않는다
+        patcher = mock.patch.object(fetch_kr, "yahoo_close", return_value=None)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
     def test_without_override_disagreement_stops(self) -> None:
         with mock.patch.dict(os.environ, {"KR_CLOSE_OVERRIDE": ""}):
             with self.assertRaises(ValueError):

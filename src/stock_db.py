@@ -376,11 +376,38 @@ def snapshot_close(day: str, folder: Path | None = None) -> dict[str, list] | No
     return json.loads(path.read_text(encoding="utf-8")).get("close")
 
 
-HELD_MAX = 20   # 두 원천이 다른 종목이 이보다 많으면 종목 문제가 아니라 원천 고장이다 — 올리지 않는다
+DISPUTE_MAX = 20   # 두 원천이 다른 종목이 이보다 많으면 종목 문제가 아니라 원천 고장이다 — 셋째 원천에 묻지 않고 멈춘다
+
+
+def _yahoo(code: str, day: str) -> float | None:
+    from src.fetch_kr import yahoo_close
+    return yahoo_close(code, day)
+
+
+def settle(code: str, rows: list[dict], snap: list, third) -> tuple[float, float, str] | None:
+    """다음 마지막 줄과 사진이 다를 때 맞는 (종가, 기준가, 근거). 종가가 다르면 야후와 같은 쪽, 종가가 같고 기준가만 다르면
+    사진 기준가가 전일 종가 그대로일 때(네이버 sv 없이 pcv) 다음(거래소 기준가)이 맞다. 가리지 못하면 None."""
+    from src.fetch_kr import pick_base
+    last = rows[-1]
+    s_close, s_base = float(snap[0]), float(snap[1])
+    if abs(s_close - last["c"]) > 0.5:
+        y = third(code, last["d"])
+        if y is None:
+            return None
+        if abs(y - last["c"]) < 0.5:
+            return last["c"], last["base"], "다음=야후"
+        if abs(y - s_close) < 0.5:
+            return s_close, s_base, "사진=야후"
+        return None
+    prev = rows[-2]["c"] if len(rows) >= 2 else None
+    pick = pick_base(last["c"], {"daum": last["base"], "snapshot": s_base}, prev_close=prev)
+    if pick is None:
+        return None
+    return last["c"], (last["base"] if pick == "daum" else s_base), f"기준가는 {pick}"
 
 
 def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str, dict | None],
-              fallback_day: str = "") -> tuple[list[str], list[str]]:
+              fallback_day: str = "", third=None) -> tuple[list[str], list[str]]:
     """목록의 가격 칸을 KRX 정규장 값으로 바꾼다. 돌려주는 것: (멈출 문제, 알릴 것).
 
     - 다음 일별 시세가 있으면 그 마지막 줄을 쓰고, 그날 사진이 있으면 종가·기준가가 같아야 한다(다르면 멈춘다).
@@ -391,7 +418,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
     day = max([rows[-1]["d"] for rows in daily.values() if rows] + ([fallback_day] if fallback_day else []), default="")
     one_source = 0
     stale: list[str] = []
-    held: list[str] = []
+    disputed: list[tuple] = []
     for row in listing:
         code, rows = row["code"], daily.get(row["code"]) or []
         if rows and rows[-1]["d"] < day and not (snaps.get(day) or {}).get(code):
@@ -403,17 +430,9 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
             snap = (snaps.get(last["d"]) or {}).get(code)
             if snap and (abs(float(snap[0]) - last["c"]) > 0.5 or abs(float(snap[1]) - last["base"]) > 0.5):
                 detail = f"{code}: 다음 {last['c']:,.0f}(기준가 {last['base']:,.0f}) / 사진 {float(snap[0]):,.0f}(기준가 {float(snap[1]):,.0f})"
-                if len(rows) < 2:
-                    problems.append(detail + " — 어제 값도 없습니다")
-                    continue
-                # 그 종목만 어제 확정값·어제 날짜로 둔다(사장님 결정 2026-10-05) — 한 종목 때문에 전 종목 갱신이 멈추지 않게.
-                # 차트도 어제까지만 그린다. 많이 어긋나면(HELD_MAX 초과) 원천 고장이라 아래에서 전체를 멈춘다.
-                held.append(detail)
-                rows = daily[code] = rows[:-1]
-                last = rows[-1]
-                snap = None
-            else:
-                one_source += snap is None
+                disputed.append((row, rows, snap, detail))
+                continue
+            one_source += snap is None
             close, base = last["c"], last["base"]
             row.update(close=close, chg=close - base, pct=round((close / base - 1) * 100, 2), date=last["d"])
             if last.get("v") is not None:
@@ -434,10 +453,29 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
         notes.append(code)
     if notes:
         notes = [f"다음 일별 시세를 못 받아 사진 하나로 쓴 종목 {len(notes)}개(거래량·거래대금은 네이버 통합값): {', '.join(notes[:15])}"]
-    if len(held) > HELD_MAX:
-        problems += held
-    elif held:
-        notes.append(f"두 원천(다음·15시 반 사진)이 달라 어제 값·날짜로 둔 종목 {len(held)}개: " + " / ".join(held[:10]))
+    # 두 원천(다음·15시 반 사진)이 다른 종목은 셋째 근거로 가린다(2026-10-05 사장님: 옛 값이 아니라 정확한 값) — 종가는 야후와
+    # 같은 쪽, 기준가는 fetch_kr.pick_base. 가리지 못한 종목이 하나라도 있으면 올리지 않는다. 많이 다르면 원천 고장이라 묻지 않는다.
+    if len(disputed) > DISPUTE_MAX:
+        problems += [d for *_, d in disputed]
+    else:
+        settled = []
+        for row, rows, snap, detail in disputed:
+            fixed = settle(row["code"], rows, snap, third or _yahoo)
+            if fixed is None:
+                problems.append(detail + " — 야후로도 가리지 못했습니다")
+                continue
+            close, base, how = fixed
+            last = rows[-1]
+            rows[-1] = {**last, "c": close, "base": base}
+            row.update(close=close, chg=close - base, pct=round((close / base - 1) * 100, 2), date=last["d"])
+            for key, field in (("v", "volume"), ("val", "value")):
+                if last.get(key) is not None:
+                    row[field] = float(last[key])
+            if last.get("shares"):
+                row["mcap"] = close * float(last["shares"])
+            settled.append(f"{row['code']} {how}")
+        if settled:
+            notes.append(f"두 원천이 달라 셋째 근거로 정한 종목 {len(settled)}개: " + " / ".join(settled[:10]))
     if stale:
         notes.append(f"다음 일별 시세가 {day}보다 이르고 그날 사진도 없어 마지막 날짜 값으로 나간 종목 {len(stale)}개: {', '.join(stale[:15])}")
     if one_source:
@@ -1184,7 +1222,7 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     wanted = set(details)
     daily = {}
     for n, row in enumerate(listing, 1):
-        daily[row["code"]] = daum.days(row["code"], HISTORY_DAYS if row["code"] in wanted else 2)   # 2: 어긋난 날 어제 값으로 두려고
+        daily[row["code"]] = daum.days(row["code"], HISTORY_DAYS if row["code"] in wanted else 1)
         if n % 500 == 0:
             print(f"  다음 일별 시세 {n}/{len(listing)} (실패 {len(daum.failed)})", flush=True)
     snap_days = sorted(p.stem for p in SNAPSHOTS.glob("20*.json")) if SNAPSHOTS.exists() else []

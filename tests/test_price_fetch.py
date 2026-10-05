@@ -243,11 +243,36 @@ class KrxCloseForStocksTest(unittest.TestCase):
         self.assertEqual(out["history"]["close"][-1], 286500.0)
         self.assertIn("KRX", out["data_source"])
 
-    def test_sources_disagree_stops(self) -> None:
-        with self.assertRaises(ValueError) as ctx:
-            fetch_kr._resolve_krx_close("005930", self.TODAY, {"nv": 286500, "cr": 3.62, "pcv": 276500},
-                                        self._daum(286000.0, 276500.0))
-        self.assertIn("두 원천", str(ctx.exception))
+    def test_sources_disagree_and_yahoo_cannot_tell_stops(self) -> None:
+        from unittest.mock import patch
+        for third in (None, 285000.0):        # 야후 값이 없거나, 어느 쪽과도 다르면 멈춘다
+            with patch.object(fetch_kr, "yahoo_close", return_value=third), self.assertRaises(ValueError) as ctx:
+                fetch_kr._resolve_krx_close("005930", self.TODAY, {"nv": 286500, "cr": 3.62, "pcv": 276500},
+                                            self._daum(286000.0, 276500.0))
+            self.assertIn("두 원천", str(ctx.exception))
+
+    def test_yahoo_breaks_the_tie(self) -> None:
+        """2026-10-05 사장님: 옛 값이 아니라 정확한 값 — 셋 중 둘이 같은 값을 쓴다(야후 한국 종가 = KRX 정규장, 10/2 296/296)."""
+        from unittest.mock import patch
+        with patch.object(fetch_kr, "yahoo_close", return_value=286000.0) as asked, patch("builtins.print"):
+            got = fetch_kr._resolve_krx_close("005930", self.TODAY, {"nv": 286500, "cr": 3.62, "pcv": 276500},
+                                              self._daum(286000.0, 276500.0))
+        asked.assert_called_once_with("005930", self.TODAY)
+        self.assertEqual((got["close"], got["base"], got["sources"]), (286000.0, 276500.0, ["daum", "yahoo"]))
+        with patch.object(fetch_kr, "yahoo_close", return_value=286500.0), patch("builtins.print"):
+            got = fetch_kr._resolve_krx_close("005930", self.TODAY, {"nv": 286500, "cr": 3.62, "pcv": 276500},
+                                              self._daum(286000.0, 276500.0))
+        self.assertEqual((got["close"], got["sources"]), (286500.0, ["naver_snapshot", "yahoo"]))
+
+    def test_base_only_dispute_on_an_adjusted_day(self) -> None:
+        """종가는 같고 기준가만 다른 날(액면병합·배당락): 네이버가 sv 없이 전일 종가(pcv)를 썼으면 다음의 거래소 기준가가 맞다.
+        야후에는 묻지 않는다."""
+        from unittest.mock import patch
+        with patch.object(fetch_kr, "yahoo_close", side_effect=AssertionError("종가가 같으면 묻지 않는다")), patch("builtins.print"):
+            got = fetch_kr._resolve_krx_close("084680", self.TODAY, {"nv": 2700, "pcv": 532}, self._daum(2700.0, 2660.0))
+        self.assertEqual((got["close"], got["base"]), (2700.0, 2660.0))
+        with patch.object(fetch_kr, "yahoo_close", return_value=None), self.assertRaises(ValueError):   # 둘 다 진짜 기준가인데 다르면 멈춘다
+            fetch_kr._resolve_krx_close("084680", self.TODAY, {"nv": 2700, "sv": 2650, "pcv": 532}, self._daum(2700.0, 2660.0))
 
     def test_one_source_is_enough_and_none_stops(self) -> None:
         only_daum = fetch_kr._resolve_krx_close("005930", self.TODAY, None, self._daum(286500.0, 276500.0))
@@ -312,32 +337,6 @@ class KrxCloseForStocksTest(unittest.TestCase):
         out = self._closes(wl, both, {"999999": self._daum(10000.0, 9900.0)})
         self.assertEqual(set(out), {"005930", "999999"})
         self.assertEqual(out["999999"]["close_sources"], ["daum", "naver_snapshot"])
-
-    def test_a_few_unconfirmed_stocks_go_to_unverified_with_yesterday(self) -> None:
-        """사장님 결정(2026-10-05): 한두 종목이 어긋나면 그 종목만 시황 목록에서 빼고 어제 값·이유를 unverified에 남긴다."""
-        from unittest.mock import patch
-        wl = {"005930": self._entry(), "999999": {**self._entry(), "ticker": "999999", "name": "편입", "source": "dynamic"}}
-        wl["999999"]["history"] = {"dates": ["2026-09-22", self.TODAY], "close": [9900.0, 10000.0]}
-        snap = {"005930": {"nv": 286500, "cr": 3.62, "pcv": 276500}, "999999": {"nv": 10100, "cr": 2.02, "pcv": 9900}}
-        unverified: dict = {}
-        with patch.object(fetch_kr, "_krx_close_snapshot", return_value=snap), \
-                patch.object(fetch_kr, "_fetch_daum_quote", side_effect=lambda c: self._daum(10000.0, 9900.0) if c == "999999" else {"date": "", "close": None, "base": None}), \
-                patch.object(fetch_kr.dt, "datetime", wraps=fetch_kr.dt.datetime) as fake, patch("builtins.print"):
-            fake.now.return_value = fetch_kr.dt.datetime(2026, 10, 6, 16, 20, tzinfo=fetch_kr.KST)
-            out = fetch_kr._apply_krx_closes(wl, self.TODAY, None, unverified)
-        self.assertEqual(set(out), {"005930"})
-        self.assertEqual((unverified["999999"]["price"], unverified["999999"]["date"]), (9900.0, "2026-09-22"))
-        self.assertIn("두 원천", unverified["999999"]["reason"])
-
-    def test_many_unconfirmed_stocks_stop_everything(self) -> None:
-        wl = {f"{i:06d}": {**self._entry(), "ticker": f"{i:06d}"} for i in range(fetch_kr.UNVERIFIED_MAX + 1)}
-        with self.assertRaises(ValueError):
-            from unittest.mock import patch
-            with patch.object(fetch_kr, "_krx_close_snapshot", return_value={}), \
-                    patch.object(fetch_kr, "_fetch_daum_quote", side_effect=lambda c: {"date": "", "close": None, "base": None}), \
-                    patch.object(fetch_kr.dt, "datetime", wraps=fetch_kr.dt.datetime) as fake:
-                fake.now.return_value = fetch_kr.dt.datetime(2026, 10, 6, 16, 20, tzinfo=fetch_kr.KST)
-                fetch_kr._apply_krx_closes(wl, self.TODAY, None, {})
 
     def test_a_stale_daily_list_stops(self) -> None:
         wl = {"005930": self._entry(date="2026-09-18")}
