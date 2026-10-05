@@ -1486,7 +1486,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "MU": {
       "ticker": "MU",
@@ -1652,7 +1656,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "INTC": {
       "ticker": "INTC",
@@ -1818,7 +1826,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "TSLA": {
       "ticker": "TSLA",
@@ -1984,7 +1996,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "AAPL": {
       "ticker": "AAPL",
@@ -2150,7 +2166,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "MSFT": {
       "ticker": "MSFT",
@@ -2316,7 +2336,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "AMZN": {
       "ticker": "AMZN",
@@ -2482,7 +2506,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "META": {
       "ticker": "META",
@@ -2648,7 +2676,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "GOOGL": {
       "ticker": "GOOGL",
@@ -2814,7 +2846,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "WMT": {
       "ticker": "WMT",
@@ -2980,7 +3016,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "MRNA": {
       "ticker": "MRNA",
@@ -3146,7 +3186,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "MRK": {
       "ticker": "MRK",
@@ -3312,7 +3356,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "COIN": {
       "ticker": "COIN",
@@ -3478,7 +3526,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "DE": {
       "ticker": "DE",
@@ -3644,7 +3696,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "SOXX": {
       "ticker": "SOXX",
@@ -3810,7 +3866,11 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "CL=F": {
       "ticker": "CL=F",
@@ -3976,7 +4036,10 @@
       },
       "unit": "",
       "trading_date": "2026-10-02",
-      "source": "core"
+      "source": "core",
+      "close_sources": [
+        "yahoo"
+      ]
     },
     "SNDK": {
       "ticker": "SNDK",
@@ -4144,7 +4207,11 @@
       "trading_date": "2026-10-02",
       "source": "dynamic",
       "trading_value": 16479351890.220001,
-      "sector": "Technology"
+      "sector": "Technology",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "AMD": {
       "ticker": "AMD",
@@ -4312,7 +4379,11 @@
       "trading_date": "2026-10-02",
       "source": "dynamic",
       "trading_value": 10550566799.42,
-      "sector": "Technology"
+      "sector": "Technology",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "SPCX": {
       "ticker": "SPCX",
@@ -4480,7 +4551,11 @@
       "trading_date": "2026-10-02",
       "source": "dynamic",
       "trading_value": 10230568082.67,
-      "sector": "Technology"
+      "sector": "Technology",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "AVGO": {
       "ticker": "AVGO",
@@ -4648,7 +4723,11 @@
       "trading_date": "2026-10-02",
       "source": "dynamic",
       "trading_value": 8444855406.24,
-      "sector": "Technology"
+      "sector": "Technology",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "LITE": {
       "ticker": "LITE",
@@ -4816,7 +4895,11 @@
       "trading_date": "2026-10-02",
       "source": "dynamic",
       "trading_value": 7892157598.38,
-      "sector": "Telecommunications"
+      "sector": "Telecommunications",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     },
     "GOOG": {
       "ticker": "GOOG",
@@ -4984,7 +5067,11 @@
       "trading_date": "2026-10-02",
       "source": "dynamic",
       "trading_value": 6713705343.0,
-      "sector": "Technology"
+      "sector": "Technology",
+      "close_sources": [
+        "yahoo",
+        "nasdaq"
+      ]
     }
   },
   "trading_date": "2026-10-02",
