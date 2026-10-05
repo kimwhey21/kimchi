@@ -629,27 +629,17 @@ def _fetch_usdkrw_reference(
     # 응답으로 맞춥니다.
     series[-1] = price
     change_pct = round(float(detail["fluctuationsRatio"]), 2)
-    # 두 번째 원천(2026-10-05): 다음 금융의 같은 하나은행 고시. 회차가 같으면 값이 같아야 하고, 네이버 상세가 회차가 늦으면
-    # (10/5 실측: 상세 2663회 1,345.50 · 네이버 일별 목록과 다음은 2665회 1,346.50) 일별 목록과 다음이 같은 최신 고시를 쓴다.
-    # 둘이 같은 값을 못 찾으면 멈춘다(_retry가 다시 묻는다).
+    # 두 번째 원천(2026-10-05): 다음 금융의 같은 하나은행 고시 — 회차와 값이 같아야 쓴다. 다르면(한쪽이 아직 앞 회차) 예외로
+    # _retry가 다시 묻는다. 고시 시각은 네이버 상세의 것이다 — 다음의 날짜 칸과 네이버 일별 목록의 날짜는 영업일 기준이라
+    # 휴장일(10/5)에 새 고시가 나와도 '10/2'로 남는다.
     sources = ["naver"]
     daum = _daum_fx()
     if daum:
-        d_count, d_when, d_price = daum
-        latest_day, latest = rows[0]["localTradedAt"][:10], float(rows[0]["closePrice"].replace(",", ""))
-        if str(detail.get("degreeCount")) == str(d_count) and abs(price - d_price) < 0.005:
-            sources = ["daum", "naver"]
-            traded_at = d_when     # 네이버 localTradedAt은 고시 시각이 아니다(10/5 휴장일에 '15:31'로 왔다; 마지막 고시는 10/2 21:30)
-        elif latest_day == d_when.date().isoformat() and abs(latest - d_price) < 0.005 and len(rows) >= 2:
-            prev = float(rows[1]["closePrice"].replace(",", ""))
-            print(f"[안내] USD/KRW: 네이버 상세({detail.get('degreeCount')}회 {price:,.2f})가 늦어 네이버 일별 목록·다음이 같은 "
-                  f"{d_count}회 {d_price:,.2f}를 씁니다")
-            price, traded_at, change_pct = d_price, d_when, round((d_price - prev) / prev * 100, 2)
-            series[-1] = price
-            sources = ["daum", "naver_list"]
-        else:
-            raise ValueError(f"USD/KRW: 네이버 {detail.get('degreeCount')}회 {price:,.2f}(일별 {latest_day} {latest:,.2f}) / "
-                             f"다음 {d_count}회 {d_price:,.2f} — 같은 고시를 두 곳에서 확인하지 못했습니다")
+        d_count, _, d_price = daum
+        if str(detail.get("degreeCount")) != str(d_count) or abs(price - d_price) >= 0.005:
+            raise ValueError(f"USD/KRW: 네이버 {detail.get('degreeCount')}회 {price:,.2f} / 다음 {d_count}회 {d_price:,.2f} — "
+                             "같은 고시를 두 곳에서 확인하지 못했습니다(다시 묻습니다)")
+        sources = ["daum", "naver"]
     reference_ko = f"{traded_at:%Y-%m-%d %H:%M} 하나은행 고시"
     reference_en = f"{traded_at:%Y-%m-%d %H:%M} Hana Bank notice"
     return {

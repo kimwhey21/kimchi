@@ -99,22 +99,18 @@ class UsdKrwSecondSourceTest(unittest.TestCase):
             {"localTradedAt": "2026-10-05T21:30:00+09:00", "closePrice": "1,359.50"},
             {"localTradedAt": "2026-10-02T21:30:00+09:00", "closePrice": "1,358.00"}]
 
-    def test_same_notice_agrees_and_takes_daum_time(self):
-        when = fetch_kr.dt.datetime(2026, 10, 6, 16, 18, tzinfo=self.KST)
-        got = self._run(2665, "1,346.50", self.ROWS, (2665, when, 1346.5))
-        self.assertEqual((got["price"], got["close_sources"], got["as_of_label"]), (1346.5, ["daum", "naver"], "16:18 하나은행 고시"))
+    def test_same_notice_agrees_and_keeps_the_naver_notice_time(self):
+        """다음의 날짜 칸은 영업일 기준이다(10/5 휴장일 새 고시도 '10/2 21:30') — 고시 시각은 네이버 상세 것."""
+        stale = fetch_kr.dt.datetime(2026, 10, 2, 21, 30, tzinfo=self.KST)
+        got = self._run(2672, "1,345.50", self.ROWS, (2672, stale, 1345.5))
+        self.assertEqual((got["price"], got["close_sources"], got["as_of_label"]), (1345.5, ["daum", "naver"], "15:31 하나은행 고시"))
 
-    def test_lagging_naver_detail_uses_the_notice_both_lists_show(self):
-        """10/5 실측: 네이버 상세 2663회 1,345.50 · 네이버 일별 목록과 다음은 2665회 1,346.50."""
-        when = fetch_kr.dt.datetime(2026, 10, 6, 16, 18, tzinfo=self.KST)
-        got = self._run(2663, "1,345.50", self.ROWS, (2665, when, 1346.5))
-        self.assertEqual((got["price"], got["change_pct"], got["close_sources"]), (1346.5, -0.96, ["daum", "naver_list"]))
-        self.assertEqual(got["series"][-1], 1346.5)
-
-    def test_no_two_sources_agree_stops(self):
-        when = fetch_kr.dt.datetime(2026, 10, 6, 16, 18, tzinfo=self.KST)
-        with self.assertRaises(ValueError):
-            self._run(2663, "1,345.50", self.ROWS, (2665, when, 1347.0))
+    def test_different_notices_are_asked_again(self):
+        """회차나 값이 다르면 예외 — _retry가 다시 묻는다(어느 고시의 시각인지 댈 수 없는 값은 쓰지 않는다)."""
+        when = fetch_kr.dt.datetime(2026, 10, 2, 21, 30, tzinfo=self.KST)
+        for daum in ((2665, when, 1346.5), (2663, when, 1347.0)):
+            with self.assertRaises(ValueError):
+                self._run(2663, "1,345.50", self.ROWS, daum)
 
     def test_daum_down_is_naver_only_and_tagged(self):
         got = self._run(2665, "1,346.50", self.ROWS, None)
