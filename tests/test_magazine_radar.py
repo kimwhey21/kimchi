@@ -187,7 +187,7 @@ class RoutinesUseTheRadarTest(unittest.TestCase):
         text = (ROOT / "docs" / "routine_magazine.md").read_text(encoding="utf-8")
         self.assertIn("git pull origin main", text)
         self.assertIn("`git checkout main`을 하지 않습니다", text)
-        self.assertIn("git push origin HEAD:main", text)
+        self.assertIn("scripts.commit_push", text)   # 2026-10-05: HEAD를 main에 올리는 일은 commit_push 한 명령이 한다
 
     def test_the_korean_guide_keeps_the_variety_rule_above_the_radar(self) -> None:
         """레이더는 주제를 만들지 않는다 — 갈래 안에서 순서만 바꾼다.

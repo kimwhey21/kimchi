@@ -98,8 +98,7 @@
    → 통과하면 `WORDPRESS_URL= WORDPRESS_USERNAME= WORDPRESS_APP_PASSWORD= python -m src.publish_feature editorial/weekly/<파일>.json --render-only`
    → `output/features/<slug>/`의 그래픽을 **한 장씩 `Read`로 봅니다** — 주간 카드에 "주간"이 찍혔는지,
    종목 이름이 막대와 맞는지. → 제목·소제목·그래픽 글자만 따로 모아 다시 읽습니다.
-6. `git add editorial/weekly/<파일>.json && git commit -m "주간 결산: <제목>" && git push origin HEAD:main`
-   (push 거부 시 `git pull --rebase origin main` 뒤 다시). push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
+6. `python -m scripts.commit_push "주간 결산: <제목>" editorial/weekly/<파일>.json` — 거부·rebase·재시도까지 한 번에. push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
 7. 휴대폰 알림을 한 번 보냅니다(PushNotification):
    `주간 결산 커밋: <제목> — 네이버에 10분 안에 전문이 올라갑니다(본진에는 올리지 않습니다).`
    건너뛰었거나 실패했을 때도 한 번, 이유와 함께.

@@ -1,5 +1,18 @@
 # 시황 조사·집필 루틴 — 공통 지시문
 
+> **턴을 쓰는 다섯 가지 — 하지 않습니다(2026-10-05 실행 기록 실측).**
+> 1. **`src/`·`scripts/`의 검사·관문 코드를 읽지 않습니다.** 관문 출력이 곧 지시입니다(10/4 가이드 실행이 규칙을 알아내려고
+>    `editorial_title.py`·`feature_checks.py`·`source_check.py`를 11턴 읽었습니다). 문구가 이해되지 않으면 그대로 보고에 적습니다.
+> 2. **예전 원고 전문을 `Read`하지 않습니다.** 꼴은 지시문의 예시와 `python -m scripts.recent_titles <종류>`로 충분합니다
+>    (10/1 영어 가이드 실행이 옛 가이드 두 편 28,000자를 통째로 읽었고, 그 뒤 모든 턴이 그 글자를 다시 실었습니다).
+> 3. **원고만 커밋할 때 `unittest`를 돌리지 않습니다.** 코드를 고치지 않았습니다 — 관문이 검사입니다(실행마다 1~2턴·60초).
+> 4. **커밋·푸시는 한 명령입니다**: `python -m scripts.commit_push "<메시지>" <파일...>`. 거부·rebase·재시도·upstream까지
+>    이 명령이 합니다. 업스트림 커밋을 `git log`·`git diff`로 들여다보지 않습니다(실행마다 4~6턴, CLAUDE.md 9,000자 diff를 찍은 날도 있습니다).
+> 5. **자바스크립트 화면(홈택스·세이브로·국세청 일부·data.krx.co.kr·law.go.kr)은 WebFetch가 제목만 돌려줍니다.** 검색 결과 요약·
+>    보도자료·PDF로 대신합니다. 샌드박스의 브라우저·인증서·프록시를 고치려 들지 않습니다(10/4 가이드 실행이 13턴을 썼고 실패했습니다).
+> 6. **글자 수를 채우지 않습니다.** 하한은 없습니다 — 짧으면 사실을 더 찾고, 없으면 짧게 냅니다(10/4 잡지 실행이 관문을 30번 돌리며 강조어를 끼웠습니다).
+
+
 > 클라우드 루틴(claude.ai/code/routines)의 프롬프트는 이 파일과 시장별 파일
 > (`docs/routine_kr.md`·`docs/routine_us.md`)을 읽고 그대로 따르라는 몇 줄뿐입니다.
 > 규칙을 고칠 때는 **여기를 고치고 커밋**하세요 — 프롬프트를 따로 고칠 필요가
@@ -85,7 +98,7 @@ WebSearch·WebFetch는 별도 경로라 늘 됩니다.
      장중에 받으면 반쯤 지난 장의 숫자로 마감 시황을 쓰게 됩니다(시험 호출이나
      Run now가 장중에 들어올 수 있습니다). 시각은 `date -u`로 확인합니다.
      `python -m src.main --market <market> --fetch-only` → 생긴 파일을
-     `git add data/ && git commit -m "시세 데이터: <market> <거래일>" && git push origin HEAD:main`.
+     `python -m scripts.commit_push "시세 데이터: <market> <거래일>" data/`.
      GitHub Actions 수집이 실패한 날의 자구책입니다(2026-09-04에 시세가 없어
      그날 글이 통째로 빠졌습니다). 받아도 거래일이 오늘 것이 아니면(휴장)
      보고하고 종료합니다. 받은 파일의 `watchlist`에 `source: "dynamic"` 종목이
@@ -187,7 +200,7 @@ WebSearch·WebFetch는 별도 경로라 늘 됩니다.
    이 표를 맞추려다 `1. 지금 숫자` 같은 소제목이 나온 것이 2026-09-06입니다.
    출력에 "코퍼스 없음 — 우리 수치만"이 찍히면 집계 파일이 빠진 것이니 보고에
    적으세요(비교가 안 된 것입니다).
-10. `git add editorial/ && git commit -m "시황 원고: <거래일> <시장>" && git push origin HEAD:main`
+10. `python -m scripts.commit_push "시황 원고: <거래일> <시장>" editorial/<파일>.json` — add·commit·pull --rebase·push·재시도를 한 번에 합니다.
    (세션의 작업 브랜치가 무엇이든 **main으로** push합니다 — 발행 워크플로는
    main의 `editorial/*.json` 변경에만 붙어 있습니다). **작업 브랜치(`claude/…`)에만
    push하고 끝내지 않습니다.** 2026-09-09 미국장 루틴이 "브랜치 정책"을 이유로 자기

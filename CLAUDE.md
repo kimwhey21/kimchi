@@ -168,7 +168,8 @@
   **종목별 수급은 다음 날 아침 미국장 수집이 전 거래일 파일에 채운다**(`scripts/fill_kr_flows.py`, 2026-09-26) — 마감 직후에는
   네이버가 전날 줄만 줘서 그날 파일은 늘 빈다. 한국장 글은 전 거래일 파일의 수급을 날짜를 밝혀 '어제'로 쓰고 그림은 `"day": "previous"`.
   되돌리지 말 것.
-- **루틴 턴 절약 장치 넷**(2026-09-25): ① 첫 명령 `python -m scripts.routine_precheck <kr|us|preview>`(어제 원고 JSON 통째 읽기
+- **루틴 턴 절약 장치 넷**(2026-09-25; 2026-10-05에 `docs/routine_common.md` 맨 위 「턴을 쓰는 다섯 가지」 상자와 `scripts/commit_push`를 더했다 —
+  관문 코드 읽기·옛 원고 전문 읽기·원고 커밋의 unittest·푸시 거부 뒤 업스트림 탐색·JS 화면 WebFetch·글자 수 채우기): ① 첫 명령 `python -m scripts.routine_precheck <kr|us|preview>`(어제 원고 JSON 통째 읽기
   대신 요약) ② 관문·렌더가 그림을 **모음판**(`sheets/sheet-NN.png`, 원본 크기 그대로)으로 이어 붙인다 — **읽는 장수를 줄이지는
   않는다** ③ `graphic_checks.collect_spec_issues`에 `price_data`·`section_body`(제목의 '만·유일·신고가·최고' vs 데이터, 그린 종목이
   절 본문에 하나도 없음, 표 셀 폭; `fact_table`은 19→17→15로 자동 축소) ④ 프리뷰에도 숫자 대조(`editorial_facts.collect_issues_for_preview`,
@@ -457,7 +458,9 @@
   안 된다(고정 태그 `퍼플썸매거진`). 형식 예시는 `tests/fixtures/magazine_sample.json`(관문 통과본, 루틴 프롬프트가 이 이름을 읽는다; 옛 꼴은 `magazine_sample_classic.json`). **2026-10-03부터 기본 꼴은 피우스형이다**(사장님 결정): 소제목 없이 한두 문장 문단(170자), 2,400~4,800자, 사람의 말을 그대로 옮긴 문단 하나 이상, **같은 문단 반복 금지**(`feature_checks.pius_issues`·`duplicate_paragraph_issues`; 옛 꼴은 `form: classic`만). 주제는 이름난 사람·회사의 결정·주장이 있는 기사를 먼저 고르고, 주장·근거·반론·숫자·독자의 돈으로 짜며 우리가 권하지는 않는다 — 지시문 「글의 꼴과 재미」, 견본 `tests/fixtures/magazine_sample.json`. 간단 브리핑은 싣지 않는다.
 - **고친 것이 있으면 곧바로 커밋·푸시한다.** 클라우드 루틴이 규칙과 관문 코드를 **깃허브에서** 받아 가기 때문이다 — 맥에서만 고쳐
   두면 루틴은 옛 규칙으로 계속 돈다. 대상은 `main`이다(작업 브랜치를 만들지 않는다 — 발행 워크플로가 `main` 푸시로만 돈다).
-  - **푸시 전에 `python -m unittest discover -s tests`를 돌려 통과한 것만 올린다.** 실패하면 올리지 않고 보고한다.
+  - **푸시 전에 `python -m unittest discover -s tests`를 돌려 통과한 것만 올린다.** 실패하면 올리지 않고 보고한다. **원고(`editorial/**`)·
+    시세(`data/**`)만 커밋할 때는 돌리지 않는다**(2026-10-05 — 루틴 실행마다 1~2턴·60초를 썼다; 관문이 검사다). 루틴의 커밋·푸시는
+    `python -m scripts.commit_push "<메시지>" <파일...>` 한 명령이다(거부·rebase·재시도·upstream까지).
   - **`editorial/**` 같은 발행 트리거 경로가 섞였는지 먼저 본다**
     (`.github/workflows`의 `paths`). 섞였다면 그 커밋은 글을 공개시키므로, 의도한 발행이 아니면 나눠서 올린다.
   - 비밀값(`.env`, 토큰)과 `output/`·벤치마크 코퍼스는 어떤 경우에도 커밋하지 않는다.

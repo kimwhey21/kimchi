@@ -81,8 +81,7 @@
    — 통과 전에는 커밋하지 않습니다.
    → 통과하면 `WORDPRESS_URL= WORDPRESS_USERNAME= WORDPRESS_APP_PASSWORD= python -m src.publish_feature editorial/weekly/<파일>.json --render-only`
    → `output/features/<slug>/`의 그래픽을 `Read`로 봅니다 → 제목·소제목·그래픽 글자만 따로 읽습니다.
-6. `git add editorial/weekly/<파일>.json && git commit -m "다음 주 일정: <제목>" && git push origin HEAD:main`
-   (push 거부 시 `git pull --rebase origin main` 뒤 다시). push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
+6. `python -m scripts.commit_push "다음 주 일정: <제목>" editorial/weekly/<파일>.json` — 거부·rebase·재시도까지 한 번에. push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
 7. 휴대폰 알림을 한 번 보냅니다(PushNotification):
    `다음 주 일정 커밋: <제목> — 네이버에 10분 안에 전문이 올라갑니다(본진에는 올리지 않습니다).`
    건너뛰었거나 실패했을 때도 한 번, 이유와 함께.
@@ -109,7 +108,7 @@
   - `graphics` 2~3장: `cover`(featured, kicker `이벤트 · <N월 N일>`) + `fact_table`(section 1: 지난 값·예상값,
     `source` 필수) 또는 `calendar_strip`(section 0) + 있으면 `price_history`(section 2, `price_file`).
 - **관문.** `python -m src.feature_gate editorial/events/<파일>.json --graphics <수>` → 통과하면 렌더 확인 →
-  `git add editorial/events/<파일>.json && git commit -m "이벤트: <제목>" && git push origin HEAD:main`.
+  `python -m scripts.commit_push "이벤트: <제목>" editorial/events/<파일>.json`.
   `weekly_publish.yml`이 다음 주 일정과 같은 정책으로 검사하고(본진에는 올리지 않는다), 네이버에는 10분 안에 전문이 갑니다.
 - 다음 주 일정을 못 쓴 날(재료 부족)에는 이벤트 글도 쓰지 않습니다. 알림은 두 글을 한 번에 보냅니다.
 

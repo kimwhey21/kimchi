@@ -106,7 +106,7 @@
    커밋하지 않습니다. → `WORDPRESS_URL= WORDPRESS_USERNAME= WORDPRESS_APP_PASSWORD= python -m src.publish_feature editorial/previews/<파일>.json --render-only`
    → 출력 끝의 **「그림 모음판」**(`output/features/<slug>/sheets/sheet-NN.png`, 원본 크기 그대로 서너 장씩 이어 붙임)만 `Read`로 봅니다 — 낱장을 따로 읽지 않습니다(축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은
    코드만 봐서는 안 보입니다) → 제목·소제목·그래픽 글자만 따로 읽습니다.
-6. `git add editorial/previews/<파일>.json && git commit -m "프리뷰: <제목>" && git push origin HEAD:main`
+6. `python -m scripts.commit_push "프리뷰: <제목>" editorial/previews/<파일>.json` — 거부·rebase·재시도까지 한 번에.
    push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다). **알림은 보내지 않습니다**(맥이 네이버에 올린 뒤
    네이버 주소로 보냅니다). 건너뛰었거나 실패했을 때만 휴대폰 알림 한 번.
 

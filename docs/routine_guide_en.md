@@ -231,8 +231,7 @@ KEPCO 기사가 난 날에 쓴다고 더 오르지 않습니다.
 5. **관문.** `python -m src.feature_gate editorial/guides/en_<slug>.json --graphics <수>` → 통과 후
    `WORDPRESS_URL= WORDPRESS_USERNAME= WORDPRESS_APP_PASSWORD= python -m src.publish_feature editorial/guides/en_<slug>.json --render-only`
    → 그래픽을 `Read`로 봅니다(영어 글자가 잘리지 않는지).
-6. `git add editorial/guides/en_<slug>.json && git commit -m "Guide: <title>" && git push origin HEAD:main`
-   (거부되면 `git pull --rebase origin main` 뒤 다시).
+6. `python -m scripts.commit_push "Guide: <title>" editorial/guides/en_<slug>.json` — 거부·rebase·재시도까지 한 번에.
 7. 휴대폰 알림 한 번(PushNotification): `영어 가이드 커밋: <title> — 몇 분 안에 https://fermata.it.kr/<slug>/ 로 공개됩니다.`
    건너뛰었거나 실패했을 때도 한 번, 이유와 함께. (영어 가이드는 네이버·텔레그램·스레드에 올리지 않습니다 — 한국어 채널입니다.)
 

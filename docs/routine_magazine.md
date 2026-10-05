@@ -157,8 +157,8 @@
    완료 보고에 **어느 레이더 제목에서 출발했는지**를 적습니다.
 3. 사진: `python -m src.photo_search --sheet <이름> <검색어들>` → 대조표를 `Read`로 열어 봄 → 고른 Unsplash 주소를 `featured_photo.url`에.
 4. 원고 셋을 쓰고, 각각 `python -m src.feature_gate <원고> --graphics 0`. 막히면 고쳐서 다시. 통과한 것만 커밋합니다.
-5. `git add editorial/magazine/<파일 셋> && git commit -m "잡지 원고 세 편: <제목들>" && git push origin HEAD:main`.
-   거부되면 `git pull --rebase origin main` 뒤 다시 push합니다. 커밋하는 것은 원고 JSON 셋뿐입니다(`output/` 커밋 금지).
+5. `python -m scripts.commit_push "잡지 원고 세 편: <제목들>" editorial/magazine/<파일 셋>` — 거부·rebase·재시도까지 한 번에.
+   커밋하는 것은 원고 JSON 셋뿐입니다(`output/`은 이 명령이 거절합니다).
 6. 완료 보고: 원고 경로 셋, 제목, 코너, 출처(무엇을 어디서), 사진(무엇이 보이는지), 관문 출력 전문, 커밋 해시. 버린 주제가 있으면 이유.
 
 환경은 `docs/routine_common.md`의 "이 샌드박스에서 할 수 있는 것" 절과 같습니다(`python`이 없으면 `python3`).

@@ -131,7 +131,7 @@
    막대와 어긋나는 것은 코드만 봐서는 안 보입니다(실제로 두 번 겪었습니다).
 7. **제목·소제목·그래픽 글자(`kicker`·`subject`·`label`)만 따로 모아 다시
    읽습니다.** 본문과 떼어 놓고 읽어야 어색한 것이 보입니다.
-8. `git add editorial/features/<파일>.json && git commit -m "기준표 원고: <제목>" && git push origin HEAD:main`
+8. `python -m scripts.commit_push "기준표 원고: <제목>" editorial/features/<파일>.json` — 거부·rebase·재시도까지 한 번에.
    push 뒤 워크플로를 기다리지도 조회하지도 않습니다(`sleep`·Actions 폴링 금지 — 2026-09-25 감사에서 턴만 쓰고 완료를 본 적이 없습니다).
 9. 휴대폰 알림을 한 번 보냅니다: `주말 Checkpoint 커밋: <제목> — 네이버에는 10분 안에 본문 전문이 공개됩니다(본진에는 올리지 않습니다).`
    건너뛰었거나 실패했을 때도 한 번, 이유와 함께.
