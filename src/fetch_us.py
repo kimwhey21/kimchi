@@ -254,6 +254,14 @@ def fetch_all() -> dict:
     trading_date = required_trading_date(macro)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
     problems = _verify_second_source(macro) + _verify_second_source(watchlist)
+    # 몇 개를 실제로 대조했는지 찍는다 — 나스닥이 러너를 막으면 전부 '야후 하나'로 조용히 넘어가 대조가 장식이 된다(2026-10-05)
+    both = {**macro, **watchlist}
+    checked = [t for t, e in both.items() if len(e.get("close_sources") or []) > 1]
+    stocks = [t for t in watchlist if not t.startswith("^")]
+    print(f"[대조] 공식 원천과 맞춘 종가 {len(checked)}/{len(both)}개(종목 {sum(t in checked for t in stocks)}/{len(stocks)}) — "
+          f"나머지는 그날 값이 아직 없거나 두 번째 원천이 없는 항목")
+    if stocks and not any(t in checked for t in stocks):
+        print("[경고] 나스닥 공식 종가를 한 종목도 받지 못했습니다 — 막혔거나 아직 안 올라왔습니다. 증명서가 그날 밤 다시 맞춥니다.")
     if problems:
         raise ValueError(f"야후 종가가 공식 원천과 다른 항목 {len(problems)}개 — 쓰지 않고 멈춥니다: " + " / ".join(problems))
     return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date,
