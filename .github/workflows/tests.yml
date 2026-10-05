@@ -30,8 +30,9 @@ jobs:
 
       - name: 테스트
         # 네트워크·워드프레스 자격증명 없이 도는 테스트만 있습니다.
-        # 새로 추가할 때도 외부 호출은 mock으로 막아 주세요.
-        run: python -m unittest discover -s tests -v
+        # 새로 추가할 때도 외부 호출은 mock으로 막아 주세요. 2026-10-06부터 바깥 접속을 소켓에서 막는다(tests/_offline) —
+        # 시험이 실제 원천에 몰래 접속해 통과하면 원천에 기대는 결함을 가린다(다음 장애·거래정지 시험이 실제 야후 값으로 통과했다).
+        run: PYTHONPATH=tests/_offline python -m unittest discover -s tests -v
 
       - name: 실패 알림 (텔레그램 운영 대화)
         # 2026-09-12: 어떤 워크플로가 왜 죽었는지 휴대폰으로. 토큰이 없으면 조용히 넘어간다(curl이라 앞 단계가 어디서 죽었든 된다).
