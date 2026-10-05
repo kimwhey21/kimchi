@@ -116,16 +116,26 @@ def _actual_trading_date(market: str) -> str | None:
             from src import fetch_kr
 
             return fetch_kr.last_closed_trading_day()
-        import FinanceDataReader as fdr
-
-        start = (dt.date.today() - dt.timedelta(days=10)).isoformat()
-        frame = fdr.DataReader("DJI", start)
-        if frame.empty:
-            return None
-        return frame.index[-1].date().isoformat()
+        return last_collected_us_day()
     except Exception as exc:  # noqa: BLE001 - 확인 못 하면 검사만 건너뜁니다
         print(f"[안내] {market}: 실제 거래일을 확인하지 못해 최신성 검사를 건너뜁니다 ({exc}).")
         return None
+
+
+def last_collected_us_day(now: dt.datetime | None = None) -> str:
+    """미국장 시세가 수집됐어야 할 마지막 거래일 — 달력(주말·US_HOLIDAYS)과 뉴욕 시각으로 계산한다(2026-10-06).
+
+    전에는 FinanceDataReader 다우의 마지막 줄을 썼는데, 장이 열려 있는 시각(23:30 KST = 뉴욕 10:30)에는 그 줄이 끝나지 않은
+    오늘 줄이라 '마지막 거래일 10-05인데 시세 파일은 10-02'라는 헛경보가 평일 밤마다 났다(감사 F-146). 시세 파일은 뉴욕 18:20에
+    만들어지고 재시도가 18:34까지라, 뉴욕 18:50이 지난 거래일만 센다. 서머타임은 시간대가 알아서 맞춘다.
+    """
+    from zoneinfo import ZoneInfo
+    from src.daily_proof import US_HOLIDAYS
+    ny = (now or dt.datetime.now(dt.timezone.utc)).astimezone(ZoneInfo("America/New_York"))
+    day = ny.date() if ny.time() >= dt.time(18, 50) else ny.date() - dt.timedelta(days=1)
+    while day.weekday() >= 5 or day.isoformat() in US_HOLIDAYS:
+        day -= dt.timedelta(days=1)
+    return day.isoformat()
 
 
 def check_market(market: str, check_site: bool, sitemap_urls: set[str] | None = None) -> list[str]:

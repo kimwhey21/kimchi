@@ -126,6 +126,20 @@ class CheckPublicationTest(unittest.TestCase):
                 problems = cp.check_market("us", check_site=True)
         self.assertTrue(any("원고가 없습니다" in p for p in problems), problems)
 
+class UsLastCollectedDayTest(unittest.TestCase):
+    """미국장 '수집됐어야 할 마지막 거래일'은 달력과 뉴욕 시각으로(2026-10-06 — 장중에 오늘 줄을 마감일로 읽어 평일 밤 헛경보가 났다)."""
+
+    def test_calendar_and_new_york_time(self) -> None:
+        import datetime as dt
+        from src.check_publication import last_collected_us_day
+        utc = dt.timezone.utc
+        at = lambda s: last_collected_us_day(dt.datetime.fromisoformat(s).replace(tzinfo=utc))   # noqa: E731
+        self.assertEqual(at("2026-10-06T14:30"), "2026-10-05")   # 23:30 KST — 미국장 장중
+        self.assertEqual(at("2026-10-06T22:51"), "2026-10-06")   # 뉴욕 18:51 — 수집·재시도 뒤
+        self.assertEqual(at("2026-10-10T14:30"), "2026-10-09")   # 토요일
+        self.assertEqual(at("2026-11-27T14:30"), "2026-11-25")   # 추수감사절(11/26) 다음 날
+        self.assertEqual(at("2026-11-03T23:40"), "2026-11-02")   # 서머타임 뒤 뉴욕 18:40
+
 
 if __name__ == "__main__":
     unittest.main()
