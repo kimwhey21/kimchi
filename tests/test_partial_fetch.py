@@ -285,6 +285,18 @@ class UsSecondSourcesTest(unittest.TestCase):
                 mock.patch.object(fetch_us, "cnbc_settle", return_value=None):
             self.assertEqual(len(fetch_us._settle_futures(entries)), 1)    # 네이버 전일 4,190 ≠ 야후 이력 4,202.3
 
+    def test_cnbc_fills_the_day_only_after_the_close(self):
+        """2026-10-06: 수집 시각엔 Cboe·FRED·나스닥 공식 일별에 그날 줄이 없다 — CNBC의 그날 종가(16:00 ET 이후 시각)로 채운다."""
+        def quote(last, when):
+            r = mock.Mock(); r.json.return_value = {"FormattedQuoteResult": {"FormattedQuote": [{"last": last, "last_time": when}]}}
+            return r
+        with mock.patch.object(fetch_us, "_official_series", return_value={"2026-10-02": 7722.72}), \
+                mock.patch.object(fetch_us.requests, "get", return_value=quote("7,773.95", "2026-10-05T16:48:30.000-0400")):
+            self.assertEqual(fetch_us.second_series("^GSPC", "2026-10-05"), {"2026-10-02": 7722.72, "2026-10-05": 7773.95})
+        with mock.patch.object(fetch_us, "_official_series", return_value={"2026-10-02": 7722.72}), \
+                mock.patch.object(fetch_us.requests, "get", return_value=quote("7,760.00", "2026-10-05T14:10:00.000-0400")):
+            self.assertNotIn("2026-10-05", fetch_us.second_series("^GSPC", "2026-10-05"))   # 장중 값은 쓰지 않는다
+
     def test_cboe_indexes_go_to_cboe(self):
         with mock.patch.object(fetch_us, "cboe_closes", return_value={"2026-10-02": 5.277}) as cboe:
             self.assertEqual(fetch_us.second_close("^TNX", "2026-10-02"), 5.277)

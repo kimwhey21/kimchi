@@ -198,8 +198,13 @@ def fetch_top_dollar_volume_us(
     count: int = 6,
     min_market_cap: float = 10_000_000_000.0,
     reference_prices: dict[str, float] | None = None,
+    trading_date: str | None = None,
 ) -> list[dict]:
     """미국장 거래대금(= 종가 x 거래량) 상위 종목을 돌려줍니다.
+
+    2026-10-06: 나스닥 스크리너는 9/24부터 수집 시각(마감 2시간 20분 뒤)에 **전 거래일** 종가·거래량을 준다(9/25 'AMD 159억달러'는
+    9/24 값이었다). 그래서 `trading_date`가 오면 스크리너는 후보를 모으는 데만 쓰고, 순위는 그날 야후 일별 종가 × 거래량으로 다시 매긴다
+    (`_rank_same_day`). 후보에 야후 '거래 활발' 100개(그날 값)를 더해 스크리너가 놓친 종목도 들어오게 한다.
 
     나스닥 스크리너는 한 번의 요청으로 미국 상장 종목 전체(약 7,000개)의
     거래량·종가·시가총액을 줍니다. 거래대금 항목은 없으므로 종가와 거래량을
@@ -266,7 +271,50 @@ def fetch_top_dollar_volume_us(
         )
 
     candidates.sort(key=lambda row: row["trading_value"], reverse=True)
+    if trading_date:
+        return _rank_same_day(candidates[:40], exclude_tickers, count, min_market_cap, trading_date)
     return candidates[:count]
+
+
+def _rank_same_day(pool: list[dict], exclude: set[str], count: int, min_market_cap: float, day: str) -> list[dict]:
+    """후보(스크리너 상위 + 야후 '거래 활발')를 그날 야후 일별 종가 × 거래량으로 다시 줄 세운다. 그날 값이 없는 후보는 빼고 개수를 찍는다."""
+    import datetime as _dt
+    import yfinance as yf
+    by_symbol = {row["ticker"]: dict(row) for row in pool}
+    try:
+        actives = (yf.screen("most_actives", count=100) or {}).get("quotes") or []
+    except Exception as exc:  # noqa: BLE001 — 센다: 스크리너 후보만으로 계속하고 이유를 남긴다
+        print(f"[경고] 야후 '거래 활발' 목록을 받지 못했습니다 — 스크리너 후보만으로 줄 세웁니다: {exc}")
+        actives = []
+    for q in actives:
+        symbol = str(q.get("symbol") or "").strip()
+        name = str(q.get("longName") or q.get("shortName") or "").strip()
+        if (not symbol or symbol in exclude or symbol in by_symbol or q.get("quoteType") != "EQUITY"
+                or (q.get("marketCap") or 0) < min_market_cap or not _is_us_common_stock(symbol, name)):
+            continue
+        by_symbol[symbol] = {"ticker": symbol, "name": clean_us_name(name), "market": "US", "sector": "",
+                             "trading_value": 0.0, "market_cap": float(q.get("marketCap") or 0)}
+    if not by_symbol:
+        return []
+    end = (_dt.date.fromisoformat(day) + _dt.timedelta(days=1)).isoformat()
+    frame = yf.download(sorted(by_symbol), start=day, end=end, auto_adjust=False, progress=False, threads=True, group_by="column")
+    ranked, missing = [], []
+    for symbol, row in by_symbol.items():
+        try:
+            close = float(frame["Close"][symbol].loc[day]) if len(by_symbol) > 1 else float(frame["Close"].loc[day])
+            volume = float(frame["Volume"][symbol].loc[day]) if len(by_symbol) > 1 else float(frame["Volume"].loc[day])
+        except (KeyError, TypeError, ValueError):
+            missing.append(symbol)
+            continue
+        if not (close > 0 and volume > 0):
+            missing.append(symbol)
+            continue
+        ranked.append({**row, "trading_value": close * volume})
+    if missing:
+        print(f"[안내] 편입 후보 {len(missing)}개는 {day} 야후 일별 값이 없어 순위에서 뺐습니다: {', '.join(missing[:10])}")
+    ranked.sort(key=lambda r: r["trading_value"], reverse=True)
+    print(f"[대조] 편입 순위는 {day} 종가 × 거래량(야후 일별)으로 매겼습니다 — 후보 {len(by_symbol)}개 중 {len(ranked)}개")
+    return ranked[:count]
 
 
 if __name__ == "__main__":

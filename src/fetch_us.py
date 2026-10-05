@@ -14,6 +14,7 @@ import datetime as dt
 import json
 import math
 import os
+import re
 import time
 from pathlib import Path
 
@@ -292,8 +293,54 @@ def _settle_futures(entries: dict[str, dict], trading_date: str | None = None) -
     return problems
 
 
+# CNBC 시세(2026-10-06) — 수집 시각(장 마감 2시간 20분 뒤)에 그날 종가가 이미 있는 유일한 독립 원천이다. Cboe·FRED·나스닥 공식
+# 일별 종가는 그 시각에 그날 줄이 없다(10/6 06:45 KST 실측: 셋 다 10/2가 마지막). CNBC의 previous_day_closing은 10/2 공식 종가와
+# 지수·금리·종목 모두 일치했다(다우 51,176.96·S&P500 7,722.72·나스닥 27,190.864·10년 5.277·엔비디아 233.95·애플 333.69).
+_CNBC_QUOTE = "https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol"
+_CNBC_INDEX = {"^DJI": ".DJI", "^GSPC": ".SPX", "^IXIC": ".IXIC", "^RUT": ".RUT", "^VIX": ".VIX", "^TNX": "US10Y", "^TYX": "US30Y"}
+
+
+def _cnbc_number(text) -> float | None:
+    try:
+        return float(str(text).replace(",", "").replace("%", "").strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def cnbc_close(ticker: str, day: str) -> float | None:
+    """CNBC의 그날 종가. 마지막 체결 시각이 그날 정규장 마감(16:00 ET) 이후일 때만 — 장중 값은 쓰지 않는다. 못 받으면 None."""
+    symbol = _CNBC_INDEX.get(ticker) or ticker.replace("-", ".")
+    try:
+        quote = requests.get(_CNBC_QUOTE, params={"symbols": symbol, "requestMethod": "itv", "noform": 1, "partnerId": 2, "fund": 1,
+                                                  "exthrs": 1, "output": "json", "events": 1},
+                             headers=_NASDAQ_HEADERS, timeout=20).json()["FormattedQuoteResult"]["FormattedQuote"][0]
+        stamp = re.sub(r"\.\d+", "", str(quote["last_time"]))
+        when = dt.datetime.fromisoformat(re.sub(r"([+-]\d{2})(\d{2})$", r"\1:\2", stamp))   # 파이썬 3.11은 -0400 꼴을 못 읽는다
+    except (requests.RequestException, ValueError, KeyError, IndexError, TypeError) as exc:
+        print(f"[안내] CNBC {symbol}: {exc}")
+        return None
+    if when.date().isoformat() != day or when.time() < dt.time(16, 0):   # 시각은 CNBC가 준 뉴욕 현지 시각 그대로
+        return None
+    return _cnbc_number(quote.get("last"))
+
+
 def second_series(ticker: str, day: str) -> dict[str, float]:
-    """두 번째 원천의 최근 일별 종가 {날짜: 값}(그날 포함, 없으면 빈 dict). 금·원유는 _settle_futures가 따로 맞춘다."""
+    """두 번째 원천의 최근 일별 종가 {날짜: 값}(그날 포함, 없으면 빈 dict). 금·원유는 _settle_futures가 따로 맞춘다.
+    공식 일별 종가(FRED·Cboe·나스닥)에 그날 줄이 아직 없으면 CNBC의 그날 종가를 더한다(전일 값은 공식 원천 그대로)."""
+    series = _official_series(ticker, day)
+    if ticker in _FUTURES or day in series:
+        return series
+    close = cnbc_close(ticker, day)
+    if close is not None:
+        _CNBC_USED.add(ticker)
+        return {**series, day: close}
+    return series
+
+
+_CNBC_USED: set[str] = set()
+
+
+def _official_series(ticker: str, day: str) -> dict[str, float]:
     if ticker == "^DJI":
         try:
             return fred_closes(ticker, (dt.date.fromisoformat(day) - dt.timedelta(days=14)).isoformat())
@@ -365,7 +412,8 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
         if bad_change:
             problems.append(bad_change)
             continue
-        entry["close_sources"] = ["yahoo", "fred" if ticker == "^DJI" else "cboe" if ticker in _CBOE_SYMBOLS else "nasdaq"]
+        entry["close_sources"] = ["yahoo", "cnbc" if ticker in _CNBC_USED else "fred" if ticker == "^DJI"
+                                  else "cboe" if ticker in _CBOE_SYMBOLS else "nasdaq"]
     return problems
 
 
@@ -460,6 +508,7 @@ def _fetch_dynamic_tier(
                     for ticker, entry in list(core.items())[:3]
                     if entry.get("price")
                 },
+                trading_date=trading_date,   # 순위는 그날 종가 × 거래량으로(스크리너는 수집 시각에 전날 값, 2026-10-06)
             )
             if movers:
                 break
