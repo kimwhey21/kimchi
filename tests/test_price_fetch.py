@@ -313,6 +313,32 @@ class KrxCloseForStocksTest(unittest.TestCase):
         self.assertEqual(set(out), {"005930", "999999"})
         self.assertEqual(out["999999"]["close_sources"], ["daum", "naver_snapshot"])
 
+    def test_a_few_unconfirmed_stocks_go_to_unverified_with_yesterday(self) -> None:
+        """사장님 결정(2026-10-05): 한두 종목이 어긋나면 그 종목만 시황 목록에서 빼고 어제 값·이유를 unverified에 남긴다."""
+        from unittest.mock import patch
+        wl = {"005930": self._entry(), "999999": {**self._entry(), "ticker": "999999", "name": "편입", "source": "dynamic"}}
+        wl["999999"]["history"] = {"dates": ["2026-09-22", self.TODAY], "close": [9900.0, 10000.0]}
+        snap = {"005930": {"nv": 286500, "cr": 3.62, "pcv": 276500}, "999999": {"nv": 10100, "cr": 2.02, "pcv": 9900}}
+        unverified: dict = {}
+        with patch.object(fetch_kr, "_krx_close_snapshot", return_value=snap), \
+                patch.object(fetch_kr, "_fetch_daum_quote", side_effect=lambda c: self._daum(10000.0, 9900.0) if c == "999999" else {"date": "", "close": None, "base": None}), \
+                patch.object(fetch_kr.dt, "datetime", wraps=fetch_kr.dt.datetime) as fake, patch("builtins.print"):
+            fake.now.return_value = fetch_kr.dt.datetime(2026, 10, 6, 16, 20, tzinfo=fetch_kr.KST)
+            out = fetch_kr._apply_krx_closes(wl, self.TODAY, None, unverified)
+        self.assertEqual(set(out), {"005930"})
+        self.assertEqual((unverified["999999"]["price"], unverified["999999"]["date"]), (9900.0, "2026-09-22"))
+        self.assertIn("두 원천", unverified["999999"]["reason"])
+
+    def test_many_unconfirmed_stocks_stop_everything(self) -> None:
+        wl = {f"{i:06d}": {**self._entry(), "ticker": f"{i:06d}"} for i in range(fetch_kr.UNVERIFIED_MAX + 1)}
+        with self.assertRaises(ValueError):
+            from unittest.mock import patch
+            with patch.object(fetch_kr, "_krx_close_snapshot", return_value={}), \
+                    patch.object(fetch_kr, "_fetch_daum_quote", side_effect=lambda c: {"date": "", "close": None, "base": None}), \
+                    patch.object(fetch_kr.dt, "datetime", wraps=fetch_kr.dt.datetime) as fake:
+                fake.now.return_value = fetch_kr.dt.datetime(2026, 10, 6, 16, 20, tzinfo=fetch_kr.KST)
+                fetch_kr._apply_krx_closes(wl, self.TODAY, None, {})
+
     def test_a_stale_daily_list_stops(self) -> None:
         wl = {"005930": self._entry(date="2026-09-18")}
         with self.assertRaises(ValueError) as ctx:

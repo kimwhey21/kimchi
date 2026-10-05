@@ -501,8 +501,25 @@ class KrxPricesTest(unittest.TestCase):
         self.assertEqual(row["volume"], 1938753.0)                       # 거래소 거래량(네이버 2,893,258은 넥스트레이드 포함)
         self.assertEqual(row["mcap"], 1841000.0 * 730492365)
 
-    def test_disagreeing_snapshot_stops(self):
-        problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": self.DAUM}, {"2026-10-02": {"000660": [1842000, 1833000]}})
+    def test_disagreeing_stock_keeps_yesterday_and_is_reported(self):
+        """사장님 결정(2026-10-05): 두 원천이 다른 종목만 어제 확정값·어제 날짜로 두고 알린다 — 전 종목 갱신은 멈추지 않는다."""
+        row = dict(self.ROW)
+        daily = {"000660": list(self.DAUM)}
+        problems, notes = sdb.apply_krx([row], daily, {"2026-10-02": {"000660": [1842000, 1833000]}})
+        self.assertEqual(problems, [])
+        self.assertEqual((row["close"], row["date"]), (1833000.0, "2026-10-01"))
+        self.assertEqual(daily["000660"][-1]["d"], "2026-10-01")             # 차트도 어제까지
+        self.assertTrue(any("어제 값·날짜로 둔 종목 1개" in n for n in notes))
+
+    def test_many_disagreements_mean_a_broken_source_and_stop(self):
+        rows = [dict(self.ROW, code=f"{i:06d}") for i in range(sdb.HELD_MAX + 1)]
+        daily = {r["code"]: list(self.DAUM) for r in rows}
+        snaps = {"2026-10-02": {r["code"]: [1842000, 1833000] for r in rows}}
+        problems, _ = sdb.apply_krx(rows, daily, snaps)
+        self.assertEqual(len(problems), sdb.HELD_MAX + 1)
+
+    def test_disagreement_without_yesterday_stops(self):
+        problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": self.DAUM[1:]}, {"2026-10-02": {"000660": [1842000, 1833000]}})
         self.assertEqual(len(problems), 1)
 
     def test_adjusted_base_price_day(self):

@@ -36,6 +36,18 @@ class FetchOnlyTest(unittest.TestCase):
             self.assertTrue(ok(False, 2026, 10, 6, 8, 0))         # 장 전
 
 
+    def test_unverified_is_kept_on_merge_and_alerted(self) -> None:
+        """오늘 종가 미확인 종목(2026-10-05): 다시 써도 먼저 쓴 기록을 지키고, 생기면 운영 대화로 알린다(보내기는 가짜)."""
+        old = {"trading_date": "2026-10-06", "macro": {}, "watchlist": {},
+               "unverified": {"999999": {"name": "편입", "price": 9900.0, "date": "2026-10-02", "reason": "두 원천"}}}
+        merged = main_module._merge_price_file(old, {"trading_date": "2026-10-06", "macro": {}, "watchlist": {}})
+        self.assertIn("999999", merged["unverified"])
+        with mock.patch("src.alert.send", return_value=True) as sent:
+            main_module._alert_unverified("kr", old)
+            main_module._alert_unverified("kr", {"trading_date": "2026-10-06"})
+        self.assertEqual(sent.call_count, 1)
+        self.assertIn("편입(999999)", sent.call_args[0][0])
+
     def test_fetch_only_writes_price_file_and_stops(self) -> None:
         price = {"trading_date": "2026-09-07", "macro": {}, "watchlist": {}}
         with tempfile.TemporaryDirectory() as tmp:

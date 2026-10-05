@@ -240,7 +240,20 @@ def _krx_close_snapshot(today: str, data_dir: Path | None = None) -> dict[str, d
     return (json.loads(path.read_text(encoding="utf-8")).get("quotes") or {})
 
 
-def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: str | None = None) -> dict[str, dict]:
+UNVERIFIED_MAX = 3   # 이보다 많은 종목이 확인되지 않으면 종목 문제가 아니라 원천 고장이다 — 전체를 멈춘다
+
+
+def _last_verified(entry: dict, today: str, why: str) -> dict:
+    """오늘 종가를 확인하지 못한 종목의 '어제 값' — 이력에서 오늘 전의 마지막 날 종가."""
+    hist = entry.get("history") or {}
+    rows = [(d, c) for d, c in zip(hist.get("dates") or [], hist.get("close") or []) if d < today]
+    day, price = rows[-1] if rows else (None, None)
+    return {"name": entry.get("name"), "name_en": entry.get("name_en"), "source": entry.get("source"),
+            "sector": entry.get("sector"), "price": price, "date": day, "reason": why}
+
+
+def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: str | None = None,
+                      unverified: dict | None = None) -> dict[str, dict]:
     """워치리스트 전체(코어+편입)의 오늘 값을 KRX 정규장 확정 종가로. **한 종목이라도 확인하지 못하면 멈춘다** — 빼지 않는다(2026-10-05).
 
     전에는 편입 종목은 조용히 빼고 코어는 80%까지 빠져도 글을 냈다. 데이터가 중요한 사이트에서 빼는 것은 누락이다.
@@ -258,7 +271,7 @@ def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: s
         live = _fetch_naver_item_quotes([t for t in watchlist if str(t) not in snap])
         snap = {**live, **snap}
     out: dict[str, dict] = {}
-    problems: list[str] = []
+    problems: list[tuple[str, str]] = []
     for ticker, entry in watchlist.items():
         code = str(ticker)
         try:
@@ -272,9 +285,14 @@ def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: s
                 daum = None
             out[ticker] = _apply_krx_close(entry, _resolve_krx_close(code, today, snap.get(code), daum), today)
         except ValueError as exc:
-            problems.append(f"{entry.get('name', ticker)}({code}): {exc}")
-    if problems:
-        raise ValueError(f"KRX 종가를 확인하지 못한 종목 {len(problems)}개 — 빼지 않고 멈춥니다: " + " / ".join(problems))
+            problems.append((ticker, f"{entry.get('name', ticker)}({code}): {exc}"))
+    if problems and (unverified is None or len(problems) > UNVERIFIED_MAX):
+        raise ValueError(f"KRX 종가를 확인하지 못한 종목 {len(problems)}개 — 빼지 않고 멈춥니다: " + " / ".join(p for _, p in problems))
+    # 몇 종목만 어긋나면(사장님 결정 2026-10-05) 그 종목은 시황용 오늘 목록에 넣지 않고 어제 값·이유와 함께 `unverified`에 남긴다 —
+    # 오늘 값을 모르는 종목의 등락을 글에 쓰면 안 되고, 한 종목 때문에 그날 시황 전체가 멈추면 안 된다. 알림은 main이 보낸다.
+    for ticker, why in problems:
+        unverified[ticker] = _last_verified(watchlist[ticker], today, why)
+        print(f"[경고] {why} — 오늘 시황 목록에서 빼고 어제 값으로 남깁니다(unverified).")
     return out
 
 
@@ -693,10 +711,11 @@ def fetch_all() -> dict:
     prev_day = next((d for d in reversed(index_dates) if d < trading_date), None)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
     # 오늘 값은 KRX 정규장 확정 종가 — 네이버 사진과 다음, 두 원천이 같아야 쓴다(2026-10-05).
-    watchlist = _apply_krx_closes(watchlist, trading_date, prev_day)
+    unverified: dict[str, dict] = {}
+    watchlist = _apply_krx_closes(watchlist, trading_date, prev_day, unverified)
     fetch_foreign_flows.attach_foreign_flows(watchlist, trading_date)
     return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date,
-            "missing": []}
+            "missing": [], **({"unverified": unverified} if unverified else {})}
 
 
 _YAHOO_SUFFIX = {"KOSPI": ".KS", "KOSDAQ": ".KQ"}

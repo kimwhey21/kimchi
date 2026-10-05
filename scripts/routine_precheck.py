@@ -157,6 +157,10 @@ def price_summary(root: Path, path: Path, data: dict) -> tuple[list[str], dict]:
              f"종목 {len(entries)} (코어 {core} · 편입 {dynamic}) · 수급(foreign_net) 있는 종목 {flows} · "
              f"지수·환율 {len(macro)} · missing {len(missing)}"
              + (f" ({', '.join(str(m) for m in missing[:6])})" if missing else "")]
+    unverified = data.get("unverified") or {}
+    if unverified:   # 2026-10-05: 두 원천이 달라 오늘 종가를 모르는 종목 — 오늘 등락을 쓰지 않는다
+        lines.append("오늘 종가 미확인(두 원천 불일치 — 이 종목의 오늘 등락·가격을 쓰지 마십시오): "
+                     + ", ".join(f"{e.get('name')}({t}, 어제 {e.get('date')} 종가 {e.get('price')})" for t, e in unverified.items()))
     # 한국장 종목별 수급은 그날 파일에 없고 다음 날 아침 전 거래일 파일에 채워진다(2026-09-26) — 쓸 수 있는 쪽을 보여 준다.
     if path.name.startswith("price_kr_"):
         earlier = sorted(p for p in path.parent.glob("price_kr_*.json") if p.name < path.name)
