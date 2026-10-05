@@ -25,7 +25,7 @@ class LevelTest(unittest.TestCase):
     def test_right_or_other_numbers_pass(self) -> None:
         ok = _doc("WTI 원유는 1.90% 하락한 배럴당 91.11달러였습니다. 다우존스는 0.68% 하락한 51,176.96로 마감했습니다. "
                   "국제유가가 배럴당 100달러를 넘었던 지난주와 다릅니다. 10년물 금리는 장중 5.34%까지 올랐습니다. "
-                  "10년물 금리가 5.18%를 넘어 더 오르는지 봅니다.")
+                  "10년물 금리가 5.18%를 넘어 더 오르는지 봅니다. 미 10년물 국채금리도 5.28%에서 5.11%로 더 올랐습니다.")   # 10/6 오탐
         self.assertEqual(ef.level_issues(ok, PD), [])
 
     def test_judgment_words(self) -> None:

@@ -812,7 +812,7 @@ def level_issues(doc: dict, price_data: dict, lang: str = "ko") -> list[str]:
                 sentence = text[lo:max(hi, m.end())]
                 tail = text[m.end():m.end() + 10]
                 if (_LEVEL_SKIP.search(between) or _other_day_in_sentence(text, m.start(), m.end())
-                        or re.search(r"^\s*(?:을|를|이|가)?\s*(?:넘|돌파|웃|밑|하회|상회|선|이상|이하)", tail)
+                        or re.search(r"^\s*(?:%\s*)?(?:을|를|이|가)?\s*(?:넘|돌파|웃|밑|하회|상회|선|이상|이하|에서|부터)", tail)
                         or re.search(r"서울\s*외환|외환시장|15시\s*30분|오후\s*3시\s*30분|Seoul FX|3:30\s*p\.?m", sentence, re.I)):
                     continue   # 조건·기준선, 또는 다른 기준(서울 외환시장 종가)을 밝힌 인용
                 value, places = _num(written)
