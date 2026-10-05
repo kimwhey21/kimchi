@@ -1,0 +1,24 @@
+name: Source Probe (temporary)
+# 일회용(2026-10-05): 깃허브 러너에서 새 두 번째 원천(Cboe·네이버 선물·CNBC·다음 환율)에 접속되는지 본다. 확인 뒤 지운다.
+on:
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: |
+          python - <<'PY'
+          from src import fetch_us, fetch_kr
+          for t in ("^RUT", "^TNX", "^TYX", "^VIX"):
+              rows = fetch_us.cboe_closes(t); print(t, "Cboe", len(rows), rows.get("2026-10-02"))
+          for t in ("GC=F", "CL=F"):
+              print(t, "네이버", fetch_us.naver_future_closes(t).get("2026-10-02"), "CNBC", fetch_us.cnbc_settle(t))
+          print("다음 환율", fetch_kr._daum_fx())
+          print("야후 한국", fetch_kr.yahoo_close("000660", "2026-10-02"), fetch_kr.yahoo_close("247540", "2026-10-02"))
+          PY
