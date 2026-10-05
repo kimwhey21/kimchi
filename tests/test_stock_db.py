@@ -350,9 +350,12 @@ class SkhyTest(unittest.TestCase):
         usd = pd.Series([150.0, 150.0, 150.0, 999.0, 999.0, 150.0, 150.0], index=idx)
         fx = pd.Series([1400.0] * 7, index=idx)
         tick = lambda sym: mock.Mock(history=lambda period: pd.DataFrame({"Close": usd if sym == "SKHY" else fx}))   # noqa: E731
-        seoul = [{"localDate": d, "closePrice": 1_400_000.0} for d in ("20260917", "20260918", "20260921", "20260922", "20260923")]
+        # 서울 종가는 다음 일별 시세(KRX 정규장)에서 — 2026-10-05 전에는 네이버 차트(넥스트레이드 합산)였다
+        seoul = {"data": [{"date": f"{d} 00:00:00", "tradePrice": 1_400_000.0, "prevClosingPrice": 1_390_000.0}
+                          for d in ("2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23")]}
         fake_yf = mock.Mock(Ticker=tick)
-        with mock.patch.dict("sys.modules", {"yfinance": fake_yf}), mock.patch.object(sdb, "_get", return_value=mock.Mock(json=lambda: seoul)):
+        with mock.patch.dict("sys.modules", {"yfinance": fake_yf}), mock.patch.object(sdb, "_get", return_value=mock.Mock(json=lambda: seoul)), \
+                mock.patch.object(sdb.time, "sleep"):
             p = sdb.build_skhy(mock.Mock())
         self.assertEqual([r["d"] for r in p["rows"]], ["2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23"])  # 서울이 쉰 9/24·25는 빠진다
         self.assertEqual(p["rows"][0]["seoul_usd"], 100.0)          # 1,400,000 ÷ 10 ÷ 1,400
@@ -474,3 +477,83 @@ class MarketIndexPreOpenTest(unittest.TestCase):
             got = sdb._index_from_price_file(name, "2026-09-30")
             self.assertIsNotNone(got, name)
             self.assertEqual(got["date"], "2026-09-30")
+
+
+class KrxPricesTest(unittest.TestCase):
+    """종목 페이지 가격은 KRX 정규장 값(2026-10-05): 다음 일별 시세 + 15:3x 전 종목 사진. 어긋나면 올리지 않는다.
+
+    전에는 네이버 통합값을 'At close · Korea Exchange'로 보여 줬다 — 10/2 SK하이닉스 ₩1,842,000 +0.49%(거래소 ₩1,841,000 +0.44%).
+    """
+    ROW = {"code": "000660", "market": "KOSPI", "close": 1842000.0, "chg": 9000.0, "pct": 0.49, "volume": 2893258.0,
+           "value": 5.3e12, "mcap": 1345566936330000.0, "date": "2026-10-02", "trading": True}
+    DAUM = [{"d": "2026-10-01", "c": 1833000.0, "base": 1776000.0}, {"d": "2026-10-02", "c": 1841000.0, "base": 1833000.0,
+             "v": 1938753, "val": 3568590397500, "shares": 730492365}]
+
+    def test_daum_row_becomes_the_page_price(self):
+        row = dict(self.ROW)
+        problems, notes = sdb.apply_krx([row], {"000660": self.DAUM}, {"2026-10-02": {"000660": [1841000, 1833000]}})
+        self.assertEqual((problems, notes), ([], []))
+        self.assertEqual((row["close"], row["chg"], row["pct"]), (1841000.0, 8000.0, 0.44))
+        self.assertEqual(row["volume"], 1938753.0)                       # 거래소 거래량(네이버 2,893,258은 넥스트레이드 포함)
+        self.assertEqual(row["mcap"], 1841000.0 * 730492365)
+
+    def test_disagreeing_snapshot_stops(self):
+        problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": self.DAUM}, {"2026-10-02": {"000660": [1842000, 1833000]}})
+        self.assertEqual(len(problems), 1)
+
+    def test_adjusted_base_price_day(self):
+        """10/2 삼성바이오로직스: 기준가 1,418,000(전일 종가 1,429,000) — 거래소 등락률 −4.51%."""
+        row = {**self.ROW, "code": "207940"}
+        daum = {"207940": [{"d": "2026-10-02", "c": 1354000.0, "base": 1418000.0}]}
+        sdb.apply_krx([row], daum, {"2026-10-02": {"207940": [1354000, 1418000]}})
+        self.assertEqual(row["pct"], -4.51)
+
+    def test_daum_missing_falls_back_to_the_snapshot_and_says_so(self):
+        row = dict(self.ROW)
+        problems, notes = sdb.apply_krx([row], {"000660": [], "005930": [{"d": "2026-10-02", "c": 276000.0, "base": 276000.0}]},
+                                        {"2026-10-02": {"000660": [1841000, 1833000]}})
+        self.assertEqual(problems, [])
+        self.assertEqual((row["close"], row["pct"]), (1841000.0, 0.44))
+        self.assertTrue(any("사진 하나로" in n for n in notes))
+
+    def test_neither_source_stops(self):
+        problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": []}, {}, "2026-10-02")
+        self.assertEqual(len(problems), 1)
+
+    def test_detail_chart_and_range_become_krx(self):
+        d = {"r": {"high52": 3002000.0, "low52": 400000.0}, "hist": {"d": ["2026-10-01", "2026-10-02"], "c": [1828000, 1842000], "fr": [49.7, 49.8]},
+             "flows": [{"d": "2026-10-02", "close": 1842000.0, "foreign": 10}]}
+        out = sdb.krx_detail(d, self.DAUM, (403000.4, 2987000.0))
+        self.assertEqual(out["hist"]["c"], [1833000.0, 1841000.0])
+        self.assertEqual(out["hist"]["fr"], [49.7, 49.8])
+        self.assertEqual((out["r"]["low52"], out["r"]["high52"]), (403000.0, 2987000.0))
+        self.assertEqual(out["flows"][0]["close"], 1841000.0)
+
+    def test_daum_stops_asking_after_repeated_failures(self):
+        from unittest import mock
+        daum = sdb.Daum(mock.Mock())
+        with mock.patch.object(sdb, "_get", side_effect=sdb.StockDBError("403")) as got, mock.patch.object(sdb.time, "sleep"):
+            for code in ("1", "2", "3", "4", "5", "6", "7"):
+                self.assertEqual(daum.days(code), [])
+        self.assertEqual(got.call_count, sdb.DAUM_TRIP)
+        self.assertEqual(len(daum.failed), 7)
+        self.assertTrue(daum.down)
+
+    def test_holiday_is_not_a_session(self):
+        self.assertFalse(sdb.in_krx_session(dt.datetime(2026, 10, 5, 10, 0, tzinfo=sdb.KST)))
+        self.assertTrue(sdb.in_krx_session(dt.datetime(2026, 10, 6, 10, 0, tzinfo=sdb.KST)))
+
+
+class DaumHaltedTest(unittest.TestCase):
+    def test_halted_stock_keeps_its_price_at_zero_change(self):
+        """2026-10-05: 거래정지 종목은 다음이 기준가를 0으로 준다 — 버리지 않고 가격 그대로·0%로 읽는다."""
+        from unittest import mock
+        body = {"data": [{"date": "2026-10-02 00:00:00", "tradePrice": 5820.0, "change": "EVEN", "prevClosingPrice": 0.0,
+                          "accTradeVolume": 0, "accTradePrice": 0.0, "listedSharesCount": 39139903}]}
+        daum = sdb.Daum(mock.Mock())
+        with mock.patch.object(sdb, "_get", return_value=mock.Mock(json=lambda: body)), mock.patch.object(sdb.time, "sleep"):
+            rows = daum.days("001470")
+        self.assertEqual((rows[0]["c"], rows[0]["base"]), (5820.0, 5820.0))
+        row = {"code": "001470", "close": 5820.0, "mcap": 1.0}
+        sdb.apply_krx([row], {"001470": rows}, {"2026-10-02": {"001470": [5820, 5820]}})
+        self.assertEqual((row["pct"], row["chg"], row["volume"]), (0.0, 0.0, 0.0))

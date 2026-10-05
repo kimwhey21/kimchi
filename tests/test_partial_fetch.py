@@ -49,21 +49,43 @@ class UsPartialFetchTest(unittest.TestCase):
 
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
+             mock.patch.object(fetch_us, "second_close", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
             return fetch_us.fetch_all()
 
-    def test_optional_macro_failure_is_skipped(self) -> None:
-        data = self._run({"GC=F"})
-        self.assertNotIn("GC=F", data["macro"])
-        self.assertEqual(len(data["watchlist"]), 10)
-        self.assertEqual(data["trading_date"], "2026-09-04")
-        self.assertTrue(any("GC=F" in m for m in data["missing"]))
+    def test_macro_failure_stops_instead_of_dropping(self) -> None:
+        """2026-10-05: 미국장도 빼지 않는다 — 전에는 지수 셋만 필수였고 금·VIX·종목은 빠진 채 글이 나갈 수 있었다."""
+        with self.assertRaises(ValueError) as ctx:
+            self._run({"GC=F"})
+        self.assertIn("국제 금(GC=F)", str(ctx.exception))
 
-    def test_optional_stock_failure_is_skipped(self) -> None:
-        data = self._run({"TSLA"})
-        self.assertIn("NVDA", data["watchlist"])
-        self.assertNotIn("TSLA", data["watchlist"])
-        self.assertTrue(any("TSLA" in m for m in data["missing"]))
+    def test_stock_failure_stops_instead_of_dropping(self) -> None:
+        with self.assertRaises(ValueError) as ctx:
+            self._run({"TSLA"})
+        self.assertIn("테슬라(TSLA)", str(ctx.exception))
+
+    def test_official_close_disagreement_stops(self) -> None:
+        def fake_one(ticker, name="", **kw):
+            return _entry(ticker, name)
+        with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
+             mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
+             mock.patch.object(fetch_us, "second_close", side_effect=lambda t, d: 101.0 if t == "NVDA" else 100.0), \
+             mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
+            with self.assertRaises(ValueError) as ctx:
+                fetch_us.fetch_all()
+        self.assertIn("엔비디아(NVDA)", str(ctx.exception))
+
+    def test_sources_are_recorded(self) -> None:
+        def fake_one(ticker, name="", **kw):
+            return _entry(ticker, name)
+        with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
+             mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
+             mock.patch.object(fetch_us, "second_close", side_effect=lambda t, d: None if t.startswith(("^G", "^I", "GC")) else 100.0), \
+             mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):
+            data = fetch_us.fetch_all()
+        self.assertEqual(data["watchlist"]["NVDA"]["close_sources"], ["yahoo", "nasdaq"])
+        self.assertEqual(data["macro"]["^DJI"]["close_sources"], ["yahoo", "fred"])
+        self.assertEqual(data["macro"]["GC=F"]["close_sources"], ["yahoo"])
 
     def test_required_index_failure_still_raises(self) -> None:
         """지수까지 없으면 그날 글은 성립하지 않습니다."""
@@ -75,19 +97,16 @@ class UsPartialFetchTest(unittest.TestCase):
             self._run({"NVDA", "TSLA", "AAPL", "MSFT", "AMZN", "META",
                        "MU", "INTC", "COIN", "MRNA"})
 
-    def test_core_coverage_floor(self) -> None:
-        """빠진 종목이 그날 1위였는지 알 수 없으므로 하한 아래면 쓰지 않습니다.
-
-        editorial_facts는 살아남은 종목 중에서 '그날 1위'를 고릅니다. 여기서
-        막지 않으면 자료 장애가 '핵심 종목이 빠진 완성된 글'로 조용히 바뀝니다.
-        """
+    def test_every_missing_name_is_listed(self) -> None:
         with self.assertRaises(ValueError) as ctx:
-            self._run({"TSLA", "AAPL", "MSFT"})   # 10종목 중 3개 = 70% < 80%
-        self.assertIn("코어 종목을", str(ctx.exception))
+            self._run({"TSLA", "AAPL", "MSFT"})
+        for name in ("테슬라(TSLA)", "애플(AAPL)", "마이크로소프트(MSFT)"):
+            self.assertIn(name, str(ctx.exception))
 
     def test_nothing_missing_reports_empty(self) -> None:
         data = self._run(set())
         self.assertEqual(data["missing"], [])
+        self.assertEqual(len(data["watchlist"]), 10)
 
 
 class KrPartialFetchTest(unittest.TestCase):
@@ -132,14 +151,18 @@ class KrPartialFetchTest(unittest.TestCase):
                                side_effect=lambda w, *a, **k: None):
             return fetch_kr.fetch_all()
 
-    def test_usdkrw_failure_no_longer_loses_the_day(self) -> None:
-        """2026-09-01에 실제로 일어난 일입니다."""
-        data = self._run({"USD/KRW"})
-        self.assertNotIn("USD/KRW", data["macro"])
-        self.assertIn("KS11", data["macro"])
+    def test_usdkrw_is_retried_then_stops_instead_of_dropping(self) -> None:
+        """2026-10-05: 환율도 빼지 않는다 — 네 번(바로·10·30·60초 뒤) 묻고, 그래도 안 되면 이름을 적고 멈춘다."""
+        with mock.patch.object(fetch_kr.time, "sleep"):
+            with self.assertRaises(ValueError) as ctx:
+                self._run({"USD/KRW"})
+        self.assertIn("원/달러 환율(USD/KRW)", str(ctx.exception))
+
+    def test_everything_present_reports_nothing_missing(self) -> None:
+        data = self._run(set())
+        self.assertEqual(data["missing"], [])
         self.assertEqual(len(data["watchlist"]), 10)
         self.assertEqual(data["trading_date"], "2026-09-04")
-        self.assertTrue(any("USD/KRW" in m for m in data["missing"]))
 
     def test_one_core_stock_failure_stops_instead_of_dropping(self) -> None:
         """2026-10-05: 한국장 코어는 하나도 빼지 않는다 — 전에는 80%까지 빠져도 글을 냈다. 못 받은 종목 이름을 적고 멈춘다."""
@@ -151,8 +174,8 @@ class KrPartialFetchTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self._run({"KS11"})
 
-    def test_sector_survives_partial_failure(self) -> None:
-        data = self._run({"USD/KRW"})
+    def test_sector_is_carried(self) -> None:
+        data = self._run(set())
         self.assertEqual(data["watchlist"]["005930"]["sector"], "반도체")
 
 

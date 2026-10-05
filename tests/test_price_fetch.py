@@ -1,4 +1,5 @@
 import unittest
+from unittest import mock
 from unittest.mock import MagicMock, patch
 
 import pandas as pd
@@ -359,6 +360,47 @@ class KrxCloseSnapshotTest(unittest.TestCase):
             out = fetch_kr._apply_krx_closes({"035720": entry}, today)
         self.assertEqual(out["035720"]["price"], 33950.0)
         self.assertEqual(out["035720"]["change_pct"], 1.49)
+
+    def test_snapshot_keeps_every_listed_stock_for_the_stock_pages(self) -> None:
+        """2026-10-05: 종목 페이지 대조용으로 전 종목 [종가, 기준가]를 `close`에 남긴다. 기준가는 sv(없으면 pcv)."""
+        import json, tempfile
+        from pathlib import Path
+        from scripts import krx_close_snapshot as snap
+        quotes = {"005930": {"nv": 276000, "pcv": 276000, "sv": 276000, "cr": 0.0, "ms": "OPEN"},
+                  "207940": {"nv": 1354000, "pcv": 1429000, "sv": 1418000, "cr": 4.51, "ms": "OPEN"},
+                  "900110": {"nv": 1000, "pcv": 990}}
+        with tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.object(snap, "DIR", Path(tmp)), \
+                mock.patch.object(snap, "codes", return_value=["005930"]), \
+                mock.patch.object(snap, "all_codes", return_value=["005930", "207940", "900110"]), \
+                mock.patch.object(snap.fetch_kr, "_fetch_naver_item_quotes", return_value=quotes) as got, \
+                mock.patch.object(snap.dt, "datetime", wraps=snap.dt.datetime) as fake:
+            now = snap.dt.datetime(2026, 10, 6, 15, 32, tzinfo=snap.KST)
+            fake.now.return_value = now
+            self.assertEqual(snap.main(now), 0)
+            doc = json.loads((Path(tmp) / "2026-10-06.json").read_text(encoding="utf-8"))
+        self.assertEqual(got.call_args[0][0], ["005930", "207940", "900110"])
+        self.assertEqual(set(doc["quotes"]), {"005930"})                       # fetch_kr용은 코어·후보만
+        self.assertEqual(doc["close"], {"005930": [276000, 276000], "207940": [1354000, 1418000], "900110": [1000, 990]})
+
+    def test_a_partial_snapshot_is_retaken_but_a_full_one_is_kept(self) -> None:
+        import json, tempfile
+        from pathlib import Path
+        from scripts import krx_close_snapshot as snap
+        now = snap.dt.datetime(2026, 10, 6, 15, 40, tzinfo=snap.KST)
+        with tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.object(snap, "DIR", Path(tmp)), mock.patch.object(snap, "FULL_MARKET", 2), \
+                mock.patch.object(snap, "codes", return_value=["005930"]), \
+                mock.patch.object(snap, "all_codes", return_value=["005930", "000660"]), \
+                mock.patch.object(snap.fetch_kr, "_fetch_naver_item_quotes",
+                                  return_value={"005930": {"nv": 1, "pcv": 1}, "000660": {"nv": 2, "pcv": 2}}) as got, \
+                mock.patch.object(snap.dt, "datetime", wraps=snap.dt.datetime) as fake:
+            fake.now.return_value = now
+            (Path(tmp) / "2026-10-06.json").write_text(json.dumps({"quotes": {}, "close": {"005930": [1, 1]}}), encoding="utf-8")
+            snap.main(now)                                    # 앞 사진은 전 종목이 모자랐다 — 다시 찍는다
+            self.assertEqual(len(json.loads((Path(tmp) / "2026-10-06.json").read_text())["close"]), 2)
+            snap.main(now)                                    # 이제 충분하다 — 묻지도 않는다
+        self.assertEqual(got.call_count, 1)
 
 
 class DaumSourceTest(unittest.TestCase):

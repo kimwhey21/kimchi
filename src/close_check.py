@@ -14,6 +14,8 @@
 2. 지수: 네이버 지수 일별 목록(지금 원천)이 2거래일 넘게 뒤처졌는가, 이력이 한국은행 ECOS 「주식시장(일)」(작성기관
    한국거래소)과 같은가 — 겹치는 날짜만, 0.01 넘게 다르면 문제. ECOS가 3거래일 넘게 뒤처졌으면 그것도 알린다.
 3. 파일의 `missing`(빠진 항목)이 비어 있지 않으면 알린다.
+4. 미국장: 가장 최근 파일의 다우·S&P500·나스닥·VIX를 FRED와, 수집 때 야후 하나로만 확인한 종목을 나스닥 공식 종가와 맞춘다
+   (S&P500은 미국 20:01 ET에야 FRED에 올라와 07:20 KST 수집 때는 대조할 수 없다).
 
 발행은 막지 않는다 — 알리기만 한다. 발행 점검(publish_check.yml)의 저녁 실행(19:00 KST, 월~금)에서 하루 한 번 돈다.
 
@@ -31,7 +33,7 @@ from pathlib import Path
 import requests
 from dotenv import load_dotenv
 
-from src import alert, fetch_kr
+from src import alert, fetch_kr, fetch_us
 
 load_dotenv()
 
@@ -160,6 +162,29 @@ def check(price_doc: dict, key: str) -> list[str]:
     return issues
 
 
+def us_issues(doc: dict) -> list[str]:
+    """가장 최근 미국장 파일을 공식 원천과 맞춘다(2026-10-05): 지수는 FRED(S&P500은 수집 뒤 20:01 ET에 올라온다), 수집 때 야후
+    하나로만 확인한 종목은 나스닥 공식 종가. 공식 원천에 그날 값이 아직 없으면 건너뛴다(틀렸다고 하지 않는다)."""
+    day = str(doc.get("trading_date") or "")
+    issues = []
+    for group in ("macro", "watchlist"):
+        for ticker, entry in (doc.get(group) or {}).items():
+            if ticker in fetch_us._FRED_SERIES:
+                other = fetch_us.fred_closes(ticker, day).get(day)
+            elif entry.get("close_sources") == ["yahoo"]:
+                other = fetch_us.nasdaq_closes(ticker, day).get(day)
+            else:
+                continue
+            if other is not None and abs(other - float(entry["price"])) > max(0.011, abs(other) * 0.00001):
+                issues.append(f"[미국 {day}] {entry.get('name', ticker)}({ticker}): 파일 {entry['price']} / 공식 {other}")
+    return issues
+
+
+def latest_us_file() -> Path | None:
+    files = sorted((ROOT / "data").glob("price_us_*.json"))
+    return files[-1] if files else None
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="한국장 전 거래일 파일의 종목·지수를 다른 원천과 대조합니다")
     parser.add_argument("path", nargs="?", help="한국장 시세 파일(기본: 가장 최근)")
@@ -170,6 +195,9 @@ def main(argv: list[str] | None = None) -> int:
             raise RuntimeError("ECOS_API_KEY가 없습니다 — 워크플로 env 또는 .env를 확인하세요")
         path = Path(args.path) if args.path else latest_price_file()
         issues = check(json.loads(path.read_text(encoding="utf-8")), key) + check_stocks()
+        us = latest_us_file()
+        if us:
+            issues += us_issues(json.loads(us.read_text(encoding="utf-8")))
     except Exception as exc:  # noqa: BLE001 — 대조를 못 한 것도 알린다(조용히 넘기지 않는다)
         alert.send(f"한국장 종가 대조를 하지 못했습니다 — {exc}", "warn")
         raise

@@ -10,11 +10,14 @@ yfinance로 주요 지수/금리와 관심 종목의 종가, 등락률, 최근 �
 """
 from __future__ import annotations
 
+import datetime as dt
 import json
 import math
+import os
 import time
 from pathlib import Path
 
+import requests
 import yaml
 import yfinance as yf
 
@@ -134,61 +137,98 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
     }
 
 
-# 이것만 없으면 그날 발행을 포기합니다. 나머지는 빠져도 글은 나갑니다.
-# 2026-09-01에 원/달러 하나가 결측이라 지수 2개와 종목 27개를 통째로 버렸습니다.
-# 환율 한 줄을 못 쓰는 것과 그날 시황이 통째로 없는 것은 다른 크기의 손해입니다.
+# ── 두 번째 원천(2026-10-05) ───────────────────────────────────────────────────────
+# 야후 하나로 받던 종가를 공식 원천과 맞춘다 — 개별 종목·ETF는 나스닥 공식 일별 종가(12개 파일 240건이 야후와 모두 같았다),
+# 나스닥 종합은 나스닥, 다우는 FRED(미국 18:02 ET에 올라온다). S&P500(20:01 ET)·VIX는 수집 시각(18:20 ET)에 아직 없어
+# 그날 저녁 close_check가 맞춘다. 금리·금·원유·러셀은 두 번째 원천이 없다(야후 하나 — 대신 빼지 않는다).
+_NASDAQ = "https://api.nasdaq.com/api/quote/{symbol}/historical"
+_NASDAQ_HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/141 Safari/537.36",
+                   "Accept": "application/json"}
+_FRED = "https://api.stlouisfed.org/fred/series/observations"
+_FRED_SERIES = {"^DJI": "DJIA", "^GSPC": "SP500", "^IXIC": "NASDAQCOM", "^VIX": "VIXCLS"}
+
+
+def nasdaq_closes(symbol: str, day: str) -> dict[str, float]:
+    """나스닥 공식 일별 종가 {날짜: 종가}(그날까지 열흘). 종목이 아니면 ETF로, ^IXIC은 COMP 지수로 묻는다. 못 받으면 빈 dict."""
+    if symbol == "^IXIC":
+        tries = [("COMP", "index")]
+    elif symbol.startswith("^") or "=" in symbol:
+        return {}
+    else:
+        tries = [(symbol.replace("-", "."), "stocks"), (symbol.replace("-", "."), "etf")]
+    start = (dt.date.fromisoformat(day) - dt.timedelta(days=10)).isoformat()
+    for sym, cls in tries:
+        try:
+            body = requests.get(_NASDAQ.format(symbol=sym), headers=_NASDAQ_HEADERS, timeout=20,
+                                params={"assetclass": cls, "fromdate": start, "todate": day, "limit": 15}).json()
+        except (requests.RequestException, ValueError) as exc:
+            print(f"[안내] 나스닥 {sym}: {exc}")
+            return {}
+        rows = (((body or {}).get("data") or {}).get("tradesTable") or {}).get("rows") or []
+        if rows:
+            return {f"{r['date'][6:]}-{r['date'][:2]}-{r['date'][3:5]}": float(str(r["close"]).replace("$", "").replace(",", ""))
+                    for r in rows if r.get("date") and r.get("close")}
+    return {}
+
+
+def fred_closes(ticker: str, start: str) -> dict[str, float]:
+    """FRED 공식 종가 {날짜: 값}. 열쇠가 없으면 예외 — 조용히 건너뛰지 않는다."""
+    series = _FRED_SERIES.get(ticker)
+    if not series:
+        return {}
+    key = os.environ.get("FRED_API_KEY")
+    if not key:
+        raise RuntimeError("FRED_API_KEY가 없습니다 — 워크플로 env 또는 .env를 확인하세요")
+    body = requests.get(_FRED, timeout=20, params={"series_id": series, "api_key": key, "file_type": "json",
+                                                    "observation_start": start}).json()
+    return {o["date"]: float(o["value"]) for o in body.get("observations") or [] if o.get("value") not in (None, ".", "")}
+
+
+def second_close(ticker: str, day: str) -> float | None:
+    """그날 두 번째 원천의 종가. 없거나(아직 안 올라옴·원천 없음) 못 받으면 None."""
+    if ticker == "^DJI":
+        try:
+            return fred_closes(ticker, day).get(day)
+        except requests.RequestException as exc:
+            print(f"[안내] FRED {ticker}: {exc}")
+            return None
+    return nasdaq_closes(ticker, day).get(day)
+
+
+def _verify_second_source(entries: dict[str, dict]) -> list[str]:
+    """야후 종가를 두 번째 원천과 맞춘다. 다르면 문제 목록에, 같으면 close_sources에 둘 다 적는다."""
+    problems = []
+    for ticker, entry in entries.items():
+        other = second_close(ticker, str(entry.get("trading_date")))
+        if other is None:
+            entry["close_sources"] = ["yahoo"]
+            continue
+        if abs(other - float(entry["price"])) > max(0.011, abs(other) * 0.00001):
+            problems.append(f"{entry.get('name', ticker)}({ticker}): 야후 {entry['price']} / 공식 {other}")
+            continue
+        entry["close_sources"] = ["yahoo", "fred" if ticker == "^DJI" else "nasdaq"]
+    return problems
+
+
+# 거래일을 읽는 지수. 2026-10-05부터는 설정의 모든 항목이 필수다(하나라도 못 받으면 멈춘다) — 이 셋은 기준일 판정에만 쓴다.
 _REQUIRED = {"^DJI", "^GSPC", "^IXIC"}
 
 
-# 코어 종목이 몇 개까지 빠져도 그날 시세를 쓸 것인가.
-#
-# 부분 실패를 허용하면서 하한을 두지 않았더니, 코어가 대부분 빠져도 "정상"인
-# price_data가 나왔습니다. 그다음이 문제입니다 — editorial_facts는 **살아남은**
-# 종목 중에서 '그날 1위'를 고르므로, 빠진 종목이 진짜 1위였어도 알 수 없습니다.
-# 자료 장애가 '글 없음'이 아니라 '핵심 종목이 빠진 채 완성된 글'로 바뀝니다.
-#
-# 그래서 하한을 둡니다. 이 밑으로 내려가면 그날 시세를 쓰지 않고 실패시킵니다 —
-# 재시도 스케줄(:20/:27/:34)이 있으므로 한 번 실패해도 그날이 끝나지 않습니다.
-_MIN_CORE_COVERAGE = 0.8
 
 
 def _fetch_group(rows, extra=None) -> tuple[dict, list[str]]:
-    """설정의 각 줄을 받아오되, 필수가 아닌 항목의 실패는 건너뜁니다."""
+    """설정의 각 줄을 받아온다. 실패한 항목은 (이유와 함께) 따로 돌려준다 — 2026-10-05부터 부른 쪽이 하나라도 있으면 멈춘다."""
     out: dict[str, dict] = {}
     missing: list[str] = []
     for row in rows:
         ticker = row["ticker"]
         try:
             entry = _fetch_one(**row)
-        except Exception as exc:  # noqa: BLE001
-            if ticker in _REQUIRED:
-                raise
-            missing.append(f"{row.get('name', ticker)}({ticker})")
-            print(f"[안내] 시세 제외 — {row.get('name', ticker)}({ticker}): {exc}")
+        except Exception as exc:  # noqa: BLE001 — 센다: 부른 쪽이 모아서 멈춘다
+            missing.append(f"{row.get('name', ticker)}({ticker}): {exc}")
             continue
         out[ticker] = {**entry, **(extra(row) if extra else {})}
     return out, missing
-
-
-def _require_core_coverage(got: dict, configured: list, missing: list[str]) -> None:
-    """코어 종목이 하한보다 많이 빠지면 그날 시세를 쓰지 않습니다.
-
-    빠진 종목의 등락률은 알 수 없으므로, 그 종목이 그날 1위였는지도 알 수 없습니다.
-    editorial_facts의 '그날 1위를 다뤘는가' 검사가 살아남은 종목만 보고 통과해
-    버리기 때문에, 여기서 막지 않으면 자료 장애가 '핵심 종목이 빠진 완성된 글'로
-    조용히 바뀝니다.
-    """
-    total = len(configured)
-    if not total:
-        return
-    ratio = len(got) / total
-    if ratio < _MIN_CORE_COVERAGE:
-        raise ValueError(
-            f"코어 종목을 {len(got)}/{total}개만 받았습니다"
-            f"({ratio:.0%} < {_MIN_CORE_COVERAGE:.0%}). 빠진 종목이 그날 1위였는지 "
-            f"확인할 수 없으므로 이 시세로는 글을 쓰지 않습니다. "
-            f"빠진 항목: {', '.join(missing) or '(기록 없음)'}"
-        )
 
 
 def fetch_all() -> dict:
@@ -204,16 +244,19 @@ def fetch_all() -> dict:
     watchlist, miss_stock = _fetch_group(
         config["watchlist"], extra=lambda row: {"source": "core"}
     )
-    _require_core_coverage(watchlist, config["watchlist"], miss_macro + miss_stock)
-    # 거래일은 필수 지수에서 읽습니다. 선택 항목이 빠져도 기준일은 흔들리지
-    # 않아야 합니다.
+    # 2026-10-05: 하나도 빼지 않는다. 전에는 지수 셋만 필수였고 코어는 80%까지 빠져도 글을 냈다 — 데이터가 중요한 사이트에서
+    # 빼는 것은 누락이다. 야후는 항목마다 4분까지 다시 묻는다(_fetch_one). 그래도 못 받은 항목은 이름을 모두 적고 멈춘다.
+    if miss_macro or miss_stock:
+        raise ValueError(f"미국장 시세 {len(miss_macro) + len(miss_stock)}개를 받지 못했습니다 — 빼지 않고 멈춥니다: "
+                         + " / ".join(miss_macro + miss_stock))
+    # 거래일은 필수 지수에서 읽습니다.
     trading_date = required_trading_date(macro)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
-    missing = miss_macro + miss_stock
-    if missing:
-        print(f"[안내] 시세에서 빠진 항목 {len(missing)}개: {', '.join(missing)}")
+    problems = _verify_second_source(macro) + _verify_second_source(watchlist)
+    if problems:
+        raise ValueError(f"야후 종가가 공식 원천과 다른 항목 {len(problems)}개 — 쓰지 않고 멈춥니다: " + " / ".join(problems))
     return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date,
-            "missing": missing}
+            "missing": []}
 
 
 def _fetch_dynamic_tier(
@@ -221,9 +264,7 @@ def _fetch_dynamic_tier(
 ) -> dict[str, dict]:
     """그날 거래대금 상위 종목을 코어 워치리스트 뒤에 붙입니다.
 
-    한국장(fetch_kr._fetch_dynamic_tier)과 같은 구조입니다. 코어와 달리 종목
-    하나가 실패해도 그 종목만 빼고 진행하고, 기준일이 코어와 다른 종목도
-    버립니다 — 이름도 모르는 종목 하나 때문에 그날 발행이 멈추면 안 됩니다.
+    2026-10-05부터 코어와 같다 — 조회 실패·기준일 차이를 빼지 않고 이름을 적고 멈춘다(그날 거래대금 상위가 빠진 글은 누락이다).
     """
     settings = config.get("dynamic") or {}
     if not settings.get("enabled"):
@@ -235,23 +276,32 @@ def _fetch_dynamic_tier(
         fetch_movers.clean_us_name(key).lower(): value
         for key, value in (config.get("name_ko_map") or {}).items()
     }
-    try:
-        movers = fetch_movers.fetch_top_dollar_volume_us(
-            exclude_tickers=set(core),
-            count=settings.get("count", 6),
-            min_market_cap=settings.get("min_market_cap", 10_000_000_000),
-            # 스크리너가 당일 데이터로 갱신됐는지 로그로 확인하려고 넘깁니다.
-            reference_prices={
-                ticker: float(entry["price"])
-                for ticker, entry in list(core.items())[:3]
-                if entry.get("price")
-            },
-        )
-    except Exception as exc:
-        print(f"[경고] 거래대금 상위 종목을 가져오지 못해 코어 워치리스트로만 진행합니다: {exc}")
-        return {}
+    movers = None
+    for attempt, delay in enumerate((0, 10, 30)):
+        if delay:
+            time.sleep(delay)
+        try:
+            movers = fetch_movers.fetch_top_dollar_volume_us(
+                exclude_tickers=set(core),
+                count=settings.get("count", 6),
+                min_market_cap=settings.get("min_market_cap", 10_000_000_000),
+                # 스크리너가 당일 데이터로 갱신됐는지 로그로 확인하려고 넘깁니다.
+                reference_prices={
+                    ticker: float(entry["price"])
+                    for ticker, entry in list(core.items())[:3]
+                    if entry.get("price")
+                },
+            )
+            if movers:
+                break
+            print(f"[안내] 거래대금 상위 목록이 비었습니다 — 다시 묻습니다({attempt + 1}/3)")
+        except Exception as exc:  # noqa: BLE001 — 센다: 세 번 모두 실패하면 멈춘다
+            print(f"[안내] 거래대금 상위 조회 실패 {attempt + 1}/3: {exc}")
+    if not movers:
+        raise ValueError("그날 거래대금 상위 종목을 세 번 모두 받지 못했습니다 — 편입 종목을 빼고 쓰지 않고 멈춥니다.")
 
     added: dict[str, dict] = {}
+    failed: list[str] = []
     for mover in movers:
         ticker, name_en = mover["ticker"], mover["name"]
         name_ko = name_ko_map.get(name_en.lower())
@@ -264,14 +314,11 @@ def _fetch_dynamic_tier(
             entry = _fetch_one(
                 ticker=ticker, name=name_ko or name_en, name_en=name_en
             )
-        except Exception as exc:
-            print(f"[안내] 동적 편입 제외 — {name_en}({ticker}) 시세 조회 실패: {exc}")
+        except Exception as exc:  # noqa: BLE001 — 센다: 아래에서 모아 멈춘다
+            failed.append(f"{name_en}({ticker}): {exc}")
             continue
         if entry.get("trading_date") != trading_date:
-            print(
-                f"[안내] 동적 편입 제외 — {name_en}({ticker}) 기준일 "
-                f"{entry.get('trading_date')}이 코어({trading_date})와 다릅니다."
-            )
+            failed.append(f"{name_en}({ticker}): 기준일 {entry.get('trading_date')}이 코어({trading_date})와 다릅니다")
             continue
         added[ticker] = {
             **entry,
@@ -280,6 +327,8 @@ def _fetch_dynamic_tier(
             "sector": mover["sector"],
         }
 
+    if failed:
+        raise ValueError(f"편입 종목 {len(failed)}개의 시세를 받지 못했습니다 — 빼지 않고 멈춥니다: " + " / ".join(failed))
     if added:
         names = ", ".join(entry["name"] for entry in added.values())
         print(f"[안내] 그날 거래대금 상위로 편입: {names}")

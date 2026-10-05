@@ -41,9 +41,9 @@ _NAVER_USDKRW_URL = "https://api.stock.naver.com/marketindex/exchange/FX_USDKRW"
 _NAVER_USDKRW_PRICES_URL = f"{_NAVER_USDKRW_URL}/prices"
 
 
-# 이것만 없으면 그날 발행을 포기합니다. 나머지는 빠져도 글은 나갑니다.
-# 2026-09-01에 원/달러 하나가 결측이라 지수 2개와 종목 27개를 통째로 버렸습니다.
-# 환율 한 줄을 못 쓰는 것과 그날 시황이 통째로 없는 것은 다른 크기의 손해입니다.
+# 거래일을 읽는 지수. 2026-10-05부터는 환율까지 설정의 모든 항목을 빼지 않는다(받지 못하면 다시 묻고, 그래도 안 되면 멈춘다).
+# 2026-09-01에 원/달러 결측(그때는 FinanceDataReader)으로 하루를 잃은 뒤 환율을 빼고 진행하게 했었다 — 지금 원천은 하나은행
+# 고시(네이버)이고 세 번 다시 묻는다.
 _REQUIRED = {"KS11", "KQ11"}
 
 
@@ -496,6 +496,19 @@ def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None,
     }
 
 
+def _retry(fn, what: str, delays: tuple[int, ...] = (10, 30, 60)):
+    """세 번 더(10·30·60초 뒤) 해 보고 그래도 안 되면 마지막 예외를 올린다."""
+    for attempt, delay in enumerate((0,) + delays):
+        if delay:
+            time.sleep(delay)
+        try:
+            return fn()
+        except (requests.RequestException, ValueError, KeyError) as exc:
+            last = exc
+            print(f"[안내] {what} 재시도 {attempt + 1}/{len(delays) + 1}: {exc}")
+    raise last
+
+
 def _fetch_usdkrw_reference(
     ticker: str, name: str, name_en: str = "", lookback: int = 7, unit: str = "", **_ignore
 ) -> dict:
@@ -629,7 +642,7 @@ def fetch_all() -> dict:
         ticker = row["ticker"]
         try:
             if ticker == "USD/KRW":
-                macro[ticker] = _fetch_usdkrw_reference(**row)
+                macro[ticker] = _retry(lambda: _fetch_usdkrw_reference(**row), f"{ticker} 하나은행 고시환율")
                 continue
             if ticker in _NAVER_INDEX_CODES:
                 entry = _apply_final_index_quote(
@@ -639,11 +652,12 @@ def fetch_all() -> dict:
             else:
                 entry = _fetch_one(**row)
             macro[ticker] = entry
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:  # noqa: BLE001 — 센다: 아래에서 모아 멈춘다(2026-10-05부터 환율도 빼지 않는다)
             if ticker in _REQUIRED:
                 raise
-            missing.append(f"{row.get('name', ticker)}({ticker})")
-            print(f"[안내] 시세 제외 — {row.get('name', ticker)}({ticker}): {exc}")
+            missing.append(f"{row.get('name', ticker)}({ticker}): {exc}")
+    if missing:
+        raise ValueError(f"한국장 지표 {len(missing)}개를 받지 못했습니다 — 빼지 않고 멈춥니다: " + " / ".join(missing))
     # 코어 종목은 하나도 빼지 않는다(2026-10-05). 전에는 80%까지 빠져도 글을 냈다 — 데이터가 중요한 사이트에서 빼는 것은
     # 누락이다. 다음 일별 시세를 세 번 다시 묻고(_daum_get), 그래도 못 받은 종목이 있으면 이름을 모두 적고 멈춘다.
     # 재시도 예약(:27/:34)이 다시 돈다. sector는 원고와 업종 그래픽에서 필요하므로 설정에서 실어 나른다.
@@ -672,10 +686,8 @@ def fetch_all() -> dict:
     # 오늘 값은 KRX 정규장 확정 종가 — 네이버 사진과 다음, 두 원천이 같아야 쓴다(2026-10-05).
     watchlist = _apply_krx_closes(watchlist, trading_date, prev_day)
     fetch_foreign_flows.attach_foreign_flows(watchlist, trading_date)
-    if missing:
-        print(f"[안내] 시세에서 빠진 항목 {len(missing)}개: {', '.join(missing)}")
     return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date,
-            "missing": missing}
+            "missing": []}
 
 
 _YAHOO_SUFFIX = {"KOSPI": ".KS", "KOSDAQ": ".KQ"}

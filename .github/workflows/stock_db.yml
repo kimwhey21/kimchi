@@ -69,6 +69,9 @@ jobs:
       - name: 시세·상세 받아 워드프레스로
         run: python -m src.stock_db run --push
         env:
+          # 다음 금융·사진 대조에서 한 원천으로만 쓴 종목이 있으면 운영 대화로 알린다(2026-10-05)
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}
           WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
           WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
           WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}

@@ -113,6 +113,9 @@ jobs:
         # 됩니다 — 코드는 그대로 있고 자동 실행에서만 뺐습니다. 그래서 이 단계에는
         # 워드프레스 시크릿을 넘기지 않습니다.
         run: python -m src.main --market ${{ steps.market.outputs.market }} --fetch-only
+        env:
+          # 미국장 다우 종가를 FRED 공식 값과 맞춘다(fetch_us.second_close, 2026-10-05). 생성형 AI 키가 아니다.
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
 
       - name: 재료(이야기 엔진) 뽑기
         # 시황 루틴이 시세와 함께 읽는 재료(2026-09-08). 루틴 샌드박스는 야후가 막혀 밸류에이션·등급변경·실적일정·계절성

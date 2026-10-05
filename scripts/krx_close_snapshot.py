@@ -7,6 +7,10 @@
 (2026-09-28 첫 실전에서 세 번 모두 멈춤; 카카오 nv가 17:40에 33,950→34,000으로 바뀌는 것을 확인). 정규장 종가를 읽을 수 있는
 때는 15:30~16:00뿐이라 그때 찍어 두고, fetch_kr가 그 파일을 쓴다. 대상: 코어 워치리스트 + 편입 후보(두 시장 시가총액 상위 universe).
 krx_close.yml이 15:32·15:40·15:48에 돌리고, 이미 찍었으면 건너뛴다.
+
+2026-10-05부터 **전 종목**(코스피·코스닥 주식 2,700여 개)의 종가·기준가를 `close`에 함께 남긴다 — 본진 종목 페이지(stock_db)가
+다음 금융 일별 시세와 대조하는 두 번째 원천이다(전에는 종목 페이지가 넥스트레이드까지 합친 값을 '거래소 종가'로 보여 줬다).
+`quotes`(코어+편입 후보, 폴링 필드 그대로)는 fetch_kr가 쓰고, `close`는 {코드: [종가, 기준가]}로 짧게 적는다.
 """
 from __future__ import annotations
 
@@ -24,6 +28,7 @@ DIR = ROOT / "data" / "krx_close"
 KST = dt.timezone(dt.timedelta(hours=9))
 WINDOW = (dt.time(15, 31), dt.time(16, 0))
 KEEP = ("nv", "pcv", "cv", "cr", "rf", "ms", "sv")
+FULL_MARKET = 2000   # 전 종목 사진이 이보다 적으면(목록을 못 받은 실행) 다음 예약이 다시 찍는다
 
 
 def in_window(now: dt.datetime) -> bool:
@@ -43,25 +48,46 @@ def codes() -> list[str]:
     return list(dict.fromkeys(core + extra))
 
 
+def all_codes() -> list[str]:
+    """코스피·코스닥 전 종목(주식만) — stock_db와 같은 목록. 못 받으면 빈 목록(코어·편입 후보 사진은 그대로 찍는다)."""
+    import requests
+    from src import stock_db
+    session = requests.Session()
+    session.headers.update(stock_db.UA)
+    try:
+        return [r["code"] for r in stock_db.list_market(session, "KOSPI") + stock_db.list_market(session, "KOSDAQ")]
+    except Exception as error:   # noqa: BLE001 — 전 종목을 못 받아도 코어 사진은 찍는다. 이유는 찍고, stock_db가 사진 없음을 알린다
+        print(f"[경고] 전 종목 목록을 못 받았습니다 — 종목 페이지 대조용 사진은 빠집니다: {error!r}")
+        return []
+
+
 def main(now: dt.datetime | None = None) -> int:
     now = now or dt.datetime.now(KST)
     if not in_window(now):
         print(f"{now:%H:%M} — 정규장 종가를 읽을 수 있는 창(15:31~15:59, 평일) 밖이라 찍지 않습니다.")
         return 0
     path = DIR / f"{now.date().isoformat()}.json"
-    if path.exists():
-        print(f"{path.name} 이미 있음 — 건너뜁니다.")
+    before = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+    if before and len(before.get("close") or {}) >= FULL_MARKET:
+        print(f"{path.name} 이미 있음(전 종목 {len(before['close'])}개) — 건너뜁니다.")
         return 0
     wanted = codes()
-    quotes = fetch_kr._fetch_naver_item_quotes(wanted)
+    everything = list(dict.fromkeys(wanted + all_codes()))
+    quotes = fetch_kr._fetch_naver_item_quotes(everything)
     if dt.datetime.now(KST).time() >= WINDOW[1]:   # 받는 사이 16:00을 넘겼으면 시간외 값이 섞일 수 있다
         print("받는 사이 16:00을 넘겨 버립니다.")
         return 1
-    rows = {c: {k: q.get(k) for k in KEEP} for c, q in quotes.items() if q.get("nv")}
+    rows = {c: {k: quotes[c].get(k) for k in KEEP} for c in wanted if (quotes.get(c) or {}).get("nv")}
+    close = {c: [q["nv"], q.get("sv") or q.get("pcv")] for c, q in quotes.items() if q.get("nv") and (q.get("sv") or q.get("pcv"))}
+    if before and len(before.get("close") or {}) >= len(close):
+        print(f"{path.name}: 앞 사진(전 종목 {len(before.get('close') or {})}개)이 이번({len(close)}개)보다 많아 그대로 둡니다.")
+        return 0
     DIR.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({"at": dt.datetime.now(KST).isoformat(timespec="seconds"), "quotes": rows},
-                               ensure_ascii=False, indent=0, sort_keys=True) + "\n", encoding="utf-8")
-    print(f"{path.name}: {len(rows)}/{len(wanted)}종목 정규장 종가를 남겼습니다.")
+    body = json.dumps({"at": dt.datetime.now(KST).isoformat(timespec="seconds"), "quotes": rows},
+                      ensure_ascii=False, indent=0, sort_keys=True)
+    body = body[:-1] + ',\n"close":' + json.dumps(close, separators=(",", ":"), sort_keys=True) + "\n}"
+    path.write_text(body + "\n", encoding="utf-8")
+    print(f"{path.name}: 코어·편입 후보 {len(rows)}/{len(wanted)}종목, 전 종목 {len(close)}/{len(everything)}종목 정규장 종가를 남겼습니다.")
     return 0 if rows else 1
 
 

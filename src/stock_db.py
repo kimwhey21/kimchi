@@ -39,6 +39,8 @@ from pathlib import Path
 import requests
 import yaml
 
+from src import alert
+
 ROOT = Path(__file__).resolve().parent.parent
 META = ROOT / "data" / "stock_meta.json"
 WATCHLIST = ROOT / "config" / "watchlist_kr.yaml"
@@ -185,11 +187,11 @@ def base_code(code: str) -> str:
 
 
 # ── 네이버 ───────────────────────────────────────────────────────────────────────────
-def _get(session: requests.Session, url: str, *, params=None, tries: int = 4) -> requests.Response:
+def _get(session: requests.Session, url: str, *, params=None, tries: int = 4, headers: dict | None = None) -> requests.Response:
     last = None
     for attempt in range(tries):
         try:
-            r = session.get(url, params=params, timeout=25)
+            r = session.get(url, params=params, timeout=25, **({"headers": headers} if headers else {}))
             if r.status_code == 200:
                 return r
             last = f"HTTP {r.status_code}"
@@ -294,6 +296,132 @@ def detail(session: requests.Session, code: str) -> dict:
             "flows": flows, "peers": peers, "fin": fin, "hist": hist}
 
 
+# ── 다음 금융: KRX 정규장 값 (2026-10-05) ─────────────────────────────────────────────
+# 네이버 목록·상세·차트의 가격은 거래소+넥스트레이드 통합값이다. 종목 페이지는 'At close · Korea Exchange'라고 쓰면서
+# 10/2 SK하이닉스를 ₩1,842,000 +0.49%(거래소 ₩1,841,000 +0.44%), 삼성바이오로직스를 −3.67%(거래소 −4.51%)로 보여 줬다.
+# 17:05 실행은 넥스트레이드가 20:00까지 움직이는 중간 값이었다. 가격·등락·거래량·거래대금·시가총액·차트·52주 범위는
+# 다음 일별 시세(KRX 정규장, 9/30~10/2 사진 600건 모두 일치)에서 받고, 15:3x 전 종목 사진(data/krx_close)과 대조한다.
+DAUM = "https://finance.daum.net/api"
+SNAPSHOTS = ROOT / "data" / "krx_close"
+DAUM_PAUSE = 0.1
+DAUM_TRIP = 5           # 다음이 연달아 이만큼 실패하면 이번 실행에서는 더 묻지 않는다(종목마다 26초씩 기다리지 않게)
+
+
+class Daum:
+    """다음 금융 요청 — 연속 실패를 세다가 DAUM_TRIP번이면 멈춘다. 실패한 종목은 `failed`에 남는다."""
+
+    def __init__(self, session: requests.Session):
+        self.session, self.streak, self.down, self.failed = session, 0, None, []
+
+    def get(self, path: str, code: str, params: dict | None = None) -> dict | None:
+        if self.down:
+            self.failed.append(code)
+            return None
+        try:
+            body = _get(self.session, f"{DAUM}/{path}", params=params, tries=2,
+                        headers={"Referer": f"https://finance.daum.net/quotes/A{code}"}).json()
+        except (StockDBError, ValueError) as error:
+            self.failed.append(code)
+            self.streak += 1
+            if self.streak >= DAUM_TRIP:
+                self.down = f"{DAUM_TRIP}번 연달아 실패 — 마지막: {error}"
+                print(f"[경고] 다음 금융이 {self.down}. 이번 실행은 사진만으로 확인합니다.", flush=True)
+            return None
+        self.streak = 0
+        time.sleep(DAUM_PAUSE)
+        return body
+
+    def days(self, code: str, rows: int = 1) -> list[dict]:
+        """일별 시세, 오래된 것부터 [{d, c, base, o, h, l, v, val, shares}]. `base`는 거래소 기준가(배당락 등으로 전일 종가와 다를 수 있다)."""
+        body = self.get(f"quote/A{code}/days", code, {"symbolCode": f"A{code}", "page": 1, "perPage": rows, "pagination": "true"})
+        out = []
+        for r in (body or {}).get("data") or []:
+            if not (r.get("date") and r.get("tradePrice")):
+                continue
+            base = r.get("prevClosingPrice")
+            if not base and r.get("change") == "EVEN" and not r.get("accTradeVolume"):
+                # 거래정지(2026-10-05 전 종목 시험: 삼부토건·진원생명과학 등) — 다음은 기준가를 0으로 준다. 체결이 없으니 가격 그대로·0%
+                base = r["tradePrice"]
+            if base:
+                out.append({"d": str(r["date"])[:10], "c": float(r["tradePrice"]), "base": float(base),
+                            "o": r.get("openingPrice"), "h": r.get("highPrice"), "l": r.get("lowPrice"),
+                            "v": r.get("accTradeVolume"), "val": r.get("accTradePrice"), "shares": r.get("listedSharesCount")})
+        return sorted(out, key=lambda r: r["d"])
+
+    def range52(self, code: str) -> tuple[float | None, float | None]:
+        body = self.get(f"quotes/A{code}", code, {"summary": "false", "changeStatistics": "true"}) or {}
+        return body.get("low52wPrice"), body.get("high52wPrice")
+
+
+def snapshot_close(day: str, folder: Path | None = None) -> dict[str, list] | None:
+    """그날 15:3x 전 종목 사진 {코드: [종가, 기준가]}. 파일이나 `close`가 없으면 None."""
+    path = (folder or SNAPSHOTS) / f"{day}.json"
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8")).get("close")
+
+
+def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str, dict | None],
+              fallback_day: str = "") -> tuple[list[str], list[str]]:
+    """목록의 가격 칸을 KRX 정규장 값으로 바꾼다. 돌려주는 것: (멈출 문제, 알릴 것).
+
+    - 다음 일별 시세가 있으면 그 마지막 줄을 쓰고, 그날 사진이 있으면 종가·기준가가 같아야 한다(다르면 멈춘다).
+    - 다음이 없으면 그날(다른 종목들의 날짜) 사진으로 — 거래량·거래대금은 네이버 통합값이 남는다고 알린다. 사진도 없으면 멈춘다.
+    """
+    problems, notes = [], []
+    day = max((rows[-1]["d"] for rows in daily.values() if rows), default=fallback_day)
+    one_source = 0
+    for row in listing:
+        code, rows = row["code"], daily.get(row["code"]) or []
+        if rows:
+            last = rows[-1]
+            snap = (snaps.get(last["d"]) or {}).get(code)
+            if snap and (abs(float(snap[0]) - last["c"]) > 0.5 or abs(float(snap[1]) - last["base"]) > 0.5):
+                problems.append(f"{code}: 다음 {last['c']:,.0f}(기준가 {last['base']:,.0f}) / 사진 {float(snap[0]):,.0f}(기준가 {float(snap[1]):,.0f})")
+                continue
+            one_source += snap is None
+            close, base = last["c"], last["base"]
+            row.update(close=close, chg=close - base, pct=round((close / base - 1) * 100, 2), date=last["d"])
+            if last.get("v") is not None:
+                row["volume"] = float(last["v"])
+            if last.get("val") is not None:
+                row["value"] = float(last["val"])
+            if last.get("shares"):
+                row["mcap"] = close * float(last["shares"])
+            continue
+        snap = (snaps.get(day) or {}).get(code)
+        if not snap:
+            problems.append(f"{code}: 다음 일별 시세도 {day or '그날'} 사진도 없습니다")
+            continue
+        close, base = float(snap[0]), float(snap[1])
+        if row.get("close") and row.get("mcap"):
+            row["mcap"] = row["mcap"] / row["close"] * close
+        row.update(close=close, chg=close - base, pct=round((close / base - 1) * 100, 2), date=day)
+        notes.append(code)
+    if notes:
+        notes = [f"다음 일별 시세를 못 받아 사진 하나로 쓴 종목 {len(notes)}개(거래량·거래대금은 네이버 통합값): {', '.join(notes[:15])}"]
+    if one_source:
+        notes.append(f"그날 사진이 없어 다음 하나로만 확인한 종목 {one_source}개 — 사진({day})을 확인하십시오")
+    return problems, notes
+
+
+def krx_detail(detail_row: dict, rows: list[dict], range52: tuple[float | None, float | None]) -> dict:
+    """상세의 차트 종가·52주 범위·수급 금액의 종가를 KRX 값으로. 외국인 보유율(fr)은 네이버 차트 그대로(가격이 아니다)."""
+    if not rows:
+        return detail_row
+    hist = detail_row.get("hist") or {}
+    fr = dict(zip(hist.get("d") or [], hist.get("fr") or []))
+    rows = rows[-HISTORY_DAYS:]
+    closes = {r["d"]: r["c"] for r in rows}
+    out = {**detail_row, "hist": {"d": [r["d"] for r in rows], "c": [r["c"] for r in rows], "fr": [fr.get(r["d"]) for r in rows]}}
+    low, high = range52
+    if low and high:
+        # 다음 52주 값은 분할·권리락을 반영한 수정주가라 소수가 붙는다(삼성바이오로직스 995,279.216) — 원 단위로
+        out["r"] = {**(detail_row.get("r") or {}), "low52": float(round(low)), "high52": float(round(high))}
+    out["flows"] = [{**f, "close": closes.get(f.get("d"), f.get("close"))} for f in detail_row.get("flows") or []]
+    return out
+
+
 def _index_row(b: dict) -> dict:
     chg = _num(b.get("compareToPreviousClosePrice")) or 0.0
     if (b.get("compareToPreviousPrice") or {}).get("name") in ("FALLING", "LOWER_LIMIT"):
@@ -375,16 +503,16 @@ SKHY_START = "2026-07-10"   # 나스닥 첫 거래일(야후 이력의 첫 날)
 def build_skhy(session: requests.Session) -> dict | None:
     """SKHY(나스닥)와 서울 원주의 가격 차이를 **같은 날짜끼리** 짝지어 상장일부터 늘어놓는다 (2026-09-28).
 
-    프리미엄 = SKHY 종가 × 10 × 그날 원달러 ÷ 그날 서울 종가 − 1. 서울은 종목 페이지와 같은 네이버 일봉 종가, 환율은 야후
+    프리미엄 = SKHY 종가 × 10 × 그날 원달러 ÷ 그날 서울 종가 − 1. 서울은 종목 페이지와 같은 KRX 정규장 종가(다음 일별 시세), 환율은 야후
     KRW=X 일봉(SKHY 종가와 같은 날). 서울이 쉰 날·나스닥이 쉰 날은 짝이 없어 빠진다. 받지 못하면 None — 페이지와 홈 칸을 비운다."""
     try:
         import yfinance as yf
         usd = {str(i.date()): float(v) for i, v in yf.Ticker("SKHY").history(period="1y")["Close"].items()}
         fxs = {str(i.date()): float(v) for i, v in yf.Ticker("KRW=X").history(period="1y")["Close"].items()}
-        start = SKHY_START.replace("-", "")
-        rows = _get(session, f"https://api.stock.naver.com/chart/domestic/item/000660/day?startDateTime={start}0000"
-                             f"&endDateTime={dt.date.today():%Y%m%d}2359").json()
-        seoul = {f"{r['localDate'][:4]}-{r['localDate'][4:6]}-{r['localDate'][6:]}": float(r["closePrice"]) for r in rows}
+        # 서울 종가는 KRX 정규장 값(다음 일별 시세, 2026-10-05) — 네이버 차트는 넥스트레이드까지 합친 값이었다
+        seoul = {r["d"]: r["c"] for r in Daum(session).days("000660", 250)}
+        if not seoul:
+            raise StockDBError("다음에서 SK하이닉스 일별 시세를 받지 못했습니다")
     except Exception as error:  # noqa: BLE001 — 페이지 하나 때문에 전체를 멈추지 않는다. 이유는 찍는다
         print(f"[경고] SKHY 괴리율 이력을 못 구했습니다: {error!r}")
         return None
@@ -752,6 +880,8 @@ KST = dt.timezone(dt.timedelta(hours=9))
 def in_krx_session(now: dt.datetime | None = None) -> bool:
     """평일 09:00~15:30(한국 시각)이면 True — 장중에 받으면 장중 가격이 '종가'로 올라간다."""
     now = (now or dt.datetime.now(KST)).astimezone(KST)
+    if now.date().isoformat() in KRX_HOLIDAYS:      # 휴장일 낮에 손으로 돌릴 때 장중으로 오인하지 않게(2026-10-05 개천절 대체 휴일)
+        return False
     return now.weekday() < 5 and dt.time(9, 0) <= now.time() < dt.time(15, 30)
 
 
@@ -1004,6 +1134,35 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
             print(f"  상세 {n}/{len(targets)} (실패 {len(failed)})", flush=True)
     if len(failed) > max(20, len(targets) * 0.1):
         raise StockDBError(f"상세 실패가 {len(failed)}/{len(targets)}건 — 네이버가 막혔을 수 있습니다. 올리지 않습니다.")
+    # 가격은 KRX 정규장 값으로(2026-10-05) — 다음 일별 시세 + 15:3x 전 종목 사진. 하나라도 어긋나면 올리지 않는다.
+    daum = Daum(session)
+    wanted = set(details)
+    daily = {}
+    for n, row in enumerate(listing, 1):
+        daily[row["code"]] = daum.days(row["code"], HISTORY_DAYS if row["code"] in wanted else 1)
+        if n % 500 == 0:
+            print(f"  다음 일별 시세 {n}/{len(listing)} (실패 {len(daum.failed)})", flush=True)
+    snap_days = sorted(p.stem for p in SNAPSHOTS.glob("20*.json")) if SNAPSHOTS.exists() else []
+    fallback_day = next((d for d in reversed(snap_days) if snapshot_close(d)), "")
+    needed = {rows[-1]["d"] for rows in daily.values() if rows} | ({fallback_day} if fallback_day else set())
+    snaps = {d: snapshot_close(d) for d in needed}
+    problems, notes = apply_krx(listing, daily, snaps, fallback_day)
+    if problems:
+        raise StockDBError(f"KRX 값이 두 원천에서 맞지 않거나 없는 종목 {len(problems)}개 — 올리지 않습니다: " + " / ".join(problems[:20]))
+    no_hist = []
+    for code in list(details):
+        rows = daily.get(code) or []
+        if not rows:
+            no_hist.append(code)
+        details[code] = krx_detail(details[code], rows, daum.range52(code) if rows else (None, None))
+    if no_hist:
+        notes.append(f"차트·52주 범위를 다음에서 못 받아 네이버 통합값이 남은 종목 {len(no_hist)}개: {', '.join(no_hist[:15])}")
+    if daum.down:
+        notes.append(f"다음 금융: {daum.down}")
+    if notes:
+        print("[경고] " + " / ".join(notes), flush=True)
+        if do_push:
+            alert.send("종목 DB: " + " / ".join(notes), "warn")
     day_now = max((r.get("date") or "" for r in listing), default="")
     idx = market_index(session, day_now)
     if idx["KOSPI"].get("foreign_net_eok") is None and FOREIGN_HISTORY.exists():   # 장 전 실행 — 기록된 그날 값으로
