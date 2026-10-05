@@ -794,6 +794,12 @@ def institutions(top: int = 12) -> dict:
                 })
         time.sleep(0.4)
 
+    # 펀드마다 최신 보고 분기가 다르다 — 6/30 보고를 늦게 낸(13F-NT) 퍼싱스퀘어의 3/31 보고가 6/30 표에 섞여 원고 7편이
+    # '6월 말 신규 편입'으로 썼다(2026-10-06, 감사). 가장 최근 분기를 기준으로 삼고, 그보다 오래된 보고만 있는 펀드는 표에서 빼
+    # '지연 공시'로 따로 보여 준다.
+    latest = max((m["quarter"] for m in moves), default="")
+    stale = sorted({(m["fund"], m["quarter"]) for m in moves if m["quarter"] < latest})
+    moves = [m for m in moves if m["quarter"] == latest]
     added = sorted([m for m in moves if m["change"] > 0],
                    key=lambda m: -m["value_usd"])[:top]
     trimmed = sorted([m for m in moves if m["change"] < 0],
@@ -801,7 +807,8 @@ def institutions(top: int = 12) -> dict:
     return {"engine": "institutions", "asof": dt.date.today().isoformat(),
             "funds": len(FUNDS) - len(failed), "failed": failed,
             "fetch_failed": len(failed),
-            "added": added, "trimmed": trimmed,
+            "added": added, "trimmed": trimmed, "quarter": latest,
+            "stale": [{"fund": f, "quarter": q} for f, q in stale],
             "note": "13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 "
                     "지금의 포지션이 아닙니다."}
 
@@ -1093,8 +1100,11 @@ def _print(result: dict) -> None:
                       f"{row['stocks']:>3}종목 중 상승 {row['up']:>3} / 하락 {row['down']:>3}")
         print("  " + result["note"])
     elif engine == "institutions":
-        print(f"[기관 보유 변동] 펀드 {result['funds']}곳 · 13F "
-              f"{result['added'][0]['quarter'] if result['added'] else '?'} 기준")
+        print(f"[기관 보유 변동] 펀드 {result['funds']}곳 · 13F {result.get('quarter') or '?'} 기준 "
+              f"(직전 분기 대비 — 모든 줄이 이 분기 보고다)")
+        if result.get("stale"):
+            print("  ※ 지연 공시(이 분기 보고가 아직 없어 표에서 뺐다 — 이 펀드의 숫자를 위 분기 것처럼 쓰지 마십시오): "
+                  + ", ".join(f"{s['fund']}(최신 {s['quarter']})" for s in result["stale"]))
         if result["failed"]:
             print(f"  ※ 받지 못한 곳: {', '.join(result['failed'])}")
         print("  늘린 쪽")
