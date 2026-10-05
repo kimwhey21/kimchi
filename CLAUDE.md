@@ -162,7 +162,7 @@
 - **빈도는 그 낱말이 어느 자리에 오는지를 알려주지 않는다.**
 - **문서에 적힌 수치를 목표로 삼지 않는다.** `scripts/compare_to_benchmark.py`는 코퍼스를 그 자리에서 다시 재고, 결과를 "맞춰야
   할 기준이 아니다"라고 못박아 출력한다. 코퍼스는 이 컴퓨터에만 있으므로(남의 글을 저장소에 올리지 않는다) 클라우드 루틴은
-  `--export-stats`로 내보낸 집계 파일 `data/benchmark_stats.json`을 읽는다 — 이 맥의 야간 작업(`scripts/bench_nightly.sh`, launchd
+  `--export-stats`로 내보낸 집계 파일 `data/benchmark_stats.json`을 읽는다 — 이 맥의 야간 작업(`scripts/bench_nightly.py`, launchd
   23:10)이 집계값이 바뀐 날만 커밋·푸시한다.
 
 ### 사진 (`src/photo_search.py`)
