@@ -150,6 +150,7 @@ class IndexCheckTest(unittest.TestCase):
         with mock.patch.dict("os.environ", {"ECOS_API_KEY": "k"}), \
                 mock.patch.object(close_check, "check", return_value=["KOSPI: 지수 이력이 ECOS와 다릅니다"]), \
                 mock.patch.object(close_check, "check_stocks", return_value=[]), \
+                mock.patch.object(close_check, "latest_us_file", return_value=None), \
                 mock.patch.object(close_check, "latest_price_file") as latest, \
                 mock.patch.object(close_check.alert, "send", side_effect=lambda m, level="info": sent.append((level, m))):
             latest.return_value.read_text.return_value = "{}"
