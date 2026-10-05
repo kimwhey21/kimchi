@@ -1,11 +1,16 @@
 {
  "beats": {
-  "blogger_sync": "2026-10-05T13:22:31+09:00",
-  "naver_sync": "2026-10-05T13:22:16+09:00"
+  "bench_nightly": "2026-10-05T23:10:19+09:00",
+  "blogger_sync": "2026-10-05T23:15:45+09:00",
+  "daily_summary": "2026-10-05T22:30:49+09:00",
+  "expose_weekly": "2026-10-05T08:37:00+09:00",
+  "gsc_daily_index": "2026-10-05T15:16:11+09:00",
+  "gsc_queries": "2026-10-05T10:30:24+09:00",
+  "naver_sync": "2026-10-05T23:20:33+09:00"
  },
- "generated_at": "2026-10-05T13:23:01+09:00",
+ "generated_at": "2026-10-05T23:22:05+09:00",
  "posted": {
   "blogger_today": 7,
-  "naver_today": 2
+  "naver_today": 3
  }
 }
