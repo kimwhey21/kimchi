@@ -215,10 +215,10 @@ class PriorBranchCarriesChangePctTest(unittest.TestCase):
 
 
 class KrxCloseForStocksTest(unittest.TestCase):
-    """종목 가격·등락률은 KRX 정규장 확정 종가(네이버 폴링 nv/cr/pcv)로 쓴다(2026-09-25).
+    """종목 가격·등락률은 KRX 정규장 확정 종가 — 네이버 사진과 다음, 두 원천이 같아야 쓴다(2026-10-05).
 
     16:20~16:40에 세 번 받은 9/23 일봉은 27종목 중 14종목이 서로 달랐고(NXT 애프터마켓이 20:00까지 움직인다),
-    발행된 삼성전자 등락률 2.70%는 KRX 기준 3.62%도 NXT 확정 3.24%도 아니었다.
+    발행된 삼성전자 등락률 2.70%는 KRX 기준 3.62%도 NXT 확정 3.24%도 아니었다. 2026-10-05부터는 못 받은 종목을 빼지 않는다.
     """
     TODAY = fetch_kr.dt.date.today().isoformat()
 
@@ -227,9 +227,14 @@ class KrxCloseForStocksTest(unittest.TestCase):
                 "series": [277500.0, 285000.0], "history": {"dates": ["2026-09-22", self.TODAY], "close": [277500.0, 285000.0]},
                 "source": "core"}
 
-    def test_close_and_change_come_from_the_polling_quote(self) -> None:
-        quote = {"cd": "005930", "nv": 286500, "cv": 10000, "cr": 3.62, "pcv": 276500, "ms": "CLOSE"}
-        out = fetch_kr._apply_krx_close(self._entry(), quote, self.TODAY)
+    def _daum(self, close, base, date=None):
+        return {"date": date or self.TODAY, "close": close, "base": base}
+
+    def test_both_sources_agree(self) -> None:
+        naver = {"nv": 286500, "cr": 3.62, "pcv": 276500}
+        resolved = fetch_kr._resolve_krx_close("005930", self.TODAY, naver, self._daum(286500.0, 276500.0))
+        self.assertEqual(resolved["sources"], ["daum", "naver_snapshot"])
+        out = fetch_kr._apply_krx_close(self._entry(), resolved, self.TODAY)
         self.assertEqual(out["price"], 286500.0)
         self.assertEqual(out["change_pct"], 3.62)
         self.assertEqual(out["prev_close_krx"], 276500.0)
@@ -237,55 +242,85 @@ class KrxCloseForStocksTest(unittest.TestCase):
         self.assertEqual(out["history"]["close"][-1], 286500.0)
         self.assertIn("KRX", out["data_source"])
 
+    def test_sources_disagree_stops(self) -> None:
+        with self.assertRaises(ValueError) as ctx:
+            fetch_kr._resolve_krx_close("005930", self.TODAY, {"nv": 286500, "cr": 3.62, "pcv": 276500},
+                                        self._daum(286000.0, 276500.0))
+        self.assertIn("두 원천", str(ctx.exception))
+
+    def test_one_source_is_enough_and_none_stops(self) -> None:
+        only_daum = fetch_kr._resolve_krx_close("005930", self.TODAY, None, self._daum(286500.0, 276500.0))
+        self.assertEqual(only_daum["sources"], ["daum"])
+        only_naver = fetch_kr._resolve_krx_close("005930", self.TODAY, {"nv": 286500, "cr": 3.62, "pcv": 276500},
+                                                 self._daum(276500.0, 270000.0, date="2026-01-02"))   # 다음이 옛날 날짜면 안 센다
+        self.assertEqual(only_naver["sources"], ["naver_snapshot"])
+        with self.assertRaises(ValueError):
+            fetch_kr._resolve_krx_close("005930", self.TODAY, None, None)
+
     def test_polling_cr_is_unsigned_so_the_sign_comes_from_the_prices(self) -> None:
         """KB금융 9/23 실제 응답: nv 174,100 · pcv 175,700 · cr 0.91 · rf '5'(하락) — cr을 그대로 쓰면 +0.91%가 된다."""
         entry = {**self._entry(), "ticker": "105560", "price": 174100.0, "series": [175700.0, 174100.0],
                  "history": {"dates": ["2026-09-22", self.TODAY], "close": [175700.0, 174100.0]}}
-        out = fetch_kr._apply_krx_close(entry, {"nv": 174100, "cv": 1600, "cr": 0.91, "pcv": 175700, "ms": "CLOSE", "rf": "5"}, self.TODAY)
-        self.assertEqual(out["change_pct"], -0.91)
+        resolved = fetch_kr._resolve_krx_close("105560", self.TODAY, {"nv": 174100, "cv": 1600, "cr": 0.91, "pcv": 175700, "rf": "5"}, None)
+        self.assertEqual(fetch_kr._apply_krx_close(entry, resolved, self.TODAY)["change_pct"], -0.91)
         with self.assertRaises(ValueError):   # cr 크기가 계산값과 다르면 응답 형식이 바뀐 것
-            fetch_kr._apply_krx_close(entry, {"nv": 174100, "cr": 5.0, "pcv": 175700, "ms": "CLOSE"}, self.TODAY)
+            fetch_kr._resolve_krx_close("105560", self.TODAY, {"nv": 174100, "cr": 5.0, "pcv": 175700}, None)
 
     def test_change_is_against_the_adjusted_base_price(self):
-        """2026-10-02 삼성바이오로직스 실제 사진: 기준가(sv)가 전일 종가(pcv)와 다른 날 — 거래소 등락률은 기준가 대비 −4.51%."""
-        entry = {**self._entry(), "ticker": "207940", "price": 1354000}
-        quote = {"cr": 4.51, "cv": 64000, "ms": "CLOSE", "nv": 1354000, "pcv": 1429000, "rf": "5", "sv": 1418000}
-        out = fetch_kr._apply_krx_close(entry, quote, self.TODAY)
+        """2026-10-02 삼성바이오로직스 실제 값: 기준가가 전일 종가와 다른 날 — 사진(sv 1,418,000)과 다음(basePrice 1,418,000)이 같다."""
+        naver = {"cr": 4.51, "cv": 64000, "nv": 1354000, "pcv": 1429000, "rf": "5", "sv": 1418000}
+        resolved = fetch_kr._resolve_krx_close("207940", self.TODAY, naver, self._daum(1354000.0, 1418000.0))
+        out = fetch_kr._apply_krx_close({**self._entry(), "ticker": "207940"}, resolved, self.TODAY)
         self.assertEqual(out["change_pct"], -4.51)
         self.assertEqual(out["prev_close_krx"], 1418000)
 
     def test_without_sv_the_previous_close_is_the_base(self):
-        out = fetch_kr._apply_krx_close(self._entry(), {"nv": 286500, "cr": 3.62, "pcv": 276500, "ms": "CLOSE"}, self.TODAY)
-        self.assertEqual(out["change_pct"], 3.62)
+        resolved = fetch_kr._resolve_krx_close("005930", self.TODAY, {"nv": 286500, "cr": 3.62, "pcv": 276500}, None)
+        self.assertEqual(fetch_kr._apply_krx_close(self._entry(), resolved, self.TODAY)["change_pct"], 3.62)
 
-    def test_not_today_is_left_alone(self) -> None:
-        entry = self._entry(date="2026-09-23")
-        self.assertEqual(fetch_kr._apply_krx_close(entry, None, self.TODAY), entry)
+    def test_todays_row_is_appended_when_the_daily_list_is_a_day_late(self) -> None:
+        entry = self._entry(date="2026-09-22")
+        entry["history"] = {"dates": ["2026-09-21", "2026-09-22"], "close": [270000.0, 276500.0]}
+        resolved = fetch_kr._resolve_krx_close("005930", self.TODAY, None, self._daum(286500.0, 276500.0))
+        out = fetch_kr._apply_krx_close(entry, resolved, self.TODAY)
+        self.assertEqual(out["trading_date"], self.TODAY)
+        self.assertEqual(out["history"]["dates"][-1], self.TODAY)
+        self.assertEqual(out["history"]["close"][-2:], [276500.0, 286500.0])
 
-    def test_snapshot_is_never_published_as_a_close(self) -> None:
+    def test_beyond_the_price_limit_means_a_wrong_response(self) -> None:
         with self.assertRaises(ValueError):
-            fetch_kr._apply_krx_close(self._entry(), {"nv": 285000, "cr": 2.7, "pcv": 276500, "ms": "OPEN"}, self.TODAY)
-        with self.assertRaises(ValueError):
-            fetch_kr._apply_krx_close(self._entry(), None, self.TODAY)
+            fetch_kr._resolve_krx_close("005930", self.TODAY, None, self._daum(100000.0, 276500.0))
 
-    def test_wildly_different_quote_means_a_wrong_code(self) -> None:
-        with self.assertRaises(ValueError):
-            fetch_kr._apply_krx_close(self._entry(), {"nv": 100000, "cr": 1.0, "pcv": 99000, "ms": "CLOSE"}, self.TODAY)
-
-    def test_core_failure_stops_and_dynamic_failure_drops(self) -> None:
+    def _closes(self, wl, snap, daum, prev_day=None):
         from unittest.mock import patch
+        with patch.object(fetch_kr, "_krx_close_snapshot", return_value=snap), \
+                patch.object(fetch_kr, "_fetch_daum_quote", side_effect=lambda c: daum.get(c) or {"date": "", "close": None, "base": None}), \
+                patch.object(fetch_kr, "_fetch_naver_item_quotes", side_effect=AssertionError("창 밖 폴링은 쓰지 않는다")), \
+                patch.object(fetch_kr.dt, "datetime", wraps=fetch_kr.dt.datetime) as fake:
+            fake.now.return_value = fetch_kr.dt.datetime(2026, 10, 6, 16, 20, tzinfo=fetch_kr.KST)
+            return fetch_kr._apply_krx_closes(wl, self.TODAY, prev_day)
+
+    def test_nothing_is_dropped_core_or_dynamic(self) -> None:
+        """2026-10-05: 전에는 편입 종목을 조용히 뺐다 — 이제 한 종목이라도 확인하지 못하면 이름을 적고 멈춘다."""
         wl = {"005930": self._entry(), "999999": {**self._entry(), "ticker": "999999", "name": "편입", "source": "dynamic"}}
-        quotes = {"005930": {"nv": 286500, "cr": 3.62, "pcv": 276500, "ms": "CLOSE"}}
-        # 저장소의 실제 사진(data/krx_close/<오늘>.json)을 읽지 않게 — 사진이 커밋된 날에만 실패했다(2026-09-30)
-        nosnap = patch.object(fetch_kr, "_krx_close_snapshot", return_value={})
-        nosnap.start(); self.addCleanup(nosnap.stop)
-        with patch.object(fetch_kr, "_fetch_naver_item_quotes", return_value=quotes):
-            out = fetch_kr._apply_krx_closes(wl, self.TODAY)
-        self.assertEqual(set(out), {"005930"})                        # 편입 종목은 조용히 빠진다
-        with patch.object(fetch_kr, "_fetch_naver_item_quotes", return_value={}):
-            with self.assertRaises(ValueError):
-                fetch_kr._apply_krx_closes({"005930": self._entry()}, self.TODAY)   # 코어는 멈춘다
-        self.assertEqual(fetch_kr._apply_krx_closes(wl, "2026-09-23"), wl)          # 오늘 거래일이 아니면 그대로
+        snap = {"005930": {"nv": 286500, "cr": 3.62, "pcv": 276500}}
+        with self.assertRaises(ValueError) as ctx:
+            self._closes(wl, snap, {})
+        self.assertIn("편입(999999)", str(ctx.exception))
+        both = {**snap, "999999": {"nv": 10000, "cr": 1.0, "pcv": 9900}}
+        out = self._closes(wl, both, {"999999": self._daum(10000.0, 9900.0)})
+        self.assertEqual(set(out), {"005930", "999999"})
+        self.assertEqual(out["999999"]["close_sources"], ["daum", "naver_snapshot"])
+
+    def test_a_stale_daily_list_stops(self) -> None:
+        wl = {"005930": self._entry(date="2026-09-18")}
+        with self.assertRaises(ValueError) as ctx:
+            self._closes(wl, {"005930": {"nv": 286500, "cr": 3.62, "pcv": 276500}}, {}, prev_day="2026-09-22")
+        self.assertIn("멈춰", str(ctx.exception))
+
+    def test_not_a_trading_day_is_left_alone(self) -> None:
+        wl = {"005930": self._entry(date="2026-09-23")}
+        self.assertEqual(fetch_kr._apply_krx_closes(wl, "2026-09-23"), wl)
 
 
 class KrxCloseSnapshotTest(unittest.TestCase):
@@ -299,29 +334,66 @@ class KrxCloseSnapshotTest(unittest.TestCase):
         self.assertFalse(snap.in_window(fetch_kr.dt.datetime(2026, 9, 28, 15, 29, tzinfo=kst)))    # 정규장 중
         self.assertFalse(snap.in_window(fetch_kr.dt.datetime(2026, 9, 27, 15, 35, tzinfo=kst)))    # 일요일
 
-    def test_snapshot_beats_the_live_quote(self) -> None:
-        """카카오 9/28 실제 값: 15:4x 사진 33,950(+1.49%) · 17:40 폴링 34,000(ms OPEN, 시간외 단일가) — 사진을 쓴다."""
+    def test_snapshot_values_were_the_next_days_previous_close(self) -> None:
+        """커밋된 사진이 KRX 종가였다는 증거: 9/30·10/1 사진의 nv가 다음 거래일 사진의 pcv(네이버 '전일')와 393건 모두 같았다(2026-10-05)."""
+        import json
+        from pathlib import Path
+        folder = Path(__file__).resolve().parent.parent / "data" / "krx_close"
+        a = json.loads((folder / "2026-09-30.json").read_text(encoding="utf-8"))["quotes"]
+        b = json.loads((folder / "2026-10-01.json").read_text(encoding="utf-8"))["quotes"]
+        common = set(a) & set(b)
+        self.assertGreater(len(common), 150)
+        self.assertEqual([c for c in common if float(a[c]["nv"]) != float(b[c]["pcv"])], [])
+
+    def test_live_polling_after_four_is_never_a_close(self) -> None:
+        """카카오 9/28 실제 값: 17:40 폴링 34,000은 시간외 단일가 — 창 밖에서는 폴링을 아예 묻지 않는다."""
         from unittest import mock
         today = fetch_kr.dt.date.today().isoformat()
-        entry = {"ticker": "035720", "name": "카카오", "price": 34000.0, "change_pct": 1.64, "trading_date": today,
-                 "series": [33450.0, 34000.0], "history": {"dates": ["2026-09-23", today], "close": [33450.0, 34000.0]}, "source": "core"}
-        live = {"035720": {"nv": 34000, "pcv": 33450, "cr": 1.64, "ms": "OPEN"}}
-        snap = {"035720": {"nv": 33950, "pcv": 33450, "cr": 1.49, "cv": 500, "rf": "2"}}
-        with mock.patch.object(fetch_kr, "_fetch_naver_item_quotes", return_value=live), \
-                mock.patch.object(fetch_kr, "_krx_close_snapshot", return_value=snap):
+        entry = {"ticker": "035720", "name": "카카오", "price": 34000.0, "trading_date": today, "source": "core",
+                 "series": [33450.0, 34000.0], "history": {"dates": ["2026-09-23", today], "close": [33450.0, 34000.0]}}
+        with mock.patch.object(fetch_kr, "_fetch_naver_item_quotes", side_effect=AssertionError("창 밖 폴링")), \
+                mock.patch.object(fetch_kr, "_krx_close_snapshot", return_value={}), \
+                mock.patch.object(fetch_kr, "_fetch_daum_quote", return_value={"date": today, "close": 33950.0, "base": 33450.0}), \
+                mock.patch.object(fetch_kr.dt, "datetime", wraps=fetch_kr.dt.datetime) as fake:
+            fake.now.return_value = fetch_kr.dt.datetime(2026, 9, 28, 17, 40, tzinfo=fetch_kr.KST)
             out = fetch_kr._apply_krx_closes({"035720": entry}, today)
         self.assertEqual(out["035720"]["price"], 33950.0)
         self.assertEqual(out["035720"]["change_pct"], 1.49)
 
-    def test_without_snapshot_an_open_quote_still_stops(self) -> None:
-        from unittest import mock
-        today = fetch_kr.dt.date.today().isoformat()
-        entry = {"ticker": "035720", "name": "카카오", "price": 34000.0, "trading_date": today, "source": "core",
-                 "series": [34000.0], "history": {"dates": [today], "close": [34000.0]}}
-        with mock.patch.object(fetch_kr, "_fetch_naver_item_quotes", return_value={"035720": {"nv": 34000, "pcv": 33450, "cr": 1.64, "ms": "OPEN"}}), \
-                mock.patch.object(fetch_kr, "_krx_close_snapshot", return_value={}):
+
+class DaumSourceTest(unittest.TestCase):
+    def test_days_are_parsed_oldest_first(self) -> None:
+        body = {"data": [{"date": "2026-10-02 00:00:00", "tradePrice": 1841000.0},
+                         {"date": "2026-10-01 00:00:00", "tradePrice": 1833000.0}]}
+        with patch.object(fetch_kr, "_daum_get", return_value=body):
+            self.assertEqual(fetch_kr._fetch_daum_days("000660"), [("2026-10-01", 1833000.0), ("2026-10-02", 1841000.0)])
+
+    def test_quote_uses_the_regular_session_price_not_the_trade_price(self) -> None:
+        """10/2 SK하이닉스: tradePrice 1,842,000(넥스트레이드 포함) · regularTradePrice 1,841,000(KRX 사진과 같음)."""
+        body = {"date": "2026-10-02", "tradePrice": 1842000.0, "regularTradePrice": 1841000.0, "basePrice": 1833000.0}
+        with patch.object(fetch_kr, "_daum_get", return_value=body):
+            self.assertEqual(fetch_kr._fetch_daum_quote("000660"), {"date": "2026-10-02", "close": 1841000.0, "base": 1833000.0})
+
+    def test_daum_retries_then_raises(self) -> None:
+        with patch.object(fetch_kr.requests, "get", side_effect=fetch_kr.requests.ConnectionError("x")) as get, \
+                patch.object(fetch_kr.time, "sleep"):
             with self.assertRaises(ValueError):
-                fetch_kr._apply_krx_closes({"035720": entry}, today)
+                fetch_kr._fetch_daum_days("000660")
+        self.assertEqual(get.call_count, 4)
+
+    def test_daum_outage_falls_back_without_dropping(self) -> None:
+        """다음이 막힌 날: 이력은 FinanceDataReader로(표시를 남긴다), 오늘 값은 사진 하나로, 다음은 한 번만 기다린다."""
+        import pandas as pd
+        fetch_kr._daum_down.clear()
+        frame = pd.DataFrame({"Close": [276500.0, 286500.0]}, index=pd.to_datetime(["2026-10-05", "2026-10-06"]))
+        with patch.object(fetch_kr.requests, "get", side_effect=fetch_kr.requests.ConnectionError("down")) as get, \
+                patch.object(fetch_kr.time, "sleep"), patch.object(fetch_kr.fdr, "DataReader", return_value=frame):
+            a = fetch_kr._fetch_stock("005930", "삼성전자")
+            b = fetch_kr._fetch_stock("000660", "SK하이닉스")
+        self.assertEqual(get.call_count, 4)                     # 첫 종목에서만 네 번 묻고, 그 뒤로는 묻지 않는다
+        self.assertIn("Daum unavailable", a["history_source"])
+        self.assertIn("Daum unavailable", b["history_source"])
+        fetch_kr._daum_down.clear()
 
 
 class IndexGapFillTest(unittest.TestCase):

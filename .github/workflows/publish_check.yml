@@ -64,6 +64,21 @@ jobs:
         if: always()
         run: python -m scripts.site_health
 
+      - name: 한국장 종가 대조 (네이버 전일·한국은행 ECOS)
+        # 2026-10-05: 한국장 파일의 종목 종가를 다음 장의 네이버 '전일'과, 지수를 ECOS·네이버 목록과 맞춰 본다
+        # (src/close_check.py — 수집 때 쓴 두 원천과 다른 세 번째 눈). 저녁 실행(19:00 KST, 월~금)에서만 하루 한 번 돈다 —
+        # '전일'은 새 장이 열려야 넘어가므로 월요일 저녁에 금요일 파일, 화요일 저녁에 월요일 파일을 본다.
+        # 틀리면 운영 대화로 자세히 알리고, 발행 점검의 성패는 바꾸지 않는다(continue-on-error).
+        if: always()
+        continue-on-error: true
+        run: |
+          [ "$(TZ=Asia/Seoul date +%H)" -ge 12 ] || { echo "저녁 실행에서만 대조합니다."; exit 0; }
+          python -m src.close_check
+        env:
+          ECOS_API_KEY: ${{ secrets.ECOS_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}
+
       - name: 실패 알림 (텔레그램 운영 대화)
         # 2026-09-12: 어떤 워크플로가 왜 죽었는지 휴대폰으로. 토큰이 없으면 조용히 넘어간다(curl이라 앞 단계가 어디서 죽었든 된다).
         if: failure()

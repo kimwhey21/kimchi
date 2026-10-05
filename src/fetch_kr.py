@@ -47,16 +47,6 @@ _NAVER_USDKRW_PRICES_URL = f"{_NAVER_USDKRW_URL}/prices"
 _REQUIRED = {"KS11", "KQ11"}
 
 
-# 코어 종목이 몇 개까지 빠져도 그날 시세를 쓸 것인가.
-#
-# 부분 실패를 허용하면서 하한을 두지 않았더니, 코어가 대부분 빠져도 "정상"인
-# price_data가 나왔습니다. 그다음이 문제입니다 — editorial_facts는 **살아남은**
-# 종목 중에서 '그날 1위'를 고르므로, 빠진 종목이 진짜 1위였어도 알 수 없습니다.
-# 자료 장애가 '글 없음'이 아니라 '핵심 종목이 빠진 채 완성된 글'로 바뀝니다.
-#
-# 그래서 하한을 둡니다. 이 밑으로 내려가면 그날 시세를 쓰지 않고 실패시킵니다 —
-# 재시도 스케줄(:20/:27/:34)이 있으므로 한 번 실패해도 그날이 끝나지 않습니다.
-_MIN_CORE_COVERAGE = 0.8
 
 
 def _fetch_naver_index_quotes() -> dict[str, dict]:
@@ -108,43 +98,132 @@ def _fetch_naver_item_quotes(codes: list[str]) -> dict[str, dict]:
     return quotes
 
 
-def _apply_krx_close(entry: dict, quote: dict | None, today: str) -> dict:
-    """오늘 거래일이면 종목 가격·등락률을 KRX 정규장 확정 종가(폴링 nv/cr/pcv)로 바꿉니다.
+_DAUM = "https://finance.daum.net/api"
+_DAUM_RETRY_DELAYS = (3, 10, 30)
+KST = dt.timezone(dt.timedelta(hours=9))
+_SNAPSHOT_WINDOW = (dt.time(15, 31), dt.time(16, 0))
+_PRICE_LIMIT = 0.30   # 거래소 가격제한폭 ±30% — 이보다 크게 움직였다면 종목 코드나 응답이 어긋난 것이다
 
-    - 기준일이 오늘이 아니면(휴장·지연) 그대로 둡니다.
-    - 오늘인데 확정(``ms=CLOSE``)을 못 받았으면 예외 — 스냅숏을 종가라고 발행하지 않습니다(지수와 같은 원칙).
-    - 폴링 값이 FDR 값과 15% 넘게 다르면 종목 코드가 어긋난 것이라 예외.
-    이력(history)의 마지막 행만 KRX 종가로 바꿉니다 — 앞 행들은 FDR(NXT 포함) 종가라 주간 통계에 ±0.3%p 섞임이
-    남지만, 지금처럼 수집 시각마다 달라지는 값보다 작습니다(2026-09-25 검증).
+
+_daum_down: list[str] = []   # 이번 실행에서 다음이 재시도 끝에 실패했으면 이유를 담는다 — 그 뒤로는 묻지 않는다(종목마다 43초씩 기다리지 않게)
+
+
+def _daum_get(path: str, code: str, params: dict | None = None) -> dict:
+    """다음 금융 API(비공식). Referer가 없으면 막힌다. 실패하면 세 번(3·10·30초 뒤) 더 묻고, 그래도 안 되면 예외."""
+    if _daum_down:
+        raise ValueError(f"{code}: 이번 실행에서 다음 금융이 이미 실패했습니다 — {_daum_down[0]}")
+    headers = {**_NAVER_HEADERS, "Referer": f"https://finance.daum.net/quotes/A{code}"}
+    for attempt, delay in enumerate((0,) + _DAUM_RETRY_DELAYS):
+        if delay:
+            time.sleep(delay)
+        try:
+            response = requests.get(f"{_DAUM}/{path}", params=params, headers=headers, timeout=_NAVER_TIMEOUT_SECONDS)
+            response.raise_for_status()
+            return response.json()
+        except (requests.RequestException, ValueError) as exc:
+            last = exc
+            print(f"[안내] 다음 {path} 재시도 {attempt + 1}/{len(_DAUM_RETRY_DELAYS) + 1}: {exc}")
+    _daum_down.append(f"{path}: {last}")
+    raise ValueError(f"{code}: 다음 금융 {path}를 받지 못했습니다 — {last}")
+
+
+def _fetch_daum_days(code: str, rows: int = price_history.DAYS) -> list[tuple[str, float]]:
+    """다음 일별 시세 — **KRX 정규장 종가**(넥스트레이드·시간외 제외), 오래된 것부터.
+
+    2026-10-05 대조: 9/30·10/1·10/2 사진 205종목 600건이 종가·등락률·기준가 모두 같았다(기준가가 바뀐 10/2 삼성바이오로직스
+    포함). 네이버 일봉(FinanceDataReader)·모바일 일별 목록·basic은 KRX+넥스트레이드 통합값이라 같은 600건 중 486건이 달랐다.
     """
-    if str(entry.get("trading_date") or "") != today:
-        return entry
-    code = str(entry.get("ticker"))
-    if not quote:
-        raise ValueError(f"{code}: 네이버 확정 종가(폴링)를 받지 못했습니다.")
-    if quote.get("ms") != "CLOSE":
-        raise ValueError(f"{code}: 장마감 확정 종목 종가(ms=CLOSE)를 아직 확인하지 못했습니다(ms={quote.get('ms')}).")
-    nv, pcv, cr = float(quote["nv"]), float(quote["pcv"]), float(quote["cr"])
-    fdr_price = float(entry.get("price") or 0)
-    if fdr_price and abs(nv - fdr_price) / fdr_price > 0.15:
-        raise ValueError(f"{code}: 폴링 종가 {nv:,.0f}가 일봉 {fdr_price:,.0f}와 15% 넘게 다릅니다 — 코드 불일치 의심.")
-    # 폴링의 cr·cv는 **부호가 없다**(KB금융 9/23: nv 174,100 < pcv 175,700인데 cr 0.91, rf '5'=하락). 등락률은 nv·pcv로
-    # 직접 계산하고 cr은 크기 대조에만 쓴다 — 2026-09-25 실제 데이터로 시험하다 잡은 것.
-    if not pcv:
-        raise ValueError(f"{code}: 폴링에 전일 종가(pcv)가 없습니다.")
-    # 거래소 등락률은 전일 종가가 아니라 **기준가**(`sv`)에 대한 비율이다. 보통은 둘이 같지만 배당락·권리락·분할처럼 기준가를
-    # 조정한 날은 다르다(2026-10-02 삼성바이오로직스: pcv 1,429,000 · sv 1,418,000 · nv 1,354,000 → 거래소 −4.51%, pcv로는 −5.25%;
-    # 크기 대조에 걸려 한국장 수집 전체가 멈췄다). sv가 있으면 그것을 기준으로 쓴다.
-    base = float(quote.get("sv") or 0) or pcv
-    change_pct = (nv - base) / base * 100
-    if abs(abs(change_pct) - cr) > 0.05:
-        raise ValueError(f"{code}: 계산한 등락률 {change_pct:.2f}%와 폴링 cr {cr}이 다릅니다 — 응답 형식 확인 필요.")
-    series = list(entry.get("series") or [])
-    if series:
-        series[-1] = round(nv, 4)
-    return {**entry, "price": round(nv, 2), "change_pct": round(change_pct, 2), "prev_close_krx": round(base, 2),
-            "series": series, "history": price_history.replace_last(entry.get("history"), nv),
-            "data_source": "Naver Finance realtime item (KRX regular-session close)"}
+    body = _daum_get(f"quote/A{code}/days", code, {"symbolCode": f"A{code}", "page": 1, "perPage": rows, "pagination": "true"})
+    out = {str(r["date"])[:10]: float(r["tradePrice"]) for r in body.get("data") or [] if r.get("date") and r.get("tradePrice")}
+    return sorted(out.items())
+
+
+def _fetch_daum_quote(code: str) -> dict:
+    """다음 현재가 — `regularTradePrice`(정규장 종가)와 `basePrice`(거래소 기준가). 16:00 이후·넥스트레이드 중에도 정규장 값이 따로 있다."""
+    body = _daum_get(f"quotes/A{code}", code, {"summary": "false", "changeStatistics": "true"})
+    close, base = body.get("regularTradePrice"), body.get("basePrice")
+    return {"date": str(body.get("date") or "")[:10], "close": float(close) if close else None,
+            "base": float(base) if base else None}
+
+
+def _fetch_stock(ticker: str, name: str, name_en: str = "", lookback: int = 7, unit: str = "", **_ignore) -> dict:
+    """종목 하나의 최근 KRX 정규장 종가 이력(다음 일별 시세 70거래일, 2026-10-05).
+
+    전에는 FinanceDataReader(네이버 일봉, 넥스트레이드 합산)라 이력의 앞 행들이 KRX 값이 아니었다(주간 통계에 ±0.3%p 섞임).
+    오늘 행은 `_apply_krx_closes`가 두 원천으로 확인한 값으로 바꾸거나 덧붙인다.
+    """
+    try:
+        rows = _fetch_daum_days(str(ticker))
+        if len(rows) < 2:
+            raise ValueError(f"{ticker}: 다음 일별 시세를 {len(rows)}개만 받았습니다.")
+    except ValueError as exc:
+        # 다음이 막힌 날에도 종목을 빼지 않는다 — 이력만 FinanceDataReader(통합값)로 받고 그렇다고 적는다. 오늘 값은 여전히
+        # `_apply_krx_closes`가 KRX 사진으로 확인하고, close_check가 이 표시를 운영 대화로 알린다.
+        print(f"[경고] {ticker}: 다음 일별 시세를 못 받아 이력을 FinanceDataReader(KRX+넥스트레이드 통합)로 받습니다 — {exc}")
+        return {**_fetch_one(ticker=ticker, name=name, name_en=name_en, lookback=lookback, unit=unit),
+                "history_source": "FinanceDataReader (KRX+NXT combined; Daum unavailable)"}
+    closes = [c for _, c in rows]
+    return {
+        "ticker": ticker,
+        "name": name,
+        "name_en": name_en or name,
+        "price": round(closes[-1], 2),
+        "change_pct": round((closes[-1] / closes[-2] - 1) * 100, 2),
+        "series": [round(c, 4) for c in closes[-(lookback + 1):]],
+        "history": {"dates": [d for d, _ in rows], "close": [round(c, 4) for c in closes]},
+        "unit": unit,
+        "trading_date": rows[-1][0],
+    }
+
+
+def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | None) -> dict:
+    """오늘 KRX 정규장 종가를 **서로 다른 두 원천**으로 확인한다(2026-10-05). 빼지 않는다 — 받거나, 못 받으면 멈추고 이유를 말한다.
+
+    - 네이버: 15:31~15:59에 찍은 사진(`nv`, 기준가 `sv`·없으면 `pcv`). 16:00부터 폴링 `nv`는 시간외 단일가를 따라 움직여 쓰지 않는다.
+    - 다음: `regularTradePrice`·`basePrice`(날짜가 오늘일 때만).
+    둘 다 있으면 종가와 기준가가 같아야 한다 — 다르면 어느 쪽이 맞는지 모르므로 멈춘다. 하나만 있으면 그것을 쓰고(다음 날 아침
+    `close_check`가 네이버 '전일'과 한 번 더 대조한다), 둘 다 없으면 멈춘다. 기준가 대비 ±30%를 넘으면 응답이 어긋난 것이라 멈춘다.
+    """
+    found: dict[str, tuple[float, float]] = {}
+    if naver and naver.get("nv"):
+        base = float(naver.get("sv") or 0) or float(naver.get("pcv") or 0)
+        if base:
+            found["naver_snapshot"] = (float(naver["nv"]), base)
+    if daum and daum.get("date") == today and daum.get("close") and daum.get("base"):
+        found["daum"] = (float(daum["close"]), float(daum["base"]))
+    if not found:
+        raise ValueError(f"{code}: 오늘({today}) KRX 정규장 종가를 네이버 사진에서도 다음에서도 받지 못했습니다"
+                         f"(다음 날짜 {daum.get('date') if daum else '응답 없음'}).")
+    values = set(found.values())
+    if len(values) > 1:
+        detail = ", ".join(f"{k} 종가 {c:,.0f}·기준가 {b:,.0f}" for k, (c, b) in found.items())
+        raise ValueError(f"{code}: 두 원천의 KRX 종가가 다릅니다 — {detail}. 어느 쪽이 맞는지 확인할 때까지 쓰지 않습니다.")
+    close, base = next(iter(values))
+    if abs(close / base - 1) > _PRICE_LIMIT:
+        raise ValueError(f"{code}: 종가 {close:,.0f}가 기준가 {base:,.0f}에서 가격제한폭(±30%) 넘게 벗어났습니다 — 응답이 어긋났습니다.")
+    if naver and "naver_snapshot" in found and naver.get("cr") is not None:
+        # 폴링의 cr은 부호가 없다(KB금융 9/23: nv < pcv인데 cr 0.91). 크기만 대조해 응답 형식이 바뀐 것을 잡는다.
+        pct = (close - base) / base * 100
+        if abs(abs(pct) - float(naver["cr"])) > 0.05:
+            raise ValueError(f"{code}: 계산한 등락률 {pct:.2f}%와 네이버 cr {naver['cr']}이 다릅니다 — 응답 형식 확인 필요.")
+    return {"close": close, "base": base, "sources": sorted(found)}
+
+
+def _apply_krx_close(entry: dict, resolved: dict, today: str) -> dict:
+    """확인한 오늘 종가를 이력 끝에 바꿔 넣거나(다음 일별 시세에 오늘 줄이 있으면) 덧붙인다(아직 없으면)."""
+    close, base = resolved["close"], resolved["base"]
+    series, history = list(entry.get("series") or []), entry.get("history")
+    if str(entry.get("trading_date") or "") == today:
+        if series:
+            series[-1] = round(close, 4)
+        history = price_history.replace_last(history, close)
+    else:
+        series = (series + [round(close, 4)])[-len(series):] if len(series) >= 2 else series + [round(close, 4)]
+        history = price_history.append(history, today, close)
+    return {**entry, "price": round(close, 2), "change_pct": round((close - base) / base * 100, 2),
+            "prev_close_krx": round(base, 2), "series": series, "history": history, "trading_date": today,
+            "close_sources": resolved["sources"],
+            "data_source": "KRX regular-session close (" + " + ".join(resolved["sources"]) + ")"}
 
 
 def _krx_close_snapshot(today: str, data_dir: Path | None = None) -> dict[str, dict]:
@@ -154,27 +233,41 @@ def _krx_close_snapshot(today: str, data_dir: Path | None = None) -> dict[str, d
     return (json.loads(path.read_text(encoding="utf-8")).get("quotes") or {})
 
 
-def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str) -> dict[str, dict]:
-    """워치리스트 전체(코어+편입)에 KRX 확정 종가를 적용합니다. 코어가 실패하면 전체를 멈추고, 편입 종목은 뺍니다."""
+def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: str | None = None) -> dict[str, dict]:
+    """워치리스트 전체(코어+편입)의 오늘 값을 KRX 정규장 확정 종가로. **한 종목이라도 확인하지 못하면 멈춘다** — 빼지 않는다(2026-10-05).
+
+    전에는 편입 종목은 조용히 빼고 코어는 80%까지 빠져도 글을 냈다. 데이터가 중요한 사이트에서 빼는 것은 누락이다.
+    `prev_day`(지수의 직전 거래일)가 주어지면, 다음 일별 시세가 그보다 더 뒤처진 종목도 멈춘다(빈 날이 생긴다).
+    """
     today = dt.date.today().isoformat()
     if trading_date != today:
         return watchlist
-    quotes = _fetch_naver_item_quotes(list(watchlist))
-    # 15:31~15:59에 찍어 둔 정규장 종가 사진이 있으면 그것을 쓴다(scripts/krx_close_snapshot.py) — 16:00부터 nv는 시간외 단일가를
-    # 따라 움직이고 ms는 넥스트레이드 때문에 20:00까지 OPEN이라, 16:20에 받은 폴링으로는 정규장 종가를 확인할 수 없다(2026-09-28).
     snap = _krx_close_snapshot(today)
-    for code, q in snap.items():
-        quotes[code] = {**q, "ms": "CLOSE", "snapshot": True}
+    now = dt.datetime.now(KST).time()
+    if _SNAPSHOT_WINDOW[0] <= now < _SNAPSHOT_WINDOW[1]:
+        # 창 안에서 손으로 돌리면 지금 폴링이 곧 사진이다. 창 밖의 폴링은 시간외 단일가라 쓰지 않는다(2026-09-28).
+        live = _fetch_naver_item_quotes([t for t in watchlist if str(t) not in snap])
+        snap = {**live, **snap}
     out: dict[str, dict] = {}
+    problems: list[str] = []
     for ticker, entry in watchlist.items():
+        code = str(ticker)
         try:
-            out[ticker] = _apply_krx_close(entry, quotes.get(str(ticker)), today)
+            last = str(entry.get("trading_date") or "")
+            if prev_day and last < prev_day:
+                raise ValueError(f"{code}: 다음 일별 시세가 {last}에 멈춰 있습니다(직전 거래일 {prev_day}).")
+            try:
+                daum = _fetch_daum_quote(code)
+            except ValueError as exc:   # 다음이 막혔으면 사진 하나로 — 사진도 없으면 아래에서 멈춘다
+                print(f"[경고] {code}: 다음 현재가를 못 받아 네이버 사진만으로 확인합니다 — {exc}")
+                daum = None
+            out[ticker] = _apply_krx_close(entry, _resolve_krx_close(code, today, snap.get(code), daum), today)
         except ValueError as exc:
-            if entry.get("source") == "dynamic":
-                print(f"[안내] 편입 종목 제외 — {entry.get('name', ticker)}: {exc}")
-                continue
-            raise
+            problems.append(f"{entry.get('name', ticker)}({code}): {exc}")
+    if problems:
+        raise ValueError(f"KRX 종가를 확인하지 못한 종목 {len(problems)}개 — 빼지 않고 멈춥니다: " + " / ".join(problems))
     return out
+
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
@@ -238,7 +331,7 @@ def _fetch_index(ticker: str, name: str, name_en: str = "", lookback: int = 7, u
     로그인이 실패한 9/17 낮부터 멈춰 있었다(9/17 행은 장중 값 6,724.34 — 확정 종가 6,715.41). 우리 수집은 빈 날을
     네이버 확정값·우리 파일로 메워 글이 계속 나갔고, 실행 기록에 날마다 "일봉이 9/17에 머물러"가 찍혔지만 아무도 몰랐다.
     네이버 목록은 70거래일 전부가 한국은행 ECOS(한국거래소 작성 통계)와 같았다(2026-10-05 대조). 목록에 오늘 줄이 아직
-    없거나 목록이 멈춘 날은 `_apply_final_index_quote`가 확정값·우리 파일로 잇고, `index_check`가 운영 대화로 알린다.
+    없거나 목록이 멈춘 날은 `_apply_final_index_quote`가 확정값·우리 파일로 잇고, `close_check`가 다음 날 아침 운영 대화로 알린다.
     목록을 못 받으면 우리가 커밋한 마지막 파일을 밑바탕으로 쓴다(없으면 멈춘다).
     """
     try:
@@ -519,27 +612,6 @@ def _fetch_one(
     }
 
 
-def _require_core_coverage(got: dict, configured: list, missing: list[str]) -> None:
-    """코어 종목이 하한보다 많이 빠지면 그날 시세를 쓰지 않습니다.
-
-    빠진 종목의 등락률은 알 수 없으므로, 그 종목이 그날 1위였는지도 알 수 없습니다.
-    editorial_facts의 '그날 1위를 다뤘는가' 검사가 살아남은 종목만 보고 통과해
-    버리기 때문에, 여기서 막지 않으면 자료 장애가 '핵심 종목이 빠진 완성된 글'로
-    조용히 바뀝니다.
-    """
-    total = len(configured)
-    if not total:
-        return
-    ratio = len(got) / total
-    if ratio < _MIN_CORE_COVERAGE:
-        raise ValueError(
-            f"코어 종목을 {len(got)}/{total}개만 받았습니다"
-            f"({ratio:.0%} < {_MIN_CORE_COVERAGE:.0%}). 빠진 종목이 그날 1위였는지 "
-            f"확인할 수 없으므로 이 시세로는 글을 쓰지 않습니다. "
-            f"빠진 항목: {', '.join(missing) or '(기록 없음)'}"
-        )
-
-
 def fetch_all() -> dict:
     """설정 파일에 등록된 모든 지수/종목의 시세를 가져옵니다.
 
@@ -549,6 +621,7 @@ def fetch_all() -> dict:
     이미 발행했는지"를 main.py에서 판단합니다.
     """
     config = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
+    _daum_down.clear()
     index_quotes = _fetch_naver_index_quotes()
     macro: dict[str, dict] = {}
     missing: list[str] = []
@@ -571,30 +644,33 @@ def fetch_all() -> dict:
                 raise
             missing.append(f"{row.get('name', ticker)}({ticker})")
             print(f"[안내] 시세 제외 — {row.get('name', ticker)}({ticker}): {exc}")
-    # sector는 _fetch_one이 쓰지 않지만 원고와 업종 그래픽에서 필요하므로
-    # 설정에서 그대로 실어 나릅니다. 코어 종목도 하나가 실패했다고 그날
-    # 전체를 버리지 않습니다 — 동적 편입 종목이 이미 그렇게 하고 있습니다.
+    # 코어 종목은 하나도 빼지 않는다(2026-10-05). 전에는 80%까지 빠져도 글을 냈다 — 데이터가 중요한 사이트에서 빼는 것은
+    # 누락이다. 다음 일별 시세를 세 번 다시 묻고(_daum_get), 그래도 못 받은 종목이 있으면 이름을 모두 적고 멈춘다.
+    # 재시도 예약(:27/:34)이 다시 돈다. sector는 원고와 업종 그래픽에서 필요하므로 설정에서 실어 나른다.
     watchlist: dict[str, dict] = {}
+    failed: list[str] = []
     for row in config["watchlist"]:
         ticker = row["ticker"]
         try:
-            entry = _fetch_one(**row)
-        except Exception as exc:  # noqa: BLE001
-            missing.append(f"{row.get('name', ticker)}({ticker})")
-            print(f"[안내] 시세 제외 — {row.get('name', ticker)}({ticker}): {exc}")
+            entry = _fetch_stock(**row)
+        except Exception as exc:  # noqa: BLE001 — 센다: 아래에서 모두 모아 멈춘다
+            failed.append(f"{row.get('name', ticker)}({ticker}): {exc}")
             continue
         watchlist[ticker] = {
             **entry,
             "source": "core",
             **({"sector": row["sector"]} if row.get("sector") else {}),
         }
-    _require_core_coverage(watchlist, config["watchlist"], missing)
+    if failed:
+        raise ValueError(f"코어 종목 {len(failed)}개의 시세를 받지 못했습니다 — 빼지 않고 멈춥니다: " + " / ".join(failed))
     # 거래일은 필수 지수에서 읽습니다. 선택 항목이 빠져도 기준일은 흔들리지
     # 않아야 합니다.
     trading_date = next(macro[t]["trading_date"] for t in _REQUIRED if t in macro)
+    index_dates = ((macro.get("KS11") or {}).get("history") or {}).get("dates") or []
+    prev_day = next((d for d in reversed(index_dates) if d < trading_date), None)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
-    # 종목 가격·등락률을 KRX 정규장 확정 종가로(2026-09-25) — 일봉 오늘 행은 20:00까지 NXT를 따라 움직인다.
-    watchlist = _apply_krx_closes(watchlist, trading_date)
+    # 오늘 값은 KRX 정규장 확정 종가 — 네이버 사진과 다음, 두 원천이 같아야 쓴다(2026-10-05).
+    watchlist = _apply_krx_closes(watchlist, trading_date, prev_day)
     fetch_foreign_flows.attach_foreign_flows(watchlist, trading_date)
     if missing:
         print(f"[안내] 시세에서 빠진 항목 {len(missing)}개: {', '.join(missing)}")
@@ -645,30 +721,37 @@ def _fetch_dynamic_tier(
 ) -> dict[str, dict]:
     """그날 거래대금 상위 종목을 코어 워치리스트 뒤에 붙입니다.
 
-    코어와 달리 여기서는 종목 하나가 실패해도 그 종목만 빼고 진행합니다.
-    이름도 모르는 종목 하나 때문에 그날 발행 전체가 멈추면 안 되기 때문입니다.
-    같은 이유로 기준일이 코어와 다른 종목(거래정지·데이터 지연 등)도 버립니다 —
-    data_quality.validate_trading_dates가 기준일이 섞인 걸 발행 중단 사유로
-    보기 때문에, 여기서 걸러야 코어만으로라도 글이 나갑니다.
+    2026-10-05부터 코어와 같다 — 하나라도 못 받으면 빼지 않고 멈춘다(전에는 조용히 뺐다. 그날 거래대금 상위가 빠진
+    글은 누락이다). 오늘 값은 `_apply_krx_closes`가 두 원천으로 확인하므로, 다음 일별 시세에 오늘 줄이 아직 없어도
+    (기준일이 하루 늦어도) 버리지 않는다. 후보는 krx_close_snapshot이 찍는 시가총액 상위 universe 안에서만 나온다.
     """
     settings = config.get("dynamic") or {}
     if not settings.get("enabled"):
         return {}
 
     name_en_map = config.get("name_en_map") or {}
-    try:
-        movers = fetch_movers.fetch_top_turnover(
-            exclude_tickers=set(core),
-            count=settings.get("count", 6),
-            universe_size=settings.get("universe_size", 100),
-            min_market_cap=settings.get("min_market_cap", 1_000_000_000_000),
-            markets=tuple(settings.get("markets") or ("KOSPI", "KOSDAQ")),
-        )
-    except Exception as exc:
-        print(f"[경고] 거래대금 상위 종목을 가져오지 못해 코어 워치리스트로만 진행합니다: {exc}")
-        return {}
+    movers = None
+    for attempt, delay in enumerate((0, 10, 30)):
+        if delay:
+            time.sleep(delay)
+        try:
+            movers = fetch_movers.fetch_top_turnover(
+                exclude_tickers=set(core),
+                count=settings.get("count", 6),
+                universe_size=settings.get("universe_size", 100),
+                min_market_cap=settings.get("min_market_cap", 1_000_000_000_000),
+                markets=tuple(settings.get("markets") or ("KOSPI", "KOSDAQ")),
+            )
+            if movers:
+                break
+            print(f"[안내] 거래대금 상위 목록이 비었습니다 — 다시 묻습니다({attempt + 1}/3)")
+        except Exception as exc:  # noqa: BLE001 — 센다: 세 번 모두 실패하면 멈춘다
+            print(f"[안내] 거래대금 상위 조회 실패 {attempt + 1}/3: {exc}")
+    if not movers:
+        raise ValueError("그날 거래대금 상위 종목을 세 번 모두 받지 못했습니다 — 편입 종목을 빼고 쓰지 않고 멈춥니다.")
 
     added: dict[str, dict] = {}
+    failed: list[str] = []
     for mover in movers:
         ticker, name = mover["ticker"], mover["name"]
         name_en = name_en_map.get(name) or english_name(ticker, mover.get("market"))
@@ -678,21 +761,17 @@ def _fetch_dynamic_tier(
                 "영어판에 한글 이름이 나갑니다 — config/watchlist_kr.yaml의 name_en_map에 적으십시오."
             )
         try:
-            entry = _fetch_one(ticker=ticker, name=name, name_en=name_en or name)
-        except Exception as exc:
-            print(f"[안내] 동적 편입 제외 — {name}({ticker}) 시세 조회 실패: {exc}")
-            continue
-        if entry.get("trading_date") != trading_date:
-            print(
-                f"[안내] 동적 편입 제외 — {name}({ticker}) 기준일 {entry.get('trading_date')}"
-                f"이 코어({trading_date})와 다릅니다."
-            )
+            entry = _fetch_stock(ticker=ticker, name=name, name_en=name_en or name)
+        except Exception as exc:  # noqa: BLE001 — 센다: 아래에서 모아 멈춘다
+            failed.append(f"{name}({ticker}): {exc}")
             continue
         added[ticker] = {
             **entry,
             "source": "dynamic",
             "trading_value": mover["trading_value"],
         }
+    if failed:
+        raise ValueError(f"편입 종목 {len(failed)}개의 시세를 받지 못했습니다 — 빼지 않고 멈춥니다: " + " / ".join(failed))
 
     if added:
         names = ", ".join(entry["name"] for entry in added.values())

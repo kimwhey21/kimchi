@@ -120,6 +120,7 @@ class KrPartialFetchTest(unittest.TestCase):
             return _entry(ticker, name)
 
         with mock.patch.object(fetch_kr, "_fetch_one", side_effect=fake_one), \
+             mock.patch.object(fetch_kr, "_fetch_stock", side_effect=fake_one), \
              mock.patch.object(fetch_kr, "_fetch_index", side_effect=fake_one), \
              mock.patch.object(fetch_kr, "_fetch_usdkrw_reference", side_effect=fake_fx), \
              mock.patch.object(fetch_kr, "_fetch_naver_index_quotes", return_value={}), \
@@ -140,10 +141,11 @@ class KrPartialFetchTest(unittest.TestCase):
         self.assertEqual(data["trading_date"], "2026-09-04")
         self.assertTrue(any("USD/KRW" in m for m in data["missing"]))
 
-    def test_one_core_stock_failure_is_skipped(self) -> None:
-        data = self._run({"000660"})
-        self.assertIn("005930", data["watchlist"])
-        self.assertNotIn("000660", data["watchlist"])
+    def test_one_core_stock_failure_stops_instead_of_dropping(self) -> None:
+        """2026-10-05: 한국장 코어는 하나도 빼지 않는다 — 전에는 80%까지 빠져도 글을 냈다. 못 받은 종목 이름을 적고 멈춘다."""
+        with self.assertRaises(ValueError) as ctx:
+            self._run({"000660"})
+        self.assertIn("SK하이닉스(000660)", str(ctx.exception))
 
     def test_required_index_failure_still_raises(self) -> None:
         with self.assertRaises(ValueError):
@@ -152,6 +154,38 @@ class KrPartialFetchTest(unittest.TestCase):
     def test_sector_survives_partial_failure(self) -> None:
         data = self._run({"USD/KRW"})
         self.assertEqual(data["watchlist"]["005930"]["sector"], "반도체")
+
+
+class KrDynamicTierNoDropTest(unittest.TestCase):
+    """2026-10-05: 그날 거래대금 상위(편입 종목)도 빼지 않는다 — 전에는 조회 실패·기준일 차이면 조용히 뺐다."""
+    CONFIG = {"dynamic": {"enabled": True, "count": 2}, "name_en_map": {"편입A": "A", "편입B": "B"}}
+    MOVERS = [{"ticker": "111111", "name": "편입A", "market": "KOSPI", "trading_value": 10},
+              {"ticker": "222222", "name": "편입B", "market": "KOSDAQ", "trading_value": 9}]
+
+    def test_ranking_failure_retries_then_stops(self) -> None:
+        with mock.patch.object(fetch_kr.fetch_movers, "fetch_top_turnover", side_effect=RuntimeError("down")) as top, \
+                mock.patch.object(fetch_kr.time, "sleep"):
+            with self.assertRaises(ValueError):
+                fetch_kr._fetch_dynamic_tier(self.CONFIG, {}, "2026-10-06")
+        self.assertEqual(top.call_count, 3)
+
+    def test_one_mover_failure_stops(self) -> None:
+        def fake(ticker, name="", **kw):
+            if ticker == "222222":
+                raise ValueError("다음 실패")
+            return _entry(ticker, name, "2026-10-05")
+        with mock.patch.object(fetch_kr.fetch_movers, "fetch_top_turnover", return_value=self.MOVERS), \
+                mock.patch.object(fetch_kr, "_fetch_stock", side_effect=fake):
+            with self.assertRaises(ValueError) as ctx:
+                fetch_kr._fetch_dynamic_tier(self.CONFIG, {}, "2026-10-06")
+        self.assertIn("편입B(222222)", str(ctx.exception))
+
+    def test_a_day_late_daily_list_is_kept_for_the_close_step(self) -> None:
+        """다음 일별 시세에 오늘 줄이 아직 없어도 버리지 않는다 — 오늘 값은 _apply_krx_closes가 두 원천으로 덧붙인다."""
+        with mock.patch.object(fetch_kr.fetch_movers, "fetch_top_turnover", return_value=self.MOVERS), \
+                mock.patch.object(fetch_kr, "_fetch_stock", side_effect=lambda ticker, name="", **kw: _entry(ticker, name, "2026-10-05")):
+            added = fetch_kr._fetch_dynamic_tier(self.CONFIG, {}, "2026-10-06")
+        self.assertEqual(set(added), {"111111", "222222"})
 
 
 if __name__ == "__main__":

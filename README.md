@@ -12,7 +12,7 @@ fetch_us.py / fetch_kr.py   →   generate_free.py   →   render_html.py   → 
 ```
 
 1. **시세 수집** — `config/watchlist_us.yaml`, `config/watchlist_kr.yaml`에 등록된 지수·종목의
-   실제 가격, 등락률, 최근 며칠간의 종가 흐름을 가져옵니다. (미국: yfinance / 한국: 네이버 지수 목록·FinanceDataReader)
+   실제 가격, 등락률, 최근 며칠간의 종가 흐름을 가져옵니다. (미국: yfinance / 한국: 네이버 지수 목록·KRX 종가 사진·다음 금융)
 2. **무료 시황 생성** — 가격 데이터와 언론사 RSS(`fetch_news.py`)의 최근 헤드라인을 정해진
    형식으로 조합합니다. 외부 생성형 AI API를 호출하지 않으며, 확인하지 못한 시장 원인이나
    전망은 추측하지 않습니다. 한국장 예약 실행은 같은 시세에서 한국어판과 영어판을 각각
