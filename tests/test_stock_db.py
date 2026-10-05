@@ -529,6 +529,11 @@ class KrxPricesTest(unittest.TestCase):
         self.assertEqual((out["r"]["low52"], out["r"]["high52"]), (403000.0, 2987000.0))
         self.assertEqual(out["flows"][0]["close"], 1841000.0)
 
+    def test_chart_window_matches_the_ownership_history(self):
+        d = {"hist": {"d": ["2026-10-02"], "c": [1842000], "fr": [49.8]}}
+        out = sdb.krx_detail(d, self.DAUM, (None, None))
+        self.assertEqual(out["hist"], {"d": ["2026-10-02"], "c": [1841000.0], "fr": [49.8]})
+
     def test_daum_stops_asking_after_repeated_failures(self):
         from unittest import mock
         daum = sdb.Daum(mock.Mock())

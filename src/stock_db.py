@@ -412,6 +412,10 @@ def krx_detail(detail_row: dict, rows: list[dict], range52: tuple[float | None, 
     hist = detail_row.get("hist") or {}
     fr = dict(zip(hist.get("d") or [], hist.get("fr") or []))
     rows = rows[-HISTORY_DAYS:]
+    if hist.get("d"):
+        # 차트 기간은 네이버 보유율 이력과 같게 — 템플릿은 보유율이 모든 날짜에 있어야 점선을 그린다(2026-10-05: 다음 130일 · 네이버
+        # 110일이라 앞 20일이 비어 SK하이닉스 차트에서 보유율 선이 사라졌다)
+        rows = [r for r in rows if r["d"] >= hist["d"][0]] or rows
     closes = {r["d"]: r["c"] for r in rows}
     out = {**detail_row, "hist": {"d": [r["d"] for r in rows], "c": [r["c"] for r in rows], "fr": [fr.get(r["d"]) for r in rows]}}
     low, high = range52
