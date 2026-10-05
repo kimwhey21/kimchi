@@ -379,6 +379,7 @@ def snapshot_close(day: str, folder: Path | None = None) -> dict[str, list] | No
     return json.loads(path.read_text(encoding="utf-8")).get("close")
 
 
+ONE_SOURCE_MAX = 60   # 원천이 하나뿐인 종목이 이보다 많으면 원천(다음·사진)이 통째로 빠진 것이다 — 야후에 묻지 않고 올리지 않는다
 DISPUTE_MAX = 20   # 두 원천이 다른 종목이 이보다 많으면 종목 문제가 아니라 원천 고장이다 — 셋째 원천에 묻지 않고 멈춘다
 
 
@@ -419,7 +420,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
     problems, notes = [], []
     # 기준일은 다음의 가장 늦은 날과 가장 최근 사진 중 늦은 쪽 — 다음이 오늘 줄을 아직 안 올린 종목이 옛 날짜로 섞이지 않게(2026-10-05)
     day = max([rows[-1]["d"] for rows in daily.values() if rows] + ([fallback_day] if fallback_day else []), default="")
-    one_source = 0
+    single: list[tuple] = []    # (row, 원천, 종가, 날짜) — 원천이 하나뿐인 종목
     stale: list[str] = []
     disputed: list[tuple] = []
     for row in listing:
@@ -435,7 +436,8 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
                 detail = f"{code}: 다음 {last['c']:,.0f}(기준가 {last['base']:,.0f}) / 사진 {float(snap[0]):,.0f}(기준가 {float(snap[1]):,.0f})"
                 disputed.append((row, rows, snap, detail))
                 continue
-            one_source += snap is None
+            if snap is None and code not in stale:   # 오래 멈춘 거래정지 종목은 야후도 값을 주지 않는다 — '마지막 날짜' 알림으로 따로 센다
+                single.append((row, "다음", last["c"], last["d"]))
             close, base = last["c"], last["base"]
             row.update(close=close, chg=close - base, pct=round((close / base - 1) * 100, 2), date=last["d"])
             if last.get("v") is not None:
@@ -453,9 +455,21 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
         if row.get("close") and row.get("mcap"):
             row["mcap"] = row["mcap"] / row["close"] * close
         row.update(close=close, chg=close - base, pct=round((close / base - 1) * 100, 2), date=day)
-        notes.append(code)
-    if notes:
-        notes = [f"다음 일별 시세를 못 받아 사진 하나로 쓴 종목 {len(notes)}개(거래량·거래대금은 네이버 통합값): {', '.join(notes[:15])}"]
+        single.append((row, "사진", close, day))
+    # 원천이 하나뿐인 종목(다음만·사진만)은 야후 종가와 맞을 때만 올린다 — 두 원천이 된다(2026-10-06, 감사 F-039·F-058).
+    # 많으면(다음이 통째로 막혔거나 그날 사진이 없다) 원천 고장이라 묻지 않고 올리지 않는다.
+    if len(single) > ONE_SOURCE_MAX:
+        kinds = sorted({k for _, k, _, _ in single})
+        problems.append(f"원천이 하나({'·'.join(kinds)})뿐인 종목 {len(single)}개 — 다음이나 15시 반 사진이 통째로 빠졌습니다. 올리지 않습니다")
+    elif single:
+        checked = 0
+        for row, kind, close, when in single:
+            other = (third or _yahoo)(row["code"], when)
+            if other is None or abs(other - close) >= 0.5:
+                problems.append(f"{row['code']}: {kind} 하나로만 받은 종가 {close:,.0f}를 야후로 확인하지 못했습니다(야후 {other})")
+                continue
+            checked += 1
+        notes.append(f"원천이 하나뿐이라 야후로 확인한 종목 {checked}개(다음·사진 중 하나가 빠짐)")
     # 두 원천(다음·15시 반 사진)이 다른 종목은 셋째 근거로 가린다(2026-10-05 사장님: 옛 값이 아니라 정확한 값) — 종가는 야후와
     # 같은 쪽, 기준가는 fetch_kr.pick_base. 가리지 못한 종목이 하나라도 있으면 올리지 않는다. 많이 다르면 원천 고장이라 묻지 않는다.
     if len(disputed) > DISPUTE_MAX:
@@ -481,8 +495,6 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
             notes.append(f"두 원천이 달라 셋째 근거로 정한 종목 {len(settled)}개: " + " / ".join(settled[:10]))
     if stale:
         notes.append(f"다음 일별 시세가 {day}보다 이르고 그날 사진도 없어 마지막 날짜 값으로 나간 종목 {len(stale)}개: {', '.join(stale[:15])}")
-    if one_source:
-        notes.append(f"그날 사진이 없어 다음 하나로만 확인한 종목 {one_source}개 — 사진({day})을 확인하십시오")
     return problems, notes
 
 

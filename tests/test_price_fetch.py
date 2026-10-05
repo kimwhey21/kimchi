@@ -538,18 +538,23 @@ class DaumSourceTest(unittest.TestCase):
         self.assertEqual(get.call_count, 4)
 
     def test_daum_outage_falls_back_without_dropping(self) -> None:
-        """다음이 막힌 날: 이력은 FinanceDataReader로(표시를 남긴다), 오늘 값은 사진 하나로, 다음은 한 번만 기다린다."""
-        import pandas as pd
+        """다음이 막힌 날: 이력은 야후의 조정하지 않은 일별 종가(KRX 정규장)로(표시를 남긴다), 다음은 한 번만 기다린다.
+        2026-10-06부터 FinanceDataReader(넥스트레이드 합산)로 채우지 않는다. 야후도 안 되면 멈춘다."""
         fetch_kr._daum_down.clear()
-        frame = pd.DataFrame({"Close": [276500.0, 286500.0]}, index=pd.to_datetime(["2026-10-05", "2026-10-06"]))
-        with patch.object(fetch_kr.requests, "get", side_effect=fetch_kr.requests.ConnectionError("down")) as get, \
-                patch.object(fetch_kr.time, "sleep"), patch.object(fetch_kr.fdr, "DataReader", return_value=frame):
-            a = fetch_kr._fetch_stock("005930", "삼성전자")
-            b = fetch_kr._fetch_stock("000660", "SK하이닉스")
-        self.assertEqual(get.call_count, 4)                     # 첫 종목에서만 네 번 묻고, 그 뒤로는 묻지 않는다
-        self.assertIn("Daum unavailable", a["history_source"])
-        self.assertIn("Daum unavailable", b["history_source"])
-        fetch_kr._daum_down.clear()
+        rows = [("2026-10-05", 276500.0), ("2026-10-06", 286500.0)]
+        try:
+            with patch.object(fetch_kr.requests, "get", side_effect=fetch_kr.requests.ConnectionError("down")) as get, \
+                    patch.object(fetch_kr.time, "sleep"), patch.object(fetch_kr, "_fetch_yahoo_days", return_value=rows), \
+                    patch.object(fetch_kr.fdr, "DataReader", side_effect=AssertionError("합산값 원천은 쓰지 않는다")), patch("builtins.print"):
+                a = fetch_kr._fetch_stock("005930", "삼성전자")
+                b = fetch_kr._fetch_stock("000660", "SK하이닉스")
+            self.assertEqual(get.call_count, 4)                     # 첫 종목에서만 네 번 묻고, 그 뒤로는 묻지 않는다
+            self.assertIn("Yahoo", a["history_source"]); self.assertIn("Daum unavailable", b["history_source"])
+            self.assertEqual((a["price"], a["trading_date"]), (286500.0, "2026-10-06"))
+            with patch.object(fetch_kr, "_fetch_yahoo_days", return_value=[]), self.assertRaises(ValueError):
+                fetch_kr._fetch_stock("005930", "삼성전자")
+        finally:
+            fetch_kr._daum_down.clear()
 
 
 class IndexGapFillTest(unittest.TestCase):
