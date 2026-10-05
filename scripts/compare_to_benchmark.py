@@ -136,10 +136,12 @@ def _corpus_samples() -> dict[str, list[float]]:
     if not CORPUS.exists():
         return {}
     samples: dict[str, list[float]] = {}
+    broken = 0
     for path in CORPUS.glob("*.json"):
         try:
             doc = json.loads(path.read_text(encoding="utf-8"))
-        except Exception:
+        except Exception:  # noqa: BLE001 — 센다: 깨진 코퍼스 파일 수를 아래에서 찍는다
+            broken += 1
             continue
         blocks = [b for b in doc.get("blocks", []) if b.get("t") == "p"]
         heads, paras = [], []
@@ -156,6 +158,8 @@ def _corpus_samples() -> dict[str, list[float]]:
                             + [{"heading": "", "body": "\n\n".join(paras)}]})
         for key, value in measured.items():
             samples.setdefault(key, []).append(value)
+    if broken:
+        print(f"[안내] 벤치마크 코퍼스에서 읽지 못한 파일 {broken}개를 빼고 셉니다")
     return samples
 
 

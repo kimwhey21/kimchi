@@ -64,8 +64,8 @@ def kicker(doc: dict) -> str:
         text = publish_feature._kicker(doc)
         if text:
             return str(text)
-    except Exception:
-        pass
+    except Exception as exc:  # noqa: BLE001 — 글머리는 꾸밈이라 시리즈 이름으로 대신하되 이유는 찍는다
+        print(f"[안내] 글머리를 만들지 못해 시리즈 이름으로 씁니다 — {type(exc).__name__}: {exc}")
     return series
 
 

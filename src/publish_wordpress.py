@@ -514,7 +514,7 @@ def _featured_media_matches(
         if response.status_code >= 400:
             return False
         return response.json().get("alt_text", "") == image.get("alt", "")
-    except Exception:  # noqa: BLE001 - 비교 실패 시 새 이미지로 안전하게 교체
+    except Exception:  # 무시: 비교를 못 하면 '다르다'로 보고 새 이미지로 교체한다(안전한 쪽) — noqa: BLE001
         return False
 
 

@@ -82,7 +82,7 @@ def korean_font(size: int, bold: bool = False):
                 # .ttc는 굵기별 인덱스가 따로 있습니다 (AppleSDGothicNeo: 0 얇음 … 6 굵음)
                 index = 6 if (bold and path.endswith(".ttc")) else 2 if path.endswith(".ttc") else 0
                 return ImageFont.truetype(path, size=size, index=index)
-            except Exception:
+            except Exception:  # 무시: 다음 글꼴 후보를 시도한다 — 다 실패하면 아래에서 소리를 낸다
                 continue
     # 여기까지 왔다면 한글 폰트가 없습니다. 기본 폰트로 그리면 한글이 두부(□)로
     # 찍히는데 **예외가 안 나서 테스트도 통과합니다.** 2026-09-06에 이 구멍을

@@ -279,8 +279,8 @@ def detail(session: requests.Session, code: str) -> dict:
                 rows[name] = [_num((r.get("columns") or {}).get(k, {}).get("value")) for k in keys]
         if keys:
             fin = {"cols": [f"FY{k[:4]}" + ("E" if c.get("isConsensus") == "Y" else "") for k, c in zip(keys, cols)], "rows": rows}
-    except StockDBError:
-        fin = {}
+    except StockDBError as error:   # 재무표 없이 상세를 싣되 센다 — run()이 모아서 알린다(2026-10-05 전수 정리: 전에는 조용히 비었다)
+        fin = {"missing": str(error)[:120]}
     time.sleep(PAUSE)
     hist = {}
     try:
@@ -288,8 +288,8 @@ def detail(session: requests.Session, code: str) -> dict:
         infos = (chart.get("priceInfos") or [])[-HISTORY_DAYS:]
         hist = {"d": [f"{p['localDate'][:4]}-{p['localDate'][4:6]}-{p['localDate'][6:]}" for p in infos],
                 "c": [p.get("closePrice") for p in infos], "fr": [p.get("foreignRetentionRate") for p in infos]}
-    except StockDBError:
-        hist = {}
+    except StockDBError as error:   # 차트 없이 싣되 센다(위와 같음)
+        hist = {"missing": str(error)[:120]}
     time.sleep(PAUSE)
     return {"r": ratios, "c": {"rating": _num(cons.get("recommMean")), "target": _num(cons.get("priceTargetMean")),
                                "date": cons.get("createDate")} if cons else {},
@@ -1153,6 +1153,9 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     problems, notes = apply_krx(listing, daily, snaps, fallback_day)
     if problems:
         raise StockDBError(f"KRX 값이 두 원천에서 맞지 않거나 없는 종목 {len(problems)}개 — 올리지 않습니다: " + " / ".join(problems[:20]))
+    gaps = [code for code, d in details.items() if (d.get("fin") or {}).get("missing") or (d.get("hist") or {}).get("missing")]
+    if gaps:
+        notes.append(f"네이버 재무표·차트를 못 받은 종목 {len(gaps)}개(그 칸은 비어 나갑니다): {', '.join(gaps[:15])}")
     no_hist = []
     for code in list(details):
         rows = daily.get(code) or []

@@ -126,7 +126,7 @@ def check_clicks(browser, problems):
         p.keyboard.press("Enter")
         try:
             p.wait_for_url(f"**{target}", timeout=15000)
-        except Exception:  # noqa: BLE001 — 안 넘어가면 아래에서 문제로 적는다
+        except Exception:  # 무시: 안 넘어가면 바로 아래 주소 비교에서 문제로 적는다 — noqa: BLE001
             pass
         if not target or not p.url.endswith(target):
             problems.append(f"{w}px 홈: 화살표 두 번 + Enter가 두 번째 결과로 안 간다 ({target} → {p.url})")

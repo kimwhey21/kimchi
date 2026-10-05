@@ -233,7 +233,8 @@ def contact_sheet(name: str, queries: list[str], out_dir: Path,
     for query in queries:
         try:
             rows = searcher(query, limit=per_query)
-        except Exception:
+        except Exception as exc:  # noqa: BLE001 — 검색어 하나가 실패해도 대조표는 만든다. 빠진 검색어는 찍는다
+            print(f"[안내] 사진 검색 '{query}' 실패 — {type(exc).__name__}: {exc}")
             continue
         for row in download(rows, out_dir / query.replace(" ", "_")):
             row["query"] = query
@@ -258,7 +259,7 @@ def contact_sheet(name: str, queries: list[str], out_dir: Path,
             image.thumbnail((cell_w - 40, cell_h - 40))
             sheet.paste(image, (x + 20 + (cell_w - 40 - image.width) // 2,
                                 y + 20 + (cell_h - 40 - image.height) // 2))
-        except Exception:
+        except Exception:  # 무시: 그 칸은 빈 상자로 남고 번호는 그대로 — 사람이 대조표를 보며 고르므로 빈 칸이 보인다
             pass
         row["label"] = f"{index + 1:02d}"
         draw.text((x + 20, y + cell_h + 18), f"{row['label']}   {row['query'][:24]}",

@@ -113,7 +113,7 @@ def _resolve_yahoo(entry: dict, market: str):
         ticker = yf.Ticker(candidate)
         try:
             info = ticker.info
-        except Exception:
+        except Exception:  # 무시: 다음 야후 코드 후보(.KS·.KQ)를 시도하고, 다 안 되면 None — 부른 쪽이 실패로 센다
             continue
         if info.get("regularMarketPrice") or info.get("currentPrice"):
             return candidate, ticker

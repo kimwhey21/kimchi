@@ -67,7 +67,7 @@ def _when(block: str) -> dt.datetime | None:
         except Exception:
             try:
                 return dt.datetime.fromisoformat(raw.replace("Z", "+00:00")).astimezone(dt.timezone.utc)
-            except Exception:
+            except Exception:  # 무시: 다음 날짜 칸(published·updated…)을 시도하고, 다 안 되면 None — 부른 쪽이 시각 없음으로 다룬다
                 continue
     return None
 

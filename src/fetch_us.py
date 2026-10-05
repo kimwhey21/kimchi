@@ -83,7 +83,8 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
     ticker_client = yf.Ticker(ticker)
     try:
         quote_metadata = ticker_client.get_history_metadata()
-    except Exception:  # noqa: BLE001 - 메타데이터 실패 시 일봉으로 폴백
+    except Exception as exc:  # noqa: BLE001 - 메타데이터 실패 시 일봉으로 폴백(종가는 second_close가 공식 원천과 따로 맞춘다)
+        print(f"[안내] {ticker}: 야후 메타데이터를 못 받아 직전 종가를 일봉에서 씁니다 — {type(exc).__name__}: {exc}")
         quote_metadata = {}
     for attempt in range(1, _NAN_RETRY_ATTEMPTS + 1):
         # 최근 3개월 이력(history)까지 한 번에 받습니다 — 본문 기간 차트용(2026-09-08).
