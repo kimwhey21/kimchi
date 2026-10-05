@@ -395,11 +395,24 @@ def earnings(market: str, days: int = 21) -> dict:
 
 
 # ── 엔진 4. 내부자 매수 (SEC Form 4) ───────────────────────────────────
-_FORM4_TX = re.compile(r"<transactionCode>(\w)</transactionCode>")
-_FORM4_SHARES = re.compile(r"<transactionShares>\s*<value>([\d.]+)</value>")
-_FORM4_PRICE = re.compile(r"<transactionPricePerShare>\s*<value>([\d.]+)</value>")
 _FORM4_OWNER = re.compile(r"<rptOwnerName>([^<]+)</rptOwnerName>")
 _FORM4_TITLE = re.compile(r"<officerTitle>([^<]+)</officerTitle>")
+
+
+_FORM4_TXN = re.compile(r"<nonDerivativeTransaction>(.*?)</nonDerivativeTransaction>", re.S)
+
+
+def form4_purchases(raw: str) -> list[tuple[float, float]]:
+    """신고서의 공개시장 매수(코드 P) 거래들 (주식 수, 단가). 거래가 여럿이면 거래마다 코드·수량·단가를 묶어 읽는다 —
+    전에는 P가 있는지만 보고 수량·단가는 첫 거래에서 읽어, 앞에 증여·매도가 있으면 그 값이 '매수'로 나갔다(감사 F-065)."""
+    out = []
+    for block in _FORM4_TXN.findall(raw):
+        code = re.search(r"<transactionCode>\s*([A-Z])\s*</transactionCode>", block)
+        shares = re.search(r"<transactionShares>\s*<value>\s*([\d.]+)", block)
+        price = re.search(r"<transactionPricePerShare>\s*<value>\s*([\d.]+)", block)
+        if code and code.group(1) == "P" and shares and price and float(price.group(1)) > 0:
+            out.append((float(shares.group(1)), float(price.group(1))))
+    return out
 
 
 def insiders(days: int = 14, limit_per_ticker: int = 10) -> dict:
@@ -418,6 +431,9 @@ def insiders(days: int = 14, limit_per_ticker: int = 10) -> dict:
     found, failed = [], 0
     for entry in core_watchlist("us"):
         symbol = entry["ticker"]
+        # ETF·선물은 내부자 신고(Form 4)가 없다 — 매일 '받지 못함 2건'이 찍혀 규칙상 결과를 한 번도 쓸 수 없었다(2026-10-06, 감사 F-065)
+        if "=" in symbol or symbol.startswith("^") or "ETF" in f"{entry.get('name', '')} {entry.get('name_en', '')}":
+            continue
         try:
             listing = requests.get(
                 "https://www.sec.gov/cgi-bin/browse-edgar",
@@ -454,21 +470,19 @@ def insiders(days: int = 14, limit_per_ticker: int = 10) -> dict:
             except Exception:
                 failed += 1
                 continue
-            if "P" not in _FORM4_TX.findall(raw):
-                continue                       # 공개시장 매수가 아닌 신고서
-            shares = _FORM4_SHARES.search(raw)
-            price = _FORM4_PRICE.search(raw)
-            if not (shares and price):
-                continue
-            value = float(shares.group(1)) * float(price.group(1))
+            buys = form4_purchases(raw)
+            if not buys:
+                continue                       # 공개시장 매수(P)가 없는 신고서
+            bought = sum(n for n, _ in buys)
+            value = sum(n * p for n, p in buys)
             owner = _FORM4_OWNER.search(raw)
             title = _FORM4_TITLE.search(raw)
             found.append({
                 "name": entry["name"], "symbol": symbol, "date": updated,
                 "owner": owner.group(1) if owner else None,
                 "title": title.group(1) if title else None,
-                "shares": float(shares.group(1)),
-                "price": float(price.group(1)),
+                "shares": bought,
+                "price": round(value / bought, 4) if bought else None,
                 "value_usd": round(value),
                 "filing": url,
             })
@@ -531,6 +545,11 @@ def seasonality(market: str, years: int = 20) -> dict:
     if frame is None or len(frame) == 0:
         return {"engine": "seasonality", "market": market, "error": "이력을 받지 못했습니다."}
     frame = frame[frame["Close"] > 0]
+    # 월봉의 마지막 줄이 진행 중인 이번 달이면 버린다 — 며칠짜리 부분 수익률이 20년 표본에 섞여 '20년 평균'이 날마다 바뀌었고
+    # 시황 두 편이 서로 다른 값을 냈다(2026-10-06, 감사 F-067).
+    today = dt.date.today()
+    if len(frame) and frame.index[-1].year == today.year and frame.index[-1].month == today.month:
+        frame = frame.iloc[:-1]
     monthly = frame["Close"].pct_change().dropna() * 100
     by_month = {}
     for when, value in monthly.items():

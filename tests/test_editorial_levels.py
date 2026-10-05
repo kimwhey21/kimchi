@@ -42,6 +42,10 @@ class LevelTest(unittest.TestCase):
         self.assertEqual(data_graphics.change_label({"unit": "%", "price": 5.11, "change_pct": 3.04}), "+0.15%p")
         self.assertEqual(data_graphics.change_label({"price": 51176.96, "change_pct": -0.68}), "-0.68%")
 
+    def test_internal_names_are_blocked(self) -> None:
+        self.assertEqual(len(ef.internal_name_issues(_doc("story_engines 계절성 엔진에 따르면 9월은 평균 0.30% 올랐습니다."))), 2)
+        self.assertEqual(ef.internal_name_issues(_doc("야후 파이낸스 월봉으로 세면 9월은 평균 0.40% 올랐습니다.")), [])
+
     def test_past_manuscripts_only_flag_real_mismatches(self) -> None:
         """지난 시황 원고 전부: 값 수준·판단 낱말은 9/1 원/달러(1,372.70원 vs 시세 1,373.4원) 두 자리만 걸린다."""
         root = Path(__file__).resolve().parents[1] / "editorial"

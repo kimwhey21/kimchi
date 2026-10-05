@@ -881,3 +881,19 @@ def yield_change_issues(doc: dict, price_data: dict, lang: str = "ko") -> list[s
                 continue
             out.append(f"{where}: '{m.group(0)[-50:]}' — 금리 등락은 %p(또는 bp)로 쓰십시오(5.11% 금리가 '3.04% 올랐다'는 0.15%p)")
     return out
+
+
+# ── 원고에 내부 도구 이름(2026-10-06) ───────────────────────────────────────────────────────────
+# 'story_engines 계절성 엔진에 따르면'처럼 우리 내부 모듈·파일 이름이 출처인 양 독자에게 나갔다(감사 F-067). 독자에게는 원천(야후·
+# EDGAR·한국거래소 등)을 밝히고 도구 이름은 쓰지 않는다.
+_INTERNAL = re.compile(r"story_engines|editorial_(?:facts|gate|quality)|feature_gate|weekly_stats|routine_\w+|"
+                       r"engines_(?:kr|us)|price_(?:kr|us)_\d|\b\w+\.(?:py|json|txt)\b|"
+                       r"(?:계절성|밸류에이션|의견\s*변경|내부자|월가 리포트|13F|업종)\s*엔진|엔진(?:에 따르면|이 집계|으로 계산|출력)", re.I)
+
+
+def internal_name_issues(doc: dict) -> list[str]:
+    out = []
+    for text in _all_strings({k: v for k, v in doc.items() if k not in ("price_data", "sources", "graphics")}):
+        for m in _INTERNAL.finditer(text):
+            out.append(f"'{m.group(0)}' — 내부 도구·파일 이름은 본문에 쓰지 않습니다. 원천(야후 파이낸스·EDGAR·한국거래소 등)을 밝히십시오")
+    return out

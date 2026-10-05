@@ -93,10 +93,29 @@ class InsidersTest(unittest.TestCase):
     FORM4 = """<ownershipDocument>
       <reportingOwner><rptOwnerName>TAN LIP BU</rptOwnerName></reportingOwner>
       <officerTitle>CEO</officerTitle>
-      <transactionCode>P</transactionCode>
-      <transactionShares><value>1000</value></transactionShares>
-      <transactionPricePerShare><value>25.5</value></transactionPricePerShare>
+      <nonDerivativeTable><nonDerivativeTransaction>
+        <transactionCoding><transactionCode>P</transactionCode></transactionCoding>
+        <transactionAmounts><transactionShares><value>1000</value></transactionShares>
+        <transactionPricePerShare><value>25.5</value></transactionPricePerShare></transactionAmounts>
+      </nonDerivativeTransaction></nonDerivativeTable>
     </ownershipDocument>"""
+
+    def test_only_purchase_rows_are_counted(self) -> None:
+        """2026-10-06(감사 F-065): 증여(A) 5만 주@0 뒤에 매수(P) 1천 주@123.45 — 첫 거래가 아니라 매수 거래만 센다."""
+        raw = ("<nonDerivativeTransaction><transactionCoding><transactionCode>A</transactionCode></transactionCoding>"
+               "<transactionAmounts><transactionShares><value>50000</value></transactionShares>"
+               "<transactionPricePerShare><value>0</value></transactionPricePerShare></transactionAmounts></nonDerivativeTransaction>"
+               "<nonDerivativeTransaction><transactionCoding><transactionCode>P</transactionCode></transactionCoding>"
+               "<transactionAmounts><transactionShares><value>1000</value></transactionShares>"
+               "<transactionPricePerShare><value>123.45</value></transactionPricePerShare></transactionAmounts></nonDerivativeTransaction>")
+        self.assertEqual(story_engines.form4_purchases(raw), [(1000.0, 123.45)])
+
+    def test_etfs_and_futures_are_not_asked(self) -> None:
+        with mock.patch.object(story_engines.requests, "get", side_effect=AssertionError("ETF·선물은 묻지 않는다")), \
+             mock.patch.object(story_engines, "core_watchlist",
+                               return_value=[{"ticker": "SOXX", "name": "필라델피아 반도체 ETF"}, {"ticker": "CL=F", "name": "WTI 원유"}]):
+            result = story_engines.insiders(days=7)
+        self.assertEqual(result.get("fetch_failed", result.get("failed", 0)), 0)
 
     def _fake_get(self, url, **kwargs):
         response = mock.Mock(status_code=200)

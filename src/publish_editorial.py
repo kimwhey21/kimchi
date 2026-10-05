@@ -559,6 +559,8 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
                       for p in editorial_facts.level_issues(part, price_data, lang)]
     if level_problems:   # 그날 종가 수준(지수·금·원유·VIX·금리·환율)이 시세와 다르면 틀린 숫자다 — 막는다(2026-10-06)
         raise ValueError("본문의 종가 수준이 시세와 다릅니다 — 발행하지 않습니다: " + " / ".join(level_problems[:10]))
+    for line in editorial_facts.internal_name_issues(doc):
+        print(f"[경고] 내부 이름: {line}")
     for lang, part in (("ko", ko), ("en", en)):   # 표현 문제는 경고만(관문이 막는다)
         if part:
             for line in (editorial_facts.judgment_word_issues(part, price_data, lang)

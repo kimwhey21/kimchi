@@ -134,6 +134,7 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
     issues += [f"네이버 — {i}" for i in feature_checks.naver_issues(doc)]
     issues += [f"시세 사본 — {i}" for i in editorial_facts.copy_issues(price_data, market)]
     issues += [f"목표주가 — {i}" for i in editorial_facts.target_phrase_issues(doc)]
+    issues += [f"내부 이름 — {i}" for i in editorial_facts.internal_name_issues(doc)]
     for lang, part in (("ko", ko), ("en", en)):   # 값 수준·판단 낱말·금리 %p(2026-10-06, 감사 F-031·F-035)
         if part:
             issues += [f"숫자 수준({lang}) — {i}" for i in editorial_facts.level_issues(part, price_data, lang)]
