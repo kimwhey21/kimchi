@@ -142,8 +142,25 @@ def github_runs(since: dt.datetime, token: str | None) -> list[dict]:
     return runs
 
 
-def job_status(job: dict, runs: list[dict]) -> str:
-    """'ok' | '실패' | '진행 중' | '없음' — 창 안의 실행 중 성공이 하나면 ok(예비 예약이 건너뛴 실행도 success다)."""
+def ran_for_real(run: dict, token: str | None) -> bool:
+    """그 실행에서 본 작업(건너뛰기 판단 'guard'를 뺀 잡)이 실제로 돌아 성공했나. 건너뛴 예약도 실행 결론은 success라서(감사 F-037)
+    잡을 본다. 조회에 실패하면 True(모르는 것을 실패로 세지 않는다 — 결과물 판정이 따로 있다)."""
+    headers = {"Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "fermata-daily-proof"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    try:
+        r = requests.get(f"https://api.github.com/repos/{REPO}/actions/runs/{run['id']}/jobs", headers=headers, timeout=30)
+        r.raise_for_status()
+        jobs = r.json().get("jobs") or []
+    except (requests.RequestException, ValueError, KeyError) as exc:
+        print(f"[안내] 실행 {run.get('id')}의 잡을 조회하지 못했습니다: {exc}")
+        return True
+    return any(j.get("conclusion") == "success" and not str(j.get("name", "")).startswith("guard") for j in jobs)
+
+
+def job_status(job: dict, runs: list[dict], real=None) -> str:
+    """'ok' | '건너뜀만' | '실패' | '진행 중' | '없음'. `real(run)`이 오면 성공한 실행 중 본 작업이 실제로 돈 것이 있어야 ok —
+    건너뛴 예비 예약도 실행 결론은 success다(2026-10-06, 감사 F-037)."""
     path = f".github/workflows/{job['workflow']}"
     lo, hi = job["window"]
     hits = []
@@ -153,8 +170,11 @@ def job_status(job: dict, runs: list[dict]) -> str:
         created = dt.datetime.fromisoformat(str(r.get("created_at", "")).replace("Z", "+00:00"))
         if lo <= created <= hi:
             hits.append(r)
-    if any(r.get("conclusion") == "success" for r in hits):
+    successes = [r for r in hits if r.get("conclusion") == "success"]
+    if successes and (real is None or any(real(r) for r in successes)):
         return "ok"
+    if successes:
+        return "건너뜀만"
     if not hits:
         return "없음"
     return "실패" if all(r.get("status") == "completed" for r in hits) else "진행 중"
@@ -170,7 +190,7 @@ def changed_today(day: dt.date, root: Path = ROOT) -> set[str]:
 
 
 # 원고마다 "이 시각(KST)이 지나야 없다고 말한다" — 낮에 손으로 돌려도 아직 쓸 때가 안 된 글을 빠졌다고 하지 않게(2026-10-05 13:17 시험 실행).
-ARTIFACT_DUE = {"한국장 시황": "17:40", "미국장 시황": "09:00", "미국장 시세": "08:00", "미국장 프리뷰": "22:30", "잡지 3편": "03:30",
+ARTIFACT_DUE = {"한국장 시세": "16:45", "종가 사진": "16:05", "한국장 시황": "17:40", "미국장 시황": "09:00", "미국장 시세": "08:00", "미국장 프리뷰": "22:30", "잡지 3편": "03:30",
                 "한국어 가이드": "14:00", "영어 가이드": "12:00", "주말 Checkpoint": "10:00", "주간 결산": "11:00",
                 "다음 주 일정": "21:00", "주간 점검": "09:30"}
 
@@ -185,6 +205,14 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
     has = lambda rel: (root / rel).exists()   # noqa: E731
     touched = lambda prefix, suffix="": any(p.startswith(prefix) and p.endswith(suffix) for p in changed)   # noqa: E731
     if wd < 5 and d not in KRX_HOLIDAYS:
+        # 수집 작업이 '성공'으로 끝나도 결과물이 없을 수 있다(수능용 16:50 실행은 평일엔 아무것도 안 하고 성공한다) — 결과물로 본다(감사 F-036)
+        out.append(("한국장 시세", has(f"data/price_kr_{d}.json"), f"data/price_kr_{d}.json"))
+        snap = root / "data" / "krx_close" / f"{d}.json"
+        try:
+            n_close = len((json.loads(snap.read_text(encoding="utf-8")).get("close") or {})) if snap.exists() else 0
+        except (OSError, ValueError):
+            n_close = 0
+        out.append(("종가 사진", n_close >= 2000, f"data/krx_close/{d}.json 전 종목 {n_close}개(2,000개 이상이어야)"))
         out.append(("한국장 시황", has(f"editorial/kr_{d}.json"), f"editorial/kr_{d}.json"))
     if 1 <= wd <= 5 and prev not in US_HOLIDAYS:
         if has(f"data/price_us_{prev}.json"):
@@ -341,7 +369,7 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
     try:
         runs = github_runs(dt.datetime.combine(day, dt.time(0), KST) - dt.timedelta(hours=1), token)
         for j in jobs:   # 같은 작업이 하루 두 번(종목 DB 07:50·17:05)이라 이름표가 아니라 작업마다 적는다(2026-10-05 시험에서 아침 것이 저녁 것에 덮였다)
-            j["status"] = job_status(j, runs)
+            j["status"] = job_status(j, runs, real=lambda run: ran_for_real(run, token))
     except Exception as exc:  # noqa: BLE001 — 조회 실패도 한 줄로 적는다
         issues.append(f"깃허브 실행 목록을 받지 못했습니다: {exc}")
     pending = [j for j in jobs if j["last"] + RUN_WINDOW[1] > now]       # 아직 창이 안 닫힌 작업은 세지 않는다

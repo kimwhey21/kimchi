@@ -98,8 +98,8 @@ class ExpectedArtifactsTest(unittest.TestCase):
                            "editorial/magazine/2026-10-06_a.json", "editorial/magazine/2026-10-06_b.json"])
         arts = daily_proof.expected_artifacts(dt.date(2026, 10, 6), {"editorial/guides/ko_x.json"}, root)
         got = {name: ok for name, ok, _ in arts}
-        self.assertEqual(got, {"한국장 시황": True, "미국장 시황": False, "미국장 프리뷰": True, "잡지 3편": False,
-                               "한국어 가이드": True, "영어 가이드": False})
+        self.assertEqual(got, {"한국장 시세": False, "종가 사진": False, "한국장 시황": True, "미국장 시황": False,
+                               "미국장 프리뷰": True, "잡지 3편": False, "한국어 가이드": True, "영어 가이드": False})
 
     def test_not_yet_due_artifacts_are_not_missing(self) -> None:
         """13:17에 손으로 돌리면 프리뷰(22:30 뒤)·한국어 가이드(14:00 뒤)는 아직 없다고 하지 않는다."""
@@ -108,8 +108,23 @@ class ExpectedArtifactsTest(unittest.TestCase):
         names = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 6), set(), root, noon)]
         self.assertEqual(names, ["미국장 시황", "잡지 3편", "영어 가이드"])
         night = dt.datetime(2026, 10, 6, 23, 30, tzinfo=daily_proof.KST)
-        self.assertEqual(len(daily_proof.expected_artifacts(dt.date(2026, 10, 6), set(), root, night)), 6)
-        self.assertEqual(len(daily_proof.expected_artifacts(dt.date(2026, 10, 6), set(), root, None)), 6)   # 다른 날짜 지정은 전부
+        self.assertEqual(len(daily_proof.expected_artifacts(dt.date(2026, 10, 6), set(), root, night)), 8)
+        self.assertEqual(len(daily_proof.expected_artifacts(dt.date(2026, 10, 6), set(), root, None)), 8)   # 다른 날짜 지정은 전부
+
+    def test_skipped_or_noop_runs_are_not_success(self) -> None:
+        """2026-10-06(감사 F-036·F-037): 건너뛴 예약 실행도 결론은 success다 — 본 작업이 실제로 돈 실행이 있어야 ok."""
+        lo = dt.datetime(2026, 10, 6, 7, 0, tzinfo=dt.timezone.utc)
+        job = {"workflow": "market_brief.yml", "window": (lo, lo + dt.timedelta(hours=3))}
+        runs = [{"id": 1, "path": ".github/workflows/market_brief.yml", "created_at": "2026-10-06T07:20:00Z",
+                 "conclusion": "success", "status": "completed"}]
+        self.assertEqual(daily_proof.job_status(job, runs, real=lambda r: False), "건너뜀만")
+        self.assertEqual(daily_proof.job_status(job, runs, real=lambda r: True), "ok")
+        snap = {"close": {str(i): [1, 1] for i in range(2100)}}
+        root = self._root(["data/price_kr_2026-10-06.json"])
+        (root / "data" / "krx_close").mkdir(parents=True, exist_ok=True)
+        (root / "data" / "krx_close" / "2026-10-06.json").write_text(json.dumps(snap), encoding="utf-8")
+        got = {n: ok for n, ok, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 6), set(), root)}
+        self.assertTrue(got["한국장 시세"] and got["종가 사진"])
 
     def test_holiday_and_weekend(self) -> None:
         root = self._root([])
