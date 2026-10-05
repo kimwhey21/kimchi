@@ -90,7 +90,9 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
     for attempt in range(1, _NAN_RETRY_ATTEMPTS + 1):
         # 최근 3개월 이력(history)까지 한 번에 받습니다 — 본문 기간 차트용(2026-09-08).
         # 등락률·스파크라인은 여전히 마지막 lookback+1개만 씁니다.
-        hist = ticker_client.history(period="4mo")
+        # 조정하지 않은 실제 종가(2026-10-06) — 기본값(auto_adjust=True)은 배당을 뺀 조정 종가라 지난 값이 공식 종가와 달랐다
+        # (석 달 대조: 머크 66일 중 52일·월마트 36일 다름, 실제 종가는 0일). 주간 등락·3개월 차트가 이 이력을 쓴다.
+        hist = ticker_client.history(period="4mo", auto_adjust=False)
         if hist.empty or len(hist) < 2:
             raise ValueError(f"{ticker}: 시세 데이터를 가져오지 못했습니다.")
 
