@@ -162,22 +162,45 @@ def check(price_doc: dict, key: str) -> list[str]:
     return issues
 
 
-def us_issues(doc: dict) -> list[str]:
-    """가장 최근 미국장 파일을 공식 원천과 맞춘다(2026-10-05): 지수는 FRED(S&P500은 수집 뒤 20:01 ET에 올라온다), 수집 때 야후
-    하나로만 확인한 종목은 나스닥 공식 종가. 공식 원천에 그날 값이 아직 없으면 건너뛴다(틀렸다고 하지 않는다)."""
+def us_recheck(doc: dict) -> tuple[list[str], int, list[str]]:
+    """가장 최근 미국장 파일의 **모든** 값을 공식 원천으로 다시 맞춘다(2026-10-06, 감사 F-020·F-147·F-177).
+
+    전에는 FRED 네 지수와 '야후 하나'로 들어온 항목만 봤다 — 수집 때 CNBC로 확인한 값(10/5 파일 30개 중 25개)은 공식 종가와 한 번도
+    맞춰 보지 않았고, VIX는 FRED에 없어 늘 건너뛰면서 '대조한 숫자'로 셌다. 원천: 다우·나스닥 종합은 FRED, S&P500·러셀·VIX·
+    금리는 Cboe, 종목·ETF는 나스닥. 금·원유는 결제가를 수집 때 둘 이상으로 맞췄고 공식 무료 원천이 없어 다시 보지 않는다.
+    돌려주는 것: (틀린 값, 다시 맞춘 수, 공식 값이 없어 못 맞춘 이름)."""
     day = str(doc.get("trading_date") or "")
-    issues = []
+    issues, checked, missing = [], 0, []
     for group in ("macro", "watchlist"):
         for ticker, entry in (doc.get(group) or {}).items():
-            if ticker in fetch_us._FRED_SERIES:
-                other = fetch_us.fred_closes(ticker, day).get(day)
-            elif entry.get("close_sources") == ["yahoo"]:     # 수집 때 공식 원천이 아직 없던 항목(나스닥·Cboe)
-                other = fetch_us.second_close(ticker, day)
-            else:
+            ticker = str(entry.get("ticker") or ticker)
+            if ticker in fetch_us._FUTURES or entry.get("price") is None:
                 continue
-            if other is not None and abs(other - float(entry["price"])) > max(0.011, abs(other) * 0.00001):
-                issues.append(f"[미국 {day}] {entry.get('name', ticker)}({ticker}): 파일 {entry['price']} / 공식 {other}")
-    return issues
+            try:
+                if ticker in fetch_us._CBOE_SYMBOLS:
+                    other = fetch_us.cboe_closes(ticker).get(day)
+                elif ticker in fetch_us._FRED_SERIES:
+                    other = fetch_us.fred_closes(ticker, day).get(day)
+                    if other is None and ticker == "^IXIC":   # FRED가 아직 안 올린 날은 나스닥 공식(COMP)
+                        other = fetch_us.nasdaq_closes(ticker, day).get(day)
+                else:
+                    other = fetch_us.nasdaq_closes(ticker, day).get(day)
+            except Exception as exc:  # noqa: BLE001 — 못 받은 것은 '못 맞춤'으로 센다(통과로 읽지 않는다)
+                print(f"[안내] {ticker} 공식 원천: {exc}")
+                other = None
+            name = str(entry.get("name") or ticker)
+            if other is None:
+                missing.append(name)
+                continue
+            checked += 1
+            tolerance = 0.0051 if str(entry.get("unit") or "") == "%" else max(0.011, abs(other) * 0.00001)
+            if abs(other - float(entry["price"])) > tolerance:
+                issues.append(f"[미국 {day}] {name}({ticker}): 파일 {entry['price']} / 공식 {other}")
+    return issues, checked, missing
+
+
+def us_issues(doc: dict) -> list[str]:
+    return us_recheck(doc)[0]
 
 
 def latest_us_file() -> Path | None:

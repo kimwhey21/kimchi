@@ -51,3 +51,26 @@ class RequiredTradingDateTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class UsRecheckTest(unittest.TestCase):
+    """밤 증명서가 미국장 값 전부를 공식 원천으로 다시 맞춘다(2026-10-06, 감사 F-147·F-177)."""
+
+    def test_every_value_goes_to_its_official_source(self) -> None:
+        from unittest import mock
+        from src import close_check, fetch_us
+        doc = {"trading_date": "2026-10-05",
+               "macro": {"^GSPC": {"ticker": "^GSPC", "name": "S&P500", "price": 7773.95},
+                         "^VIX": {"ticker": "^VIX", "name": "VIX", "price": 15.52},
+                         "^TNX": {"ticker": "^TNX", "name": "10년물", "price": 5.31, "unit": "%"},
+                         "GC=F": {"ticker": "GC=F", "name": "금", "price": 4156.8}},
+               "watchlist": {"NVDA": {"ticker": "NVDA", "name": "엔비디아", "price": 190.0, "close_sources": ["yahoo", "cnbc"]},
+                             "AAPL": {"ticker": "AAPL", "name": "애플", "price": 250.0}}}
+        cboe = {"^GSPC": {"2026-10-05": 7773.95}, "^VIX": {"2026-10-05": 15.52}, "^TNX": {"2026-10-05": 5.312}}
+        with mock.patch.object(fetch_us, "cboe_closes", side_effect=lambda t: cboe[t]), \
+                mock.patch.object(fetch_us, "nasdaq_closes", side_effect=lambda t, d: {"NVDA": {d: 191.0}}.get(t, {})):
+            wrong, checked, missing = close_check.us_recheck(doc)
+        self.assertEqual(checked, 4)                       # S&P·VIX(전에는 FRED에 없어 건너뛰며 셌다)·10년물·엔비디아
+        self.assertEqual(missing, ["애플"])                 # 공식 값을 못 받으면 '못 맞춤'
+        self.assertEqual(len(wrong), 1)                    # CNBC로만 확인했던 엔비디아 190 / 공식 191
+        self.assertIn("엔비디아", wrong[0])

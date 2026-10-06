@@ -446,9 +446,12 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
     if us_files:
         try:
             us_doc = json.loads(us_files[-1].read_text(encoding="utf-8"))
-            issues += close_check.us_issues(us_doc)
-            n_numbers += sum(1 for g in ("macro", "watchlist") for t, e in (us_doc.get(g) or {}).items()
-                             if t in fetch_us._FRED_SERIES or len(e.get("close_sources") or []) >= 2)
+            us_wrong, us_checked, us_missing = close_check.us_recheck(us_doc)
+            issues += us_wrong
+            n_numbers += us_checked   # 실제로 공식 원천과 다시 맞춘 수만 센다(감사 F-147: 전에는 꼬리표만 붙은 값까지 셌다)
+            if us_missing:
+                issues.append(f"미국장 {us_files[-1].stem[-10:]}: 공식 원천으로 다시 맞추지 못한 값 {len(us_missing)}개 — "
+                              + ", ".join(us_missing[:10]))
         except Exception as exc:  # noqa: BLE001
             issues.append(f"미국장 대조 실패: {exc}")
     parts["숫자"] = f"{n_numbers:,}건"
@@ -480,11 +483,17 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
         if n_mag and now.time() >= dt.time(20, 0) and int(posted.get("naver_today") or 0) < min(3, n_mag):
             issues.append(f"네이버 잡지 게시 {posted.get('naver_today')}편 — 오늘 원고 {n_mag}편")
 
-    # 5. 꼬리표
-    two, total = source_tags(kr_doc)
-    parts["꼬리표"] = f"{two}/{total}"
-    if total and two < total:
-        issues.append(f"원천 하나로만 확인한 값 {total - two}개 ({kr_files[-1].name})")
+    # 5. 꼬리표 — 두 시장 모두(감사 F-167: 전에는 한국장만 보고 0/0이면 말이 없었다)
+    us_doc_tags = json.loads(us_files[-1].read_text(encoding="utf-8")) if us_files else None
+    tag_parts = []
+    for label, files, doc_ in (("한", kr_files, kr_doc), ("미", us_files, us_doc_tags)):
+        two, total = source_tags(doc_)
+        tag_parts.append(f"{label} {two}/{total}")
+        if not total and files:
+            issues.append(f"두 원천 확인 기록이 하나도 없는 시세 파일 ({files[-1].name}) — 확인 전 코드로 만든 파일입니다")
+        elif total and two < total:
+            issues.append(f"원천 하나로만 확인한 값 {total - two}개 ({files[-1].name})")
+    parts["꼬리표"] = " · ".join(tag_parts)
 
     return compose(day, parts, issues), issues, parts
 

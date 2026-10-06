@@ -77,7 +77,7 @@ class BuildJobsTest(unittest.TestCase):
                     mock.patch.object(daily_proof.close_check, "check", return_value=[]), \
                     mock.patch.object(daily_proof.close_check, "pcv_day", return_value=None), \
                     mock.patch.object(daily_proof.close_check, "check_stocks", return_value=[]), \
-                    mock.patch.object(daily_proof.close_check, "us_issues", return_value=[]), \
+                    mock.patch.object(daily_proof.close_check, "us_recheck", return_value=([], 30, [])), \
                     mock.patch.object(daily_proof.check_publication, "check_market", return_value=[]), \
                     mock.patch.dict(os.environ, {"ECOS_API_KEY": "k", "WORDPRESS_URL": ""}):
                 text, issues, parts = daily_proof.build(dt.date(2026, 10, 6), now, screens=False)
