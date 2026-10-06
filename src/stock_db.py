@@ -421,8 +421,20 @@ def _day_range(row: dict, last: dict) -> None:
         row.pop("dlow", None), row.pop("dhigh", None)
 
 
+def _naver_basic(code: str, day: str) -> dict | None:
+    """네이버 기본 시세 — {close, halted}. 그날 값이 아니면 None. 마감 뒤라 넥스트레이드에 없는 종목은 KRX 종가와 같다(같을 때만 쓴다)."""
+    try:
+        body = requests.get(f"{NAVER}/stock/{code}/basic", headers=UA, timeout=20).json()
+    except (requests.RequestException, ValueError) as exc:
+        print(f"[안내] 네이버 기본 시세 {code}: {exc}")
+        return None
+    if str(body.get("localTradedAt") or "")[:10] != day:
+        return None
+    return {"close": _num(body.get("closePrice")), "halted": (body.get("tradeStopType") or {}).get("name") == "HALTED"}
+
+
 def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str, dict | None],
-              fallback_day: str = "", third=None) -> tuple[list[str], list[str]]:
+              fallback_day: str = "", third=None, naver_basic=None) -> tuple[list[str], list[str]]:
     """목록의 가격 칸을 KRX 정규장 값으로 바꾼다. 돌려주는 것: (멈출 문제, 알릴 것).
 
     - 다음 일별 시세가 있으면 그 마지막 줄을 쓰고, 그날 사진이 있으면 종가·기준가가 같아야 한다(다르면 멈춘다).
@@ -448,7 +460,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
                 disputed.append((row, rows, snap, detail))
                 continue
             if snap is None and code not in stale:   # 오래 멈춘 거래정지 종목은 야후도 값을 주지 않는다 — '마지막 날짜' 알림으로 따로 센다
-                single.append((row, "다음", last["c"], last["d"]))
+                single.append((row, "다음", last["c"], last["d"], last))
             close, base = last["c"], last["base"]
             row.update(close=close, chg=close - base, pct=round((close / base - 1) * 100, 2), date=last["d"])
             if last.get("v") is not None:
@@ -470,21 +482,32 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
         # 사진에는 거래량·거래대금·고가·저가가 없다 — 네이버 목록의 값은 넥스트레이드 합산이라 KRX 값처럼 싣지 않고 비운다(2026-10-06, 감사 F-050)
         for key in ("volume", "value", "dlow", "dhigh"):
             row.pop(key, None)
-        single.append((row, "사진", close, day))
+        single.append((row, "사진", close, day, None))
     # 원천이 하나뿐인 종목(다음만·사진만)은 야후 종가와 맞을 때만 올린다 — 두 원천이 된다(2026-10-06, 감사 F-039·F-058).
     # 많으면(다음이 통째로 막혔거나 그날 사진이 없다) 원천 고장이라 묻지 않고 올리지 않는다.
     if len(single) > ONE_SOURCE_MAX:
-        kinds = sorted({k for _, k, _, _ in single})
+        kinds = sorted({k for _, k, *_ in single})
         problems.append(f"원천이 하나({'·'.join(kinds)})뿐인 종목 {len(single)}개 — 다음이나 15시 반 사진이 통째로 빠졌습니다. 올리지 않습니다")
     elif single:
-        checked = 0
-        for row, kind, close, when in single:
+        checked, by_naver, halted = 0, 0, 0
+        for row, kind, close, when, last in single:
             other = (third or _yahoo)(row["code"], when)
-            if other is None or abs(other - close) >= 0.5:
-                problems.append(f"{row['code']}: {kind} 하나로만 받은 종가 {close:,.0f}를 야후로 확인하지 못했습니다(야후 {other})")
+            if other is not None and abs(other - close) < 0.5:
+                checked += 1
                 continue
-            checked += 1
-        notes.append(f"원천이 하나뿐이라 야후로 확인한 종목 {checked}개(다음·사진 중 하나가 빠짐)")
+            # 야후가 값을 주지 않는 종목(거래정지 — 야후는 거래량 0인 날을 빼고, 일부 리츠는 야후에 없다)은 네이버 기본 시세로 가린다
+            # (2026-10-06: 17:05 실행이 거래정지 21종목·맵스리얼티1 때문에 통째로 멈췄다). 거래정지는 네이버가 '정지'로 표시하고 다음이
+            # 체결 0주·종가=기준가일 때만, 거래가 있던 종목은 네이버 종가가 다음 종가와 같을 때만 쓴다.
+            naver = (naver_basic or _naver_basic)(row["code"], when) if other is None else None
+            if naver and naver.get("halted") and last and not last.get("v") and abs(last["c"] - last["base"]) < 0.5:
+                halted += 1
+                continue
+            if naver and naver.get("close") is not None and abs(naver["close"] - close) < 0.5:
+                by_naver += 1
+                continue
+            problems.append(f"{row['code']}: {kind} 하나로만 받은 종가 {close:,.0f}를 야후로도 네이버로도 확인하지 못했습니다"
+                            f"(야후 {other}, 네이버 {naver})")
+        notes.append(f"원천이 하나뿐이라 셋째 근거로 확인한 종목 — 야후 {checked}개·네이버 종가 {by_naver}개·거래정지 {halted}개")
     # 두 원천(다음·15시 반 사진)이 다른 종목은 셋째 근거로 가린다(2026-10-05 결정: 옛 값이 아니라 정확한 값) — 종가는 야후와
     # 같은 쪽, 기준가는 fetch_kr.pick_base. 가리지 못한 종목이 하나라도 있으면 올리지 않는다. 많이 다르면 원천 고장이라 묻지 않는다.
     if len(disputed) > DISPUTE_MAX:
@@ -1262,6 +1285,10 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     from dotenv import load_dotenv
     load_dotenv(ROOT / ".env")
     if in_krx_session() and not force:
+        if os.environ.get("GITHUB_EVENT_NAME") == "schedule":
+            # 몇 시간 늦게 온 깃허브 예비 예약이 장중에 닿은 것 — 실패(❌)가 아니라 건너뛴다(2026-10-06: 11:31에 헛 ❌가 갔다)
+            print("[안내] 늦게 온 예약 실행이 장중에 닿았습니다 — 장중 가격을 종가로 올리지 않게 이번에는 건너뜁니다.")
+            return {}
         raise StockDBError("지금은 한국장 장중입니다 — 장중 가격이 '종가'로 올라가므로 멈춥니다(굳이 돌리려면 --force).")
     session = requests.Session()
     session.headers.update(UA)

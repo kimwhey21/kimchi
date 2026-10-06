@@ -608,7 +608,7 @@ class KrxPricesTest(unittest.TestCase):
                                         third=lambda c, d: 1841000.0)
         self.assertEqual(problems, [])
         self.assertEqual((row["close"], row["pct"]), (1841000.0, 0.44))
-        self.assertTrue(any("야후로 확인한 종목 1개" in n for n in notes))
+        self.assertTrue(any("야후 1개" in n for n in notes))
         # 2026-10-06: 하나 남은 원천을 야후가 확인해 주지 않으면 올리지 않는다
         problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": []}, {"2026-10-02": {"000660": [1841000, 1833000]}},
                                     "2026-10-02", third=lambda c, d: None)
@@ -629,7 +629,7 @@ class KrxPricesTest(unittest.TestCase):
                                         third=lambda c, d: 1841000.0)
         self.assertEqual(problems, [])
         self.assertEqual((row["close"], row["date"]), (1841000.0, "2026-10-02"))
-        self.assertTrue(any("야후로 확인한 종목 1개" in n for n in notes))
+        self.assertTrue(any("야후 1개" in n for n in notes))
 
     def test_long_halted_stock_keeps_its_last_day_and_is_counted(self):
         row = dict(self.ROW)
@@ -695,3 +695,31 @@ class KrxRatiosTest(unittest.TestCase):
         rows = [{"d": "2026-10-02", "c": 276000.0}]
         r = sdb.krx_detail(detail, rows, (89000.0, 380000.0))["r"]
         self.assertEqual((r["per"], r["pbr"], r["div_yield"], r["high52"]), (12.38, 3.21, 0.6, 380000.0))
+
+
+class OneSourceFallbackTest(unittest.TestCase):
+    """2026-10-06 17:05: 거래정지 21종목·맵스리얼티1이 야후에 없어 종목 DB 전체가 멈췄다 — 네이버 기본 시세로 가린다."""
+
+    def _row(self, code):
+        return {"code": code, "market": "KOSPI", "close": 1.0, "chg": 0.0, "pct": 0.0, "date": "2026-10-06"}
+
+    def test_halted_stock_is_confirmed_by_naver_halt_flag(self):
+        daum = {"001470": [{"d": "2026-10-06", "c": 5820.0, "base": 5820.0, "v": 0}]}
+        problems, notes = sdb.apply_krx([self._row("001470")], daum, {"2026-10-06": {}}, "2026-10-06",
+                                        third=lambda c, d: None, naver_basic=lambda c, d: {"close": 5820.0, "halted": True})
+        self.assertEqual(problems, [])
+        self.assertTrue(any("거래정지 1개" in n for n in notes))
+
+    def test_traded_stock_needs_the_same_naver_close(self):
+        daum = {"094800": [{"d": "2026-10-06", "c": 7720.0, "base": 7870.0, "v": 17640}]}
+        ok, _ = sdb.apply_krx([self._row("094800")], daum, {"2026-10-06": {}}, "2026-10-06",
+                              third=lambda c, d: None, naver_basic=lambda c, d: {"close": 7720.0, "halted": False})
+        bad, _ = sdb.apply_krx([self._row("094800")], daum, {"2026-10-06": {}}, "2026-10-06",
+                               third=lambda c, d: None, naver_basic=lambda c, d: {"close": 7750.0, "halted": False})
+        self.assertEqual((ok, len(bad)), ([], 1))
+
+    def test_late_schedule_during_the_session_is_skipped_not_failed(self):
+        from unittest import mock
+        with mock.patch.object(sdb, "in_krx_session", return_value=True), mock.patch.dict("os.environ", {"GITHUB_EVENT_NAME": "schedule"}), \
+                mock.patch("builtins.print"):
+            self.assertEqual(sdb.run(detail_all=False, do_push=False, out=None), {})
