@@ -39,7 +39,8 @@ def posted_today(path: Path, day: dt.date) -> int:
     n = 0
     for info in (rows.values() if isinstance(rows, dict) else rows):
         at = str((info or {}).get("at") or "")[:10] if isinstance(info, dict) else ""
-        n += at == day.isoformat()
+        discarded = isinstance(info, dict) and "버림" in str(info.get("note") or "")   # 올리지 않고 버린 기록은 세지 않는다(2026-10-06)
+        n += (not discarded) and at == day.isoformat()
     return n
 
 

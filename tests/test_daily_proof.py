@@ -177,9 +177,10 @@ class MacBeatsTest(unittest.TestCase):
     def test_uploader_counts_todays_posts(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             naver = Path(tmp) / "posted.json"
-            naver.write_text(json.dumps({"a": {"at": "2026-10-06T07:31:00"}, "b": {"at": "2026-10-05T19:31:00"}}), encoding="utf-8")
+            naver.write_text(json.dumps({"a": {"at": "2026-10-06T07:31:00", "logNo": "1"}, "b": {"at": "2026-10-05T19:31:00", "logNo": "2"},
+                                         "c": {"at": "2026-10-06T19:00:00", "logNo": None, "note": "버림"}}), encoding="utf-8")   # 버림 기록은 안 센다
             blogger = Path(tmp) / "blogger_posted.json"
-            blogger.write_text(json.dumps({"x": {"at": "2026-10-06T00:28:46"}}), encoding="utf-8")
+            blogger.write_text(json.dumps({"x": {"at": "2026-10-06T00:28:46", "url": "https://fermata49.blogspot.com/x"}}), encoding="utf-8")
             blocked = Path(tmp) / "blocked.json"
             blocked.write_text(json.dumps({"m": {"at": "2026-10-06T12:30:00", "why": "근거 없음"}}), encoding="utf-8")
             doc = mac_beats.build(dt.datetime(2026, 10, 6, 23, 22, tzinfo=daily_proof.KST), beats={"naver_sync": "t"}, naver=naver, blogger=blogger,

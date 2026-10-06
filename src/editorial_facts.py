@@ -832,8 +832,10 @@ def _level_rules(lang: str) -> list[tuple[str, re.Pattern]]:
             ("^TNX", re.compile(r"\b10-year\b" + _gap(50) + r"\b" + _NUM + r"%(?!\s*(?:points?|pp))", re.I)),
             ("^TYX", re.compile(r"\b30-year\b" + _gap(50) + r"\b" + _NUM + r"%(?!\s*(?:points?|pp))", re.I)),
             ("USD/KRW", re.compile(_NUM + r"\s*won\b", re.I)),
-            # 영어 환율 꼴 "the won … to 1,372.70 per dollar"는 넣지 않았다(2026-10-06): 지난 원고에서 이 꼴은 대부분 서울 외환시장
-            # 종가(뉴스)를 인용해 우리 파일의 하나은행 고시와 정의가 다르다 — 9/4·9/9 맞는 문장 둘이 걸렸다(환율 기준은 사장님 결정 대기).
+            # 원/달러는 하나은행 고시 하나만 쓴다(2026-10-06 결정) — 영어 문장 "the won … to 1,372.70 per dollar"도 시세 파일과 대조한다.
+            # 9/4·9/9 원고는 서울 외환시장 종가를 인용해 지금 기준으로는 걸린다(지난 글 — 고치지 않는다).
+            ("USD/KRW", re.compile(r"\b(?:won|USD/KRW)\b" + _gap(50) + r"\b(?:to|at)\s+" + _NUM
+                                   + r"\s*(?:won\s+)?(?:per|to the|against the|a)\s+(?:U\.?S\.?\s+)?dollar", re.I)),
         ]
     return [
         ("GC=F", re.compile(r"(?:국제\s*금|금값|금\s*선물|금은|금이|금도)" + _gap(40) + r"온스당\s*" + _NUM + r"\s*달러")),

@@ -649,27 +649,12 @@ SKHY_RATIO = 10          # SKHY ADR 1주 = SK하이닉스 보통주 10분의 1�
 SKHY_START = "2026-07-10"   # 나스닥 첫 거래일(야후 이력의 첫 날)
 
 
-def file_fx(folder: Path | None = None) -> dict[str, float]:
-    """날마다 커밋한 한국장 시세 파일의 원/달러 {날짜: 값} — 서울 마감 무렵 하나은행 고시, 두 원천으로 확인한 값."""
-    out = {}
-    for path in sorted((folder or ROOT / "data").glob("price_kr_*.json")):
-        try:
-            macro = json.loads(path.read_text(encoding="utf-8")).get("macro") or {}
-        except (OSError, ValueError):
-            continue
-        for entry in (macro.values() if isinstance(macro, dict) else macro):
-            if isinstance(entry, dict) and "USD/KRW" in str(entry.get("ticker") or "") and entry.get("price"):
-                out[path.stem[-10:]] = float(entry["price"])
-    return out
-
-
-def build_skhy(session: requests.Session, fx_files: dict[str, float] | None = None) -> dict | None:
+def build_skhy(session: requests.Session) -> dict | None:
     """SKHY(나스닥)와 서울 원주의 가격 차이를 **같은 날짜끼리** 짝지어 상장일부터 늘어놓는다 (2026-09-28).
 
     프리미엄 = SKHY 종가 × 10 × 그날 원달러 ÷ 그날 서울 종가 − 1. 서울은 종목 페이지와 같은 KRX 정규장 종가(다음 일별 시세).
-    환율은 **서울 마감 무렵 값**(2026-10-06, 감사 F-026): 우리 한국장 시세 파일의 하나은행 고시(홈 띠의 원/달러와 같은 값), 파일이 없는
-    날(8/28 전)은 야후 시간봉의 서울 15시 값. 전에는 야후 일봉 '종가'를 썼는데 그것은 그날 아침 8시(런던 0시) 값이라 프리미엄이
-    0.5~1.7포인트 어긋났다. SKHY 종가는 조정하지 않은 값이고 최근 날짜는 나스닥 공식 종가와 같아야 한다 — 다르면 올리지 않는다.
+    환율은 **뉴욕 마감 시각(16:00 ET) 값**(2026-10-06 결정, 감사 F-026): 야후 시간봉의 그날 뉴욕 15:00~16:00 봉 종가 — SKHY 종가와
+    같은 시각의 환율이다. 전에는 야후 일봉 '종가'를 썼는데 그것은 그날 아침 8시(런던 0시) 값이라 프리미엄이 0.5~1.7포인트 어긋났다. SKHY 종가는 조정하지 않은 값이고 최근 날짜는 나스닥 공식 종가와 같아야 한다 — 다르면 올리지 않는다.
     서울이 쉰 날·나스닥이 쉰 날은 짝이 없어 빠진다. 받지 못하면 None — 페이지와 홈 칸을 비운다."""
     try:
         import yfinance as yf
@@ -683,9 +668,9 @@ def build_skhy(session: requests.Session, fx_files: dict[str, float] | None = No
             raise StockDBError("SKHY 종가가 나스닥 공식값과 다릅니다: " + ", ".join(wrong[:5]))
         usd.update(official)
         usd = {d: v for d, v in usd.items() if d <= max(official)}   # 나스닥이 아직 안 올린 날은 다음 실행에 — 확인 안 된 값은 싣지 않는다
+        # 환율은 뉴욕 마감 시각 값(2026-10-06 결정) — 야후 시간봉 가운데 그날 뉴욕 15:00~16:00 봉의 종가(=16:00 ET).
         hourly = yf.Ticker("KRW=X").history(period="1y", interval="1h")["Close"]
-        fxs = {str(t.date()): float(v) for t, v in hourly.tz_convert("Asia/Seoul").items() if t.hour == 15}
-        fxs.update(file_fx() if fx_files is None else fx_files)
+        fxs = {str(t.date()): float(v) for t, v in hourly.tz_convert("America/New_York").items() if t.hour == 15}
         # 서울 종가는 KRX 정규장 값(다음 일별 시세, 2026-10-05) — 네이버 차트는 넥스트레이드까지 합친 값이었다
         seoul = {r["d"]: r["c"] for r in Daum(session).days("000660", 250)}
         if not seoul:

@@ -58,7 +58,8 @@ class LevelTest(unittest.TestCase):
                 if doc.get(lang):
                     found += [(path.stem, x) for x in ef.level_issues(doc[lang], doc["price_data"], lang)
                               + ef.judgment_word_issues(doc[lang], doc["price_data"], lang)]
-        self.assertEqual({stem for stem, _ in found}, {"kr_2026-09-01"}, found)
+        # 9/4·9/9는 영어판이 서울 외환시장 종가를 인용했다 — 2026-10-06 결정(원/달러는 하나은행 고시 하나)으로 이제 걸리는 지난 글이다
+        self.assertEqual({stem for stem, _ in found}, {"kr_2026-09-01", "kr_2026-09-04", "kr_2026-09-09"}, found)
 
 
 if __name__ == "__main__":

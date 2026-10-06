@@ -88,7 +88,7 @@ class DailyRunTest(unittest.TestCase):
         php = (Path(__file__).resolve().parent.parent / "templates" / "wp_stock_db.php").read_text(encoding="utf-8")
         self.assertIn("fs_krw( $q['dlow'] ) . ' – ' . fs_krw( $q['dhigh'] )", php)
         self.assertNotIn("fs_krw( $r['low'] ) . ' – ' . fs_krw( $r['high'] )", php)   # 상세의 고가·저가는 넥스트레이드 합산
-        self.assertIn("USD/KRW is the Hana Bank rate near the Seoul close", php)
+        self.assertIn("USD/KRW is the rate at the Nasdaq close", php)
         self.assertNotIn("SK Hynix closing prices via Naver Finance", php)
 
     def test_rotation_turn_does_not_move_when_the_ranking_changes(self):
@@ -364,14 +364,14 @@ class ForeignFlowsTest(unittest.TestCase):
 class SkhyTest(unittest.TestCase):
     """/stocks/skhy-premium/ (2026-09-28): 같은 날짜끼리만 짝짓는다."""
 
-    def _run(self, usd_values, official, fx_files=None):
+    def _run(self, usd_values, official):
         from unittest import mock
         import pandas as pd
         idx = pd.to_datetime(["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-18", "2026-09-17", "2026-09-16"])
         usd = pd.Series(list(usd_values) + [150.0], index=idx)
         hours = pd.DatetimeIndex([f"{d} 15:00" for d in ("2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23")],
-                                 tz="Asia/Seoul").append(pd.DatetimeIndex(["2026-09-23 08:00"], tz="Asia/Seoul"))
-        fx = pd.Series([1400.0] * 6 + [9999.0], index=hours).tz_convert("UTC")      # 아침 8시 값은 쓰지 않는다
+                                 tz="America/New_York").append(pd.DatetimeIndex(["2026-09-23 03:00"], tz="America/New_York"))
+        fx = pd.Series([1400.0] * 6 + [9999.0], index=hours).tz_convert("UTC")      # 뉴욕 15~16시 봉만 — 런던 0시 무렵 값은 쓰지 않는다
         sym_of = [None]
 
         def history(period, auto_adjust=True, interval="1d"):
@@ -390,19 +390,13 @@ class SkhyTest(unittest.TestCase):
         from src import fetch_us
         with mock.patch.dict("sys.modules", {"yfinance": fake_yf}), mock.patch.object(sdb, "_get", return_value=mock.Mock(json=lambda: seoul)), \
                 mock.patch.object(sdb.time, "sleep"), mock.patch.object(fetch_us, "nasdaq_closes", return_value=official):
-            return sdb.build_skhy(mock.Mock(), fx_files=fx_files or {})
+            return sdb.build_skhy(mock.Mock())
 
     def test_pairs_same_day_only_and_uses_ratio(self):
         p = self._run([150.0, 150.0, 150.0, 999.0, 999.0, 150.0, 150.0], {"2026-09-23": 150.0, "2026-09-25": 999.0})
         self.assertEqual([r["d"] for r in p["rows"]], ["2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23"])  # 서울이 쉰 9/24·25는 빠진다
-        self.assertEqual(p["rows"][0]["seoul_usd"], 100.0)          # 1,400,000 ÷ 10 ÷ 1,400(서울 15시 값 — 아침 8시 9,999는 안 쓴다)
+        self.assertEqual(p["rows"][0]["seoul_usd"], 100.0)          # 1,400,000 ÷ 10 ÷ 1,400(뉴욕 마감 무렵 값 — 다른 시각 9,999는 안 쓴다)
         self.assertEqual(p["rows"][0]["prem"], 50.0)
-
-    def test_fx_comes_from_our_daily_file_first(self):
-        """감사 F-026: 야후 일봉 '종가'는 아침 8시 값이었다 — 우리 시세 파일의 하나은행 고시(홈 띠와 같은 값)를 먼저 쓴다."""
-        p = self._run([150.0] * 7, {"2026-09-25": 150.0}, fx_files={"2026-09-23": 1500.0})
-        self.assertEqual(p["rows"][-1]["fx"], 1500.0)
-        self.assertEqual(p["rows"][0]["fx"], 1400.0)
 
     def test_skhy_close_must_match_nasdaq(self):
         self.assertIsNone(self._run([150.0] * 7, {"2026-09-23": 151.0}))   # 야후 150 / 나스닥 151 — 싣지 않는다
