@@ -242,13 +242,28 @@ class KrInsidersTest(unittest.TestCase):
         session.headers = {}
         return session
 
-    def _run(self, body: str) -> dict:
+    def _run(self, body: str, today: "dt.date | None" = None) -> dict:
+        import datetime as _dt
+        fixed = today or _dt.date(2026, 9, 5)
+
+        class _Date(_dt.date):
+            @classmethod
+            def today(cls):
+                return fixed
         with mock.patch.object(story_engines.requests, "Session",
                                return_value=self._session(body)), \
              mock.patch.object(story_engines.time, "sleep", lambda *_: None), \
+             mock.patch.object(story_engines.dt, "date", _Date), \
              mock.patch.object(story_engines, "core_watchlist",
                                return_value=[{"ticker": "000660", "name": "SK하이닉스"}]):
             return story_engines.kr_insiders(days=7, scan=5)
+
+    def test_old_purchase_in_a_new_filing_is_kept_apart(self) -> None:
+        """감사 F-184: 공시는 최근이어도 매수일이 기간 밖이면 '최근 매수'에 넣지 않는다."""
+        import datetime as _dt
+        result = self._run(self.BODY, today=_dt.date(2026, 10, 6))
+        self.assertEqual(result["buys"], [])
+        self.assertEqual(len(result["old_buys"]), 1)
 
     def test_parses_on_market_purchase_and_flags_core_name(self) -> None:
         result = self._run(self.BODY)

@@ -218,7 +218,11 @@ def ratings(market: str, days: int = 7) -> dict:
         "changes": moved,
         "reiterations": len(changes) - len(moved),
         "upgrade_count": len(upgrades), "downgrade_count": len(downgrades),
-        "note": "빈 결과도 결과입니다 — 그 주에 의견 변경이 없었다는 뜻입니다.",
+        "note": ("빈 결과도 결과입니다 — 그 주에 의견 변경이 없었다는 뜻입니다. 날짜는 야후가 기록한 날로, 보도일과 하루 다를 수 있습니다"
+                 "(감사 F-188: 웰스파고 코인베이스 건 엔진 10/2, 보도 10/1) — '같은 날'이라고 쓰기 전에 출처에서 날짜를 확인하십시오."
+                 if market != "kr" else
+                 "야후는 한국 증권사 의견을 거의 주지 않습니다 — 0건은 '변경이 없었다'가 아니라 '자료가 없다'입니다(감사 F-106). "
+                 "한국 목표가 변경은 뉴스·증권사 리포트에서 찾으십시오."),
         "fetch_failed": failed,
     }
 
@@ -362,7 +366,8 @@ def earnings(market: str, days: int = 21) -> dict:
     벤치마크의 「9월 30일 실적에서 확인할 5가지」가 이 소재입니다. 글의 수명이
     하루가 아니라 그 실적일까지 갑니다 — 우리 글에 없는 성질입니다.
     """
-    today = dt.date.today()
+    from zoneinfo import ZoneInfo
+    today = dt.datetime.now(ZoneInfo("Asia/Seoul" if market == "kr" else "America/New_York")).date()   # 거래소 날짜 기준
     limit = today + dt.timedelta(days=days)
     upcoming, failed = [], 0
     for entry in core_watchlist(market):
@@ -375,15 +380,24 @@ def earnings(market: str, days: int = 21) -> dict:
         except Exception:
             failed += 1
             continue
-        dates = calendar.get("Earnings Date") or []
-        if not isinstance(dates, (list, tuple)):
-            dates = [dates]
-        for when in dates:
-            when = when if isinstance(when, dt.date) else None
-            if when and today <= when <= limit:
+        # 날짜는 거래소 시간대로(2026-10-06, 감사 F-130): `calendar`의 날짜는 돌리는 컴퓨터의 시간대로 바뀐다 — 이 맥(KST)에서는
+        # 엔비디아 11/17(뉴욕) 장 마감 뒤 발표가 11/18로 나왔다. 시간대가 붙은 `get_earnings_dates`를 먼저 쓴다.
+        exchange_tz = "Asia/Seoul" if market == "kr" else "America/New_York"
+        dates = []
+        try:
+            frame = ticker.get_earnings_dates(limit=6)
+            for stamp in (sorted(frame.index) if frame is not None else []):
+                local = stamp.tz_convert(exchange_tz) if getattr(stamp, "tzinfo", None) else stamp
+                dates.append((local.date(), local.strftime("%H:%M")))
+        except Exception:  # noqa: BLE001  # 무시: 시간대 붙은 값이 없으면 calendar 날짜로 대신하고 출력에 '시각 미정'으로 남는다
+            raw = calendar.get("Earnings Date") or []
+            dates = [(d, None) for d in (raw if isinstance(raw, (list, tuple)) else [raw]) if isinstance(d, dt.date)]
+        for when, at in dates:
+            if today <= when <= limit:
                 upcoming.append({
                     "name": entry["name"], "symbol": symbol,
                     "date": when.isoformat(),
+                    "time_local": at,
                     "days_away": (when - today).days,
                     "eps_estimate": calendar.get("Earnings Average"),
                     "revenue_estimate": calendar.get("Revenue Average"),
@@ -681,14 +695,18 @@ def kr_insiders(days: int = 7, scan: int = 40) -> dict:
             when = next((c for c in window if re.fullmatch(r"\d{4}\.\d{2}\.\d{2}", c)), filed)
             buys.append({
                 "company": company, "is_core": company in core,
-                "filer": filer, "date": when.replace(".", "-"),
+                "filer": filer, "date": when.replace(".", "-"), "filed": str(filed).replace(".", "-"),
                 "shares": change, "price": price, "value_krw": change * price,
                 "filing": f"{_DART_MAIN}?rcpNo={rcp_no}",
             })
         time.sleep(1.0)                       # DART는 빠르게 두드리면 연결을 끊습니다
 
     buys.sort(key=lambda b: b["value_krw"], reverse=True)
-    return {"engine": "kr_insiders", "days": days, "scanned": len(rows),
+    # 공시는 최근이어도 매수(변동일)는 두 달 전일 수 있다(감사 F-184: '최근 7일' 아래 8/11 거래). 기간 밖 매수는 따로 둔다.
+    cutoff = (today - dt.timedelta(days=days)).isoformat()
+    old = [b for b in buys if b["date"] < cutoff]
+    buys = [b for b in buys if b["date"] >= cutoff]
+    return {"engine": "kr_insiders", "days": days, "scanned": len(rows), "requested": scan, "old_buys": old,
             "failed": failed, "fetch_failed": failed, "asof": today.isoformat(), "buys": buys,
             "core_hits": [b for b in buys if b["is_core"]],
             "note": "장내매수만 담았습니다. 상속·증여·대여주식상환·스톡옵션 행사는 "
@@ -1088,7 +1106,10 @@ def _print(result: dict) -> None:
     elif engine == "earnings":
         print(f"[실적 일정] {result['market'].upper()} · 앞으로 {result['days']}일")
         for row in result["upcoming"]:
-            print(f"  D-{row['days_away']:<3} {row['date']}  {row['name']}")
+            at = row.get("time_local")
+            print(f"  D-{row['days_away']:<3} {row['date']}  {row['name']}"
+                  + ("  (시각 미정)" if not at or at in ("00:00", "15:00")
+                     else f"  ({'뉴욕' if result['market'] == 'us' else '서울'} {at})"))
         if not result["upcoming"]:
             print("  해당 기간에 예정된 코어 종목 실적이 없습니다.")
     elif engine == "insiders":
@@ -1100,7 +1121,7 @@ def _print(result: dict) -> None:
     elif engine == "fred":
         print(f"[미 거시] 최근 {result['days']}일")
         for row in result["rows"]:
-            print(f"  {row['name']:<18}{row['value']:>8.2f}  ({row['change']:+.2f}) "
+            print(f"  {row['name']:<18}{row['value']:>8.2f}  [{row.get('date', '?')} 기준]  ({row['change']:+.2f}) "
                   f"기간 최저 {row['period_low']:.2f}({row['period_low_date']}) "
                   f"최고 {row['period_high']:.2f}({row['period_high_date']})")
     elif engine == "ecos":
@@ -1143,10 +1164,15 @@ def _print(result: dict) -> None:
               f"장내매수 {len(result['buys'])}건")
         if result.get("failed"):
             print(f"  ※ {result['failed']}건은 열지 못했습니다 — 이 결과는 그만큼 덜 셌습니다.")
+        if result.get("requested") and result["scanned"] < result["requested"]:
+            print(f"  ※ 목록에서 {result['scanned']}건만 나왔습니다(요청 {result['requested']}건) — 그 기간 공시가 그만큼이거나 목록 형식이 바뀐 것입니다.")
         for buy in result["buys"][:15]:
             mark = "★" if buy["is_core"] else " "
-            print(f" {mark}{buy['date']} {buy['company'][:12]:<13}{buy['value_krw']:>14,}원  "
+            print(f" {mark}변동 {buy['date']} (공시 {buy.get('filed', '?')}) {buy['company'][:12]:<13}{buy['value_krw']:>14,}원  "
                   f"{buy['filer']} ({buy['shares']:,}주 @ {buy['price']:,})")
+        if result.get("old_buys"):
+            print(f"  ※ 공시는 최근이지만 매수일이 {result['days']}일보다 오래된 것 {len(result['old_buys'])}건 — '최근 매수'로 쓰지 마십시오: "
+                  + ", ".join(f"{b['company']} {b['date']}" for b in result["old_buys"][:6]))
         print("  ★ = 우리 코어 워치리스트 종목")
         print("  " + result["note"])
     elif engine == "flows":
