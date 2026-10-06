@@ -69,6 +69,55 @@ def needed_claims(doc: dict, numbers: bool = True, events: bool = False) -> list
     return out
 
 
+# 근거 구절의 숫자와 원문 숫자(2026-10-06, 감사 F-088: 본문 '39조 달러'의 원문이 '$38.5 trillion'이어도 통과했다).
+_KO_UNIT = {"조": 1e12, "억": 1e8, "만": 1e4, "천": 1e3}
+_EN_UNIT = {"trillion": 1e12, "billion": 1e9, "bn": 1e9, "million": 1e6, "mn": 1e6, "thousand": 1e3}
+_NUM_TOKEN = re.compile(r"(\d[\d,]*(?:\.\d+)?)\s*(조|억|만|천|trillion|billion|bn|million|mn|thousand)?", re.I)
+
+
+def _values(text: str) -> list[float]:
+    """글 속 숫자 값 — 단위를 곱하고 '1만 7,000'처럼 이어진 한국어 단위는 더한 값도 넣는다."""
+    out: list[float] = []
+    tokens = []
+    for m in _NUM_TOKEN.finditer(text):
+        try:
+            base = float(m.group(1).replace(",", ""))
+        except ValueError:
+            continue
+        unit = (m.group(2) or "").lower()
+        value = base * _KO_UNIT.get(unit, _EN_UNIT.get(unit, 1))
+        tokens.append((m.start(), m.end(), value, unit))
+        out.append(value)
+    for (s1, e1, v1, u1), (s2, e2, v2, u2) in zip(tokens, tokens[1:]):
+        if u1 in _KO_UNIT and s2 - e1 <= 2 and (not u2 or _KO_UNIT.get(u2, 0) < _KO_UNIT[u1]):
+            out.append(v1 + v2)
+    return out
+
+
+def number_mismatches(claim: str, original: str) -> list[tuple[float, float]]:
+    """구절의 숫자 가운데 원문의 가장 가까운 숫자와 0.5%~50% 어긋나는 것 — 옮겨 적다 틀린 숫자(39 대 38.5).
+    원문에 짝이 아예 없는 숫자(날짜를 문맥에서 가져온 것 등)는 여기서 보지 않는다."""
+    months = {m: i for i, m in enumerate(("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"), 1)}
+    have = [v for v in _values(original) if v] + [float(months[w[:3]]) for w in re.findall(r"[A-Za-z]{3,}", original.lower())
+                                                  if w[:3] in months and (len(w) == 3 or w in (
+                                                      "january", "february", "march", "april", "june", "july", "august",
+                                                      "september", "sept", "october", "november", "december"))]
+    bad = []
+    claim_values = _values(claim)
+    combined = set(claim_values[len(_NUM_TOKEN.findall(claim)):])
+    for value in claim_values:
+        if not value or not have:
+            continue
+        nearest = min(have, key=lambda o: abs(o - value) / max(abs(o), abs(value)))
+        gap = abs(nearest - value) / max(abs(nearest), abs(value))
+        integers = value == int(value) and nearest == int(nearest) and value != nearest   # 1907 대 1906 — 정수가 다르면 옮겨 적다 틀린 것
+        covered = any(abs(c - nearest) <= 1e-9 * max(abs(c), 1) for c in claim_values) or \
+            any(abs(c - nearest) / max(abs(c), 1) <= 0.005 for c in combined)   # 그 원문 숫자를 다른 구절 숫자가 이미 옮겼다
+        if (0.005 < gap or integers) and gap <= 0.5 and not covered:
+            bad.append((value, nearest))
+    return bad
+
+
 def evidence_issues(doc: dict, fetch=None, numbers: bool = True, events: bool = False) -> list[str]:
     """`numbers=False`면 큰따옴표 인용만 본다(잡지 밖의 글 — 숫자는 시세 대조·엔진이 맡는다)."""
     fetch = fetch or page_text      # 부를 때 찾는다(시험이 page_text를 바꿔 끼울 수 있게)
@@ -96,4 +145,6 @@ def evidence_issues(doc: dict, fetch=None, numbers: bool = True, events: bool = 
             issues.append(f"근거 '{str(e.get('claim'))[:40]}'의 출처를 열 수 없습니다 — 열리는 출처를 쓰십시오: {url[:80]}")
         elif normalize(original) not in text:
             issues.append(f"근거 '{str(e.get('claim'))[:40]}'의 원문이 출처 페이지에 없습니다: '{original[:60]}'")
+        for value, nearest in number_mismatches(str(e.get("claim") or ""), original):
+            issues.append(f"근거 '{str(e.get('claim'))[:40]}'의 숫자 {value:,.10g}이(가) 원문의 {nearest:,.10g}과 다릅니다 — 원문 숫자를 그대로 옮기십시오")
     return issues

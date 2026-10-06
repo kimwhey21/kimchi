@@ -58,3 +58,23 @@ class EventClaimTest(unittest.TestCase):
         self.assertEqual(ec.needed_claims(doc, numbers=False, events=True), ["10월 1일부터 이어진 셧다운이 변수입니다."])
         issues = ec.evidence_issues(doc, fetch=lambda u: None, numbers=False, events=True)
         self.assertTrue(any("근거 없음" in i for i in issues))
+
+
+class NumberMatchTest(unittest.TestCase):
+    """근거 구절의 숫자와 원문 숫자(감사 F-088: '39조 달러'의 원문이 '$38.5 trillion')."""
+
+    def test_miscopied_numbers_are_caught(self) -> None:
+        self.assertTrue(ec.number_mismatches("부채 39조 달러", "debt of $38.5 trillion"))
+        self.assertTrue(ec.number_mismatches("1907년 10월", "in October 1906"))
+        self.assertTrue(ec.number_mismatches("S&P500 7,722.72", "closed at 7,773.95"))
+
+    def test_unit_conversions_and_dates_pass(self) -> None:
+        for claim, original in (("예금주 1만 7,000명", "17,000 depositors"), ("3,500만 달러", "$35 million"),
+                                ("1,000억 개", "capped at 100 billion tokens"), ("10월 8일", "on october 8."),
+                                ("9월 27일", "sun, 27/09/2026 - 6:57"), ("2029년까지 60만 달러", "$600,000 by 2029")):
+            with self.subTest(claim=claim):
+                self.assertEqual(ec.number_mismatches(claim, original), [])
+
+    def test_sample_evidence_has_no_mismatch(self) -> None:
+        doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
+        self.assertEqual([e["claim"] for e in doc["evidence"] if ec.number_mismatches(e["claim"], e["original"])], [])
