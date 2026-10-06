@@ -564,7 +564,7 @@ class KrxPricesTest(unittest.TestCase):
         self.assertFalse({"volume", "value", "dlow", "dhigh"} & set(sdb.quote(row)))
 
     def test_disagreement_is_settled_by_a_third_source(self):
-        """2026-10-05 사장님: 옛 값이 아니라 정확한 값 — 사진과 다음이 다르면 야후와 같은 쪽(실제 10/2: 야후 1,841,000 = 다음)."""
+        """2026-10-05 결정: 옛 값이 아니라 정확한 값 — 사진과 다음이 다르면 야후와 같은 쪽(실제 10/2: 야후 1,841,000 = 다음)."""
         row = dict(self.ROW)
         problems, notes = sdb.apply_krx([row], {"000660": list(self.DAUM)}, {"2026-10-02": {"000660": [1842000, 1833000]}},
                                         third=lambda code, day: 1841000.0)

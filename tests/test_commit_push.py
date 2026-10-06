@@ -13,7 +13,7 @@ class _Run:
     def __init__(self, table):
         self.table, self.calls = table, []
 
-    def __call__(self, cmd, cwd=None, text=None, capture_output=None):
+    def __call__(self, cmd, cwd=None, text=None, capture_output=None, env=None):
         args = tuple(cmd[1:])
         self.calls.append(args)
         for key, (rc, out, err) in self.table.items():
@@ -67,3 +67,35 @@ class CommitPushTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GuardTest(unittest.TestCase):
+    """공개 저장소 지키기(감사 F-113·F-114·F-163)."""
+
+    def test_owner_quote_in_message_is_refused(self) -> None:
+        with self.assertRaises(SystemExit):
+            commit_push.main(["고침(" + "사장" + '님: "이렇게")', "editorial/kr_x.json"])   # 이 파일이 시험에 걸리지 않게 나눠 적는다
+
+    def test_code_commit_runs_the_tests_first(self) -> None:
+        calls = []
+
+        def run(cmd, **kw):
+            calls.append(cmd)
+            return mock.Mock(returncode=1, stdout="", stderr="FAIL: test_x (t.T)\n")
+        with mock.patch.object(commit_push.subprocess, "run", run):
+            with self.assertRaises(SystemExit) as ctx:
+                commit_push.main(["고침", "src/x.py"])
+        self.assertIn("시험이 통과하지 않아", str(ctx.exception))
+        self.assertIn("unittest", calls[0])
+
+    def test_commit_uses_the_noreply_address(self) -> None:
+        seen = []
+
+        def run(cmd, **kw):
+            seen.append(cmd)
+            rc = 1 if cmd[:3] == ["git", "diff", "--cached"] else 0
+            return mock.Mock(returncode=rc, stdout="abc\n", stderr="")
+        with mock.patch.object(commit_push.subprocess, "run", run), mock.patch("builtins.print"):
+            commit_push.main(["원고", "editorial/kr_x.json"])
+        commit = next(c for c in seen if "commit" in c)
+        self.assertIn(f"user.email={commit_push.NOREPLY}", commit)

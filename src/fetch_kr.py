@@ -251,7 +251,7 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
     - 네이버: 15:31~15:59에 찍은 사진(`nv`, 기준가 `sv`·없으면 `pcv`). 16:00부터 폴링 `nv`는 KRX 애프터마켓을 따라 움직여 쓰지 않는다.
     - 다음: `regularTradePrice`·`basePrice`(날짜가 오늘일 때만).
     둘 다 있으면 종가와 기준가가 같아야 한다 — 다르면 셋째 근거로 가린다(종가는 야후 `yahoo_close`와 같은 쪽, 기준가는 `pick_base`).
-    가리지 못하면 멈춘다 — 옛 값이나 한 원천 값으로 내보내지 않는다(2026-10-05 사장님: 데이터가 정확해야 한다). 하나만 있으면 그것을 쓰고(다음 날 아침
+    가리지 못하면 멈춘다 — 옛 값이나 한 원천 값으로 내보내지 않는다(2026-10-05 결정). 하나만 있으면 그것을 쓰고(다음 날 아침
     `close_check`가 네이버 '전일'과 한 번 더 대조한다), 둘 다 없으면 멈춘다. 기준가 대비 ±30%를 넘으면 응답이 어긋난 것이라 멈춘다.
     """
     found: dict[str, tuple[float, float]] = {}
@@ -275,7 +275,7 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
                              f"({only} {close_one:,.0f} / 야후 {'없음' if third is None else f'{third:,.0f}'}) — 쓰지 않습니다.")
         sources = sorted([only, "yahoo"])
     if len(values) > 1:
-        # 두 원천이 다르다 — 셋째 근거로 맞는 값을 가린다(2026-10-05 사장님: 옛 값이 아니라 정확한 값). 종가는 야후와 같은 쪽,
+        # 두 원천이 다르다 — 셋째 근거로 맞는 값을 가린다(2026-10-05 결정: 옛 값이 아니라 정확한 값). 종가는 야후와 같은 쪽,
         # 기준가는 pick_base. 가리지 못하면 아래에서 멈춘다.
         closes = {k: c for k, (c, _) in found.items()}
         winner, third = None, None

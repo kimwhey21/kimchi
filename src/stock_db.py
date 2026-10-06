@@ -485,7 +485,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
                 continue
             checked += 1
         notes.append(f"원천이 하나뿐이라 야후로 확인한 종목 {checked}개(다음·사진 중 하나가 빠짐)")
-    # 두 원천(다음·15시 반 사진)이 다른 종목은 셋째 근거로 가린다(2026-10-05 사장님: 옛 값이 아니라 정확한 값) — 종가는 야후와
+    # 두 원천(다음·15시 반 사진)이 다른 종목은 셋째 근거로 가린다(2026-10-05 결정: 옛 값이 아니라 정확한 값) — 종가는 야후와
     # 같은 쪽, 기준가는 fetch_kr.pick_base. 가리지 못한 종목이 하나라도 있으면 올리지 않는다. 많이 다르면 원천 고장이라 묻지 않는다.
     if len(disputed) > DISPUTE_MAX:
         problems += [d for *_, d in disputed]

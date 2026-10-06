@@ -302,7 +302,7 @@ class KrxCloseForStocksTest(unittest.TestCase):
             self.assertIn("두 원천", str(ctx.exception))
 
     def test_yahoo_breaks_the_tie(self) -> None:
-        """2026-10-05 사장님: 옛 값이 아니라 정확한 값 — 셋 중 둘이 같은 값을 쓴다(야후 한국 종가 = KRX 정규장, 10/2 296/296)."""
+        """2026-10-05 결정: 옛 값이 아니라 정확한 값 — 셋 중 둘이 같은 값을 쓴다(야후 한국 종가 = KRX 정규장, 10/2 296/296)."""
         from unittest.mock import patch
         with patch.object(fetch_kr, "yahoo_close", return_value=286000.0) as asked, patch("builtins.print"):
             got = fetch_kr._resolve_krx_close("005930", self.TODAY, {"nv": 286500, "cr": 3.62, "pcv": 276500},

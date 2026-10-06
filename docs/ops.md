@@ -59,7 +59,7 @@
   **대조 0건은 성공이 아니다. 증명서가 안 오면 워커가 00:05 KST에 울린다**(`jobs.json` watch `success: true` — 실행 성공 = 텔레그램 전송
   성공이라, 보내지 못하면 1로 끝난다). 저녁 종가 대조는 여기로 합쳤다(publish_check에서 뺐다). 맥 작업은 끝날 때 `~/.market-brief-state/beats/<이름>`을
   만지고(`src/beat.py`, 맥 스크립트는 같은 세 줄 인라인) `scripts/mac_beats.py`(launchd `kr.it.fermata.macbeats`, 23:22)가 커밋한다 — 그 파일이
-  없거나 오늘 것이 아니면 맥이 죽은 것이다. **막힌 날 사장님이 "내보내"라고 하면** `gh workflow run market_brief.yml -f market=kr
+  없거나 오늘 것이 아니면 맥이 죽은 것이다. **막힌 날 사장님이 내보내기로 정하면** `gh workflow run market_brief.yml -f market=kr
   -f close_override=naver_snapshot`(또는 `daum`)으로 지목한 원천 값에 `(owner override)` 꼬리표를 달아 내보낸다(`KR_CLOSE_OVERRIDE`, 자동 실행엔 없음).
   새 예약 작업을 만들면 `jobs.json`에 넣는 것으로 증명서의 기대 목록에도 들어간다(따로 적는 표가 없다).
 - **코스피·코스닥의 원천은 네이버 지수 일별 목록이다**(`fetch_kr._fetch_index`, 70거래일을 35줄 두 쪽으로, 2026-10-05). FinanceDataReader의

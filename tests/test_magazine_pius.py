@@ -75,7 +75,7 @@ class DefaultForm(unittest.TestCase):
         self.assertTrue(any("4,800자 이하" in i for i in feature_checks.magazine_issues(doc)))
 
     def test_brief_is_not_required_or_rendered(self) -> None:
-        """2026-10-02 사장님: "잡지에 간단브리핑은 하지말자"."""
+        """2026-10-02 결정: 잡지에는 간단 브리핑을 싣지 않는다."""
         doc = _doc(); doc["brief"] = ["핵심 : 이런 줄이 있어도", "싣지 : 않습니다", "셋째 : 줄"]
         self.assertEqual(feature_checks.magazine_issues(doc), [])
         tmp = ROOT / "output" / "_pius_test.json"; tmp.parent.mkdir(exist_ok=True)

@@ -8,6 +8,8 @@ upstream을 origin/main으로 맞춘다(샌드박스의 stop hook이 "unpushed c
 """
 from __future__ import annotations
 
+import os
+import re
 import subprocess
 import sys
 import time
@@ -15,6 +17,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RETRIES = 3
+# 공개 저장소의 작성자 주소는 깃허브 가림 주소다(CLAUDE.md 머리말) — 샌드박스의 git 설정이 개인 주소여도 이 주소로 쓴다(감사 F-163:
+# 10/5 한국어 가이드 커밋이 개인 주소로 올라갔다).
+NOREPLY = "322328287+kimwhey21@users.noreply.github.com"
+# 공개 저장소에는 사장님 말을 옮기지 않는다 — 커밋 메시지도(감사 F-113)
+_OWNER_QUOTE = re.compile(r"사장님[^\n]{0,2}[:：]|사장님이?\s*[\"“]")
+# 원고·시세만 올리는 커밋은 시험을 건너뛴다(관문이 검사다, CLAUDE.md). 그 밖의 것은 시험이 통과해야 올린다(감사 F-114:
+# 시험이 깨진 채 main에 올라간 푸시가 9/22 뒤 15번).
+_DATA_ONLY = ("editorial/", "data/", "state/")
 
 
 def _git(*args: str, check: bool = False) -> subprocess.CompletedProcess:
@@ -33,11 +43,21 @@ def main(argv: list[str] | None = None) -> int:
     for p in paths:
         if p.startswith("output/") or p == "output":
             raise SystemExit(f"{p}: output/은 커밋하지 않습니다")
+    if _OWNER_QUOTE.search(message):
+        raise SystemExit("커밋 메시지에 사장님 말 인용이 있습니다 — 공개 저장소입니다. 날짜·결정으로만 적으십시오")
+    if not all(p.startswith(_DATA_ONLY) for p in paths):
+        env = {**os.environ, "PYTHONPATH": str(ROOT / "tests" / "_offline")}
+        tests = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests"], cwd=ROOT, env=env,
+                               capture_output=True, text=True)
+        if tests.returncode != 0:
+            plain = re.sub(r"\x1b\[[0-9;]*m", "", tests.stderr or "")
+            tail = [l for l in plain.splitlines() if l.startswith(("FAIL:", "ERROR:"))][:5]
+            raise SystemExit("시험이 통과하지 않아 올리지 않습니다: " + " / ".join(tail or [(tests.stderr or "")[-300:]]))
     _git("add", "--", *paths, check=True)
     if _git("diff", "--cached", "--quiet").returncode == 0:
         print("커밋할 변화가 없습니다")
         return 0
-    _git("commit", "-q", "-m", message, check=True)
+    _git("-c", f"user.email={NOREPLY}", "commit", "-q", "-m", message, check=True)
     for attempt in range(1, RETRIES + 1):
         pull = _git("pull", "-q", "--rebase", "origin", "main")
         if pull.returncode != 0:

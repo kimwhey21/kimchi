@@ -91,3 +91,28 @@ class OpsSplitTest(unittest.TestCase):
         self.assertIn("docs/ops.md", text)
         self.assertGreaterEqual(text.count("`docs/ops.md` 「"), 3)
         self.assertLess(len(text), 25000, "규칙 파일이 다시 커졌습니다 — 운영 규칙은 docs/ops.md에 적으십시오")
+
+
+class NoOwnerQuotesTest(unittest.TestCase):
+    """공개 저장소에 사장님 말을 옮기지 않는다(CLAUDE.md 머리말, 감사 F-113) — 호칭 뒤 쌍점이나 따옴표가 오는 꼴을 막는다."""
+
+    def test_public_files_carry_no_owner_quotes(self) -> None:
+        import re
+        root = Path(__file__).resolve().parents[1]
+        quote = re.compile(r"사장님[^\n]{0,2}[:：]|사장님이?\s*[\"“]")
+        bad = []
+        import subprocess
+        tracked = set(subprocess.run(["git", "ls-files"], cwd=root, capture_output=True, text=True).stdout.splitlines())
+        for folder in ("src", "scripts", "tests", "docs", "templates", "config", ".github"):
+            for path in (root / folder).rglob("*"):
+                if path.suffix not in (".py", ".md", ".yml", ".yaml", ".php", ".json", ".html", ".j2") or not path.is_file():
+                    continue
+                if tracked and str(path.relative_to(root)) not in tracked:
+                    continue   # 커밋되지 않은 다른 세션의 초안은 보지 않는다
+                for n, line in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+                    if quote.search(line) and "quote = re.compile" not in line:
+                        bad.append(f"{path.relative_to(root)}:{n}")
+        for n, line in enumerate((root / "CLAUDE.md").read_text(encoding="utf-8").splitlines(), 1):
+            if quote.search(line):
+                bad.append(f"CLAUDE.md:{n}")
+        self.assertEqual(bad, [])
