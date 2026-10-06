@@ -47,8 +47,13 @@ def page_text(url: str) -> str | None:
     return text
 
 
-def needed_claims(doc: dict, numbers: bool = True) -> list[str]:
-    """근거가 있어야 하는 본문 문장 — 큰따옴표 인용이 든 문장과(numbers면) 숫자가 든 문장."""
+# 일정 글(다음 주 일정·이벤트)에서 근거가 있어야 하는 사건 낱말(2026-10-06, 감사 F-029: 10/4 「다음 주 일정」이 2025년 뉴스를 섞어
+# 있지도 않은 '10월 1일부터 미국 정부 셧다운'을 사실처럼 썼다). 일정 자체(지표 발표일)는 공식 달력이 있어 여기 넣지 않는다.
+_EVENT = re.compile(r"셧다운|shutdown|파업|strike|디폴트|default|부도|폐쇄|중단|연기|철회|사임|해임|제재|sanction|탄핵|봉쇄")
+
+
+def needed_claims(doc: dict, numbers: bool = True, events: bool = False) -> list[str]:
+    """근거가 있어야 하는 본문 문장 — 큰따옴표 인용이 든 문장과(numbers면) 숫자가 든 문장, (events면) 사건 낱말이 든 문장."""
     ko = doc.get("ko") or doc
     out: list[str] = []
     for section in ko.get("narrative") or []:
@@ -58,22 +63,23 @@ def needed_claims(doc: dict, numbers: bool = True) -> list[str]:
             quoted = _QUOTE.search(sentence)
             if quoted and not numbers:   # 잡지 밖의 글: 누가 말했는지 가리키는 인용만(검색어·이름 따옴표는 근거가 필요 없다)
                 quoted = (len(quoted.group(1).split()) >= 4 and _ATTRIBUTION.search(sentence)) and quoted
-            if sentence and ((numbers and re.search(r"\d", sentence)) or quoted) and sentence not in out:
+            if sentence and ((numbers and re.search(r"\d", sentence)) or quoted or (events and _EVENT.search(sentence))) \
+                    and sentence not in out:
                 out.append(sentence)
     return out
 
 
-def evidence_issues(doc: dict, fetch=None, numbers: bool = True) -> list[str]:
+def evidence_issues(doc: dict, fetch=None, numbers: bool = True, events: bool = False) -> list[str]:
     """`numbers=False`면 큰따옴표 인용만 본다(잡지 밖의 글 — 숫자는 시세 대조·엔진이 맡는다)."""
     fetch = fetch or page_text      # 부를 때 찾는다(시험이 page_text를 바꿔 끼울 수 있게)
     issues: list[str] = []
     sources = doc.get("sources") or []
     urls = {str(s.get("url") or "").strip() for s in sources if isinstance(s, dict)}
-    for s in (sources if numbers else []):
+    for s in (sources if numbers or events else []):
         if isinstance(s, dict) and not str(s.get("url") or "").startswith("http"):
             issues.append(f"출처 '{s.get('name') or s.get('title')}'에 주소(url)가 없습니다 — 근거를 대조할 수 없습니다")
     evidence = [e for e in (doc.get("evidence") or []) if isinstance(e, dict)]
-    for sentence in needed_claims(doc, numbers):
+    for sentence in needed_claims(doc, numbers, events):
         key = normalize(sentence)
         if not any(normalize(str(e.get("claim") or "")) and normalize(str(e.get("claim"))) in key for e in evidence):
             issues.append(f"근거 없음: '{sentence[:70]}' — evidence에 이 문장 안의 구절(claim)·출처 주소·원문 문장을 적으십시오")

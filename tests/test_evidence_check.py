@@ -47,3 +47,14 @@ class EvidenceTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EventClaimTest(unittest.TestCase):
+    """일정 글의 사건 문장(감사 F-029: 있지도 않은 셧다운)."""
+
+    def test_event_sentences_need_evidence_only_when_asked(self) -> None:
+        doc = {"ko": {"narrative": [{"body": "다음 주 CPI가 나옵니다. 10월 1일부터 이어진 셧다운이 변수입니다."}]}}
+        self.assertEqual(ec.needed_claims(doc, numbers=False), [])
+        self.assertEqual(ec.needed_claims(doc, numbers=False, events=True), ["10월 1일부터 이어진 셧다운이 변수입니다."])
+        issues = ec.evidence_issues(doc, fetch=lambda u: None, numbers=False, events=True)
+        self.assertTrue(any("근거 없음" in i for i in issues))

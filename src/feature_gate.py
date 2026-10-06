@@ -105,7 +105,9 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     blocking.extend(f"목표주가 — {i}" for i in editorial_facts.target_phrase_issues(doc))   # 2026-10-06: 뜻이 뒤집힌 문장 83곳
     blocking.extend(f"내부 이름 — {i}" for i in editorial_facts.internal_name_issues(doc))   # 2026-10-06: 'story_engines' 등 16편
     # 인용·숫자의 출처 원문(2026-10-06, 감사: 잡지 9편 중 6편에서 출처에 없는 숫자·인용) — 잡지는 숫자·인용 모두, 나머지는 인용만
-    blocking.extend(f"근거 — {i}" for i in evidence_check.evidence_issues(doc, numbers=str(doc.get("series") or "") == "매거진"))
+    blocking.extend(f"근거 — {i}" for i in evidence_check.evidence_issues(
+        doc, numbers=str(doc.get("series") or "") == "매거진",
+        events=str(doc.get("series") or "") in ("다음 주 일정", "이벤트")))   # 사건 낱말 문장에도 근거(감사 F-029)
     blocking.extend(source_check.collect_issues(doc))
 
     benchmark_words = []
