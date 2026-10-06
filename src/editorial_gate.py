@@ -143,7 +143,7 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
             issues += [f"판단 낱말({lang}) — {i}" for i in editorial_facts.judgment_word_issues(part, price_data, lang)]
             issues += [f"금리 표기({lang}) — {i}" for i in editorial_facts.yield_change_issues(part, price_data, lang)]
     try:
-        editorial_facts.validate(ko, price_data, lang="ko")
+        editorial_facts.validate(editorial_facts.with_review(ko, doc), price_data, lang="ko")
     except Exception as exc:  # noqa: BLE001 - 종류가 무엇이든 목록에 담는다
         issues.append(f"숫자(한국어) — {exc}")
     if en:

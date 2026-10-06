@@ -525,7 +525,8 @@ def fact_blockers(doc: dict) -> list[str]:
                  for p in editorial_facts.level_issues(part, price_data, lang)]
     for lang, part in (("ko", ko), ("en", en)):
         if part:
-            problems += [f"등락률({lang}): {p}" for p in editorial_facts.collect_issues(part, price_data, lang=lang)]
+            checked = editorial_facts.with_review(part, doc) if lang == "ko" else part
+            problems += [f"등락률({lang}): {p}" for p in editorial_facts.collect_issues(checked, price_data, lang=lang)]
     return problems
 
 

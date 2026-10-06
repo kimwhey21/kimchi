@@ -105,7 +105,12 @@ _OTHER_DAY = re.compile(
     r"(어제|전날|지난|직전|이틀|전 거래일|다음 거래일|\d+월 \d+일|\d+/\d+|→"
     # 영어판(2026-09-25): 'jumped'를 등락 낱말에 더하자 kr 9/09 영어판의 "Daewoo E&C, which jumped
     # 8.47% yesterday"가 걸렸습니다 — 한국어 '어제'만 있고 영어가 없었습니다.
-    r"|yesterday|the day before|previous (?:day|session)|prior (?:day|session)|a day earlier|last week)",
+    r"|yesterday|the day before|previous (?:day|session)|prior (?:day|session)|a day earlier|last week"
+    # 2026-10-06: 기간 등락("over the full month, the Dow fell 4.90%"·"이번 주 3%")과 영어 날짜("on the 28th")도 그날 숫자가 아니다
+    r"|이달|이번\s?달|한\s?달|이번\s?주|올해|연초|분기|\d+\s*거래일\s*전|상승분|하락분|오름폭|낙폭"
+    r"|\b(?:month|monthly|week|weekly|year|annual|quarter|year-to-date|YTD|since)\b"
+    r"|\bon the \d{1,2}(?:st|nd|rd|th)\b"
+    r"|\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.? \d{1,2}\b)",
     re.IGNORECASE,
 )
 # 프리뷰의 미국장(D-1) 파일용(2026-09-25). 프리뷰에서 "어제·어젯밤"은 곧 그 파일의 날이라 건너뛰면
@@ -120,6 +125,13 @@ _OTHER_DAY_PREVIEW = re.compile(
 # "미국이 노동절로 쉰 9월 7일, 서울은 같은 이야기를 이어받았습니다. SK하이닉스가 8.26%…"처럼
 # 앞 문장의 날짜를 놓쳐 9/07 숫자를 9/08 파일과 대조했습니다(9/08 프리뷰 실측).
 _DATE_MARK = re.compile(r"\d+월 \d+일|\d+/\d+")
+# 기간 등락의 표지는 **같은 문장 앞쪽**에만 있어도 그 문장의 숫자가 기간 등락이다("Over the full month, the Dow fell 4.9% and the
+# S&P 500 lost 0.7%" — S&P 500 앞 20자 창에는 'month'가 없다, 2026-10-06 재실행에서 확인).
+_PERIOD_MARK = re.compile(
+    r"이달|이번\s?달|한\s?달|이번\s?주|올해|연초|분기|\d+월\s?(?:한\s?달|중|들어)"
+    r"|\b(?:month|monthly|week|weekly|year|annual|quarter|year-to-date|YTD|since)\b",
+    re.IGNORECASE,
+)
 _WINDOW_BEFORE, _WINDOW_AFTER = 20, 45
 
 # 지수·환율 이름과 등락률 사이에 올 수 있는 것: 조사, 숫자, 단위, 부호뿐입니다.
@@ -127,6 +139,26 @@ _WINDOW_BEFORE, _WINDOW_AFTER = 20, 45
 # 뒤에 나오는 첫 퍼센트를 그대로 가져오면 남의 숫자를 읽습니다. 실제로 2026-09-03
 # 원고의 저 문장에서 4.78%(심텍)를 코스닥 등락률로 읽었습니다.
 _MACRO_FILLER = re.compile(r"^[은는이가도의을를]?[\s0-9,.\-+()원달러포인트p]*$")
+# 2026-10-06(감사 F-014·F-054): 위 꼴은 "코스피 지수는 1.46%"·"원/달러 환율은 1,347원으로 0.23%"·"The S&P 500 rose 1.95%"를
+# 모두 건너뛰었다. 지수 이름 뒤에 붙는 **정해진 낱말**만 지우고 나머지가 숫자·단위·부호뿐이면 그 지수의 숫자로 본다 — 목록 밖 낱말이
+# 하나라도 끼면("코스닥 장비주도 심텍") 여전히 남의 숫자로 보고 건너뛴다.
+_MACRO_WORDS = re.compile(
+    r"(?:종합지수|지수|종합|환율|금값|값|가격|선물|종가|고시|기준|배럴당|온스당|서울|외환시장|외환|시장|오늘|이날|으로|로|에서|은|는|이|가|도|의|을|를"
+    r"|\b(?:the|index|composite|average|rose|fell|gained|lost|added|slipped|climbed|declined|dropped|jumped|advanced|slid"
+    r"|surged|sank|tumbled|rallied|ended|closed|finished|was|were|up|down|by|to|at|or|a|points?|pts?|per|dollar|barrel|ounce"
+    r"|won|percent|today)\b)",
+    re.IGNORECASE,
+)
+
+
+def _macro_filler(between: str) -> bool:
+    """지수·환율 이름과 퍼센트 사이가 그 지수의 숫자를 잇는 말뿐인가."""
+    if _MACRO_FILLER.match(between):
+        return True
+    if re.search(r",(?!\d)", between):
+        return False   # 숫자 안의 쉼표가 아니면 다른 말이 이어진다("listed on the KOSDAQ, gained 9.33%" — 그 종목의 숫자)
+    rest = _MACRO_WORDS.sub(" ", between)
+    return bool(re.fullmatch(r"[\s0-9,.\-+()$원달러포인트p/]*", rest))
 
 # 경계 표현까지 보는 자리(제목류). `_texts`의 위치 이름이 이 접두어로 시작하면 해당합니다.
 _TITLE_LIKE = ("제목", "본문 소제목")
@@ -144,7 +176,8 @@ _TAG = re.compile(r"<[^>]+>")
 #    이름 앞이 글자면 이름으로 보지 않고, 영어 이름은 뒤도 본다. 알려진 합성어('애플리케이션' 등)는 뺀다.
 _SENTENCE_END = re.compile(r"[.!?](?=\s|$)|\n")
 _WORD_CHAR = re.compile(r"[가-힣A-Za-z0-9]")
-_COMPOUNDS = {"애플": ("애플리케이션",), "메타": ("메타버스", "메타데이터"), "인텔": ("인텔리전스",), "델": ("델타",)}
+_COMPOUNDS = {"애플": ("애플리케이션",), "메타": ("메타버스", "메타데이터"), "인텔": ("인텔리전스",), "델": ("델타",),
+              "다우": ("다우데이타", "다우기술")}
 _UP_AFTER = re.compile(r"^\s*(?:의\s*)?(?:상승|올랐|오른|오르며|올라|급등|뛰었|뛴|뛰며|반등|강세)")
 _DOWN_AFTER = re.compile(r"^\s*(?:의\s*)?(?:하락|내렸|내린|내리며|내려|급락|떨어|빠졌|빠진|빠지며|밀렸|밀린|밀리며|약세)")
 _UP_BEFORE = re.compile(r"\b(?:rose|gained|climbed|jumped|surged|rallied|soared|added|advanced|up)\s+(?:by\s+)?$", re.IGNORECASE)
@@ -256,6 +289,15 @@ def _texts(doc: dict, include_candidates: bool = True) -> list[tuple[str, str]]:
     for key in ("theme_section", "stock_section"):
         section = doc.get(key) or {}
         out.append((key, str(section.get("commentary", ""))))
+    # 2026-10-06(감사 F-014): 어제 판정의 결과 문장(그날 숫자로 판정한다)과 그림 설명·제목도 독자에게 나가는 숫자다
+    if doc.get("_review_result"):
+        out.append(("어제 판정", str(doc["_review_result"])))
+    for index, section in enumerate(doc.get("narrative") or [], start=1):
+        for graphic in [section.get("graphic")] + list(section.get("graphics") or []):
+            if isinstance(graphic, dict):
+                for field in ("title", "note", "subtitle"):
+                    if graphic.get(field):
+                        out.append((f"그림 {index}", str(graphic[field])))
     return [(where, _strip_tags(text)) for where, text in out if text]
 
 
@@ -290,7 +332,9 @@ def _checkable_entries(price_data: dict) -> list[dict]:
 # 넣지 않습니다 — '금'을 넣으면 금리·금융이 걸립니다.
 _ALIASES = {
     "원/달러 환율": ("원/달러", "원·달러", "원달러"),
-    "나스닥종합": ("나스닥",),
+    "나스닥종합": ("나스닥", "나스닥 종합지수", "나스닥종합지수"),
+    "다우존스": ("다우",),
+    "Dow Jones Industrial Average": ("Dow Jones", "the Dow"),
     "S&P500": ("S&P 500",),
     "Nasdaq Composite": ("Nasdaq",),
     # 편입 종목 가운데 시세 파일에 한글 이름이 없는 것. 원고는 음차로 씁니다(2026-09-25 실측: 9/09·9/17
@@ -339,6 +383,8 @@ def _names_by_length(price_data: dict, lang: str) -> list[tuple[str, dict]]:
         pairs.append((name, entry))
         for alias in _ALIASES.get(name, ()):
             pairs.append((alias, entry))
+        if lang == "en" and name.isupper() and len(name) > 3 and name.isalpha():
+            pairs.append((name.capitalize(), entry))   # 'NVIDIA'를 글은 'Nvidia'로 쓴다(감사 F-014)
     return sorted(pairs, key=lambda p: len(p[0]), reverse=True)
 
 
@@ -378,9 +424,13 @@ def _own_day_markers(price_data: dict) -> frozenset[str]:
     if found is None:
         return frozenset()
     month, day = int(found.group(2)), int(found.group(3))
+    import calendar
+    full, short = calendar.month_name[month], calendar.month_abbr[month]
+    suffix = "th" if 10 <= day % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
     return frozenset({
         f"{month}월 {day}일", f"{month:02d}월 {day:02d}일",
         f"{month}/{day}", f"{month:02d}/{day:02d}",
+        f"{full} {day}", f"{short} {day}", f"{short}. {day}", f"Sept {day}", f"Sept. {day}", f"on the {day}{suffix}",
     })
 
 
@@ -431,9 +481,14 @@ def _quoted_moves(
             claimed.append((at, end))
             s_start, s_end = _sentence_bounds(text, at)
             window = text[max(s_start, at - _WINDOW_BEFORE) : min(s_end, end + _WINDOW_AFTER)]
+            # 장중·다른 날 표지는 창(이름 앞 20자·뒤 45자) 어디에 있어도 건너뛴다. 숫자 앞에서만 보게 좁혀 보았으나(2026-10-06, 감사
+            # F-054) 지난 원고 재실행에서 맞는 문장 7개가 새로 걸렸다 — 영어는 때를 숫자 뒤에 쓴다("jumped 8.47% yesterday",
+            # "(2.70%) on the 28th"). '확실할 때만 막는다'에 따라 넓은 창을 그대로 둔다.
             if _NOT_A_MOVE.search(window) or _INTRADAY.search(window):
                 continue
             if _mentions_other_day(text, at, window, other_day, own_days):
+                continue
+            if _PERIOD_MARK.search(text[s_start:at]):
                 continue
             tail = _same_sentence_tail(text, end, names)
             match = _PERCENT.search(tail)
@@ -456,7 +511,7 @@ def _quoted_moves(
                 # ("코스피 6,687.21 +1.64%"). 그래서 종목과 달리 _MOVE_WORDS를
                 # 요구하지 않고, **이름과 등락률이 붙어 있는지**로 판단합니다.
                 # 사이에 다른 낱말이 끼면("코스닥 장비주도 심텍 4.78%") 남의 숫자입니다.
-                if not _MACRO_FILLER.match(tail[: match.start()]):
+                if not _macro_filler(tail[: match.start()]):
                     continue
             elif not _MOVE_WORDS.search(window) and "(" not in window:
                 continue
@@ -544,6 +599,12 @@ def collect_issues(
             "원고 어디에도 없습니다. 다루지 않을 이유가 있다면 본문에서 밝히세요."
         )
     return issues
+
+
+def with_review(part: dict, doc: dict) -> dict:
+    """한국어 본문에 어제 판정의 결과 문장(원고 최상위 `review.result`)을 붙인 사본 — 그 문장의 숫자도 그날 시세로 대조한다."""
+    result = (doc.get("review") or {}).get("result")
+    return {**part, "_review_result": result} if result else part
 
 
 def validate(doc: dict, price_data: dict, lang: str = "ko") -> None:
@@ -761,6 +822,8 @@ def _level_rules(lang: str) -> list[tuple[str, re.Pattern]]:
             ("^TNX", re.compile(r"\b10-year\b" + _gap(50) + r"\b" + _NUM + r"%(?!\s*(?:points?|pp))", re.I)),
             ("^TYX", re.compile(r"\b30-year\b" + _gap(50) + r"\b" + _NUM + r"%(?!\s*(?:points?|pp))", re.I)),
             ("USD/KRW", re.compile(_NUM + r"\s*won\b", re.I)),
+            # 영어 환율 꼴 "the won … to 1,372.70 per dollar"는 넣지 않았다(2026-10-06): 지난 원고에서 이 꼴은 대부분 서울 외환시장
+            # 종가(뉴스)를 인용해 우리 파일의 하나은행 고시와 정의가 다르다 — 9/4·9/9 맞는 문장 둘이 걸렸다(환율 기준은 사장님 결정 대기).
         ]
     return [
         ("GC=F", re.compile(r"(?:국제\s*금|금값|금\s*선물|금은|금이|금도)" + _gap(40) + r"온스당\s*" + _NUM + r"\s*달러")),
@@ -841,7 +904,8 @@ def judgment_word_issues(doc: dict, price_data: dict, lang: str = "ko") -> list[
             if (_other_day_in_sentence(text, m.start(), m.end())
                     or re.search(r"장중|한때|intraday|earlier|최근|며칠|뒤\s|이후|후\s|recent|after", sentence, re.I)
                     or text[max(0, m.start() - 1):m.start()] in ("강", "약")   # 강보합·약보합은 작은 상승·하락을 뜻하는 맞는 말
-                    or text[m.end():m.end() + 1] == "분" or re.search(r"되돌|만회|회복", sentence)):   # '급락분을 되돌렸다'는 장중 이야기
+                    or text[m.end():m.end() + 1] == "분" or re.search(r"되돌|만회|회복", sentence)   # '급락분을 되돌렸다'는 장중 이야기
+                    or re.match(r"\s*(?:에서|으로부터|from)\b", text[m.end():m.end() + 6])):   # '급등에서 급락으로' — 앞 낱말은 전의 상태(그림 제목, 2026-10-06)
                 continue
             hit = next(((n, e) for n, e in names if n and window.rfind(n) >= 0
                         and not re.search(r"[0-9]", window[window.rfind(n) + len(n):])), None)
