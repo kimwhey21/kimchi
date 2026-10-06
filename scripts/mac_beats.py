@@ -43,15 +43,28 @@ def posted_today(path: Path, day: dt.date) -> int:
     return n
 
 
+PAUSE = Path.home() / ".market-brief-naver" / "fermata49_pause.json"
+
+
+def _paused(path: Path = PAUSE) -> str | None:
+    """시황 블로그(fermata49) 게시 멈춤이면 멈춘 날 — 증명서가 '멈춤'과 '고장'을 가른다(감사 F-136)."""
+    try:
+        state = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    except ValueError:
+        return "읽지 못함"
+    return str(state.get("since") or state.get("at") or "날짜 모름")[:10] if state.get("paused") else None
+
+
 def build(now: dt.datetime | None = None, beats: dict[str, str] | None = None,
           naver: Path = NAVER_POSTED, blogger: Path = BLOGGER_POSTED,
-          naver_blocked: Path = NAVER_BLOCKED, blogger_blocked: Path = BLOGGER_BLOCKED) -> dict:
+          naver_blocked: Path = NAVER_BLOCKED, blogger_blocked: Path = BLOGGER_BLOCKED, pause: Path = PAUSE) -> dict:
     now = now or dt.datetime.now(KST)
     return {"generated_at": now.isoformat(timespec="seconds"),
             "beats": beats if beats is not None else read_all(),
             "posted": {"naver_today": posted_today(naver, now.date()), "blogger_today": posted_today(blogger, now.date()),
                        "naver_blocked_today": posted_today(naver_blocked, now.date()),
-                       "blogger_blocked_today": posted_today(blogger_blocked, now.date())}}
+                       "blogger_blocked_today": posted_today(blogger_blocked, now.date()),
+                       "fermata49_paused": _paused(pause)}}
 
 
 TOKEN = Path.home() / ".github_dispatch_token"

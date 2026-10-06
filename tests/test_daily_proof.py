@@ -183,8 +183,9 @@ class MacBeatsTest(unittest.TestCase):
             blocked = Path(tmp) / "blocked.json"
             blocked.write_text(json.dumps({"m": {"at": "2026-10-06T12:30:00", "why": "근거 없음"}}), encoding="utf-8")
             doc = mac_beats.build(dt.datetime(2026, 10, 6, 23, 22, tzinfo=daily_proof.KST), beats={"naver_sync": "t"}, naver=naver, blogger=blogger,
-                                  naver_blocked=blocked, blogger_blocked=Path(tmp) / "none.json")
-        self.assertEqual(doc["posted"], {"naver_today": 1, "blogger_today": 1, "naver_blocked_today": 1, "blogger_blocked_today": 0})
+                                  naver_blocked=blocked, blogger_blocked=Path(tmp) / "none.json", pause=Path(tmp) / "pause.json")
+        self.assertEqual(doc["posted"], {"naver_today": 1, "blogger_today": 1, "naver_blocked_today": 1, "blogger_blocked_today": 0,
+                                         "fermata49_paused": None})
         self.assertEqual(doc["beats"], {"naver_sync": "t"})
 
     def test_state_file_is_tracked(self) -> None:

@@ -402,8 +402,15 @@ def compose(day: dt.date, parts: dict, issues: list[str]) -> str:
     head = f"{day:%m/%d} 증명 — " + " · ".join(f"{k} {v}" for k, v in parts.items())
     if not issues:
         return "✅ " + head
-    body = "\n".join(f"- {i}" for i in issues)
-    return ("⚠️ " + head + "\n" + body)[:3800]
+    lines, size = [], len(head) + 10
+    for issue in issues:   # 길면 자르되 몇 건을 잘랐는지 적는다(감사 F-059: 3,800자에서 말없이 끊겼다)
+        line = f"- {issue}"
+        if size + len(line) > 3700:
+            lines.append(f"… 외 {len(issues) - len(lines)}건 잘림(실행 기록에 전부 있다)")
+            break
+        lines.append(line)
+        size += len(line) + 1
+    return "⚠️ " + head + "\n" + "\n".join(lines)
 
 
 def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = None, token: str | None = None,
@@ -494,7 +501,7 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
             issues.append(f"본진 {market} 발행 확인 실패: {exc}")
     if beats:
         posted = beats.get("posted") or {}
-        parts["네이버"] = str(posted.get("naver_today", "?"))
+        parts["네이버"] = str(posted.get("naver_today", "?")) + (f"(시황 멈춤 {posted['fermata49_paused']}~)" if posted.get("fermata49_paused") else "")
         parts["블로그스팟"] = str(posted.get("blogger_today", "?"))
         n_mag = len(list((root / "editorial" / "magazine").glob(f"{day.isoformat()}_*.json")))
         # 잡지는 07:30·12:30·19:30에 올라간다 — 마지막 편이 올라간 뒤(20:00)에만 센다(낮에 손으로 돌리면 늘 2편이다)
@@ -546,7 +553,8 @@ def main(argv: list[str] | None = None) -> int:
     print(text)
     if args.dry_run:
         return 0
-    if not alert.send(text, "warn" if issues else "ok"):
+    # 머리 표시(✅·⚠️)는 alert가 붙인다 — compose의 것을 떼고 보낸다(감사 F-168: ⚠️가 두 번 붙었다)
+    if not alert.send(text.removeprefix("⚠️ ").removeprefix("✅ "), "warn" if issues else "ok"):
         print("[오류] 증명서를 텔레그램으로 보내지 못했습니다 — 워커의 자정 확인이 '오지 않았다'를 울립니다.")
         return 1
     return 0
