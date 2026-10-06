@@ -33,7 +33,13 @@ class DefaultForm(unittest.TestCase):
         self.assertEqual(feature_checks.magazine_issues(doc), [])
 
     def test_the_new_fixture_passes_the_whole_gate(self) -> None:
-        result = feature_gate.run(copy.deepcopy(_doc()), graphics=0, path=FIXTURE)
+        # 근거 표의 원문은 실제 출처 페이지로 통과를 확인했다(2026-10-06). 시험은 바깥에 접속하지 않으므로 그 원문들을 담은 가짜 페이지로 본다.
+        from unittest import mock
+        from src import evidence_check
+        doc = copy.deepcopy(_doc())
+        page = evidence_check.normalize(" ".join(e["original"] for e in doc["evidence"]))
+        with mock.patch.object(evidence_check, "page_text", lambda url: page):
+            result = feature_gate.run(doc, graphics=0, path=FIXTURE)
         self.assertEqual(result["blocking"], [])
 
     def test_classic_manuscripts_keep_the_old_form(self) -> None:
