@@ -34,6 +34,7 @@ import re
 import sys
 import time
 import zipfile
+import zlib
 from pathlib import Path
 
 import requests
@@ -410,12 +411,22 @@ def settle(code: str, rows: list[dict], snap: list, third) -> tuple[float, float
     return last["c"], (last["base"] if pick == "daum" else s_base), f"기준가는 {pick}"
 
 
+def _day_range(row: dict, last: dict) -> None:
+    """당일 고가·저가를 다음 일별 시세(KRX 정규장)로 — 전에는 상세(네이버 통합, 넥스트레이드 20시까지 포함)의 고가·저가였고,
+    상세는 7일에 한 번만 새로 받아 엿새 묵은 날의 범위가 나갔다(2026-10-06, 감사 F-041)."""
+    low, high = last.get("l"), last.get("h")
+    if low and high:
+        row["dlow"], row["dhigh"] = float(low), float(high)
+    else:
+        row.pop("dlow", None), row.pop("dhigh", None)
+
+
 def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str, dict | None],
               fallback_day: str = "", third=None) -> tuple[list[str], list[str]]:
     """목록의 가격 칸을 KRX 정규장 값으로 바꾼다. 돌려주는 것: (멈출 문제, 알릴 것).
 
     - 다음 일별 시세가 있으면 그 마지막 줄을 쓰고, 그날 사진이 있으면 종가·기준가가 같아야 한다(다르면 멈춘다).
-    - 다음이 없으면 그날(다른 종목들의 날짜) 사진으로 — 거래량·거래대금은 네이버 통합값이 남는다고 알린다. 사진도 없으면 멈춘다.
+    - 다음이 없으면 그날(다른 종목들의 날짜) 사진으로 — 거래량·거래대금·당일 범위는 비운다(네이버 값은 통합값). 사진도 없으면 멈춘다.
     """
     problems, notes = [], []
     # 기준일은 다음의 가장 늦은 날과 가장 최근 사진 중 늦은 쪽 — 다음이 오늘 줄을 아직 안 올린 종목이 옛 날짜로 섞이지 않게(2026-10-05)
@@ -446,6 +457,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
                 row["value"] = float(last["val"])
             if last.get("shares"):
                 row["mcap"] = close * float(last["shares"])
+            _day_range(row, last)
             continue
         snap = (snaps.get(day) or {}).get(code)
         if not snap:
@@ -455,6 +467,9 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
         if row.get("close") and row.get("mcap"):
             row["mcap"] = row["mcap"] / row["close"] * close
         row.update(close=close, chg=close - base, pct=round((close / base - 1) * 100, 2), date=day)
+        # 사진에는 거래량·거래대금·고가·저가가 없다 — 네이버 목록의 값은 넥스트레이드 합산이라 KRX 값처럼 싣지 않고 비운다(2026-10-06, 감사 F-050)
+        for key in ("volume", "value", "dlow", "dhigh"):
+            row.pop(key, None)
         single.append((row, "사진", close, day))
     # 원천이 하나뿐인 종목(다음만·사진만)은 야후 종가와 맞을 때만 올린다 — 두 원천이 된다(2026-10-06, 감사 F-039·F-058).
     # 많으면(다음이 통째로 막혔거나 그날 사진이 없다) 원천 고장이라 묻지 않고 올리지 않는다.
@@ -490,6 +505,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
                     row[field] = float(last[key])
             if last.get("shares"):
                 row["mcap"] = close * float(last["shares"])
+            _day_range(row, last)
             settled.append(f"{row['code']} {how}")
         if settled:
             notes.append(f"두 원천이 달라 셋째 근거로 정한 종목 {len(settled)}개: " + " / ".join(settled[:10]))
@@ -597,15 +613,43 @@ SKHY_RATIO = 10          # SKHY ADR 1주 = SK하이닉스 보통주 10분의 1�
 SKHY_START = "2026-07-10"   # 나스닥 첫 거래일(야후 이력의 첫 날)
 
 
-def build_skhy(session: requests.Session) -> dict | None:
+def file_fx(folder: Path | None = None) -> dict[str, float]:
+    """날마다 커밋한 한국장 시세 파일의 원/달러 {날짜: 값} — 서울 마감 무렵 하나은행 고시, 두 원천으로 확인한 값."""
+    out = {}
+    for path in sorted((folder or ROOT / "data").glob("price_kr_*.json")):
+        try:
+            macro = json.loads(path.read_text(encoding="utf-8")).get("macro") or {}
+        except (OSError, ValueError):
+            continue
+        for entry in (macro.values() if isinstance(macro, dict) else macro):
+            if isinstance(entry, dict) and "USD/KRW" in str(entry.get("ticker") or "") and entry.get("price"):
+                out[path.stem[-10:]] = float(entry["price"])
+    return out
+
+
+def build_skhy(session: requests.Session, fx_files: dict[str, float] | None = None) -> dict | None:
     """SKHY(나스닥)와 서울 원주의 가격 차이를 **같은 날짜끼리** 짝지어 상장일부터 늘어놓는다 (2026-09-28).
 
-    프리미엄 = SKHY 종가 × 10 × 그날 원달러 ÷ 그날 서울 종가 − 1. 서울은 종목 페이지와 같은 KRX 정규장 종가(다음 일별 시세), 환율은 야후
-    KRW=X 일봉(SKHY 종가와 같은 날). 서울이 쉰 날·나스닥이 쉰 날은 짝이 없어 빠진다. 받지 못하면 None — 페이지와 홈 칸을 비운다."""
+    프리미엄 = SKHY 종가 × 10 × 그날 원달러 ÷ 그날 서울 종가 − 1. 서울은 종목 페이지와 같은 KRX 정규장 종가(다음 일별 시세).
+    환율은 **서울 마감 무렵 값**(2026-10-06, 감사 F-026): 우리 한국장 시세 파일의 하나은행 고시(홈 띠의 원/달러와 같은 값), 파일이 없는
+    날(8/28 전)은 야후 시간봉의 서울 15시 값. 전에는 야후 일봉 '종가'를 썼는데 그것은 그날 아침 8시(런던 0시) 값이라 프리미엄이
+    0.5~1.7포인트 어긋났다. SKHY 종가는 조정하지 않은 값이고 최근 날짜는 나스닥 공식 종가와 같아야 한다 — 다르면 올리지 않는다.
+    서울이 쉰 날·나스닥이 쉰 날은 짝이 없어 빠진다. 받지 못하면 None — 페이지와 홈 칸을 비운다."""
     try:
         import yfinance as yf
-        usd = {str(i.date()): float(v) for i, v in yf.Ticker("SKHY").history(period="1y")["Close"].items()}
-        fxs = {str(i.date()): float(v) for i, v in yf.Ticker("KRW=X").history(period="1y")["Close"].items()}
+        from src import fetch_us
+        usd = {str(i.date()): float(v) for i, v in yf.Ticker("SKHY").history(period="1y", auto_adjust=False)["Close"].items()}
+        official = fetch_us.nasdaq_closes("SKHY", max(usd)) if usd else {}
+        if not official:
+            raise StockDBError("나스닥 공식 SKHY 종가를 받지 못해 야후 값을 확인하지 못했습니다")
+        wrong = [f"{d} 야후 {usd[d]:.2f} / 나스닥 {c:.2f}" for d, c in official.items() if d in usd and abs(usd[d] - c) > 0.011]
+        if wrong:
+            raise StockDBError("SKHY 종가가 나스닥 공식값과 다릅니다: " + ", ".join(wrong[:5]))
+        usd.update(official)
+        usd = {d: v for d, v in usd.items() if d <= max(official)}   # 나스닥이 아직 안 올린 날은 다음 실행에 — 확인 안 된 값은 싣지 않는다
+        hourly = yf.Ticker("KRW=X").history(period="1y", interval="1h")["Close"]
+        fxs = {str(t.date()): float(v) for t, v in hourly.tz_convert("Asia/Seoul").items() if t.hour == 15}
+        fxs.update(file_fx() if fx_files is None else fx_files)
         # 서울 종가는 KRX 정규장 값(다음 일별 시세, 2026-10-05) — 네이버 차트는 넥스트레이드까지 합친 값이었다
         seoul = {r["d"]: r["c"] for r in Daum(session).days("000660", 250)}
         if not seoul:
@@ -1020,9 +1064,10 @@ def detail_targets(listing: list[dict], today: dt.date, all_: bool, top: int = D
         return [r["code"] for r in listing]
     ranked = sorted(listing, key=lambda r: -(r["mcap"] or 0))
     head = [r["code"] for r in ranked[:top]]
-    rest = sorted(r["code"] for r in ranked[top:])
+    # 차례는 종목 코드로 정한다 — 전에는 '상위 300 밖 목록에서의 순번'이라 300위 경계가 하루에 한 종목만 움직여도 뒤 종목의
+    # 차례가 모두 밀려 319종목(13%)이 12일째 안 돌았다(2026-10-06, 감사 F-034). 코드 해시는 순위와 무관해 7일에 꼭 한 번 돈다.
     slot = today.toordinal() % ROTATE_DAYS
-    return head + [c for i, c in enumerate(rest) if i % ROTATE_DAYS == slot]
+    return head + sorted(r["code"] for r in ranked[top:] if zlib.crc32(r["code"].encode()) % ROTATE_DAYS == slot)
 
 
 def display_name(code: str, name_ko: str | None, meta: dict) -> str:
@@ -1036,7 +1081,7 @@ def display_name(code: str, name_ko: str | None, meta: dict) -> str:
 
 
 def quote(row: dict) -> dict:
-    return {k: row[k] for k in ("close", "chg", "pct", "volume", "value", "mcap", "date") if row.get(k) is not None}
+    return {k: row[k] for k in ("close", "chg", "pct", "volume", "value", "mcap", "date", "dlow", "dhigh") if row.get(k) is not None}
 
 
 def assemble(listing: list[dict], details: dict[str, dict], meta: dict) -> tuple[list[dict], list[list], dict]:
@@ -1237,7 +1282,7 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     wanted = set(details)
     daily = {}
     for n, row in enumerate(listing, 1):
-        daily[row["code"]] = daum.days(row["code"], HISTORY_DAYS if row["code"] in wanted else 1)
+        daily[row["code"]] = daum.days(row["code"], HISTORY_DAYS if row["code"] in wanted else 2)   # 두 줄 — 기준가 다툼을 가릴 전일 종가(감사 F-176)
         if n % 500 == 0:
             print(f"  다음 일별 시세 {n}/{len(listing)} (실패 {len(daum.failed)})", flush=True)
     snap_days = sorted(p.stem for p in SNAPSHOTS.glob("20*.json")) if SNAPSHOTS.exists() else []

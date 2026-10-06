@@ -173,7 +173,8 @@ function fs_stock_html( $s, $index_by_code, $related = array(), $lists = array()
 	$rows2 = array(
 		array( 'Volume', ( isset( $q['volume'] ) && $q['volume'] !== null ) ? number_format( $q['volume'] ) : '–' ),
 		array( 'Trading value', fs_big( isset( $q['value'] ) ? $q['value'] : null ) ),
-		array( 'Day’s range', ( isset( $r['low'] ) && $r['low'] ) ? fs_krw( $r['low'] ) . ' – ' . fs_krw( $r['high'] ) : '–' ),
+		// 당일 범위는 매일 받는 시세(q, KRX 정규장)에서만 — 상세(r)의 고가·저가는 넥스트레이드 합산이고 7일에 한 번만 새로 받는다(2026-10-06)
+		array( 'Day’s range', ( ! empty( $q['dlow'] ) && ! empty( $q['dhigh'] ) ) ? fs_krw( $q['dlow'] ) . ' – ' . fs_krw( $q['dhigh'] ) : '–' ),
 		// 액면병합 뒤 52주 값이 조정되지 않은 종목이 있다(009310: 가격 5,330 vs 864~1,705) — 가격과 모순되면 숨긴다
 		array( '52-week range', ( ! empty( $r['low52'] ) && ! empty( $r['high52'] ) && ! empty( $q['close'] ) && $q['close'] >= $r['low52'] * 0.7 && $q['close'] <= $r['high52'] * 1.3 ) ? fs_krw( $r['low52'] ) . ' – ' . fs_krw( $r['high52'] ) : '–' ),
 		array( 'Foreign ownership <span class="fs-kr">KR</span>', fs_foreign_cell( $s ) ),
@@ -240,7 +241,7 @@ function fs_stock_html( $s, $index_by_code, $related = array(), $lists = array()
 	}
 	$h .= '</section></div>';
 	$h .= '<div class="fs-cta"><div><b>Want to own ' . fs_esc( $name ) . ' from outside Korea?</b><br><span>Direct KRX access through a global broker, a US-listed ADR where one exists, or a Korea ETF — compared in our guide.</span></div><a class="fs-btn" href="' . $guide . '">Read the guide</a></div>';
-	$h .= '<p class="fs-src">Data: Korea Exchange closing prices, investor flows and foreign ownership via Naver Finance; company information from DART (Financial Supervisory Service). Updated after each Korean market close'
+	$h .= '<p class="fs-src">Data: Korea Exchange regular-session closing prices, volume and day’s range via Daum Finance, checked against a Naver Finance snapshot at the close; investor flows, foreign ownership and ratios via Naver Finance; company information from DART (Financial Supervisory Service). Updated after each Korean market close'
 		. ( ! empty( $s['detail_date'] ) ? '; ratios and flows as of ' . fs_date( $s['detail_date'] ) : '' ) . '. Delayed data, not investment advice.</p>';
 	return '<div class="fs-page">' . $h . '</div>';
 }
@@ -318,8 +319,8 @@ function fs_list_html( $slug, $l, $lists ) {
 	$other = '';
 	foreach ( $lists as $k => $x ) { if ( $k !== $slug ) { $other .= '<a href="/stocks/lists/' . $k . '/">' . fs_esc( $x['short'] ) . '</a>'; } }
 	$h .= '<div class="fs-sec"><h2>Other lists</h2><div class="fs-pills">' . $other . '</div></div>';
-	$src = 'highest-dividend-yield' === $slug ? 'Dividends: each company\'s latest annual filing on DART (Financial Supervisory Service), cash dividend per common share. Prices: Korea Exchange close via Naver Finance.'
-		: 'Data: Korea Exchange closing prices, ratios and foreign ownership via Naver Finance; latest annual results for ROE.';
+	$src = 'highest-dividend-yield' === $slug ? 'Dividends: each company\'s latest annual filing on DART (Financial Supervisory Service), cash dividend per common share. Prices: Korea Exchange regular-session close via Daum Finance.'
+		: 'Data: Korea Exchange regular-session closing prices via Daum Finance; ratios and foreign ownership via Naver Finance; latest annual results for ROE.';
 	return '<div class="fs-page">' . $h . '<p class="fs-src">' . $src . ' Updated after each Korean market close. Delayed data, not investment advice.</p></div>';
 }
 function fs_list_cards( $lists, $flows = null, $skhy = null ) {
@@ -364,7 +365,7 @@ function fs_skhy_html( $p ) {
 	$h .= '<div class="fs-two fs-sec"><div><h2>How we calculate it</h2><p class="fs-note">Premium = SKHY close × 10 × USD/KRW ÷ SK Hynix Seoul close − 1. Both closes are from the same calendar day, so the Nasdaq close comes about 13 hours after the Seoul close — news in between moves one and not the other. Days when either market was shut are left out.</p></div>';
 	$h .= '<div><h2>Why the two prices can differ</h2><p class="fs-note">An ADR only tracks its home share as closely as investors can swap one for the other. New ADRs are created by depositing Seoul shares with the depositary bank, which takes time, fees and access to the Korean market. When US demand for SKHY outruns that process, the ADR can trade above the Seoul price for long stretches.</p></div></div>';
 	$h .= '<div class="fs-cta"><div><b>Buying SK Hynix from abroad?</b><br><span>Seoul shares, the SKHY ADR and Korea ETFs compared.</span></div><a class="fs-btn" href="/korean-adrs-for-us-investors/">Korean ADRs explained →</a></div>';
-	$h .= '<p class="fs-src">Data: SKHY and USD/KRW closing prices from Yahoo Finance; SK Hynix closing prices via Naver Finance. Each ADR = 0.1 common share. Updated after each Korean close. Delayed data, not investment advice. See also <a href="/sk-hynix-vs-micron/">SK Hynix vs Micron</a>.</p>';
+	$h .= '<p class="fs-src">Data: SKHY closing prices from Yahoo Finance, checked against Nasdaq; SK Hynix Korea Exchange regular-session closes via Daum Finance; USD/KRW is the Hana Bank rate near the Seoul close (before Aug 28, 2026: the Yahoo Finance 3 p.m. Seoul rate). Each ADR = 0.1 common share. Updated after each Korean close. Delayed data, not investment advice. See also <a href="/sk-hynix-vs-micron/">SK Hynix vs Micron</a>.</p>';
 	return '<div class="fs-page">' . $h . '</div>';
 }
 

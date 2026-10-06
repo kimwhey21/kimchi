@@ -84,6 +84,23 @@ class DailyRunTest(unittest.TestCase):
         self.assertEqual(len(week), 1000, "일주일이면 모든 종목의 상세가 한 번은 새로 와야 한다")
         self.assertEqual(len(sdb.detail_targets(listing, day, True)), 1000)
 
+    def test_template_reads_day_range_and_skhy_source_from_daily_values(self):
+        php = (Path(__file__).resolve().parent.parent / "templates" / "wp_stock_db.php").read_text(encoding="utf-8")
+        self.assertIn("fs_krw( $q['dlow'] ) . ' – ' . fs_krw( $q['dhigh'] )", php)
+        self.assertNotIn("fs_krw( $r['low'] ) . ' – ' . fs_krw( $r['high'] )", php)   # 상세의 고가·저가는 넥스트레이드 합산
+        self.assertIn("USD/KRW is the Hana Bank rate near the Seoul close", php)
+        self.assertNotIn("SK Hynix closing prices via Naver Finance", php)
+
+    def test_rotation_turn_does_not_move_when_the_ranking_changes(self):
+        """감사 F-034: 차례가 '300위 밖 목록에서의 순번'이면 경계가 한 종목만 움직여도 뒤 종목이 모두 밀려 319종목이 12일째 안 돌았다."""
+        listing = [_row(f"{i:06d}", mcap=10_000 - i) for i in range(1, 1001)]
+        day = dt.date(2026, 10, 6)
+        before = set(sdb.detail_targets(listing, day, False, top=100)[100:])
+        moved = [dict(r) for r in listing]
+        moved[150]["mcap"] = 20_000                                        # 151위가 1위로 — 경계가 움직인다
+        after = set(sdb.detail_targets(moved, day, False, top=100)[100:])
+        self.assertEqual(before - {"000151", "000100"}, after - {"000151", "000100"})
+
     def test_assemble_merges_quote_only_items(self):
         listing = [_row("000660", 2e15), _row("123450", 1e11), _row("005930", 3e15)]
         items, index, _ = sdb.assemble(listing, {"000660": {"r": {}, "peers": ["005930", "069500"]}},
@@ -347,23 +364,53 @@ class ForeignFlowsTest(unittest.TestCase):
 class SkhyTest(unittest.TestCase):
     """/stocks/skhy-premium/ (2026-09-28): 같은 날짜끼리만 짝짓는다."""
 
-    def test_pairs_same_day_only_and_uses_ratio(self):
+    def _run(self, usd_values, official, fx_files=None):
         from unittest import mock
         import pandas as pd
-        idx = pd.to_datetime(["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-18", "2026-09-17"])
-        usd = pd.Series([150.0, 150.0, 150.0, 999.0, 999.0, 150.0, 150.0], index=idx)
-        fx = pd.Series([1400.0] * 7, index=idx)
-        tick = lambda sym: mock.Mock(history=lambda period: pd.DataFrame({"Close": usd if sym == "SKHY" else fx}))   # noqa: E731
+        idx = pd.to_datetime(["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-18", "2026-09-17", "2026-09-16"])
+        usd = pd.Series(list(usd_values) + [150.0], index=idx)
+        hours = pd.DatetimeIndex([f"{d} 15:00" for d in ("2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23")],
+                                 tz="Asia/Seoul").append(pd.DatetimeIndex(["2026-09-23 08:00"], tz="Asia/Seoul"))
+        fx = pd.Series([1400.0] * 6 + [9999.0], index=hours).tz_convert("UTC")      # 아침 8시 값은 쓰지 않는다
+        sym_of = [None]
+
+        def history(period, auto_adjust=True, interval="1d"):
+            if sym_of[0] == "SKHY":
+                assert auto_adjust is False, "SKHY는 조정하지 않은 종가"
+                return pd.DataFrame({"Close": usd})
+            return pd.DataFrame({"Close": fx})
+
+        def tick(sym):
+            sym_of[0] = sym
+            return mock.Mock(history=history)
         # 서울 종가는 다음 일별 시세(KRX 정규장)에서 — 2026-10-05 전에는 네이버 차트(넥스트레이드 합산)였다
         seoul = {"data": [{"date": f"{d} 00:00:00", "tradePrice": 1_400_000.0, "prevClosingPrice": 1_390_000.0}
-                          for d in ("2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23")]}
+                          for d in ("2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23")]}
         fake_yf = mock.Mock(Ticker=tick)
+        from src import fetch_us
         with mock.patch.dict("sys.modules", {"yfinance": fake_yf}), mock.patch.object(sdb, "_get", return_value=mock.Mock(json=lambda: seoul)), \
-                mock.patch.object(sdb.time, "sleep"):
-            p = sdb.build_skhy(mock.Mock())
-        self.assertEqual([r["d"] for r in p["rows"]], ["2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23"])  # 서울이 쉰 9/24·25는 빠진다
-        self.assertEqual(p["rows"][0]["seoul_usd"], 100.0)          # 1,400,000 ÷ 10 ÷ 1,400
+                mock.patch.object(sdb.time, "sleep"), mock.patch.object(fetch_us, "nasdaq_closes", return_value=official):
+            return sdb.build_skhy(mock.Mock(), fx_files=fx_files or {})
+
+    def test_pairs_same_day_only_and_uses_ratio(self):
+        p = self._run([150.0, 150.0, 150.0, 999.0, 999.0, 150.0, 150.0], {"2026-09-23": 150.0, "2026-09-25": 999.0})
+        self.assertEqual([r["d"] for r in p["rows"]], ["2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-22", "2026-09-23"])  # 서울이 쉰 9/24·25는 빠진다
+        self.assertEqual(p["rows"][0]["seoul_usd"], 100.0)          # 1,400,000 ÷ 10 ÷ 1,400(서울 15시 값 — 아침 8시 9,999는 안 쓴다)
         self.assertEqual(p["rows"][0]["prem"], 50.0)
+
+    def test_fx_comes_from_our_daily_file_first(self):
+        """감사 F-026: 야후 일봉 '종가'는 아침 8시 값이었다 — 우리 시세 파일의 하나은행 고시(홈 띠와 같은 값)를 먼저 쓴다."""
+        p = self._run([150.0] * 7, {"2026-09-25": 150.0}, fx_files={"2026-09-23": 1500.0})
+        self.assertEqual(p["rows"][-1]["fx"], 1500.0)
+        self.assertEqual(p["rows"][0]["fx"], 1400.0)
+
+    def test_skhy_close_must_match_nasdaq(self):
+        self.assertIsNone(self._run([150.0] * 7, {"2026-09-23": 151.0}))   # 야후 150 / 나스닥 151 — 싣지 않는다
+        self.assertIsNone(self._run([150.0] * 7, {}))                      # 나스닥을 못 받으면 확인 못 한 것
+
+    def test_days_after_nasdaq_official_are_left_for_the_next_run(self):
+        p = self._run([150.0] * 7, {"2026-09-22": 150.0})
+        self.assertEqual(p["rows"][-1]["d"], "2026-09-22")
 
     def test_page_is_wired(self):
         for needle in ("'^stocks/skhy-premium/?$'", "fm_skhy", "home_url( '/stocks/skhy-premium/' )", "fs_skhy_html( $k )",
@@ -500,6 +547,21 @@ class KrxPricesTest(unittest.TestCase):
         self.assertEqual((row["close"], row["chg"], row["pct"]), (1841000.0, 8000.0, 0.44))
         self.assertEqual(row["volume"], 1938753.0)                       # 거래소 거래량(네이버 2,893,258은 넥스트레이드 포함)
         self.assertEqual(row["mcap"], 1841000.0 * 730492365)
+
+    def test_day_range_comes_from_the_daum_row(self):
+        """감사 F-041: 당일 범위는 상세(네이버 통합·7일에 한 번)가 아니라 매일 받는 다음 일별 시세(KRX 정규장)의 고가·저가."""
+        row = dict(self.ROW)
+        daum = [self.DAUM[0], {**self.DAUM[1], "h": 1860000, "l": 1801000}]
+        sdb.apply_krx([row], {"000660": daum}, {"2026-10-02": {"000660": [1841000, 1833000]}})
+        self.assertEqual((sdb.quote(row)["dlow"], sdb.quote(row)["dhigh"]), (1801000.0, 1860000.0))
+
+    def test_snapshot_only_row_drops_naver_volume_and_range(self):
+        """사진만으로 간 종목의 거래량·거래대금은 네이버 통합값이라 KRX 값처럼 싣지 않는다(감사 F-050)."""
+        row = {**self.ROW, "dlow": 1.0, "dhigh": 2.0}
+        problems, _ = sdb.apply_krx([row], {"000660": []}, {"2026-10-02": {"000660": [1841000, 1833000]}}, "2026-10-02",
+                                    third=lambda c, d: 1841000.0)
+        self.assertEqual(problems, [])
+        self.assertFalse({"volume", "value", "dlow", "dhigh"} & set(sdb.quote(row)))
 
     def test_disagreement_is_settled_by_a_third_source(self):
         """2026-10-05 사장님: 옛 값이 아니라 정확한 값 — 사진과 다음이 다르면 야후와 같은 쪽(실제 10/2: 야후 1,841,000 = 다음)."""
