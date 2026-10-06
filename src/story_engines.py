@@ -154,6 +154,24 @@ def valuation(market: str) -> dict:
             "off_52w_high_pct": round(100 * (price / info["fiftyTwoWeekHigh"] - 1), 1)
             if price and info.get("fiftyTwoWeekHigh") else None,
         })
+    # 한국 종목은 네이버 컨센서스도 붙인다(2026-10-06, 감사 F-016): 야후 FWD PER은 기준 연도가 달라(삼성전자 야후 3.8배 / 네이버
+    # 추정PER 5.8배) 한국 독자가 증권 앱에서 보는 숫자와 다르다. 두 값을 나란히 두고 글에는 네이버 값을 쓴다.
+    naver_failed = []
+    if market == "kr":
+        for row in rows:
+            try:
+                body = requests.get(f"https://m.stock.naver.com/api/stock/{row['ticker']}/integration",
+                                    headers={"User-Agent": "Mozilla/5.0"}, timeout=20).json()
+                infos = {i.get("key"): i.get("value") for i in body.get("totalInfos") or []}
+                cons = body.get("consensusInfo") or {}
+                fpe = str(infos.get("추정PER") or "").replace("배", "").replace(",", "").strip()
+                target = str(cons.get("priceTargetMean") or "").replace(",", "").strip()
+                row["naver_forward_pe"] = float(fpe) if fpe not in ("", "-", "N/A") else None
+                row["naver_target"] = float(target) if target not in ("", "-") else None
+                row["naver_target_date"] = cons.get("createDate")
+            except (requests.RequestException, ValueError) as exc:
+                naver_failed.append(f"{row['name']}({exc.__class__.__name__})")
+            time.sleep(0.3)
     # FWD PER이 음수면 내년에 적자가 예상된다는 뜻입니다. 그대로 정렬하면 "가장
     # 싼 종목"으로 맨 위에 올라오므로 따로 뺍니다.
     priced = [r for r in rows if r["forward_pe"] and r["forward_pe"] > 0]
@@ -167,6 +185,7 @@ def valuation(market: str) -> dict:
         "median_forward_pe": round(statistics.median([r["forward_pe"] for r in priced]), 1)
         if priced else None,
         "fetch_failed": failed,
+        "naver_failed": naver_failed,
     }
 
 
@@ -1063,7 +1082,11 @@ def _print(result: dict) -> None:
         # '목표가까지 +73%'는 목표주가가 주가보다 73% 높다는 뜻이다. 이것을 '주가가 목표가보다 73% 낮다'로 옮기면 틀린다(실제 42%) —
         # 9/8~10/2 33편 83곳이 그렇게 나갔다(2026-10-06). 그래서 두 숫자를 다 찍는다.
         print("  (목표가까지 = 목표주가가 지금 주가보다 몇 % 높은가 · 주가 위치 = 지금 주가가 목표주가보다 몇 % 낮은가 — 둘은 다른 숫자)")
-        print(f"  {'종목':<12}{'FWD PER':>9}{'목표가까지':>11}{'주가 위치':>11}{'52주고점 대비':>13}{'애널':>6}")
+        if result["market"] == "kr":
+            print("  (FWD PER·목표가는 야후 — 기준 연도가 달라 한국 증권 앱과 다르다. 글에는 오른쪽 네이버 추정PER(올해 예상 이익)·네이버 "
+                  "컨센서스 목표가를 쓰고 출처를 '네이버 금융 컨센서스'로 밝힌다)")
+        print(f"  {'종목':<12}{'FWD PER':>9}{'목표가까지':>11}{'주가 위치':>11}{'52주고점 대비':>13}{'애널':>6}"
+              + (f"{'네이버추정PER':>9}{'네이버목표가까지':>11}" if result["market"] == "kr" else ""))
         for row in result["rows"]:
             # f-string 안에 같은 따옴표를 중첩하는 것은 파이썬 3.12부터입니다.
             # 워크플로는 3.11로 돌아서 로컬(3.14)에서만 통과하는 문법이 됩니다.
@@ -1074,12 +1097,19 @@ def _print(result: dict) -> None:
             off_high = ("-" if row["off_52w_high_pct"] is None
                         else f"{row['off_52w_high_pct']:+.1f}%")
             name = row["name"][:11]
+            naver = ""
+            if result["market"] == "kr":
+                n_pe, n_target = row.get("naver_forward_pe"), row.get("naver_target")
+                n_up = f"{(n_target / row['price'] - 1) * 100:+.1f}%" if n_target and row.get("price") else "-"
+                naver = f"{(f'{n_pe:.1f}' if n_pe else '-'):>9}{n_up:>11}"
             print(f"  {name:<12}{row['forward_pe']:>9.1f}{upside:>11}{below:>11}"
-                  f"{off_high:>13}{row['analysts'] or '-':>6}")
+                  f"{off_high:>13}{row['analysts'] or '-':>6}{naver}")
         if result.get("loss_making"):
             print(f"  (내년 적자 예상: {', '.join(result['loss_making'])})")
         if result["no_estimate"]:
             print(f"  (추정치 없음: {', '.join(result['no_estimate'])})")
+        if result.get("naver_failed"):
+            print(f"  (네이버 컨센서스를 못 받은 종목 {len(result['naver_failed'])}개: {', '.join(result['naver_failed'][:8])} — 그 줄의 네이버 칸은 비었다)")
     elif engine == "ratings":
         print(f"[의견 변경] {result['market'].upper()} · 최근 {result['days']}일 · "
               f"상향 {result['upgrade_count']} 하향 {result['downgrade_count']} "
