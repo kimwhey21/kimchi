@@ -162,16 +162,16 @@ class MacBeatsTest(unittest.TestCase):
             "gsc_queries": "2026-10-05T10:35:00+09:00",
             "daily_summary": "2026-10-06T22:31:00+09:00", "bench_nightly": "2026-10-06T23:12:00+09:00"}}
         issues, n, ok = daily_proof.mac_issues(beats, self.NOW)
-        self.assertEqual(n, 5)
+        self.assertEqual(n, 4)
         self.assertEqual(ok, 3)
-        self.assertTrue(any(i.startswith("맥 blogger_sync") for i in issues))     # 30분 넘게 조용함
+        self.assertFalse(any(i.startswith("맥 blogger_sync") for i in issues))    # 블로그스팟 올리기는 멈춰 있다
         self.assertTrue(any(i.startswith("맥 gsc_queries") for i in issues))  # 어제 신호
 
     def test_weekly_jobs_only_on_their_day(self) -> None:
         sunday = dt.datetime(2026, 10, 11, 23, 30, tzinfo=daily_proof.KST)
         beats = {"generated_at": "2026-10-11T23:22:00+09:00", "beats": {}}
         issues, n, _ = daily_proof.mac_issues(beats, sunday)
-        self.assertEqual(n, 5 + 2)   # threads_refresh·search_snapshot
+        self.assertEqual(n, 4 + 2)   # threads_refresh·search_snapshot
         self.assertTrue(any("threads_refresh" in i for i in issues))
 
     def test_uploader_counts_todays_posts(self) -> None:

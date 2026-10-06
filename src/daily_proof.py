@@ -64,7 +64,7 @@ MAC_BEATS = ROOT / "state" / "mac_beats.json"
 SCREEN_SAMPLE = 20
 RUN_WINDOW = (dt.timedelta(minutes=10), dt.timedelta(minutes=150))   # 예약 시각 앞 10분 ~ 뒤 150분 안의 실행을 그 작업으로 본다
 # 맥 작업(launchd) — 신호가 언제까지 있어야 하나. 분 단위면 "generated_at 기준 그 안", 시각이면 "그날 그 시각 이후".
-MAC_JOBS = {"naver_sync": 30, "blogger_sync": 30, "gsc_queries": "10:30",
+MAC_JOBS = {"naver_sync": 30, "gsc_queries": "10:30",
             "daily_summary": "22:30", "bench_nightly": "23:10"}
 MAC_WEEKLY = {"threads_refresh": (6, "21:30"), "expose_weekly": (0, "08:30"), "search_snapshot": (6, "22:00")}   # (weekday, 시각)
 
