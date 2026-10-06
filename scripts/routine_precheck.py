@@ -157,6 +157,16 @@ def price_summary(root: Path, path: Path, data: dict) -> tuple[list[str], dict]:
              f"종목 {len(entries)} (코어 {core} · 편입 {dynamic}) · 수급(foreign_net) 있는 종목 {flows} · "
              f"지수·환율 {len(macro)} · missing {len(missing)}"
              + (f" ({', '.join(str(m) for m in missing[:6])})" if missing else "")]
+    # 기준가가 전일 종가와 다른 종목(배당락·권리락·액면 변경) — 그 등락을 '공시 없이 빠졌다'고 쓰지 않게(2026-10-06, 감사 F-039)
+    adjusted = [f"{e.get('name')}(기준가 {e.get('prev_close_krx'):,.0f} / 전일 종가 {e.get('prev_close'):,.0f})"
+                for e in entries if e.get("base_adjusted") and e.get("prev_close_krx") and e.get("prev_close")]
+    if adjusted:
+        lines.append("기준가 조정(배당락·권리락 등) 종목 — 등락률은 조정된 기준가 대비입니다: " + ", ".join(adjusted[:8]))
+    for t in ("KS11", "KQ11"):
+        flows_m = (macro.get(t) or {}).get("investor_flows") if isinstance(macro, dict) else None
+        if flows_m:
+            lines.append(f"{(macro.get(t) or {}).get('name', t)} 투자자별 순매수(억 원, {flows_m.get('fetched_at')} 잠정): "
+                         f"개인 {flows_m.get('individual_eok')} · 외국인 {flows_m.get('foreign_eok')} · 기관 {flows_m.get('institution_eok')}")
     # 한국장 종목별 수급은 그날 파일에 없고 다음 날 아침 전 거래일 파일에 채워진다(2026-09-26) — 쓸 수 있는 쪽을 보여 준다.
     if path.name.startswith("price_kr_"):
         earlier = sorted(p for p in path.parent.glob("price_kr_*.json") if p.name < path.name)

@@ -150,8 +150,35 @@ def _fetch_daum_days(code: str, rows: int = price_history.DAYS) -> list[tuple[st
     포함). 네이버 일봉(FinanceDataReader)·모바일 일별 목록·basic은 KRX+넥스트레이드 통합값이라 같은 600건 중 486건이 달랐다.
     """
     body = _daum_get(f"quote/A{code}/days", code, {"symbolCode": f"A{code}", "page": 1, "perPage": rows, "pagination": "true"})
-    out = {str(r["date"])[:10]: float(r["tradePrice"]) for r in body.get("data") or [] if r.get("date") and r.get("tradePrice")}
-    return sorted(out.items())
+    data = [r for r in body.get("data") or [] if r.get("date") and r.get("tradePrice")]
+    out = {str(r["date"])[:10]: float(r["tradePrice"]) for r in data}
+    bases = {str(r["date"])[:10]: float(r["prevClosingPrice"]) for r in data if r.get("prevClosingPrice")}
+    return sorted(_repair_chain(code, out, bases).items())
+
+
+def _repair_chain(code: str, closes: dict[str, float], bases: dict[str, float], third=None) -> dict[str, float]:
+    """다음 일별 시세의 '그날 종가'와 '다음 날 기준가'가 다른 날을 야후로 가린다(2026-10-06, 감사 F-079).
+
+    대부분은 배당락·권리락(기준가가 바뀐 진짜 차이)이지만, 다음의 그날 종가가 KRX 종가와 다른 줄도 있었다(삼성전기 9/3 1,349,000 /
+    KRX 1,348,000, 셀트리온 9/11). 야후 종가가 다음 날 기준가와 같으면 그 값으로 고치고, 야후가 그날 종가와 같으면 그대로 둔다.
+    가리지 못하면 그대로 두고 알린다(3개월 차트·52주 값에만 쓰이는 지난 줄이다 — 오늘 종가는 두 원천으로 따로 확인한다)."""
+    third = third or yahoo_close
+    days = sorted(closes)
+    fixed = dict(closes)
+    for day, nxt in zip(days, days[1:]):
+        base = bases.get(nxt)
+        if base is None or abs(closes[day] - base) < 0.5:
+            continue
+        y = third(code, day)
+        if y is not None and abs(y - base) < 0.5:
+            print(f"[안내] {code} {day}: 다음 종가 {closes[day]:,.0f}가 KRX 종가가 아니라 {base:,.0f}로 고칩니다(야후·다음 날 기준가)")
+            fixed[day] = base
+        elif y is None:
+            # 야후가 그날을 소급 조정했다(원 단위가 아니다) = 배당락·권리락 같은 기준가 변경이 있었다는 뜻 — 진짜 차이로 둔다
+            print(f"[안내] {code} {day}: 다음 날 기준가 {base:,.0f}가 종가 {closes[day]:,.0f}와 다른 기준가 변경일로 봅니다")
+        elif abs(y - closes[day]) >= 0.5:
+            print(f"[경고] {code} {day}: 다음 종가 {closes[day]:,.0f}·다음 날 기준가 {base:,.0f}·야후 {y:,.0f} — 가리지 못해 그대로 둡니다")
+    return fixed
 
 
 def _fetch_daum_quote(code: str) -> dict:
@@ -207,6 +234,10 @@ def _fetch_yahoo_days(code: str) -> list[tuple[str, float]]:
             print(f"[안내] 야후 {code}{suffix}: {exc}")
             continue
         rows = [(d.strftime("%Y-%m-%d"), float(c)) for d, c, v in zip(hist.index, hist["Close"], hist["Volume"]) if float(v or 0) > 0]
+        if any(abs(c - round(c)) > 1e-6 for _, c in rows):
+            # 소급 조정된 이력(권리락·분할)은 KRX 체결가가 아니다(감사 F-098) — 쓰지 않는다(부른 쪽이 멈춘다)
+            print(f"[경고] 야후 {code}{suffix} 이력에 원 단위가 아닌 조정 값이 있어 쓰지 않습니다")
+            return []
         if len(rows) >= 2:
             return rows[-price_history.DAYS:]
     return []
@@ -225,7 +256,12 @@ def yahoo_close(code: str, day: str) -> float | None:
             continue
         rows = hist[hist.index.strftime("%Y-%m-%d") == day] if len(hist) else hist
         if len(rows) and float(rows["Volume"].iloc[0] or 0) > 0:
-            return float(rows["Close"].iloc[0])
+            close = float(rows["Close"].iloc[0])
+            if abs(close - round(close)) > 1e-6:
+                # 원 단위가 아니면 권리락·분할 뒤 소급 조정한 값이다(2026-10-06, 감사 F-098) — KRX 종가가 아니라 쓰지 않는다
+                print(f"[안내] 야후 {code}{suffix} {day}: {close}는 조정된 값이라 쓰지 않습니다")
+                return None
+            return close
     return None
 
 
@@ -238,10 +274,8 @@ def pick_base(close: float, bases: dict[str, float], prev_close: float | None = 
     others = [k for k in bases if k != "daum"]
     if "daum" in bases and prev_close is not None and all(abs(bases[k] - prev_close) < 0.5 for k in others):
         return "daum"
-    if rate is not None:
-        fit = [k for k, b in bases.items() if abs(abs(close / b - 1) * 100 - float(rate)) <= 0.05]
-        if len(fit) == 1:
-            return fit[0]
+    # 2026-10-06(감사 F-124): '네이버 등락률(cr)과 맞는 쪽' 규칙을 뺐다 — cr은 네이버 기준가로 계산된 값이라 늘 네이버 편을 들었다
+    # (순환 논리). 독립 근거가 없으면 None — 부른 쪽이 멈추고 이름을 적는다. `rate`는 예전 호출과 맞추려고 남겨 둔 인자다.
     return None
 
 
@@ -255,15 +289,18 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
     `close_check`가 네이버 '전일'과 한 번 더 대조한다), 둘 다 없으면 멈춘다. 기준가 대비 ±30%를 넘으면 응답이 어긋난 것이라 멈춘다.
     """
     found: dict[str, tuple[float, float]] = {}
+    snapshot_note = ""
     if naver and naver.get("nv"):
         base = float(naver.get("sv") or 0) or float(naver.get("pcv") or 0)
         if base:
             found["naver_snapshot"] = (float(naver["nv"]), base)
+        else:
+            snapshot_note = "; 사진에 종가는 있으나 기준가(sv·pcv)가 없음"   # 감사 F-152: 전에는 '사진에서도 받지 못했다'로만 나왔다
     if daum and daum.get("date") == today and daum.get("close") and daum.get("base"):
         found["daum"] = (float(daum["close"]), float(daum["base"]))
     if not found:
         raise ValueError(f"{code}: 오늘({today}) KRX 정규장 종가를 네이버 사진에서도 다음에서도 받지 못했습니다"
-                         f"(다음 날짜 {daum.get('date') if daum else '응답 없음'}).")
+                         f"(다음 날짜 {daum.get('date') if daum else '응답 없음'}{snapshot_note}).")
     values = set(found.values())
     sources = sorted(found)
     if len(found) == 1:
@@ -301,6 +338,8 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
     if len(values) > 1:
         detail = ", ".join(f"{k} 종가 {c:,.0f}·기준가 {b:,.0f}" for k, (c, b) in found.items())
         override = os.environ.get("KR_CLOSE_OVERRIDE", "").strip()
+        if os.environ.get("GITHUB_ACTIONS") != "true":
+            override = ""   # 승인 경로는 깃허브 수동 실행에서만 — 루틴 샌드박스가 스스로 켤 수 없게(2026-10-06, 감사 F-084)
         if override in found:
             # 사장님 승인 경로(2026-10-05): 두 원천이 다른 날 "내보내"라고 하면 지목한 원천 값에 꼬리표를 달아 내보낸다
             # (market_brief.yml 수동 실행의 close_override 입력). 자동 실행에는 이 값이 없다.
@@ -331,17 +370,34 @@ def _apply_krx_close(entry: dict, resolved: dict, today: str) -> dict:
     else:
         series = (series + [round(close, 4)])[-len(series):] if len(series) >= 2 else series + [round(close, 4)]
         history = price_history.append(history, today, close)
-    return {**entry, "price": round(close, 2), "change_pct": round((close - base) / base * 100, 2),
+    # 기준가가 전일 종가와 다르면(배당락·권리락·액면 변경) 표시한다 — 글이 그 등락을 '공시 없이 빠졌다'고 쓰지 않게(감사 F-039)
+    closes = (history or {}).get("close") or []
+    prev = closes[-2] if len(closes) >= 2 else None
+    adjusted = {"base_adjusted": True, "prev_close": round(float(prev), 2)} if prev and abs(float(prev) - base) >= 0.5 else {}
+    return {**entry, **adjusted, "price": round(close, 2), "change_pct": round((close - base) / base * 100, 2),
             "prev_close_krx": round(base, 2), "series": series, "history": history, "trading_date": today,
             "close_sources": resolved["sources"],
             "data_source": "KRX regular-session close (" + " + ".join(resolved["sources"]) + ")"}
+
+
+def _kst_today() -> dt.date:
+    """오늘(KST) — 러너는 UTC라 `dt.date.today()`는 00:00~09:00 KST에 어제가 된다(2026-10-06, 감사 F-181: 손으로 돌린 실행이 두 원천
+    확인을 건너뛰었다)."""
+    return dt.datetime.now(KST).date()
 
 
 def _krx_close_snapshot(today: str, data_dir: Path | None = None) -> dict[str, dict]:
     path = (data_dir or Path(__file__).resolve().parent.parent / "data") / "krx_close" / f"{today}.json"
     if not path.exists():
         return {}
-    return (json.loads(path.read_text(encoding="utf-8")).get("quotes") or {})
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    quotes = dict(doc.get("quotes") or {})
+    # 사진의 전 종목 종가 칸(close: [종가, 기준가])도 읽는다 — 전에는 quotes(코어·후보)에 없는 편입 종목은 사진이 있어도 원천 하나로 갔다
+    # (2026-10-06, 감사 F-122). 등락률 칸(cr)은 없으니 그 대조만 빠진다.
+    for code, pair in (doc.get("close") or {}).items():
+        if code not in quotes and isinstance(pair, (list, tuple)) and len(pair) >= 2 and pair[0]:
+            quotes[code] = {"nv": pair[0], "sv": pair[1]}
+    return quotes
 
 
 def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: str | None = None) -> dict[str, dict]:
@@ -350,13 +406,13 @@ def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: s
     전에는 편입 종목은 조용히 빼고 코어는 80%까지 빠져도 글을 냈다. 데이터가 중요한 사이트에서 빼는 것은 누락이다.
     `prev_day`(지수의 직전 거래일)가 주어지면, 다음 일별 시세가 그보다 더 뒤처진 종목도 멈춘다(빈 날이 생긴다).
     """
-    today = dt.date.today().isoformat()
+    today = _kst_today().isoformat()
     if trading_date != today:
         return watchlist
     snap = _krx_close_snapshot(today)
     now = dt.datetime.now(KST).time()
     from src.stock_db import close_window
-    window = close_window(dt.date.today())     # 수능일은 16:31~16:59 (2026-10-05)
+    window = close_window(_kst_today())     # 수능일은 16:31~16:59 (2026-10-05)
     if window[0] <= now < window[1]:
         # 창 안에서 손으로 돌리면 지금 폴링이 곧 사진이다. 창 밖의 폴링은 애프터마켓 값이라 쓰지 않는다(2026-09-28).
         live = _fetch_naver_item_quotes([t for t in watchlist if str(t) not in snap])
@@ -452,7 +508,7 @@ def _fetch_index(ticker: str, name: str, name_en: str = "", lookback: int = 7, u
         if len(rows) < 2:
             raise ValueError(f"일별 종가를 {len(rows)}개만 받았습니다")
     except (requests.RequestException, ValueError) as exc:
-        prior = _latest_committed_index(ticker, dt.date.today().isoformat())
+        prior = _latest_committed_index(ticker, _kst_today().isoformat())
         if prior is None:
             raise ValueError(f"{ticker}: 네이버 지수 일별 목록을 받지 못했고 우리 파일도 없습니다 — {exc}") from exc
         print(f"[경고] {ticker}: 네이버 지수 일별 목록을 받지 못해 우리 파일({prior['trading_date']})을 밑바탕으로 씁니다 — {exc}")
@@ -479,13 +535,15 @@ def last_closed_trading_day(today: str | None = None) -> str:
     날 종가와 다르면 오늘도 거래일이다(목록이 늦게 올라오는 날). 휴장일에는 확정값이 마지막 거래일 종가 그대로다(10/5 확인).
     """
     today = today or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date().isoformat()
+    from src.stock_db import KRX_HOLIDAYS
+    closed_today = dt.date.fromisoformat(today).weekday() >= 5 or today in KRX_HOLIDAYS   # 휴장일은 값 차이로 판정하지 않는다(감사 F-187)
     rows = _fetch_naver_index_daily("KOSPI")
     quote = _fetch_naver_index_quotes().get("KOSPI") or {}
     closes = dict(rows)
     before = [d for d, _ in rows if d < today]
     if not before:
         raise ValueError(f"네이버 코스피 일별 목록에 {today} 이전 날짜가 없습니다")
-    if quote.get("ms") == "CLOSE" and (today in closes or abs(float(quote["nv"]) / 100 - closes[before[-1]]) > 0.005):
+    if not closed_today and quote.get("ms") == "CLOSE" and (today in closes or abs(float(quote["nv"]) / 100 - closes[before[-1]]) > 0.005):
         return today
     return before[-1]
 
@@ -536,7 +594,7 @@ def _apply_final_index_quote(entry: dict, ticker: str, quote: dict | None,
        주말·공휴일에 가짜 행이 생기지 않습니다. 등식이 안 맞으면 손대지 않고
        그대로 돌려줍니다(그러면 기존대로 기준일 불일치로 멈춥니다).
     """
-    today = dt.date.today().isoformat()
+    today = _kst_today().isoformat()
     last = str(entry.get("trading_date") or "")
     code = _NAVER_INDEX_CODES[ticker]
     if prior and str(prior.get("trading_date") or "") > last and str(prior["trading_date"]) < today:
@@ -684,6 +742,11 @@ def _fetch_usdkrw_reference(
             raise ValueError(f"USD/KRW: 네이버 {detail.get('degreeCount')}회 {price:,.2f} / 다음 {d_count}회 {d_price:,.2f} — "
                              "같은 고시를 두 곳에서 확인하지 못했습니다(다시 묻습니다)")
         sources = ["daum", "naver"]
+        d_time = daum[1]
+        if d_time.date() == traded_at.date():
+            # 고시 시각은 다음의 회차 시각으로(2026-10-06, 감사 F-121) — 네이버 localTradedAt은 네이버가 갱신한 시각이라 고시 시각과
+            # 몇십 초~몇 분 다르다(10/6 13:33 고시를 13:32:34로). 날짜가 다르면(휴장일에 다음이 영업일을 적는 경우) 네이버 시각을 둔다.
+            traded_at = d_time.replace(tzinfo=None) if traded_at.tzinfo is None else d_time
     reference_ko = f"{traded_at:%Y-%m-%d %H:%M} 하나은행 고시"
     reference_en = f"{traded_at:%Y-%m-%d %H:%M} Hana Bank notice"
     return {
@@ -710,7 +773,7 @@ def _fetch_one(
     ticker: str, name: str, name_en: str = "", lookback: int = 7, unit: str = "", **_ignore
 ) -> dict:
     """종목/지수 하나의 최근 시세를 가져와 카드에 필요한 형태로 정리합니다."""
-    end = dt.date.today()
+    end = _kst_today()
     # 최근 3개월 이력(history)까지 한 번에 받습니다 — 본문 기간 차트용(2026-09-08).
     start = end - dt.timedelta(days=price_history.CALENDAR_DAYS)
 
@@ -784,10 +847,11 @@ def fetch_all() -> dict:
             if ticker in _NAVER_INDEX_CODES:
                 entry = _apply_final_index_quote(
                     _fetch_index(**row), ticker, index_quotes.get(_NAVER_INDEX_CODES[ticker]),
-                    prior=_latest_committed_index(ticker, dt.date.today().isoformat()),
+                    prior=_latest_committed_index(ticker, _kst_today().isoformat()),
                 )
             else:
-                entry = _fetch_one(**row)
+                # FinanceDataReader(네이버 통합 일봉)로 되돌아가지 않는다(2026-10-06, 감사 F-155) — 모르는 지표는 원천을 정한 뒤에 넣는다
+                raise ValueError(f"{ticker}: 원천이 정해지지 않은 한국장 지표입니다(설정에 KS11·KQ11·USD/KRW만 있어야 한다)")
             macro[ticker] = entry
         except Exception as exc:  # noqa: BLE001 — 센다: 아래에서 모아 멈춘다(2026-10-05부터 환율도 빼지 않는다)
             if ticker in _REQUIRED:
@@ -823,8 +887,40 @@ def fetch_all() -> dict:
     # 오늘 값은 KRX 정규장 확정 종가 — 네이버 사진과 다음, 두 원천이 같아야 쓴다(2026-10-05).
     watchlist = _apply_krx_closes(watchlist, trading_date, prev_day)
     fetch_foreign_flows.attach_foreign_flows(watchlist, trading_date)
+    attach_index_flows(macro, trading_date)
     return {"macro": macro, "watchlist": watchlist, "trading_date": trading_date,
             "missing": []}
+
+
+def attach_index_flows(macro: dict, trading_date: str) -> None:
+    """코스피·코스닥 투자자별 순매수(억 원, 잠정)를 지수 항목에 붙인다(2026-10-06, 감사 F-038).
+
+    전에는 원고가 언론의 장 마감 직후 잠정치를 옮겨 적고 아무것도 대조하지 않았다. 네이버 지수 수급(trend)은 수집 시각(16:20)의
+    잠정값이라 저녁에 조금 바뀔 수 있다 — `provisional`과 받은 시각을 함께 적는다. 날짜가 그날이 아니면 붙이지 않는다(장 전 값)."""
+    for ticker, market in (("KS11", "KOSPI"), ("KQ11", "KOSDAQ")):
+        if ticker not in macro:
+            continue
+        try:
+            body = requests.get(f"https://m.stock.naver.com/api/index/{market}/trend", headers=_NAVER_HEADERS,
+                                timeout=_NAVER_TIMEOUT_SECONDS).json()
+        except (requests.RequestException, ValueError) as exc:
+            print(f"[경고] {market} 투자자별 수급을 받지 못했습니다 — {exc}")
+            continue
+        biz = str(body.get("bizdate") or "")
+        if f"{biz[:4]}-{biz[4:6]}-{biz[6:]}" != trading_date:
+            print(f"[경고] {market} 투자자별 수급 날짜({biz})가 거래일({trading_date})이 아니라 붙이지 않습니다")
+            continue
+
+        def eok(key: str) -> float | None:
+            raw = str(body.get(key) or "").replace(",", "").replace("+", "").strip()
+            try:
+                return float(raw)
+            except ValueError:
+                return None
+        macro[ticker]["investor_flows"] = {
+            "date": trading_date, "individual_eok": eok("personalValue"), "foreign_eok": eok("foreignValue"),
+            "institution_eok": eok("institutionalValue"), "provisional": True,
+            "fetched_at": dt.datetime.now(KST).strftime("%H:%M"), "source": "Naver Finance index investor trend"}
 
 
 _YAHOO_SUFFIX = {"KOSPI": ".KS", "KOSDAQ": ".KQ"}

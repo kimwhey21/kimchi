@@ -167,6 +167,9 @@ jobs:
         # 시세 커밋은 막지 않는다.
         if: ${{ success() && steps.market.outputs.market == 'us' }}
         run: python -m scripts.fill_kr_flows || echo "::warning::한국장 수급 채우기 실패 — 다음 아침에 다시 시도합니다"
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}
 
       - name: 시세 파일 커밋
         id: commit
@@ -197,7 +200,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/
-          git commit -m "시세 데이터: ${{ steps.market.outputs.market }} $(date -u +%Y-%m-%d)"
+          # 메시지에는 실제로 바뀐 거래일 파일을 적는다(감사 F-138: UTC 실행일이 적혀 전날 한국장 수급 채움이 미국장 커밋에 숨었다)
+          CHANGED=$(git diff --cached --name-only -- data/ | sed -nE 's#^data/(price|engines)_([a-z]+)_([0-9-]+)\.(json|txt)$#\2 \3#p' | sort -u | tr '\n' ',' | sed 's/,$//; s/,/, /g')
+          git commit -m "시세 데이터: ${CHANGED:-${{ steps.market.outputs.market }} $(date -u +%Y-%m-%d)}"
 
           # push가 거절되면 최신 main을 다시 읽고 rebase한 뒤 다시 시도합니다.
           # 동시 실행은 concurrency로 막았지만, 루틴이 원고를 push하는 것과

@@ -44,6 +44,8 @@ from src.stock_db import KRX_HOLIDAYS, KRX_HOLIDAYS_CONFIRMED, KRX_LATE_CLOSE, K
 # 뉴욕증시 휴장일 — python-holidays 0.105 `financial_holidays("NYSE")`와 같다(2026-10-05; 2026-09-07 노동절엔 실제로 미국장 시세 파일이 없다).
 # 미국 휴장일에는 미국장 시세·시황(다음 날 아침)과 프리뷰(그날 밤)를 기대하지 않는다. 해가 바뀌기 전에 다음 해를 더한다.
 US_HOLIDAYS = {
+    # 2026년 앞부분(1~9월)은 지난 날이지만 전 거래일 계산(fetch_us.previous_us_session)이 쓰므로 함께 둔다(2026-10-06)
+    "2026-01-01", "2026-01-19", "2026-02-16", "2026-04-03", "2026-05-25", "2026-06-19", "2026-07-03", "2026-09-07",
     "2026-11-26", "2026-12-25",
     "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31", "2027-06-18", "2027-07-05",
     "2027-09-06", "2027-11-25", "2027-12-24",
@@ -79,6 +81,9 @@ def calendar_issues(today: dt.date) -> list[str]:
             out.append(f"달력: 한국거래소 {nxt}년 휴장일(계산값)을 거래소 공고와 대조하고 KRX_HOLIDAYS_CONFIRMED에 더하십시오")
         if not any(d.startswith(nxt) for d in US_HOLIDAYS):
             out.append(f"달력: 뉴욕증시 {nxt}년 휴장일이 daily_proof.US_HOLIDAYS에 없습니다")
+        from src.fetch_us import US_BOND_HOLIDAYS
+        if not any(d.startswith(nxt) for d in US_BOND_HOLIDAYS):
+            out.append(f"달력: 미국 채권만 쉬는 {nxt}년 날(SIFMA — 콜럼버스 데이·재향군인의 날)이 fetch_us.US_BOND_HOLIDAYS에 없습니다")
     this_year = [d for d in KRX_LATE_CLOSE if d.startswith(str(today.year))]
     if today.month >= 7 and not this_year:
         out.append(f"달력: {today.year}년 수능일이 stock_db.KRX_LATE_CLOSE에 없습니다 — 그날 장이 16:30에 닫힙니다(평가원 발표 확인)")

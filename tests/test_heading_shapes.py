@@ -25,10 +25,10 @@ class HeadlineShapeTest(unittest.TestCase):
         for h in ("예상을 넘고도 하락한 브로드컴", "금리 기대가 낮아지자 오른 코인베이스",
                   "좋은 소식에도 5.81% 하락한 팔란티어"):
             self.assertTrue(any("헤드라인 꼴" in i for i in _issues(h)), h)
-        # 설정에 없는 이름(스노우플레이크)이나 보통 명사(고용)로 끝나면 막지 않고 알려만 준다
+        # 설정에 없는 이름(데이터독)이나 보통 명사(고용)로 끝나면 막지 않고 알려만 준다
         notes: list[str] = []
         self.assertEqual(editorial_title.collect_heading_issues(
-            [{"heading": "가속으로 답한 스노우플레이크"}, {"heading": "예상치의 3배…너무 강했던 고용"}],
+            [{"heading": "가속으로 답한 데이터독"}, {"heading": "예상치의 3배…너무 강했던 고용"}],
             notes_out=notes), [])
         self.assertEqual(len(notes), 2, notes)
 

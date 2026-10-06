@@ -1,5 +1,7 @@
-yfinance>=0.2.40
-finance-datareader>=0.9.50
+# 시세 원천 라이브러리는 판본을 고정한다(2026-10-06, 감사 F-092) — 매 실행 최신판을 깔면 값이 바뀌어도 모른다.
+# 올릴 때는 지난 시세 파일에 다시 돌려 같은 값이 나오는지 보고 올린다. 1.7.0 = 10/6까지 Actions가 깔던 판본.
+yfinance==1.7.0
+finance-datareader==0.9.202
 PyYAML>=6.0
 Jinja2>=3.1
 requests>=2.31.0

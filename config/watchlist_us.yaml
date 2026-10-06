@@ -56,6 +56,16 @@ dynamic:
 # 쓰고 로그에 안내가 출력되니, 자주 올라오는 이름이 보이면 추가하세요.
 name_ko_map:
   Broadcom: 브로드컴
+  # 2026-10-06(감사 F-120): 편입 때 영문 이름이 한국어 글에 나간 종목
+  Warner Bros. Discovery: 워너브러더스디스커버리
+  Strategy: 스트래티지
+  Bloom Energy: 블룸에너지
+  Lumentum: 루멘텀
+  Lumentum Holdings: 루멘텀
+  Nebius Group: 네비우스
+  CoreWeave: 코어위브
+  MongoDB: 몽고DB
+  Snowflake: 스노우플레이크
   Advanced Micro Devices: AMD
   Dell Technologies: 델 테크놀로지스
   Sandisk Corporation: 샌디스크

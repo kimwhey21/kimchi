@@ -434,7 +434,7 @@ class KrxCloseSnapshotTest(unittest.TestCase):
     def test_live_polling_after_four_is_never_a_close(self) -> None:
         """카카오 9/28 실제 값: 17:40 폴링 34,000은 시간외 단일가 — 창 밖에서는 폴링을 아예 묻지 않는다."""
         from unittest import mock
-        today = fetch_kr.dt.date.today().isoformat()
+        today = "2026-09-28"   # 아래에서 '지금'을 9/28 17:40으로 고정한다 — 오늘 판정도 KST 지금에서 온다(2026-10-06)
         entry = {"ticker": "035720", "name": "카카오", "price": 34000.0, "trading_date": today, "source": "core",
                  "series": [33450.0, 34000.0], "history": {"dates": ["2026-09-23", today], "close": [33450.0, 34000.0]}}
         with mock.patch.object(fetch_kr, "_fetch_naver_item_quotes", side_effect=AssertionError("창 밖 폴링")), \
@@ -575,3 +575,59 @@ class IndexGapFillTest(unittest.TestCase):
 
     def test_equation_must_hold_against_previous_row(self) -> None:
         self.assertIsNone(fetch_kr._fill_gap_from_naver_daily(self.ENTRY, "KOSPI", "2026-09-30", 6838.04, -10.0, self.DAILY))
+
+
+class DaumChainTest(unittest.TestCase):
+    """감사 F-079: 다음 일별 시세의 그날 종가가 KRX 종가와 다른 줄(삼성전기 9/3)."""
+
+    def test_wrong_day_close_is_repaired_by_the_next_base_and_yahoo(self) -> None:
+        from unittest import mock
+        closes = {"2026-09-03": 1349000.0, "2026-09-04": 1400000.0}
+        bases = {"2026-09-04": 1348000.0}
+        with mock.patch("builtins.print"):
+            out = fetch_kr._repair_chain("009150", closes, bases, third=lambda c, d: 1348000.0)
+        self.assertEqual(out["2026-09-03"], 1348000.0)
+
+    def test_real_ex_dividend_gap_is_kept(self) -> None:
+        closes = {"2026-10-01": 1429000.0, "2026-10-02": 1354000.0}
+        bases = {"2026-10-02": 1418000.0}   # 권리락 기준가
+        out = fetch_kr._repair_chain("207940", closes, bases, third=lambda c, d: 1429000.0)
+        self.assertEqual(out["2026-10-01"], 1429000.0)
+
+
+class KrAuditFixesTest(unittest.TestCase):
+    """2026-10-06 감사 F-039·F-097·F-098·F-122·F-124."""
+
+    def test_pick_base_no_longer_trusts_naver_rate(self) -> None:
+        self.assertIsNone(fetch_kr.pick_base(2700, {"naver_snapshot": 2650, "daum": 2660}, rate=1.89))
+
+    def test_snapshot_close_column_fills_codes_missing_from_quotes(self) -> None:
+        import json, tempfile
+        from pathlib import Path
+        d = Path(tempfile.mkdtemp())
+        (d / "krx_close").mkdir()
+        (d / "krx_close" / "2026-10-06.json").write_text(json.dumps(
+            {"quotes": {"005930": {"nv": 1, "sv": 1}}, "close": {"005930": [9, 9], "347700": [12000, 11500]}}), encoding="utf-8")
+        snap = fetch_kr._krx_close_snapshot("2026-10-06", d)
+        self.assertEqual(snap["005930"], {"nv": 1, "sv": 1})            # quotes가 먼저
+        self.assertEqual(snap["347700"], {"nv": 12000, "sv": 11500})
+
+    def test_base_change_is_flagged(self) -> None:
+        entry = {"trading_date": "2026-10-01", "series": [1429000.0],
+                 "history": {"dates": ["2026-10-01"], "close": [1429000.0]}}
+        out = fetch_kr._apply_krx_close(entry, {"close": 1354000.0, "base": 1418000.0, "sources": ["daum", "naver_snapshot"]}, "2026-10-02")
+        self.assertTrue(out["base_adjusted"])
+        self.assertEqual(out["prev_close"], 1429000.0)
+
+
+class MergeTagTest(unittest.TestCase):
+    def test_verification_tag_is_not_added_to_a_different_stored_value(self) -> None:
+        from src import main as main_module
+        old = {"trading_date": "2026-10-02", "macro": {}, "watchlist": {"GC=F": {"price": 4172.1, "change_pct": 0.1}}}
+        new = {"trading_date": "2026-10-02", "macro": {}, "watchlist": {"GC=F": {"price": 4162.3, "change_pct": -0.95,
+                                                                                "close_sources": ["cnbc_settle", "naver"]}}}
+        from unittest import mock
+        with mock.patch("builtins.print"):
+            merged = main_module._merge_price_file(old, new)
+        self.assertNotIn("close_sources", merged["watchlist"]["GC=F"])
+        self.assertEqual(merged["watchlist"]["GC=F"]["price"], 4172.1)

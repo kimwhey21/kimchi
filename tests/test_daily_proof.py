@@ -285,11 +285,14 @@ class OwnerOverrideTest(unittest.TestCase):
                 fetch_kr._resolve_krx_close("005930", "2026-10-06", self.NAVER, self.DAUM)
 
     def test_override_picks_the_named_source_and_tags_it(self) -> None:
-        with mock.patch.dict(os.environ, {"KR_CLOSE_OVERRIDE": "naver_snapshot"}):
+        with mock.patch.dict(os.environ, {"KR_CLOSE_OVERRIDE": "naver_snapshot", "GITHUB_ACTIONS": ""}):   # 깃허브 밖(루틴 샌드박스)에서는 무시
+            with self.assertRaises(ValueError):
+                fetch_kr._resolve_krx_close("005930", "2026-10-06", self.NAVER, self.DAUM)
+        with mock.patch.dict(os.environ, {"KR_CLOSE_OVERRIDE": "naver_snapshot", "GITHUB_ACTIONS": "true"}):
             out = fetch_kr._resolve_krx_close("005930", "2026-10-06", self.NAVER, self.DAUM)
         self.assertEqual(out["close"], 286500.0)
         self.assertEqual(out["sources"], ["naver_snapshot (owner override)"])
-        with mock.patch.dict(os.environ, {"KR_CLOSE_OVERRIDE": "yahoo"}):     # 모르는 이름은 승인이 아니다
+        with mock.patch.dict(os.environ, {"KR_CLOSE_OVERRIDE": "yahoo", "GITHUB_ACTIONS": "true"}):     # 모르는 이름은 승인이 아니다
             with self.assertRaises(ValueError):
                 fetch_kr._resolve_krx_close("005930", "2026-10-06", self.NAVER, self.DAUM)
 

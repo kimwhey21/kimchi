@@ -37,11 +37,14 @@ def _parse_row(row: dict) -> dict:
     biz = str(row.get("bizdate") or "")
     if len(biz) != 8 or not biz.isdigit():
         raise ValueError(f"bizdate가 이상함: {biz!r}")
+    # 칸이 비면 0이 아니라 None — '모름'과 '0주'가 같은 숫자가 되지 않게(2026-10-06, 감사 F-134)
+    blank = lambda v: v is None or str(v).strip() in ("", "-")   # noqa: E731
     return {
         "date": f"{biz[:4]}.{biz[4:6]}.{biz[6:]}",
-        "institution_net": _to_int(row.get("organPureBuyQuant") or 0),
-        "foreign_net": _to_int(row.get("foreignerPureBuyQuant") or 0),
-        "foreign_ratio": float(str(row.get("foreignerHoldRatio") or "0").replace("%", "").replace(",", "") or 0),
+        "institution_net": None if blank(row.get("organPureBuyQuant")) else _to_int(row["organPureBuyQuant"]),
+        "foreign_net": None if blank(row.get("foreignerPureBuyQuant")) else _to_int(row["foreignerPureBuyQuant"]),
+        "foreign_ratio": None if blank(row.get("foreignerHoldRatio"))
+        else float(str(row["foreignerHoldRatio"]).replace("%", "").replace(",", "")),
     }
 
 

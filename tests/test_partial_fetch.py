@@ -306,3 +306,48 @@ class UsSecondSourcesTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class UsAuditFixesTest(unittest.TestCase):
+    """2026-10-06 감사 F-021·F-046·F-061·F-178."""
+
+    def test_stale_entry_stops_the_collection(self) -> None:
+        def fake_one(ticker, name="", **kw):
+            return _entry(ticker, name, "2026-09-03" if ticker == "MU" else "2026-09-04")
+        cfg = UsPartialFetchTest.CONFIG
+        with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
+             mock.patch.object(fetch_us.yaml, "safe_load", return_value=cfg), \
+             mock.patch.object(fetch_us, "second_series", side_effect=lambda t, d: {d: 100.0}), \
+             mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-03": 99.0, "2026-09-04": 100.0}), \
+             mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
+             mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}), mock.patch("builtins.print"):
+            with self.assertRaises(ValueError) as ctx:
+                fetch_us.fetch_all()
+        self.assertIn("기준일이 2026-09-03", str(ctx.exception))
+
+    def test_official_series_missing_the_previous_session_is_not_used(self) -> None:
+        entry = {"name": "다우존스", "price": 51511.59, "change_pct": -0.68, "trading_date": "2026-09-23"}
+        series = {"2026-09-21": 52048.83, "2026-09-23": 51511.59}            # 9/22 줄이 빠졌다
+        problem = fetch_us._check_change("^DJI", entry, series, "2026-09-23")
+        self.assertIn("전 거래일은 2026-09-22", problem)
+        self.assertEqual(entry["change_pct"], -0.68)                        # 이틀치로 덮어쓰지 않는다
+
+    def test_previous_session_skips_weekends_and_holidays(self) -> None:
+        self.assertEqual(fetch_us.previous_us_session("2026-09-08"), "2026-09-04")   # 노동절 월요일 건너뜀
+
+    def test_bond_holiday_keeps_yields_flat(self) -> None:
+        entries = {"^TNX": {"name": "10년물", "price": 5.33, "change_pct": 0.4, "trading_date": "2026-10-12"}}
+        with mock.patch.object(fetch_us, "cboe_closes", return_value={"2026-10-09": 5.31}), mock.patch("builtins.print"):
+            fetch_us._bond_holiday(entries, "2026-10-12")
+        e = entries["^TNX"]
+        self.assertEqual((e["price"], e["change_pct"], e["bond_market_closed"]), (5.31, 0.0, True))
+
+    def test_roll_day_uses_the_change_both_sources_agree_on(self) -> None:
+        """월물 교체기: 전일 값이 달라도 각자 월물 기준 등락률이 같으면 그 등락률을 쓴다(전에는 미국장 전체가 멈췄다)."""
+        entries = {"CL=F": {"name": "WTI", "price": 90.0, "change_pct": 0.0, "trading_date": "2026-10-02",
+                            "series": [88.0, 90.0], "history": {"dates": ["2026-10-01", "2026-10-02"], "close": [88.0, 90.0]}}}
+        naver = {"2026-10-01": 89.0, "2026-10-02": 91.0227}   # 다른 월물이지만 등락률은 같다(+2.27%)
+        with mock.patch.object(fetch_us, "naver_future_closes", return_value=naver), \
+                mock.patch.object(fetch_us, "cnbc_settle", return_value=("2026-10-02", 90.0)), mock.patch("builtins.print"):
+            self.assertEqual(fetch_us._settle_futures(entries), [])
+        self.assertEqual(entries["CL=F"]["change_pct"], 2.27)

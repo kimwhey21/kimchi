@@ -38,7 +38,7 @@ def fill(path: Path, fetch=fetch_foreign_flows.fetch_rows) -> tuple[int, int, in
             kept += 1
             continue
         row = fetch_foreign_flows.row_for(fetch(ticker, MAX_DAYS), trading_date)
-        if not row:
+        if not row or any(row.get(key) is None for key in FIELDS):   # 빈 칸은 채운 것이 아니다(감사 F-134)
             missed += 1
             continue
         for key in FIELDS:
@@ -73,6 +73,9 @@ def main(argv: list[str] | None = None) -> int:
     if total_missed:
         # 조용한 실패 금지 — 못 채운 것은 세어 알린다(그날 줄이 아직 없거나 조회 실패).
         print(f"[안내] 수급을 못 채운 종목 {total_missed}개 — 그날 줄이 아직 없거나 조회에 실패했습니다.", file=sys.stderr)
+        # 깃허브 주석(::warning)만으로는 아무도 못 본다(감사 F-134) — 운영 대화로 알린다
+        from src import alert
+        alert.send(f"한국장 수급 채우기: {targets[-1].name} 등에서 {total_missed}개 종목을 못 채웠습니다(그날 줄이 없거나 조회 실패)", "warn")
     return 0
 
 

@@ -139,6 +139,10 @@ _KEEP_ONCE_WRITTEN = ("price", "change_pct", "series", "history", "trading_date"
 _FILL_IF_EMPTY = ("foreign_net", "institution_net", "foreign_ratio")
 
 
+# 새 수집의 '확인' 꼬리표 — 저장된 옛 숫자에 붙으면 확인하지 않은 값이 확인한 것처럼 보인다(2026-10-06, 감사 F-097)
+_VERIFY_TAGS = {"close_sources", "data_source", "history_source", "prev_close_krx", "base_adjusted", "prev_close", "series", "history"}
+
+
 def _merge_price_file(existing: dict, fresh: dict) -> dict:
     """같은 거래일 파일이 이미 있으면 가격은 그대로 두고 빈 칸만 채운다.
 
@@ -162,8 +166,14 @@ def _merge_price_file(existing: dict, fresh: dict) -> dict:
     for ticker, old in (existing.get("watchlist") or {}).items():
         new = fresh_wl.get(ticker) or {}
         entry = dict(old)                                   # 기존 값은 전부 지킨다
+        same = (old.get("price") is not None and new.get("price") is not None
+                and abs(float(old["price"]) - float(new["price"])) < 0.005
+                and abs(float(old.get("change_pct") or 0) - float(new.get("change_pct") or 0)) < 0.005)
+        if new and not same:
+            print(f"[경고] {ticker}: 이미 있는 파일의 값({old.get('price')}, {old.get('change_pct')}%)과 새로 받은 값({new.get('price')}, "
+                  f"{new.get('change_pct')}%)이 다릅니다 — 저장값을 지키고 새 원천 꼬리표는 붙이지 않습니다")
         for key, value in new.items():
-            if key not in entry:                            # 기존에 없던 칸만 새로 넣는다
+            if key not in entry and (same or key not in _VERIFY_TAGS):   # 기존에 없던 칸만 — 확인 꼬리표는 값이 같을 때만(감사 F-097)
                 entry[key] = value
         for key in _FILL_IF_EMPTY:                          # 수급은 비어 있을 때만 채운다
             if old.get(key) in (None, 0, 0.0, "") and new.get(key) not in (None, ""):
@@ -189,6 +199,8 @@ def _krx_closed_or_say_why(late_close_only: bool, now: dt.datetime | None = None
     from src.stock_db import KRX_HOLIDAYS, KRX_LATE_CLOSE, close_window, krx_hours
     now = now or dt.datetime.now(dt.timezone(dt.timedelta(hours=9)))
     today = now.date()
+    # 휴장일 실행은 막지 않는다(2026-10-06 검토, 감사 F-125): 결과는 무해하고(그날 데이터의 거래일이 전 거래일이라 이미 있는 파일을
+    # 건드리지 않는다), 앞 거래일 수집이 실패한 날 휴장일에 손으로 다시 받는 복구 길이 된다.
     if late_close_only and today.isoformat() not in KRX_LATE_CLOSE:
         print("[안내] 오늘은 정규장이 15:30에 끝나 16:20 실행이 맡습니다 — 마감이 늦은 날(수능일)용 예약이라 아무것도 하지 않습니다.")
         return False
@@ -253,6 +265,14 @@ def run(
 
     if market == "kr" and not _krx_closed_or_say_why(late_close_only):
         return None
+    if market == "us" and fetch_only:
+        # 미국 휴장일 다음 날 아침: 받을 새 거래일이 없다 — 전 거래일 파일이 이미 있으면 수집·대조를 돌리지 않는다(2026-10-06, 감사 F-146:
+        # 전에는 끝까지 돈 뒤에야 '이미 발행됨'으로 건너뛰어, 그사이 대조가 멈추면 발행할 것도 없는데 ❌ 알림이 갔다)
+        from src.check_publication import last_collected_us_day
+        last_day = last_collected_us_day()
+        if (Path(__file__).resolve().parent.parent / "data" / f"price_us_{last_day}.json").exists():
+            print(f"[안내] 미국장 마지막 거래일({last_day}) 시세 파일이 이미 있습니다 — 새로 받을 거래일이 없습니다.")
+            return None
 
     print(f"[1/4] {market} 시세 수집 중...")
     price_data = _fetch_price_data(fetcher, market)

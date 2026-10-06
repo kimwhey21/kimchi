@@ -162,7 +162,7 @@ def clean_us_name(name: str) -> str:
     않습니다. 이름이 통째로 사라지지 않도록 접미사를 떼고도 남는 게 있을
     때만 잘라냅니다.
     """
-    cleaned = name.split(" Class ")[0].strip()
+    cleaned = re.split(r" (?:Class|Series) [A-Z]\b", name)[0].strip()   # 'Series A'도 뗀다(감사 F-120: Liberty … Series A)
     changed = True
     while changed:
         changed = False

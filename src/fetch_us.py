@@ -272,19 +272,30 @@ def _settle_futures(entries: dict[str, dict], trading_date: str | None = None) -
         groups = [[k for k in readings if same(readings[k], v)] for v in readings.values()]
         best = max(groups, key=len)
         if len(best) < 2:
-            problems.append(f"{entry.get('name', ticker)}({ticker}): 확인할 수 없습니다 — " +
-                            ", ".join(f"{k} {v}" for k, v in readings.items()))
+            missing = [k for k in ("naver", "cnbc_settle") if k not in readings]
+            problems.append(f"{entry.get('name', ticker)}({ticker}): {day} 결제가를 확인할 수 없습니다 — " +
+                            ", ".join(f"{k} {v}" for k, v in readings.items()) +
+                            (f" (그날 값이 없는 곳: {', '.join(missing)}" + (f"; CNBC 결제일 {settle[0]}" if settle else "") + ")" if missing else ""))
             continue
         value = readings[best[0]]
         # 등락률은 전일 결제가로 — 네이버 전일 값과 야후 이력의 같은 날 값(야후는 지난날을 결제가로 고쳐 둔다)이 같아야 쓴다
         naver_all = naver_future_closes(ticker)
         prior = [d for d in naver_all if d < day]
         hist = dict(zip((entry.get("history") or {}).get("dates") or [], (entry.get("history") or {}).get("close") or []))
-        if prior and max(prior) in hist and abs(hist[max(prior)] - naver_all[max(prior)]) < 0.006:
-            prev_settle = naver_all[max(prior)]
+        prev_day = max(prior) if prior else None
+        if prev_day and prev_day in hist and abs(hist[prev_day] - naver_all[prev_day]) < 0.006:
+            prev_settle = naver_all[prev_day]
+        elif prev_day and prev_day in hist and day in naver_all and hist[prev_day] and naver_all[prev_day] \
+                and abs((naver_all[day] / naver_all[prev_day] - 1) - (value / hist[prev_day] - 1)) * 100 <= 0.02:
+            # 월물 교체기(2026-10-06, 감사 F-021): 네이버 연결물과 야후가 전일에 다른 월물을 보면 전일 값이 다르다. 두 곳의 '자기 월물 기준
+            # 등락률'이 0.02%p 안으로 같으면 그 등락률을 쓴다 — 전에는 이때마다 미국장 수집 전체가 멈췄다.
+            prev_settle = value / (naver_all[day] / naver_all[prev_day])
+            print(f"[안내] {ticker}: 전일 값이 네이버 {naver_all[prev_day]} / 야후 {hist[prev_day]}로 달라(월물 교체기) 두 곳이 같은 등락률을 씁니다")
         else:
-            problems.append(f"{entry.get('name', ticker)}({ticker}): 전일 결제가를 두 곳에서 확인하지 못했습니다 — 네이버 "
-                            f"{max(prior) if prior else '-'} {naver_all.get(max(prior)) if prior else '-'} / 야후 {hist.get(max(prior)) if prior else '-'}")
+            why = ("네이버 일별에 전일 줄이 없습니다" if not prev_day else
+                   f"야후 이력에 전일({prev_day}) 줄이 없습니다(야후 마지막 {max(hist) if hist else '-'})" if prev_day not in hist else
+                   f"전일({prev_day}) 네이버 {naver_all[prev_day]} / 야후 {hist[prev_day]}가 다르고 등락률도 다릅니다")
+            problems.append(f"{entry.get('name', ticker)}({ticker}): 전일 결제가를 두 곳에서 확인하지 못했습니다 — {why}")
             continue
         if "yahoo" not in best:
             print(f"[안내] {ticker}: 야후 {yahoo}가 결제가가 아니라 {'·'.join(best)} {value}로 바꿉니다")
@@ -365,6 +376,34 @@ def second_close(ticker: str, day: str) -> float | None:
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
 
+# 채권만 쉬는 날(SIFMA 권고, 주식은 연다) — 10년·30년 금리는 그날 새 값이 없다(2026-10-06, 감사 F-178: 야후·Cboe가 전날 값을 그날
+# 줄로 내거나 서로 다른 값을 냈다). 해마다 SIFMA 달력과 대조해 다음 해를 넣는다 — 증명서가 12월에 알린다(daily_proof.calendar_issues).
+US_BOND_HOLIDAYS = {"2026-10-12", "2026-11-11", "2027-10-11", "2027-11-11"}
+_YIELDS = {"^TNX", "^TYX"}
+
+
+def previous_us_session(day: str) -> str:
+    """미국 주식시장의 전 거래일(주말·휴장일을 건너뛴다)."""
+    from src.daily_proof import US_HOLIDAYS
+    d = dt.date.fromisoformat(day) - dt.timedelta(days=1)
+    while d.weekday() >= 5 or d.isoformat() in US_HOLIDAYS:
+        d -= dt.timedelta(days=1)
+    return d.isoformat()
+
+
+def _bond_holiday(entries: dict[str, dict], trading_date: str) -> None:
+    """채권 휴장일: 금리는 전 거래일 공식 종가 그대로·등락 0·표시를 붙인다 — 글이 그날 금리가 움직였다고 쓰지 않게."""
+    for ticker in _YIELDS & set(entries):
+        prev = previous_us_session(trading_date)
+        official = cboe_closes(ticker).get(prev)
+        if official is None:
+            raise ValueError(f"{ticker}: 채권 휴장일({trading_date})인데 전 거래일({prev}) 공식 금리를 받지 못했습니다")
+        entry = entries[ticker]
+        entry.update(price=round(official, 3), change_pct=0.0, trading_date=trading_date, bond_market_closed=True,
+                     close_sources=["cboe", "bond_market_closed"])
+        print(f"[안내] {ticker}: {trading_date}는 채권 휴장일이라 전 거래일({prev}) 공식 금리 {official}를 그대로 둡니다(등락 0)")
+
+
 def _committed_close(ticker: str, day: str) -> float | None:
     """우리가 그날 커밋한 미국장 시세 파일의 값(그날도 두 원천으로 확인된 값)."""
     path = DATA_DIR / f"price_us_{day}.json"
@@ -383,6 +422,11 @@ def _check_change(ticker: str, entry: dict, series: dict[str, float], day: str) 
     if day not in series or not prior_days or entry.get("change_pct") is None:
         return None
     prev_day = max(prior_days)
+    expected = previous_us_session(day)
+    if prev_day != expected:
+        # 공식 이력에 전 거래일 줄이 빠지면 이틀치 등락률을 '공식'이라며 덮어썼다(2026-10-06, 감사 F-061) — 고치지 않고 멈춘다
+        return (f"{entry.get('name', ticker)}({ticker}): 공식 이력의 전일이 {prev_day}인데 전 거래일은 {expected}입니다 — "
+                "등락률을 확인하지 못했습니다")
     official = round((series[day] / series[prev_day] - 1) * 100, 2)
     if abs(official - float(entry["change_pct"])) <= 0.015:
         return None
@@ -462,9 +506,18 @@ def fetch_all() -> dict:
     # 거래일은 필수 지수에서 읽습니다.
     trading_date = required_trading_date(macro)
     watchlist.update(_fetch_dynamic_tier(config, watchlist, trading_date))
+    bond_closed = trading_date in US_BOND_HOLIDAYS
+    if bond_closed:
+        _bond_holiday(macro, trading_date)
     problems = _settle_futures(macro, trading_date) + _settle_futures(watchlist, trading_date)
-    problems += _verify_second_source({t: e for t, e in macro.items() if t not in _FUTURES}) + \
-        _verify_second_source({t: e for t, e in watchlist.items() if t not in _FUTURES})
+    # 항목마다 기준일이 그날이어야 한다(2026-10-06, 감사 F-046) — 전에는 한 항목이 전날 값이어도 그 전날로 두 번째 원천과 맞춰 통과했다
+    for group in (macro, watchlist):
+        for t, e in group.items():
+            if str(e.get("trading_date")) != trading_date:
+                problems.append(f"{e.get('name', t)}({t}): 기준일이 {e.get('trading_date')}로 그날({trading_date})이 아닙니다")
+    skip = set(_FUTURES) | (_YIELDS if bond_closed else set())
+    problems += _verify_second_source({t: e for t, e in macro.items() if t not in skip}) + \
+        _verify_second_source({t: e for t, e in watchlist.items() if t not in skip})
     # 몇 개를 실제로 대조했는지 찍는다 — 나스닥이 러너를 막으면 전부 '야후 하나'로 조용히 넘어가 대조가 장식이 된다(2026-10-05)
     both = {**macro, **watchlist}
     checked = [t for t, e in both.items() if len(e.get("close_sources") or []) > 1]
@@ -502,7 +555,9 @@ def _fetch_dynamic_tier(
             time.sleep(delay)
         try:
             movers = fetch_movers.fetch_top_dollar_volume_us(
-                exclude_tickers=set(core),
+                # 같은 회사의 다른 주식(GOOG ↔ GOOGL, BRK-A ↔ BRK-B)도 뺀다 — 코어 알파벳 옆에 편입 카드가 또 나왔다(감사 F-120)
+                exclude_tickers=set(core) | {o for pair in ({"GOOG", "GOOGL"}, {"BRK-A", "BRK-B"}, {"FOX", "FOXA"}, {"NWS", "NWSA"})
+                                             if pair & set(core) for o in pair},
                 count=settings.get("count", 6),
                 min_market_cap=settings.get("min_market_cap", 10_000_000_000),
                 # 스크리너가 당일 데이터로 갱신됐는지 로그로 확인하려고 넘깁니다.
