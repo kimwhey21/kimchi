@@ -96,7 +96,8 @@ jobs:
              [ "${{ github.event.inputs.publish_live }}" = "true" ]; then
             ARGS="$ARGS --publish-live"
           fi
-          python -m src.publish_editorial $ARGS
+          set -o pipefail
+          python -m src.publish_editorial $ARGS 2>&1 | tee "$RUNNER_TEMP/publish.log"
         env:
           WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
           WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
@@ -111,6 +112,14 @@ jobs:
           # 보지 않고 붙는 유일한 사진이었고 실제로 로고가 나갔습니다. 이제 인사이트
           # 사진은 루틴이 직접 보고 고른 것(원고의 image.url) 아니면 사람이 미리
           # 승인한 풀(config/photo_pool.yaml)에서만 옵니다 — 둘 다 키가 필요 없습니다.
+
+      - name: 발행 경고 모아 알리기
+        # 그림을 못 그려 빼고 발행한 것 같은 '[경고]' 줄은 실행 기록에만 남았다(감사 F-110) — 운영 대화로 보낸다
+        if: always()
+        run: python -m scripts.collect_warnings "$RUNNER_TEMP/publish.log" publish || echo "::warning::경고 알림을 보내지 못했습니다"
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ vars.TELEGRAM_ADMIN_CHAT_ID }}
 
       - name: 벤치마크 대조 (보고만)
         # 검사가 통과했다는 것은 "encode한 규칙을 어기지 않았다"는 뜻이지

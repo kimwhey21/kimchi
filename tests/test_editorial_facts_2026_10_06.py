@@ -122,3 +122,14 @@ class DisplayTest(unittest.TestCase):
         self.assertEqual((stock["price"], stock["change_label"]), ("276,000", "0.00%"))
         fx = render_html._to_card(KR["price_data"]["macro"]["USD/KRW"], "en")
         self.assertEqual(fx["price"], "1,347.0 KRW")
+
+
+class PreviewPointerTest(unittest.TestCase):
+    def test_pointer_to_an_old_us_file_is_refused(self) -> None:
+        doc = {"date": "2026-10-06", "graphics": [{"kind": "number_cards", "price_file": "data/price_us_2026-10-01.json"}]}
+        with self.assertRaises(ValueError):
+            ef.preview_price_files(doc)
+
+    def test_pointer_to_the_latest_file_passes(self) -> None:
+        doc = {"date": "2026-10-06", "graphics": [{"kind": "number_cards", "price_file": "data/price_us_2026-10-05.json"}]}
+        self.assertEqual(ef.preview_price_files(doc)["us"].name, "price_us_2026-10-05.json")

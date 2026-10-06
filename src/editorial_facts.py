@@ -656,6 +656,14 @@ def preview_price_files(doc: dict, root: Path = ROOT) -> dict[str, Path | None]:
             )
         if dates:
             files[market] = root / "data" / f"price_{market}_{next(iter(dates))}.json"
+            # 가리킨 파일이 그날 기준 가장 최근 파일이어야 한다(2026-10-06, 감사 F-129: 포인터를 그대로 믿어 옛 파일과 대조해도 통과했다).
+            # 미국장은 원고 날짜 전의 마지막 파일, 한국장은 원고 날짜까지의 마지막 파일(휴장이면 전 거래일 파일이 맞다).
+            limit = f"price_{market}_{date_str}"
+            pool = sorted(q.stem for q in (root / "data").glob(f"price_{market}_*.json")
+                          if date_str and (q.stem < limit if market == "us" else q.stem <= limit))
+            if date_str and pool and files[market].stem != pool[-1]:
+                raise ValueError(f"프리뷰가 가리킨 {market} 시세 파일({files[market].name})이 {date_str} 기준 가장 최근 파일({pool[-1]}.json)이 "
+                                 "아닙니다 — 옛 시세와 대조하면 틀린 숫자도 통과합니다.")
             continue
         if market == "kr":
             candidate = root / "data" / f"price_kr_{date_str}.json"

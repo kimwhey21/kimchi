@@ -225,10 +225,14 @@ class PreviewEntryPointTest(unittest.TestCase):
 
     # --- 파일 찾기 ---
     def test_files_come_from_graphics_first(self) -> None:
-        doc = self._doc("", graphics=[{"kind": "number_cards", "price_file": "data/price_us_2026-09-15.json"},
+        doc = self._doc("", graphics=[{"kind": "number_cards", "price_file": "data/price_us_2026-09-16.json"},
                                       {"kind": "price_history", "price_file": "data/price_kr_2026-09-17.json"}])
         files = preview_price_files(doc, root=self.root)
-        self.assertEqual(files["us"].name, "price_us_2026-09-15.json")
+        self.assertEqual(files["us"].name, "price_us_2026-09-16.json")
+        # 2026-10-06(감사 F-129): 가장 최근이 아닌 옛 파일(9/15)을 가리키면 막는다
+        old = self._doc("", graphics=[{"kind": "number_cards", "price_file": "data/price_us_2026-09-15.json"}])
+        with self.assertRaises(ValueError):
+            preview_price_files(old, root=self.root)
         self.assertEqual(files["kr"].name, "price_kr_2026-09-17.json")
 
     def test_files_fall_back_to_the_date_rule(self) -> None:

@@ -38,3 +38,9 @@ class CollectWarningsTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PublishModeTest(unittest.TestCase):
+    def test_publish_log_reports_only_its_own_warnings(self) -> None:
+        text = cw.compose("publish", ["[경고] 본문 그래픽 생략 — movers_list: ValueError()"], "", [])
+        self.assertIn("시황 발행 경고 1줄", text)

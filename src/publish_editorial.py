@@ -377,9 +377,11 @@ def _attach_section_graphics(doc_section: list, price_data: dict, market: str,
                 section["graphic"] = {"url": url, "alt": spec.get("title", ""), "kind": kind}
                 print(f"[안내] 본문 그래픽: {kind} -> {url}")
             else:
+                print(f"[경고] 본문 그래픽 업로드 실패 — {kind}: 그림을 빼고 발행합니다")
                 section.pop("graphic", None)
         except Exception as exc:  # noqa: BLE001
-            print(f"[안내] 본문 그래픽 생략 — {kind}: {exc!r}")
+            # 관문 뒤의 실패는 아무도 모른다(감사 F-110) — '[경고]'로 찍어 발행 워크플로가 운영 대화로 보낸다
+            print(f"[경고] 본문 그래픽 생략 — {kind}: {exc!r}")
             section.pop("graphic", None)
 
 

@@ -37,7 +37,8 @@ def compose(market: str, log_lines: list[str], engine_file: str, engine_lines: l
     parts = []
     if log_lines:
         cleaned = [re.sub(r"^\[경고\]\s*", "", l)[:220] for l in log_lines[:15]]   # f-문자열 안에 역슬래시를 넣으면 파이썬 3.11이 못 읽는다
-        parts.append(f"{market} 시세 수집 경고 {len(log_lines)}줄:\n" + "\n".join(f"- {c}" for c in cleaned))
+        label = "시황 발행" if market == "publish" else f"{market} 시세 수집"
+        parts.append(f"{label} 경고 {len(log_lines)}줄:\n" + "\n".join(f"- {c}" for c in cleaned))
     if engine_lines:
         parts.append(f"재료 엔진 실패 {len(engine_lines)}줄({engine_file}):\n" + "\n".join(f"- {l[:220]}" for l in engine_lines[:15]))
     return "\n\n".join(parts)
@@ -46,13 +47,14 @@ def compose(market: str, log_lines: list[str], engine_file: str, engine_lines: l
 def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
     if len(argv) != 2:
-        print("쓰는 법: python -m scripts.collect_warnings <수집 기록 파일> <kr|us>")
+        print("쓰는 법: python -m scripts.collect_warnings <기록 파일> <kr|us|publish>")
         return 2
     log_path, market = Path(argv[0]), argv[1]
     text = log_path.read_text(encoding="utf-8", errors="replace") if log_path.exists() else ""
     if not text:
         print(f"[경고] 수집 기록 {log_path}이 비어 있습니다 — 경고를 모을 수 없습니다")
-    engine_file, engine_lines = engine_failures(market)
+    # 'publish'는 시황 발행 기록(2026-10-06, 감사 F-110: 그림을 못 그리면 빼고 지나갔다) — 엔진 파일은 보지 않는다
+    engine_file, engine_lines = ("", []) if market == "publish" else engine_failures(market)
     message = compose(market, warnings_from_log(text), engine_file, engine_lines)
     if not message:
         print("모을 경고가 없습니다")
