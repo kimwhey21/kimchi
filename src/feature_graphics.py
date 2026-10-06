@@ -101,7 +101,8 @@ def gap_bars(rows: list[dict], output_path: Path,
         left = int(span * abs(row["down_pct"]) / scale)
         right = int(span * abs(row["upside_pct"]) / scale)
         draw.rectangle([center - left, y + 6, center, y + 38], fill=DOWN)
-        draw.rectangle([center, y + 6, center + right, y + 38], fill=UP)
+        right_color = UP if row["upside_pct"] >= 0 else DOWN   # 목표가가 주가보다 낮으면(음수) 오름색으로 그리지 않는다
+        draw.rectangle([center, y + 6, center + right, y + 38], fill=right_color)
         left_text = f"{row['down_pct']:.1f}{unit}"
         right_text = f"{signed(row['upside_pct'], 1)}{unit}"   # 전에는 '+'를 고정으로 붙여 음수면 '+-5.0'이 됐다(감사 F-132)
         left_width = draw.textlength(left_text, font=korean_font(18, bold=True))
@@ -116,7 +117,7 @@ def gap_bars(rows: list[dict], output_path: Path,
             left_fill = PANEL
         draw.text((left_x, y + 10), left_text, font=korean_font(18, bold=True), fill=left_fill)
         draw.text((center + right + 14, y + 10), right_text,
-                  font=korean_font(18, bold=True), fill=UP)
+                  font=korean_font(18, bold=True), fill=right_color)
         y += 82
 
     draw.text((60, height - 64), legend, font=korean_font(15), fill=SUB)
@@ -373,7 +374,7 @@ def sector_breadth(rows: list[dict], output_path: Path,
         else:
             draw.rectangle([center - length, y + 4, center, y + 30], fill=color)
             label_x = center + 12
-        draw.text((label_x, y + 6), f"{row['change_pct']:+.2f}%",
+        draw.text((label_x, y + 6), f"{signed(row['change_pct'], 2)}%",
                   font=korean_font(18, bold=True), fill=color)
         breadth = f"{row['stocks']}종목 중 상승 {row['up']} · 하락 {row['down']}"
         draw.text((60, y + 32), breadth, font=korean_font(14), fill=SUB)
