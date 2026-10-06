@@ -116,7 +116,8 @@ def attach_foreign_flows(watchlist: dict, trading_date: str | None = None) -> di
     if watchlist and not got:
         if stale:
             # 조용한 실패 금지(2026-09-18): "수집이 죽었다"와 "아직 전날 값만 있다"는 다른 문제다.
-            print(f"[경고] 외국인·기관 수급이 전부 전 거래일 값입니다({stale}/{len(watchlist)}종목) "
+            # 마감 직후에는 늘 이렇다 — 정상이라 '[안내]'(2026-10-06: '[경고]'면 운영 대화로 매일 같은 알림이 갔다)
+            print(f"[안내] 외국인·기관 수급이 전부 전 거래일 값입니다({stale}/{len(watchlist)}종목) "
                   "— 네이버가 아직 오늘 행을 안 올렸습니다. 다음 날 아침 미국장 수집이 채웁니다"
                   "(scripts/fill_kr_flows.py). 오늘 원고는 전 거래일 파일의 확정 수급을 '어제'로 쓰세요.", file=sys.stderr)
         else:
