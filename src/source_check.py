@@ -110,11 +110,17 @@ def collect(doc: dict) -> dict:
             found["목록에만 있고 본문에 없는 출처"] = missing
         return {"found": found, "distinct": len(hits)}
     if str(doc.get("lang") or "ko") == "en":
-        hits = sorted({name for name in EN_SOURCES
-                       if re.search(r"(?<![A-Za-z])" + re.escape(name) + r"(?![A-Za-z])", text)})
-        if hits:
-            found["sources"] = hits
-        return {"found": found, "distinct": len(hits)}
+        # 영어 가이드는 원고의 `sources`(주소가 있는 것)를 **서로 다른 사이트 수**로 센다(2026-10-06, 감사 F-175). 전에는 본문에 기관 이름이
+        # 나오기만 하면 셌다 — 출처 목록이 빈 가이드 4편이 통과했고, ETF 가이드는 지수 이름(MSCI·FTSE Russell)이 '출처'가 됐다.
+        from urllib.parse import urlparse
+        domains = sorted({urlparse(str(x.get("url"))).netloc.lower().removeprefix("www.")
+                          for x in (doc.get("sources") or []) if isinstance(x, dict) and str(x.get("url") or "").startswith("http")})
+        if domains:
+            found["sources"] = domains
+        named = sorted({name for name in EN_SOURCES if re.search(r"(?<![A-Za-z])" + re.escape(name) + r"(?![A-Za-z])", text)})
+        if named:
+            found["본문에 이름이 나온 기관(세지 않음)"] = named
+        return {"found": found, "distinct": len(domains)}
     for label, names in (("증권사", INSTITUTIONS), ("리서치", RESEARCH),
                          ("언론", MEDIA), ("공공·시장", OFFICIAL)):
         hits = sorted({name for name in names if name in text})

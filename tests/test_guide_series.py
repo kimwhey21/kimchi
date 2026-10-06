@@ -28,6 +28,9 @@ def _en_doc(**over) -> dict:
             "closing": {"heading": "The takeaway", "body": "Check the expense ratio before you buy."},
         },
         "graphics": [],
+        "sources": [{"name": "Korea Exchange", "url": "https://global.krx.co.kr/"},
+                    {"name": "PwC", "url": "https://taxsummaries.pwc.com/republic-of-korea"},
+                    {"name": "MSCI", "url": "https://www.msci.com/indexes"}],
     }
     doc.update(over)
     return doc
@@ -72,7 +75,7 @@ class EnglishGateTest(unittest.TestCase):
     def test_english_guide_passes_without_korean_checks(self) -> None:
         result = feature_gate.run(_en_doc(), graphics=2)
         self.assertEqual(result["blocking"], [])
-        self.assertEqual(result["sources"]["distinct"], 3)   # Korea Exchange · PwC · MSCI
+        self.assertEqual(result["sources"]["distinct"], 3)   # 주소가 있는 출처의 사이트 셋(2026-10-06부터 본문 이름이 아니라 주소로 센다)
 
     def test_english_guide_is_blocked_on_short_title_missing_year_or_hangul(self) -> None:
         doc = _en_doc()
@@ -87,9 +90,7 @@ class EnglishGateTest(unittest.TestCase):
         self.assertIn("Hangul", message)
 
     def test_english_guide_needs_two_named_sources(self) -> None:
-        doc = _en_doc()
-        for section in doc["ko"]["narrative"]:
-            section["body"] = section["body"].replace("The Korea Exchange", "The exchange").replace("PwC and MSCI", "everyone")
+        doc = _en_doc(sources=[{"name": "Korea Exchange", "url": "https://global.krx.co.kr/"}, {"name": "PwC"}])   # 주소 있는 곳이 하나뿐
         with self.assertRaises(feature_gate.FeatureGateError):
             feature_gate.run(doc, graphics=2)
 

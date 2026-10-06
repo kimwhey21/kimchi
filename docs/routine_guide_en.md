@@ -220,7 +220,7 @@ KEPCO 기사가 난 날에 쓴다고 더 오르지 않습니다.
    - `ko.narrative` 5~7절(절당 글자 하한 없음 — 2026-10-05). 1절이 답. 소제목 80자 이하, 문장형 소제목 환영
      (`The cost most people miss: Korea taxes the sale, not the profit`).
    - `ko.closing`: heading `The takeaway`, 두세 문단. 마지막 문단에 "not tax/investment advice" 한 줄.
-   - `sources`: 본문에 이름을 댄 곳을 **주소까지**. 이제 글 아래 `How we checked`에 링크로 실립니다
+   - `sources`: 본문에 이름을 댄 곳을 **주소까지**. 관문은 주소가 있는 출처를 **서로 다른 사이트 수**로 셉니다(최소 2곳, 2026-10-06) — 본문에 기관 이름만 나오는 것은 세지 않습니다. 이제 글 아래 `How we checked`에 링크로 실립니다
      (2026-09-15) — 그전에는 `source_check`가 개수만 세고 독자에게는 안 보였습니다.
    - **`What we could and could not verify` 절을 하나 넣습니다**(2026-09-15). 우리가 실제로 연 페이지
      (브로커의 공개 요금표·KRX·FSC 고시)에서 **본 그대로** 적고, 확인 못 한 항목은 확인 못 했다고 적습니다.
