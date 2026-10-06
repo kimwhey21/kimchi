@@ -116,6 +116,30 @@ def send(text: str, image_url: str | None = None) -> dict:
 
 
 
+SENT_LEDGER = Path(os.environ.get("TELEGRAM_SENT_LEDGER") or (Path.home() / ".market-brief-state" / "telegram_sent.json"))
+
+
+def sent_key(doc: dict, title: str) -> str:
+    """한 글의 열쇠 — 시리즈(또는 시장)·날짜·slug(없으면 제목). 통로(네이버·블로그스팟)가 달라도 같은 글이면 같다."""
+    return "|".join(str(x) for x in (doc.get("series") or doc.get("market") or "", doc.get("date") or "", doc.get("slug") or title))
+
+
+def _load_sent() -> dict:
+    try:
+        return json.loads(SENT_LEDGER.read_text(encoding="utf-8")) if SENT_LEDGER.exists() else {}
+    except (OSError, ValueError) as exc:
+        print(f"[텔레그램] 보낸 기록을 읽지 못했습니다 — {exc}")
+        return {}
+
+
+def _save_sent(ledger: dict) -> None:
+    try:
+        SENT_LEDGER.parent.mkdir(parents=True, exist_ok=True)
+        SENT_LEDGER.write_text(json.dumps(ledger, ensure_ascii=False, indent=1), encoding="utf-8")
+    except OSError as exc:
+        print(f"[텔레그램] 보낸 기록을 쓰지 못했습니다 — {exc}")
+
+
 def notify_naver(doc: dict, title: str, link: str, image_url: str | None = None) -> bool:
     """워드프레스에 쌍둥이가 없는 글(한국어 시황·잡지)을 네이버 주소로 알린다 (2026-09-15).
 
@@ -128,6 +152,11 @@ def notify_naver(doc: dict, title: str, link: str, image_url: str | None = None)
     if not configured():
         print("[텔레그램] 설정 없음 — 알림을 건너뜁니다")
         return False
+    key = sent_key(doc, title)
+    ledger = _load_sent()
+    if key in ledger:   # 같은 글을 두 번 보내지 않는다 — 네이버·블로그스팟 두 통로가 같은 글을 알린 적이 네 번 있다(감사 F-169)
+        print(f"[텔레그램] 이미 보낸 글이라 건너뜀({ledger[key]}): {title}")
+        return False
     try:
         text = compose(doc, f"{label(doc)} · {title}" if label(doc) not in title else title, link)
         result = send(text, image_url)
@@ -135,6 +164,8 @@ def notify_naver(doc: dict, title: str, link: str, image_url: str | None = None)
             print(f"[텔레그램 실패] {result.get('description')}")
             return False
         print(f"[텔레그램] 채널에 올림: {link}")
+        ledger[key] = link
+        _save_sent(ledger)
         return True
     except Exception as error:   # noqa: BLE001 — 알림 실패가 발행을 실패시키면 안 된다
         print(f"[텔레그램 실패] {error}")

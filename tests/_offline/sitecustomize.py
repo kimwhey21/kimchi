@@ -16,3 +16,9 @@ def _guarded_connect(self, address):
 
 
 socket.socket.connect = _guarded_connect
+
+# 텔레그램 '보낸 기록'(notify_telegram.SENT_LEDGER)을 시험이 이 맥의 실제 기록에 쓰지 않게 — 실행마다 새 임시 파일
+import os as _os
+import tempfile as _tempfile
+
+_os.environ.setdefault("TELEGRAM_SENT_LEDGER", _os.path.join(_tempfile.mkdtemp(prefix="tg_sent_"), "sent.json"))

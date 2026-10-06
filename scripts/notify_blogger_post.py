@@ -33,7 +33,7 @@ BLOGSPOT = "https://fermata49.blogspot.com/"
 FRESH_DAYS = 1
 
 
-def skip_reason(path: Path, doc: dict, link: str, today: dt.date) -> str:
+def skip_reason(path: Path, doc: dict, link: str, today: dt.date, now: "dt.datetime | None" = None) -> str:
     if not link.startswith(BLOGSPOT):
         return f"블로그스팟 주소가 아닙니다({link!r})"
     if doc.get("series") == "매거진" or "/magazine/" in str(path):
@@ -48,6 +48,16 @@ def skip_reason(path: Path, doc: dict, link: str, today: dt.date) -> str:
         return f"원고 날짜를 읽지 못했습니다({doc.get('date')!r})"
     if age > FRESH_DAYS:
         return f"밀린 원고({doc.get('date')})"
+    if doc.get("series") == "프리뷰" and now is not None:
+        # '오늘 밤 미국장 프리뷰'가 미국장이 열린 뒤에 가면 프리뷰가 아니다(감사 F-170) — 그날 뉴욕 09:30을 넘기면 보내지 않는다
+        from zoneinfo import ZoneInfo
+        try:
+            day = dt.date.fromisoformat(str(doc.get("date")))
+        except ValueError:
+            return ""
+        opening = dt.datetime.combine(day, dt.time(9, 30), tzinfo=ZoneInfo("America/New_York"))
+        if now >= opening:
+            return f"미국장이 이미 열렸습니다({opening.astimezone(ZoneInfo('Asia/Seoul')):%H:%M} KST 개장)"
     return ""
 
 
@@ -58,7 +68,8 @@ def main(argv: list[str] | None = None, today: dt.date | None = None) -> int:
         return 0
     path, link = Path(args[0]), args[1]
     doc = json.loads(path.read_text(encoding="utf-8"))
-    reason = skip_reason(path, doc, link, today or dt.date.today())
+    reason = skip_reason(path, doc, link, today or dt.date.today(),
+                         now=None if today else dt.datetime.now(dt.timezone.utc))
     if reason:
         print(f"[알림] 건너뜀 — {reason}: {path.name}")
         return 0
