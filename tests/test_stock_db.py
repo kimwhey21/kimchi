@@ -686,3 +686,12 @@ class DaumHaltedTest(unittest.TestCase):
         row = {"code": "001470", "close": 5820.0, "mcap": 1.0}
         sdb.apply_krx([row], {"001470": rows}, {"2026-10-02": {"001470": [5820, 5820]}})
         self.assertEqual((row["pct"], row["chg"], row["volume"]), (0.0, 0.0, 0.0))
+
+
+class KrxRatiosTest(unittest.TestCase):
+    def test_ratios_are_recomputed_from_the_krx_close(self) -> None:
+        """감사 F-101: 네이버 PER·PBR·배당수익률은 넥스트레이드 합산 가격 기준이었다 — KRX 종가로 다시 계산한다."""
+        detail = {"r": {"per": 12.3, "eps": 22292.0, "pbr": 3.2, "bps": 86052.0, "div_yield": 0.61, "dps": 1668.0}, "hist": {}, "flows": []}
+        rows = [{"d": "2026-10-02", "c": 276000.0}]
+        r = sdb.krx_detail(detail, rows, (89000.0, 380000.0))["r"]
+        self.assertEqual((r["per"], r["pbr"], r["div_yield"], r["high52"]), (12.38, 3.21, 0.6, 380000.0))

@@ -527,10 +527,19 @@ def krx_detail(detail_row: dict, rows: list[dict], range52: tuple[float | None, 
         rows = [r for r in rows if r["d"] >= hist["d"][0]] or rows
     closes = {r["d"]: r["c"] for r in rows}
     out = {**detail_row, "hist": {"d": [r["d"] for r in rows], "c": [r["c"] for r in rows], "fr": [fr.get(r["d"]) for r in rows]}}
+    # 비율을 KRX 종가로 다시 계산한다(2026-10-06, 감사 F-101) — 네이버의 PER·PBR·배당수익률은 넥스트레이드 합산 가격으로 계산돼
+    # 가격 칸(KRX)과 기준이 달랐다. 주당 값(EPS·BPS·DPS)은 가격과 무관하니 그대로 쓴다.
+    close = rows[-1]["c"]
+    r = dict(out.get("r") or detail_row.get("r") or {})
+    for ratio, per_share, scale in (("per", "eps", 1), ("fper", "feps", 1), ("pbr", "bps", 1), ("div_yield", "dps", 100)):
+        value = r.get(per_share)
+        if close and value and value > 0:
+            r[ratio] = round((value / close * scale) if ratio == "div_yield" else close / value, 2)
+    out["r"] = r
     low, high = range52
     if low and high:
         # 다음 52주 값은 분할·권리락을 반영한 수정주가라 소수가 붙는다(삼성바이오로직스 995,279.216) — 원 단위로
-        out["r"] = {**(detail_row.get("r") or {}), "low52": float(round(low)), "high52": float(round(high))}
+        out["r"] = {**out["r"], "low52": float(round(low)), "high52": float(round(high))}
     out["flows"] = [{**f, "close": closes.get(f.get("d"), f.get("close"))} for f in detail_row.get("flows") or []]
     return out
 
