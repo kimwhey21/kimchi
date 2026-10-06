@@ -1102,6 +1102,9 @@ def assemble(listing: list[dict], details: dict[str, dict], meta: dict) -> tuple
             # 네이버 동종 업종에 ETF·목록 밖 종목이 섞여 온다 — 우리 페이지가 없는 코드로 링크하면 404(2026-09-27 전수 점검 9곳)
             data["peers"] = [{"code": p, "name": (meta.get(p) or {}).get("name") or p} for p in data.get("peers", []) if p in listed]
             data["detail_date"] = row.get("date")
+            flow_days = [f.get("d") for f in data.get("flows") or [] if f.get("d")]
+            if flow_days:
+                data["flow_date"] = max(flow_days)   # 수급표의 날짜는 시세 날짜와 다를 수 있다(감사 F-127: 토요일 실행은 하루 뒤처졌다)
         items.append({"code": row["code"], "merge": not full, "data": data})
     index = [[r["code"], display_name(r["code"], r.get("name_ko"), meta), r["market"], r.get("close"), r.get("pct"),
               r.get("mcap")] for r in sorted(listing, key=lambda r: -(r["mcap"] or 0))]
@@ -1255,8 +1258,10 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     session.headers.update(UA)
     try:
         expected = len(requests.get("https://fermata.it.kr/wp-json/fermata/v1/stock-index", headers=UA, timeout=60).json())
-    except (requests.RequestException, ValueError):
-        expected = 2500
+    except (requests.RequestException, ValueError) as exc:
+        # 본진 목록을 못 읽으면 커밋된 메타의 종목 수로(감사 F-135: 2,500으로 내려가 부분 목록 2,500~2,680개가 통과할 수 있었다)
+        expected = len(json.loads(META.read_text(encoding="utf-8"))) if META.exists() else 2500
+        print(f"[경고] 본진 종목 목록을 못 읽어 메타의 종목 수({expected})를 기대값으로 씁니다 — {exc}")
     listing = list_all(session, expected)
     if limit:
         listing = sorted(listing, key=lambda r: -(r["mcap"] or 0))[:limit]
@@ -1317,6 +1322,8 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
             idx["KOSPI"]["foreign_net_eok"], idx["KOSPI"]["flow_date"] = kept, day_now.replace("-", "")
     fx = usdkrw()
     skhy_page = build_skhy(session) if not limit else None
+    if skhy_page is None and not limit and do_push:   # 화면 로그에만 남기면 페이지·홈 칸이 조용히 사라진다(감사 F-103)
+        alert.send("종목 DB: SKHY 프리미엄 표를 만들지 못해 페이지와 홈 칸을 비웁니다 — 실행 기록의 [경고] 줄을 보십시오", "warn")
     last = skhy_page["rows"][-1] if skhy_page else None     # 홈 칸도 페이지와 같은 날짜 짝으로
     skhy = {"usd": last["usd"], "date": last["d"], "premium_pct": round(last["prem"], 1)} if last else None
     items, index, _ = assemble(listing, details, meta)

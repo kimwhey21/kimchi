@@ -242,7 +242,8 @@ function fs_stock_html( $s, $index_by_code, $related = array(), $lists = array()
 	$h .= '</section></div>';
 	$h .= '<div class="fs-cta"><div><b>Want to own ' . fs_esc( $name ) . ' from outside Korea?</b><br><span>Direct KRX access through a global broker, a US-listed ADR where one exists, or a Korea ETF — compared in our guide.</span></div><a class="fs-btn" href="' . $guide . '">Read the guide</a></div>';
 	$h .= '<p class="fs-src">Data: Korea Exchange regular-session closing prices, volume and day’s range via Daum Finance, checked against a Naver Finance snapshot at the close; investor flows, foreign ownership and ratios via Naver Finance; company information from DART (Financial Supervisory Service). Updated after each Korean market close'
-		. ( ! empty( $s['detail_date'] ) ? '; ratios and flows as of ' . fs_date( $s['detail_date'] ) : '' ) . '. Delayed data, not investment advice.</p>';
+		. ( ! empty( $s['detail_date'] ) ? '; ratios as of ' . fs_date( $s['detail_date'] ) : '' )
+		. ( ! empty( $s['flow_date'] ) ? '; investor flows as of ' . fs_date( $s['flow_date'] ) : '' ) . '. Delayed data, not investment advice.</p>';
 	return '<div class="fs-page">' . $h . '</div>';
 }
 
