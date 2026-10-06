@@ -897,3 +897,64 @@ def internal_name_issues(doc: dict) -> list[str]:
         for m in _INTERNAL.finditer(text):
             out.append(f"'{m.group(0)}' — 내부 도구·파일 이름은 본문에 쓰지 않습니다. 원천(야후 파이낸스·EDGAR·한국거래소 등)을 밝히십시오")
     return out
+
+
+# 주간 결산(2026-10-06): 주간 등락률을 `scripts/weekly_stats`와 같은 계산으로 대조한다. 하루 등락·다른 주·장중 숫자는
+# 건너뛴다 — 요일·'하루'·'지난주'·날짜가 창에 있으면 그날·그 주의 숫자다. 업종 평균은 대조하지 않고 이웃 숫자로만
+# 쓴다("자동차(-2.89%, 현대차·기아)와 조선·방산(-0.03%" — 기아에 뒤 업종 숫자가 붙는다). 지난 네 편에 돌려 0건.
+_OTHER_DAY_WEEK = re.compile(
+    r"(어제|전날|하루|당일|월요일|화요일|수요일|목요일|금요일|첫날|마지막 날|장중|지난주|전주|직전|이틀|사흘|\d+거래일"
+    r"|\d+월 \d+일|\d+/\d+|\d+일|→|올해|이달|한 달|석 달|연초|yesterday|last week)"
+)
+
+
+def weekly_price_data(path: Path) -> dict:
+    """시세 파일 하나를 '주간 등락이 change_pct인' 시세 꼴로 — 금리·VIX(포인트로 읽는 것)는 뺀다. 업종 평균은 `_sector`."""
+    from scripts import weekly_stats
+    market = "kr" if "_kr_" in path.name else "us"
+    price_data = json.loads(path.read_text(encoding="utf-8"))
+    weekly_stats.augment_from_daily_files(price_data, market, path.parent)
+    result = weekly_stats.compute(price_data, market)
+    by_ticker = {str(e.get("ticker") or k): (g, k) for g in ("macro", "watchlist")
+                 for k, e in (price_data.get(g) or {}).items()}
+    out: dict = {"trading_date": None, "macro": {}, "watchlist": {}}
+    for row in [*result["macro"], *result["stocks"]]:
+        if row["points"] or row["week_pct"] is None or row["ticker"] not in by_ticker:
+            continue
+        group, key = by_ticker[row["ticker"]]
+        out[group][key] = {**price_data[group][key], "change_pct": row["week_pct"]}
+    for row in result["sectors"]:
+        out["watchlist"][f"sector:{row['name']}"] = {"name": row["name"], "ticker": f"sector:{row['name']}",
+                                                    "change_pct": row["avg_pct"], "_sector": True}
+    return out
+
+
+def weekly_issues(doc: dict, root: Path = ROOT) -> list[str]:
+    """주간 결산 원고: 그래픽이 가리키는 시세 파일마다 (1) 이력이 날마다 확인한 종가와 같은지(`weekly_stats.verify`),
+    (2) 본문·제목·숫자 카드에 적은 주간 등락률이 그 파일의 주간 계산과 같은지."""
+    from scripts import weekly_stats
+    ko = doc.get("ko") or doc
+    files = sorted({str(spec["price_file"]) for spec in doc.get("graphics") or [] if spec.get("price_file")})
+    if not files:
+        return ["그래픽에 price_file이 하나도 없어 주간 숫자를 대조할 수 없습니다 — 시세 그래픽에 시세 파일을 적으십시오."]
+    texts = dict(ko)
+    extra = [{"heading": "", "body": " ".join(str(v) for v in _all_strings(ko.get("closing") or {}))}]
+    for spec in doc.get("graphics") or []:
+        for item in (spec.get("args") or {}).get("items") or []:
+            extra.append({"heading": "", "body": f"{item.get('label', '')} {item.get('change', '')}"})
+    texts["narrative"] = list(ko.get("narrative") or []) + extra
+    issues: list[str] = []
+    for name in files:
+        path = root / name
+        if not path.exists():
+            issues.append(f"[{name}] 시세 파일이 없습니다.")
+            continue
+        price_data = json.loads(path.read_text(encoding="utf-8"))
+        market = "kr" if "_kr_" in path.name else "us"
+        issues.extend(f"[{path.stem}] {i}" for i in weekly_stats.verify(price_data, market, path.parent))
+        weekly = weekly_price_data(path)
+        sectors = {e["name"] for e in weekly["watchlist"].values() if e.get("_sector")}
+        for issue in collect_issues(texts, weekly, other_day=_OTHER_DAY_WEEK, require_lead=False):
+            if not any(f"'{s}'" in issue for s in sectors):
+                issues.append(f"[{path.stem}] 주간 {issue}")
+    return issues

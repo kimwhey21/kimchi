@@ -200,7 +200,7 @@
 - **주말 편성**: 토 10:00 KST 「주간 결산」(`docs/routine_week_review.md`, `editorial/weekly/review_<토요일>.json`, 시리즈 "주간 결산")과
   일 20:00 KST 「다음 주 일정」(`docs/routine_week_ahead.md`, `editorial/weekly/ahead_<일요일>.json`, 시리즈 "다음 주 일정")은 기준표
   파이프라인을 그대로 쓰고 `weekly_publish.yml`이 **바로 공개**한다. 분류는 Weekly(id 433; 네이버에도 같은 이름 — 본진의 `/weekly/`
-  목록과 탭은 2026-09-26에 없앴다). 지수·종목·환율·금리 숫자는 `python -m scripts.weekly_stats`에서만 온다 — 검색 결과의 등락률을 옮겨 적지 않는다.
+  목록과 탭은 2026-09-26에 없앴다). 지수·종목·환율·금리 숫자는 `python -m scripts.weekly_stats`에서만 온다 — 검색 결과의 등락률을 옮겨 적지 않는다. `weekly_stats`는 금요일 파일의 이력이 날마다 두 원천으로 확인한 종가와 다르면 종료 코드 3으로 멈추고, `feature_gate`가 원고의 주간 등락률을 같은 계산과 대조해 막는다(`editorial_facts.weekly_issues`).
   그래픽은 `number_cards`·`movers_list`에 `"period": "week"`를 넣어 달력 주간 등락으로 그린다. 문턱은 주간 결산 절 5·시각자료 4·출처 2,
   다음 주 일정 절 4·시각자료 3·출처 2. 머리말은 최상위 `period`로 `주간 결산 · 9월 7일~11일`. 거래일 3일 미만인 주는 결산을 쓰지
   않는다. 지난주 판정(맞음·빗나감)은 이 글에 넣지 않는다 — 사용자가 아직 정하지 않았다.

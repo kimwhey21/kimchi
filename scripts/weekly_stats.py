@@ -12,6 +12,7 @@
     python -m scripts.weekly_stats --json output/weekly/2026-09-12.json   # 루틴이 읽을 JSON도 남긴다
 
 거래일이 3일 미만인 주(긴 연휴)는 결산을 쓰지 않는다 — 종료 코드 2로 멈추고 이유를 찍는다.
+이력이 날마다 두 원천으로 확인한 종가와 다르면(`verify`) 종료 코드 3으로 멈추고 이름을 찍는다(2026-10-06).
 억지로 얇은 결산을 쓰지 않는 것이 규칙이다(`--allow-thin`은 시험용).
 """
 from __future__ import annotations
@@ -218,6 +219,66 @@ def augment_from_daily_files(price_data: dict, market: str, data_dir: Path | Non
     return added
 
 
+def _same(a: float, b: float, points: bool) -> bool:
+    """같은 종가인가 — 금리·VIX는 소수 둘째 자리 반올림 차이(0.005)까지, 나머지는 0.05%까지(호가 한 칸보다 작다)."""
+    if points:
+        return abs(a - b) <= 0.0051
+    return abs(a - b) <= max(abs(b) * 0.0005, 0.0051)
+
+
+def verify(price_data: dict, market: str, data_dir: Path | None = None) -> list[str]:
+    """주간 숫자의 바탕인 이 파일의 이력이 날마다 두 원천으로 확인해 커밋한 종가와 같은지(2026-10-06).
+
+    주간 결산과 주간 그래픽(`period: "week"`)은 금요일 파일 하나의 이력(`history`)으로 센다. 그런데 10/6 전의
+    한국장 이력은 넥스트레이드 합산 일봉이었고(삼성전자 9/15 이력 250,500원 / KRX 종가 248,500원), 미국장 이력은
+    배당을 뺀 조정 종가였다(디어 9/29 678.88 / 공식 680.50). 그래서 둘을 본다 — 이 파일의 종목이 두 원천 확인을
+    거친 것인지(`close_sources`), 그리고 이 주와 전주 마지막 날의 이력 값이 그날 두 원천으로 확인해 커밋한 종가와
+    같은지. 다르면 어느 쪽도 고르지 않고 이름을 적어 멈춘다(사장님 원칙: 정확한 값이 아니면 쓰지 않는다)."""
+    folder = data_dir or DATA
+    issues: list[str] = []
+    trading_date = dt.date.fromisoformat(str(price_data["trading_date"]))
+    monday, friday = week_bounds(trading_date)
+    end = min(friday, trading_date).isoformat()
+    unverified = [str(e.get("name") or k) for k, e in (price_data.get("watchlist") or {}).items()
+                  if len(e.get("close_sources") or []) < 2]
+    if unverified:
+        issues.append(f"{market}: 시세 파일 {trading_date}의 종목 {len(unverified)}개에 두 원천 확인 기록(close_sources)이 "
+                      f"없습니다 — 확인 전 코드로 만든 파일이라 이력이 공식 종가가 아닐 수 있습니다({', '.join(unverified[:6])} …)")
+    cache: dict[str, dict | None] = {}
+
+    def day_file(day: str) -> dict | None:
+        if day not in cache:
+            path = folder / f"price_{market}_{day}.json"
+            try:
+                cache[day] = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+            except (OSError, ValueError) as exc:
+                raise ValueError(f"{path.name}을 읽지 못했습니다 — {exc}") from exc
+        return cache[day]
+
+    for group in ("macro", "watchlist"):
+        for key, entry in (price_data.get(group) or {}).items():
+            rows = _history(entry)
+            if not rows or (entry.get("history") or {}).get("source") == "daily_files":
+                continue   # 날마다의 파일에서 이어 붙인 이력은 그 파일 값 그대로다
+            before = [(d, c) for d, c in rows if d < monday.isoformat()]
+            days = dict(([before[-1]] if before else []) + [(d, c) for d, c in rows if monday.isoformat() <= d <= end])
+            points = str(entry.get("ticker") or "") in POINT_TICKERS
+            name = str(entry.get("name") or key)
+            for day in sorted({*days, *(d.isoformat() for d in (monday + dt.timedelta(n) for n in range(5)))}):
+                if day > end:
+                    continue
+                other = entry if day == trading_date.isoformat() else ((day_file(day) or {}).get(group) or {}).get(key)
+                if not other or other.get("price") is None or len(other.get("close_sources") or []) < 2:
+                    continue
+                if day not in days:
+                    if day >= monday.isoformat():
+                        issues.append(f"{market}: {name} {day} — 그날 확인한 종가({other['price']})가 있는데 이력에 그날이 없습니다")
+                    continue
+                if not _same(days[day], float(other["price"]), points):
+                    issues.append(f"{market}: {name} {day} — 이력 {days[day]} / 그날 두 원천으로 확인한 종가 {other['price']}")
+    return issues
+
+
 def run(markets: list[str], on_or_before: dt.date, data_dir: Path | None = None) -> dict[str, dict]:
     results = {}
     for market in markets:
@@ -228,6 +289,7 @@ def run(markets: list[str], on_or_before: dt.date, data_dir: Path | None = None)
         augmented = augment_from_daily_files(price_data, market, data_dir)
         result = compute(price_data, market)
         result["history_from_daily_files"] = augmented
+        result["unverified"] = verify(price_data, market, data_dir)
         result["price_file"] = str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else str(path)
         results[market] = result
     return results
@@ -251,6 +313,12 @@ def main(argv: list[str] | None = None) -> int:
         args.json.parent.mkdir(parents=True, exist_ok=True)
         args.json.write_text(json.dumps(results, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"JSON: {args.json}")
+    wrong = [i for r in results.values() for i in r["unverified"]]
+    if wrong:
+        print(f"⛔ 주간 숫자의 바탕이 확인한 종가와 다릅니다({len(wrong)}건) — 이번 주 결산은 쓰지 않고 이 목록을 보고하십시오:")
+        for issue in wrong[:40]:
+            print(f"  - {issue}")
+        return 3
     thin = [m for m, r in results.items() if r["thin"]]
     if thin and not args.allow_thin:
         print(f"⚠ 거래일이 {MIN_TRADING_DAYS}일 미만인 시장: {', '.join(thin)} — 이번 주 결산은 쓰지 않습니다.")

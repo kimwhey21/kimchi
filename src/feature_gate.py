@@ -94,6 +94,12 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
             blocking.append(f"숫자 — {exc}")
     # 오늘 이 글이 막힌 이유는 문장이 아니라 재료였습니다. 재료를 안 뽑고 쓴 글은
     # 여기서 멈춥니다 — 사람이 엔진 돌리기를 기억하는 데 기대지 않습니다.
+    if str(doc.get("series") or "") == "주간 결산":
+        # 2026-10-06: 주간 숫자의 바탕(시세 파일 이력)이 날마다 확인한 종가와 같은지, 원고의 주간 등락률이 그 계산과 같은지
+        try:
+            blocking.extend(f"주간 숫자 — {i}" for i in editorial_facts.weekly_issues(doc))
+        except (OSError, ValueError, KeyError) as exc:
+            blocking.append(f"주간 숫자 — 대조하지 못했습니다: {exc}")
     blocking.extend(f"목표주가 — {i}" for i in editorial_facts.target_phrase_issues(doc))   # 2026-10-06: 뜻이 뒤집힌 문장 83곳
     blocking.extend(f"내부 이름 — {i}" for i in editorial_facts.internal_name_issues(doc))   # 2026-10-06: 'story_engines' 등 16편
     # 인용·숫자의 출처 원문(2026-10-06, 감사: 잡지 9편 중 6편에서 출처에 없는 숫자·인용) — 잡지는 숫자·인용 모두, 나머지는 인용만
