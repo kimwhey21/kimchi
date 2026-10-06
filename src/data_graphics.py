@@ -386,16 +386,25 @@ def two_day_compare(price_data: dict, output_path: Path, previous: dict | None =
     img = Image.new("RGB", (W, h), BG)
     d = ImageDraw.Draw(img)
     d.text((32, 26), _t(title), font=_font(21, True), fill=SUB)
-    d.text((470, 56), _t("어제"), font=_font(15), fill=SUB)
-    d.text((720, 56), _t("오늘"), font=_font(15), fill=SUB)
+    # 머리글은 실제 날짜로(월요일에도 '어제'라고 찍혔다), 두 칸은 겹치지 않게 떨어뜨린다 — 전에는 오늘 칸의 음수 막대가 어제 숫자를
+    # 덮었다(2026-10-06, 감사 F-108: 21장 중 6장)
+    def _day(doc: dict | None, fallback: str) -> str:
+        try:
+            day = dt.date.fromisoformat(str((doc or {}).get("trading_date")))
+        except (TypeError, ValueError):
+            return _t(fallback)
+        return f"{_MONTHS_EN[day.month - 1]} {day.day}" if _LANG == "en" else f"{day.month}월 {day.day}일"
+    d.text((360, 56), _day(previous, "어제"), font=_font(15), fill=SUB)
+    d.text((740, 56), _day(price_data, "오늘"), font=_font(15), fill=SUB)
 
     span = max(
         max(abs(prev[t]["change_pct"]), abs(today[t]["change_pct"])) for t in picks
     ) or 1.0
     for i, t in enumerate(picks):
         y = top + i * row_h
-        d.text((32, y + 14), today[t]["name"][:12], font=_font(19, True), fill=INK)
-        for k, (src, x0) in enumerate(((prev[t], 420), (today[t], 670))):
+        name = str(today[t]["name"])
+        d.text((32, y + 14), name, font=_font(19 if len(name) <= 9 else 15, True), fill=INK)   # 자르지 않고 글자를 줄인다
+        for k, (src, x0) in enumerate(((prev[t], 400), (today[t], 780))):
             change = src["change_pct"]
             color = _color(change)
             width = abs(change) / span * 130
@@ -404,7 +413,7 @@ def two_day_compare(price_data: dict, output_path: Path, previous: dict | None =
             else:
                 d.rounded_rectangle([x0 - width, y + 8, x0, y + 30], 4, fill=color)
             label = f"{signed(change, 2)}%"
-            d.text((x0 + 140, y + 10), label, font=_font(17, True), fill=color)
+            d.text((x0 + 136, y + 10), label, font=_font(17, True), fill=color)
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
@@ -828,7 +837,12 @@ def price_history(price_data: dict, output_path: Path, ticker: str, title: str =
         raise ValueError(
             f"price_history: {ticker}의 종가 이력이 부족합니다({len(closes)}개). "
             "시세 파일에 history가 없으면(2026-09-08 이전 수집기) 이 그래픽은 쓸 수 없습니다.")
-    change = float(entry.get("change_pct") or 0)
+    # 부제의 날짜·종가·등락률은 모두 이력에서 — 일봉이 하루 늦는 날 어제 날짜·종가 옆에 오늘 등락률이 붙었다(2026-10-06, 감사 F-109).
+    # 이력의 마지막이 그날 종가면 그날 등락률과 같고, 아니면 이력 날짜의 등락률이 나온다(그림 안에서 날짜와 숫자가 어긋나지 않는다).
+    day = str(entry.get("trading_date") or price_data.get("trading_date") or "")
+    price = entry.get("price")
+    same_day = day == dates[-1] and (price is None or abs(closes[-1] - float(price)) <= max(abs(float(price)) * 0.001, 0.006))
+    change = float(entry.get("change_pct") or 0) if same_day or not closes[-2] else (closes[-1] / closes[-2] - 1) * 100
     color = _color(change)
     unit = _unit_for(entry)
     fmt = "{:,.0f}" if abs(closes[-1]) >= 10000 else "{:,.2f}"
