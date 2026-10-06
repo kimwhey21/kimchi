@@ -1,0 +1,87 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "과학",
+  "date": "2026-10-07",
+  "slug": "optogenetics-nobel-algae",
+  "radar_origin": "The Conversation: Optogenetics wins the Nobel – one neuroscience breakthrough in a line of technological innovations helping scientists map and control the brain",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1597733336794-12d05021d510?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8b3B0aWNhbCUyMGZpYmVyJTIwbGlnaHR8ZW58MHwwfHx8MTc5MTMwOTI1MHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "unsplash_id": "8bghKxNU1j0",
+    "credit": "Unsplash / JJ Ying"
+  },
+  "sources": [
+    {
+      "name": "스탯뉴스",
+      "title": "2026 Nobel Prize in Medicine awarded for brain research tool called optogenetics",
+      "url": "https://www.statnews.com/2026/10/05/nobel-prize-medicine-2026-winner-deisseroth-hegemann-nagel/"
+    },
+    {
+      "name": "더 컨버세이션",
+      "title": "Optogenetics wins the Nobel – one neuroscience breakthrough in a line of technological innovations helping scientists map and control the brain",
+      "url": "https://theconversation.com/optogenetics-wins-the-nobel-one-neuroscience-breakthrough-in-a-line-of-technological-innovations-helping-scientists-map-and-control-the-brain-293619"
+    }
+  ],
+  "tags": [
+    "노벨상",
+    "광유전학",
+    "뇌과학",
+    "채널로돕신",
+    "칼다이서로스"
+  ],
+  "ko": {
+    "title": "조류 한 마리가 어떻게 노벨 생리의학상이 됐을까",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "1990년대 초, 독일 막스플랑크연구소의 페터 헤게만은 엉뚱한 질문 하나에 빠져 있었습니다.\n민물 웅덩이에 사는 단세포 조류 클라미도모나스가 빛을 향해 헤엄치는 이유였습니다.\n그는 게오르그 나겔과 함께 이 조류의 세포막에서 빛을 받으면 열리는 단백질 통로를 찾아냈습니다. 훗날 채널로돕신이라는 이름이 붙은 단백질입니다."
+      },
+      {
+        "heading": "",
+        "body": "이 발견은 한동안 그저 흥미로운 생물학 상식으로 남아 있었습니다.\n그 사이 다른 과학자들도 이 빛에 반응하는 단백질을 신경세포에 넣는 실험을 하나둘 시도했습니다."
+      },
+      {
+        "heading": "",
+        "body": "매듭을 지은 사람은 스탠퍼드대학교의 칼 다이서로스와 그의 제자 에드 보이든이었습니다.\n둘은 쥐의 신경세포에 채널로돕신 유전자를 넣고 파란빛을 비췄습니다. 신경세포가 실제로 신호를 냈습니다.\n2005년, 두 사람의 이름으로 나온 이 논문은 신경과학의 틀을 바꿔 놓았습니다."
+      },
+      {
+        "heading": "",
+        "body": "다이서로스는 훗날 이 기술이 특별한 이유를 스탯뉴스와의 인터뷰에서 이렇게 설명했습니다.\n“우리는 빛으로 정보를 모으는 게 아니라, 빛으로 어떤 일이 일어나게 만드는 겁니다.”"
+      },
+      {
+        "heading": "",
+        "body": "더 컨버세이션에 따르면 이 기술로 신경과학자들은 신경세포 하나하나를 1,000분의 1초 단위로 켜고 끌 수 있게 됐습니다.\n방법은 이렇습니다. 바이러스를 이용해 신경세포에, 빛에 반응하는 단백질을 만들라는 유전 정보를 넣는 것입니다.\n지금은 시력을 되찾고, 통증을 줄이고, 뇌전증과 정신질환을 치료하는 연구에까지 쓰이고 있습니다."
+      },
+      {
+        "heading": "",
+        "body": "처음엔 누구도 이 조류 연구가 뇌과학을 바꿀 거라 생각하지 않았습니다.\n식물도 동물도 아닌 단세포 생물 하나가, 신경세포를 빛으로 조종하는 스위치의 재료가 된 셈입니다.\n연못 속 조류의 생존 비법이 사람의 뇌를 들여다보는 도구가 될 거라고, 그 누가 짐작했을까요?"
+      },
+      {
+        "heading": "",
+        "body": "이 기술이 아직 약국에서 파는 치료제는 아닙니다. 그래도 걸린 판돈은 작지 않습니다.\n뇌전증과 실명, 만성 통증처럼 약으로 잘 듣지 않는 병을 겨냥한 연구에 이 기술이 쓰이고 있기 때문입니다.\n노벨위원회는 다이서로스와 헤게만, 나겔 세 사람에게 올해 생리의학상을 안겼습니다.\n여러분의 뇌 속에서도 지금 이 순간, 빛으로 켜고 끌 수 있는 스위치가 켜져 있다는 사실이 믿어지시나요?"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "1990년대 초, 독일 막스플랑크연구소",
+      "url": "https://www.statnews.com/2026/10/05/nobel-prize-medicine-2026-winner-deisseroth-hegemann-nagel/",
+      "original": "The work started in the early 1990s at the Max Planck Institute, when Hegemann wondered how a single-cell green alga called Chlamydomonas could swim toward light."
+    },
+    {
+      "claim": "2005년, 두 사람의 이름으로 나온 이 논문",
+      "url": "https://www.statnews.com/2026/10/05/nobel-prize-medicine-2026-winner-deisseroth-hegemann-nagel/",
+      "original": "Ed Boyden, who was the first author on Deisseroth's landmark 2005 paper and a Ph.D. student in his lab, should not have been excluded."
+    },
+    {
+      "claim": "빛으로 어떤 일이 일어나게 만드는 겁니다",
+      "url": "https://www.statnews.com/2026/10/05/nobel-prize-medicine-2026-winner-deisseroth-hegemann-nagel/",
+      "original": "We're not using light to collect information, we're using light to cause things to happen"
+    },
+    {
+      "claim": "1,000분의 1초 단위로 켜고 끌 수 있게",
+      "url": "https://theconversation.com/optogenetics-wins-the-nobel-one-neuroscience-breakthrough-in-a-line-of-technological-innovations-helping-scientists-map-and-control-the-brain-293619",
+      "original": "allows neuroscientists to manipulate what neurons do millisecond by millisecond."
+    }
+  ]
+}

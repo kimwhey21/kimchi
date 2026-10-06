@@ -1,0 +1,127 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "시장 읽기",
+  "date": "2026-10-07",
+  "slug": "sk-hynix-rebalancing-goldman",
+  "radar_origin": "24/7 Wall St.: SK Hynix Falls 4% on Earnings Caution Before a Rebalancing Goldman Says Favors It; SanDisk Slips 2%, Micron Holds Firm",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8bWljcm9jaGlwfGVufDB8MHx8fDE3OTEzMDkyMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "unsplash_id": "eGGFZ5X2LnA",
+    "credit": "Unsplash / Igor Omilaev"
+  },
+  "sources": [
+    {
+      "name": "24/7 월스트리트",
+      "title": "SK Hynix Falls 4% on Earnings Caution Before a Rebalancing Goldman Says Favors It; SanDisk Slips 2%, Micron Holds Firm",
+      "url": "https://247wallst.com/investing/2026/10/06/sk-hynix-falls-4-on-earnings-caution-before-a-rebalancing-goldman-says-favors-it-sandisk-slips-2-micron-holds-firm/"
+    },
+    {
+      "name": "코리아헤럴드",
+      "title": "Currency's sharp rebound squeezes export earnings, chips away at overseas investment returns",
+      "url": "https://www.koreaherald.com/article/10865189"
+    }
+  ],
+  "tags": [
+    "SK하이닉스",
+    "골드만삭스",
+    "원달러환율",
+    "메모리반도체",
+    "지수리밸런싱"
+  ],
+  "ko": {
+    "title": "실적 경고에도 골드만이 SK하이닉스를 반기는 이유",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "SK하이닉스 주식은 10월 6일 낮장에서 4% 하락해 187.25달러에 거래됐다고 24/7 월스트리트는 전했습니다.\n한국 분기 실적 발표를 앞두고 투자자들이 몸을 사린 결과였습니다."
+      },
+      {
+        "heading": "",
+        "body": "하락한 이유로는 두 가지가 꼽혔습니다. 강세를 보인 원화와, 두둑해진 보너스 충당금입니다.\n24/7 월스트리트는 이렇게 설명했습니다.\n“두 회사 모두 지난 1년의 호황에서 나온 더 큰 직원 보너스에 대비해 충당금을 쌓고 있습니다.”"
+      },
+      {
+        "heading": "",
+        "body": "그런데 골드만삭스의 애널리스트 헤더 오는 다른 그림을 봅니다.\n다가오는 지수 리밸런싱이 삼성전자에서 돈을 빼 SK하이닉스로 보낼 것이라는 분석입니다.\n“리밸런싱은 SK하이닉스에는 반대 방향으로 작동해, 삼성전자가 유출을 흡수하는 사이 유입을 가져다 줄 것입니다.”"
+      },
+      {
+        "heading": "",
+        "body": "투자자들이 조심스러워진 데는 배경이 있습니다.\n코리아헤럴드에 따르면 원화는 지난 7월 1일 달러당 1,599.2원까지 밀렸습니다.\n거기서 두 달 만에 200원 넘게 올라 10월 들어 1,334.7원까지 강해졌습니다.\n2024년 10월 4일 이후 가장 강한 수준이었습니다."
+      },
+      {
+        "heading": "",
+        "body": "환율이 이렇게 움직이자 씨티그룹은 지난달 삼성전자의 3분기 영업이익 전망을 11조 5,500억 원에서 10조 4,100억 원으로 낮췄습니다.\nSK하이닉스 전망도 7조 6,700억 원에서 7조 4,000억 원으로 줄였습니다."
+      },
+      {
+        "heading": "",
+        "body": "같은 날 메모리 반도체 전반에 조심스러운 분위기가 번졌습니다.\n샌디스크는 2% 하락한 1,675.08달러, 마이크론은 0.3% 오른 1,066.91달러로 마감했습니다.\n마이크론 최고경영자 산제이 메흐로트라는 이렇게 말했습니다.\n“공급과 수요가 언제 균형을 되찾을지, 저희는 가늠할 수 없습니다.”"
+      },
+      {
+        "heading": "",
+        "body": "SK하이닉스는 국내 개인 투자자들이 가장 많이 들고 있는 종목 가운데 하나입니다.\n실적이 흔들려도 지수 자금이 들어오면 주가가 버틸 수 있고, 거꾸로 실적이 좋아도 자금이 빠지면 주가가 밀릴 수 있다는 뜻이기도 합니다.\n여러분이 들고 있는 주가를 움직이는 힘은 오늘의 실적 숫자일까요, 아니면 지수를 따라 도는 큰돈의 흐름일까요?"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "4% 하락해 187.25달러",
+      "url": "https://247wallst.com/investing/2026/10/06/sk-hynix-falls-4-on-earnings-caution-before-a-rebalancing-goldman-says-favors-it-sandisk-slips-2-micron-holds-firm/",
+      "original": "SK Hynix stock is down 4% to $187.25 in midday trading."
+    },
+    {
+      "claim": "24/7 월스트리트는 이렇게 설명했습니다",
+      "url": "https://247wallst.com/investing/2026/10/06/sk-hynix-falls-4-on-earnings-caution-before-a-rebalancing-goldman-says-favors-it-sandisk-slips-2-micron-holds-firm/",
+      "original": "© 2026 24/7 Wall St."
+    },
+    {
+      "claim": "더 큰 직원 보너스에 대비해 충당금",
+      "url": "https://247wallst.com/investing/2026/10/06/sk-hynix-falls-4-on-earnings-caution-before-a-rebalancing-goldman-says-favors-it-sandisk-slips-2-micron-holds-firm/",
+      "original": "both companies are setting aside provisions for larger worker bonuses out of the past year's windfall"
+    },
+    {
+      "claim": "2024년 10월 4일 이후",
+      "url": "https://www.koreaherald.com/article/10865189",
+      "original": "The won strengthened to 1,334.7 per dollar in onshore Seoul trading Monday, its strongest level since Oct. 4, 2024."
+    },
+    {
+      "claim": "삼성전자가 유출을 흡수하는 사이 유입",
+      "url": "https://247wallst.com/investing/2026/10/06/sk-hynix-falls-4-on-earnings-caution-before-a-rebalancing-goldman-says-favors-it-sandisk-slips-2-micron-holds-firm/",
+      "original": "rebalancing to push the opposite way for SK Hynix, delivering inflows as Samsung Electronics absorbs outflows"
+    },
+    {
+      "claim": "1,599.2원까지 밀렸습니다",
+      "url": "https://www.koreaherald.com/article/10865189",
+      "original": "It has gained more than 200 won against the dollar in just over two months after weakening to 1,599.2 on July 1."
+    },
+    {
+      "claim": "1,334.7원까지 강해졌습니다",
+      "url": "https://www.koreaherald.com/article/10865189",
+      "original": "The won strengthened to 1,334.7 per dollar in onshore Seoul trading Monday, its strongest level since Oct. 4, 2024."
+    },
+    {
+      "claim": "10조 4,100억 원으로 낮췄습니다",
+      "url": "https://www.koreaherald.com/article/10865189",
+      "original": "Citigroup lowered its third-quarter operating profit estimate for Samsung Electronics by 10 percent to 10.41 trillion won ($ 7.7 billion) from 11.55 trillion won"
+    },
+    {
+      "claim": "7조 4,000억 원으로 줄였습니다",
+      "url": "https://www.koreaherald.com/article/10865189",
+      "original": "For SK hynix, the banking group brought down its forecast by 3 percent to 7.4 trillion won from 7.67 trillion won."
+    },
+    {
+      "claim": "2% 하락한 1,675.08달러",
+      "url": "https://247wallst.com/investing/2026/10/06/sk-hynix-falls-4-on-earnings-caution-before-a-rebalancing-goldman-says-favors-it-sandisk-slips-2-micron-holds-firm/",
+      "original": "stock is sliding 2% to $1,675.08 as the selling spreads across memory names."
+    },
+    {
+      "claim": "0.3% 오른 1,066.91달러",
+      "url": "https://247wallst.com/investing/2026/10/06/sk-hynix-falls-4-on-earnings-caution-before-a-rebalancing-goldman-says-favors-it-sandisk-slips-2-micron-holds-firm/",
+      "original": "stock is up 0.3% to $1,066.91."
+    },
+    {
+      "claim": "공급과 수요가 언제 균형을 되찾을지",
+      "url": "https://247wallst.com/investing/2026/10/06/sk-hynix-falls-4-on-earnings-caution-before-a-rebalancing-goldman-says-favors-it-sandisk-slips-2-micron-holds-firm/",
+      "original": "We do not have line of sight to when supply and demand will return to balance"
+    }
+  ]
+}
