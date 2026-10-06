@@ -284,7 +284,7 @@ WebSearch·WebFetch는 별도 경로라 늘 됩니다.
 - `"photo": {"ticker": "005930"}` — **코어 종목**이면 승인 풀(`config/photo_pool.yaml`,
   34장·14업종)에서 그 종목·업종 사진을 자동으로 고릅니다. 동적 편입 종목에는 붙지
   않습니다(풀 규칙) — 관문이 알려줍니다.
-- `"photo": {"url": "<images.unsplash.com 주소>", "alt": "<실제로 보이는 것>",
+- `"photo": {"url": "<images.unsplash.com 주소>", "unsplash_id": "<대조표의 unsplash_id>", "alt": "<실제로 보이는 것>",
   "photographer": "...", "photographer_url": "..."}` — 인사이트 사진처럼 대조표를
   `Read`로 보고 고른 것. 회사가 식별되는 사진도 괜찮지만 **다른 회사로 읽히는 사진**
   (다른 은행 간판, 다른 거래소 화면)은 쓰지 않습니다.

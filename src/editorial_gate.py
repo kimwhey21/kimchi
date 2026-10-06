@@ -137,6 +137,8 @@ def run(path: Path, min_visuals: int = MIN_VISUALS,
     issues += [f"목표주가 — {i}" for i in editorial_facts.target_phrase_issues(doc)]
     issues += [f"내부 이름 — {i}" for i in editorial_facts.internal_name_issues(doc)]
     issues += [f"근거 — {i}" for i in evidence_check.evidence_issues(doc, numbers=False)]   # 큰따옴표 인용의 출처 원문(2026-10-06)
+    from src import unsplash_ping
+    issues += [f"사진 — {i}" for i in unsplash_ping.missing_ids(doc)]   # Unsplash 사진은 번호와 함께(2026-10-06)
     for lang, part in (("ko", ko), ("en", en)):   # 값 수준·판단 낱말·금리 %p(2026-10-06, 감사 F-031·F-035)
         if part:
             issues += [f"숫자 수준({lang}) — {i}" for i in editorial_facts.level_issues(part, price_data, lang)]

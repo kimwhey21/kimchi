@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 
 from scripts import check_against_benchmark, compare_to_benchmark
-from src import editorial_facts, editorial_quality, editorial_title, evidence_check, feature_checks, source_check, title_feed
+from src import editorial_facts, editorial_quality, editorial_title, evidence_check, feature_checks, source_check, title_feed, unsplash_ping
 
 ROOT = Path(__file__).resolve().parent.parent
 # 시리즈가 사는 폴더. 같은 목록에 나란히 보이는 최근 제목과 뼈대를 대조할 때 쓴다.
@@ -102,6 +102,7 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
             blocking.append(f"주간 숫자 — 대조하지 못했습니다: {exc}")
     # 2026-10-06(감사 F-030·F-052): 'M월 D일 코스피는 N%'처럼 날짜가 박힌 숫자를 그날 두 원천으로 확인한 시세 파일과 대조
     blocking.extend(f"날짜 숫자 — {i}" for i in editorial_facts.dated_issues(doc))
+    blocking.extend(f"사진 — {i}" for i in unsplash_ping.missing_ids(doc))   # Unsplash 사진은 번호와 함께(2026-10-06)
     blocking.extend(f"목표주가 — {i}" for i in editorial_facts.target_phrase_issues(doc))   # 2026-10-06: 뜻이 뒤집힌 문장 83곳
     blocking.extend(f"내부 이름 — {i}" for i in editorial_facts.internal_name_issues(doc))   # 2026-10-06: 'story_engines' 등 16편
     # 인용·숫자의 출처 원문(2026-10-06, 감사: 잡지 9편 중 6편에서 출처에 없는 숫자·인용) — 잡지는 숫자·인용 모두, 나머지는 인용만

@@ -61,7 +61,7 @@
 {
   "kind": "feature", "series": "매거진", "group": "시장의 역사", "date": "2026-09-14", "slug": "salt-history",
   "radar_origin": "Why Salt Was Once Worth Its Weight in Gold - Big Think",
-  "featured_photo": {"url": "https://images.unsplash.com/photo-…", "credit": "Unsplash / 작가"},
+  "featured_photo": {"url": "https://images.unsplash.com/photo-…", "unsplash_id": "<대조표의 unsplash_id>", "credit": "Unsplash / 작가"},
   "sources": [{"name": "브리태니커 백과사전", "title": "Salt", "url": "…"}, {"name": "미국 지질조사국(USGS)", "title": "…", "url": "…"}],
   "tags": ["소금의역사", "경제사"],
   "ko": {"title": "…", "narrative": [{"heading": "", "body": "한두 문장.\n한두 문장.\n“원문에서 확인한 말.”\n…"}, …]}
@@ -77,6 +77,7 @@
 - **`brief`(간단 브리핑)는 쓰지 않습니다**(2026-09-13 저녁, 2026-10-02 다시 확인 — 피우스형 시험에서도 뺐습니다). 첫 문단이 곧 도입입니다 — 장면이나 뜻밖의 사실로 엽니다(위 「글의 꼴과 재미」).
 - 본문 절 4~7개(소제목 없음), 4,800자 이하·하한 없음 — 위 「글의 꼴과 재미」. 제목 규칙은 다른 글과 같습니다(`docs/editorial-style.md` 「제목 문법」).
 - **`closing`(Fermata's Take)은 쓰지 않습니다**(2026-09-13). 우리 판단을 따로 붙이지 않고, 마지막 문단(물음)이 글을 닫습니다.
+- `featured_photo`에는 대조표가 찍어 준 **`unsplash_id`를 url 옆에 꼭 적습니다**(2026-10-06 — 글을 올릴 때 맥이 Unsplash에 '썼음' 신호를 보내는 번호, Unsplash 열쇠 이용 규칙. 없으면 관문이 막습니다).
 - `featured_photo.url`은 **대조표를 눈으로 보고 고른** Unsplash 주소 하나(`python -m src.photo_search --sheet <이름> <검색어들>` →
   `Read`로 봄 → 고름). 사진 없는 글은 관문이 막습니다. 추상 개념(돈·시간)은 검색이 잘 안 맞으니 구체물(소금·다리·공장)로 검색합니다.
 - 마크다운 볼드(`**`) 금지. 포지션 화법 금지.

@@ -151,6 +151,8 @@ def search_unsplash(query: str, limit: int = 8) -> list[dict]:
             "license": "Unsplash License",
             "creator": (item.get("user") or {}).get("name") or "",
             "source": "unsplash",
+            # Unsplash 사진 번호 — 원고에 `unsplash_id`로 적으면 글을 올릴 때 맥이 '썼음' 신호를 보낸다(Unsplash API 규칙, 2026-10-06)
+            "unsplash_id": item.get("id"),
             "url": (item.get("urls") or {}).get("regular"),
             "page": (item.get("links") or {}).get("html"),
             "width": item.get("width"), "height": item.get("height"),
@@ -272,7 +274,9 @@ def contact_sheet(name: str, queries: list[str], out_dir: Path,
         json.dumps(cands, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"대조표 {len(cands)}장 → {path}\n")
     for row in cands:
-        print(f"  {row['label']}  {row['query'][:20]:<22} {row['license']:<12} {row['local_path']}")
+        print(f"  {row['label']}  {row['query'][:20]:<22} {row['license']:<12} {row['local_path']}"
+              + (f"\n       url {row['url']}\n       unsplash_id {row['unsplash_id']}  ← 고르면 원고에 url과 함께 적는다"
+                 if row.get("unsplash_id") else ""))
     print("\n**번호로 고르십시오.** 한 장씩 들이밀지 마십시오.")
     return path
 
@@ -312,7 +316,7 @@ def main() -> int:
         after_kb = row.get("bytes_after", 0) // 1024
         print(f"  {Path(row['local_path']).name}  [{row['license']:<10}] "
               f"{row['title'][:36]:<38} {w}x{h}  {before_kb}KB→{after_kb}KB")
-        print(f"     {credit(row)}")
+        print(f"     {credit(row)}" + (f"  · unsplash_id {row['unsplash_id']}" if row.get("unsplash_id") else ""))
     print("\n**받은 파일을 직접 열어 보고 고르십시오.** 검색어만 믿고 붙이지 마십시오 — "
           "`korean bank`가 계곡 사진으로 나온 적이 있습니다.")
     (out / "candidates.json").write_text(

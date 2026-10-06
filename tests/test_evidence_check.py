@@ -78,3 +78,26 @@ class NumberMatchTest(unittest.TestCase):
     def test_sample_evidence_has_no_mismatch(self) -> None:
         doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
         self.assertEqual([e["claim"] for e in doc["evidence"] if ec.number_mismatches(e["claim"], e["original"])], [])
+
+
+class UnsplashPingTest(unittest.TestCase):
+    """Unsplash 열쇠 규칙: 고른 사진마다 '썼음' 신호(2026-10-06 결정)."""
+
+    def test_ids_are_collected_and_missing_ones_are_named(self) -> None:
+        from src import unsplash_ping
+        doc = {"featured_photo": {"url": "https://images.unsplash.com/photo-1", "unsplash_id": "abc"},
+               "ko": {"insight_section": {"stories": [{"image": {"url": "https://images.unsplash.com/photo-2"}}]}}}
+        self.assertEqual(unsplash_ping.photo_ids(doc), ["abc"])
+        self.assertEqual(len(unsplash_ping.missing_ids(doc)), 1)
+
+    def test_ping_once_per_manuscript_and_photo(self) -> None:
+        import tempfile
+        from unittest import mock
+        from src import unsplash_ping
+        ledger = Path(tempfile.mkdtemp()) / "pinged.json"
+        get = mock.Mock(return_value=mock.Mock(status_code=200))
+        doc = {"featured_photo": {"url": "x", "unsplash_id": "abc"}}
+        self.assertEqual(unsplash_ping.ping(doc, "key", name="m.json", ledger=ledger, get=get), (1, []))
+        self.assertEqual(unsplash_ping.ping(doc, "key", name="m.json", ledger=ledger, get=get), (0, []))
+        self.assertEqual(get.call_count, 1)
+        self.assertIn("/photos/abc/download", get.call_args.args[0])
