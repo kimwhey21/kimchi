@@ -7,7 +7,7 @@
     {"workflow": "stock_db.yml", "utc": ["22:50"], "days": "0-5"},
     {"workflow": "publish_check.yml", "utc": ["01:00"], "days": "2-6"},
     {"workflow": "market_brief.yml", "inputs": {"market": "kr"}, "utc": ["07:20", "07:27", "07:34"], "days": "1-5"},
-    {"workflow": "market_brief.yml", "inputs": {"market": "kr", "late_close_only": "true"}, "utc": ["07:50"], "days": "1-5"},
+    {"workflow": "market_brief.yml", "inputs": {"market": "kr", "late_close_only": "true"}, "utc": ["07:50", "07:57", "08:04"], "days": "1-5"},
     {"workflow": "stock_db.yml", "utc": ["08:05"], "days": "1-5"},
     {"workflow": "publish_check.yml", "utc": ["10:00"], "days": "1-5"},
     {"workflow": "story_material.yml", "utc": ["11:40"], "days": "1-5"},

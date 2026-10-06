@@ -39,6 +39,9 @@ on:
     # 16:50 KST — 정규장이 16:30에 끝나는 날(수능일, stock_db.KRX_LATE_CLOSE)에만 일한다(2026-10-05). 다른 날은
     # `--late-close-only`가 바로 끝낸다. 그날 16:20·:27·:34 실행은 "정규장이 아직 끝나지 않았다"며 아무것도 받지 않는다.
     - cron: "50 7 * * 1-5"
+    # 16:57·17:04 KST — 수능일 늦은 마감의 재시도(2026-10-06, 감사 F-049: 16:50 한 번뿐이었다). 다른 날은 바로 끝난다.
+    - cron: "57 7 * * 1-5"
+    - cron: "4 8 * * 1-5"
   workflow_dispatch:
     inputs:
       late_close_only:
@@ -113,7 +116,7 @@ jobs:
           # 여기도 같이 고쳐야 하고 빠뜨리면 조용히 엉뚱한 시장을 돌립니다.
           case "${{ github.event.schedule }}" in
             *" 22 * * "*) echo "market=us" >> "$GITHUB_OUTPUT" ;;
-            *" 7 * * "*)  echo "market=kr" >> "$GITHUB_OUTPUT" ;;
+            *" 7 * * "*|*" 8 * * "*)  echo "market=kr" >> "$GITHUB_OUTPUT" ;;
             *)            echo "market=${{ github.event.inputs.market }}" >> "$GITHUB_OUTPUT" ;;
           esac
 
@@ -130,7 +133,7 @@ jobs:
         # 기록을 파일로도 남긴다 — 아래 '경고 모아 알리기'가 [경고] 줄을 운영 대화로 보낸다(2026-10-06, 감사 F-012).
         run: |
           set -o pipefail
-          python -m src.main --market ${{ steps.market.outputs.market }} --fetch-only ${{ (github.event.schedule == '50 7 * * 1-5' || github.event.inputs.late_close_only == 'true') && '--late-close-only' || '' }} 2>&1 | tee "$RUNNER_TEMP/fetch.log"
+          python -m src.main --market ${{ steps.market.outputs.market }} --fetch-only ${{ (github.event.schedule == '50 7 * * 1-5' || github.event.schedule == '57 7 * * 1-5' || github.event.schedule == '4 8 * * 1-5' || github.event.inputs.late_close_only == 'true') && '--late-close-only' || '' }} 2>&1 | tee "$RUNNER_TEMP/fetch.log"
         env:
           # 미국장 다우 종가를 FRED 공식 값과 맞춘다(fetch_us.second_close, 2026-10-05). 생성형 AI 키가 아니다.
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
