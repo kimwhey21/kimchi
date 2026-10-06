@@ -126,6 +126,16 @@ class ExpectedArtifactsTest(unittest.TestCase):
         got = {n: ok for n, ok, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 6), set(), root)}
         self.assertTrue(got["한국장 시세"] and got["종가 사진"])
 
+    def test_paused_routines_are_not_expected_in_the_window(self) -> None:
+        """쉬게 한 루틴(10/7~10/20)의 원고는 그 기간에 기다리지 않고, 기간이 끝나면 다시 기다린다."""
+        root = self._root([])
+        sat = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 10), set(), root)]
+        self.assertNotIn("주말 Checkpoint", sat); self.assertNotIn("주간 결산", sat); self.assertNotIn("한국어 가이드", sat)
+        self.assertIn("영어 가이드", sat); self.assertIn("잡지 3편", sat)
+        wed = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 21), set(), root)]
+        self.assertIn("미국장 프리뷰", wed); self.assertIn("한국어 가이드", wed)
+
+    @mock.patch.object(daily_proof, "PAUSED_ARTIFACTS", (set(), dt.date(2000, 1, 1), dt.date(2000, 1, 1)))
     def test_holiday_and_weekend(self) -> None:
         root = self._root([])
         names = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 9), set(), root)]   # 한글날(금)

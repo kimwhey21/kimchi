@@ -66,6 +66,10 @@ RUN_WINDOW = (dt.timedelta(minutes=10), dt.timedelta(minutes=150))   # 예약 �
 # 맥 작업(launchd) — 신호가 언제까지 있어야 하나. 분 단위면 "generated_at 기준 그 안", 시각이면 "그날 그 시각 이후".
 MAC_JOBS = {"naver_sync": 30, "gsc_queries": "10:30",
             "daily_summary": "22:30", "bench_nightly": "23:10"}
+# 쉬게 한 루틴 — 이 기간에는 그 원고를 기다리지 않는다(2026-10-06 결정: 한국어 글이 나갈 곳이 없는 동안).
+# 기간이 지나도 루틴을 다시 켜지 않았으면 증명서·원고 감시가 다시 '없음'을 알린다 — 그것이 다시 정하라는 신호다.
+PAUSED_ARTIFACTS = ({"미국장 프리뷰", "한국어 가이드", "주말 Checkpoint", "주간 결산", "다음 주 일정"},
+                    dt.date(2026, 10, 7), dt.date(2026, 10, 20))
 MAC_WEEKLY = {"threads_refresh": (6, "21:30"), "expose_weekly": (0, "08:30"), "search_snapshot": (6, "22:00")}   # (weekday, 시각)
 
 
@@ -238,6 +242,9 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
         out.append(("다음 주 일정", has(f"editorial/weekly/ahead_{d}.json"), f"editorial/weekly/ahead_{d}.json"))
     if wd == 0:
         out.append(("주간 점검", touched("reports/weekly_", ".md"), "reports/weekly_* 오늘 커밋"))
+    names, start, end = PAUSED_ARTIFACTS
+    if start <= day <= end:
+        out = [row for row in out if row[0] not in names]
     if now is not None and now.date() == day:
         out = [row for row in out if now.time() >= dt.time(*map(int, ARTIFACT_DUE[row[0]].split(":")))]
     return out
