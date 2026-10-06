@@ -101,9 +101,13 @@ KRX_HOLIDAYS_CONFIRMED = {"2026"}          # 2027은 계산값 — 12월 거래�
 KRX_LATE_CLOSE_CONFIRMED: set[str] = set()   # 수능일 장 시간은 거래소가 수능 직전에 공고한다 — 확인한 날을 더한다
 
 
+# 새해 첫 거래일은 10:00에 연다(마감은 그대로 15:30, 2026-10-06 감사 F-145) — 수능일 표와 따로 둔다(그 표는 '그해 수능일이 있나'를 본다)
+KRX_LATE_OPEN = {"2026-01-02": (dt.time(10, 0), dt.time(15, 30)), "2027-01-04": (dt.time(10, 0), dt.time(15, 30))}
+
+
 def krx_hours(day: dt.date) -> tuple[dt.time, dt.time]:
     """그날 정규장 (시작, 끝)."""
-    return KRX_LATE_CLOSE.get(day.isoformat(), (dt.time(9, 0), dt.time(15, 30)))
+    return KRX_LATE_CLOSE.get(day.isoformat()) or KRX_LATE_OPEN.get(day.isoformat()) or (dt.time(9, 0), dt.time(15, 30))
 
 
 def close_window(day: dt.date) -> tuple[dt.time, dt.time]:
