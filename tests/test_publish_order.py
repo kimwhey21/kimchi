@@ -64,8 +64,8 @@ class KoreanOffWordPressTest(unittest.TestCase):
              patch.object(publish_wordpress, "verify_published"), \
              patch.object(publish_wordpress, "upload_image_url", return_value="https://example.com/g.png") as upload, \
              patch.object(publish_wordpress, "_find_existing_post_by_slug", return_value=None):
-            publish_editorial.publish(ROOT / "editorial" / "kr_2026-09-22.json", publish_live=True)   # 영어 그림이 있는 원고
-        self.assertEqual([c["slug"] for c in calls], ["editorial-kr-2026-09-22-en"])
+            publish_editorial.publish(ROOT / "editorial" / "kr_2026-10-02.json", publish_live=True)   # 영어 그림이 있는 원고(9/22 원고는 10/6 시세 파일 보정 뒤 사본이 파일과 달라 발행 검사가 막는다)
+        self.assertEqual([c["slug"] for c in calls], ["editorial-kr-2026-10-02-en"])
         self.assertEqual(calls[0].get("status"), "publish")
         captions = [c.args[0].get("caption", "") for c in upload.call_args_list if c.args]
         self.assertTrue(any("Data graphic" in x for x in captions), captions)                  # 영어 그림은 올린다
