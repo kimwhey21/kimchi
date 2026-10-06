@@ -107,7 +107,7 @@ def krx_hours(day: dt.date) -> tuple[dt.time, dt.time]:
 
 
 def close_window(day: dt.date) -> tuple[dt.time, dt.time]:
-    """네이버 폴링 nv가 정규장 종가로 멈춰 있는 때 — 마감 1분 뒤부터 30분 뒤(시간외 단일가가 붙기 전)까지."""
+    """네이버 폴링 nv가 정규장 종가로 멈춰 있는 때 — 마감 1분 뒤부터 30분 뒤(KRX 애프터마켓 체결이 붙기 전)까지."""
     end = dt.datetime.combine(day, krx_hours(day)[1])
     return (end + dt.timedelta(minutes=1)).time(), (end + dt.timedelta(minutes=30)).time()
 _ACRONYM_KEEP = {"SK", "LG", "KB", "GS", "CJ", "HD", "LS", "DB", "KT", "NH", "BNK", "DGB", "JB", "KCC", "OCI", "SKC",

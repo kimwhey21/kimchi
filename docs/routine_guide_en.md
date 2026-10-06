@@ -32,7 +32,7 @@
 
 ## 읽을 것
 
-1. 기존 영어 가이드의 어법: `scripts/publish_guide_korea_stock_taxes.py`·`scripts/publish_guide_korea_trading_rules.py`
+1. 기존 영어 가이드의 어법: `scripts/publish_guide_korea_stock_taxes.py`·`editorial/guides/en_kospi-trading-hours.json`(옛 장 시간 스크립트는 틀린 제도가 남아 있어 본보기로 쓰지 않는다)
    (SECTIONS·CLOSING 문장을 봅니다 — 이 어조로 씁니다: 명확한 사실, 짧은 문장, "you"에게 말하기, 과장 없음).
 2. `python -m scripts.recent_titles guide_en` — 최근 영어 가이드 제목과 "피할 것".
 3. **이미 올라간 영어 글 전부**: `https://fermata.it.kr/wp-json/wp/v2/posts?categories=153&per_page=100&_fields=title,link,slug`
@@ -129,7 +129,7 @@ KEPCO 기사가 난 날에 쓴다고 더 오르지 않습니다.
 - `minimum-investment-korean-stocks` — 최소 매수 단위와 소수점 거래 (korean stocks fractional shares)
 
 **B. 세금·비용 (tax, cost)**
-- `korean-dividend-withholding-for-us-residents` — 22% 대 조약 15% (korea dividend withholding tax)
+- `korean-dividend-withholding-for-us-residents` — 22% 대 조약 15%, 지방소득세를 더하면 16.5% (korea dividend withholding tax)
 - `korea-us-tax-treaty-forms` — W-8BEN과 실질귀속자 입증서류, 2월 마감 (korea tax treaty w-8ben)
 - `korea-capital-gains-tax-for-foreigners` — 25% 보유 기준과 비과세 (korea capital gains tax foreigners)
 - `reclaiming-korean-withholding-tax` — 과다 원천징수 환급 절차 (korea withholding tax refund)

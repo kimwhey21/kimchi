@@ -154,14 +154,12 @@ class RoutinePrecheckTest(unittest.TestCase):
         self.repo.price("kr", "2026-09-23")
         self.repo.doc("kr", "2026-09-23", "어제 제목")
         text = self._build("kr", "2026-09-24T16:25")
-        self.assertEqual(text.splitlines()[0], "종료: 새 거래일 시세 없음(거래일 2026-09-23)")
+        self.assertTrue(text.splitlines()[0].startswith("종료: 새 거래일 시세 없음(거래일 2026-09-23)"), text.splitlines()[0])
         self.assertIn("원고 editorial/kr_2026-09-24.json: 없음", text)
+        # 2026-10-06(감사 F-084): --allow-stale이어도 루틴이 시세를 직접 받지 않으므로 종료한다
         text = self._build("kr", "2026-09-24T17:40", allow_stale=True)
-        lines = text.splitlines()
-        self.assertTrue(lines[0].startswith("계속: kr 거래일 2026-09-24 — 시세 없음(최신 2026-09-23, --allow-stale)"), lines[0])
-        self.assertTrue(lines[1].startswith("경고: 시세 파일 거래일 2026-09-23 ≠ 다루는 거래일 2026-09-24"), lines[1])
-        self.assertIn("--fetch-only", lines[1])
-        self.assertIn("[editorial/kr_2026-09-23.json]", text)     # 어제 원고 요약은 그대로 나온다
+        self.assertTrue(text.splitlines()[0].startswith("종료: 새 거래일 시세 없음(거래일 2026-09-23)"), text.splitlines()[0])
+        self.assertNotIn("--fetch-only", text)
 
     def test_no_price_file_at_all(self) -> None:
         text = self._build("kr", "2026-09-23T16:25")
@@ -181,7 +179,7 @@ class RoutinePrecheckTest(unittest.TestCase):
         """월요일 아침 KST: 어제(일)는 미국장이 없다 — 최신 파일은 금요일 → 종료."""
         self.repo.price("us", "2026-09-25")
         text = self._build("us", "2026-09-28T07:30")
-        self.assertEqual(text.splitlines()[0], "종료: 새 거래일 시세 없음(거래일 2026-09-25)")
+        self.assertTrue(text.splitlines()[0].startswith("종료: 새 거래일 시세 없음(거래일 2026-09-25)"))
 
     # ── 프리뷰 ───────────────────────────────────────────────────────────────
     def _preview_fixture(self) -> None:

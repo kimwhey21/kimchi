@@ -144,7 +144,8 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
 # ── 두 번째 원천(2026-10-05) ───────────────────────────────────────────────────────
 # 야후 하나로 받던 종가를 공식 원천과 맞춘다 — 개별 종목·ETF는 나스닥 공식 일별 종가(12개 파일 240건이 야후와 모두 같았다),
 # 나스닥 종합은 나스닥, 다우는 FRED(미국 18:02 ET에 올라온다). S&P500(20:01 ET)·VIX는 수집 시각(18:20 ET)에 아직 없어
-# 그날 저녁 close_check가 맞춘다. 금리·금·원유·러셀은 두 번째 원천이 없다(야후 하나 — 대신 빼지 않는다).
+# 그날 밤 증명서(close_check.us_recheck)가 공식 원천으로 다시 맞춘다. 러셀·금리·VIX는 Cboe, 그날 줄이 아직 없으면 CNBC 마감 값,
+# 금·원유는 결제가 셋 중 둘(2026-10-06 갱신 — 전에는 '두 번째 원천이 없다'였다).
 _NASDAQ = "https://api.nasdaq.com/api/quote/{symbol}/historical"
 _NASDAQ_HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/141 Safari/537.36",
                    "Accept": "application/json"}

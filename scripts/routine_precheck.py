@@ -480,13 +480,9 @@ def build(market: str, *, root: Path | None = None, now: dt.datetime | None = No
                    f"오늘 밤 프리뷰 없음({manuscript_rel}) → 씁니다")
     elif price_date != target_s:
         lines.append(f"새 거래일 시세: 없음 — 최신 파일의 거래일은 {price_date}(휴장이거나 수집 실패)")
-        if allow_stale:
-            warnings.append(f"시세 파일 거래일 {price_date} ≠ 다루는 거래일 {target_s} — 휴장이면 보고하고 종료, 수집 실패면 "
-                            f"장 마감 뒤에만 자구책(`python3 -m src.main --market {key} --fetch-only`)으로 받는다(--allow-stale).")
-            verdict = (f"계속: {market} 거래일 {target_s} — 시세 없음(최신 {price_date}, --allow-stale), "
-                       f"원고 없음({manuscript_rel})")
-        else:
-            verdict = f"종료: 새 거래일 시세 없음(거래일 {price_date})"
+        # 루틴은 시세를 직접 받지 않는다(2026-10-06, 감사 F-084) — 예전 `--allow-stale`은 '계속'으로 넘겨 샌드박스에서 받게 했다.
+        # 이제 두 경우 모두 종료한다(휴장이면 쓸 글이 없고, 수집 실패면 Actions·예비 누르기가 재시도하고 증명서가 알린다).
+        verdict = f"종료: 새 거래일 시세 없음(거래일 {price_date}) — 휴장이거나 수집 실패. 루틴은 시세를 직접 받지 않는다"
     else:
         lines.append(f"새 거래일 시세: 있음(거래일 {price_date} = 다루는 거래일)")
         verdict = (f"계속: {market} 거래일 {target_s} — 시세 있음({stats['n']}종목·수급 {stats['flows']}), "

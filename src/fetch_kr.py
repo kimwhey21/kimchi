@@ -80,7 +80,7 @@ def _fetch_naver_item_quotes(codes: list[str], failed: list[str] | None = None) 
     왜 필요한가: FinanceDataReader(네이버 fchart) 일봉의 오늘 행은 15:30 이후에도 NXT 애프터마켓(~20:00)을 따라
     계속 움직입니다. 16:20~16:40에 세 번 수집한 9/23 파일은 27종목 중 14종목이 서로 달랐고, 발행된 등락률은
     KRX 기준(삼성전자 3.62%)도 NXT 확정 기준(3.24%)도 아닌 제3의 값(2.70%)이었습니다. 폴링 응답의 ``nv``는
-    15:30~16:00에는 정규장 종가로 멈춰 있지만 **16:00부터 KRX 시간외 단일가를 따라 다시 움직이고**, 넥스트레이드 애프터마켓
+    15:30~16:00에는 정규장 종가로 멈춰 있지만 **16:00부터 KRX 애프터마켓(9/14부터 16~20시 실시간)을 따라 다시 움직이고**, 넥스트레이드 애프터마켓
     때문에 ``ms``는 20:00까지 OPEN입니다(2026-09-28 확인) — 그래서 그 창에 찍어 둔 사진(_krx_close_snapshot)을 먼저 씁니다.
     ``pcv``는 KRX 전일 종가, ``sv``는 그날 기준가(배당락·권리락 날만 pcv와 다르다), ``cr``은 언론·HTS가 쓰는 그 등락률(기준가 대비)입니다.
     한 요청에 여러 종목을 묶어 보냅니다.
@@ -248,7 +248,7 @@ def pick_base(close: float, bases: dict[str, float], prev_close: float | None = 
 def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | None) -> dict:
     """오늘 KRX 정규장 종가를 **서로 다른 두 원천**으로 확인한다(2026-10-05). 빼지 않는다 — 받거나, 못 받으면 멈추고 이유를 말한다.
 
-    - 네이버: 15:31~15:59에 찍은 사진(`nv`, 기준가 `sv`·없으면 `pcv`). 16:00부터 폴링 `nv`는 시간외 단일가를 따라 움직여 쓰지 않는다.
+    - 네이버: 15:31~15:59에 찍은 사진(`nv`, 기준가 `sv`·없으면 `pcv`). 16:00부터 폴링 `nv`는 KRX 애프터마켓을 따라 움직여 쓰지 않는다.
     - 다음: `regularTradePrice`·`basePrice`(날짜가 오늘일 때만).
     둘 다 있으면 종가와 기준가가 같아야 한다 — 다르면 셋째 근거로 가린다(종가는 야후 `yahoo_close`와 같은 쪽, 기준가는 `pick_base`).
     가리지 못하면 멈춘다 — 옛 값이나 한 원천 값으로 내보내지 않는다(2026-10-05 사장님: 데이터가 정확해야 한다). 하나만 있으면 그것을 쓰고(다음 날 아침
@@ -358,7 +358,7 @@ def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: s
     from src.stock_db import close_window
     window = close_window(dt.date.today())     # 수능일은 16:31~16:59 (2026-10-05)
     if window[0] <= now < window[1]:
-        # 창 안에서 손으로 돌리면 지금 폴링이 곧 사진이다. 창 밖의 폴링은 시간외 단일가라 쓰지 않는다(2026-09-28).
+        # 창 안에서 손으로 돌리면 지금 폴링이 곧 사진이다. 창 밖의 폴링은 애프터마켓 값이라 쓰지 않는다(2026-09-28).
         live = _fetch_naver_item_quotes([t for t in watchlist if str(t) not in snap])
         snap = {**live, **snap}
     out: dict[str, dict] = {}
