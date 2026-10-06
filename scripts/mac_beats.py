@@ -102,6 +102,26 @@ def check_worker(now: dt.datetime | None = None, count: int | None = -1) -> str 
     return None
 
 
+def telegram_alive() -> str | None:
+    """운영 텔레그램 봇이 살아 있나 — 막혔으면 이유(감사 F-057: 알림 통로가 텔레그램 하나라 막히면 모든 경보가 사라진다)."""
+    from src import alert
+    if not alert.configured():
+        return "텔레그램 설정(.env)이 없습니다"
+    import os
+    import requests
+    try:
+        body = requests.get(f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/getMe", timeout=20).json()
+    except (requests.RequestException, ValueError) as exc:
+        return f"텔레그램에 닿지 못했습니다({exc.__class__.__name__})"
+    return None if body.get("ok") else f"텔레그램 봇이 거절했습니다({str(body.get('description'))[:80]})"
+
+
+def local_notice(text: str) -> None:
+    """맥 화면 알림 — 텔레그램이 막혔을 때의 두 번째 통로."""
+    safe = text.replace('"', "'")[:200]
+    subprocess.run(["osascript", "-e", f'display notification "{safe}" with title "페르마타 경보"'], capture_output=True)
+
+
 def _run(*args: str) -> subprocess.CompletedProcess:
     return subprocess.run([GIT, *args], cwd=ROOT, text=True, capture_output=True)
 
@@ -117,7 +137,13 @@ def main(argv: list[str] | None = None) -> int:
         print(worker)
         if not args.dry_run:
             from src import alert
-            alert.send(worker, "fail")
+            if not alert.send(worker, "fail"):
+                local_notice(worker)
+    dead = telegram_alive()
+    if dead:
+        print(f"[경고] {dead}")
+        if not args.dry_run:
+            local_notice(f"{dead} — 오늘 밤 증명서와 모든 경보가 오지 않습니다")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(f"맥 신호 {len(doc['beats'])}개, 네이버 오늘 {doc['posted']['naver_today']}편, 블로그스팟 오늘 {doc['posted']['blogger_today']}편")
