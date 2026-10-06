@@ -22,6 +22,9 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "state" / "mac_beats.json"
 NAVER_POSTED = Path.home() / ".market-brief-naver" / "posted.json"
 BLOGGER_POSTED = Path.home() / ".market-brief-google" / "blogger_posted.json"
+# 게시 직전 검사에서 막힌 원고(2026-10-06) — 증명서가 '안 올라간 것'과 '막아서 안 올린 것'을 가른다
+NAVER_BLOCKED = Path.home() / ".market-brief-naver" / "blocked.json"
+BLOGGER_BLOCKED = Path.home() / ".market-brief-google" / "blogger_blocked.json"
 GIT = "/usr/bin/git"
 
 
@@ -41,11 +44,14 @@ def posted_today(path: Path, day: dt.date) -> int:
 
 
 def build(now: dt.datetime | None = None, beats: dict[str, str] | None = None,
-          naver: Path = NAVER_POSTED, blogger: Path = BLOGGER_POSTED) -> dict:
+          naver: Path = NAVER_POSTED, blogger: Path = BLOGGER_POSTED,
+          naver_blocked: Path = NAVER_BLOCKED, blogger_blocked: Path = BLOGGER_BLOCKED) -> dict:
     now = now or dt.datetime.now(KST)
     return {"generated_at": now.isoformat(timespec="seconds"),
             "beats": beats if beats is not None else read_all(),
-            "posted": {"naver_today": posted_today(naver, now.date()), "blogger_today": posted_today(blogger, now.date())}}
+            "posted": {"naver_today": posted_today(naver, now.date()), "blogger_today": posted_today(blogger, now.date()),
+                       "naver_blocked_today": posted_today(naver_blocked, now.date()),
+                       "blogger_blocked_today": posted_today(blogger_blocked, now.date())}}
 
 
 TOKEN = Path.home() / ".github_dispatch_token"

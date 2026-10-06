@@ -180,8 +180,11 @@ class MacBeatsTest(unittest.TestCase):
             naver.write_text(json.dumps({"a": {"at": "2026-10-06T07:31:00"}, "b": {"at": "2026-10-05T19:31:00"}}), encoding="utf-8")
             blogger = Path(tmp) / "blogger_posted.json"
             blogger.write_text(json.dumps({"x": {"at": "2026-10-06T00:28:46"}}), encoding="utf-8")
-            doc = mac_beats.build(dt.datetime(2026, 10, 6, 23, 22, tzinfo=daily_proof.KST), beats={"naver_sync": "t"}, naver=naver, blogger=blogger)
-        self.assertEqual(doc["posted"], {"naver_today": 1, "blogger_today": 1})
+            blocked = Path(tmp) / "blocked.json"
+            blocked.write_text(json.dumps({"m": {"at": "2026-10-06T12:30:00", "why": "근거 없음"}}), encoding="utf-8")
+            doc = mac_beats.build(dt.datetime(2026, 10, 6, 23, 22, tzinfo=daily_proof.KST), beats={"naver_sync": "t"}, naver=naver, blogger=blogger,
+                                  naver_blocked=blocked, blogger_blocked=Path(tmp) / "none.json")
+        self.assertEqual(doc["posted"], {"naver_today": 1, "blogger_today": 1, "naver_blocked_today": 1, "blogger_blocked_today": 0})
         self.assertEqual(doc["beats"], {"naver_sync": "t"})
 
     def test_state_file_is_tracked(self) -> None:
@@ -195,6 +198,9 @@ class ScreenAndMessageTest(unittest.TestCase):
         self.assertEqual(daily_proof.page_quote("<p>nothing</p>"), (None, None))
         home = 'KOSPI · Oct 2 close</span><b>7,003.74</b>'
         self.assertEqual(daily_proof.home_kospi(home, 2026), ("2026-10-02", 7003.74))
+        # 1월 초에 홈이 아직 지난해 12월 날짜면 지난해로 읽는다(감사 F-150)
+        dec = home.replace("Oct 2", "Dec 30")
+        self.assertEqual(daily_proof.home_kospi(dec, dt.date(2027, 1, 2))[0], "2026-12-30")
 
     def test_screen_issues_compare_page_with_daum(self) -> None:
         pages = {"/": 'KOSPI · Oct 2 close</span><b>7,003.74</b>',
@@ -205,7 +211,7 @@ class ScreenAndMessageTest(unittest.TestCase):
         daum = {"000660": [("2026-10-02", 1841000.0)], "207940": [("2026-10-02", 1354000.0)]}
         with mock.patch.object(daily_proof.fetch_kr, "_fetch_naver_index_daily", return_value=[("2026-10-02", 7003.74)]), \
                 mock.patch.object(daily_proof.fetch_kr, "_fetch_daum_days", side_effect=lambda c, rows=1: daum[c]):
-            issues, n = daily_proof.screen_issues(session, ["000660", "207940"], dt.datetime(2026, 10, 2, 23, 30, tzinfo=daily_proof.KST))
+            issues, n, _ok = daily_proof.screen_issues(session, ["000660", "207940"], dt.datetime(2026, 10, 2, 23, 30, tzinfo=daily_proof.KST))
         self.assertEqual(n, 3)
         self.assertEqual(len(issues), 1)
         self.assertIn("207940", issues[0])

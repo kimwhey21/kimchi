@@ -287,28 +287,40 @@ def page_quote(html: str) -> tuple[float | None, str | None]:
     return close, iso
 
 
-def home_kospi(html: str, year: int) -> tuple[str | None, float | None]:
+def home_kospi(html: str, today: "dt.date | int") -> tuple[str | None, float | None]:
+    """홈 띠의 코스피 날짜·값. 화면에는 연도가 없다 — 읽은 날짜가 오늘보다 뒤면 작년이다(1월 초에 'Dec 30'을 올해로 읽어 거짓 불일치,
+    감사 F-150)."""
     m = re.search(r"KOSPI · ([A-Z][a-z]{2} \d{1,2}) close</span><b>([\d,.]+)", html)
     if not m:
         return None, None
-    return dt.datetime.strptime(f"{m.group(1)} {year}", "%b %d %Y").date().isoformat(), float(m.group(2).replace(",", ""))
+    year = today if isinstance(today, int) else today.year
+    day = dt.datetime.strptime(f"{m.group(1)} {year}", "%b %d %Y").date()
+    if not isinstance(today, int) and day > today:
+        day = day.replace(year=year - 1)
+    return day.isoformat(), float(m.group(2).replace(",", ""))
 
 
-def screen_issues(session: requests.Session, codes: list[str], now: dt.datetime) -> tuple[list[str], int]:
-    """종목 페이지 표본과 홈 띠를 원천과 맞춘다 — (문제, 대조 건수)."""
-    issues, n = [], 0
+def screen_issues(session: requests.Session, codes: list[str], now: dt.datetime) -> tuple[list[str], int, int]:
+    """종목 페이지 표본과 홈 띠를 원천과 맞춘다 — (문제, 대조 건수, 맞은 건수).
+
+    종목 값은 다음 일별 시세와 15:3x 종가 사진 **둘 다**와 맞춘다(감사 F-051: 페이지와 같은 원천(다음) 하나와만 맞춰 보면 그 원천이
+    틀린 날 못 잡는다). 맞은 건수를 따로 센다 — 전에는 '건수 − 문제 수'라 막힌 페이지를 두 번 빼 음수가 나왔다(감사 F-166)."""
+    from src import stock_db
+    issues, n, ok = [], 0, 0
     fetch_kr._daum_down.clear()
     home = session.get(BASE + "/", headers=UA, timeout=60)
     if is_bot_challenge(home.text) or home.status_code == 403:
         return [f"본진 홈 HTTP {home.status_code}: {BLOCKED}"], 0
     try:
         rows = fetch_kr._fetch_naver_index_daily("KOSPI")
-        day, close = home_kospi(home.text, now.year)
+        day, close = home_kospi(home.text, now.date())
         n += 1
         if not rows:
             issues.append("네이버 코스피 목록이 비어 홈을 대조하지 못했습니다")
         elif day != rows[-1][0] or close is None or abs(close - rows[-1][1]) > 0.011:
             issues.append(f"홈 코스피 {day} {close} / 네이버 목록 {rows[-1][0]} {rows[-1][1]}")
+        else:
+            ok += 1
     except (requests.RequestException, ValueError) as exc:
         issues.append(f"홈 코스피 대조 실패: {exc}")
     for code in codes:
@@ -329,7 +341,13 @@ def screen_issues(session: requests.Session, codes: list[str], now: dt.datetime)
             issues.append(f"{code}: 페이지에서 가격·날짜를 못 읽었습니다(HTTP {r.status_code})")
         elif day != daum[-1][0] or abs(close - daum[-1][1]) > 0.5:
             issues.append(f"{code}: 화면 {day} ₩{close:,.0f} / 다음 {daum[-1][0]} ₩{daum[-1][1]:,.0f}")
-    return issues, n
+        else:
+            snap = (stock_db.snapshot_close(day) or {}).get(code)
+            if snap and abs(close - float(snap[0])) > 0.5:
+                issues.append(f"{code}: 화면 {day} ₩{close:,.0f} / 15시 반 종가 사진 ₩{float(snap[0]):,.0f}")
+            else:
+                ok += 1
+    return issues, n, ok
 
 
 def sample_codes(k: int = SCREEN_SAMPLE, root: Path = ROOT, seed: int | None = None) -> list[str]:
@@ -460,9 +478,9 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
 
     # 3. 화면
     if screens:
-        s_issues, s_n = screen_issues(session, sample_codes(root=root), now)
+        s_issues, s_n, s_ok = screen_issues(session, sample_codes(root=root), now)
         issues += s_issues
-        parts["화면"] = f"{s_n - len(s_issues)}/{s_n}"
+        parts["화면"] = f"{s_ok}/{s_n}"
         if s_n == 0:
             issues.append("화면 대조 0건")
 
@@ -481,7 +499,9 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
         n_mag = len(list((root / "editorial" / "magazine").glob(f"{day.isoformat()}_*.json")))
         # 잡지는 07:30·12:30·19:30에 올라간다 — 마지막 편이 올라간 뒤(20:00)에만 센다(낮에 손으로 돌리면 늘 2편이다)
         if n_mag and now.time() >= dt.time(20, 0) and int(posted.get("naver_today") or 0) < min(3, n_mag):
-            issues.append(f"네이버 잡지 게시 {posted.get('naver_today')}편 — 오늘 원고 {n_mag}편")
+            blocked = int(posted.get("naver_blocked_today") or 0)
+            issues.append(f"네이버 잡지 게시 {posted.get('naver_today')}편 — 오늘 원고 {n_mag}편"
+                          + (f"(게시 직전 검사에서 막은 원고 {blocked}편)" if blocked else ""))
 
     # 5. 꼬리표 — 두 시장 모두(감사 F-167: 전에는 한국장만 보고 0/0이면 말이 없었다)
     us_doc_tags = json.loads(us_files[-1].read_text(encoding="utf-8")) if us_files else None
@@ -505,14 +525,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--no-screens", action="store_true", help="본진 화면 대조를 건너뛴다(점검용)")
     args = parser.parse_args(argv)
     now = dt.datetime.now(KST)
-    day = dt.date.fromisoformat(args.day) if args.day else now.date()
+    # 자정을 넘겨 돈 증명서(워커 00:05 재실행·늦게 온 깃허브 예약)는 전날 증명서다 — 전에는 '다음 날' 것이 됐다(감사 F-190)
+    day = dt.date.fromisoformat(args.day) if args.day else (now.date() - dt.timedelta(days=1) if now.hour < 3 else now.date())
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
     if not token:
         try:
             token = subprocess.run(["gh", "auth", "token"], capture_output=True, text=True, timeout=20).stdout.strip() or None
         except (OSError, subprocess.SubprocessError):
             token = None
-    text, issues, parts = build(day, now, token=token, screens=not args.no_screens)
+    as_of = now if day == now.date() else dt.datetime.combine(day, dt.time(23, 59), tzinfo=KST)   # 전날 증명서는 그날 끝 기준으로
+    text, issues, parts = build(day, as_of, token=token, screens=not args.no_screens)
     if issues:
         issues, state = mark_repeats(day, issues)
         text = compose(day, parts, issues)
