@@ -93,13 +93,25 @@ def collect(week_ending: dt.date) -> dict:
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
         if _in(doc.get("date", ""), start, end):
             features.append(_post_stats(doc))
-    # 빠진 날: 시세 파일은 있는데 원고가 없는 거래일
+    # 빠진 날: 휴장일을 뺀 평일마다 시세 파일과 원고를 따로 본다(2026-10-06, 감사 F-115: 전에는 '시세 파일은 있는데 원고가 없는 날'만
+    # 세어 시세 파일 자체가 없는 9/28·29를 '빠진 거래일 없음'으로 적었다)
+    from src.daily_proof import US_HOLIDAYS
+    from src.stock_db import KRX_HOLIDAYS
     missed = []
-    for market in ("kr", "us"):
-        for path in glob.glob(str(ROOT / "data" / f"price_{market}_*.json")):
-            day = Path(path).stem.split("_")[-1]
-            if _in(day, start, end) and not (ROOT / "editorial" / f"{market}_{day}.json").exists():
-                missed.append(f"{market} {day}")
+    day = dt.date.fromisoformat(start) if isinstance(start, str) else start
+    last = dt.date.fromisoformat(end) if isinstance(end, str) else end
+    while day <= min(last, dt.date.today() - dt.timedelta(days=1)):   # 오늘은 아직 끝나지 않았다
+        if day.weekday() < 5:
+            for market, closed in (("kr", KRX_HOLIDAYS), ("us", US_HOLIDAYS)):
+                if day.isoformat() in closed:
+                    continue
+                has_price = (ROOT / "data" / f"price_{market}_{day.isoformat()}.json").exists()
+                has_doc = (ROOT / "editorial" / f"{market}_{day.isoformat()}.json").exists()
+                if not has_price:
+                    missed.append(f"{market} {day.isoformat()} 시세 파일 없음")
+                elif not has_doc:
+                    missed.append(f"{market} {day.isoformat()} 원고 없음")
+        day += dt.timedelta(days=1)
     bench = {}
     bs = ROOT / "data" / "benchmark_stats.json"
     if bs.exists():
