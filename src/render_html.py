@@ -81,9 +81,28 @@ def _display_name(entry: dict, lang: str) -> str:
     return entry.get("ticker") or name_en or entry["name"]
 
 
+def _change_text(entry: dict, lang: str) -> str:
+    from src import data_graphics
+    previous = data_graphics._LANG
+    data_graphics._LANG = lang
+    try:
+        return data_graphics.change_label(entry)
+    finally:
+        data_graphics._LANG = previous
+
+
+def _price_text(entry: dict, unit: str) -> str:
+    """값 표기 — 원화 주가는 소수 없이, 원/달러는 소수 한 자리, 나머지는 두 자리(전에는 '276,000.0 KRW'·'1,347.0 KRW', 감사 F-131)."""
+    value = float(entry["price"])
+    if str(entry.get("unit") or "") == "원":
+        digits = 1 if "USD" in str(entry.get("ticker") or "") else 0
+    else:
+        digits = 2 if abs(value) < 100000 else 0
+    return f"{value:,.{digits}f}{unit}"
+
+
 def _to_card(entry: dict, lang: str = "ko", reference_date: str | None = None) -> dict:
     direction = "up" if entry["change_pct"] >= 0 else "down"
-    sign = "+" if entry["change_pct"] >= 0 else ""
     unit = entry.get("unit", "")
     if lang == "en":
         # 시세 파일의 단위는 한국어판 기준으로 들어 있습니다. 영어판에 그대로 쓰면
@@ -92,9 +111,10 @@ def _to_card(entry: dict, lang: str = "ko", reference_date: str | None = None) -
     return {
         "name": _display_name(entry, lang),
         "ticker": entry.get("ticker", ""),
-        "price": f'{entry["price"]:,}{unit}',
+        "price": _price_text(entry, unit),
         "change_pct": entry["change_pct"],
-        "change_label": f'{sign}{entry["change_pct"]}%',
+        # 금리는 %p(영어 pp), 반올림해 0이면 부호 없이 — 전에는 10년물 5.28%에 '+0.76%'(실제 +0.04%p)·'+-0.0%'가 나갔다(감사 F-080·F-043)
+        "change_label": _change_text(entry, lang),
         "direction": direction,
         "as_of": entry.get("as_of_label_en" if lang == "en" else "as_of_label") or (
             (f"As of {entry['trading_date']}" if lang == "en" else f"{entry['trading_date']} 기준")

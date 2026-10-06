@@ -103,3 +103,22 @@ class DatedNumbersTest(unittest.TestCase):
     def test_numbers_not_right_after_the_date_are_left_alone(self) -> None:
         body = "코스피는 전 거래일(9월 23일, 7,080.92) 대비 2.70% 하락했고, 삼성전자는 3.59% 하락했습니다."
         self.assertEqual(ef.dated_issues(self._doc(body), data_dir=self._folder()), [])
+
+
+class DisplayTest(unittest.TestCase):
+    """화면 표기(감사 F-043·F-080·F-131·F-132)."""
+
+    def test_signed_never_prints_minus_zero(self) -> None:
+        from src.data_graphics import signed
+        self.assertEqual((signed(-0.001), signed(0.0), signed(-0.004, 1), signed(1.234), signed(-5.0, 1)),
+                         ("0.00", "0.00", "0.0", "+1.23", "-5.0"))
+
+    def test_html_card_shows_yields_in_points_and_clean_prices(self) -> None:
+        from src import render_html
+        macro = US["price_data"]["macro"]
+        card = render_html._to_card(macro["^TNX"], "en")
+        self.assertTrue(card["change_label"].endswith(" pp"), card)
+        stock = render_html._to_card({"name": "삼성전자", "price": 276000.0, "change_pct": -0.001}, "ko")
+        self.assertEqual((stock["price"], stock["change_label"]), ("276,000", "0.00%"))
+        fx = render_html._to_card(KR["price_data"]["macro"]["USD/KRW"], "en")
+        self.assertEqual(fx["price"], "1,347.0 KRW")

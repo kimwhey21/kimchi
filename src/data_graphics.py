@@ -183,6 +183,14 @@ def localized(price_data: dict | None, lang: str) -> dict | None:
     return out
 
 
+def signed(value: float, digits: int = 2) -> str:
+    """부호 붙인 숫자. 반올림해 0이면 부호 없이 '0.00' — 전에는 '-0.00%'·'+-0.0%'가 나갔다(2026-10-06, 감사 F-043)."""
+    rounded = round(float(value), digits)
+    if rounded == 0:
+        return f"{0:.{digits}f}"
+    return f"{rounded:+.{digits}f}"
+
+
 def change_label(entry: dict, change: float | None = None) -> str:
     """등락 표기. 값 자체가 %인 항목(금리)은 %p 변동으로 — '5.11% 금리가 3.04% 올랐다'는 독자가 3%포인트로 읽는다(2026-10-06,
     감사 F-035: 23편). %p = 오늘 값 − 오늘 값 ÷ (1 + 등락률)."""
@@ -190,8 +198,8 @@ def change_label(entry: dict, change: float | None = None) -> str:
     if str(entry.get("unit") or "").strip() == "%" and entry.get("price") is not None:
         price = float(entry["price"])
         pp = price - price / (1 + pct / 100)
-        return f"{pp:+.2f} pp" if _LANG == "en" else f"{pp:+.2f}%p"
-    return f"{pct:+.2f}%"
+        return f"{signed(pp, 2)} pp" if _LANG == "en" else f"{signed(pp, 2)}%p"
+    return f"{signed(pct, 2)}%"
 
 
 def _fmt(value: float, unit: str = "") -> str:
@@ -309,10 +317,10 @@ def sector_bars(price_data: dict, output_path: Path, title: str = "업종별 등
             d.rounded_rectangle([mid - width, y + 8, mid, y + 34], 5, fill=color)
         d.text((32, y + 12), sector, font=_font(19, True), fill=INK)
         # 값 라벨은 항상 막대 오른쪽 바깥 한 자리에 고정해 서로 겹치지 않게 합니다.
-        d.text((mid + half + 16, y + 12), f"{avg:+.2f}%", font=_font(19, True), fill=color)
+        d.text((mid + half + 16, y + 12), f"{signed(avg, 2)}%", font=_font(19, True), fill=color)
         lead = max(members, key=lambda e: abs(e["change_pct"]))
         d.text((mid + half + 110, y + 14),
-               f"{lead['name']} {lead['change_pct']:+.2f}%", font=_font(16), fill=SUB)
+               f"{lead['name']} {signed(lead['change_pct'], 2)}%", font=_font(16), fill=SUB)
     img.save(output_path, format="PNG", optimize=True)
     return output_path
 
@@ -395,7 +403,7 @@ def two_day_compare(price_data: dict, output_path: Path, previous: dict | None =
                 d.rounded_rectangle([x0, y + 8, x0 + width, y + 30], 4, fill=color)
             else:
                 d.rounded_rectangle([x0 - width, y + 8, x0, y + 30], 4, fill=color)
-            label = f"{change:+.2f}%"
+            label = f"{signed(change, 2)}%"
             d.text((x0 + 140, y + 10), label, font=_font(17, True), fill=color)
     img.save(output_path, format="PNG", optimize=True)
     return output_path
@@ -553,7 +561,7 @@ def _movers_bars(picked: list[dict], output_path: Path, title: str) -> Path:
         y = top + i * row_h
         v = float(e["change_pct"]); c = _color(v)
         d.text((48, y + 6), str(e["name"])[:14], font=_font(20, True), fill=INK)
-        label = f"{v:+.2f}%"; lf = _font(20, True)
+        label = f"{signed(v, 2)}%"; lf = _font(20, True)
         if v >= 0:
             bl = span * v / mx
             d.rounded_rectangle([zx, y, zx + max(bl, 4), y + 34], 6, fill=c)
@@ -578,7 +586,7 @@ def _movers_tiles(picked: list[dict], output_path: Path, title: str) -> Path:
         v = float(e["change_pct"]); c = _color(v)
         d.rounded_rectangle([x, y, x + 290, y + 140], 14, fill=PANEL, outline=LINE)
         d.text((x + 20, y + 18), str(e["name"])[:14], font=_font(20, True), fill=INK)
-        d.text((x + 20, y + 52), f"{v:+.2f}%", font=_font(40, True), fill=c)
+        d.text((x + 20, y + 52), f"{signed(v, 2)}%", font=_font(40, True), fill=c)
         d.text((x + 20, y + 106), _fmt(float(e["price"]), _stock_unit(e)), font=_font(15), fill=SUB)
     img.save(output_path, format="PNG", optimize=True)
     return output_path
@@ -597,11 +605,11 @@ def _movers_table(picked: list[dict], output_path: Path, title: str) -> Path:
         v = float(e["change_pct"]); p5 = _pct_over(e, 5)
         d.text((48, y), str(e["name"])[:14], font=_font(20, True), fill=INK)
         d.text((420, y), _fmt(float(e["price"]), _stock_unit(e)), font=_font(19), fill=INK)
-        d.text((600, y), f"{v:+.2f}%", font=_font(20, True), fill=_color(v))
+        d.text((600, y), f"{signed(v, 2)}%", font=_font(20, True), fill=_color(v))
         if p5 is None:
             d.text((760, y), "—", font=_font(19), fill=SUB)
         else:
-            d.text((760, y), f"{p5:+.1f}%", font=_font(19), fill=_color(p5))
+            d.text((760, y), f"{signed(p5, 1)}%", font=_font(19), fill=_color(p5))
         d.line([(48, y + 38), (W - 48, y + 38)], fill=LINE, width=1)
     img.save(output_path, format="PNG", optimize=True)
     return output_path
@@ -719,7 +727,7 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
     while d.textlength(name, font=nf) > 420 and nf.size > 26:
         nf = _font(nf.size - 4, True)
     d.text((60, 88), name, font=nf, fill=INK)
-    d.text((60, 158), f"{change:+.2f}%", font=_font(68, True), fill=color)
+    d.text((60, 158), f"{signed(change, 2)}%", font=_font(68, True), fill=color)
     price = _fmt(float(picked["price"]), _stock_unit(picked))
     d.text((60, 240), price, font=_font(20), fill=SUB)
 
@@ -737,7 +745,7 @@ def stock_spotlight(price_data: dict, output_path: Path, ticker: str | None = No
             elif fixed:
                 d.text((x, y + 24), str(value), font=_font(28, True), fill=fixed)
             else:
-                d.text((x, y + 24), f"{value:+.1f}%", font=_font(28, True), fill=_color(float(value)))
+                d.text((x, y + 24), f"{signed(value, 1)}%", font=_font(28, True), fill=_color(float(value)))
     elif style == "history":
         lo, hi = min(closes), max(closes)
         pts = [(x0 + (x1 - x0) * i / (len(closes) - 1), y1 - (y1 - y0) * (c - lo) / (hi - lo or 1))
@@ -826,8 +834,8 @@ def price_history(price_data: dict, output_path: Path, ticker: str, title: str =
     fmt = "{:,.0f}" if abs(closes[-1]) >= 10000 else "{:,.2f}"
     name = str(entry.get("name"))
     title = title or (f"{name}, last 3 months" if _LANG == "en" else f"{name}, 최근 3개월")
-    subtitle = subtitle or (f"{dates[-1]} close {fmt.format(closes[-1])}{unit} ({change:+.2f}%)" if _LANG == "en"
-                            else f"{dates[-1]} 종가 {fmt.format(closes[-1])}{unit} ({change:+.2f}%)")
+    subtitle = subtitle or (f"{dates[-1]} close {fmt.format(closes[-1])}{unit} ({signed(change, 2)}%)" if _LANG == "en"
+                            else f"{dates[-1]} 종가 {fmt.format(closes[-1])}{unit} ({signed(change, 2)}%)")
 
     h = 600
     img = Image.new("RGB", (W, h), BG)

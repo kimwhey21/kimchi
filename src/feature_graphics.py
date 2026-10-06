@@ -20,7 +20,7 @@ from PIL import Image, ImageDraw
 
 from src.data_graphics import (
     BG, INK, SUB, UP, DOWN, FLAT, PANEL, LINE, W,
-    ensure_korean_font, korean_font,
+    ensure_korean_font, korean_font, signed,
 )
 
 
@@ -103,7 +103,7 @@ def gap_bars(rows: list[dict], output_path: Path,
         draw.rectangle([center - left, y + 6, center, y + 38], fill=DOWN)
         draw.rectangle([center, y + 6, center + right, y + 38], fill=UP)
         left_text = f"{row['down_pct']:.1f}{unit}"
-        right_text = f"+{row['upside_pct']:.1f}{unit}"
+        right_text = f"{signed(row['upside_pct'], 1)}{unit}"   # 전에는 '+'를 고정으로 붙여 음수면 '+-5.0'이 됐다(감사 F-132)
         left_width = draw.textlength(left_text, font=korean_font(18, bold=True))
         # 왼쪽 값이 이름 칸을 침범하면 막대 안쪽에 씁니다. 밖에 쓰면 이름이
         # 가려져 어느 줄인지 못 읽습니다(2026-09-07 실측).
@@ -364,7 +364,7 @@ def sector_breadth(rows: list[dict], output_path: Path,
     scale = max(abs(r["change_pct"]) for r in rows) or 1.0
 
     for row in rows:
-        color = UP if row["change_pct"] > 0 else DOWN
+        color = UP if row["change_pct"] > 0 else (DOWN if row["change_pct"] < 0 else FLAT)   # 보합은 하락색이 아니다(감사 F-132)
         draw.text((60, y + 6), row["name"][:12], font=korean_font(19, bold=True), fill=INK)
         length = int(span * abs(row["change_pct"]) / scale)
         if row["change_pct"] >= 0:
