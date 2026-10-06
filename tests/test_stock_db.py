@@ -605,7 +605,7 @@ class KrxPricesTest(unittest.TestCase):
         self.assertTrue(any("야후 1개" in n for n in notes))
         # 2026-10-06: 하나 남은 원천을 야후가 확인해 주지 않으면 올리지 않는다
         problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": []}, {"2026-10-02": {"000660": [1841000, 1833000]}},
-                                    "2026-10-02", third=lambda c, d: None)
+                                    "2026-10-02", third=lambda c, d: None, naver_basic=lambda c, d: None)
         self.assertEqual(len(problems), 1)
 
     def test_whole_source_missing_stops(self):
@@ -680,6 +680,24 @@ class DaumHaltedTest(unittest.TestCase):
         row = {"code": "001470", "close": 5820.0, "mcap": 1.0}
         sdb.apply_krx([row], {"001470": rows}, {"2026-10-02": {"001470": [5820, 5820]}})
         self.assertEqual((row["pct"], row["chg"], row["volume"]), (0.0, 0.0, 0.0))
+
+
+class DaumUnfinishedDayTest(unittest.TestCase):
+    def test_todays_row_before_the_close_is_dropped(self):
+        """2026-10-07 07:50: 다음이 장 전에 '전일 종가·거래량 0'인 오늘 줄을 줬다 — 마감 전에는 버리고, 마감 뒤에는 쓴다."""
+        from unittest import mock
+        body = {"data": [
+            {"date": "2026-10-06 00:00:00", "tradePrice": 272000.0, "prevClosingPrice": 276000.0, "accTradeVolume": 12671704},
+            {"date": "2026-10-07 00:00:00", "tradePrice": 272000.0, "prevClosingPrice": 272000.0, "accTradeVolume": 0}]}
+        for now, want in ((dt.datetime(2026, 10, 7, 7, 50, tzinfo=sdb.KST), ["2026-10-06"]),
+                          (dt.datetime(2026, 10, 7, 11, 0, tzinfo=sdb.KST), ["2026-10-06"]),
+                          (dt.datetime(2026, 10, 7, 17, 5, tzinfo=sdb.KST), ["2026-10-06", "2026-10-07"])):
+            daum = sdb.Daum(mock.Mock(), now=now)
+            with mock.patch.object(sdb, "_get", return_value=mock.Mock(json=lambda: body)), mock.patch.object(sdb.time, "sleep"):
+                self.assertEqual([r["d"] for r in daum.days("005930", 2)], want, now)
+        # 수능일은 16:30에 닫는다 — 16:00의 오늘 줄은 아직 종가가 아니다
+        self.assertTrue(sdb.unfinished("2026-11-19", dt.datetime(2026, 11, 19, 16, 0, tzinfo=sdb.KST))
+                        if "2026-11-19" in sdb.KRX_LATE_CLOSE else True)
 
 
 class KrxRatiosTest(unittest.TestCase):

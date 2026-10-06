@@ -49,14 +49,14 @@ class FetchCarriesHistoryTest(unittest.TestCase):
         self.assertEqual(len(result["history"]["close"]), price_history.DAYS)
 
     def test_lagging_index_append_reaches_history(self) -> None:
-        yesterday = (fetch_kr.dt.date.today() - fetch_kr.dt.timedelta(days=1)).isoformat()
+        yesterday = (fetch_kr._kst_today() - fetch_kr.dt.timedelta(days=1)).isoformat()
         entry = {"ticker": "KS11", "price": 6995.39, "change_pct": 4.61,
                  "series": [6687.21, 6995.39], "trading_date": yesterday,
                  "history": {"dates": ["2026-09-04", yesterday], "close": [6687.21, 6995.39]}}
         quote = {"ms": "CLOSE", "nv": 695452, "cv": -4087, "cr": -0.58, "cd": "KOSPI"}
         result = fetch_kr._apply_final_index_quote(entry, "KS11", quote)
         self.assertEqual(result["history"]["close"][-1], 6954.52)
-        self.assertEqual(result["history"]["dates"][-1], fetch_kr.dt.date.today().isoformat())
+        self.assertEqual(result["history"]["dates"][-1], fetch_kr._kst_today().isoformat())
 
 
 @unittest.skipUnless(data_graphics.has_korean_font(), "한글 폰트가 없어 렌더를 건너뜁니다")

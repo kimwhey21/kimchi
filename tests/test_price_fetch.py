@@ -29,7 +29,7 @@ class KoreanPriceFetchTests(unittest.TestCase):
             "price": 6779.87,
             "change_pct": -0.59,
             "series": [6820.02, 6779.87],
-            "trading_date": fetch_kr.dt.date.today().isoformat(),
+            "trading_date": fetch_kr._kst_today().isoformat(),
         }
         quote = {"cd": "KOSPI", "ms": "CLOSE", "nv": 683580, "cr": 0.23}
 
@@ -42,7 +42,7 @@ class KoreanPriceFetchTests(unittest.TestCase):
     def test_rejects_current_index_without_close_state(self):
         entry = {
             "series": [6820.02, 6779.87],
-            "trading_date": fetch_kr.dt.date.today().isoformat(),
+            "trading_date": fetch_kr._kst_today().isoformat(),
         }
 
         with self.assertRaisesRegex(ValueError, "ms=CLOSE"):
@@ -149,14 +149,14 @@ class LaggingIndexDailyBarTest(unittest.TestCase):
     """
 
     def _yesterday_entry(self) -> dict:
-        yesterday = (fetch_kr.dt.date.today() - fetch_kr.dt.timedelta(days=1)).isoformat()
+        yesterday = (fetch_kr._kst_today() - fetch_kr.dt.timedelta(days=1)).isoformat()
         return {"ticker": "KS11", "price": 6995.39, "change_pct": 4.61,
                 "series": [6562.72, 6579.48, 6687.21, 6995.39], "trading_date": yesterday}
 
     def test_appends_todays_close_when_the_daily_bar_lags(self) -> None:
         quote = {"ms": "CLOSE", "nv": 695452, "cv": -4087, "cr": -0.58, "cd": "KOSPI"}
         result = fetch_kr._apply_final_index_quote(self._yesterday_entry(), "KS11", quote)
-        self.assertEqual(result["trading_date"], fetch_kr.dt.date.today().isoformat())
+        self.assertEqual(result["trading_date"], fetch_kr._kst_today().isoformat())
         self.assertEqual(result["price"], 6954.52)
         self.assertEqual(result["change_pct"], -0.58)
         self.assertEqual(result["series"], [6579.48, 6687.21, 6995.39, 6954.52])
@@ -176,7 +176,7 @@ class LaggingIndexDailyBarTest(unittest.TestCase):
     def test_naver_basis_differs_from_krx_daily_bar(self) -> None:
         """2026-09-18: 일봉의 9/17 코스피 종가 6,724.34 ≠ 우리 9/17 파일(네이버 확정값) 6,715.41.
         네이버의 오늘 등락폭 +178.82는 6,715.41 기준이라 일봉 기준 등식은 절대 안 맞는다 — 우리 파일 기준으로도 본다."""
-        today = fetch_kr.dt.date.today()
+        today = fetch_kr._kst_today()
         d = lambda n: (today - fetch_kr.dt.timedelta(days=n)).isoformat()
         bar = {"ticker": "KS11", "price": 6724.34, "change_pct": 0.09, "series": [6717.97, 6724.34],
                "trading_date": d(1), "history": {"dates": [d(2), d(1)], "close": [6717.97, 6724.34]}}
@@ -194,7 +194,7 @@ class LaggingIndexDailyBarTest(unittest.TestCase):
 
     def test_three_day_lag_is_bridged_by_our_own_file(self) -> None:
         """2026-09-10: 일봉은 09-07에 멈췄는데 우리 파일에는 09-09 종가가 있다 — 그 이력으로 메운다."""
-        today = fetch_kr.dt.date.today()
+        today = fetch_kr._kst_today()
         d = lambda n: (today - fetch_kr.dt.timedelta(days=n)).isoformat()
         stale = {"ticker": "KS11", "price": 6995.39, "change_pct": 4.61, "series": [6687.21, 6995.39],
                  "trading_date": d(3), "history": {"dates": [d(4), d(3)], "close": [6687.21, 6995.39]}}
@@ -209,7 +209,7 @@ class LaggingIndexDailyBarTest(unittest.TestCase):
 
     def test_prior_file_older_than_the_bar_is_ignored(self) -> None:
         entry = self._yesterday_entry()
-        prior = {**entry, "trading_date": (fetch_kr.dt.date.today() - fetch_kr.dt.timedelta(days=5)).isoformat(),
+        prior = {**entry, "trading_date": (fetch_kr._kst_today() - fetch_kr.dt.timedelta(days=5)).isoformat(),
                  "history": {"dates": ["x"], "close": [1.0]}}
         quote = {"ms": "CLOSE", "nv": 695452, "cv": -4087, "cr": -0.58, "cd": "KOSPI"}
         self.assertEqual(fetch_kr._apply_final_index_quote(entry, "KS11", quote, prior=prior)["price"], 6954.52)
@@ -227,7 +227,7 @@ class PriorBranchCarriesChangePctTest(unittest.TestCase):
     """
 
     def test_change_pct_and_source_come_from_the_prior_file(self) -> None:
-        today = fetch_kr.dt.date.today().isoformat()
+        today = fetch_kr._kst_today().isoformat()
         stale = {"ticker": "KS11", "price": 7017.91, "change_pct": 0.09, "trading_date": "2026-09-22",
                  "series": [7007.72, 7017.91], "history": {"dates": ["2026-09-21", "2026-09-22"], "close": [7007.72, 7017.91]},
                  "data_source": "FinanceDataReader"}
@@ -268,7 +268,7 @@ class KrxCloseForStocksTest(unittest.TestCase):
     16:20~16:40에 세 번 받은 9/23 일봉은 27종목 중 14종목이 서로 달랐고(NXT 애프터마켓이 20:00까지 움직인다),
     발행된 삼성전자 등락률 2.70%는 KRX 기준 3.62%도 NXT 확정 3.24%도 아니었다. 2026-10-05부터는 못 받은 종목을 빼지 않는다.
     """
-    TODAY = fetch_kr.dt.date.today().isoformat()
+    TODAY = fetch_kr._kst_today().isoformat()
 
     def setUp(self) -> None:   # 원천이 하나만 남은 경우 야후가 같은 값을 준다고 친다(2026-10-06부터 야후 확인이 필요하다)
         _agreeing_yahoo(self)
@@ -377,7 +377,8 @@ class KrxCloseForStocksTest(unittest.TestCase):
                 patch.object(fetch_kr, "_fetch_daum_quote", side_effect=lambda c: daum.get(c) or {"date": "", "close": None, "base": None}), \
                 patch.object(fetch_kr, "_fetch_naver_item_quotes", side_effect=AssertionError("창 밖 폴링은 쓰지 않는다")), \
                 patch.object(fetch_kr.dt, "datetime", wraps=fetch_kr.dt.datetime) as fake:
-            fake.now.return_value = fetch_kr.dt.datetime(2026, 10, 6, 16, 20, tzinfo=fetch_kr.KST)
+            # 시험의 '오늘'(TODAY) 16:20 — 날짜를 박아 두면 그 다음 날부터 TODAY와 어긋난다(2026-10-07)
+            fake.now.return_value = fetch_kr.dt.datetime.combine(fetch_kr.dt.date.fromisoformat(self.TODAY), fetch_kr.dt.time(16, 20), tzinfo=fetch_kr.KST)
             return fetch_kr._apply_krx_closes(wl, self.TODAY, prev_day)
 
     def test_nothing_is_dropped_core_or_dynamic(self) -> None:

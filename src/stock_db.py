@@ -333,8 +333,9 @@ DAUM_TRIP = 5           # 다음이 연달아 이만큼 실패하면 이번 실�
 class Daum:
     """다음 금융 요청 — 연속 실패를 세다가 DAUM_TRIP번이면 멈춘다. 실패한 종목은 `failed`에 남는다."""
 
-    def __init__(self, session: requests.Session):
+    def __init__(self, session: requests.Session, now: dt.datetime | None = None):
         self.session, self.streak, self.down, self.failed = session, 0, None, []
+        self.now = now   # 시험용 — 없으면 지금(KST)
 
     def get(self, path: str, code: str, params: dict | None = None) -> dict | None:
         if self.down:
@@ -365,6 +366,8 @@ class Daum:
             if not base and r.get("change") == "EVEN" and not r.get("accTradeVolume"):
                 # 거래정지(2026-10-05 전 종목 시험: 삼부토건·진원생명과학 등) — 다음은 기준가를 0으로 준다. 체결이 없으니 가격 그대로·0%
                 base = r["tradePrice"]
+            if base and unfinished(str(r["date"])[:10], self.now):
+                continue   # 장이 끝나기 전의 오늘 줄 — 다음은 장 전부터 '전일 종가·거래량 0' 줄을 만든다(2026-10-07 07:50 전 종목이 이 줄로 읽혔다)
             if base:
                 out.append({"d": str(r["date"])[:10], "c": float(r["tradePrice"]), "base": float(base),
                             "o": r.get("openingPrice"), "h": r.get("highPrice"), "l": r.get("lowPrice"),
@@ -1037,6 +1040,12 @@ def next_holiday(today: dt.date) -> dict | None:
 
 
 KST = dt.timezone(dt.timedelta(hours=9))
+
+
+def unfinished(day: str, now: dt.datetime | None = None) -> bool:
+    """`day`가 오늘(KST)이고 그날 정규장이 아직 끝나지 않았으면 True — 그 줄의 가격은 종가가 아니다."""
+    now = (now or dt.datetime.now(KST)).astimezone(KST)
+    return day == now.date().isoformat() and now.time() < krx_hours(now.date())[1]
 
 
 def in_krx_session(now: dt.datetime | None = None) -> bool:
