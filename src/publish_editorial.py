@@ -514,6 +514,21 @@ MARKET_CATEGORY_IDS = {"kr": 684, "us": 685}   # Korea Close · Wall Street Clos
 KO_DAILY_STATUS = "private"
 
 
+def fact_blockers(doc: dict) -> list[str]:
+    """시황 원고의 숫자 검사 중 **막는 것** 전부(2026-10-06) — 발행 단계와 네이버 게시 직전 검사(`scripts.pre_post_check`)가 같이 쓴다.
+
+    원고 속 시세 사본이 커밋된 시세 파일과 같은지, 그날 종가 수준(지수·금·원유·VIX·금리·환율), 등락률·방향·주인공(`validate`).
+    검수 없이 공개되는 경로에서 틀린 숫자는 글이 없는 것보다 나쁘다."""
+    price_data, ko, en = doc["price_data"], doc["ko"], doc.get("en")
+    problems = [f"시세 사본: {p}" for p in editorial_facts.copy_issues(price_data, doc["market"])]
+    problems += [f"종가 수준({lang}): {p}" for lang, part in (("ko", ko), ("en", en)) if part
+                 for p in editorial_facts.level_issues(part, price_data, lang)]
+    for lang, part in (("ko", ko), ("en", en)):
+        if part:
+            problems += [f"등락률({lang}): {p}" for p in editorial_facts.collect_issues(part, price_data, lang=lang)]
+    return problems
+
+
 def ko_daily_status(publish_live: bool) -> str:
     """한국어 시황이 워드프레스에서 가질 상태. 수동 실행은 종전대로 임시저장이다."""
     return KO_DAILY_STATUS if publish_live else "draft"
@@ -551,14 +566,9 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
         print("한국어 편집 기준·제목·구조 검사 통과")
     # 원고의 숫자를 시세와 대조합니다. 이것은 그대로 막습니다 — 검수 없이 공개되는
     # 경로에서 틀린 숫자는 글이 없는 것보다 나쁩니다.
-    copy_problems = editorial_facts.copy_issues(price_data, doc["market"])
-    if copy_problems:   # 원고 속 사본이 커밋된 시세 파일과 다르면 틀린 숫자가 나간다 — 막는다(2026-10-06)
-        raise ValueError(f"원고의 시세 사본이 커밋된 시세 파일과 다른 칸 {len(copy_problems)}개 — 발행하지 않습니다: "
-                         + " / ".join(copy_problems[:10]))
-    level_problems = [p for lang, part in (("ko", ko), ("en", en)) if part
-                      for p in editorial_facts.level_issues(part, price_data, lang)]
-    if level_problems:   # 그날 종가 수준(지수·금·원유·VIX·금리·환율)이 시세와 다르면 틀린 숫자다 — 막는다(2026-10-06)
-        raise ValueError("본문의 종가 수준이 시세와 다릅니다 — 발행하지 않습니다: " + " / ".join(level_problems[:10]))
+    blockers = fact_blockers(doc)
+    if blockers:
+        raise ValueError(f"숫자 검사 실패 {len(blockers)}건 — 발행하지 않습니다: " + " / ".join(blockers[:10]))
     for line in editorial_facts.internal_name_issues(doc):
         print(f"[경고] 내부 이름: {line}")
     for lang, part in (("ko", ko), ("en", en)):   # 표현 문제는 경고만(관문이 막는다)
@@ -566,11 +576,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
             for line in (editorial_facts.judgment_word_issues(part, price_data, lang)
                          + editorial_facts.yield_change_issues(part, price_data, lang)):
                 print(f"[경고] 표현({lang}): {line}")
-    editorial_facts.validate(ko, price_data, lang="ko")
-    print("시세 대조 검사 통과 (한국어)")
-    if en:
-        editorial_facts.validate(en, price_data, lang="en")
-        print("시세 대조 검사 통과 (영어)")
+    print("시세 대조 검사 통과" + (" (한국어·영어)" if en else " (한국어)"))
 
     # 본문 데이터 그래픽 (한국어판). 그날 시세로 그리므로 숫자가 어긋날 수 없습니다.
     # render_only일 때는 로컬 파일만 만들고 미디어 라이브러리에는 올리지 않는다.

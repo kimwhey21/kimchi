@@ -235,6 +235,7 @@
 - 같은 초안을 여러 번 고칠 땐 새 글을 또 만들지 말고 `publish_wordpress.update_draft()` / `publish_guide.py`의 `post_id` 인자로
   같은 글을 덮어쓴다 — 임시저장 글이 중복으로 쌓이는 걸 방지.
 - 본진(Cloudflare·사이트맵·코드 조각·템플릿·메뉴·종목 데이터베이스·태그·분류), 텔레그램·스레드, 블로그스팟, 네이버 완결성 대조, 잡지 블로그 규칙은 `docs/ops.md` 「발행 워크플로우」 — 그 일을 하기 전에 읽는다.
+- **네이버에 올리기 직전에 `python -m scripts.pre_post_check <원고>`가 다시 막는다**(맥의 `naver_sync.pre_post_ok`) — 시황은 발행 단계와 같은 숫자 검사(`publish_editorial.fact_blockers`), 나머지는 관문 전체. 막힌 원고는 올리지 않고 한 번 알리며, 잡지는 쓴 날로부터 이틀이 지나면 올리지 않는다.
 - **네이버 제목은 본진 제목 그대로다.** 검색어·날짜 머리도 `| 투자 체크포인트` 꼬리도 붙이지 않는다 —
   `scripts/naver_post.naver_title()`은 본진 제목을 그대로 돌려주고, 이미 올라간 글은 `~/.market-brief-naver/retitle_sync.py`로 맞춘다.
   **제목에 검색어를 넣는 일은 제목 문법의 몫이다**(`docs/editorial-style.md` 「제목 문법」). 네이버 쪽 검색 작업은 블로그에 건다.
