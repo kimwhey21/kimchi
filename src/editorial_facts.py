@@ -506,6 +506,8 @@ def _quoted_moves(
                 quoted = float(match.group(1))
                 if _POINT_UNIT.match(text, end + match.end()):
                     continue  # "0.70%포인트" — 퍼센트포인트는 등락률이 아닙니다
+                if re.match(r"\s*(?:에서|부터)", text[end + match.end():end + match.end() + 4]):
+                    continue  # "5.11%에서 더 오르는지" — 출발점 수준이지 그 종목의 등락률이 아니다(2026-10-06)
             if entry.get("_is_macro"):
                 # 지수·환율은 요약 줄에서 움직임을 뜻하는 말 없이 숫자만 나열합니다
                 # ("코스피 6,687.21 +1.64%"). 그래서 종목과 달리 _MOVE_WORDS를
@@ -1022,3 +1024,42 @@ def weekly_issues(doc: dict, root: Path = ROOT) -> list[str]:
             if not any(f"'{s}'" in issue for s in sectors):
                 issues.append(f"[{path.stem}] 주간 {issue}")
     return issues
+
+
+# ── 날짜가 박힌 숫자(2026-10-06, 감사 F-030·F-052·F-063) ──────────────────────────────────────────────
+# Checkpoint·가이드·이벤트·다음 주 일정은 시세 파일과 대조하지 않아 "9월 23일 코스피 0.09% 상승"(실제 +0.90%)이 그대로 나갔다.
+# 문장에 'M월 D일'이 있고 그날 커밋한 시세 파일이 있으면 그 문장을 그 파일과 대조한다 — 날짜가 없는 문장은 어느 날 값인지 몰라 보지 않는다.
+_KO_DATE = re.compile(r"(?<!\d)(\d{1,2})월\s*(\d{1,2})일")
+
+
+def dated_issues(doc: dict, year: int | None = None, data_dir: Path | None = None) -> list[str]:
+    folder = data_dir or DATA_DIR
+    part = doc.get("ko") or doc
+    year = year or int(str(doc.get("date") or "2026")[:4])
+    out: list[str] = []
+    for where, text in _texts(part):
+        for m in _KO_DATE.finditer(text):
+            try:
+                day = f"{year}-{int(m.group(1)):02d}-{int(m.group(2)):02d}"
+            except ValueError:
+                continue
+            lo, hi = _sentence_bounds(text, m.start())
+            if len(_KO_DATE.findall(text[lo:hi])) != 1 or re.search(r"거래일|_", text[lo:m.start()]) \
+                    or _PERIOD_MARK.search(text[lo:hi]) or _OTHER_DAY.search(text[lo:m.start()]):
+                continue   # 날짜가 둘 이상이거나 기간·다른 날 이야기면 어느 숫자가 어느 날 것인지 모른다
+            sentence = text[m.start():hi]   # 날짜 뒤의 이름·숫자만 — 날짜 앞의 숫자는 다른 날 것일 수 있다
+            for market in ("kr", "us"):
+                path = folder / f"price_{market}_{day}.json"
+                if not path.exists():
+                    continue
+                price_data = json.loads(path.read_text(encoding="utf-8"))
+                if any(len(e.get("close_sources") or []) < 2 for e in (price_data.get("watchlist") or {}).values()):
+                    continue   # 두 원천 확인 전 파일(10/6 전 한국장·10/5 전 미국장)은 값 자체가 틀린 것이 있어 기준으로 쓰지 않는다
+                mini = {"narrative": [{"heading": "", "body": sentence}]}
+                found = collect_issues(mini, price_data, require_lead=False) + level_issues(mini, price_data)
+                head = sentence[:len(m.group(0)) + 30]   # 이름이 날짜 바로 뒤(30자 안)에 있을 때만 — "9월 23일 코스피는 0.09%"
+                for issue in found:
+                    named = re.search(r"'([^']+)'", issue)
+                    if named and named.group(1) in head:
+                        out.append(f"{where} [{day} {market}]: {issue.split(': ', 1)[-1]}")
+    return sorted(set(out))

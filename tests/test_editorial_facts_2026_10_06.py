@@ -72,3 +72,34 @@ class MoreTextsTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DatedNumbersTest(unittest.TestCase):
+    """Checkpoint·가이드·이벤트의 'M월 D일 코스피는 N%'(감사 F-052: 9월 23일 코스피 0.09% — 실제 +0.90%)."""
+
+    def _folder(self, verified: bool = True) -> Path:
+        import tempfile
+        folder = Path(tempfile.mkdtemp())
+        data = json.loads((ROOT / "data" / "price_kr_2026-09-23.json").read_text(encoding="utf-8"))
+        if verified:
+            for entry in data["watchlist"].values():
+                entry["close_sources"] = ["daum", "naver_snapshot"]
+        (folder / "price_kr_2026-09-23.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        return folder
+
+    def _doc(self, body: str) -> dict:
+        return {"date": "2026-09-25", "ko": {"title": "t", "narrative": [{"heading": "h", "body": body}]}}
+
+    def test_wrong_dated_number_is_caught(self) -> None:
+        issues = ef.dated_issues(self._doc("9월 23일 코스피는 0.09% 오른 7,080.92로 마감했습니다."), data_dir=self._folder())
+        self.assertTrue(any("0.09" in i for i in issues), issues)
+
+    def test_right_dated_number_passes(self) -> None:
+        self.assertEqual(ef.dated_issues(self._doc("9월 23일 코스피는 0.90% 올랐습니다."), data_dir=self._folder()), [])
+
+    def test_unverified_file_is_not_a_yardstick(self) -> None:
+        self.assertEqual(ef.dated_issues(self._doc("9월 23일 코스피는 0.09% 올랐습니다."), data_dir=self._folder(False)), [])
+
+    def test_numbers_not_right_after_the_date_are_left_alone(self) -> None:
+        body = "코스피는 전 거래일(9월 23일, 7,080.92) 대비 2.70% 하락했고, 삼성전자는 3.59% 하락했습니다."
+        self.assertEqual(ef.dated_issues(self._doc(body), data_dir=self._folder()), [])
