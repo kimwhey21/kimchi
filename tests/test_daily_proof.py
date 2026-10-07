@@ -130,7 +130,7 @@ class ExpectedArtifactsTest(unittest.TestCase):
         """쉬게 한 루틴(10/7~10/20)의 원고는 그 기간에 기다리지 않고, 기간이 끝나면 다시 기다린다."""
         root = self._root([])
         sat = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 10), set(), root)]
-        self.assertNotIn("주말 Checkpoint", sat); self.assertNotIn("주간 결산", sat); self.assertNotIn("한국어 가이드", sat)
+        self.assertNotIn("주말 Checkpoint", sat); self.assertNotIn("주간 결산", sat); self.assertIn("한국어 가이드", sat)   # 10/7 다시 켬
         self.assertIn("영어 가이드", sat); self.assertIn("잡지 3편", sat)
         wed = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 21), set(), root)]
         self.assertIn("미국장 프리뷰", wed); self.assertIn("한국어 가이드", wed)

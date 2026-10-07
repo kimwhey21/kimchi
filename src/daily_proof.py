@@ -68,7 +68,7 @@ MAC_JOBS = {"naver_sync": 30, "gsc_queries": "10:30",
             "daily_summary": "22:30", "bench_nightly": "23:10"}
 # 쉬게 한 루틴 — 이 기간에는 그 원고를 기다리지 않는다(2026-10-06 결정: 한국어 글이 나갈 곳이 없는 동안).
 # 기간이 지나도 루틴을 다시 켜지 않았으면 증명서·원고 감시가 다시 '없음'을 알린다 — 그것이 다시 정하라는 신호다.
-PAUSED_ARTIFACTS = ({"미국장 프리뷰", "한국어 가이드", "주말 Checkpoint", "주간 결산", "다음 주 일정"},
+PAUSED_ARTIFACTS = ({"미국장 프리뷰", "주말 Checkpoint", "주간 결산", "다음 주 일정"},   # 한국어 가이드는 10/7 저녁 다시 켬(시황 블로그에 가이드만 올린다)
                     dt.date(2026, 10, 7), dt.date(2026, 10, 20))
 MAC_WEEKLY = {"threads_refresh": (6, "21:30"), "expose_weekly": (0, "08:30"), "search_snapshot": (6, "22:00")}   # (weekday, 시각)
 
