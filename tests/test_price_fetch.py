@@ -135,6 +135,21 @@ class USPriceFetchTests(unittest.TestCase):
         self.assertEqual(result["trading_date"], "2026-08-31")
 
 
+# 넷째 원천(네이버 기본 시세)은 시험에서 묻지 않는다 — 바깥 접속 대신 '값 없음'(2026-10-07)
+_NAVER_BASIC = None
+
+
+def setUpModule():
+    global _NAVER_BASIC
+    from unittest import mock as _mock
+    from src import fetch_kr as _fk
+    _NAVER_BASIC = _mock.patch.object(_fk, "naver_basic_close", return_value=None)
+    _NAVER_BASIC.start()
+
+
+def tearDownModule():
+    _NAVER_BASIC.stop()
+
 if __name__ == "__main__":
     unittest.main()
 
@@ -366,6 +381,16 @@ class KrxCloseForStocksTest(unittest.TestCase):
         self.assertEqual(out["trading_date"], self.TODAY)
         self.assertEqual(out["history"]["dates"][-1], self.TODAY)
         self.assertEqual(out["history"]["close"][-2:], [276500.0, 286500.0])
+
+    def test_naver_basic_is_the_fourth_source(self) -> None:
+        """2026-10-07: 원천이 하나뿐이고 야후가 값을 주지 않으면 네이버 기본 시세(KRX 종가)와 맞을 때 쓴다 — 다르면 여전히 멈춘다."""
+        from unittest.mock import patch
+        with patch.object(fetch_kr, "yahoo_close", return_value=None), patch.object(fetch_kr, "naver_basic_close", return_value=286500.0):
+            got = fetch_kr._resolve_krx_close("005930", self.TODAY, None, self._daum(286500.0, 276500.0))
+        self.assertEqual(got["sources"], ["daum", "naver_basic"])
+        with patch.object(fetch_kr, "yahoo_close", return_value=None), patch.object(fetch_kr, "naver_basic_close", return_value=280000.0):
+            with self.assertRaises(ValueError):
+                fetch_kr._resolve_krx_close("005930", self.TODAY, None, self._daum(286500.0, 276500.0))
 
     def test_beyond_the_price_limit_means_a_wrong_response(self) -> None:
         with self.assertRaises(ValueError):

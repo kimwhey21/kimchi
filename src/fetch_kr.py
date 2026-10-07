@@ -265,6 +265,14 @@ def yahoo_close(code: str, day: str) -> float | None:
     return None
 
 
+def naver_basic_close(code: str, day: str) -> float | None:
+    """넷째 원천(2026-10-07): 네이버 기본 시세의 KRX 종가 — 넥스트레이드 값은 `overMarketPriceInfo`로 따로 온다. 그날 값이 아니면 None.
+    야후가 값을 주지 않거나 가리지 못할 때만 묻는다."""
+    from src.stock_db import _naver_basic
+    got = _naver_basic(code, day)
+    return got.get("close") if got else None
+
+
 def pick_base(close: float, bases: dict[str, float], prev_close: float | None = None, rate: float | None = None) -> str | None:
     """기준가가 원천마다 다를 때 맞는 쪽 — 다음 `basePrice`는 거래소 기준가다(배당락·액면병합 날엔 전일 종가와 다르다).
     1) 다른 쪽이 전일 종가 그대로면(네이버 `sv`가 없어 `pcv`를 쓴 경우) 다음이 맞다. 2) 네이버가 준 등락률(`cr`, 기준가로 계산된
@@ -307,20 +315,30 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
         # 원천이 하나뿐이면(다음이 막혔거나 사진이 없다) 야후 종가와 맞을 때만 쓴다 — 두 원천이 된다(2026-10-06, 감사 F-039).
         (only, (close_one, base_one)), = found.items()
         third = yahoo_close(code, today)
-        if third is None or abs(third - close_one) >= 0.5:
-            raise ValueError(f"{code}: 오늘 종가를 {only} 하나로만 받았고 야후로 확인하지 못했습니다"
-                             f"({only} {close_one:,.0f} / 야후 {'없음' if third is None else f'{third:,.0f}'}) — 쓰지 않습니다.")
-        sources = sorted([only, "yahoo"])
+        if third is not None and abs(third - close_one) < 0.5:
+            sources = sorted([only, "yahoo"])
+        else:
+            fourth = naver_basic_close(code, today)
+            if fourth is None or abs(fourth - close_one) >= 0.5:
+                raise ValueError(f"{code}: 오늘 종가를 {only} 하나로만 받았고 야후로도 네이버 기본 시세로도 확인하지 못했습니다"
+                                 f"({only} {close_one:,.0f} / 야후 {'없음' if third is None else f'{third:,.0f}'}"
+                                 f" / 네이버 {'없음' if fourth is None else f'{fourth:,.0f}'}) — 쓰지 않습니다.")
+            sources = sorted([only, "naver_basic"])
     if len(values) > 1:
         # 두 원천이 다르다 — 셋째 근거로 맞는 값을 가린다(2026-10-05 결정: 옛 값이 아니라 정확한 값). 종가는 야후와 같은 쪽,
         # 기준가는 pick_base. 가리지 못하면 아래에서 멈춘다.
         closes = {k: c for k, (c, _) in found.items()}
-        winner, third = None, None
+        winner, third, judge = None, None, "yahoo"
         if len(set(closes.values())) == 1:
             winner = next(iter(closes.values()))
         else:
             third = yahoo_close(code, today)
             agree = [k for k, c in closes.items() if third is not None and abs(c - third) < 0.5]
+            if not agree:   # 야후가 없거나 둘 다와 다르면 넷째 원천(네이버 기본 시세의 KRX 종가)으로
+                fourth = naver_basic_close(code, today)
+                agree = [k for k, c in closes.items() if fourth is not None and abs(c - fourth) < 0.5]
+                if agree:
+                    third, judge = fourth, "naver_basic"
             winner = closes[agree[0]] if agree else None
         if winner is not None:
             right = [k for k, c in closes.items() if abs(c - winner) < 0.5]
@@ -333,7 +351,7 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
             if pick is not None:
                 found = {"resolved": (winner, found[pick][1])}
                 values = {found["resolved"]}
-                sources = sorted(set(k for k, c in closes.items() if abs(c - winner) < 0.5) | ({"yahoo"} if third is not None else set()))
+                sources = sorted(set(k for k, c in closes.items() if abs(c - winner) < 0.5) | ({judge} if third is not None else set()))
                 print(f"[안내] {code}: 두 원천이 달라 셋째 근거로 정했습니다 — 종가 {winner:,.0f}({'·'.join(sources)}), 기준가는 {pick}")
     if len(values) > 1:
         detail = ", ".join(f"{k} 종가 {c:,.0f}·기준가 {b:,.0f}" for k, (c, b) in found.items())
@@ -346,7 +364,7 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
             print(f"[경고] {code}: 두 원천이 달라 사장님 승인으로 {override} 값을 씁니다 — {detail}")
             close, base = found[override]
             return {"close": close, "base": base, "sources": [f"{override} (owner override)"]}
-        raise ValueError(f"{code}: 두 원천의 KRX 종가가 다르고 야후로도 가리지 못했습니다 — {detail}. 맞는 값을 확인할 때까지 쓰지 않습니다.")
+        raise ValueError(f"{code}: 두 원천의 KRX 종가가 다르고 야후로도 네이버 기본 시세로도 가리지 못했습니다 — {detail}. 맞는 값을 확인할 때까지 쓰지 않습니다.")
     close, base = next(iter(values))
     if abs(close / base - 1) > _PRICE_LIMIT:
         raise ValueError(f"{code}: 종가 {close:,.0f}가 기준가 {base:,.0f}에서 가격제한폭(±30%) 넘게 벗어났습니다 — 응답이 어긋났습니다.")

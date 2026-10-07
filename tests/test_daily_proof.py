@@ -313,6 +313,21 @@ class OwnerOverrideTest(unittest.TestCase):
         self.assertIn("KR_CLOSE_OVERRIDE: ${{ github.event.inputs.close_override }}", text)
 
 
+# 넷째 원천(네이버 기본 시세)은 시험에서 묻지 않는다 — 바깥 접속 대신 '값 없음'(2026-10-07)
+_NAVER_BASIC = None
+
+
+def setUpModule():
+    global _NAVER_BASIC
+    from unittest import mock as _mock
+    from src import fetch_kr as _fk
+    _NAVER_BASIC = _mock.patch.object(_fk, "naver_basic_close", return_value=None)
+    _NAVER_BASIC.start()
+
+
+def tearDownModule():
+    _NAVER_BASIC.stop()
+
 if __name__ == "__main__":
     unittest.main()
 
