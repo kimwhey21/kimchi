@@ -440,6 +440,8 @@ class KrxOfficial:
         return out
 
     def close(self, code: str, day: str) -> float | None:
+        if not settled(day):
+            return None   # 20분 늦는 원천 — 마감 30분 전에는 장중 가격이다
         if day not in self.days:
             try:
                 self.days[day] = self._fetch(day)
@@ -458,7 +460,8 @@ def yahoo_bulk(wanted: list[tuple[str, str, str]]) -> dict[tuple[str, str], floa
     out: dict[tuple[str, str], float] = {}
     by_day: dict[str, list[tuple[str, str]]] = {}
     for code, market, day in wanted:
-        by_day.setdefault(day, []).append((code, ".KQ" if market == "KOSDAQ" else ".KS"))
+        if settled(day):   # 야후도 20분 늦다 — 마감 30분 전의 오늘 값은 장중 가격이라 묻지 않는다
+            by_day.setdefault(day, []).append((code, ".KQ" if market == "KOSDAQ" else ".KS"))
     failed = 0
     for day, items in by_day.items():
         end = (dt.date.fromisoformat(day) + dt.timedelta(days=1)).isoformat()
@@ -1156,6 +1159,19 @@ def unfinished(day: str, now: dt.datetime | None = None) -> bool:
     """`day`가 오늘(KST)이고 그날 정규장이 아직 끝나지 않았으면 True — 그 줄의 가격은 종가가 아니다."""
     now = (now or dt.datetime.now(KST)).astimezone(KST)
     return day == now.date().isoformat() and now.time() < krx_hours(now.date())[1]
+
+
+DELAYED_READY = dt.timedelta(minutes=30)   # 거래소 정보데이터시스템·야후는 20분 늦다 — 10/7 실측: 마감(15:30) 뒤 15:51에 최종 종가
+
+
+def settled(day: str, now: dt.datetime | None = None) -> bool:
+    """`day`의 종가가 늦게 오는 원천(거래소 정보데이터시스템·야후)에 최종으로 올라왔으면 True — 지난날이거나 마감 30분 뒤.
+    그 전에는 20분 전 장중 가격이 '종가' 칸에 있다(10/7 15:48 삼성전자 269,500, 실제 종가 268,500)."""
+    now = (now or dt.datetime.now(KST)).astimezone(KST)
+    today = now.date().isoformat()
+    if day != today:
+        return day < today
+    return now >= dt.datetime.combine(now.date(), krx_hours(now.date())[1], tzinfo=KST) + DELAYED_READY
 
 
 def in_krx_session(now: dt.datetime | None = None) -> bool:

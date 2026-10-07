@@ -760,6 +760,16 @@ class DaumUnfinishedDayTest(unittest.TestCase):
                         if "2026-11-19" in sdb.KRX_LATE_CLOSE else True)
 
 
+class DelayedSourcesTest(unittest.TestCase):
+    def test_delayed_sources_wait_until_thirty_minutes_after_the_close(self):
+        """2026-10-07 실측: 거래소 정보데이터시스템·야후는 15:48에 삼성전자 269,500(20분 전 장중), 15:51부터 268,500(종가)."""
+        at = lambda h, m: dt.datetime(2026, 10, 7, h, m, tzinfo=sdb.KST)   # noqa: E731
+        self.assertFalse(sdb.settled("2026-10-07", at(15, 48)))
+        self.assertTrue(sdb.settled("2026-10-07", at(16, 0)))
+        self.assertTrue(sdb.settled("2026-10-06", at(9, 0)))
+        self.assertFalse(sdb.settled("2026-10-08", at(17, 0)))
+
+
 class KrxRatiosTest(unittest.TestCase):
     def test_ratios_are_recomputed_from_the_krx_close(self) -> None:
         """감사 F-101: 네이버 PER·PBR·배당수익률은 넥스트레이드 합산 가격 기준이었다 — KRX 종가로 다시 계산한다."""

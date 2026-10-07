@@ -247,6 +247,10 @@ def yahoo_close(code: str, day: str) -> float | None:
     """세 번째 원천(2026-10-05): 야후 일별 종가. KRX 정규장 값이다 — 10/2 무작위 300종목 중 거래가 있던 296개가 다음과 모두 같았고
     (네이버 통합값과는 달랐다), 다른 셋은 거래정지 종목이라 거래량 0인 날은 쓰지 않는다. 두 원천이 다를 때만 묻는다. 못 받으면 None."""
     import yfinance as yf
+    from src.stock_db import settled
+    if not settled(day):
+        print(f"[안내] 야후 {code} {day}: 마감 30분 전이라 야후 값은 장중 가격입니다 — 묻지 않습니다")
+        return None
     start = dt.date.fromisoformat(day)
     for suffix in (".KS", ".KQ"):
         try:
