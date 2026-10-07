@@ -1,0 +1,122 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-07",
+  "checked": "2026-10-07",
+  "slug": "korea-ftse-and-msci-classification",
+  "category_id": 153,
+  "tags": ["korea ftse classification", "msci korea emerging market", "south korea developed market index", "VWO Korea", "EEM Korea"],
+  "radar_origin": "list order (Category G: policy) — the search queue's top lines this week ('kospi vs kosdaq', 'kosdaq vs kospi', 'englishdart', 'kospi200 kosdaq150 2026 year end target forecast', 'dart korean', 'krx kospi 200 index methodology', 'kospi and kosdaq', 'kospi futures trading hours') were all either fix-type lines whose two-edit weekly quota was already spent this week (kospi-200-kosdaq-150-year-end-targets-2026 on 2026-10-05, kospi-trading-hours on 2026-10-06) or 'new article' lines that duplicated pages already published under those same fixes, so every queue line was out of scope today. Fell back to the topic list. The most recent new-topic pick (2026-10-04) was Category A (access, buying-korean-stocks-from-europe), so picked a different category. Category G's first item (korea-value-up-program) is already published; the next unwritten item is korea-ftse-and-msci-classification.",
+  "related": [
+    {
+      "title": "MSCI Korea 2026: Why Korea Is Still an Emerging Market",
+      "url": "https://fermata.it.kr/korea-is-still-an-emerging-market-what-mscis-2026-decision-means-for-foreign-investors/"
+    },
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    },
+    {
+      "title": "USD to KRW for Korean Stocks: Where the FX Costs Hide",
+      "url": "https://fermata.it.kr/converting-dollars-to-won-the-fx-math-behind-buying-korean-stocks/"
+    }
+  ],
+  "ko": {
+    "title": "Korea FTSE vs. MSCI Classification: Why the Two Disagree (2026)",
+    "narrative": [
+      {
+        "heading": "The short answer: both providers are right, just not about the same question",
+        "body": "Ask whether South Korea is a developed market or an emerging market and you will get two confident, opposite answers depending on who you ask. <b>FTSE Russell</b> has classified South Korea as a Developed Market since September 2009. <b>MSCI</b>, in its 2026 annual market classification review released in June, kept South Korea in the Emerging Markets index — the same answer MSCI has given every year since removing Korea from its developed-market watchlist in 2014.\n\nNeither provider is wrong, and this isn't a dispute waiting to be resolved. The two run separate classification systems with separate criteria, separate review calendars, and separate index families, and a market can sit on different sides of each one indefinitely. The gap matters to you directly if you hold a fund with 'emerging markets' in its name: whether South Korea is actually inside that fund depends entirely on which of the two systems the fund's index follows."
+      },
+      {
+        "heading": "FTSE Russell's call: made in 2009, confirmed every review since",
+        "body": "FTSE Russell promoted South Korea to Developed Market status in its equity country classification in September 2009, following a recommendation from its independent Country Classification Advisory Committee — a panel of market practitioners that assesses countries against published criteria covering market and regulatory environment, custody and settlement, and dealing landscape. That 2009 decision has not been reversed in any classification review since, including FTSE Russell's most recent full annual review.\n\nFTSE Russell runs a parallel but separate classification track for fixed income. South Korea's government bond market was upgraded there too, but only recently and only partially: in October 2024, FTSE Russell reclassified South Korea's fixed-income Market Accessibility Level from 1 to 2 and announced it would add Korean sovereign bonds to the FTSE World Government Bond Index (WGBI). That bond-market change is new as of 2026; the equity Developed Market status it sits alongside is seventeen years old."
+      },
+      {
+        "heading": "MSCI's answer in 2026: still no, and this year's stated reason is specific",
+        "body": "MSCI published its 2026 annual market classification review on June 24, 2026, and once again did not add South Korea to its developed-market watchlist — the step that would have to happen before any future promotion. Korea Herald reported that this marks the twelfth unsuccessful attempt since Korea fell off that watchlist in 2014. MSCI said it \"acknowledges the measures announced by Korean market authorities to address longstanding concerns,\" but added that \"investors have indicated that the fundamental issues have not been fully resolved.\"\n\nThe specific obstacle MSCI named is currency, not disclosure or governance: the Korean won's limited convertibility in offshore foreign-exchange markets. MSCI noted that the won \"cannot be delivered offshore,\" and that even after Korea extended its onshore FX trading hours, liquidity in that market is still not deep enough to support the kind of seamless execution MSCI expects of a developed market. South Korea's Ministry of Economy and Finance and Financial Services Commission responded that they expect the country to \"naturally achieve inclusion in the MSCI developed-market index\" as reforms continue, on Korea's own timeline rather than a deadline set by the review."
+      },
+      {
+        "heading": "The word 'emerging markets' doesn't tell you whether Korea is inside",
+        "body": "This is where the classification gap stops being trivia and starts changing what you actually own. <b>Vanguard FTSE Emerging Markets ETF (VWO)</b> tracks an index built on FTSE Russell's classification system. Because FTSE Russell has called South Korea developed since 2009, VWO holds zero South Korean stocks — no Samsung Electronics, no SK Hynix, no Hyundai — a structural exclusion, not an active decision by the fund manager to avoid Korea.\n\n<b>iShares MSCI Emerging Markets ETF (EEM)</b> tracks the opposite classification system. According to iShares' own fund page, South Korea made up 21.57% of EEM's country weighting as of October 5, 2026 — one of the largest single-country allocations in the fund, alongside China, Taiwan and India. A fund built on a FTSE emerging-markets index and a fund built on an MSCI emerging-markets index are answering a genuinely different question about what 'emerging markets' means, and a retail investor comparing 'broad EM exposure' funds by name alone can end up with Korea exposure that swings from roughly a fifth of the portfolio to exactly none, depending only on which provider's benchmark the fund happens to track."
+      },
+      {
+        "heading": "The 2026 twist: Korea is joining a FTSE index, but for bonds, not stocks",
+        "body": "The WGBI bond inclusion described above is easy to mistake for an equity reclassification story, because it is also a 2026 FTSE Russell decision about South Korea. It isn't one. Inclusion of South Korean government bonds in the FTSE World Government Bond Index began with April 2026 index profiles and is being phased in over eight months, in eight equal monthly tranches, with full inclusion targeted for November 2026 — a timeline FTSE Russell's Nikki Stefanelli described as designed to ensure \"a smooth index inclusion, based on demonstrated close collaboration amongst the global investment community,\" as quoted by Investment Executive.\n\nThat process runs entirely on FTSE Russell's fixed-income classification track, which grades market accessibility for government bonds — things like foreign-exchange and settlement access for bond investors — separately from the equity criteria that produced the 2009 Developed Market call. South Korea's equities were already Developed under FTSE Russell well before this; the WGBI news doesn't change that status, and it has no bearing on MSCI's separate, equity-only classification either."
+      },
+      {
+        "heading": "If you already hold EWY or FLKR, none of this changes your position",
+        "body": "It's worth being precise about what the classification gap does and doesn't affect. A fund built specifically to hold South Korea — <b>EWY</b> (tracking the MSCI Korea 25/50 Index) or <b>FLKR</b> (tracking the FTSE South Korea Capped Index) — gives you Korean equities either way, because the fund's whole mandate is Korea, not a broader emerging-or-developed-markets basket. The classification only decides whether Korea shows up inside a multi-country fund built around one provider's regional groupings.\n\nWhere it actually bites is a portfolio built with the assumption that 'my emerging-markets fund' and 'my developed-markets fund' between them cover every country once. If one of those two funds tracks FTSE and the other tracks MSCI, Korea can end up fully inside both, fully inside neither, or split unevenly, and the only way to know is to check which index each fund actually follows — not what the fund's marketing name implies."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed FTSE Russell's 2009 Developed Market classification of South Korea, and its continued inclusion in that status through subsequent reviews, from financial-media reporting (247wallst.com, Benzinga) describing FTSE Russell's own classification framework; we were not able to retrieve a readable copy of FTSE Russell's current equity country classification paper directly, since the PDF FTSE Russell publishes did not parse as text for us. We confirmed the October 2024 Market Accessibility Level upgrade and the April–November 2026 WGBI phase-in, including the quote from FTSE Russell's Nikki Stefanelli, from Investment Executive's reporting and from an FTSE Russell/LSEG press release describing the same rollout. We confirmed MSCI's June 24, 2026 decision, the 'twelfth unsuccessful attempt' framing, and MSCI's stated reasoning about offshore won convertibility from Korea Herald's reporting on MSCI's own review language. We confirmed EEM's 21.57% South Korea weighting directly from iShares' own fund page, dated October 5, 2026.\n\nWe could not retrieve Vanguard's own holdings or country-allocation page for VWO with usable content during our research, so VWO's zero-percent South Korea weighting here rests on financial-media reporting (247wallst.com, Benzinga) rather than a Vanguard document we read ourselves; both outlets describe the same structural cause (VWO tracking a FTSE emerging-markets index), which is independently consistent with FTSE Russell's own classification. We did not attempt to verify every other country's classification under either system, and fund weightings for both EEM and VWO will drift over time as both indexes rebalance."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "South Korea isn't waiting on a single verdict about whether it's an emerging market — it already has two permanent, conflicting ones from the two providers that matter most to index funds. FTSE Russell has called it Developed since 2009. MSCI reconfirmed Emerging Market status in June 2026, for the twelfth time since 2014, citing restrictions on offshore won trading as the specific unresolved issue. A separate, newer FTSE Russell decision is adding Korean government bonds to the WGBI through November 2026 — a bond-market development that doesn't touch either provider's equity classification.\n\nThe practical consequence is that 'emerging markets' is not one basket. Before assuming a fund gives you Korea exposure, or assuming it doesn't, check the index the fund actually tracks — EEM and similar MSCI-based funds hold Korea at a double-digit weight; VWO and similar FTSE-based emerging-markets funds hold none.\n\nThis guide reflects classification decisions and fund weightings as of October 2026. Index classifications are reviewed on fixed schedules and can change in either direction, and fund holdings drift between rebalances — confirm current weightings on the fund provider's own site before relying on a figure here. This is not investment advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "FTSE Russell classifies South Korea as Developed; MSCI classifies South Korea as Emerging",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "FTSE vs. MSCI: Korea",
+        "left": {"label": "South Korea in FTSE Russell equities, since 2009", "value": "Developed"},
+        "right": {"label": "South Korea in MSCI equities, 2026 review", "value": "Emerging"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "How FTSE Russell and MSCI classify South Korea, and what is changing in 2026",
+      "args": {
+        "title": "Two providers, two answers on South Korea",
+        "subtitle": "Equity classification versus the 2026 bond-market change",
+        "columns": ["Classification track", "Where South Korea sits"],
+        "rows": [
+          ["FTSE Russell — equities", "Developed Market since September 2009"],
+          ["MSCI — equities", "Emerging Market — reconfirmed in the June 2026 review"],
+          ["FTSE Russell — government bonds (WGBI)", "Being phased in, April–November 2026"]
+        ],
+        "source": "FTSE Russell/LSEG press releases, Investment Executive, Korea Herald — checked October 2026",
+        "note": "The WGBI bond inclusion runs on FTSE Russell's separate fixed-income classification track and does not change either provider's equity classification of South Korea."
+      },
+      "section": 2
+    },
+    {
+      "kind": "checklist",
+      "alt": "What the FTSE vs MSCI classification gap actually does to an emerging-markets ETF",
+      "args": {
+        "title": "What this actually does to your portfolio",
+        "subtitle": "Check the index, not the fund's name",
+        "items": [
+          {
+            "label": "A FTSE-based 'emerging markets' fund holds zero South Korea",
+            "why": "FTSE Russell has called Korea developed since 2009, so VWO and similar funds hold zero Korean stocks."
+          },
+          {
+            "label": "An MSCI-based 'emerging markets' fund holds a fifth of its weight in Korea",
+            "why": "EEM, tracking the MSCI Emerging Markets Index, held South Korea at 21.57% of the fund (Oct. 5, 2026)."
+          },
+          {
+            "label": "A Korea-specific fund (EWY, FLKR) isn't affected either way",
+            "why": "Its mandate is Korea itself, so the FTSE/MSCI classification gap only matters for multi-country funds."
+          }
+        ]
+      },
+      "section": 5
+    }
+  ],
+  "sources": [
+    {"name": "iShares", "title": "iShares MSCI Emerging Markets ETF (EEM) — country allocation", "url": "https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf"},
+    {"name": "Korea Herald", "title": "MSCI says structural issues not fully resolved; government vows to improve market access", "url": "https://biz.heraldcorp.com/article/10785910"},
+    {"name": "LSEG", "title": "FTSE Russell announces results of March 2026 semi-annual country classification review", "url": "https://www.lseg.com/en/media-centre/press-releases/ftse-russell/2026/ftse-russell-announces-results-march-2026-semi-annual-country-classification-review-equities-fixed-income"},
+    {"name": "Investment Executive", "title": "South Korea, Greece and Vietnam covered in latest FTSE Russell country review", "url": "https://www.investmentexecutive.com/news/research-and-markets/south-korea-greece-and-vietnam-covered-in-latest-ftse-russell-country-review/"},
+    {"name": "247wallst", "title": "How Vanguard's VWO ETF Forgot South Korea and Paid the Price", "url": "https://247wallst.com/investing/2026/05/28/how-vanguards-vwo-etf-forgot-south-korea-and-paid-the-price/"}
+  ]
+}
