@@ -439,9 +439,16 @@ class KrxOfficial:
             raise StockDBError(f"KRX {day} 전 종목 시세가 비었습니다")
         return out
 
+    def table(self, day: str) -> dict[str, tuple[float, float]]:
+        """그날 전 종목 {코드: (종가, 기준가)} — 아직 이르거나 받지 못했으면 빈 dict(이유는 `error`)."""
+        self.close("", day)
+        return self.days.get(day, {})
+
     def close(self, code: str, day: str) -> float | None:
-        if not settled(day):
-            return None   # 20분 늦는 원천 — 마감 30분 전에는 장중 가격이다
+        if day >= dt.datetime.now(KST).date().isoformat():
+            # 그날 값은 쓰지 않는다(2026-10-07 실측): 마감 뒤 20분은 장중 가격, 16시부터는 시간외 단일가가 '종가' 칸에 들어온다
+            # (삼성전자 15:48 269,500 → 15:51 268,500 → 17:2x 270,000; 종가 268,500). 다음 날 아침에는 정규장 종가다(10/6 전 종목 일치).
+            return None
         if day not in self.days:
             try:
                 self.days[day] = self._fetch(day)
@@ -498,7 +505,7 @@ def _yahoo(code: str, day: str) -> float | None:
     return yahoo_close(code, day)
 
 
-def settle(code: str, rows: list[dict], snap: list, third, naver_basic=None) -> tuple[float, float, str] | None:
+def settle(code: str, rows: list[dict], snap: list, third, naver_basic=None, primary: str = "사진") -> tuple[float, float, str] | None:
     """다음 마지막 줄과 사진이 다를 때 맞는 (종가, 기준가, 근거). 종가가 다르면 야후와 같은 쪽 — 야후가 가리지 못하면 네이버 기본
     시세(KRX 값)와 같은 쪽(2026-10-07). 종가가 같고 기준가만 다르면 사진 기준가가 전일 종가 그대로일 때(네이버 sv 없이 pcv)
     다음(거래소 기준가)이 맞다. 가리지 못하면 None."""
@@ -508,15 +515,15 @@ def settle(code: str, rows: list[dict], snap: list, third, naver_basic=None) -> 
     if abs(s_close - last["c"]) > 0.5:
         y = third(code, last["d"])
         if y is not None and abs(y - last["c"]) < 0.5:
-            return last["c"], last["base"], "다음=거래소·야후"
+            return last["c"], last["base"], "다음=셋째"
         if y is not None and abs(y - s_close) < 0.5:
-            return s_close, s_base, "사진=거래소·야후"
+            return s_close, s_base, f"{primary}=셋째"
         n = (naver_basic or _naver_basic)(code, last["d"])
         n = n.get("close") if n else None
         if n is not None and abs(n - last["c"]) < 0.5:
             return last["c"], last["base"], "다음=네이버"
         if n is not None and abs(n - s_close) < 0.5:
-            return s_close, s_base, "사진=네이버"
+            return s_close, s_base, f"{primary}=네이버"
         return None
     prev = rows[-2]["c"] if len(rows) >= 2 else None
     pick = pick_base(last["c"], {"daum": last["base"], "snapshot": s_base}, prev_close=prev)
@@ -547,8 +554,28 @@ def _naver_basic(code: str, day: str) -> dict | None:
     return {"close": _num(body.get("closePrice")), "halted": (body.get("tradeStopType") or {}).get("name") == "HALTED"}
 
 
+def apply_prices(listing: list[dict], daily: dict[str, list[dict]], needed: set[str], fallback_day: str, official,
+                 snapshot=snapshot_close) -> tuple[list[str], list[str]]:
+    """기본 짝은 다음 + 거래소 공식 시세(2026-10-07 결정 — 10/6 전 종목 대조에서 둘 다 100%). 거래소 값은 지난날만 쓴다(그날 저녁에는
+    시간외 단일가가 '종가' 칸에 들어온다) — 그날 저녁 실행과 거래소가 막힌 날은 15시 반 사진이 그 자리를 맡는다(막혔을 때만 알린다). 셋째는 기본 짝에 들지 않은 쪽(사진 또는 거래소), 그다음 야후·네이버 기본 시세."""
+    tables = {d: official.table(d) for d in needed}
+    if needed and all(tables.values()):
+        print(f"가격: 다음 + 거래소 공식 시세({', '.join(sorted(needed))})", flush=True)   # 평소 — 알리지 않는다
+        snaps = {d: {c: [cl, b] for c, (cl, b) in t.items()} for d, t in tables.items()}
+        naver_snaps = {d: snapshot(d) or {} for d in needed}
+        tiebreak = lambda code, d: (float(naver_snaps[d][code][0]) if code in naver_snaps.get(d, {}) else None)   # noqa: E731
+        return apply_krx(listing, daily, snaps, fallback_day, official=tiebreak, primary="거래소")
+    snaps = {d: snapshot(d) for d in needed}
+    problems, notes = apply_krx(listing, daily, snaps, fallback_day, official=official.close)
+    if official.error:   # 받으려다 실패했을 때만 알린다 — 그날 저녁 실행에 거래소 값이 없는 것은 정상이다
+        notes.insert(0, f"가격: 다음 + 15시 반 사진 — 거래소 공식 시세를 쓰지 못했습니다({official.error})")
+    else:
+        print("가격: 다음 + 15시 반 사진(그날 종가는 거래소 공식 시세에 다음 날 아침부터 확정)", flush=True)
+    return problems, notes
+
+
 def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str, dict | None],
-              fallback_day: str = "", third=None, naver_basic=None, official=None) -> tuple[list[str], list[str]]:
+              fallback_day: str = "", third=None, naver_basic=None, official=None, primary: str = "사진") -> tuple[list[str], list[str]]:
     """목록의 가격 칸을 KRX 정규장 값으로 바꾼다. 돌려주는 것: (멈출 문제, 알릴 것).
 
     - 다음 일별 시세가 있으면 그 마지막 줄을 쓰고, 그날 사진이 있으면 종가·기준가가 같아야 한다(다르면 멈춘다).
@@ -570,7 +597,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
             last = rows[-1]
             snap = (snaps.get(last["d"]) or {}).get(code)
             if snap and (abs(float(snap[0]) - last["c"]) > 0.5 or abs(float(snap[1]) - last["base"]) > 0.5):
-                detail = f"{code}: 다음 {last['c']:,.0f}(기준가 {last['base']:,.0f}) / 사진 {float(snap[0]):,.0f}(기준가 {float(snap[1]):,.0f})"
+                detail = f"{code}: 다음 {last['c']:,.0f}(기준가 {last['base']:,.0f}) / {primary} {float(snap[0]):,.0f}(기준가 {float(snap[1]):,.0f})"
                 disputed.append((row, rows, snap, detail))
                 continue
             if snap is None and code not in stale:   # 오래 멈춘 거래정지 종목은 야후도 값을 주지 않는다 — '마지막 날짜' 알림으로 따로 센다
@@ -587,7 +614,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
             continue
         snap = (snaps.get(day) or {}).get(code)
         if not snap:
-            problems.append(f"{code}: 다음 일별 시세도 {day or '그날'} 사진도 없습니다")
+            problems.append(f"{code}: 다음 일별 시세도 {day or '그날'} {primary}도 없습니다")
             continue
         close, base = float(snap[0]), float(snap[1])
         if row.get("close") and row.get("mcap"):
@@ -596,7 +623,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
         # 사진에는 거래량·거래대금·고가·저가가 없다 — 네이버 목록의 값은 넥스트레이드 합산이라 KRX 값처럼 싣지 않고 비운다(2026-10-06, 감사 F-050)
         for key in ("volume", "value", "dlow", "dhigh"):
             row.pop(key, None)
-        single.append((row, "사진", close, day, None))
+        single.append((row, primary, close, day, None))
     # 셋째 원천(야후)은 필요한 종목만 한 번에 묻는다 — 다음이나 사진이 통째로 빠져도(2026-10-07 07:50: 2,765종목) 몇 분이면 끝난다.
     # 확인이 필요한 종목이 있을 때만 거래소 공식 시세(official)를 먼저 묻고, 거기 없는 종목만 야후에 한 번에 묻는다.
     if third is None and (single or disputed):
@@ -635,7 +662,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
     if disputed:
         settled = []
         for row, rows, snap, detail in disputed:
-            fixed = settle(row["code"], rows, snap, third or _yahoo, naver_basic)
+            fixed = settle(row["code"], rows, snap, third or _yahoo, naver_basic, primary)
             if fixed is None:
                 problems.append(detail + " — 야후로도 네이버로도 가리지 못했습니다")
                 continue
@@ -1453,11 +1480,7 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     snap_days = sorted(p.stem for p in SNAPSHOTS.glob("20*.json")) if SNAPSHOTS.exists() else []
     fallback_day = next((d for d in reversed(snap_days) if snapshot_close(d)), "")
     needed = {rows[-1]["d"] for rows in daily.values() if rows} | ({fallback_day} if fallback_day else set())
-    snaps = {d: snapshot_close(d) for d in needed}
-    official = KrxOfficial()
-    problems, notes = apply_krx(listing, daily, snaps, fallback_day, official=official.close)
-    if official.error:
-        notes.append(f"거래소 공식 시세를 받지 못해 야후·네이버로 확인했습니다 — {official.error}")
+    problems, notes = apply_prices(listing, daily, needed, fallback_day, KrxOfficial())
     if problems:
         raise StockDBError(f"KRX 값이 두 원천에서 맞지 않거나 없는 종목 {len(problems)}개 — 올리지 않습니다: " + " / ".join(problems[:20]))
     gaps = [code for code, d in details.items() if (d.get("fin") or {}).get("missing") or (d.get("hist") or {}).get("missing")]

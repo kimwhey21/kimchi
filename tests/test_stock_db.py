@@ -651,6 +651,8 @@ class KrxPricesTest(unittest.TestCase):
     def test_krx_official_reads_signed_change_and_untraded_rows(self):
         from unittest import mock
         k = sdb.KrxOfficial("id", "pw")
+        self.assertIsNone(k.close("207940", dt.datetime.now(sdb.KST).date().isoformat()))   # 그날 값은 묻지 않는다
+        self.assertEqual(k.error, "")
         body = {"OutBlock_1": [
             {"ISU_SRT_CD": "207940", "TDD_CLSPRC": "1,310,000", "CMPPREVDD_PRC": "-44,000", "ACC_TRDVOL": "84,657"},
             {"ISU_SRT_CD": "001470", "TDD_CLSPRC": "5,820", "CMPPREVDD_PRC": "0", "ACC_TRDVOL": "0"}]}
@@ -663,6 +665,29 @@ class KrxPricesTest(unittest.TestCase):
         with mock.patch("builtins.print"):
             self.assertIsNone(k2.close("207940", "2026-10-06"))
         self.assertIn("KRX_ID", k2.error)                                    # 조용히 넘어가지 않는다
+
+    def test_primary_pair_is_daum_and_the_exchange(self):
+        """2026-10-07 결정: 기본 짝은 다음 + 거래소 공식. 사진은 셋째 — 사진이 틀려도(10/6 실제 2종목) 다음·거래소가 맞으면 그대로 나간다."""
+        from unittest import mock
+        class Off:
+            error = ""
+            def __init__(self, table): self.t = table
+            def table(self, d): return self.t
+            def close(self, c, d): return None
+        row = dict(self.ROW)
+        with mock.patch("builtins.print"):
+            problems, notes = sdb.apply_prices([row], {"000660": list(self.DAUM)}, {"2026-10-02"}, "",
+                                               Off({"000660": (1841000.0, 1833000.0)}), snapshot=lambda d: {"000660": [1842000, 1833000]})
+        self.assertEqual((problems, notes), ([], []))                      # 평소에는 알리지 않는다
+        self.assertEqual(row["close"], 1841000.0)
+        # 거래소를 못 쓰면 사진이 기본 짝을 맡고 알린다
+        row = dict(self.ROW)
+        off = Off({}); off.error = "2026-10-02 KRX 로그인 실패"
+        with mock.patch("builtins.print"):
+            problems, notes = sdb.apply_prices([row], {"000660": list(self.DAUM)}, {"2026-10-02"}, "", off,
+                                               snapshot=lambda d: {"000660": [1841000, 1833000]})
+        self.assertEqual(problems, [])
+        self.assertIn("거래소 공식 시세를 쓰지 못했습니다(2026-10-02 KRX 로그인 실패)", notes[0])
 
     def test_yahoo_bulk_reads_one_download_per_day(self):
         import pandas as pd
