@@ -657,3 +657,40 @@ class MergeTagTest(unittest.TestCase):
             merged = main_module._merge_price_file(old, new)
         self.assertNotIn("close_sources", merged["watchlist"]["GC=F"])
         self.assertEqual(merged["watchlist"]["GC=F"]["price"], 4172.1)
+
+
+class CloseLockTest(unittest.TestCase):
+    """2026-10-07: 15:53에 거래소 공식·야후 종가를 잠근다 — 시간외 거래가 '종가' 칸에 섞이기 전. 사진과 99% 같을 때만."""
+
+    def test_window(self) -> None:
+        from scripts import krx_close_snapshot as k
+        at = lambda h, m, d=7: fetch_kr.dt.datetime(2026, 10, d, h, m, tzinfo=k.KST)   # noqa: E731
+        self.assertFalse(k.lock_window(at(15, 48)))       # 아직 20분 늦은 장중 값
+        self.assertTrue(k.lock_window(at(15, 53)))
+        self.assertFalse(k.lock_window(at(16, 20)))       # 시간외 거래가 비치기 시작
+        self.assertFalse(k.lock_window(at(15, 53, 10)))   # 토요일
+
+    def test_lock_saves_only_values_that_match_the_snapshot(self) -> None:
+        import json, tempfile
+        from pathlib import Path
+        from unittest import mock
+        from scripts import krx_close_snapshot as k
+        from src import stock_db
+        with tempfile.TemporaryDirectory() as tmp:
+            day = "2026-10-07"
+            (Path(tmp) / f"{day}.json").write_text(json.dumps({"close": {"005930": [268500, 272000], "000660": [1723000, 1773000]}}))
+            now = fetch_kr.dt.datetime(2026, 10, 7, 15, 53, tzinfo=k.KST)
+            good = {"005930": (268500.0, 272000.0), "000660": (1723000.0, 1773000.0)}
+            with mock.patch.object(k, "DIR", Path(tmp)), mock.patch.object(stock_db.KrxOfficial, "table", return_value=good), \
+                    mock.patch.object(stock_db, "list_market", return_value=[{"code": "005930", "market": "KOSPI"}]), \
+                    mock.patch.object(stock_db, "yahoo_bulk", return_value={("005930", day): 269500.0}), \
+                    mock.patch.object(k, "lock_window", return_value=True), mock.patch("builtins.print"):
+                self.assertEqual(k.lock(now), 0)
+            doc = json.loads((Path(tmp) / f"{day}.json").read_text())
+            self.assertEqual(doc["krx"]["005930"], [268500.0, 272000.0])
+            self.assertNotIn("yahoo", doc)                   # 장중 값(사진과 다름)은 잠그지 않는다
+            self.assertIn("locked_at", doc)
+            with mock.patch.object(stock_db, "SNAPSHOTS", Path(tmp)):
+                got = fetch_kr._resolve_krx_close("005930", day, None, {"date": day, "close": 268500.0, "base": 272000.0},
+                                                  stock_db.locked(day, "krx").get("005930"))
+            self.assertEqual(got["sources"], ["daum", "krx"])

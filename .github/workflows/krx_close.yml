@@ -8,9 +8,11 @@ on:
     - cron: "32 6 * * 1-5"   # 15:32 KST
     - cron: "40 6 * * 1-5"   # 15:40 KST
     - cron: "48 6 * * 1-5"   # 15:48 KST
+    - cron: "53 6 * * 1-5"   # 15:53 KST — 종가 잠그기(거래소 공식·야후, 시간외 거래가 섞이기 전, 2026-10-07)
     # 수능일(정규장 16:30 마감, stock_db.KRX_LATE_CLOSE)용 — 다른 날은 스크립트가 "창 밖"으로 바로 끝낸다(2026-10-05)
     - cron: "35 7 * * 1-5"   # 16:35 KST
     - cron: "45 7 * * 1-5"   # 16:45 KST
+    - cron: "53 7 * * 1-5"   # 16:53 KST — 수능일 종가 잠그기
   workflow_dispatch:
 
 concurrency:
@@ -46,6 +48,10 @@ jobs:
 
       - name: 정규장 종가 사진
         run: python -m scripts.krx_close_snapshot
+        env:
+          # 15:53 종가 잠그기의 거래소 정보데이터시스템 로그인(2026-10-07)
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
 
       - name: 사진 커밋
         run: |
@@ -54,7 +60,7 @@ jobs:
           git diff --cached --quiet && { echo "새 사진 없음"; exit 0; }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "KRX 정규장 종가 사진: $(TZ=Asia/Seoul date +%F)"
+          git commit -m "KRX 정규장 종가 사진: $(TZ=Asia/Seoul date +%F)$(grep -q locked_at data/krx_close/$(TZ=Asia/Seoul date +%F).json 2>/dev/null && echo ' (종가 잠금)')"
           for i in 1 2 3; do git pull --rebase && git push && exit 0; sleep 10; done
           exit 1
 

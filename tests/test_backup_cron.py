@@ -83,13 +83,13 @@ class BackupCronTest(unittest.TestCase):
         job = next(j for j in JOBS["direct"] if j["workflow"] == "krx_close.yml")
         for t in job["utc"]:
             kst = minutes(t) + 9 * 60
-            # 러너가 뜨는 데 1~2분 — 15:31~15:59 KST 창 안에서 끝나야 한다
-            self.assertTrue(15 * 60 + 31 <= kst <= 15 * 60 + 50, t)
+            # 러너가 뜨는 데 1~2분 — 사진은 15:31~15:59 KST 창 안에서, 종가 잠그기(15:53)는 15:51~16:19 창 안에서 끝나야 한다
+            self.assertTrue(15 * 60 + 31 <= kst <= 15 * 60 + 50 or 15 * 60 + 51 <= kst <= 15 * 60 + 55, t)
 
     def test_late_close_presses(self):
         """수능일(16:30 마감)용: 종가 사진 16:35·16:45 KST(창 16:31~16:59 안), 한국장 수집 16:50 KST는 late_close_only로."""
         late = [j for j in JOBS["direct"] if j["workflow"] == "krx_close.yml"][1]
-        self.assertTrue(all(16 * 60 + 31 <= minutes(t) + 9 * 60 <= 16 * 60 + 50 for t in late["utc"]))
+        self.assertTrue(all(16 * 60 + 31 <= minutes(t) + 9 * 60 <= 16 * 60 + 55 for t in late["utc"]))   # 16:53은 수능일 종가 잠그기
         job = next(j for j in JOBS["direct"] if j["workflow"] == "market_brief.yml" and "07:50" in j["utc"])
         self.assertEqual(job["inputs"].get("late_close_only"), "true")
 

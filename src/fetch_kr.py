@@ -247,10 +247,12 @@ def yahoo_close(code: str, day: str) -> float | None:
     """세 번째 원천(2026-10-05): 야후 일별 종가. KRX 정규장 값이다 — 10/2 무작위 300종목 중 거래가 있던 296개가 다음과 모두 같았고
     (네이버 통합값과는 달랐다), 다른 셋은 거래정지 종목이라 거래량 0인 날은 쓰지 않는다. 두 원천이 다를 때만 묻는다. 못 받으면 None."""
     import yfinance as yf
-    from src.stock_db import settled
+    from src.stock_db import locked, settled
     if not settled(day):
-        print(f"[안내] 야후 {code} {day}: 시간외 단일가가 끝나기 전이라 야후 값은 종가가 아닐 수 있습니다 — 묻지 않습니다")
-        return None
+        got = locked(day, "yahoo").get(code)   # 15:53에 잠근 야후 종가(시간외 거래가 섞이기 전, 2026-10-07)
+        if got is None:
+            print(f"[안내] 야후 {code} {day}: 18:30 전에는 야후가 장중·시간외 가격을 줘서 묻지 않고, 15:53에 잠근 값도 없습니다")
+        return float(got) if got is not None else None
     start = dt.date.fromisoformat(day)
     for suffix in (".KS", ".KQ"):
         try:
@@ -291,7 +293,7 @@ def pick_base(close: float, bases: dict[str, float], prev_close: float | None = 
     return None
 
 
-def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | None) -> dict:
+def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | None, krx: tuple | list | None = None) -> dict:
     """오늘 KRX 정규장 종가를 **서로 다른 두 원천**으로 확인한다(2026-10-05). 빼지 않는다 — 받거나, 못 받으면 멈추고 이유를 말한다.
 
     - 네이버: 15:31~15:59에 찍은 사진(`nv`, 기준가 `sv`·없으면 `pcv`). 16:00부터 폴링 `nv`는 KRX 애프터마켓을 따라 움직여 쓰지 않는다.
@@ -310,6 +312,18 @@ def _resolve_krx_close(code: str, today: str, naver: dict | None, daum: dict | N
             snapshot_note = "; 사진에 종가는 있으나 기준가(sv·pcv)가 없음"   # 감사 F-152: 전에는 '사진에서도 받지 못했다'로만 나왔다
     if daum and daum.get("date") == today and daum.get("close") and daum.get("base"):
         found["daum"] = (float(daum["close"]), float(daum["base"]))
+    if krx and "daum" in found and abs(found["daum"][0] - float(krx[0])) < 0.5 and abs(found["daum"][1] - float(krx[1])) < 0.5:
+        # 기본 짝(2026-10-07 결정): 다음 + 거래소 공식 시세(15:53에 잠근 값)가 같으면 그 값 — 사진은 셋째 근거다(10/6 사진만 2종목 틀렸다)
+        close, base = found["daum"]
+        if abs(close / base - 1) > _PRICE_LIMIT:
+            raise ValueError(f"{code}: 종가 {close:,.0f}가 기준가 {base:,.0f}에서 가격제한폭(±30%) 넘게 벗어났습니다 — 응답이 어긋났습니다.")
+        if "naver_snapshot" in found and found["naver_snapshot"] != (close, base):
+            print(f"[안내] {code}: 15시 반 사진 {found['naver_snapshot'][0]:,.0f}(기준가 {found['naver_snapshot'][1]:,.0f})이 "
+                  f"다음·거래소 {close:,.0f}(기준가 {base:,.0f})와 다릅니다 — 다음·거래소 값을 씁니다")
+        return {"close": close, "base": base, "sources": ["daum", "krx"]}
+    if krx and "daum" not in found and "naver_snapshot" in found and abs(found["naver_snapshot"][0] - float(krx[0])) < 0.5:
+        # 다음이 막힌 날 — 사진과 거래소가 같으면 그 값, 기준가는 거래소 값
+        return {"close": found["naver_snapshot"][0], "base": float(krx[1]), "sources": ["krx", "naver_snapshot"]}
     if not found:
         raise ValueError(f"{code}: 오늘({today}) KRX 정규장 종가를 네이버 사진에서도 다음에서도 받지 못했습니다"
                          f"(다음 날짜 {daum.get('date') if daum else '응답 없음'}{snapshot_note}).")
@@ -439,6 +453,10 @@ def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: s
         # 창 안에서 손으로 돌리면 지금 폴링이 곧 사진이다. 창 밖의 폴링은 애프터마켓 값이라 쓰지 않는다(2026-09-28).
         live = _fetch_naver_item_quotes([t for t in watchlist if str(t) not in snap])
         snap = {**live, **snap}
+    from src.stock_db import locked
+    krx_locked = locked(today, "krx")   # 15:53에 잠근 거래소 공식 종가 — 없으면 사진·다음 규칙으로 간다
+    if not krx_locked:
+        print("[안내] 15:53에 잠근 거래소 공식 종가가 없어 15시 반 사진·다음으로 확인합니다")
     out: dict[str, dict] = {}
     problems: list[str] = []
     for ticker, entry in watchlist.items():
@@ -452,7 +470,7 @@ def _apply_krx_closes(watchlist: dict[str, dict], trading_date: str, prev_day: s
             except ValueError as exc:   # 다음이 막혔으면 사진 하나로 — 사진도 없으면 아래에서 멈춘다
                 print(f"[경고] {code}: 다음 현재가를 못 받아 네이버 사진만으로 확인합니다 — {exc}")
                 daum = None
-            out[ticker] = _apply_krx_close(entry, _resolve_krx_close(code, today, snap.get(code), daum), today)
+            out[ticker] = _apply_krx_close(entry, _resolve_krx_close(code, today, snap.get(code), daum, krx_locked.get(code)), today)
         except ValueError as exc:
             problems.append(f"{entry.get('name', ticker)}({code}): {exc}")
     if problems:

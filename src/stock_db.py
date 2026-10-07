@@ -379,6 +379,20 @@ class Daum:
         return body.get("low52wPrice"), body.get("high52wPrice")
 
 
+def locked(day: str, key: str, folder: Path | None = None) -> dict:
+    """15:53에 잠근 그날 종가(`krx`: {코드: [종가, 기준가]}, `yahoo`: {코드: 종가}) — 시간외 거래가 섞이기 전 값(2026-10-07)."""
+    path = (folder or SNAPSHOTS) / f"{day}.json"
+    if not path.exists():
+        return {}
+    stamp = (str(path), path.stat().st_mtime)
+    if _LOCKED_CACHE.get("stamp") != stamp:   # 종목마다 파일을 다시 읽지 않게
+        _LOCKED_CACHE.update(stamp=stamp, doc=json.loads(path.read_text(encoding="utf-8")))
+    return _LOCKED_CACHE["doc"].get(key) or {}
+
+
+_LOCKED_CACHE: dict = {}
+
+
 def snapshot_close(day: str, folder: Path | None = None) -> dict[str, list] | None:
     """그날 15:3x 전 종목 사진 {코드: [종가, 기준가]}. 파일이나 `close`가 없으면 None."""
     path = (folder or SNAPSHOTS) / f"{day}.json"
@@ -400,8 +414,9 @@ class KrxOfficial:
     그래서 다음·사진이 맞는 평소에는 묻지 않고, 확인이 필요한 종목이 있을 때만 하루 한 번 받는다. 못 받으면 [경고]로 알리고
     야후·네이버로 넘어간다(거래소가 막아도 갱신은 멈추지 않는다)."""
 
-    def __init__(self, user: str | None = None, pw: str | None = None):
+    def __init__(self, user: str | None = None, pw: str | None = None, allow_today: bool = False):
         self.user, self.pw = user or os.environ.get("KRX_ID"), pw or os.environ.get("KRX_PW")
+        self.allow_today = allow_today   # 종가 잠그기(15:53, scripts.krx_close_snapshot)만 그날 값을 받는다
         self.days: dict[str, dict[str, tuple[float, float]]] = {}
         self.session: requests.Session | None = None
         self.error = ""
@@ -445,7 +460,7 @@ class KrxOfficial:
         return self.days.get(day, {})
 
     def close(self, code: str, day: str) -> float | None:
-        if day >= dt.datetime.now(KST).date().isoformat():
+        if day >= dt.datetime.now(KST).date().isoformat() and not self.allow_today:
             # 그날 값은 쓰지 않는다(2026-10-07 실측): 마감 뒤 20분은 장중 가격, 16시부터는 시간외 단일가가 '종가' 칸에 들어온다
             # (삼성전자 15:48 269,500 → 15:51 268,500 → 17:2x 270,000; 종가 268,500). 다음 날 아침에는 정규장 종가다(10/6 전 종목 일치).
             return None
@@ -461,14 +476,17 @@ class KrxOfficial:
         return got[0] if got else None
 
 
-def yahoo_bulk(wanted: list[tuple[str, str, str]]) -> dict[tuple[str, str], float]:
-    """야후 일별 종가를 한꺼번에 — {(코드, 날짜): 종가}. `wanted`는 (코드, 시장, 날짜). 거래량 0인 날·원 단위가 아닌(소급 조정) 값은 뺀다."""
+def yahoo_bulk(wanted: list[tuple[str, str, str]], allow_today: bool = False) -> dict[tuple[str, str], float]:
+    """야후 일별 종가를 한꺼번에 — {(코드, 날짜): 종가}. `wanted`는 (코드, 시장, 날짜). 거래량 0인 날·원 단위가 아닌(소급 조정) 값은 뺀다.
+    그날 값은 18:30 전에는 묻지 않고 15:53에 잠가 둔 값(`locked`)을 쓴다 — 그 사이 야후는 장중·시간외 가격을 '종가'로 준다."""
     import yfinance as yf
     out: dict[tuple[str, str], float] = {}
     by_day: dict[str, list[tuple[str, str]]] = {}
     for code, market, day in wanted:
-        if settled(day):   # 야후도 20분 늦다 — 마감 30분 전의 오늘 값은 장중 가격이라 묻지 않는다
+        if allow_today or settled(day):
             by_day.setdefault(day, []).append((code, ".KQ" if market == "KOSDAQ" else ".KS"))
+        elif code in locked(day, "yahoo"):
+            out[(code, day)] = float(locked(day, "yahoo")[code])
     failed = 0
     for day, items in by_day.items():
         end = (dt.date.fromisoformat(day) + dt.timedelta(days=1)).isoformat()
@@ -561,7 +579,7 @@ def apply_prices(listing: list[dict], daily: dict[str, list[dict]], needed: set[
                  snapshot=snapshot_close) -> tuple[list[str], list[str]]:
     """기본 짝은 다음 + 거래소 공식 시세(2026-10-07 결정 — 10/6 전 종목 대조에서 둘 다 100%). 거래소 값은 지난날만 쓴다(그날 저녁에는
     시간외 단일가가 '종가' 칸에 들어온다) — 그날 저녁 실행과 거래소가 막힌 날은 15시 반 사진이 그 자리를 맡는다(막혔을 때만 알린다). 셋째는 기본 짝에 들지 않은 쪽(사진 또는 거래소), 그다음 야후·네이버 기본 시세."""
-    tables = {d: official.table(d) for d in needed}
+    tables = {d: official.table(d) or {c: (float(v[0]), float(v[1])) for c, v in locked(d, "krx").items()} for d in needed}
     if needed and all(tables.values()):
         print(f"가격: 다음 + 거래소 공식 시세({', '.join(sorted(needed))})", flush=True)   # 평소 — 알리지 않는다
         snaps = {d: {c: [cl, b] for c, (cl, b) in t.items()} for d, t in tables.items()}

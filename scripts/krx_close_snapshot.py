@@ -19,6 +19,7 @@ import json
 import sys
 from pathlib import Path
 
+import requests
 import yaml
 
 from src import fetch_kr, fetch_movers
@@ -63,8 +64,79 @@ def all_codes() -> list[str]:
         return []
 
 
+LOCK_FROM, LOCK_UNTIL = dt.timedelta(minutes=21), dt.timedelta(minutes=49)   # 마감 뒤 21~49분(보통 15:51~16:19)
+LOCK_AGREE = 0.99   # 잠그는 값이 15시 반 사진과 이만큼 같아야 한다 — 아직 장중(20분 늦은) 값이면 크게 다르다
+
+
+def lock_window(now: dt.datetime) -> bool:
+    """거래소 정보데이터시스템·야후가 정규장 종가를 주는 때(2026-10-07 실측) — 20분 늦게 오므로 마감 21분 뒤부터, 16:00에 시작하는
+    시간외 거래가 20분 늦게 비치기 전(마감 49분 뒤)까지."""
+    from src.stock_db import KRX_HOLIDAYS, krx_hours
+    if now.weekday() >= 5 or now.date().isoformat() in KRX_HOLIDAYS:
+        return False
+    close = dt.datetime.combine(now.date(), krx_hours(now.date())[1], tzinfo=KST)
+    return close + LOCK_FROM <= now < close + LOCK_UNTIL
+
+
+def _agree(got: dict[str, float], snap: dict[str, float]) -> float:
+    both = [c for c in got if c in snap]
+    return sum(abs(got[c] - snap[c]) < 0.5 for c in both) / len(both) if both else 0.0
+
+
+def lock(now: dt.datetime) -> int:
+    """15:53 — 거래소 공식 전 종목 시세와 야후 종가를 받아 그날 사진 파일에 잠근다(`krx`·`yahoo`). 16:20 수집과 저녁 종목 DB는
+    살아 있는 야후·네이버·거래소에 다시 묻지 않고 이 값을 쓴다(그때는 시간외 가격이 '종가' 칸에 들어온다)."""
+    from src import stock_db
+    day = now.date().isoformat()
+    path = DIR / f"{day}.json"
+    if not path.exists():
+        print(f"[경고] {path.name} 사진이 없어 종가를 잠그지 못합니다")
+        return 1
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    if doc.get("krx") and doc.get("yahoo"):
+        print(f"{path.name}: 이미 잠갔습니다({doc.get('locked_at')})")
+        return 0
+    snap = {c: float(v[0]) for c, v in (doc.get("close") or {}).items()}
+    out: dict = {}
+    krx = stock_db.KrxOfficial(allow_today=True)
+    table = krx.table(day)
+    rate = _agree({c: v[0] for c, v in table.items()}, snap)
+    if table and rate >= LOCK_AGREE:
+        out["krx"] = {c: [cl, b] for c, (cl, b) in table.items()}
+    else:
+        print(f"[경고] 거래소 공식 시세를 잠그지 않습니다 — {krx.error or f'사진과 같은 비율 {rate:.1%}'}")
+    session = requests.Session()
+    session.headers.update(stock_db.UA)
+    listing = stock_db.list_market(session, "KOSPI") + stock_db.list_market(session, "KOSDAQ")
+    yahoo = stock_db.yahoo_bulk([(r["code"], r["market"], day) for r in listing], allow_today=True)
+    yv = {c: v for (c, _), v in yahoo.items()}
+    rate_y = _agree(yv, snap)
+    if yv and rate_y >= LOCK_AGREE:
+        out["yahoo"] = yv
+    else:
+        print(f"[경고] 야후 종가를 잠그지 않습니다 — 받은 종목 {len(yv)}개, 사진과 같은 비율 {rate_y:.1%}")
+    if not lock_window(dt.datetime.now(KST)):
+        print("[경고] 받는 사이 잠그는 창이 닫혀 버립니다(시간외 가격이 섞일 수 있다)")
+        return 1
+    if not out:
+        return 1
+    doc.update(out, locked_at=dt.datetime.now(KST).isoformat(timespec="seconds"))
+    path.write_text(json.dumps(doc, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
+    print(f"{path.name}: 종가 잠금 — 거래소 {len(out.get('krx', {}))}종목(사진과 {rate:.1%} 같음), 야후 {len(out.get('yahoo', {}))}종목(사진과 {rate_y:.1%} 같음)")
+    return 0
+
+
 def main(now: dt.datetime | None = None) -> int:
     now = now or dt.datetime.now(KST)
+    if lock_window(now) and not in_window(now):
+        return lock(now)
+    rc = snap(now)
+    if rc == 0 and lock_window(now):
+        return lock(now)
+    return rc
+
+
+def snap(now: dt.datetime) -> int:
     if not in_window(now):
         print(f"{now:%Y-%m-%d %H:%M} — 정규장 종가를 읽을 수 있는 창(보통 15:31~15:59, 수능일 16:31~16:59, 평일·휴장일 제외) 밖이라 찍지 않습니다.")
         return 0
