@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.11"}
-      - run: pip install -q requests python-dotenv
+      - run: pip install -q -r requirements.txt
       - run: |
           python - <<'PY'
           from src.stock_db import KrxOfficial
