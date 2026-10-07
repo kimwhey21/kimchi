@@ -1,0 +1,89 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "기업과 기술",
+  "date": "2026-10-08",
+  "slug": "dropbox-ai-bottom-up",
+  "radar_origin": "Fortune: Dropbox's CTO wants every employee at the cloud-storage company to use AI. He's letting them find their own ways to use it",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1559136555-9303baea8ebd",
+    "unsplash_id": "l90zRbWvCoE",
+    "credit": "Unsplash / Proxyclick Visitor Management System"
+  },
+  "sources": [
+    {
+      "name": "포춘",
+      "title": "Dropbox's CTO wants every employee at the cloud-storage company to use AI. He's letting them find their own ways to use it (2026-10-07)",
+      "url": "https://fortune.com/2026/10/07/cio-intelligence-dropbox-cto/"
+    },
+    {
+      "name": "베타킷",
+      "title": "Shopify CEO Tobi Lütke tells employees to prove AI can't do the job before asking for resources",
+      "url": "https://betakit.com/shopify-ceo-tobi-lutke-tells-employees-to-prove-ai-cant-do-the-job-before-asking-for-resources/"
+    }
+  ],
+  "tags": [
+    "드롭박스",
+    "AI도입",
+    "쇼피파이",
+    "기업문화",
+    "생산성"
+  ],
+  "ko": {
+    "title": "드롭박스 vs 쇼피파이: AI를 쓰게 하는 두 가지 방법",
+    "title_candidates": [
+      "드롭박스 vs 쇼피파이: AI를 쓰게 하는 두 가지 방법",
+      "다들 AI 사용을 강제할 때, 드롭박스가 그러지 않은 까닭",
+      "AI를 명령하지 않은 회사, 드롭박스"
+    ],
+    "narrative": [
+      {
+        "heading": "",
+        "body": "드롭박스 최고기술책임자 알리 다스단이 합류했을 때, 엔지니어링·상품·디자인 팀에서 AI 도구를 쓰는 사람은 40%가 되지 않았습니다.\n그런데 다스단은 이 숫자를 끌어올리려고 AI 도구를 억지로 쓰게 하지 않았습니다.\n그 대신 그는 정반대의 방법을 골랐습니다."
+      },
+      {
+        "heading": "",
+        "body": "포춘에 따르면 다스단의 방법은 부서마다 AI 도구에 폭넓게 접근하게 하고, 쓰는 법은 직원들이 스스로 찾게 두는 것이었습니다.\n다스단은 이렇게 말했습니다.\n\"우리가 접근하는 방식은 리더십이 지지를 보여주고 장벽을 치우는 것이고, 그다음은 밑에서부터 올라오는 움직임입니다.\"\n명령으로 도구를 정해 주는 대신, 직원들은 챗GPT와 슬랙·줌의 AI 기능, 로우코드 도구까지 자유롭게 써 볼 수 있었습니다."
+      },
+      {
+        "heading": "",
+        "body": "그 결과 드롭박스 곳곳에서 직원들이 만든 맞춤 애플리케이션만 수백 개가 나왔습니다.\n엔지니어링·상품·디자인 팀은 지금 거의 전부가 AI 도구를 쓰고 있습니다.\n다스단은 인원을 AI로 줄일 생각이냐는 질문에는 선을 그었습니다.\n\"인원수와 관련해서는, 저는 그것을 AI와 묶어서 보지 않습니다.\"\n대신 그는 이것이 균형의 문제라고 말했습니다.\n\"모두의 생산성이 계속 오르기를 바란다면, 거기에 맞는 상관관계가 따라옵니다.\""
+      },
+      {
+        "heading": "",
+        "body": "그런데 같은 시기 실리콘밸리의 다른 회사는 정반대 길을 갔습니다.\n쇼피파이의 토비 뤼트케 최고경영자는 지난해 봄 낸 메모에서 AI 사용을 선택이 아니라 기본값으로 못 박았습니다.\n베타킷에 따르면 그는 이렇게 썼습니다.\n\"AI를 효과적으로 쓰는 것은 이제 쇼피파이의 모든 사람에게 기본 전제입니다.\"\n인력을 더 뽑기 전에 그 일을 AI로는 할 수 없다는 것을 팀이 먼저 증명해야 한다는 조항도 메모에 들어갔습니다."
+      },
+      {
+        "heading": "",
+        "body": "방법은 정반대였지만 두 회사 다 같은 질문에 답하고 있습니다 — AI를 누가, 어떻게 쓰게 할 것인가라는 질문입니다.\n드롭박스는 자율을 걸었고, 쇼피파이는 강제를 걸었습니다.\n한국 기업들도 AI 도입을 서두르면서 같은 갈림길 앞에 서 있습니다.\n여러분의 일터는 AI를 누가 먼저 쓰라고 말하나요, 아니면 누가 먼저 써 보라고 두나요?"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "40%가 되지 않았습니다",
+      "url": "https://fortune.com/2026/10/07/cio-intelligence-dropbox-cto/",
+      "original": "Less than 40% of Dropbox's engineering, product, and design teams were using AI tools when Dasdan joined the company."
+    },
+    {
+      "claim": "리더십이 지지를 보여주고 장벽을 치우는 것이고",
+      "url": "https://fortune.com/2026/10/07/cio-intelligence-dropbox-cto/",
+      "original": "The way we approach this is that leadership shows the support and removes the barriers, and then it's a bottom-up movement"
+    },
+    {
+      "claim": "저는 그것을 AI와 묶어서 보지 않습니다",
+      "url": "https://fortune.com/2026/10/07/cio-intelligence-dropbox-cto/",
+      "original": "With respect to the number of people, I don't think we tie it to AI"
+    },
+    {
+      "claim": "모두의 생산성이 계속 오르기를 바란다면, 거기에 맞는 상관관계가 따라옵니다",
+      "url": "https://fortune.com/2026/10/07/cio-intelligence-dropbox-cto/",
+      "original": "if you want everyone's productivity to keep increasing, then there is a corresponding correlation with that."
+    },
+    {
+      "claim": "쇼피파이의 모든 사람에게 기본 전제입니다",
+      "url": "https://betakit.com/shopify-ceo-tobi-lutke-tells-employees-to-prove-ai-cant-do-the-job-before-asking-for-resources/",
+      "original": "Using AI effectively is now a fundamental expectation of everyone at Shopify"
+    }
+  ]
+}

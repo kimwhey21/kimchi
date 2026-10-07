@@ -1,0 +1,94 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "투자 심리",
+  "date": "2026-10-08",
+  "slug": "sudden-wealth-syndrome-ai",
+  "radar_origin": "A Wealth of Common Sense (벤 칼슨): Animal Spirits: Sudden Wealth Syndrome",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1771596378772-858323ca698f",
+    "unsplash_id": "ozDFb-HMi6w",
+    "credit": "Unsplash / mindeurle lee"
+  },
+  "sources": [
+    {
+      "name": "애니 라이트(결혼가족치료사)",
+      "title": "The Psychology of Getting Rich Fast in the AI Boom",
+      "url": "https://anniewright.com/psychology-getting-rich-fast-ai-boom/"
+    },
+    {
+      "name": "더디코더",
+      "title": "AI made a tiny slice of Silicon Valley filthy rich — and left the rest wondering why they bother",
+      "url": "https://the-decoder.com/ai-made-a-tiny-slice-of-silicon-valley-filthy-rich-and-left-the-rest-wondering-why-they-bother/"
+    }
+  ],
+  "tags": [
+    "AI붐",
+    "갑작스러운부",
+    "투자심리",
+    "실리콘밸리",
+    "부의심리학"
+  ],
+  "ko": {
+    "title": "갑자기 부자가 된 사람은 왜 아무것도 느끼지 못했을까",
+    "title_candidates": [
+      "갑자기 부자가 된 사람은 왜 아무것도 느끼지 못했을까",
+      "통장이 바뀐 다음 날, 마음은 그대로였습니다",
+      "AI 대박이 남긴 것은 돈만이 아니었습니다"
+    ],
+    "narrative": [
+      {
+        "heading": "",
+        "body": "마흔 살 캔디스는 한 AI 인프라 회사의 초기 직원이었습니다.\n회사가 상장하면서 그가 쥔 주식은 여덟 자리 숫자의 자산으로 바뀌었습니다.\n결혼가족치료사 애니 라이트는 그날 캔디스를 이렇게 그렸습니다.\n\"그날 늦게 마트에서 그는 14달러짜리 수제 치즈 앞에 얼어붙은 채 서서, 여전히 그래야 하는 사람처럼 속으로 계산을 하고 있었습니다.\""
+      },
+      {
+        "heading": "",
+        "body": "라이트는 이런 반응에 이름을 붙였습니다 — 화면을 통해서만 존재하는 부, 그리고 갑작스러운 부의 증후군입니다.\n은행 잔액은 바뀌었지만 부엌도 커피잔도 운동복도 그대로라서, 몸이 그 변화를 따라잡지 못한다는 것입니다.\n같은 글에서 머신러닝 스타트업 공동 창업자 프리실라도 비슷한 말을 남겼습니다.\n\"저는 그 돈이 저를 자유롭게 해 줄 거라 생각했습니다. 그런데 저는 오히려 모두의 꿈을 위한 은행이 됐습니다.\""
+      },
+      {
+        "heading": "",
+        "body": "이 반응은 캔디스와 프리실라만의 것이 아닙니다.\n1978년 한 심리학 논문은 복권 당첨자가 사고로 다친 사람보다 더 행복하지 않았다는 결과를 내놓았습니다.\n라이트는 이 논문을 인용하며, 돈이 늘어도 일상의 기쁨은 저절로 늘지 않는다고 짚었습니다."
+      },
+      {
+        "heading": "",
+        "body": "이런 혼란이 유독 실리콘밸리에 짙은 이유는 숫자에 있습니다.\n벤처캐피털 멘로벤처스의 파트너 디디 다스에 따르면, 최근 5년 사이 실리콘밸리에서만 1만 명쯤이 2,000만 달러 넘는 재산을 쌓았습니다.\n매체 더디코더에 따르면 오픈AI 한 곳에서만 지난가을 75명이 한 사람당 3,000만 달러어치의 백만장자가 됐습니다.\n다스는 이 동네 분위기를 이렇게 표현했습니다.\n\"샌프란시스코의 분위기는 '광적'이고, 벌어진 재정 격차는 '제가 본 것 중 최악'입니다.\""
+      },
+      {
+        "heading": "",
+        "body": "한국에서도 비슷한 장면이 머지않았습니다 — 스톡옵션으로 갑자기 목돈을 쥔 스타트업 직원, 코인으로 재산이 불어난 투자자 모두 같은 질문 앞에 섭니다.\n통장의 숫자는 하루 만에 바뀌어도, 그 숫자를 받아들이는 마음은 그렇게 빨리 바뀌지 않습니다.\n여러분이라면, 통장 잔액이 갑자기 열 배로 뛴 다음 날 아침에는 무엇부터 달라질 것 같나요?"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "14달러짜리 수제 치즈 앞에 얼어붙은 채 서서",
+      "url": "https://anniewright.com/psychology-getting-rich-fast-ai-boom/",
+      "original": "Later that day, at the grocery store, she stood frozen in front of a fourteen-dollar block of artisanal cheese, doing mental math like she still needed to."
+    },
+    {
+      "claim": "모두의 꿈을 위한 은행이 됐습니다",
+      "url": "https://anniewright.com/psychology-getting-rich-fast-ai-boom/",
+      "original": "I thought the money would make me free. Instead I've become a bank for everyone else's dreams."
+    },
+    {
+      "claim": "1978년 한 심리학 논문",
+      "url": "https://anniewright.com/psychology-getting-rich-fast-ai-boom/",
+      "original": "Lottery Winners and Accident Victims: Is Happiness Relative?"
+    },
+    {
+      "claim": "1만 명쯤이 2,000만 달러 넘는 재산을 쌓았습니다",
+      "url": "https://the-decoder.com/ai-made-a-tiny-slice-of-silicon-valley-filthy-rich-and-left-the-rest-wondering-why-they-bother/",
+      "original": "around 10,000 people in Silicon Valley have amassed fortunes north of $20 million thanks to the AI boom."
+    },
+    {
+      "claim": "75명이 한 사람당 3,000만 달러어치의 백만장자가 됐습니다",
+      "url": "https://the-decoder.com/ai-made-a-tiny-slice-of-silicon-valley-filthy-rich-and-left-the-rest-wondering-why-they-bother/",
+      "original": "OpenAI alone reportedly turned 75 people into multimillionaires worth $30 million each last fall."
+    },
+    {
+      "claim": "제가 본 것 중 최악",
+      "url": "https://the-decoder.com/ai-made-a-tiny-slice-of-silicon-valley-filthy-rich-and-left-the-rest-wondering-why-they-bother/",
+      "original": "the mood in San Francisco is \"frenetic,\" and the gap in financial outcomes is \"the worst I've ever seen.\""
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "시장 읽기",
+  "date": "2026-10-08",
+  "slug": "narrow-market-breadth",
+  "radar_origin": "The Motley Fool: The Stock Market Is Flashing a Warning Sign We Haven't Seen Since 2000. History Says Investors Should Do This Now.",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1675714781259-9dfa328c6937",
+    "unsplash_id": "2lHhfn7KXTw",
+    "credit": "Unsplash / fabio Spano"
+  },
+  "sources": [
+    {
+      "name": "모틀리풀",
+      "title": "The Stock Market Is Flashing a Warning Sign We Haven't Seen Since 2000. History Says Investors Should Do This Now. (2026-10-07)",
+      "url": "https://www.fool.com/investing/2026/10/07/stock-market-warning-sign-since-2000-history-says/?source=iedfolrf0000001"
+    },
+    {
+      "name": "크립토브리핑",
+      "title": "Goldman Sachs warns S&P 500 market breadth hits lowest since dot-com bubble",
+      "url": "https://cryptobriefing.com/goldman-sachs-sp500-breadth-dotcom-low/"
+    },
+    {
+      "name": "더트레이딩툴스",
+      "title": "Stock market narrow breadth 1972, 2000, 2023 — Insights",
+      "url": "https://www.thetrading.tools/insights/stock-market-narrow-breadth-1972-2000"
+    }
+  ],
+  "tags": [
+    "S&P500",
+    "시장폭",
+    "골드만삭스",
+    "증시전망",
+    "밸류에이션"
+  ],
+  "ko": {
+    "title": "월가가 다시 2000년을 묻는 이유",
+    "title_candidates": [
+      "월가가 다시 2000년을 묻는 이유",
+      "지수 속 절반이 아직 못 오른 이유",
+      "S&P500 신고가 뒤에 숨은 숫자는 42%입니다"
+    ],
+    "narrative": [
+      {
+        "heading": "",
+        "body": "10월 5일 기준 S&P500은 사상 최고치보다 1%도 채 낮지 않은 자리에 있었습니다.\n그런데 같은 날 지수 구성 종목 가운데 200일 이동평균선 위에서 거래된 것은 42%뿐이었습니다.\n지수만 보던 눈에는 보이지 않는 틈입니다."
+      },
+      {
+        "heading": "",
+        "body": "투자매체 모틀리풀의 데이비드 더커링은 이 틈이 낯설지 않다고 짚었습니다.\n다우존스마켓데이터에 따르면, S&P500이 사상 최고치 1% 안에 있으면서 종목 절반 넘게 200일 이동평균선 아래 있었던 마지막 때는 2000년 3월이었습니다.\n그때는 닷컴버블이 정점을 찍던 시기였습니다.\n더커링은 이렇게 썼습니다.\n\"이것은 주식을 팔라는 신호가 아닙니다. 오히려 S&P500을 살 때 실제로 무엇을 소유하고 있는지 다시 생각할 때입니다.\""
+      },
+      {
+        "heading": "",
+        "body": "골드만삭스의 벤 스나이더가 이끄는 전략팀도 최근 고객 노트에서 비슷한 틈을 짚었습니다.\n이 노트를 전한 매체 크립토브리핑에 따르면, 노트에는 이렇게 적혀 있었습니다.\n\"지수 전체 숫자는 건강해 보이지만, 지수 안의 중앙값 종목은 52주 최고가보다 16% 낮은 자리에서 거래되고 있습니다.\"\n금리 상승과 AI가 끌어온 이익이 계속될지에 대한 의심이 함께 시장을 누르고 있다고 전략팀은 전했습니다."
+      },
+      {
+        "heading": "",
+        "body": "그런데 같은 틈이 매번 나쁜 결말로 이어지지는 않았습니다.\n분석업체 더트레이딩툴스에 따르면 이런 조합은 1927년 이후 딱 세 번 나타났습니다 — 1972년 9월, 2000년 3월, 2023년 5월입니다.\n두 해 뒤 지수는 1972년 9월 신호 다음에는 42% 낮아졌고, 2000년 3월 신호 다음에는 21% 낮아졌습니다.\n그런데 2023년 5월 신호 다음에는 오히려 47% 높아졌습니다."
+      },
+      {
+        "heading": "",
+        "body": "이 차이를 만드는 것은 소수의 대형 기술주입니다.\n지수를 끌어올리는 종목은 몇 개뿐인데, 나머지 절반은 이미 고점에서 밀려나 있다는 뜻입니다.\n2023년에도 같은 틈이 있었지만 그때는 반등으로 끝났습니다 — 이번에도 그럴지는 아직 아무도 모릅니다.\n여러분이 지금 지수를 담고 있다면, 그 안의 몇 종목이 나머지를 떠받치고 있는지 알고 계신가요?"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "1%도 채 낮지 않은",
+      "url": "https://www.fool.com/investing/2026/10/07/stock-market-warning-sign-since-2000-history-says/?source=iedfolrf0000001",
+      "original": "As of Oct. 5, the S&P 500 was trading at less than 1% below its all-time high, yet only 42% of its components were trading above their 200-day moving average."
+    },
+    {
+      "claim": "200일 이동평균선 위에서 거래된 것은 42%뿐이었습니다",
+      "url": "https://www.fool.com/investing/2026/10/07/stock-market-warning-sign-since-2000-history-says/?source=iedfolrf0000001",
+      "original": "As of Oct. 5, the S&P 500 was trading at less than 1% below its all-time high, yet only 42% of its components were trading above their 200-day moving average."
+    },
+    {
+      "claim": "2000년 3월이었습니다",
+      "url": "https://www.fool.com/investing/2026/10/07/stock-market-warning-sign-since-2000-history-says/?source=iedfolrf0000001",
+      "original": "According to Dow Jones Market Data, the last time the S&P 500 was within 1% of a record high while more than half of its stocks traded below their 200-day moving averages was March 2000."
+    },
+    {
+      "claim": "이것은 주식을 팔라는 신호가 아닙니다",
+      "url": "https://www.fool.com/investing/2026/10/07/stock-market-warning-sign-since-2000-history-says/?source=iedfolrf0000001",
+      "original": "but this isn't a signal to sell stocks. rather, it's time to rethink what you're actually owning when you buy the s&p 500"
+    },
+    {
+      "claim": "오히려 S&P500을 살 때 실제로 무엇을 소유하고 있는지 다시 생각할 때입니다",
+      "url": "https://www.fool.com/investing/2026/10/07/stock-market-warning-sign-since-2000-history-says/?source=iedfolrf0000001",
+      "original": "but this isn't a signal to sell stocks. rather, it's time to rethink what you're actually owning when you buy the s&p 500"
+    },
+    {
+      "claim": "52주 최고가보다 16% 낮은 자리에서 거래되고 있습니다",
+      "url": "https://cryptobriefing.com/goldman-sachs-sp500-breadth-dotcom-low/",
+      "original": "The median stock in the index is trading 16% below its 52-week high, even as the headline number looks healthy."
+    },
+    {
+      "claim": "1927년 이후 딱 세 번 나타났습니다",
+      "url": "https://www.thetrading.tools/insights/stock-market-narrow-breadth-1972-2000",
+      "original": "on a breadth record that reaches back to 1927 , that combination has appeared three times"
+    },
+    {
+      "claim": "1972년 9월 신호 다음에는 42% 낮아졌고, 2000년 3월 신호 다음에는 21% 낮아졌습니다",
+      "url": "https://www.thetrading.tools/insights/stock-market-narrow-breadth-1972-2000",
+      "original": "two years later the market was 42 % lower after september 1972 and 21 % lower after march 2000 , and 47 % higher after may 2023"
+    },
+    {
+      "claim": "2023년 5월 신호 다음에는 오히려 47% 높아졌습니다",
+      "url": "https://www.thetrading.tools/insights/stock-market-narrow-breadth-1972-2000",
+      "original": "two years later the market was 42 % lower after september 1972 and 21 % lower after march 2000 , and 47 % higher after may 2023"
+    },
+    {
+      "claim": "2023년에도 같은 틈이 있었지만",
+      "url": "https://www.thetrading.tools/insights/stock-market-narrow-breadth-1972-2000",
+      "original": "each of the three looked the same on the day"
+    }
+  ]
+}
