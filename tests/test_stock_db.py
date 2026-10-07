@@ -613,7 +613,7 @@ class KrxPricesTest(unittest.TestCase):
                                         third=lambda c, d: 1841000.0)
         self.assertEqual(problems, [])
         self.assertEqual((row["close"], row["pct"]), (1841000.0, 0.44))
-        self.assertTrue(any("야후 1개" in n for n in notes))
+        self.assertTrue(any("거래소·야후 1개" in n for n in notes))
         # 2026-10-06: 하나 남은 원천을 야후가 확인해 주지 않으면 올리지 않는다
         problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": []}, {"2026-10-02": {"000660": [1841000, 1833000]}},
                                     "2026-10-02", third=lambda c, d: None, naver_basic=lambda c, d: None)
@@ -627,10 +627,42 @@ class KrxPricesTest(unittest.TestCase):
                                         third=lambda c, d: yahoo.get(c),
                                         naver_basic=lambda c, d: {"close": 1841000.0, "halted": False})
         self.assertEqual(problems, [])
-        self.assertTrue(any("통째로" in n for n in notes) and any("야후 299개·네이버 종가 1개" in n for n in notes))
+        self.assertTrue(any("통째로" in n for n in notes) and any("거래소·야후 299개·네이버 종가 1개" in n for n in notes))
         problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": list(self.DAUM)}, {},
                                     third=lambda c, d: None, naver_basic=lambda c, d: None)
         self.assertEqual(len(problems), 1)                                   # 넷 중 하나로만 받은 값은 여전히 올리지 않는다
+
+    def test_official_krx_is_asked_first_and_yahoo_only_for_the_rest(self):
+        """2026-10-07: 다섯째 원천 — 거래소 공식 시세에 있는 종목은 야후에 묻지 않는다. 다음·사진이 맞는 날은 거래소에도 묻지 않는다."""
+        from unittest import mock
+        rows = [dict(self.ROW, code=c) for c in ("000660", "005930")]
+        asked = []
+        official = lambda c, d: {"000660": 1841000.0}.get(c)   # noqa: E731
+        with mock.patch.object(sdb, "yahoo_bulk", side_effect=lambda w: asked.extend(w) or {("005930", "2026-10-02"): 1841000.0}):
+            problems, notes = sdb.apply_krx(rows, {r["code"]: list(self.DAUM) for r in rows}, {}, official=official,
+                                            naver_basic=lambda c, d: None)
+        self.assertEqual(problems, [])
+        self.assertEqual([w[0] for w in asked], ["005930"])
+        calls = []
+        sdb.apply_krx([dict(self.ROW)], {"000660": list(self.DAUM)}, {"2026-10-02": {"000660": [1841000, 1833000]}},
+                      official=lambda c, d: calls.append(c))
+        self.assertEqual(calls, [])
+
+    def test_krx_official_reads_signed_change_and_untraded_rows(self):
+        from unittest import mock
+        k = sdb.KrxOfficial("id", "pw")
+        body = {"OutBlock_1": [
+            {"ISU_SRT_CD": "207940", "TDD_CLSPRC": "1,310,000", "CMPPREVDD_PRC": "-44,000", "ACC_TRDVOL": "84,657"},
+            {"ISU_SRT_CD": "001470", "TDD_CLSPRC": "5,820", "CMPPREVDD_PRC": "0", "ACC_TRDVOL": "0"}]}
+        k.session = mock.Mock(post=mock.Mock(return_value=mock.Mock(text="{}", json=lambda: body)))
+        self.assertEqual(k.close("207940", "2026-10-06"), 1310000.0)
+        self.assertEqual(k.days["2026-10-06"]["207940"], (1310000.0, 1354000.0))
+        self.assertEqual(k.close("001470", "2026-10-06"), 5820.0)           # 거래가 없던 종목(삼부토건) — 기준가 그대로·대비 0
+        k2 = sdb.KrxOfficial("", "")
+        k2.user = k2.pw = None
+        with mock.patch("builtins.print"):
+            self.assertIsNone(k2.close("207940", "2026-10-06"))
+        self.assertIn("KRX_ID", k2.error)                                    # 조용히 넘어가지 않는다
 
     def test_yahoo_bulk_reads_one_download_per_day(self):
         import pandas as pd
@@ -651,7 +683,7 @@ class KrxPricesTest(unittest.TestCase):
                                         third=lambda c, d: 1841000.0)
         self.assertEqual(problems, [])
         self.assertEqual((row["close"], row["date"]), (1841000.0, "2026-10-02"))
-        self.assertTrue(any("야후 1개" in n for n in notes))
+        self.assertTrue(any("거래소·야후 1개" in n for n in notes))
 
     def test_long_halted_stock_keeps_its_last_day_and_is_counted(self):
         row = dict(self.ROW)

@@ -391,6 +391,65 @@ def snapshot_close(day: str, folder: Path | None = None) -> dict[str, list] | No
 # 둘이 같은 값만 올린다. 전에는 다음이나 사진이 통째로 빠지면(원천 하나뿐인 종목 60개 초과) 묻지 않고 그날 갱신을 포기했다 —
 # 이제는 셋째·넷째 원천으로 확인해 올리고, 넷 중 어느 둘로도 확인하지 못한 종목이 있을 때만 멈춘다.
 YAHOO_CHUNK = 200
+KRX_DATA = "https://data.krx.co.kr"
+
+
+class KrxOfficial:
+    """다섯째 원천(2026-10-07): 거래소 정보데이터시스템의 전 종목 시세(MDCSTAT01501) — 거래소가 직접 주는 정규장 종가.
+    로그인이 필요하다(`.env`·깃허브 비밀값 KRX_ID·KRX_PW). 한 계정은 한 곳에서만 로그인되므로 다른 곳의 로그인을 끊고 들어간다 —
+    그래서 다음·사진이 맞는 평소에는 묻지 않고, 확인이 필요한 종목이 있을 때만 하루 한 번 받는다. 못 받으면 [경고]로 알리고
+    야후·네이버로 넘어간다(거래소가 막아도 갱신은 멈추지 않는다)."""
+
+    def __init__(self, user: str | None = None, pw: str | None = None):
+        self.user, self.pw = user or os.environ.get("KRX_ID"), pw or os.environ.get("KRX_PW")
+        self.days: dict[str, dict[str, tuple[float, float]]] = {}
+        self.session: requests.Session | None = None
+        self.error = ""
+
+    def _login(self) -> requests.Session:
+        if not (self.user and self.pw):
+            raise StockDBError("KRX_ID·KRX_PW가 없습니다")
+        s = requests.Session()
+        s.headers.update(UA)
+        s.get(f"{KRX_DATA}/contents/MDC/COMS/client/MDCCOMS001.cmd", timeout=30)
+        form = {"mbrNm": "", "telNo": "", "di": "", "certType": "", "mbrId": self.user, "pw": self.pw}
+        head = {"Referer": f"{KRX_DATA}/contents/MDC/COMS/client/view/login.jsp?site=mdc", "X-Requested-With": "XMLHttpRequest"}
+        body = s.post(f"{KRX_DATA}/contents/MDC/COMS/client/MDCCOMS001D1.cmd", data=form, headers=head, timeout=30).json()
+        if body.get("_error_code") == "CD011":   # 다른 곳에서 로그인 중 — 화면의 '기존 계정을 로그아웃하고 새로 로그인'과 같다
+            body = s.post(f"{KRX_DATA}/contents/MDC/COMS/client/MDCCOMS001D1.cmd", data={**form, "skipDup": "Y"}, headers=head, timeout=30).json()
+        if body.get("_error_code") != "CD001":
+            raise StockDBError(f"KRX 로그인 실패: {body.get('_error_code')} {body.get('_error_message')}")
+        return s
+
+    def _fetch(self, day: str) -> dict[str, tuple[float, float]]:
+        if self.session is None:
+            self.session = self._login()
+        r = self.session.post(f"{KRX_DATA}/comm/bldAttendant/getJsonData.cmd", timeout=60,
+                              data={"bld": "dbms/MDC/STAT/standard/MDCSTAT01501", "locale": "ko_KR", "mktId": "ALL",
+                                    "trdDd": day.replace("-", ""), "share": "1", "money": "1", "csvxls_isNo": "false"},
+                              headers={"Referer": f"{KRX_DATA}/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201020101"})
+        if r.text.strip() == "LOGOUT":
+            raise StockDBError("KRX가 로그인을 받아 주지 않았습니다(LOGOUT)")
+        out = {}
+        for row in r.json().get("OutBlock_1") or []:
+            close, chg = _num(row.get("TDD_CLSPRC")), _num(row.get("CMPPREVDD_PRC"))
+            if close and chg is not None:   # 거래가 없던 종목(거래정지 등)은 기준가 그대로·대비 0으로 온다 — 다음도 같은 값이라 맞으면 둘이 된다
+                out[row["ISU_SRT_CD"]] = (close, close - chg)      # 대비는 부호가 붙어 온다(10/6 삼성바이오로직스 -44,000)
+        if not out:
+            raise StockDBError(f"KRX {day} 전 종목 시세가 비었습니다")
+        return out
+
+    def close(self, code: str, day: str) -> float | None:
+        if day not in self.days:
+            try:
+                self.days[day] = self._fetch(day)
+                print(f"KRX 공식 시세 {day}: {len(self.days[day])}종목")
+            except (StockDBError, requests.RequestException, ValueError) as exc:
+                self.days[day] = {}
+                self.error = f"{day} {exc}"
+                print(f"[경고] KRX 공식 시세를 받지 못해 야후·네이버로 확인합니다 — {exc}")
+        got = self.days[day].get(code)
+        return got[0] if got else None
 
 
 def yahoo_bulk(wanted: list[tuple[str, str, str]]) -> dict[tuple[str, str], float]:
@@ -446,9 +505,9 @@ def settle(code: str, rows: list[dict], snap: list, third, naver_basic=None) -> 
     if abs(s_close - last["c"]) > 0.5:
         y = third(code, last["d"])
         if y is not None and abs(y - last["c"]) < 0.5:
-            return last["c"], last["base"], "다음=야후"
+            return last["c"], last["base"], "다음=거래소·야후"
         if y is not None and abs(y - s_close) < 0.5:
-            return s_close, s_base, "사진=야후"
+            return s_close, s_base, "사진=거래소·야후"
         n = (naver_basic or _naver_basic)(code, last["d"])
         n = n.get("close") if n else None
         if n is not None and abs(n - last["c"]) < 0.5:
@@ -486,7 +545,7 @@ def _naver_basic(code: str, day: str) -> dict | None:
 
 
 def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str, dict | None],
-              fallback_day: str = "", third=None, naver_basic=None) -> tuple[list[str], list[str]]:
+              fallback_day: str = "", third=None, naver_basic=None, official=None) -> tuple[list[str], list[str]]:
     """목록의 가격 칸을 KRX 정규장 값으로 바꾼다. 돌려주는 것: (멈출 문제, 알릴 것).
 
     - 다음 일별 시세가 있으면 그 마지막 줄을 쓰고, 그날 사진이 있으면 종가·기준가가 같아야 한다(다르면 멈춘다).
@@ -536,16 +595,19 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
             row.pop(key, None)
         single.append((row, "사진", close, day, None))
     # 셋째 원천(야후)은 필요한 종목만 한 번에 묻는다 — 다음이나 사진이 통째로 빠져도(2026-10-07 07:50: 2,765종목) 몇 분이면 끝난다.
+    # 확인이 필요한 종목이 있을 때만 거래소 공식 시세(official)를 먼저 묻고, 거기 없는 종목만 야후에 한 번에 묻는다.
     if third is None and (single or disputed):
+        off = official or (lambda code, when: None)
         wanted = [(row["code"], row.get("market", ""), when) for row, _, _, when, _ in single]
         wanted += [(row["code"], row.get("market", ""), rows[-1]["d"]) for row, rows, _, _ in disputed]
-        bulk = yahoo_bulk(wanted)
-        third = lambda code, when: bulk.get((code, when))   # noqa: E731
+        missing = [w for w in wanted if off(w[0], w[2]) is None]
+        bulk = yahoo_bulk(missing) if missing else {}
+        third = lambda code, when: off(code, when) if off(code, when) is not None else bulk.get((code, when))   # noqa: E731
     # 원천이 하나뿐인 종목(다음만·사진만)은 야후나 네이버 기본 시세와 맞을 때만 올린다 — 두 원천이 된다(2026-10-06, 감사 F-039·F-058).
     if single:
         kinds = sorted({k for _, k, *_ in single})
         if len(single) > 60:
-            notes.append(f"원천 하나({'·'.join(kinds)})가 통째로 빠져 {len(single)}종목을 야후·네이버 기본 시세로 확인했습니다")
+            notes.append(f"원천 하나({'·'.join(kinds)})가 통째로 빠져 {len(single)}종목을 거래소·야후·네이버 기본 시세로 확인했습니다")
         checked, by_naver, halted = 0, 0, 0
         for row, kind, close, when, last in single:
             other = (third or _yahoo)(row["code"], when)
@@ -564,7 +626,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
                 continue
             problems.append(f"{row['code']}: {kind} 하나로만 받은 종가 {close:,.0f}를 야후로도 네이버로도 확인하지 못했습니다"
                             f"(야후 {other}, 네이버 {naver})")
-        notes.append(f"원천이 하나뿐이라 셋째 근거로 확인한 종목 — 야후 {checked}개·네이버 종가 {by_naver}개·거래정지 {halted}개")
+        notes.append(f"원천이 하나뿐이라 셋째 근거로 확인한 종목 — 거래소·야후 {checked}개·네이버 종가 {by_naver}개·거래정지 {halted}개")
     # 두 원천(다음·15시 반 사진)이 다른 종목은 셋째 근거로 가린다(2026-10-05 결정: 옛 값이 아니라 정확한 값) — 종가는 야후와
     # 같은 쪽, 기준가는 fetch_kr.pick_base. 가리지 못한 종목이 하나라도 있으면 올리지 않는다. 많이 다르면 원천 고장이라 묻지 않는다.
     if disputed:
@@ -1376,7 +1438,10 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
     fallback_day = next((d for d in reversed(snap_days) if snapshot_close(d)), "")
     needed = {rows[-1]["d"] for rows in daily.values() if rows} | ({fallback_day} if fallback_day else set())
     snaps = {d: snapshot_close(d) for d in needed}
-    problems, notes = apply_krx(listing, daily, snaps, fallback_day)
+    official = KrxOfficial()
+    problems, notes = apply_krx(listing, daily, snaps, fallback_day, official=official.close)
+    if official.error:
+        notes.append(f"거래소 공식 시세를 받지 못해 야후·네이버로 확인했습니다 — {official.error}")
     if problems:
         raise StockDBError(f"KRX 값이 두 원천에서 맞지 않거나 없는 종목 {len(problems)}개 — 올리지 않습니다: " + " / ".join(problems[:20]))
     gaps = [code for code, d in details.items() if (d.get("fin") or {}).get("missing") or (d.get("hist") or {}).get("missing")]
