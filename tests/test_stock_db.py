@@ -569,8 +569,17 @@ class KrxPricesTest(unittest.TestCase):
     def test_unsettled_disagreement_stops(self):
         for third in (lambda c, d: None, lambda c, d: 1800000.0):
             problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": list(self.DAUM)},
-                                        {"2026-10-02": {"000660": [1842000, 1833000]}}, third=third)
+                                        {"2026-10-02": {"000660": [1842000, 1833000]}}, third=third, naver_basic=lambda c, d: None)
             self.assertEqual(len(problems), 1)
+
+    def test_naver_settles_what_yahoo_cannot(self):
+        """2026-10-07: 넷째 원천 — 야후가 값을 주지 않으면 네이버 기본 시세(KRX 값)와 같은 쪽."""
+        row = dict(self.ROW)
+        problems, notes = sdb.apply_krx([row], {"000660": list(self.DAUM)}, {"2026-10-02": {"000660": [1842000, 1833000]}},
+                                        third=lambda c, d: None, naver_basic=lambda c, d: {"close": 1841000.0, "halted": False})
+        self.assertEqual(problems, [])
+        self.assertEqual(row["close"], 1841000.0)
+        self.assertTrue(any("다음=네이버" in n for n in notes))
 
     def test_base_only_dispute_uses_the_exchange_base(self):
         """사진 기준가가 전일 종가 그대로(sv 없이 pcv)이고 다음 기준가가 다르면 다음(거래소 기준가)이 맞다 — 10/2 액면병합 종목들."""
@@ -581,12 +590,14 @@ class KrxPricesTest(unittest.TestCase):
         self.assertEqual(problems, [])
         self.assertEqual(row["pct"], round((2700 / 2660 - 1) * 100, 2))
 
-    def test_many_disagreements_mean_a_broken_source(self):
-        rows = [dict(self.ROW, code=f"{i:06d}") for i in range(sdb.DISPUTE_MAX + 1)]
-        problems, _ = sdb.apply_krx(rows, {r["code"]: list(self.DAUM) for r in rows},
-                                    {"2026-10-02": {r["code"]: [1842000, 1833000] for r in rows}},
-                                    third=lambda c, d: (_ for _ in ()).throw(AssertionError("원천 고장이면 묻지 않는다")))
-        self.assertEqual(len(problems), sdb.DISPUTE_MAX + 1)
+    def test_many_disagreements_are_settled_one_by_one(self):
+        """2026-10-07: 사진이 통째로 틀려도(전 종목이 다음과 다르다) 멈추지 않고 셋째 원천과 같은 쪽으로 — 둘이 맞는 값만 나간다."""
+        rows = [dict(self.ROW, code=f"{i:06d}") for i in range(300)]
+        problems, notes = sdb.apply_krx(rows, {r["code"]: list(self.DAUM) for r in rows},
+                                        {"2026-10-02": {r["code"]: [1842000, 1833000] for r in rows}},
+                                        third=lambda c, d: 1841000.0)
+        self.assertEqual(problems, [])
+        self.assertEqual({r["close"] for r in rows}, {1841000.0})
 
     def test_adjusted_base_price_day(self):
         """10/2 삼성바이오로직스: 기준가 1,418,000(전일 종가 1,429,000) — 거래소 등락률 −4.51%."""
@@ -608,12 +619,29 @@ class KrxPricesTest(unittest.TestCase):
                                     "2026-10-02", third=lambda c, d: None, naver_basic=lambda c, d: None)
         self.assertEqual(len(problems), 1)
 
-    def test_whole_source_missing_stops(self):
-        """원천 하나뿐인 종목이 많으면(다음이 통째로 막혔거나 그날 사진이 없다) 야후에 묻지 않고 올리지 않는다."""
-        rows = [dict(self.ROW, code=f"{i:06d}") for i in range(sdb.ONE_SOURCE_MAX + 1)]
-        problems, _ = sdb.apply_krx(rows, {r["code"]: list(self.DAUM) for r in rows}, {},
-                                    third=lambda c, d: (_ for _ in ()).throw(AssertionError("원천 고장이면 묻지 않는다")))
-        self.assertEqual(len(problems), 1)
+    def test_whole_source_missing_is_covered_by_the_other_sources(self):
+        """2026-10-07: 사진이 통째로 없으면 전에는 그날 갱신을 포기했다 — 이제 야후·네이버로 확인해 올린다(둘이 맞는 것만)."""
+        rows = [dict(self.ROW, code=f"{i:06d}") for i in range(300)]
+        yahoo = {f"{i:06d}": 1841000.0 for i in range(299)}                  # 마지막 하나는 야후에 없다 → 네이버
+        problems, notes = sdb.apply_krx(rows, {r["code"]: list(self.DAUM) for r in rows}, {},
+                                        third=lambda c, d: yahoo.get(c),
+                                        naver_basic=lambda c, d: {"close": 1841000.0, "halted": False})
+        self.assertEqual(problems, [])
+        self.assertTrue(any("통째로" in n for n in notes) and any("야후 299개·네이버 종가 1개" in n for n in notes))
+        problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": list(self.DAUM)}, {},
+                                    third=lambda c, d: None, naver_basic=lambda c, d: None)
+        self.assertEqual(len(problems), 1)                                   # 넷 중 하나로만 받은 값은 여전히 올리지 않는다
+
+    def test_yahoo_bulk_reads_one_download_per_day(self):
+        import pandas as pd
+        from unittest import mock
+        idx = pd.to_datetime(["2026-10-02"])
+        cols = pd.MultiIndex.from_product([["Close", "Volume"], ["000660.KS", "247540.KQ", "999999.KS"]])
+        df = pd.DataFrame([[1841000.0, 126000.0, 5000.5, 1938753, 900000, 10]], index=idx, columns=cols)
+        with mock.patch("yfinance.download", return_value=df) as dl:
+            got = sdb.yahoo_bulk([("000660", "KOSPI", "2026-10-02"), ("247540", "KOSDAQ", "2026-10-02"), ("999999", "KOSPI", "2026-10-02")])
+        self.assertEqual(dl.call_count, 1)
+        self.assertEqual(got, {("000660", "2026-10-02"): 1841000.0, ("247540", "2026-10-02"): 126000.0})   # 소급 조정값(5000.5)은 뺀다
 
     def test_daum_without_todays_row_uses_todays_snapshot(self):
         """다음이 오늘 줄을 아직 안 올렸으면 옛 날짜 값이 섞이지 않게 그날 사진을 쓴다(사진이 기준일을 정한다)."""

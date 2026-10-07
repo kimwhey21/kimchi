@@ -387,8 +387,48 @@ def snapshot_close(day: str, folder: Path | None = None) -> dict[str, list] | No
     return json.loads(path.read_text(encoding="utf-8")).get("close")
 
 
-ONE_SOURCE_MAX = 60   # 원천이 하나뿐인 종목이 이보다 많으면 원천(다음·사진)이 통째로 빠진 것이다 — 야후에 묻지 않고 올리지 않는다
-DISPUTE_MAX = 20   # 두 원천이 다른 종목이 이보다 많으면 종목 문제가 아니라 원천 고장이다 — 셋째 원천에 묻지 않고 멈춘다
+# 원천은 넷이다(2026-10-07): 다음 일별 시세·15시 반 사진·야후(전 종목을 한 번에)·네이버 기본 시세(종목마다, KRX 값만 따로 준다).
+# 둘이 같은 값만 올린다. 전에는 다음이나 사진이 통째로 빠지면(원천 하나뿐인 종목 60개 초과) 묻지 않고 그날 갱신을 포기했다 —
+# 이제는 셋째·넷째 원천으로 확인해 올리고, 넷 중 어느 둘로도 확인하지 못한 종목이 있을 때만 멈춘다.
+YAHOO_CHUNK = 200
+
+
+def yahoo_bulk(wanted: list[tuple[str, str, str]]) -> dict[tuple[str, str], float]:
+    """야후 일별 종가를 한꺼번에 — {(코드, 날짜): 종가}. `wanted`는 (코드, 시장, 날짜). 거래량 0인 날·원 단위가 아닌(소급 조정) 값은 뺀다."""
+    import yfinance as yf
+    out: dict[tuple[str, str], float] = {}
+    by_day: dict[str, list[tuple[str, str]]] = {}
+    for code, market, day in wanted:
+        by_day.setdefault(day, []).append((code, ".KQ" if market == "KOSDAQ" else ".KS"))
+    failed = 0
+    for day, items in by_day.items():
+        end = (dt.date.fromisoformat(day) + dt.timedelta(days=1)).isoformat()
+        for i in range(0, len(items), YAHOO_CHUNK):
+            chunk = items[i:i + YAHOO_CHUNK]
+            tickers = [c + sfx for c, sfx in chunk]
+            try:
+                df = yf.download(tickers, start=day, end=end, auto_adjust=False, progress=False, threads=True, group_by="column")
+            except Exception as exc:  # noqa: BLE001 — 센다: 못 받은 묶음은 네이버 기본 시세가 대신 확인한다
+                failed += len(chunk)
+                print(f"[안내] 야후 묶음 {day} {len(chunk)}종목: {exc!r}")
+                continue
+            if df is None or not len(df):
+                failed += len(chunk)
+                continue
+            rows = df[df.index.strftime("%Y-%m-%d") == day]
+            if not len(rows):
+                failed += len(chunk)
+                continue
+            for code, sfx in chunk:
+                try:
+                    close, vol = float(rows["Close"][code + sfx].iloc[0]), float(rows["Volume"][code + sfx].iloc[0] or 0)
+                except (KeyError, IndexError, TypeError, ValueError):
+                    continue
+                if close == close and vol > 0 and abs(close - round(close)) < 1e-6:
+                    out[(code, day)] = close
+    if failed:
+        print(f"[안내] 야후 묶음에서 못 받은 종목 {failed}개 — 네이버 기본 시세로 확인합니다")
+    return out
 
 
 def _yahoo(code: str, day: str) -> float | None:
@@ -396,20 +436,25 @@ def _yahoo(code: str, day: str) -> float | None:
     return yahoo_close(code, day)
 
 
-def settle(code: str, rows: list[dict], snap: list, third) -> tuple[float, float, str] | None:
-    """다음 마지막 줄과 사진이 다를 때 맞는 (종가, 기준가, 근거). 종가가 다르면 야후와 같은 쪽, 종가가 같고 기준가만 다르면
-    사진 기준가가 전일 종가 그대로일 때(네이버 sv 없이 pcv) 다음(거래소 기준가)이 맞다. 가리지 못하면 None."""
+def settle(code: str, rows: list[dict], snap: list, third, naver_basic=None) -> tuple[float, float, str] | None:
+    """다음 마지막 줄과 사진이 다를 때 맞는 (종가, 기준가, 근거). 종가가 다르면 야후와 같은 쪽 — 야후가 가리지 못하면 네이버 기본
+    시세(KRX 값)와 같은 쪽(2026-10-07). 종가가 같고 기준가만 다르면 사진 기준가가 전일 종가 그대로일 때(네이버 sv 없이 pcv)
+    다음(거래소 기준가)이 맞다. 가리지 못하면 None."""
     from src.fetch_kr import pick_base
     last = rows[-1]
     s_close, s_base = float(snap[0]), float(snap[1])
     if abs(s_close - last["c"]) > 0.5:
         y = third(code, last["d"])
-        if y is None:
-            return None
-        if abs(y - last["c"]) < 0.5:
+        if y is not None and abs(y - last["c"]) < 0.5:
             return last["c"], last["base"], "다음=야후"
-        if abs(y - s_close) < 0.5:
+        if y is not None and abs(y - s_close) < 0.5:
             return s_close, s_base, "사진=야후"
+        n = (naver_basic or _naver_basic)(code, last["d"])
+        n = n.get("close") if n else None
+        if n is not None and abs(n - last["c"]) < 0.5:
+            return last["c"], last["base"], "다음=네이버"
+        if n is not None and abs(n - s_close) < 0.5:
+            return s_close, s_base, "사진=네이버"
         return None
     prev = rows[-2]["c"] if len(rows) >= 2 else None
     pick = pick_base(last["c"], {"daum": last["base"], "snapshot": s_base}, prev_close=prev)
@@ -490,12 +535,17 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
         for key in ("volume", "value", "dlow", "dhigh"):
             row.pop(key, None)
         single.append((row, "사진", close, day, None))
-    # 원천이 하나뿐인 종목(다음만·사진만)은 야후 종가와 맞을 때만 올린다 — 두 원천이 된다(2026-10-06, 감사 F-039·F-058).
-    # 많으면(다음이 통째로 막혔거나 그날 사진이 없다) 원천 고장이라 묻지 않고 올리지 않는다.
-    if len(single) > ONE_SOURCE_MAX:
+    # 셋째 원천(야후)은 필요한 종목만 한 번에 묻는다 — 다음이나 사진이 통째로 빠져도(2026-10-07 07:50: 2,765종목) 몇 분이면 끝난다.
+    if third is None and (single or disputed):
+        wanted = [(row["code"], row.get("market", ""), when) for row, _, _, when, _ in single]
+        wanted += [(row["code"], row.get("market", ""), rows[-1]["d"]) for row, rows, _, _ in disputed]
+        bulk = yahoo_bulk(wanted)
+        third = lambda code, when: bulk.get((code, when))   # noqa: E731
+    # 원천이 하나뿐인 종목(다음만·사진만)은 야후나 네이버 기본 시세와 맞을 때만 올린다 — 두 원천이 된다(2026-10-06, 감사 F-039·F-058).
+    if single:
         kinds = sorted({k for _, k, *_ in single})
-        problems.append(f"원천이 하나({'·'.join(kinds)})뿐인 종목 {len(single)}개 — 다음이나 15시 반 사진이 통째로 빠졌습니다. 올리지 않습니다")
-    elif single:
+        if len(single) > 60:
+            notes.append(f"원천 하나({'·'.join(kinds)})가 통째로 빠져 {len(single)}종목을 야후·네이버 기본 시세로 확인했습니다")
         checked, by_naver, halted = 0, 0, 0
         for row, kind, close, when, last in single:
             other = (third or _yahoo)(row["code"], when)
@@ -505,7 +555,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
             # 야후가 값을 주지 않는 종목(거래정지 — 야후는 거래량 0인 날을 빼고, 일부 리츠는 야후에 없다)은 네이버 기본 시세로 가린다
             # (2026-10-06: 17:05 실행이 거래정지 21종목·맵스리얼티1 때문에 통째로 멈췄다). 거래정지는 네이버가 '정지'로 표시하고 다음이
             # 체결 0주·종가=기준가일 때만, 거래가 있던 종목은 네이버 종가가 다음 종가와 같을 때만 쓴다.
-            naver = (naver_basic or _naver_basic)(row["code"], when) if other is None else None
+            naver = (naver_basic or _naver_basic)(row["code"], when)   # 야후가 없거나 다르면 넷째 원천으로
             if naver and naver.get("halted") and last and not last.get("v") and abs(last["c"] - last["base"]) < 0.5:
                 halted += 1
                 continue
@@ -517,14 +567,12 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
         notes.append(f"원천이 하나뿐이라 셋째 근거로 확인한 종목 — 야후 {checked}개·네이버 종가 {by_naver}개·거래정지 {halted}개")
     # 두 원천(다음·15시 반 사진)이 다른 종목은 셋째 근거로 가린다(2026-10-05 결정: 옛 값이 아니라 정확한 값) — 종가는 야후와
     # 같은 쪽, 기준가는 fetch_kr.pick_base. 가리지 못한 종목이 하나라도 있으면 올리지 않는다. 많이 다르면 원천 고장이라 묻지 않는다.
-    if len(disputed) > DISPUTE_MAX:
-        problems += [d for *_, d in disputed]
-    else:
+    if disputed:
         settled = []
         for row, rows, snap, detail in disputed:
-            fixed = settle(row["code"], rows, snap, third or _yahoo)
+            fixed = settle(row["code"], rows, snap, third or _yahoo, naver_basic)
             if fixed is None:
-                problems.append(detail + " — 야후로도 가리지 못했습니다")
+                problems.append(detail + " — 야후로도 네이버로도 가리지 못했습니다")
                 continue
             close, base, how = fixed
             last = rows[-1]
