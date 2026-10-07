@@ -322,7 +322,7 @@ def detail(session: requests.Session, code: str) -> dict:
 # ── 다음 금융: KRX 정규장 값 (2026-10-05) ─────────────────────────────────────────────
 # 네이버 목록·상세·차트의 가격은 거래소+넥스트레이드 통합값이다. 종목 페이지는 'At close · Korea Exchange'라고 쓰면서
 # 10/2 SK하이닉스를 ₩1,842,000 +0.49%(거래소 ₩1,841,000 +0.44%), 삼성바이오로직스를 −3.67%(거래소 −4.51%)로 보여 줬다.
-# 17:05 실행은 넥스트레이드가 20:00까지 움직이는 중간 값이었다. 가격·등락·거래량·거래대금·시가총액·차트·52주 범위는
+# 저녁 실행(옛 17:05)은 넥스트레이드가 20:00까지 움직이는 중간 값이었다. 가격·등락·거래량·거래대금·시가총액·차트·52주 범위는
 # 다음 일별 시세(KRX 정규장, 9/30~10/2 사진 600건 모두 일치)에서 받고, 15:3x 전 종목 사진(data/krx_close)과 대조한다.
 DAUM = "https://finance.daum.net/api"
 SNAPSHOTS = ROOT / "data" / "krx_close"
@@ -543,7 +543,10 @@ def _day_range(row: dict, last: dict) -> None:
 
 
 def _naver_basic(code: str, day: str) -> dict | None:
-    """네이버 기본 시세 — {close, halted}. 그날 값이 아니면 None. 마감 뒤라 넥스트레이드에 없는 종목은 KRX 종가와 같다(같을 때만 쓴다)."""
+    """네이버 기본 시세 — {close, halted}. 그날 값이 아니면 None. 마감 뒤라 넥스트레이드에 없는 종목은 KRX 종가와 같다(같을 때만 쓴다).
+    16:00~18:00에는 시간외 단일가가 `closePrice`에 들어오므로 그날 값은 `settled` 뒤에만 묻는다(2026-10-07)."""
+    if not settled(day):
+        return None
     try:
         body = requests.get(f"{NAVER}/stock/{code}/basic", headers=UA, timeout=20).json()
     except (requests.RequestException, ValueError) as exc:
@@ -1188,12 +1191,14 @@ def unfinished(day: str, now: dt.datetime | None = None) -> bool:
     return day == now.date().isoformat() and now.time() < krx_hours(now.date())[1]
 
 
-DELAYED_READY = dt.timedelta(minutes=30)   # 거래소 정보데이터시스템·야후는 20분 늦다 — 10/7 실측: 마감(15:30) 뒤 15:51에 최종 종가
+# 야후·네이버 기본 시세의 그날 종가는 시간외 단일가(16:00~18:00)가 끝나고 30분 뒤부터 믿는다 — 10/7 실측: 15:48 야후 269,500(20분 늦은
+# 장중 가격), 17:1x 야후·네이버가 시간외 단일가(310200 2,125 등)를 '종가'로 줘서 17:05 종목 DB가 맞는 다음 값(2,100)을 버리고 멈췄다.
+DELAYED_READY = dt.timedelta(hours=3)
 
 
 def settled(day: str, now: dt.datetime | None = None) -> bool:
-    """`day`의 종가가 늦게 오는 원천(거래소 정보데이터시스템·야후)에 최종으로 올라왔으면 True — 지난날이거나 마감 30분 뒤.
-    그 전에는 20분 전 장중 가격이 '종가' 칸에 있다(10/7 15:48 삼성전자 269,500, 실제 종가 268,500)."""
+    """`day`의 종가를 야후·네이버 기본 시세에서 믿을 수 있으면 True — 지난날이거나 마감 3시간 뒤(시간외 단일가가 끝나고 30분).
+    그 전에는 장중 가격(마감 뒤 20분)이나 시간외 단일가가 '종가' 칸에 있다(10/7 삼성전자 15:48 269,500·17:40 270,500, 종가 268,500)."""
     now = (now or dt.datetime.now(KST)).astimezone(KST)
     today = now.date().isoformat()
     if day != today:

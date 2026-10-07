@@ -786,11 +786,13 @@ class DaumUnfinishedDayTest(unittest.TestCase):
 
 
 class DelayedSourcesTest(unittest.TestCase):
-    def test_delayed_sources_wait_until_thirty_minutes_after_the_close(self):
-        """2026-10-07 실측: 거래소 정보데이터시스템·야후는 15:48에 삼성전자 269,500(20분 전 장중), 15:51부터 268,500(종가)."""
+    def test_delayed_sources_wait_until_after_hours_trading_ends(self):
+        """2026-10-07 실측: 15:48 야후 삼성전자 269,500(20분 늦은 장중), 17:1x 야후·네이버가 시간외 단일가를 '종가'로 줬다(종가 268,500).
+        그날 종가는 시간외 단일가(16:00~18:00)가 끝나고 30분 뒤부터 묻는다."""
         at = lambda h, m: dt.datetime(2026, 10, 7, h, m, tzinfo=sdb.KST)   # noqa: E731
         self.assertFalse(sdb.settled("2026-10-07", at(15, 48)))
-        self.assertTrue(sdb.settled("2026-10-07", at(16, 0)))
+        self.assertFalse(sdb.settled("2026-10-07", at(17, 5)))
+        self.assertTrue(sdb.settled("2026-10-07", at(18, 30)))
         self.assertTrue(sdb.settled("2026-10-06", at(9, 0)))
         self.assertFalse(sdb.settled("2026-10-08", at(17, 0)))
 

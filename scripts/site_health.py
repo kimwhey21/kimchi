@@ -2,7 +2,7 @@
 
     python -m scripts.site_health          # 문제가 있으면 줄마다 적고 1로 끝난다(워크플로가 텔레그램으로 알린다)
 
-publish_check.yml이 평일 19:00(17:05 종목 수집 뒤)과 다음 날 10:00(07:50 수급 수집 뒤)에 돌린다. 카페24는 동시 요청에 약해
+publish_check.yml이 평일 19:30(18:35 종목 수집 뒤)과 다음 날 10:00(07:50 수급 수집 뒤)에 돌린다. 카페24는 동시 요청에 약해
 한 장씩 차례로 연다. 보는 것:
   1. /wp-sitemap.xml이 돌려보내기 없이 200이고 종목 묶음이 있는가 — Rank Math 사이트맵이 켜지면 종목 사이트맵이 404가 된다
   2. 종목 사이트맵에 종목 2,000개 이상·순위표·외국인 수급 주소가 있는가
@@ -61,7 +61,7 @@ def date_issues(home: str, flows: str, dates: list[str], now: dt.datetime) -> li
     if got is None:
         out.append("홈에서 KOSPI 날짜를 못 찾았습니다(시장 띠가 비었을 수 있음)")
     elif got < dates[-1]:
-        out.append(f"홈의 KOSPI 날짜 {got} < 마지막 한국장 시세 {dates[-1]} — 17:05 종목 수집(stock_db.yml)이 안 돌았을 수 있습니다")
+        out.append(f"홈의 KOSPI 날짜 {got} < 마지막 한국장 시세 {dates[-1]} — 18:35 종목 수집(stock_db.yml)이 안 돌았을 수 있습니다")
     elif got > dates[-1]:
         out.append(f"홈의 KOSPI 날짜 {got} > 마지막 한국장 시세 {dates[-1]} — 16:20 한국장 시세 수집(market_brief.yml)이 멈춰 "
                    f"한국장 시황이 안 나갔을 수 있습니다(15:32 종가 사진 krx_close.yml부터 확인)")

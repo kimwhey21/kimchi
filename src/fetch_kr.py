@@ -249,7 +249,7 @@ def yahoo_close(code: str, day: str) -> float | None:
     import yfinance as yf
     from src.stock_db import settled
     if not settled(day):
-        print(f"[안내] 야후 {code} {day}: 마감 30분 전이라 야후 값은 장중 가격입니다 — 묻지 않습니다")
+        print(f"[안내] 야후 {code} {day}: 시간외 단일가가 끝나기 전이라 야후 값은 종가가 아닐 수 있습니다 — 묻지 않습니다")
         return None
     start = dt.date.fromisoformat(day)
     for suffix in (".KS", ".KQ"):

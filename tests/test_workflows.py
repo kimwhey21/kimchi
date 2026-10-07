@@ -85,7 +85,7 @@ class MarketBriefIsFetchOnlyTest(unittest.TestCase):
     def test_publish_check_runs_after_the_fallback_routine(self) -> None:
         """검사는 예비 예약(17:40/08:40 KST)까지 끝난 뒤에 돌아야 헛경보가 없습니다.
         2026-09-07에 17:35 검사가 실패 메일을 보냈는데 글은 19:05에 정상 공개됐습니다."""
-        self.assertIn('cron: "0 10 * * 1-5"', self.publish_check)   # 19:00 KST
+        self.assertIn('cron: "30 10 * * 1-5"', self.publish_check)  # 19:30 KST — 18:35 종목 DB 뒤(2026-10-07)
         self.assertIn('cron: "0 1 * * 2-6"', self.publish_check)    # 10:00 KST 다음날
         self.assertNotIn('cron: "20 8 * * 1-5"', self.publish_check)
 

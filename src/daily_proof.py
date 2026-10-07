@@ -435,7 +435,7 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
     jobs = expected_workflow_jobs(day)
     try:
         runs = github_runs(dt.datetime.combine(day, dt.time(0), KST) - dt.timedelta(hours=1), token)
-        for j in jobs:   # 같은 작업이 하루 두 번(종목 DB 07:50·17:05)이라 이름표가 아니라 작업마다 적는다(2026-10-05 시험에서 아침 것이 저녁 것에 덮였다)
+        for j in jobs:   # 같은 작업이 하루 두 번(종목 DB 07:50·18:35)이라 이름표가 아니라 작업마다 적는다(2026-10-05 시험에서 아침 것이 저녁 것에 덮였다)
             j["status"] = job_status(j, runs, real=lambda run: ran_for_real(run, token))
     except Exception as exc:  # noqa: BLE001 — 조회 실패도 한 줄로 적는다
         issues.append(f"깃허브 실행 목록을 받지 못했습니다: {exc}")
