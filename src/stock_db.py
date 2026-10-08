@@ -405,6 +405,9 @@ def snapshot_close(day: str, folder: Path | None = None) -> dict[str, list] | No
 # 둘이 같은 값만 올린다. 전에는 다음이나 사진이 통째로 빠지면(원천 하나뿐인 종목 60개 초과) 묻지 않고 그날 갱신을 포기했다 —
 # 이제는 셋째·넷째 원천으로 확인해 올리고, 넷 중 어느 둘로도 확인하지 못한 종목이 있을 때만 멈춘다.
 YAHOO_CHUNK = 200
+# 가려 내고 넘어간 것 — 실행 기록에만 남기고 알리지 않는다(2026-10-08: 매일 몇 종목은 원천끼리 어긋나 매일 알림이 갔다).
+# 알림은 멈춘 날, 원천이 통째로 빠진 날, 칸이 빈 종목이 있는 날처럼 사람이 볼 일이 있을 때만.
+RESOLVED = "(가려 냄) "
 KRX_DATA = "https://data.krx.co.kr"
 
 
@@ -677,7 +680,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
                 continue
             problems.append(f"{row['code']}: {kind} 하나로만 받은 종가 {close:,.0f}를 야후로도 네이버로도 확인하지 못했습니다"
                             f"(야후 {other}, 네이버 {naver})")
-        notes.append(f"원천이 하나뿐이라 셋째 근거로 확인한 종목 — 거래소·야후 {checked}개·네이버 종가 {by_naver}개·거래정지 {halted}개")
+        notes.append(RESOLVED + f"원천이 하나뿐이라 다른 원천으로 확인한 종목 — 셋째 원천 {checked}개·네이버 기본 시세 {by_naver}개·거래정지 {halted}개")
     # 두 원천(다음·15시 반 사진)이 다른 종목은 셋째 근거로 가린다(2026-10-05 결정: 옛 값이 아니라 정확한 값) — 종가는 야후와
     # 같은 쪽, 기준가는 fetch_kr.pick_base. 가리지 못한 종목이 하나라도 있으면 올리지 않는다. 많이 다르면 원천 고장이라 묻지 않는다.
     if disputed:
@@ -699,7 +702,7 @@ def apply_krx(listing: list[dict], daily: dict[str, list[dict]], snaps: dict[str
             _day_range(row, last)
             settled.append(f"{row['code']} {how}")
         if settled:
-            notes.append(f"두 원천이 달라 셋째 근거로 정한 종목 {len(settled)}개: " + " / ".join(settled[:10]))
+            notes.append(RESOLVED + f"두 원천이 달라 셋째 근거로 정한 종목 {len(settled)}개: " + " / ".join(settled[:10]))
     if stale:
         notes.append(f"다음 일별 시세가 {day}보다 이르고 그날 사진도 없어 마지막 날짜 값으로 나간 종목 {len(stale)}개: {', '.join(stale[:15])}")
     return problems, notes
@@ -1519,10 +1522,14 @@ def run(*, detail_all: bool, do_push: bool, out: Path | None, limit: int | None 
         notes.append(f"차트·52주 범위를 다음에서 못 받아 네이버 통합값이 남은 종목 {len(no_hist)}개: {', '.join(no_hist[:15])}")
     if daum.down:
         notes.append(f"다음 금융: {daum.down}")
-    if notes:
-        print("[경고] " + " / ".join(notes), flush=True)
+    quiet = [n for n in notes if n.startswith(RESOLVED)]
+    loud = [n for n in notes if not n.startswith(RESOLVED)]
+    if quiet:
+        print("[안내] " + " / ".join(quiet), flush=True)
+    if loud:
+        print("[경고] " + " / ".join(loud), flush=True)
         if do_push:
-            alert.send("종목 DB: " + " / ".join(notes), "warn")
+            alert.send("종목 DB: " + " / ".join(loud), "warn")
     day_now = max((r.get("date") or "" for r in listing), default="")
     idx = market_index(session, day_now)
     if idx["KOSPI"].get("foreign_net_eok") is None and FOREIGN_HISTORY.exists():   # 장 전 실행 — 기록된 그날 값으로

@@ -613,7 +613,7 @@ class KrxPricesTest(unittest.TestCase):
                                         third=lambda c, d: 1841000.0)
         self.assertEqual(problems, [])
         self.assertEqual((row["close"], row["pct"]), (1841000.0, 0.44))
-        self.assertTrue(any("거래소·야후 1개" in n for n in notes))
+        self.assertTrue(any("셋째 원천 1개" in n for n in notes))
         # 2026-10-06: 하나 남은 원천을 야후가 확인해 주지 않으면 올리지 않는다
         problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": []}, {"2026-10-02": {"000660": [1841000, 1833000]}},
                                     "2026-10-02", third=lambda c, d: None, naver_basic=lambda c, d: None)
@@ -627,7 +627,7 @@ class KrxPricesTest(unittest.TestCase):
                                         third=lambda c, d: yahoo.get(c),
                                         naver_basic=lambda c, d: {"close": 1841000.0, "halted": False})
         self.assertEqual(problems, [])
-        self.assertTrue(any("통째로" in n for n in notes) and any("거래소·야후 299개·네이버 종가 1개" in n for n in notes))
+        self.assertTrue(any("통째로" in n for n in notes) and any("셋째 원천 299개·네이버 기본 시세 1개" in n for n in notes))
         problems, _ = sdb.apply_krx([dict(self.ROW)], {"000660": list(self.DAUM)}, {},
                                     third=lambda c, d: None, naver_basic=lambda c, d: None)
         self.assertEqual(len(problems), 1)                                   # 넷 중 하나로만 받은 값은 여전히 올리지 않는다
@@ -665,6 +665,13 @@ class KrxPricesTest(unittest.TestCase):
         with mock.patch("builtins.print"):
             self.assertIsNone(k2.close("207940", "2026-10-06"))
         self.assertIn("KRX_ID", k2.error)                                    # 조용히 넘어가지 않는다
+
+    def test_resolved_notes_are_marked_quiet(self):
+        """2026-10-08: 가려 내고 넘어간 것은 알리지 않는다 — 표시(RESOLVED)가 붙어 run()이 기록에만 남긴다."""
+        row = dict(self.ROW)
+        _, notes = sdb.apply_krx([row], {"000660": list(self.DAUM)}, {"2026-10-02": {"000660": [1842000, 1833000]}},
+                                 third=lambda c, d: 1841000.0)
+        self.assertTrue(notes and all(n.startswith(sdb.RESOLVED) for n in notes))
 
     def test_primary_pair_is_daum_and_the_exchange(self):
         """2026-10-07 결정: 기본 짝은 다음 + 거래소 공식. 사진은 셋째 — 사진이 틀려도(10/6 실제 2종목) 다음·거래소가 맞으면 그대로 나간다."""
@@ -708,7 +715,7 @@ class KrxPricesTest(unittest.TestCase):
                                         third=lambda c, d: 1841000.0)
         self.assertEqual(problems, [])
         self.assertEqual((row["close"], row["date"]), (1841000.0, "2026-10-02"))
-        self.assertTrue(any("거래소·야후 1개" in n for n in notes))
+        self.assertTrue(any("셋째 원천 1개" in n for n in notes))
 
     def test_long_halted_stock_keeps_its_last_day_and_is_counted(self):
         row = dict(self.ROW)
