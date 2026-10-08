@@ -1,0 +1,143 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "시장 읽기",
+  "date": "2026-10-09",
+  "slug": "bank-insider-buying-slump",
+  "radar_origin": "Fortune: Financial insiders are buying their own stock at the slowest pace in nearly 23 years—a ‘negative data point’ just as bank earnings kick off",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1566254488277-aebfe9ebb6a8",
+    "unsplash_id": "1AucbckEJWk",
+    "credit": "Unsplash / Alex Duffy"
+  },
+  "sources": [
+    {
+      "name": "포춘(Fortune)",
+      "title": "Financial insiders are buying their own stock at the slowest pace in nearly 23 years—a 'negative data point' just as bank earnings kick off (2026-10-08)",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/"
+    },
+    {
+      "name": "EPFR글로벌(쿠코인 뉴스 경유)",
+      "title": "U.S. corporate insiders sell stocks at the second-fastest pace in over 20 years",
+      "url": "https://www.kucoin.com/news/flash/us-corporate-insiders-sell-stocks-at-2nd-fastest-pace-in-20-years"
+    }
+  ],
+  "tags": [
+    "내부자매수",
+    "은행실적",
+    "금융주",
+    "베리티데이터",
+    "주식투자"
+  ],
+  "ko": {
+    "title": "은행 실적 발표를 앞두고, 임원들은 왜 자사주를 사지 않을까요",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "열흘 뒤인 10월 13일, JP모건과 골드만삭스가 나란히 3분기 실적을 내놓습니다.\n그런데 정작 이 회사들의 임원들은 요즘 자기 회사 주식을 사지 않습니다.\n경제지 포춘에 따르면 리서치회사 베리티데이터가 집계한 지난 3분기 금융권 자사주 매수자는 298명이었습니다.\n이 회사가 기록을 모으기 시작한 2004년 이후 가장 적은 숫자입니다."
+      },
+      {
+        "heading": "",
+        "body": "종전 최저치는 2024년 3분기의 302명이었는데, 이번에 그 기록마저 깨졌습니다.\n금융권만의 일도 아닙니다. 전체 내부자 매수자는 2분기 1,580명에서 이번 분기 1,290명으로 18% 줄었습니다.\n베리티데이터 리서치 책임자 벤 실버먼은 매도자 수는 조금 늘었지만 평소와 다른 수준은 아니었다고 짚었습니다."
+      },
+      {
+        "heading": "",
+        "body": "하버드 로스쿨 교수 제시 프리드는 금융권 임원들이 자기 회사 주식을 덜 사는 현상을 약세 신호로 해석합니다.\n내부자 매수는 평소 시장 평균을 웃도는 수익률을 예고하는 경우가 많다는 것이 그 이유입니다.\n미시간대 교수 네얏 세이훈의 생각은 다릅니다.\n“이게 무슨 의미가 있다고는 전혀 믿지 않습니다.”\n그는 은행주가 금리나 통화정책 같은 거시 변수에 더 크게 좌우된다고 봅니다."
+      },
+      {
+        "heading": "",
+        "body": "숫자는 이미 흔들리고 있습니다.\nKBW 은행지수는 최근 한 달 새 11% 가까이 하락했습니다. 같은 기간 S&P500은 1% 올랐습니다.\n9월 연준이 금리를 올렸고, 기업공개 시장은 주춤합니다. 오우라와 뱀부인슈어런스 같은 회사가 지난달 상장을 미뤘습니다.\nAI 투자를 위해 늘어난 기업 대출도 걱정거리로 꼽힙니다.\n모건스탠리는 하루 뒤인 10월 14일에 실적을 냅니다. 사흘 안에 대형 은행 세 곳의 성적표가 다 나오는 셈입니다."
+      },
+      {
+        "heading": "",
+        "body": "금융권만 조용한 것도 아닙니다. 시장 조사기관 EPFR글로벌에 따르면 올해 상반기 미국 기업 내부자들은 주식 776억 달러어치를 팔았습니다.\n1년 전보다 20% 늘어난 규모로, 지난 20년 동안 이보다 많이 판 해는 2021년뿐이었습니다.\n반면 같은 기간 사들인 주식은 69억 달러어치뿐이었습니다. 1년 전 7년 만의 최저치였던 67억 달러를 가까스로 넘는 수준입니다.\nEPFR 애널리스트들은 지금 밸류에이션에서 경영진이 보유 지분을 늘릴 뜻이 거의 없어 보인다고 짚었습니다."
+      },
+      {
+        "heading": "",
+        "body": "임원들의 매매가 항상 미래를 맞히는 것은 아닙니다.\n그런데도 실적 발표를 며칠 앞두고, 누구보다 숫자를 먼저 보는 사람들이 지갑을 닫았다는 사실은 눈에 걸립니다.\n한국에서도 은행·금융지주 실적 시즌마다 임원 지분 공시가 따라옵니다.\n숫자를 가장 먼저 보는 사람이 정작 손을 대지 않을 때, 그 침묵은 무엇을 말하는 걸까요?"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "298명",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "there were just 298 \"unique financial-sector buyers,\""
+    },
+    {
+      "claim": "2004년 이후",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "That was the lowest in the financial research firm’s records, which go all the way back to 2004,"
+    },
+    {
+      "claim": "302명이었는데",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "and also just under the prior record low of 302 buyers in the third quarter of 2024."
+    },
+    {
+      "claim": "1,580명에서 이번 분기 1,290명으로 18%",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "Insider buying fell 18% to 1,290 buyers, down from 1,580 in the second quarter."
+    },
+    {
+      "claim": "이게 무슨 의미가 있다고는 전혀 믿지 않습니다",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "I’m very skeptical that this means anything,"
+    },
+    {
+      "claim": "KBW 은행지수는 최근 한 달 새 11% 가까이",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "As of Wednesday, the KBW bank index is down nearly 11% over the past month, bucking the S&P 500’s 1% advance."
+    },
+    {
+      "claim": "10월 13일",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "JPMorgan and Goldman Sachs will post third-quarter results on Oct. 13."
+    },
+    {
+      "claim": "같은 기간 S&P500은 1% 올랐습니다",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "As of Wednesday, the KBW bank index is down nearly 11% over the past month, bucking the S&P 500’s 1% advance."
+    },
+    {
+      "claim": "10월 14일",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "Morgan Stanley will follow suit on Oct. 14."
+    },
+    {
+      "claim": "9월 연준이 금리를 올렸고",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "The Fed raised interest rates around the same time, which can make corporate dealmaking more difficult."
+    },
+    {
+      "claim": "오우라와 뱀부인슈어런스 같은 회사가 지난달 상장을 미뤘습니다",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "the IPO market has stalled, with Oura and Bamboo"
+    },
+    {
+      "claim": "늘어난 기업 대출도 걱정거리",
+      "url": "https://fortune.com/2026/10/08/financial-insiders-stock-buying-slows-bank-earnings-q3/",
+      "original": "companies are taking out massive loans for their buzzy AI plans."
+    },
+    {
+      "claim": "776억 달러어치를 팔았습니다",
+      "url": "https://www.kucoin.com/news/flash/us-corporate-insiders-sell-stocks-at-2nd-fastest-pace-in-20-years",
+      "original": "U.S. corporate insiders sold $77.6 billion in stocks during H1 2026"
+    },
+    {
+      "claim": "2021년뿐이었습니다",
+      "url": "https://www.kucoin.com/news/flash/us-corporate-insiders-sell-stocks-at-2nd-fastest-pace-in-20-years",
+      "original": "Only 2021 saw higher insider sales."
+    },
+    {
+      "claim": "69억 달러어치뿐이었습니다",
+      "url": "https://www.kucoin.com/news/flash/us-corporate-insiders-sell-stocks-at-2nd-fastest-pace-in-20-years",
+      "original": "Insider buying totaled $6.9 billion, just above last year’s seven-year low of $6.7 billion."
+    },
+    {
+      "claim": "1년 전 7년 만의 최저치였던 67억 달러를 가까스로 넘는 수준입니다",
+      "url": "https://www.kucoin.com/news/flash/us-corporate-insiders-sell-stocks-at-2nd-fastest-pace-in-20-years",
+      "original": "Insider buying totaled $6.9 billion, just above last year’s seven-year low of $6.7 billion."
+    }
+  ]
+}

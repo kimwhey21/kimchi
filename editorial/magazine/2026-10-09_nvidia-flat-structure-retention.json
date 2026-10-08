@@ -1,0 +1,137 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "기업과 기술",
+  "date": "2026-10-09",
+  "slug": "nvidia-flat-structure-retention",
+  "radar_origin": "Fortune: Nvidia’s secret to retaining staff? No org charts, a flat structure, and two extra days off every quarter",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1542323228-002ac256e7b8",
+    "unsplash_id": "ABVE1cyT7hk",
+    "credit": "Unsplash / Camylla Battani"
+  },
+  "sources": [
+    {
+      "name": "포춘(Fortune)",
+      "title": "Nvidia's secret to retaining staff? No org charts, a flat structure, and two extra days off every quarter (2026-10-08)",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/"
+    },
+    {
+      "name": "비즈니스 인사이더(AOL 재게재)",
+      "title": "Jensen Huang runs Nvidia with 60 direct reports — and no one-on-ones (Jordan Hart)",
+      "url": "https://www.aol.com/articles/jensen-huang-runs-nvidia-60-094101070.html"
+    }
+  ],
+  "tags": [
+    "엔비디아",
+    "조직문화",
+    "젠슨황",
+    "이직률",
+    "수평조직"
+  ],
+  "ko": {
+    "title": "엔비디아 이직률 3.7%의 비밀: 조직도가 없다는 것",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "엔비디아 인사 담당 디렉터 피브 펀살란은 19년째 이 회사에 다니고 있습니다.\n그 긴 시간 동안 한 번도 받아 본 적 없는 것이 하나 있습니다. 조직도입니다.\n경제지 포춘과의 인터뷰에서 펀살란은 이렇게 말했습니다.\n“우리는 아주 수평적인 구조를 가지고 있습니다. 조직도가 없습니다.”"
+      },
+      {
+        "heading": "",
+        "body": "전략적으로 중요한 프로젝트를 이끄는 사람이라면 신입이라도 최고경영자 젠슨 황에게 바로 보고하는 일이 있습니다.\n부서가 어디든 중요한 것은 직급이 아니라 '임무'라는 것이 펀살란이 전하는 원칙입니다.\n실제로 황은 직급 단계를 최대한 줄이려 하고, 그 결과 그의 직속 보고자는 지금 36명입니다."
+      },
+      {
+        "heading": "",
+        "body": "황은 이 많은 직속 보고자와 따로 일대일 면담을 하지 않습니다.\n비즈니스 인사이더에 그는 이렇게 말했습니다.\n“저는 그들과 일대일 면담을 하지 않습니다, 불가능하기 때문입니다.”\n대신 이렇게 설명합니다. “우리는 문제를 던지고, 다 함께 달려듭니다.”\n흔히 보는 피라미드형 조직도에 대해서는 “다들 똑같이 생겼고, 저는 그게 말이 안 된다고 생각합니다”라고 비판한 적도 있습니다."
+      },
+      {
+        "heading": "",
+        "body": "복지도 독특합니다. 코로나 시기 한 직원의 제안에서 시작된 정책으로, 전 세계 엔비디아 직원은 분기마다 이틀씩 추가로 쉽니다.\n이날은 회사 전체가 멈춥니다. 돌아왔을 때 밀린 업무가 없도록 하려는 취지입니다.\n제안함 제도도 있습니다. 인턴이든 시니어 엔지니어든 누구나 의견을 낼 수 있고, 모든 제안은 검토돼 답을 받습니다."
+      },
+      {
+        "heading": "",
+        "body": "효과는 숫자로도 나타납니다. 엔비디아의 전 세계 이직률은 3.7%로, 기술업계 평균 21.9%의 6분의 1 수준입니다.\n영국에서는 엔비디아 직원의 95%가 “좋은 직장”이라고 답했습니다. 영국 기업 평균은 54%입니다."
+      },
+      {
+        "heading": "",
+        "body": "모두가 이 구조를 반기는 것은 아닙니다. 일부 직원은 늦은 야근과 '압박솥' 같은 분위기를 문제로 꼽았고, 무료 점심이 없다는 점도 비판받습니다.\n시가총액 5.65조 달러짜리 회사치고는 검소하다는 말도 나옵니다. 대신 직원들은 급여로 자사주를 시장가보다 15% 싸게 살 수 있습니다."
+      },
+      {
+        "heading": "",
+        "body": "조직도 없이 36명이 한 사람에게 보고하는 회사가 이직률을 업계 6분의 1로 묶어 둔 것은 수평적 구조 때문일까요, 아니면 주가가 오르는 회사라 다들 버티는 것일까요?\n한국의 많은 회사가 '수평 조직'을 표방하지만 보고 체계는 그대로인 경우가 많습니다. 엔비디아의 답은 둘 중 무엇에 더 가까울까요?"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "우리는 아주 수평적인 구조를 가지고 있습니다. 조직도가 없습니다",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "We’ve got a very flat structure, with no org charts."
+    },
+    {
+      "claim": "엔비디아 인사 담당 디렉터 피브 펀살란은 19년째 이 회사에 다니고 있습니다",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "Much has changed at Nvidia in the 19 years since HR director Febe Punsalan started working at the Santa Clara,"
+    },
+    {
+      "claim": "그의 직속 보고자는 지금 36명입니다",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "he currently has 36 direct reports"
+    },
+    {
+      "claim": "저는 그들과 일대일 면담을 하지 않습니다, 불가능하기 때문입니다",
+      "url": "https://www.aol.com/articles/jensen-huang-runs-nvidia-60-094101070.html",
+      "original": "I don't have one-on-ones with them because it's impossible,\" Huang said."
+    },
+    {
+      "claim": "우리는 문제를 던지고, 다 함께 달려듭니다",
+      "url": "https://www.aol.com/articles/jensen-huang-runs-nvidia-60-094101070.html",
+      "original": "We present a problem, and all of us attack it."
+    },
+    {
+      "claim": "다들 똑같이 생겼고, 저는 그게 말이 안 된다고 생각합니다",
+      "url": "https://www.aol.com/articles/jensen-huang-runs-nvidia-60-094101070.html",
+      "original": "They all look the same, and it doesn't make any sense to me,\" Huang told Fridman."
+    },
+    {
+      "claim": "분기마다 이틀씩 추가로 쉽니다",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "Each quarter, Nvidia employees globally are given two additional days off."
+    },
+    {
+      "claim": "모든 제안은 검토돼 답을 받습니다",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "every suggestion is looked at and reviewed and has a res"
+    },
+    {
+      "claim": "엔비디아의 전 세계 이직률은 3.7%로, 기술업계 평균 21.9%의 6분의 1 수준입니다",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "The global turnover rate at Nvidia is 3.7% compared with the technology industry average of 21.9%,"
+    },
+    {
+      "claim": "95%가 “좋은 직장”이라고 답했습니다",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "in the U.K., 95% of Nvidia employees say it's a great place to work, compared with a 54% average for U.K.-based organizations"
+    },
+    {
+      "claim": "영국 기업 평균은 54%입니다",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "in the U.K., 95% of Nvidia employees say it's a great place to work, compared with a 54% average for U.K.-based organizations"
+    },
+    {
+      "claim": "시가총액 5.65조 달러짜리 회사",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "Nvidia, which has a $5.65 trillion market cap, allows workers to buy shares in the company using their salary at a 15% market"
+    },
+    {
+      "claim": "직원들은 급여로 자사주를 시장가보다 15% 싸게 살 수 있습니다",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "Nvidia, which has a $5.65 trillion market cap, allows workers to buy shares in the company using their salary at a 15% market"
+    },
+    {
+      "claim": "조직도 없이 36명이 한 사람에게 보고하는 회사가 이직률을 업계 6분의 1로 묶어 둔 것",
+      "url": "https://fortune.com/2026/10/08/nvidia-secret-to-retaining-staff-no-org-charts-a-flat-structure-two-extra-days-off-every-quarter/",
+      "original": "he currently has 36 direct reports"
+    }
+  ]
+}
