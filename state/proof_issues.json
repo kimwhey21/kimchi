@@ -1,16 +1,16 @@
 {
  "base": {
-  "글 없음: 잡지 #편 (editorial/magazine/#_* #편)": 1,
-  "작업 artifact_watch.yml (#): 없음": 1,
-  "작업 stock_db.yml (#): 실패": 1
- },
- "day": "2026-10-07",
- "issues": {
   "글 없음: 미국장 시세 (data/price_us_#json 없음 — 미국 휴장이 아니면 수집 실패)": 1,
   "글 없음: 한국어 가이드 (editorial/guides/ko_* 오늘 커밋)": 1,
   "미국장 # 공식 원천으로 다시 맞추지 못한 값 #개 — Warner Bros. Discovery": 1,
   "본진 us: 마지막 거래일은 #인데 저장소의 최신 시세 파일은 #입니다. 그날 시세 수집이 실패했거나 커밋되지 않았습니다.": 1,
   "작업 publish_check.yml (#): 실패": 1,
   "작업 stock_db.yml (#): 실패": 2
+ },
+ "day": "2026-10-08",
+ "issues": {
+  "# 페이지에서 가격·날짜를 못 읽었습니다(HTTP #)": 1,
+  "# 화면 대조 실패 — HTTPSConnectionPool(host='fermata.it.kr', port=#): Read timed out. (read timeout=#)": 1,
+  "지수 대조 실패: HTTPSConnectionPool(host='ecos.bok.or.kr', port=#): Max retries exceeded with url: /api/StatisticSearch/#MZG#UTHRWHL#VOSEA/json/kr": 1
  }
 }
