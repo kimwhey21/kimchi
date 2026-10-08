@@ -1,0 +1,113 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-08",
+  "checked": "2026-10-08",
+  "slug": "korea-circuit-breakers-and-vi",
+  "category_id": 153,
+  "tags": ["Korea circuit breaker", "KOSPI circuit breaker", "Korea volatility interruption", "KOSDAQ circuit breaker", "Korea stock market halt"],
+  "radar_origin": "list order (Category C: market structure) — search queue's top lines this week ('kospi vs kosdaq' 5.5위, 'englishdart' 6.2위, 'kosdaq vs kospi' 7.2위, 'dart korean' 12.5위, 'kospi200 kosdaq150 2026 year end target forecast' 5.3위, 'krx kospi 200 index methodology' 5.7위, 'kospi and kosdaq' 9.7위) were all either fix-type lines pointing at pages whose two-edit weekly quota was already spent this week (kospi-200-kosdaq-150-year-end-targets-2026 fixed 2026-10-05, kospi-trading-hours fixed 2026-10-06), or 'new article' lines the matcher flagged as having no dedicated page when one already exists under a different slug — 'englishdart'/'dart korean' are already answered by the live how-to-research-a-korean-company-in-english-dart-kind-and-what-the-translation-leaves-out post, and 'kospi200 kosdaq150 2026 year end target forecast' duplicates the just-fixed kospi-200-kosdaq-150-year-end-targets-2026 guide. Fell back to the topic list. Yesterday (2026-10-07) was Category G (policy, korea-ftse-and-msci-classification), so picked a different category. Within Category B (tax), the two unwritten topics ('korean-dividend-withholding-for-us-residents', 'korea-capital-gains-tax-for-foreigners') turned out to already be thoroughly covered by two live posts under different slugs (korea-us-tax-treaty-forms: the 22%/15%/10% withholding mechanics and 2026 filing deadline; the-real-cost-of-owning-korean-stocks-...: the capital gains exemption and total-cost breakdown), so Category B was skipped too. Moved to Category C (market structure): kospi-200-explained and korea-short-selling-rules are already published, and koreas-trading-day-just-doubled-hours-... covers trading hours and the daily 30% price limit but only mentions volatility interruptions in passing during the after-market launch story — it does not explain the three-level market-wide circuit breaker or define static vs. dynamic VI. Wrote korea-circuit-breakers-and-vi as the next genuinely unwritten item in C.",
+  "related": [
+    {
+      "title": "KOSPI Trading Hours: 09:00–15:30, Now Until 8 p.m.",
+      "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know/"
+    },
+    {
+      "title": "KOSPI 200 Index Methodology: How KRX Picks the 200",
+      "url": "https://fermata.it.kr/kospi-200-explained/"
+    },
+    {
+      "title": "KOSPI vs KOSDAQ: Korea's Two Boards, Explained",
+      "url": "https://fermata.it.kr/kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you/"
+    }
+  ],
+  "ko": {
+    "title": "Korea Circuit Breakers and VI: The 8%, 15% and 20% Levels Explained",
+    "narrative": [
+      {
+        "heading": "A circuit breaker stops the whole market. A VI stops one stock.",
+        "body": "Korea runs two separate mechanisms that can pause your order, and searches for \"Korea circuit breaker\" usually mean the first one without realizing the second exists. A <b>circuit breaker</b> is a market-wide halt: when the KOSPI or KOSDAQ composite index itself falls far enough, fast enough, every stock on that exchange stops trading at once. A <b>Volatility Interruption (VI)</b> is much narrower: when a single stock's price jumps or falls sharply, only that stock pauses for a two-minute call auction while everything else keeps trading normally. Both exist to slow down a market that is moving faster than price discovery can keep up with, but they trigger at different scales, and knowing which one you are looking at changes what you should expect to happen next.\n\nThere is also a third, smaller mechanism worth knowing about: the sell-side sidecar, a five-minute pause on program (algorithmic) sell orders tied to KOSPI 200 futures, not the cash index. It is not a circuit breaker and does not halt the whole market, but in practice it often shows up on the same volatile days, sometimes right before one."
+      },
+      {
+        "heading": "KOSPI and KOSDAQ circuit breakers run the same three levels",
+        "body": "Korea Exchange (KRX) applies an identical three-level circuit breaker to both the KOSPI and the KOSDAQ, confirmed on KRX's own English-language rules pages for each market as of October 2026. Level 1 triggers when the index falls more than 8% from the previous day's close and stays there for a full minute; the exchange then halts new orders in that market, plus linked futures and options, for 20 minutes, though existing orders can still be cancelled. Level 2 needs the index down more than 15% from the prior close <i>and</i> at least 1 percentage point further below wherever Level 1 first triggered, sustained for another minute — it halts trading the same way, for another 20 minutes. Level 3 needs the index down more than 20% from the prior close, again at least 1 point past the Level 2 trigger level, sustained for a minute; at that point KRX stops all trading in that market for the rest of the day, and unlike Levels 1 and 2, not even order cancellations go through.\n\nTwo timing rules matter if you are watching this happen in real time. Each level can fire only once per trading day. And Levels 1 and 2 cannot trigger in the last 40 minutes of the regular session — after 14:50 KST, with the close at 15:30 — though Level 3 can still close the market early even in that window. Circuit breakers apply only during the 09:00–15:30 regular session; they do not apply to the 16:00–20:00 after-market KRX launched in September 2026, which runs on a 30% daily price-limit band and VI alone."
+      },
+      {
+        "heading": "What an actual trigger looked like: July 7, 2026",
+        "body": "The clearest way to see the mechanics is a real one. On Tuesday, July 7, 2026, the KOSPI was down 8.07% from the previous close — 649.77 points, to 7,401.56 — when the decline held for a full minute at 1:51 p.m. KST, and KRX halted the market for 20 minutes under a Level 1 circuit breaker, as reported by Korea JoongAng Daily. Earlier the same session, at 10:23 a.m., a separate sell-side sidecar had already paused program sell orders for five minutes after KOSPI 200 futures dropped 5.12% from the prior close — the smaller, faster mechanism firing hours before the bigger one did, on the same down day. Neither mechanism is rare in 2026: Korean financial media have reported circuit breaker activations on the KOSPI roughly half a dozen times and on the KOSDAQ separately over the same stretch, though different outlets' running counts of \"this year's Nth activation\" have not agreed with each other, so treat any specific tally in a headline as approximate rather than official."
+      },
+      {
+        "heading": "Volatility Interruption: a price band around one stock, not the index",
+        "body": "VI works on a completely different trigger: not the index level, but how far one stock's own price has moved from a reference price. KRX's rules, as published on its English-language site, split VI into two types. <b>Dynamic VI</b> catches a sudden, short-term move — a single large order or an obvious pricing error — and resets its reference price to the stock's last traded price. <b>Static VI</b> catches a slower, cumulative drift away from the last periodic auction price, even if no single trade looks abnormal. Either type pauses that one stock for a two-minute single-price call auction before continuous trading resumes; there is no daily limit on how many times a given stock can trigger VI.\n\nThe trigger width depends on what you are trading. For KOSPI 200 constituent stocks, dynamic VI fires at a 3% move during the regular continuous session and the after-market, narrowing to 2% during the closing call auction; static VI fires at a 10% cumulative move, the same in every session. For general KOSPI and KOSDAQ issues outside the KOSPI 200, the dynamic band is wider — 6% in continuous trading and the after-market, 4% at the close — because smaller, less liquid stocks naturally move more on ordinary trading. KRX's after-market, which launched in September 2026, runs the same dynamic VI thresholds as the regular session, which is one reason the after-market's debut evening saw over 1,600 VI triggers in a single four-hour window on thin liquidity."
+      },
+      {
+        "heading": "What this actually means if you are holding a Korean position",
+        "body": "If a circuit breaker fires, every open order in that market is frozen for the halt's duration — you cannot buy, sell, or adjust a position in any KOSPI or KOSDAQ stock, only cancel what you already placed, and only during Levels 1 and 2. A Level 3 closes the book on the day entirely. If instead a single stock you hold trips a VI, nothing else in your account is affected; that one name pauses for about two minutes and then reopens through the call auction, typically at a materially different price than where it paused. Because VI has no daily cap, a volatile stock can trip it several times in one session, and because the after-market carries the same VI bands on far thinner volume, a position that looks stable at 15:00 can swing through several VI pauses by 19:00 on the same news. None of this changes what you are allowed to do before or after the pause — it only changes when your order can actually execute."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed the three circuit breaker levels, their 8%/15%/20% triggers, the 1-minute persistence requirement, the 20-minute halt length for Levels 1 and 2, the full-day stop at Level 3, the 14:50 KST cutoff, and the once-per-level daily limit against two independent sources: Korea Exchange's own English-language rules pages for the KOSPI and KOSDAQ markets, and a brokerage investor-education page (Moomoo) describing the same thresholds and timing. We confirmed the July 7, 2026 circuit breaker and sidecar, including the exact index levels and timestamps, against Korea JoongAng Daily's report of that session. We confirmed the dynamic and static VI definitions, the KOSPI 200 dynamic thresholds (3% continuous/after-market, 2% closing) and the KOSPI 200 static threshold (10%) directly from KRX's own VI rules pages, and the general-issue dynamic thresholds (6% continuous/after-market, 4% closing) from the same source.\n\nWe could not find KRX's English-language pages stating an explicit static VI threshold for general KOSPI and KOSDAQ issues outside the KOSPI 200 — the pages we read gave that figure only for KOSPI 200 constituents and related ETF/ETN products, so we are not printing a general-issue static number here. We also could not independently resolve the conflicting \"this is the Nth circuit breaker of 2026\" counts that different Korean outlets have reported for the same string of events, so we have not repeated any specific running total."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Two different numbers answer two different questions. If you want to know when the entire KOSPI or KOSDAQ stops trading, the answer is an index-wide move of 8%, 15% or 20% from the prior close, sustained for a minute, with the first two levels pausing the market for 20 minutes each and the third ending the day. If you want to know when one stock you hold gets a brief timeout, the answer is a much smaller, stock-specific move — as little as 2% to 3% for KOSPI 200 names near the close, wider for everything else — pausing that single name for about two minutes with no limit on how many times it can happen.\n\nNeither mechanism is unusual in 2026: KRX's own circuit breaker rules were tested on the KOSPI and KOSDAQ multiple times this year, and VI triggers run into the thousands across an average month, more in the after-market's thinner liquidity. A halt or a VI pause is not a sign that something has gone wrong with your broker or your order — it is the exchange's own plumbing doing exactly what it is built to do. This guide reflects Korea Exchange's published rules and news reporting as checked in October 2026; thresholds and timing can be revised by KRX, and this is not investment advice."
+    },
+    "excerpt": "A Korea circuit breaker halts the whole KOSPI or KOSDAQ at 8%, 15% or 20% index drops. A volatility interruption pauses just one stock, on a much smaller move. Here's exactly what triggers each one."
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea's three-level circuit breaker triggers at 8%, 15% and 20% index declines, next to the much smaller single-stock Volatility Interruption bands",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Circuit Breakers & VI",
+        "left": {"label": "Level 1 circuit breaker", "value": "8% KOSPI drop"},
+        "right": {"label": "Dynamic VI, KOSPI 200", "value": "±3% move"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Korea's three circuit breaker levels, their index triggers, and what happens at each one",
+      "args": {
+        "title": "Korea's three-level circuit breaker",
+        "subtitle": "KOSPI and KOSDAQ use the same thresholds",
+        "columns": ["Level", "Index trigger", "Halt"],
+        "rows": [
+          ["Level 1", "8%+ below prior close", "20 min, cancels only"],
+          ["Level 2", "15%+ below close, +1pt past L1", "20 min, cancels only"],
+          ["Level 3", "20%+ below close, +1pt past L2", "Stops for the day"]
+        ],
+        "source": "Korea Exchange (global.krx.co.kr), KOSPI and KOSDAQ circuit breaker rules",
+        "note": "Each trigger must hold for 1 minute. Levels 1 and 2 resume via a call auction and cannot fire in the last 40 minutes of the session (after 14:50 KST); Level 3 can still trigger then. Each level fires at most once per day, only in the 09:00–15:30 regular session."
+      },
+      "section": 2
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Volatility Interruption trigger thresholds for KOSPI 200 stocks versus general KOSPI and KOSDAQ issues",
+      "args": {
+        "title": "Volatility Interruption (VI) triggers",
+        "subtitle": "A single stock's price band, not the whole market's",
+        "columns": ["Type", "KOSPI 200", "General issues", "Pause"],
+        "rows": [
+          ["Dynamic VI", "3% / 2% close", "6% / 4% close", "2 min"],
+          ["Static VI", "10%", "Not published", "2 min"]
+        ],
+        "source": "Korea Exchange (global.krx.co.kr), Volatility Interruption rules",
+        "note": "Dynamic VI figures are continuous-session / closing-auction thresholds; the after-market (16:00–20:00 KST) uses the same continuous-session band. Static VI reacts to a cumulative move; KRX's English pages don't publish a general-issue static threshold, so none is printed. Circuit breakers do not apply after-hours; VI still does."
+      },
+      "section": 4
+    }
+  ],
+  "sources": [
+    {"name": "Korea Exchange (global.krx.co.kr)", "title": "Circuit Breakers in stock market (KOSPI)", "url": "https://global.krx.co.kr/contents/GLB/06/0602/0602010204/GLB0602010204T2.jsp"},
+    {"name": "Korea Exchange (global.krx.co.kr)", "title": "Circuit Breakers in stock market (KOSDAQ)", "url": "https://global.krx.co.kr/contents/GLB/06/0602/0602020204/GLB0602020204T2.jsp"},
+    {"name": "Korea Exchange (global.krx.co.kr)", "title": "Volatility Interruption rules (KOSPI)", "url": "https://global.krx.co.kr/contents/GLB/06/0602/0602010204/GLB0602010204T9.jsp"},
+    {"name": "Korea Exchange (global.krx.co.kr)", "title": "Volatility Interruption rules (KOSDAQ)", "url": "https://global.krx.co.kr/contents/GLB/06/0602/0602020204/GLB0602020204T7.jsp"},
+    {"name": "Moomoo", "title": "Korea Exchange circuit breaker rules (investor education)", "url": "https://www.moomoo.com/sg/support/topic5_1402"},
+    {"name": "Korea JoongAng Daily", "title": "Kospi trading halted after circuit breaker follows sell-side sidecar", "url": "https://www.koreajoongangdaily.com/business/kospi-trading-halted-after-circuit-breaker-follows-sellside-sidecar/12759341"}
+  ]
+}
