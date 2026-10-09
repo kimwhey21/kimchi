@@ -1,0 +1,141 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "기업과 기술",
+  "date": "2026-10-10",
+  "slug": "bezos-three-day-workweek-tabarrok",
+  "radar_origin": "Fortune: Jeff Bezos says a 3-day workweek and more single-income households are on the way thanks to AI: 'It's going to be difficult to hire people'",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8YW1hem9uJTIwd2FyZWhvdXNlfGVufDB8MHx8fDE3OTE1NjcwMDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "unsplash_id": "sczNLg6rrhQ",
+    "credit": "Unsplash / Adrian Sulyok"
+  },
+  "sources": [
+    {
+      "name": "포춘",
+      "title": "Jeff Bezos says a 3-day workweek and more single-income households are on the way thanks to AI (2026-10-09)",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/"
+    },
+    {
+      "name": "포춘",
+      "title": "You're Looking at the AI Revolution All Wrong, Top Economist Says (2026-04-09)",
+      "url": "https://fortune.com/2026/04/09/youre-looking-at-the-ai-revolution-all-wrong-top-economist-says-40-unemployment-and-a-3-day-work-week-are-the-same-thing"
+    },
+    {
+      "name": "아주경제",
+      "title": "[주4일 근무시대가 온다] 삼성전자, 월1회 금요휴무 도입…산업계 주4일제 확산 도화선되나 (2023-06-13)",
+      "url": "https://www.ajunews.com/view/20230613150143074"
+    }
+  ],
+  "tags": [
+    "제프베이조스",
+    "AI와고용",
+    "주4일제"
+  ],
+  "ko": {
+    "title": "베이조스가 본 AI 미래: 일자리보다 먼저 줄어든 것",
+    "title_candidates": [
+      "베이조스가 본 AI 미래: 일자리보다 먼저 줄어든 것",
+      "베이조스: 주 3일 근무 vs 아마존의 3만 명 해고",
+      "베이조스가 그린 주 3일 근무의 조건"
+    ],
+    "narrative": [
+      {
+        "heading": "",
+        "body": "이번 주, 아마존 창업자 제프 베이조스가 폭스뉴스 인터뷰에서 미래의 노동시간을 이야기했다고 경제지 포춘이 전했습니다.\n그가 그린 그림은 이렇습니다. AI가 생산성을 끌어올리면 누군가는 주 3일만 일해도 가족을 먹여 살릴 수 있다는 것입니다.\n“어떤 사람들은 주 3일만 일해도 가족을 부양할 수 있다고 결정할 것입니다. 그게 바로 경제에서 생산성이라는 것입니다”라고 그는 말했습니다.\n공교롭게도 아마존은 지난해 말 이후 기업 조직에서 3만 명을 내보낸 회사입니다."
+      },
+      {
+        "heading": "",
+        "body": "두 번째로 그린 그림은 맞벌이입니다.\n“맞벌이 가구가 꼭 필요하지는 않을 것입니다. 원한다면 계속해도 좋지만, 원하지 않으면 한 사람은 일을 그만둘 수도 있습니다”라고 그는 말했습니다.\n그 결과로 기업들이 사람을 구하기 어려워질 것이라고 그는 내다봤습니다.\n“사람들이 생산성 덕분에 꼭 두 가지 일을 할 필요가 없어지기 때문에, 사람을 구하기가 어려워질 것입니다”라고 그는 덧붙였습니다."
+      },
+      {
+        "heading": "",
+        "body": "AI가 거품이냐는 질문에 베이조스는 말을 아꼈습니다.\n“그건 알기 어렵습니다. 제가 아는 건 이 기술이 진짜라는 것입니다”라고만 했습니다.\n다만 투자자에게는 솔직했습니다. “좋은 아이디어와 나쁜 아이디어를 구분하기 어려운, 까다로운 시기”라는 것입니다.\n그 사이 아마존 자신은 올해 자본 지출로 2,000억 달러 넘게 쓸 계획입니다. 대부분 데이터센터입니다.\n같은 회사가 3만 명을 줄이면서 동시에 수십조 원을 데이터센터에 쏟아붓고 있는 셈입니다."
+      },
+      {
+        "heading": "",
+        "body": "조지메이슨대 경제학자 알렉스 타바록은 다른 틀로 봅니다.\n그는 포춘 인터뷰에서 “일을 줄인다고 하면 다들 실업부터 떠올리지만, 그것은 짧은 근무시간일 수도, 더 긴 은퇴나 더 많은 휴일일 수도 있습니다”라고 말했습니다.\n자신의 블로그에는 더 날카로운 비유를 적었습니다.\n“AI가 실업률 40%를 만든다면 끔찍하겠지만, 같은 AI가 주 3일 근무를 만든다면 반갑겠지요. 사실 이 둘은 같은 숫자입니다”라는 것입니다."
+      },
+      {
+        "heading": "",
+        "body": "그러면 지금 숫자는 어느 쪽 편일까요.\n타바록의 셈법대로면 일하는 시간은 줄어도 일자리 수는 그대로여야 합니다. 그런데 아마존이 실제로 택한 쪽은 3만 명을 줄이는 쪽이었습니다.\n생산성의 이익이 노동시간 단축이 아니라 해고로 먼저 나타난 셈입니다."
+      },
+      {
+        "heading": "",
+        "body": "한국 대기업은 이미 이 미래의 한 조각을 살고 있습니다.\n아주경제에 따르면 삼성전자는 2023년 6월부터 매달 필수 근무시간을 채우면 금요일 하루를 쉬는 제도를 운영합니다.\n정규직 12만 명이 대상입니다.\nSK하이닉스와 SK스퀘어, SK텔레콤도 한 달에 한두 번 금요일에 쉬는 '해피프라이데이'를 이어 오고 있습니다.\n베이조스가 그린 '주 3일'은 아직 먼 얘기지만, 한국의 '한 달에 하루'는 이미 와 있는 셈입니다.\n생산성이 늘어난 몫을, 여러분의 회사는 시간으로 돌려주고 있나요, 해고로 돌려주고 있나요."
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "주 3일만 일해도 가족을 먹여 살릴 수 있다",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "some people will decide, 'i can support my family working three days a week.' that's what productivity in the economy means"
+    },
+    {
+      "claim": "어떤 사람들은 주 3일만 일해도 가족을 부양할 수 있다",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "some people will decide, 'i can support my family working three days a week.' that's what productivity in the economy means"
+    },
+    {
+      "claim": "3만 명을 내보낸 회사",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "amazon has cut about 30,000 corporate roles since late last year"
+    },
+    {
+      "claim": "맞벌이 가구가 꼭 필요하지는 않을 것입니다",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "you're not going to need to have a two-earner household. if you want it, fine. if you don't want to have it, one of the people might drop out"
+    },
+    {
+      "claim": "사람을 구하기가 어려워질 것입니다",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "it's going to be difficult to hire people, because the productivity in the economy will make it so that"
+    },
+    {
+      "claim": "좋은 아이디어와 나쁜 아이디어를 구분하기 어려운",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "it's tricky for investors. every experiment gets funded—the good ideas and the bad ideas. in the moment, in the tussle of this, it's hard for investors to know the difference between the good ideas and the bad ideas."
+    },
+    {
+      "claim": "자본 지출로 2,000억 달러 넘게",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "it plans to devote over $200 billion to capital expenditures this year, largely thanks to investments in data centers."
+    },
+    {
+      "claim": "3만 명을 줄이면서",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "amazon has cut about 30,000 corporate roles since late last year"
+    },
+    {
+      "claim": "실업부터 떠올리지만",
+      "url": "https://fortune.com/2026/04/09/youre-looking-at-the-ai-revolution-all-wrong-top-economist-says-40-unemployment-and-a-3-day-work-week-are-the-same-thing",
+      "original": "the first thing that people think about when they think about reducing work is unemployment"
+    },
+    {
+      "claim": "실업률 40%를 만든다면",
+      "url": "https://fortune.com/2026/04/09/youre-looking-at-the-ai-revolution-all-wrong-top-economist-says-40-unemployment-and-a-3-day-work-week-are-the-same-thing",
+      "original": "imagine i told you that ai was going to create a 40% unemployment rate"
+    },
+    {
+      "claim": "3만 명을 줄이는 쪽",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "amazon has cut about 30,000 corporate roles since late last year"
+    },
+    {
+      "claim": "2023년 6월부터",
+      "url": "https://www.ajunews.com/view/20230613150143074",
+      "original": "김정래, 윤동, 최은정 기자 입력 2023-06-13 15:44"
+    },
+    {
+      "claim": "12만 명이 대상입니다",
+      "url": "https://www.ajunews.com/view/20230613150143074",
+      "original": "정규직만 12만명에 달하는 삼성전자의 결정에 주4일제 근무가 산업계 전반으로 확산될지 주목된다."
+    },
+    {
+      "claim": "주 3일",
+      "url": "https://fortune.com/2026/10/09/amazon-billioniare-jeff-bezos-predicts-three-day-workweek-single-income-households-thanks-to-ai/",
+      "original": "some people will decide, 'i can support my family working three days a week.' that's what productivity in the economy means"
+    }
+  ]
+}

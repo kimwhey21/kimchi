@@ -1,0 +1,176 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "시장 읽기",
+  "date": "2026-10-10",
+  "slug": "treasury-yield-6-percent-ivascyn",
+  "radar_origin": "Reuters (구글뉴스 경유): US 10-year Treasury yield risks hitting 6% for first time since 2000, Pimco's Ivascyn tells FT - Reuters",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1534469650761-fce6cc26ac0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8d2FsbCUyMHN0cmVldHxlbnwwfDB8fHwxNzkxNTY2OTUyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "unsplash_id": "mHdATQY9fIU",
+    "credit": "Unsplash / Aditya Vyas"
+  },
+  "sources": [
+    {
+      "name": "로이터",
+      "title": "US 10-year Treasury yield risks hitting 6% for first time since 2000, Pimco's Ivascyn tells FT (2026-10-09)",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft"
+    },
+    {
+      "name": "트레이딩이코노믹스",
+      "title": "US Mortgage Rates Climb Further in October (2026-10-08)",
+      "url": "https://tradingeconomics.com/united-states/30-year-mortgage-rate/news/588887"
+    },
+    {
+      "name": "스탁트윗스",
+      "title": "FedWatch's Ben Emons Sees 10-Year Treasury Yield Hitting 6% by January 2027 (2026-09-26)",
+      "url": "https://stocktwits.com/news-articles/markets/equity/fedwatch-ben-emons-10-year-treasury-yield-6-january-housing-crunch-economy/cZMgSMxRBfG"
+    },
+    {
+      "name": "머니투데이",
+      "title": "한국 10년물 국채 금리 미국 2.3배 속도로 올라…한미 격차 좁혀졌다 (2026-09-28)",
+      "url": "https://www.mt.co.kr/stock/2026/09/28/2026092814221429351"
+    }
+  ],
+  "tags": [
+    "미국채금리",
+    "핌코",
+    "국채금리"
+  ],
+  "ko": {
+    "title": "핌코 CIO가 본 다음 금리는 6%입니다",
+    "title_candidates": [
+      "핌코 CIO가 본 다음 금리는 6%입니다",
+      "미국 금리가 6%까지 가면, 한국 채권은 어떻게 될까요",
+      "모기지 금리 7.4%를 만든 금리, 어디까지 오를까"
+    ],
+    "narrative": [
+      {
+        "heading": "",
+        "body": "지난 10월 9일 금요일, 핌코의 최고투자책임자 댄 이바신이 파이낸셜타임스(FT)와 마주 앉아 숫자 하나를 꺼냈다고 로이터가 전했습니다.\n6%, 미국 10년물 국채금리가 2000년 이후 처음으로 이 숫자에 닿을 수 있다는 것입니다.\n이미 금리는 올해 들어 120bp 가까이 올라 지난주 5.34%까지, 2002년 이후 최고치를 찍었습니다.\n인터뷰 당일 금리는 5.29%, 그는 여기서 더 오르는 것도 “단기적으로 충분히 가능하다”고 말했습니다."
+      },
+      {
+        "heading": "",
+        "body": "그가 꼽은 이유는 고유가가 자극하는 물가와 불어나는 재정적자, 그리고 손실 난 채권을 던지는 헤지펀드의 손절 매물이었습니다.\n이바신은 이렇게 말했습니다.\n“단기 트레이딩 관점에서도 분명 가능한 일이며, 최근 몇 주의 움직임은 레버리지 투자자들의 손절성 청산과 관련이 있고, 거기까지 갈 수 있습니다.”"
+      },
+      {
+        "heading": "",
+        "body": "금리가 5.5%를 넘으면 어떻게 될까요.\n이바신의 답은 분명했습니다.\n“신용과 주식, 두 위험자산 시장 모두에서 상당한 약세가 나타날 것입니다.”\n숫자는 이미 집을 사려는 사람들에게 가 닿았습니다.\n트레이딩이코노믹스에 따르면 미국 30년 고정 모기지 금리는 10월 8일 기준 7.4%로, 2023년 11월 이후 최고치까지 7주 연속 올랐습니다."
+      },
+      {
+        "heading": "",
+        "body": "핌코 혼자만의 생각이 아닙니다.\n스탁트윗스에 따르면 자산운용사 페드워치의 벤 에몬스도 6%를 봅니다. 다만 그가 보는 시점은 2027년 1월로, 이바신보다 좀 더 뒤입니다.\n에몬스가 보는 이유는 다릅니다.\n그는 CNBC에서 “지금 경제가 가속하고 있고, 그래서 시장이 높아진 금리를 이만큼 흡수할 수 있었습니다”라고 설명했습니다.\n그가 보는 6%의 결과는 이렇습니다.\n“주택시장은 정말로 어려운 국면에 들어갈 것”이라고 그는 경고했습니다."
+      },
+      {
+        "heading": "",
+        "body": "그러면 숫자는 어느 쪽 편일까요.\n2년 전 6% 경고가 나왔을 때 금리는 4%대 중반이었지만 지금은 5.29%, 목표까지 남은 거리가 그때보다 훨씬 짧습니다.\n에몬스는 6%에 닿으면 실질금리가 3.5~4%를 웃돌 것이라고도 했습니다. 지금보다 훨씬 빡빡한 돈줄이라는 뜻입니다."
+      },
+      {
+        "heading": "",
+        "body": "한국도 남의 나라 금리라고 비켜설 수 없습니다.\n머니투데이에 따르면 한국 10년물 국채금리는 최근 1년 새 54.3% 올라 미국(24.1%)보다 2.3배 빠르게 뛰었습니다.\n올해 1월 3.341%였던 금리가 9월 15일 4.600%까지 치솟았습니다.\n외국인은 지난달 국내 채권을 8,397억원어치 팔아치우며 2023년 1월 이후 3년 7개월 만에 순매도로 돌아섰습니다.\n미국 금리가 6%를 향해 한 걸음 더 가면, 한국 국채와 대출 금리는 또 얼마나 따라 뛸까요."
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "10월 9일",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft",
+      "original": "fri, october 9, 2026"
+    },
+    {
+      "claim": "2000년 이후 처음으로",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft",
+      "original": "could rise to 6% for the first time since 2000"
+    },
+    {
+      "claim": "120bp 가까이 올라 지난주 5.34%까지",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft",
+      "original": "the 10-year yield has risen almost 120 basis points this year and is trading slightly below the 5.34% level it hit last week, its highest since 2002"
+    },
+    {
+      "claim": "5.29%",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft",
+      "original": "a sharp rise from the current level of 5.29% was \"feasible\" in the near term"
+    },
+    {
+      "claim": "거기까지 갈 수 있습니다",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft",
+      "original": "you can certainly get there"
+    },
+    {
+      "claim": "5.5%를 넘으면",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft",
+      "original": "a move to 5.5% or higher would likely lead to \"some decent weakness in risk markets, both credit and equity\""
+    },
+    {
+      "claim": "신용과 주식, 두 위험자산 시장 모두에서 상당한 약세",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft",
+      "original": "some decent weakness in risk markets, both credit and equity"
+    },
+    {
+      "claim": "10월 8일 기준 7.4%로, 2023년 11월 이후 최고치까지 7주 연속",
+      "url": "https://tradingeconomics.com/united-states/30-year-mortgage-rate/news/588887",
+      "original": "the us 30-year fixed-rate mortgage averaged 7.4% as of october 8th, 2026, rising further above 7% to reach its highest level since november 2023 and up from 7.28% in the previous week. this marks the seventh consecutive week with rate increases"
+    },
+    {
+      "claim": "6%를 봅니다",
+      "url": "https://stocktwits.com/news-articles/markets/equity/fedwatch-ben-emons-10-year-treasury-yield-6-january-housing-crunch-economy/cZMgSMxRBfG",
+      "original": "sees the 10-year treasury yield climbing to 6% by january 2027"
+    },
+    {
+      "claim": "2027년 1월로",
+      "url": "https://stocktwits.com/news-articles/markets/equity/fedwatch-ben-emons-10-year-treasury-yield-6-january-housing-crunch-economy/cZMgSMxRBfG",
+      "original": "sees the 10-year treasury yield climbing to 6% by january 2027"
+    },
+    {
+      "claim": "지금 경제가 가속하고 있고",
+      "url": "https://stocktwits.com/news-articles/markets/equity/fedwatch-ben-emons-10-year-treasury-yield-6-january-housing-crunch-economy/cZMgSMxRBfG",
+      "original": "the economy is currently accelerating, helping explain why markets have been able to absorb higher interest rates"
+    },
+    {
+      "claim": "6%의 결과",
+      "url": "https://stocktwits.com/news-articles/markets/equity/fedwatch-ben-emons-10-year-treasury-yield-6-january-housing-crunch-economy/cZMgSMxRBfG",
+      "original": "emons said a 6% 10-year treasury yield would likely push real interest rates above 3.5% and potentially above 4%"
+    },
+    {
+      "claim": "주택시장은 정말로 어려운 국면에 들어갈 것",
+      "url": "https://stocktwits.com/news-articles/markets/equity/fedwatch-ben-emons-10-year-treasury-yield-6-january-housing-crunch-economy/cZMgSMxRBfG",
+      "original": "a 6% 10-year yield would put the housing market \"really in a crunch,\""
+    },
+    {
+      "claim": "2년 전 6% 경고가 나왔을 때 금리는 4%대 중반이었지만 지금은 5.29%",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft",
+      "original": "a sharp rise from the current level of 5.29% was \"feasible\" in the near term"
+    },
+    {
+      "claim": "에몬스는 6%에 닿으면 실질금리가 3.5~4%를 웃돌 것",
+      "url": "https://stocktwits.com/news-articles/markets/equity/fedwatch-ben-emons-10-year-treasury-yield-6-january-housing-crunch-economy/cZMgSMxRBfG",
+      "original": "emons said a 6% 10-year treasury yield would likely push real interest rates above 3.5% and potentially above 4%"
+    },
+    {
+      "claim": "최근 1년 새 54.3% 올라 미국(24.1%)보다 2.3배",
+      "url": "https://www.mt.co.kr/stock/2026/09/28/2026092814221429351",
+      "original": "상승률로 따지면 한국 10년물 국채 금리 상승률(54.3%)이 미국의 2.3배에 달했다"
+    },
+    {
+      "claim": "1월 3.341%였던 금리가",
+      "url": "https://www.mt.co.kr/stock/2026/09/28/2026092814221429351",
+      "original": "한국 10년물 국채 금리는 올해 1월8일 3.341%까지 내렸다가"
+    },
+    {
+      "claim": "15일 4.600%까지",
+      "url": "https://www.mt.co.kr/stock/2026/09/28/2026092814221429351",
+      "original": "지난 15일 4.600%까지 치솟았다"
+    },
+    {
+      "claim": "8,397억원어치 팔아치우며 2023년 1월 이후 3년 7개월 만에 순매도",
+      "url": "https://www.mt.co.kr/stock/2026/09/28/2026092814221429351",
+      "original": "외국인은 지난달 국내 채권을 8397억원어치 순매도한 것으로 추산된다. 월간 기준으로 2023년 1월 이후 3년7개월 만의 순매도 전환이다"
+    },
+    {
+      "claim": "미국 금리가 6%를 향해",
+      "url": "https://www.freedom969.com/business/us-10-year-treasury-yield-risks-hitting-6-for-first-time-since-2000-pimcos-ivascyn-tells-ft",
+      "original": "could rise to 6% for the first time since 2000"
+    }
+  ]
+}

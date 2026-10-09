@@ -1,0 +1,136 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "과학",
+  "date": "2026-10-10",
+  "slug": "chirality-nobel-thalidomide",
+  "radar_origin": "The Conversation: A molecule's 'handedness' can determine whether it's an effective drug – 4 examples of pharmaceuticals where chirality matters",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1620416265040-cc777cad1883?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8bWlycm9yJTIwcmVmbGVjdGlvbnxlbnwwfDB8fHwxNzkxNTY3MDI5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "unsplash_id": "OwR9cyMNe4c",
+    "credit": "Unsplash / Mikhail Sekatsky"
+  },
+  "sources": [
+    {
+      "name": "더컨버세이션",
+      "title": "A molecule's 'handedness' can determine whether it's an effective drug – 4 examples of pharmaceuticals where chirality matters (2026-10-08)",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909"
+    },
+    {
+      "name": "노벨위원회",
+      "title": "Press release: The Nobel Prize in Chemistry 2026 (2026-10-07)",
+      "url": "https://www.nobelprize.org/prizes/chemistry/2026/press-release/"
+    }
+  ],
+  "tags": [
+    "노벨화학상",
+    "탈리도마이드",
+    "키랄성"
+  ],
+  "ko": {
+    "title": "“그 반응은 놀랍습니다” 노벨위원회가 고른 키랄성 이야기",
+    "title_candidates": [
+      "오늘 먹은 약에도 거울 속 쌍둥이가 있다면 어떨까요",
+      "“그 반응은 놀랍습니다” 노벨위원회가 고른 키랄성 이야기",
+      "같은 약인데 효과는 정반대, 원인은 '거울'이었습니다"
+    ],
+    "narrative": [
+      {
+        "heading": "",
+        "body": "지난 10월 7일, 스웨덴 왕립과학한림원이 2026년 노벨 화학상 수상자를 발표했습니다. 프랑스의 앙리 카강과 일본의 소아이 겐소였습니다.\n노벨위원회 의장 하이너 링케는 이렇게 말했습니다.\n“카강과 소아이는 100년 넘은 화학의 수수께끼, 균일한 손 모양이 어떻게 저절로 생겨나는지를 풀었습니다. 그들이 만든 반응은 놀랍습니다.”\n수상 이유는 '키랄성'이라는 성질 때문입니다. 두 손바닥을 마주 펴 보면, 서로 거울에 비친 모습이지만 아무리 돌려도 완전히 겹치지 않습니다.\n나선 은하도, 달팽이 껍데기도 같은 원리입니다. 그리고 우리 몸속 거의 모든 단백질도 이 '한쪽 손' 모양만 씁니다.\n웨이크포레스트대 화학자 케드릭 섀크와 맬러리 그린은 온라인 매체 더컨버세이션에서 이렇게 설명합니다.\n“키랄 물체는 거울에 비친 모습이 서로 겹쳐지지 않습니다.”"
+      },
+      {
+        "heading": "",
+        "body": "두 사람이 먼저 꺼내는 사례는 탈리도마이드입니다.\n1950년대 말, 이 약은 유럽과 캐나다, 호주에서 불면증과 입덧 치료제로 팔렸습니다. 두 거울상을 반반 섞은 약이었습니다.\n1961년 제조사가 판매를 접었을 때는 이미 늦었습니다. 팔다리가 짧거나 아예 형성되지 않은 채 태어난 아이가 1만 명을 넘었습니다.\n1979년 쥐 실험은 범인을 하나로 지목했습니다. 거울상 중 S형이었습니다.\n그런데 반전이 있었습니다. 탈리도마이드 분자는 몸속에서 두 거울상 사이를 오갈 수 있어서, 처음부터 한쪽 모양만 골라 먹였어도 안전하지 않았을 것입니다."
+      },
+      {
+        "heading": "",
+        "body": "두 번째 예는 이부프로펜입니다. 1960년대 영국 제약회사 부츠가 개발한 진통제입니다.\nS형은 통증과 염증 신호를 만드는 효소를 막아 일합니다. R형은 거의 아무 일도 하지 않습니다.\n그런데도 시중의 이부프로펜 알약은 두 형태가 섞여 있어도 효과가 있습니다. 몸속 효소가 R형의 일부를 S형으로 바꿔 주기 때문입니다."
+      },
+      {
+        "heading": "",
+        "body": "세 번째 예는 파킨슨병 치료제 L-도파입니다.\n1969년 신경학자 올리버 색스는 수십 년째 거의 움직이지 못하던 환자들에게 이 약을 투여했습니다. 많은 환자가 깨어나 말하고 움직였습니다.\n뇌의 효소는 L형만 알아봅니다. 거울상인 D-도파는 효소에 맞지 않아 아무 일도 하지 못합니다.\n1970년대 몬산토의 윌리엄 놀스가 L형만 대량으로 만드는 촉매를 개발했고, 이 공로로 2001년 노벨화학상의 한 몫을 가져갔습니다."
+      },
+      {
+        "heading": "",
+        "body": "마지막 예는 포도당입니다. 세포는 오직 D형 포도당만 에너지로 씁니다.\n거울상인 L-포도당은 녹는점도 단맛도 D형과 똑같지만, 세포 효소가 이를 읽지 못해 칼로리가 되지 않습니다.\n1980년대 연구자들은 이를 저칼로리 감미료로 만들려 했습니다. 하지만 생산 비용이 너무 높아 상용화되지 못했습니다."
+      },
+      {
+        "heading": "",
+        "body": "탈리도마이드부터 포도당까지, 네 사례가 말해주는 것은 하나입니다. 같은 분자라도 거울에 비친 모양이 다르면 몸속에서는 완전히 다른 약이 된다는 것입니다.\n노벨상이 상을 준 것도 바로 이 지점, 원하는 손 모양만 골라 만드는 기술입니다.\n오늘 아침 드신 약에도 어딘가 거울상 쌍둥이가 있을 것입니다. 그 쌍둥이는 지금 당신 몸속에서 무엇을 하고 있을까요."
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "10월 7일",
+      "url": "https://www.nobelprize.org/prizes/chemistry/2026/press-release/",
+      "original": "7 october 2026 the royal swedish academy of sciences has decided to award the nobel prize in chemistry 2026 to henri b. kagan"
+    },
+    {
+      "claim": "2026년 노벨 화학상 수상자를 발표했습니다",
+      "url": "https://www.nobelprize.org/prizes/chemistry/2026/press-release/",
+      "original": "7 october 2026 the royal swedish academy of sciences has decided to award the nobel prize in chemistry 2026 to henri b. kagan"
+    },
+    {
+      "claim": "100년 넘은 화학의 수수께끼",
+      "url": "https://www.nobelprize.org/prizes/chemistry/2026/press-release/",
+      "original": "henri kagan and kenso soai have provided a solution to a chemical mystery that is over a century old: how homochirality can emerge spontaneously. the chemical reactions they have developed are spectacular"
+    },
+    {
+      "claim": "키랄 물체는 거울에 비친 모습이 서로 겹쳐지지 않습니다",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "chiral objects have a mirror image that cannot be superimposed directly on them."
+    },
+    {
+      "claim": "1950년대 말, 이 약은 유럽과 캐나다, 호주에서",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "sold in the late 1950s as a 50:50 mixture to treat insomnia and morning sickness, thalidomide was widely prescribed in europe, canada and australia."
+    },
+    {
+      "claim": "1961년 제조사가 판매를 접었을 때는",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "after its manufacturer withdrew it in 1961, more than 10,000 children were found to have been born with severe malformations"
+    },
+    {
+      "claim": "1979년 쥐 실험은 범인을 하나로 지목했습니다",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "a 1979 study in mice pointed to thalidomide's s-form as the culprit"
+    },
+    {
+      "claim": "탈리도마이드 분자는 몸속에서 두 거울상 사이를 오갈 수 있어서",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "thalidomide's molecules are chemically flexible, meaning they can convert between the two forms while inside your body. even a purely single-handed version would not have been safe."
+    },
+    {
+      "claim": "1960년대 영국 제약회사 부츠가 개발한",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "ibuprofen was developed at the british company boots in the 1960s and has become one of the most widely used pain relievers in the world."
+    },
+    {
+      "claim": "S형은 통증과 염증 신호를 만드는 효소를 막아",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "ibuprofen's s form does the work , blocking enzymes that produce chemical signals for pain and swelling. the r-form is largely inactive and does nothing against these signals."
+    },
+    {
+      "claim": "1969년 신경학자 올리버 색스는",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "in 1969, neurologist oliver sacks gave l-dopa to patients who had spent decades nearly motionless after the encephalitis epidemic of the early 20th century. many patients woke up, spoke and moved"
+    },
+    {
+      "claim": "1970년대 몬산토의 윌리엄 놀스가",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "in the 1970s, william knowles at monsanto solved this issue using a special chiral catalyst. this work earned him a share of the 2001 nobel prize in chemistry."
+    },
+    {
+      "claim": "1980년대 연구자들은 이를 저칼로리 감미료로",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "in the 1980s, researchers explored it as a low-calorie sweetener for people with diabetes, but high production costs made it financially unviable."
+    },
+    {
+      "claim": "1만 명을 넘었습니다",
+      "url": "https://theconversation.com/a-molecules-handedness-can-determine-whether-its-an-effective-drug-4-examples-of-pharmaceuticals-where-chirality-matters-293909",
+      "original": "after its manufacturer withdrew it in 1961, more than 10,000 children were found to have been born with severe malformations"
+    }
+  ]
+}
