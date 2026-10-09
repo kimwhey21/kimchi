@@ -221,12 +221,28 @@ class ScreenAndMessageTest(unittest.TestCase):
         session = mock.Mock()
         session.get.side_effect = lambda url, **kw: mock.Mock(status_code=200, text=pages[url.replace(daily_proof.BASE, "")])
         daum = {"000660": [("2026-10-02", 1841000.0)], "207940": [("2026-10-02", 1354000.0)]}
+        from src import stock_db
         with mock.patch.object(daily_proof.fetch_kr, "_fetch_naver_index_daily", return_value=[("2026-10-02", 7003.74)]), \
-                mock.patch.object(daily_proof.fetch_kr, "_fetch_daum_days", side_effect=lambda c, rows=1: daum[c]):
+                mock.patch.object(daily_proof.fetch_kr, "_fetch_daum_days", side_effect=lambda c, rows=1: daum[c]), \
+                mock.patch.object(stock_db, "snapshot_close", return_value={}), mock.patch.object(stock_db, "locked", return_value={}):
             issues, n, _ok = daily_proof.screen_issues(session, ["000660", "207940"], dt.datetime(2026, 10, 2, 23, 30, tzinfo=daily_proof.KST))
         self.assertEqual(n, 3)
         self.assertEqual(len(issues), 1)
         self.assertIn("207940", issues[0])
+
+    def test_screen_matches_the_value_two_sources_agree_on(self) -> None:
+        """2026-10-10: 10/8 351330 — 다음만 ₩3,440, 사진·잠근 거래소 ₩3,455. 화면 ₩3,455는 맞다(전에는 다음 하나와만 맞춰 '틀림')."""
+        pages = {"/": 'KOSPI · Oct 8 close</span><b>7,003.74</b>',
+                 "/stocks/351330/": '<div class="fs-price">₩3,455 <small></small></div>At close: Oct 8, 2026 ·'}
+        session = mock.Mock()
+        session.get.side_effect = lambda url, **kw: mock.Mock(status_code=200, text=pages[url.replace(daily_proof.BASE, "")])
+        from src import stock_db
+        with mock.patch.object(daily_proof.fetch_kr, "_fetch_naver_index_daily", return_value=[("2026-10-08", 7003.74)]), \
+                mock.patch.object(daily_proof.fetch_kr, "_fetch_daum_days", return_value=[("2026-10-08", 3440.0)]), \
+                mock.patch.object(stock_db, "snapshot_close", return_value={"351330": [3455, 3475]}), \
+                mock.patch.object(stock_db, "locked", return_value={"351330": [3455.0, 3475.0]}):
+            issues, n, ok = daily_proof.screen_issues(session, ["351330"], dt.datetime(2026, 10, 8, 23, 30, tzinfo=daily_proof.KST))
+        self.assertEqual((issues, n, ok), ([], 2, 2))
 
     def test_compose(self) -> None:
         ok = daily_proof.compose(dt.date(2026, 10, 6), {"숫자": "2,800건", "작업": "9/9"}, [])

@@ -349,16 +349,32 @@ def screen_issues(session: requests.Session, codes: list[str], now: dt.datetime)
         n += 1
         if not daum:
             issues.append(f"{code}: 다음 일별 시세 없음")
-        elif close is None or day is None:
+            continue
+        if close is None or day is None:
             issues.append(f"{code}: 페이지에서 가격·날짜를 못 읽었습니다(HTTP {r.status_code})")
-        elif day != daum[-1][0] or abs(close - daum[-1][1]) > 0.5:
-            issues.append(f"{code}: 화면 {day} ₩{close:,.0f} / 다음 {daum[-1][0]} ₩{daum[-1][1]:,.0f}")
+            continue
+        if day != daum[-1][0]:
+            issues.append(f"{code}: 화면 날짜 {day} / 다음 최신 {daum[-1][0]} — 페이지가 갱신되지 않았습니다")
+            continue
+        # 원천 둘 이상이 같은 값과 맞춘다(2026-10-10: 10/8 351330은 다음만 ₩3,440이고 사진·잠근 거래소·야후는 ₩3,455 — 화면이 맞았는데
+        # 다음 하나와만 맞춰 '틀림'이 떴다). 원천: 다음 · 15시 반 사진 · 15:53에 잠근 거래소 공식 값.
+        votes = {"다음": daum[-1][1]}
+        snap = (stock_db.snapshot_close(day) or {}).get(code)
+        if snap:
+            votes["사진"] = float(snap[0])
+        krx = stock_db.locked(day, "krx").get(code)
+        if krx:
+            votes["거래소"] = float(krx[0])
+        agreed = next((v for v in votes.values() if sum(abs(v - w) < 0.5 for w in votes.values()) >= 2), None)
+        if agreed is None and len(votes) == 1:
+            agreed = votes["다음"]   # 사진도 잠근 값도 없는 날(옛날)은 다음 하나와 맞춘다
+        detail = " · ".join(f"{k} ₩{v:,.0f}" for k, v in votes.items())
+        if agreed is None:
+            issues.append(f"{code}: 원천끼리 맞는 값이 없어 화면 ₩{close:,.0f}를 확인하지 못했습니다({detail})")
+        elif abs(close - agreed) > 0.5:
+            issues.append(f"{code}: 화면 {day} ₩{close:,.0f} / 원천 둘 이상이 맞는 값 ₩{agreed:,.0f}({detail})")
         else:
-            snap = (stock_db.snapshot_close(day) or {}).get(code)
-            if snap and abs(close - float(snap[0])) > 0.5:
-                issues.append(f"{code}: 화면 {day} ₩{close:,.0f} / 15시 반 종가 사진 ₩{float(snap[0]):,.0f}")
-            else:
-                ok += 1
+            ok += 1
     return issues, n, ok
 
 
