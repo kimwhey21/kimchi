@@ -1,0 +1,135 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-09",
+  "checked": "2026-10-09",
+  "slug": "usdkrw-and-the-kospi",
+  "category_id": 153,
+  "tags": ["USDKRW KOSPI correlation", "Korean won exchange rate", "KOSPI foreign investors", "USD KRW Korea stocks", "won weakness KOSPI"],
+  "radar_origin": "list order (Category F: macro) — search queue's top lines today ('kospi vs kosdaq' 5.5위, 'englishdart' 6.2위, 'kospi trading hours' 65.6위, 'kosdaq vs kospi' 7.2위, 'how to buy korean stocks in canada/us' 등, 'dart korean' 12.5위, 'kospi200 kosdaq150 2026 year end target forecast' 5.3위, 'krx kospi 200 index methodology' 5.7위, 'kospi and kosdaq' 9.7위, 'kospi futures trading hours' 48.3위) were all either fix-type lines whose two-edit weekly quota was already spent this week (kospi-200-kosdaq-150-year-end-targets-2026 fixed 2026-10-05, kospi-trading-hours fixed 2026-10-06), or 'new article' lines the matcher flagged as having no dedicated page when one already exists under a different slug ('englishdart'/'dart korean' already answered by the live English DART guide; 'kospi200 kosdaq150 2026 year end target forecast' duplicates the just-fixed kospi-200-kosdaq-150-year-end-targets-2026 guide). Fell back to the topic list. Yesterday (2026-10-08) was Category C (market structure, korea-circuit-breakers-and-vi), so picked a different category. Category F's first two items (hedging-the-korean-won, korea-market-holidays-2026) are already published; the next unwritten item is usdkrw-and-the-kospi.",
+  "related": [
+    {
+      "title": "Hedging the Korean Won: What US Investors Can Actually Buy (2026)",
+      "url": "https://fermata.it.kr/hedging-the-korean-won/"
+    },
+    {
+      "title": "USD to KRW for Korean Stocks: Where the FX Costs Hide",
+      "url": "https://fermata.it.kr/converting-dollars-to-won-the-fx-math-behind-buying-korean-stocks/"
+    },
+    {
+      "title": "KOSPI ETFs for US Investors: EWY, FLKR and KORU Compared (2026)",
+      "url": "https://fermata.it.kr/kospi-etf-for-us-investors/"
+    }
+  ],
+  "ko": {
+    "title": "USDKRW vs KOSPI Correlation: Does a Weaker Won Sink Stocks?",
+    "narrative": [
+      {
+        "heading": "The short answer: it's not one correlation — it flipped twice in 2026",
+        "body": "As of October 8, 2026, the KOSPI closed at 6,625.93, down 2.62% on the day, while the won traded at 1,340.6 per dollar on the Hana Bank reference rate, barely changed on the day. If you search \"USDKRW vs KOSPI correlation\" expecting a clean rule — weak won, weak market, or weak won, strong market — 2026 will not give you one.\n\nThe won and the KOSPI moved in the same direction once this year, then in opposite directions twice, and the second \"opposite direction\" episode had the reverse sign from the first. In late March, a shock hit both the currency and the index together. From April through June, the index set an all-time high while the won sank to its weakest level in 17 years. From August through October, the won clawed back a large share of that loss while the index kept drifting down from its June peak. Three windows, three different answers — and the mechanism behind each one is different enough that treating USDKRW and the KOSPI as one fixed correlation will mislead you more often than it helps."
+      },
+      {
+        "heading": "The math: a weaker won is a tax on your return, apart from the index itself",
+        "body": "For a US-dollar investor holding an unhedged position — a Korean stock bought on a foreign brokerage account, or an ETF like EWY or FLKR that does not hedge its currency exposure — your dollar return is approximately the KOSPI's own return combined with the change in the won against the dollar, not the index return by itself. A weaker won subtracts from what you earn in dollars even when the index is flat; a stronger won adds to it.\n\nRun the actual 2026 numbers. The KOSPI closed at a record 8,864.24 on June 17 and at 6,625.93 on October 8 — a decline of roughly 25%. Over almost the same stretch, the won moved the other way: it closed at 1,548.61 per dollar on June 30, a 17-year low, and had strengthened to 1,340.6 by October 8 — about 13% fewer won per dollar. For a US-dollar holder who stayed in an unhedged Korean position across that window, the stronger won clawed back part of the index's dollar-denominated loss, but nowhere close to all of it. The two moves partly offset each other; they did not cancel out, and they were not moving together."
+      },
+      {
+        "heading": "When they move together: the March 2026 shock",
+        "body": "The clearest example of the textbook pattern — a shock that pushes the currency and stocks down together — came on March 31, 2026. The KOSPI fell 4.26% to 5,052.46, and the won broke above 1,530 per dollar for the first time since the 2009 financial crisis, closing the Seoul interbank week at 1,530.10, according to Korea JoongAng Daily's report of that session and a separate Money Today (mt.co.kr) report citing Hana Securities and Newsis data. Foreign investors net sold about 3.84 trillion won of KOSPI stock that same day, per Money Today. Both reports tie the move to the Iran war widening and oil and the exchange rate rising together.\n\nThis is the version of \"USDKRW vs KOSPI correlation\" most people assume holds all the time: a risk-off event pushes foreign investors to cut Korean exposure across the board, selling the stock position and the currency they would otherwise need to convert back. For the next several weeks, the two measures did move back up together — then, in a different way, they stopped."
+      },
+      {
+        "heading": "When they move apart: a record KOSPI and a 17-year-low won, together",
+        "body": "From April through June, the relationship inverted. The KOSPI rallied more than 100% year-to-date by June, led by Samsung Electronics (up roughly 185%) and SK Hynix (up roughly 284%), according to a BofA Global Research analysis carried by Investing.com. The index closed at its all-time high of 8,864.24 on June 17 — confirmed by both Yonhap's English wire (fnnews.com) and Kyunghyang Shinmun's English edition (khan.co.kr), and matching Fermata's own committed market data for that date. At the same time, the won kept weakening — briefly touching 1,560 per dollar on June 5 per BofA's note, then closing at 1,548.61 on June 30 (Fermata market data), a level Korea Times separately described as a fresh 17-year low.\n\nForeign investors were still heavy net sellers of Korean stock through this entire window. Korea Exchange data cited by Newsis put the year-to-date net sale through July 3 at about 150.3 trillion won, the largest half-year total on record; a separate Yonhap Infomax count reported by Korea Times put the same period at 156.6 trillion won. The two figures differ because they come from different data compilers, not because they disagree on direction. BofA's explanation for why the currency kept falling even as the index foreigners were selling kept rising: a feedback loop starting with an initial volatility shock, rising demand for currency hedges, and slower-than-usual dollar repatriation by domestic exporters — what the bank's note, as reported by Investing.com, called \"a self-reinforcing loop between won weakness and KOSPI strength.\" Neither BofA's note nor Investing.com's report of it fully explains that last link, so treat the feedback-loop description as one bank's working model, not a settled mechanism."
+      },
+      {
+        "heading": "Why ownership numbers help explain the disconnect",
+        "body": "One more piece explains how foreign selling and a rising KOSPI were compatible at all. Foreign ownership of the KOSPI's total market capitalization hit a record 38.5% on May 20, 2026, according to Korea Exchange data reported by Yonhap's English wire (fnnews.com), then a new record of 40.26% on June 2, per Korea Financial Investment Association data reported by the same outlet — rising even as foreigners net sold about 54.1 trillion won of KOSPI stock between May and June 2. LS Securities researcher Go Se-eun called this a \"paradox of ownership\": foreign-held mega-caps such as Samsung Electronics and SK Hynix rallied so hard over that window — up roughly 63.5% and 83.5%, respectively — that the value of what foreigners already held kept climbing even as they trimmed some of it.\n\nKorea's market is unusually sensitive to this dynamic because foreign ownership is already concentrated. Separately, Korea Herald reported that foreign ownership across all Korean exchanges — a broader measure than KOSPI alone — rose from 30.8% at the end of 2025 to 32% by the end of January 2026. Whichever measure is used, a large, concentrated foreign stake means currency flows and equity flows move together, or apart, more forcefully here than in markets where foreign investors hold a smaller share."
+      },
+      {
+        "heading": "Apart again, the other way: won up, index down since August",
+        "body": "By August, the relationship inverted again — and not back to the March pattern. The won kept strengthening through the back half of the year: Fermata's own market data puts it at 1,417.31 per dollar on August 10 (Korea Times separately quoted an intraday rate of 1,414.8 that same morning) and 1,383.49 on August 26 (fnnews separately reported a close of 1,384.8). Over the same window, the KOSPI did not rally with the stronger currency the way the simple textbook pattern would predict: it closed at 6,788.88 on August 28, down 1.79% that day, with foreign investors net selling another roughly 1.76 trillion won. By October 8, the won had firmed further to 1,340.6 while the KOSPI sat at 6,625.93 — below the August level, not above it.\n\nA strengthening won is usually read as a vote of confidence in a market, since it often signals foreign money coming back in. From August through October, Korea got the first half of that story — a currency recovering a meaningful share of its 2026 losses — without the second half following."
+      },
+      {
+        "heading": "What this means for a US-dollar KOSPI position",
+        "body": "First, know whether your exposure is hedged. Broad unhedged funds like EWY and FLKR convert your gains or losses at whatever rate prevails when you buy and sell — see our comparison of those two funds for the expense-ratio and liquidity tradeoffs, which is a separate question from currency risk.\n\nSecond, a headline that the won hit a multi-year low or high tells you less about the KOSPI's near-term direction than it sounds like it should. In 2026 alone, a weak won accompanied a falling index in March, a record index in June, and by October, neither a rising nor a sharply falling index. The sign of the relationship depends on what is actually driving the move: a risk-off shock pulls both down together; heavy foreign equity selling combined with rising hedging demand can push the index up while the currency falls; and a currency recovery driven by slower hedging demand or exporter dollar conversion does not automatically pull the index up with it.\n\nThird, foreign net-buying or -selling data, published by Korea Exchange, is a more direct signal of which regime is in play than the exchange rate alone — it is the flow that is actually moving both numbers, even in the windows when it moves them in opposite directions."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed the KOSPI's record close of 8,864.24 on June 17, 2026, against two independent news outlets — Yonhap's English wire (fnnews.com) and Kyunghyang Shinmun's English edition (khan.co.kr) — and against our own committed market data for that date. We confirmed the March 31 figures (KOSPI 5,052.46, won above 1,530) against Korea JoongAng Daily's English report and a separate Money Today report citing Hana Securities and Newsis. We confirmed the August 28 figures (KOSPI 6,788.88, foreign net selling of about 1.76 trillion won) directly against our own committed market data for that date. The June 30, August 10, August 26 and October 8 USD/KRW levels we cite as our own figures are from Fermata's committed market data, cross-checked against a second price source before being published; where a news outlet separately quoted a close intraday figure for the same date, we note it rather than treating the two as identical, since intraday and end-of-day quotes do not always match to the decimal.\n\nWe could not find a single figure for first-half 2026 foreign net selling that every outlet agreed on — Newsis, citing Korea Exchange data, reported about 150.3 trillion won through July 3, while Korea Times, citing a separate Yonhap Infomax count, reported 156.6 trillion won for the same window — so we report both rather than picking one. We also could not independently verify the mechanics behind BofA's \"self-reinforcing loop\" between won weakness and KOSPI strength beyond what Investing.com's report of the analysis states; BofA's own note was not something we could access directly, so we present that explanation as the bank's interpretation, not as a confirmed mechanism."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "There is no fixed sign to the USDKRW-KOSPI relationship. In 2026 it has been positive, negative, and negative in the other direction, all within the same year: the won and the KOSPI fell together in March, moved in opposite directions through June as the index hit a record while the currency sank to a 17-year low, and moved apart again from August through October as the currency recovered ground the index did not. What was actually driving each window — a risk-off shock, foreign equity outflows paired with rising hedging demand, or a slower currency recovery — explains the sign far better than the exchange rate alone ever could.\n\nIf you hold Korean equities through a US-dollar account, your return is the index return and the currency return added together, not the index return alone, and the two have not moved reliably together or apart this year. This guide reflects reporting and market data through October 8, 2026; figures and conditions can change. This is not investment advice."
+    },
+    "excerpt": "USDKRW and the KOSPI didn't move in one direction in 2026 — they fell together in March, split apart as the index hit a record in June, and split apart the other way from August. Here's what actually happened, and what it means for a dollar-based position."
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "USD/KRW at 1,340.6 and the KOSPI at 6,625.93 as of October 8, 2026",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "USDKRW vs KOSPI",
+        "left": {"label": "KOSPI, Oct 8 close", "value": "6,625.93"},
+        "right": {"label": "USD/KRW, Oct 8", "value": "1,340.6"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "Three 2026 episodes where the won and the KOSPI moved together, then apart, then apart the other way",
+      "args": {
+        "title": "Three episodes, three different directions",
+        "subtitle": "USDKRW and the KOSPI in 2026",
+        "columns": ["Episode", "KOSPI", "USD/KRW", "Direction"],
+        "rows": [
+          ["Mar 31: Iran war shock", "-4.26% to 5,052.46", "1,530, 17-yr low", "Fell together"],
+          ["Jun 17-30: record rally", "8,864.24, record high", "1,548.61, 17-yr low", "Index up, won down"],
+          ["Aug 10-Oct 8: slow unwind", "6,788.88 to 6,625.93", "1,417.31 to 1,340.6", "Won up, index down"]
+        ],
+        "source": "Korea JoongAng Daily; Money Today; fnnews.com (Yonhap); Korea Times; Fermata market data",
+        "note": "KOSPI and USD/KRW figures are closing levels on the date shown, except March 31 USD/KRW, a weekly interbank close reported same-day. Direction describes how the two measures moved relative to each other in that window, not a forecast of what comes next."
+      },
+      "section": 5
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things to check before reading a won headline as a KOSPI signal",
+      "args": {
+        "title": "Before you read a won headline as a KOSPI signal",
+        "subtitle": "The sign flipped twice in 2026",
+        "items": [
+          {
+            "label": "Check what's actually driving the move",
+            "why": "Equity outflows plus rising hedging demand can split the won and KOSPI; a shock pulls both down."
+          },
+          {
+            "label": "Check whether your own position is hedged",
+            "why": "Unhedged funds like EWY and FLKR convert at the prevailing rate — a weaker won cuts your return."
+          },
+          {
+            "label": "Don't assume 2026's pattern is fixed",
+            "why": "The won and KOSPI fell together in March, split apart in June, and split apart again from August."
+          }
+        ]
+      },
+      "section": 6
+    }
+  ],
+  "sources": [
+    {"name": "Korea JoongAng Daily", "title": "Kospi drops to weakest since Iran war outbreak, won plunges past 1,530", "url": "https://www.koreajoongangdaily.com/business/kospi-drops-to-weakest-since-iran-war-outbreak-won-plunges-past-1530/12595239"},
+    {"name": "Money Today (mt.co.kr)", "title": "환율 1530 뚫자 3.8조 던진 외인…'결국 16만전자' 5100피 와르르", "url": "https://www.mt.co.kr/stock/2026/03/31/2026033115580336381"},
+    {"name": "fnnews.com (Yonhap)", "title": "KOSPI closes at record high of 8,864.24", "url": "https://en.fnnews.com/news/202606171622075750"},
+    {"name": "Kyunghyang Shinmun (khan.co.kr)", "title": "KOSPI sets another all-time high at 8,864.24", "url": "https://www.khan.co.kr/en/article/202606171544007"},
+    {"name": "Korea Times", "title": "Korean won hits fresh 17-year low on fund outflows", "url": "https://www.koreatimes.co.kr/economy/20260630/korean-won-hits-fresh-17-year-low-on-fund-outflows"},
+    {"name": "Korea Times", "title": "Korean won falls nearly 6% against dollar this year amid foreign stock sell-off", "url": "https://www.koreatimes.co.kr/economy/20260705/korean-won-falls-nearly-6-against-dollar-this-year-amid-foreign-stock-sell-off"},
+    {"name": "Newsis", "title": "상반기 코스피 150조 팔고 간 외국인…하반기엔 돌아올까", "url": "https://www.newsis.com/view/NISX20260705_0003696326"},
+    {"name": "Investing.com", "title": "How KOSPI strength became KRW weakness: BofA weighs in", "url": "https://www.investing.com/news/stock-market-news/how-kospi-strength-became-krw-weakness-bofa-weighs-in-4751616"},
+    {"name": "fnnews.com (Yonhap)", "title": "Foreign ownership of KOSPI hits record 38.5%", "url": "https://en.fnnews.com/news/202605201402077836"},
+    {"name": "fnnews.com (Yonhap)", "title": "Foreign ownership of KOSPI tops 40% for the first time, a 'paradox of ownership'", "url": "https://en.fnnews.com/news/202606021815423619"},
+    {"name": "Korea Herald", "title": "US remains largest holder, Ireland leads net purchases", "url": "https://koreaherald.com/article/10677789"},
+    {"name": "Korea Times", "title": "Seoul shares pare gains late Monday morning on foreign selling", "url": "https://www.koreatimes.co.kr/economy/20260810/seoul-shares-pare-gains-late-monday-morning-on-foreign-selling"},
+    {"name": "fnnews.com (Yonhap)", "title": "Won closes at 1,384.8 on August 26", "url": "https://en.fnnews.com/news/202608271453185780"}
+  ]
+}
