@@ -1,44 +1,56 @@
-[밸류에이션] US · 2026-10-09 · FWD PER 중앙값 24.3
+[밸류에이션] US · 2026-10-09 · FWD PER 중앙값 25.1
   (목표가까지 = 목표주가가 지금 주가보다 몇 % 높은가 · 주가 위치 = 지금 주가가 목표주가보다 몇 % 낮은가 — 둘은 다른 숫자)
   종목            FWD PER      목표가까지      주가 위치     52주고점 대비    애널
-  마이크론              5.0     +50.1%     -33.4%       -17.5%    46
-  엔비디아             14.5     +42.6%     -29.9%        -5.3%    59
-  머크               15.2     +10.5%      -9.5%        -9.3%    25
-  메타               20.9     +10.9%      -9.8%        -7.6%    58
-  마이크로소프트          22.1     +12.4%     -11.0%        -5.6%    53
-  알파벳              23.1     +23.3%     -18.9%       -14.8%    54
-  아마존              24.3     +30.5%     -23.4%       -11.5%    58
-  디어               28.6      +6.3%      -5.9%        -9.5%    23
-  월마트              34.3     +14.7%     -12.8%       -18.2%    40
-  애플               35.5      -3.6%      +3.7%        -1.4%    39
-  인텔               51.4     +10.2%      -9.3%       -24.8%    43
-  코인베이스            60.6     +23.3%     -18.9%       -57.2%    33
-  테슬라             174.8      +4.6%      -4.4%       -24.8%    37
+  마이크론              5.0     +51.1%     -33.8%       -18.0%    46
+  엔비디아             14.4     +43.4%     -30.3%        -5.8%    59
+  머크               15.4      +7.3%      -6.8%        -7.2%    25
+  메타               20.8     +11.2%     -10.1%        -7.8%    58
+  마이크로소프트          22.6      +9.8%      -8.9%        -3.4%    53
+  알파벳              23.1     +22.1%     -18.1%       -13.9%    54
+  아마존              25.1     +26.3%     -20.8%        -8.6%    58
+  디어               27.3     +11.4%     -10.2%       -13.9%    23
+  월마트              34.5     +13.9%     -12.2%       -17.6%    40
+  애플               35.1      -2.5%      +2.6%        -2.5%    39
+  인텔               50.3     +12.7%     -11.3%       -26.4%    43
+  코인베이스            58.8     +18.2%     -15.4%       -55.4%    33
+  테슬라             174.9      +2.5%      -2.4%       -23.3%    37
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 0 하향 0 (의견 유지 18건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 0 하향 0 (의견 유지 20건은 뺐습니다)
   2026-10-02 · 코인베이스        Wells Fargo: ? → Equal-Weight
 
-[월가 리포트] US · 오늘 · 18건 (상향 10 하향 4 신규 2 목표가 상향 0 하향 0) · 출처 marketbeat
-  ALHC   ▼ 하향     William Blair             Market Perform           
-  BULL   ▲ 상향     Scotiabank                Sector Perform → Outperform 
+[월가 리포트] US · 오늘 · 375건 (상향 18 하향 15 신규 37 목표가 상향 56 하향 165) · 출처 marketbeat
+  ALAB   ▼ 하향     Northland Securities      Outperform → Market Perform 
+  ALAB   ▼ 하향     Citigroup                 Buy → Market Perform     
+  ALHC   ▼ 하향     William Blair             Outperform → Market Perform 
+  BULL   ▲ 상향     Scotiabank                Sector Perform → Sector Outperform $9.00
   BVRDF  ▲ 상향     Citigroup                 Neutral → Buy            
+  CBOE   ▲ 상향     Morgan Stanley            Underweight → Overweight $258.00 → $358.00
+  DD     ▼ 하향     JPMorgan Chase & Co.      Overweight → Neutral     $172.00 → $145.00
   DNBBY  ▼ 하향     Barclays                  Overweight → Underweight 
+  ESTC   ▲ 상향     Monness Crespi & Hardt    Neutral → Buy            $120.00
+  EXK    ▼ 하향     Citigroup                 Market Perform           
+  FSLY   ▲ 상향     Oppenheimer               Market Perform → Outperform $35.00
+  GEMI   ▼ 하향     Morgan Stanley            Equal Weight → Underweight $4.75
   HLI    ▲ 상향     Citigroup                 Outperform               
-  JKHY   ▲ 상향     Piper Sandler             Neutral → Overweight     
-  KNF    ▼ 하향     Royal Bank Of Canada      Outperform → Sector Perform $58.00
+  HLI    ▲ 상향     Citizens Jmp              Market Perform → Outperform $175.00
+  HUM    ▲ 상향     Monness Crespi & Hardt    Buy                      
+  HUM    ▲ 상향     Morgan Stanley            Underweight → Overweight 
+  ICLR   ▲ 상향     Bank of America           Underperform → Neutral   $185.00
+  ITW    ▼ 하향     JPMorgan Chase & Co.      Overweight → Neutral     $350.00 → $270.00
+  JKHY   ▲ 상향     Piper Sandler             Neutral → Overweight     $175.00
+  KNF    ▼ 하향     Royal Bank Of Canada      Outperform → Sector Perform $103.00 → $58.00
   MCRUF  ▲ 상향     Royal Bank Of Canada      Sector Perform → Outperform 
   MT     ▲ 상향     UBS Group                 Neutral → Buy            
+  OPCH   ▼ 하향     UBS Group                 Buy → Neutral            $39.00 → $32.05
+  PS     ▼ 하향     Citigroup                 Neutral → Sell           $45.00
+  RYAAY  ▼ 하향     Barclays                  Overweight → Equal Weight 
+  SFD    ▼ 하향     Bank of America           Buy → Neutral            $21.00
   SGPYY  ▲ 상향     Investec                  Buy                      
-  SOBO   ▼ 하향     Barclays                  Underweight              
+  SMTC   ▼ 하향     Northland Securities      Outperform → Market Perform 
+  SOBO   ▼ 하향     Barclays                  Equal Weight → Underweight $35.00 → $33.00
   SVNLY  ▲ 상향     Barclays                  Underweight → Positive   
-  SZGPY  ▲ 상향     UBS Group                 Neutral → Buy            
-  VLPNY  ▲ 상향     UBS Group                 Neutral → Buy            
-  FBIN   · 신규     Citigroup                 Buy                      
-  MPB    · 신규     Piper Sandler             Overweight               $42.00
-  HUM    · 목표가    Robert W. Baird                                    $596.00
-  ITW    · 목표가    UBS Group                                          $277.00
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
@@ -85,9 +97,9 @@
   13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 지금의 포지션이 아닙니다.
 
 [미 거시] 최근 90일
-  미 10년물 국채금리           5.28  [2026-10-07 기준]  (+0.66) 기간 최저 4.55(2026-07-15) 최고 5.31(2026-10-05)
-  미 2년물 국채금리            4.77  [2026-10-07 기준]  (+0.51) 기간 최저 4.13(2026-07-15) 최고 4.92(2026-09-28)
-  장단기 금리차(10년-2년)       0.47  [2026-10-08 기준]  (+0.11) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
+  미 10년물 국채금리           5.22  [2026-10-08 기준]  (+0.60) 기간 최저 4.55(2026-07-15) 최고 5.31(2026-10-05)
+  미 2년물 국채금리            4.75  [2026-10-08 기준]  (+0.49) 기간 최저 4.13(2026-07-15) 최고 4.92(2026-09-28)
+  장단기 금리차(10년-2년)       0.44  [2026-10-09 기준]  (+0.08) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
   연방기금금리                3.75  [2026-09-01 기준]  (+0.12) 기간 최저 3.63(2026-07-01) 최고 3.75(2026-09-01)
   미 소비자물가지수           334.13  [2026-08-01 기준]  (+1.32) 기간 최저 332.81(2026-07-01) 최고 334.13(2026-08-01)
 
