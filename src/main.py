@@ -269,7 +269,7 @@ def run(
         # 미국 휴장일 다음 날 아침: 받을 새 거래일이 없다 — 전 거래일 파일이 이미 있으면 수집·대조를 돌리지 않는다(2026-10-06, 감사 F-146:
         # 전에는 끝까지 돈 뒤에야 '이미 발행됨'으로 건너뛰어, 그사이 대조가 멈추면 발행할 것도 없는데 ❌ 알림이 갔다)
         from src.check_publication import last_collected_us_day
-        last_day = last_collected_us_day()
+        last_day = last_collected_us_day(closed_after=dt.time(16, 0))   # 받을 거래일 — 마감(뉴욕 16:00) 뒤면 그날(2026-10-09)
         if (Path(__file__).resolve().parent.parent / "data" / f"price_us_{last_day}.json").exists():
             print(f"[안내] 미국장 마지막 거래일({last_day}) 시세 파일이 이미 있습니다 — 새로 받을 거래일이 없습니다.")
             return None

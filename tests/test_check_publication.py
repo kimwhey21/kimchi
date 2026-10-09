@@ -143,3 +143,14 @@ class UsLastCollectedDayTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CollectorDayTest(unittest.TestCase):
+    def test_collector_counts_the_day_once_new_york_has_closed(self) -> None:
+        """2026-10-09: 수집(뉴욕 18:20)이 18:50 기준을 써서 그날을 전날로 보고 '이미 있음'으로 건너뛰었다 — 10/6·10/8 미국장이 빠졌다."""
+        import datetime as dt
+        from src.check_publication import last_collected_us_day
+        utc = dt.timezone.utc
+        at = dt.datetime(2026, 10, 8, 22, 20, tzinfo=utc)                       # 뉴욕 10/8 18:20, 서울 10/9 07:20
+        self.assertEqual(last_collected_us_day(at, closed_after=dt.time(16, 0)), "2026-10-08")
+        self.assertEqual(last_collected_us_day(at), "2026-10-07")             # 증명서 기준(18:50)은 그대로

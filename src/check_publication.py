@@ -122,17 +122,19 @@ def _actual_trading_date(market: str) -> str | None:
         return None
 
 
-def last_collected_us_day(now: dt.datetime | None = None) -> str:
+def last_collected_us_day(now: dt.datetime | None = None, closed_after: dt.time = dt.time(18, 50)) -> str:
     """미국장 시세가 수집됐어야 할 마지막 거래일 — 달력(주말·US_HOLIDAYS)과 뉴욕 시각으로 계산한다(2026-10-06).
 
     전에는 FinanceDataReader 다우의 마지막 줄을 썼는데, 장이 열려 있는 시각(23:30 KST = 뉴욕 10:30)에는 그 줄이 끝나지 않은
     오늘 줄이라 '마지막 거래일 10-05인데 시세 파일은 10-02'라는 헛경보가 평일 밤마다 났다(감사 F-146). 시세 파일은 뉴욕 18:20에
     만들어지고 재시도가 18:34까지라, 뉴욕 18:50이 지난 거래일만 센다. 서머타임은 시간대가 알아서 맞춘다.
+    수집 쪽은 `closed_after=16:00`(마감)으로 부른다 — '받을 거래일'은 마감 뒤면 그날이다(2026-10-09: 18:50 기준으로 물어
+    18:20 수집이 그날을 전날로 보고 '이미 있음'으로 건너뛰어 10/6·10/8 미국장이 빠졌다).
     """
     from zoneinfo import ZoneInfo
     from src.daily_proof import US_HOLIDAYS
     ny = (now or dt.datetime.now(dt.timezone.utc)).astimezone(ZoneInfo("America/New_York"))
-    day = ny.date() if ny.time() >= dt.time(18, 50) else ny.date() - dt.timedelta(days=1)
+    day = ny.date() if ny.time() >= closed_after else ny.date() - dt.timedelta(days=1)
     while day.weekday() >= 5 or day.isoformat() in US_HOLIDAYS:
         day -= dt.timedelta(days=1)
     return day.isoformat()
