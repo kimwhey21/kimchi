@@ -1,0 +1,126 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-10",
+  "checked": "2026-10-10",
+  "slug": "omnibus-account-korea-explained",
+  "category_id": 153,
+  "tags": ["Korea omnibus account", "Korea foreign investor registration", "Investment Registration Certificate Korea", "Legal Entity Identifier Korea", "MSCI Korea accessibility"],
+  "radar_origin": "list order (Category A: access) — search queue's top lines today ('kospi vs kosdaq' 5.5위, 'englishdart' 6.2위, 'kospi trading hours' 65.6위, 'kosdaq vs kospi' 7.2위, 'how to buy korean stocks in canada/us/' 등, 'dart korean' 12.5위, 'kospi200 kosdaq150 2026 year end target forecast' 5.3위, 'krx kospi 200 index methodology' 5.7위, 'kospi and kosdaq' 9.7위, 'kospi futures trading hours' 48.3위) were all either fix-type lines whose two-edit weekly quota was already spent this week (kospi-200-kosdaq-150-year-end-targets-2026 fixed 2026-10-05, kospi-trading-hours fixed 2026-10-06), or 'new article' lines the matcher flagged as having no dedicated page when one already exists under a different slug — I checked the live post list directly (wp-json categories=153): 'englishdart' is already answered by how-to-research-a-korean-company-in-english-dart-kind-and-what-the-translation-leaves-out, and 'kospi200 kosdaq150 2026 year end target forecast' duplicates the already-fixed kospi-200-kosdaq-150-year-end-targets-2026 guide. Fell back to the topic list. Yesterday (2026-10-09) was Category F (macro, usdkrw-and-the-kospi), so picked a different category. In Category A (access), items 1-3 (how-to-buy-samsung-electronics-abroad, korean-adrs-for-us-investors, buying-korean-stocks-from-europe) are already published, and item 4 (interactive-brokers-korean-stocks) is already thoroughly covered under a different slug — how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account has whole sections on 'Which brokers actually let you buy KRX-listed shares' and 'What an IBKR Korea trade costs.' Item 5, omnibus-account-korea-explained, is genuinely unwritten and not a duplicate of anything live, so wrote that.",
+  "related": [
+    {
+      "title": "Can Foreigners Buy Korean Stocks? What Changed in 2026",
+      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+    },
+    {
+      "title": "MSCI Korea 2026: Why Korea Is Still an Emerging Market",
+      "url": "https://fermata.it.kr/korea-is-still-an-emerging-market-what-mscis-2026-decision-means-for-foreign-investors/"
+    },
+    {
+      "title": "Korea FTSE vs. MSCI Classification: Why the Two Disagree (2026)",
+      "url": "https://fermata.it.kr/korea-ftse-and-msci-classification/"
+    }
+  ],
+  "ko": {
+    "title": "Korea Omnibus Account: What Changed for Foreign Investors (2026)",
+    "narrative": [
+      {
+        "heading": "The short answer: Korea replaced a 30-year ID system with one global number",
+        "body": "If you have seen \"Korea omnibus account\" mentioned alongside foreign investor access, it is part of a single reform: on December 14, 2023, Korea abolished the registration system that had required every foreign investor to get an ID from the Financial Supervisory Service (FSS) before buying a single locally listed share. In its place, institutional investors now use a Legal Entity Identifier (LEI) — the same G-20-standard code used globally — and individual investors can trade on their passport number alone, according to the Financial Services Commission's (FSC) own announcement.\n\nThe omnibus account itself is a separate, older piece of plumbing: a pooled account that lets a global custodian or asset manager hold many end-investors' Korean positions under one account instead of thousands of individually registered ones. It existed since 2017 but almost nobody used it, because of a reporting rule explained below. The 2023 reform fixed that rule at the same time it abolished individual registration — which is why the two changes are usually described together, and why this guide covers both."
+      },
+      {
+        "heading": "What foreign investors had to do before 2023",
+        "body": "Korea's foreign investor registration system dated to 1992. Before buying a locally listed stock, bond, or other security, a foreign investor — individual or institutional — had to register their identity with the FSS and receive a foreign investor ID, a step separate from and prior to opening a brokerage account. In practice this also meant lining up a standing proxy and a custodian bank in Korea to handle the paperwork and hold the shares on the investor's behalf.\n\nA Korea Times report from the time of the reform captured how this looked to the people living with it: one Korean finance professor described the old registration system as a symbol of a market still seen as closed to, and discriminatory against, global investors — this from a market Korea was simultaneously trying to get MSCI to reclassify as Developed."
+      },
+      {
+        "heading": "What the omnibus account was supposed to do, and why it sat unused",
+        "body": "The omnibus account system itself launched in 2017, built to let a global securities firm or asset manager pool many foreign clients' Korean trades under a single account instead of registering each one individually. On paper it should have been the easier path. In practice, the FSC's own January 2023 announcement said plainly that it \"had not been utilized\" since launch.\n\nThe reason was a reporting rule: anyone trading through an omnibus account had to report each end-investor's trade details immediately — at T+2, the moment of settlement — which defeated the purpose of pooling trades in the first place. The FSC's fix, proposed January 25, 2023 and in force by the end of that year, replaced real-time, per-trade reporting with an after-the-fact oversight model: the global firm holding the omnibus account verifies its own end-investors and keeps detailed records, and Korean regulators request those records only when they need them, instead of collecting everyone's trade data as a matter of course. Investigative reporting outlet KoreaPro's December 2023 coverage described the practical result as cutting disclosure frequency \"from immediate to monthly.\""
+      },
+      {
+        "heading": "The two reforms landed on the same day: December 14, 2023",
+        "body": "The Korean cabinet approved the Enforcement Decree revision abolishing individual registration on June 5, 2023, and the FSC said at the time that the change would take effect six months later. It did, on December 14, 2023 — the same date the FSS confirmed it had stopped issuing new foreign investor IDs and the omnibus account's lighter reporting rule took hold.\n\nThe transition was built to avoid disrupting investors already in the system: anyone holding an existing foreign investor ID can keep using it, under no obligation to switch to an LEI or a passport number. Korean authorities also kept the ability to cap total and individual foreign ownership on specific securities where such limits already applied — abolishing the registration system did not touch those caps."
+      },
+      {
+        "heading": "What this means in practice: who actually uses an LEI, and who doesn't",
+        "body": "The LEI side of this reform is institutional plumbing, not something an individual buying a few shares of Samsung Electronics ever has to touch directly. A global custodian bank or an asset manager opening Korean accounts on behalf of clients registers once with an LEI, opens a cash account and a securities safekeeping account at a Korean custodian, and a trading account with a broker — all three tied to that one identifier instead of a separate registration per end-investor, which is the entire point of pairing the LEI with the loosened omnibus account rule.\n\nAn individual foreign retail investor, by contrast, is covered by the other half of the same January 2023 package: trading on a passport number, with no FSS registration step at all. If you are opening an account yourself through a broker like Interactive Brokers, or buying EWY or FLKR instead, this reform mostly explains why the account-opening process got simpler starting in 2023 — the mechanics of actually placing the trade are covered in our guide to buying Korean stocks from the US or Canada, linked below."
+      },
+      {
+        "heading": "Three years later, MSCI says the reform still hasn't landed",
+        "body": "This is the part the search result snippets rarely mention. MSCI's own June 2026 Market Classification Review — the annual decision on whether Korea moves closer to Developed Market status — named the pre-2023 \"rigidity of the investor ID system\" and \"restrictions on in-kind transfers and off-exchange transactions\" among the historical barriers that kept Korea out of consultations for reclassification between 2008 and 2014. The 2023 reform directly targeted that complaint.\n\nYet MSCI's June 23, 2026 release is blunt about where things stand now: <b>\"Operational adoption of omnibus accounts and in-kind transfers remains limited.\"</b> The same release adds that \"early pre-settlement funding requirements remain a burden for market participants,\" and that market participants \"continue to face significant operational burdens\" under Korea's reinstated short-selling compliance regime. MSCI's stated conclusion was to keep monitoring implementation rather than move Korea toward reclassification — a decision the Korea Times reported left Korea off the developed-market watchlist for a twelfth consecutive year, even as the won's limited offshore convertibility remained the single barrier MSCI named most prominently."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed the abolition of Korea's foreign investor registration system, its December 14, 2023 effective date, the June 5, 2023 cabinet approval, the 1992 origin of the old system, and the passport-number/LEI split between individual and institutional investors directly from the Financial Services Commission's own English-language press releases, cross-checked against Korea Times' January 24, 2023 report of the same measures. We confirmed the omnibus account's 2017 launch, its near-zero usage before 2023, and the shift from real-time to request-based reporting from the FSC's January 25, 2023 release, cross-checked against KoreaPro's December 2023 report describing the same change as moving disclosure \"from immediate to monthly.\" We confirmed MSCI's 2026 Market Classification Review findings — including the exact quote on omnibus account adoption, the pre-settlement funding and short-selling compliance points, and the historical 2008-2014 consultation history — directly from MSCI's own June 23, 2026 press release, cross-checked against Korea Times' June 24, 2026 report of the same review.\n\nWe could not find a public, numeric figure for how many foreign institutional investors have actually opened an LEI-based omnibus account since 2023 versus how many still use a legacy foreign investor ID — MSCI's language (\"remains limited\") is qualitative, not a published statistic, and we are not estimating one. We also could not confirm from an official source exactly what \"in-kind transfers\" restrictions MSCI considers unresolved today, since its 2026 release names the issue without describing the current mechanics; treat that specific point as flagged, not fully explained, until Korea Exchange or the FSC publishes more detail."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "Two separate reforms are usually meant when people search \"Korea omnibus account\": the 2023 abolition of individual foreign investor registration (replaced by an LEI for institutions and a passport number for individuals), and a change to the omnibus account's reporting rule that made pooling foreign clients' trades through a global custodian actually usable for the first time since the account type launched in 2017. Both took effect December 14, 2023.\n\nIf you are an individual investor buying Korean shares through a US or international broker, this reform explains why opening that account got simpler — but the LEI and omnibus-account mechanics themselves are handled by your broker or custodian, not something you touch directly. If you are tracking why Korea is still classified as an Emerging Market by MSCI, this is one thread worth pulling: MSCI's own June 2026 review says adoption of the reformed system \"remains limited\" three years in, which is one of the specific reasons Korea has not reached the developed-market watchlist.\n\nThis guide reflects Korea's Financial Services Commission announcements from January, June and December 2023, and MSCI's Market Classification Review as published June 23, 2026 and reported by Korea Times. Rules on foreign investor registration, accounts, and reporting can be revised by Korean regulators; confirm current requirements with your broker or custodian before opening an account. This is not investment advice."
+    },
+    "excerpt": "Korea scrapped its 30-year foreign investor registration system in December 2023 and eased the omnibus account's reporting rule the same day. Here's what actually changed — and why MSCI's 2026 review says the reform still hasn't fully landed."
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea abolished its foreign investor registration system on December 14, 2023, replacing it with an LEI for institutions and a passport number for individuals",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea Omnibus Account",
+        "left": {"label": "Registration system abolished", "value": "Dec 14, 2023"},
+        "right": {"label": "MSCI 2026 verdict", "value": "Still \"limited\""}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "What Korea's foreign investor access rules looked like before and after the December 2023 reform",
+      "args": {
+        "title": "Before and after December 14, 2023",
+        "subtitle": "Registration and omnibus account reporting",
+        "columns": ["", "Before", "After"],
+        "rows": [
+          ["Individual investor ID", "FSS registration (since 1992)", "Passport number, no registration"],
+          ["Institutional investor ID", "FSS registration", "Legal Entity Identifier (LEI)"],
+          ["Omnibus account reporting", "Each end-investor, real-time at T+2", "Monthly, on request for detail"],
+          ["Existing foreign investor IDs", "—", "Still usable, no forced switch"]
+        ],
+        "source": "Financial Services Commission press releases, January, June and December 2023",
+        "note": "Foreign ownership limits on specific securities, where they already applied, were not changed by this reform."
+      },
+      "section": 4
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three things MSCI's June 2026 review said still limit Korea's market accessibility",
+      "args": {
+        "title": "What MSCI's 2026 review still flags on Korea",
+        "subtitle": "Three years after the registration and omnibus reform",
+        "items": [
+          {
+            "label": "Omnibus accounts and in-kind transfers",
+            "why": "MSCI: operational adoption \"remains limited,\" the same issue the 2023 reform targeted."
+          },
+          {
+            "label": "Pre-settlement funding requirements",
+            "why": "MSCI: \"early pre-settlement funding requirements remain a burden for market participants.\""
+          },
+          {
+            "label": "Short-selling compliance regime",
+            "why": "MSCI: participants \"continue to face significant operational burdens\" since the ban was lifted."
+          }
+        ]
+      },
+      "section": 6
+    }
+  ],
+  "sources": [
+    {"name": "Financial Services Commission (FSC)", "title": "Foreign Investor Registration Requirement to be Abolished in Korea", "url": "https://fsc.go.kr/eng/pr010101/80123"},
+    {"name": "Financial Services Commission (FSC)", "title": "FSC Announces Measures to Improve Foreign Investors' Access to Korean Capital Markets", "url": "https://fsc.go.kr/eng/pr010101/79346"},
+    {"name": "Financial Services Commission (FSC)", "title": "Market Access Improved for Foreign Investors with Abolishment of Investment Registration Certificates", "url": "https://fsc.go.kr/eng/pr010101/82511"},
+    {"name": "Korea Times", "title": "Korea makes it easier for foreigners to invest in local stock market", "url": "https://www.koreatimes.co.kr/economy/20230124/korea-makes-it-easier-for-foreigners-to-invest-in-local-stock-market"},
+    {"name": "KoreaPro", "title": "South Korea eases foreign investors' access to domestic securities amid risks", "url": "https://koreapro.org/2023/12/south-korea-eases-foreign-investors-access-to-domestic-securities-amid-risks/"},
+    {"name": "MSCI", "title": "MSCI Announces the Results of the MSCI 2026 Market Classification Review", "url": "https://www.msci.com/downloads/documents/press-releases/media-room/MSCI_2026_MCR_PR.pdf"},
+    {"name": "Korea Times", "title": "MSCI keeps Korea off developed market watchlist, but global analysts stay bullish", "url": "https://www.koreatimes.co.kr/economy/20260624/msci-keeps-korea-off-developed-market-watchlist-but-global-analysts-stay-bullish"}
+  ]
+}
