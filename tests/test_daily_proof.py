@@ -85,6 +85,33 @@ class BuildJobsTest(unittest.TestCase):
         self.assertFalse(any(i.startswith("작업 stock_db") for i in issues), issues)
 
 
+class WeekendCboeTest(unittest.TestCase):
+    def _build(self, now: dt.datetime):
+        with tempfile.TemporaryDirectory() as tmp:
+            table = Path(tmp) / "jobs.json"
+            table.write_text(json.dumps({"direct": [], "watch": []}), encoding="utf-8")
+            with mock.patch.object(daily_proof, "JOBS", table), \
+                    mock.patch.object(daily_proof, "github_runs", return_value=[]), \
+                    mock.patch.object(daily_proof, "changed_today", return_value=set()), \
+                    mock.patch.object(daily_proof, "expected_artifacts", return_value=[]), \
+                    mock.patch.object(daily_proof, "mac_issues", return_value=([], 0, 0)), \
+                    mock.patch.object(daily_proof.close_check, "check", return_value=[]), \
+                    mock.patch.object(daily_proof.close_check, "pcv_day", return_value=None), \
+                    mock.patch.object(daily_proof.close_check, "check_stocks", return_value=[]), \
+                    mock.patch.object(daily_proof.close_check, "us_recheck", return_value=([], 24, ["S&P500", "VIX"])), \
+                    mock.patch.object(daily_proof.check_publication, "check_market", return_value=[]), \
+                    mock.patch.dict(os.environ, {"ECOS_API_KEY": "k", "WORDPRESS_URL": ""}):
+                return daily_proof.build(now.date(), now, screens=False)
+
+    def test_cboe_gap_is_deferred_on_a_new_york_weekend_only(self) -> None:
+        """2026-10-10(토) 밤: Cboe가 빈 응답이라 S&P500 등 5개를 다시 맞추지 못해 ⚠ — 주말에는 월요일로 미루고, 평일에는 경고한다."""
+        _, issues, parts = self._build(dt.datetime(2026, 10, 10, 23, 30, tzinfo=daily_proof.KST))     # 뉴욕 토 10:30
+        self.assertFalse(any("다시 맞추지 못한" in i for i in issues), issues)
+        self.assertIn("월요일로 미룸", parts["미국장 재대조"])
+        _, issues, _ = self._build(dt.datetime(2026, 10, 13, 23, 30, tzinfo=daily_proof.KST))         # 뉴욕 화 10:30
+        self.assertTrue(any("다시 맞추지 못한" in i for i in issues), issues)
+
+
 class ExpectedArtifactsTest(unittest.TestCase):
     def _root(self, files: list[str]) -> Path:
         tmp = Path(tempfile.mkdtemp())

@@ -502,7 +502,13 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
             us_wrong, us_checked, us_missing = close_check.us_recheck(us_doc)
             issues += us_wrong
             n_numbers += us_checked   # 실제로 공식 원천과 다시 맞춘 수만 센다(감사 F-147: 전에는 꼬리표만 붙은 값까지 셌다)
-            if us_missing:
+            from zoneinfo import ZoneInfo
+            ny_weekend = now.astimezone(ZoneInfo("America/New_York")).weekday() >= 5
+            if us_missing and ny_weekend:
+                # 뉴욕 주말에는 Cboe 공식 자료가 빈 응답을 준다(2026-10-10 토 10:30 ET 실측: 200·0바이트) — 수집 때 이미 두 원천으로 확인한
+                # 값이라 경고하지 않고 월요일 밤 증명서가 같은 파일을 다시 맞춘다(그때도 못 맞추면 경고).
+                parts["미국장 재대조"] = f"{len(us_missing)}개 월요일로 미룸(주말 Cboe 빈 응답)"
+            elif us_missing:
                 issues.append(f"미국장 {us_files[-1].stem[-10:]}: 공식 원천으로 다시 맞추지 못한 값 {len(us_missing)}개 — "
                               + ", ".join(us_missing[:10]))
         except Exception as exc:  # noqa: BLE001
