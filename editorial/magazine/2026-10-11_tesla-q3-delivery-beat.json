@@ -1,0 +1,153 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "시장 읽기",
+  "date": "2026-10-11",
+  "slug": "tesla-q3-delivery-beat",
+  "radar_origin": "The Motley Fool: Tesla Beat Delivery Estimates by 25,000 Vehicles. Here's Why the Stock Still Hasn't Broken Out",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1617704548623-340376564e68",
+    "unsplash_id": "2swaWy4Xhb0",
+    "credit": "Unsplash / Tesla Fans Schweiz"
+  },
+  "sources": [
+    {
+      "name": "테슬라노스(TeslaNorth)",
+      "title": "Tesla Q3 2026 Deliveries Beat 461,974 Consensus at 486,532 Vehicles",
+      "url": "https://teslanorth.com/2026/10/02/tesla-q3-2026-deliveries/"
+    },
+    {
+      "name": "오토에볼루션(AutoEvolution)",
+      "title": "Tesla Third Quarter Deliveries Surprise Wall Street Analysts as European Sales Are Booming",
+      "url": "https://www.autoevolution.com/news/tesla-third-quarter-deliveries-surprise-wall-street-analysts-as-european-sales-are-booming-276474.html"
+    },
+    {
+      "name": "테슬라오라클(TeslaOracle)",
+      "title": "Tesla (TSLA) Q3 2026 vehicle deliveries grew 1.3% QoQ and dropped by 2.1% YoY, energy business also slows down",
+      "url": "https://teslaoracle.com/2026/10/03/tesla-tsla-q3-2026-vehicle-deliveries-grew-1-3-qoq-and-dropped-by-2-1-yoy-energy-business-also-slows-down"
+    }
+  ],
+  "tags": ["테슬라", "전기차", "실적", "미국주식"],
+  "ko": {
+    "title": "테슬라는 왜 추정치를 넘기고도 물음표를 남겼을까",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "10월 2일 금요일, 테슬라 공식 계정이 분기 숫자 셋을 올렸습니다.\n보도자료 원문은 이렇게 시작합니다.\n“we produced over 464,000 vehicles, delivered over 486,000 vehicles and deployed 13.7 GWh of energy storage products”\n풀어 쓰면 생산 46만 4천 대, 인도 48만 6천 대, 에너지저장 배치 13.7기가와트시라는 뜻입니다.\n이 문장을 그대로 실은 곳은 전기차 전문 매체 테슬라노스(TeslaNorth)입니다.\n테슬라노스에 따르면 실제 인도량 48만 6,532대는 월가 컨센서스 46만 1,974대보다 2만 4,558대 많았습니다."
+      },
+      {
+        "heading": "",
+        "body": "그런데 이 beat를 만든 힘은 미국이 아니라 유럽이었습니다.\n자동차 매체 오토에볼루션(AutoEvolution)은 이렇게 전했습니다.\n“Tesla was one of the beneficiaries, with the carmaker's EU registrations rising by about two-thirds through August.”\n테슬라의 EU 신규 등록 대수가 8월까지 1년 전보다 약 3분의 2, 66%가량 늘었다는 뜻입니다.\n작년 이맘때는 미국에서 세액공제 종료를 앞두고 수요가 한꺼번에 몰렸던 시기였습니다.\n이번에는 그런 쏠림 없이 대서양 건너편이 숫자를 받쳐 준 셈입니다."
+      },
+      {
+        "heading": "",
+        "body": "숫자를 분기 단위로 좁혀 보면 이야기가 또 갈립니다.\n테슬라오라클(TeslaOracle)은 이번 분기를 이렇게 요약했습니다.\n“Compared to Q2, the automaker delivered 6,406 more vehicles, which is a growth of just ~1.3% QoQ.”\n전분기 대비로는 1.3%, 눈에 띄지 않는 증가였습니다.\n그런데 1년 전 같은 분기와 비교하면 사정이 바뀝니다.\n“In Q3 2025, Tesla delivered 497,099 cars.”\n작년 3분기 인도량 49만 7,099대가 이번 분기 48만 6,532대보다 많았던 것입니다.\n테슬라오라클은 이를 두고 전년 대비로는 2.1% 줄었다고 적었습니다."
+      },
+      {
+        "heading": "",
+        "body": "그래서 시장은 어느 쪽에 더 크게 반응했을까요.\n오토에볼루션은 발표 직후 주가 흐름을 이렇게 적었습니다.\n“The best indicator is the shares' price, which spiked 5% to $371 after deliveries were announced.”\n발표 직후 주가는 5% 올라 371달러를 찍었다는 뜻입니다.\n2분기 발표 때는 정반대였습니다.\n“Tesla's share price dropped 7% minutes after the announcement.”\n2분기에는 발표 몇 분 만에 주가가 7% 떨어졌습니다.\n인도량 자체는 두 분기 모두 전분기보다 늘었는데, 시장의 반응은 반대로 갈린 셈입니다."
+      },
+      {
+        "heading": "",
+        "body": "10월 21일, 테슬라는 이 숫자 뒤에 가려진 마진과 순이익을 공개합니다.\n인도량이 늘어도 평균 판매가격이 낮아진 결과라면, 이번 beat는 숫자 하나짜리 축포로 끝날 수 있습니다.\n미국 주식을 사 모으는 투자자에게는 '얼마나 팔았나'보다 '얼마에 팔았나'가 더 중요할 때가 많습니다.\n여러분이라면 이번 beat를 10월 21일 전에 이미 답이 나온 질문으로 보시겠습니까, 아니면 아직 열린 질문으로 보시겠습니까?"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "10월 2일 금요일, 테슬라 공식 계정이 분기 숫자 셋을 올렸습니다",
+      "url": "https://teslanorth.com/2026/10/02/tesla-q3-2026-deliveries/",
+      "original": "Tesla said Friday in its October 2 release"
+    },
+    {
+      "claim": "we produced over 464,000 vehicles, delivered over 486,000 vehicles and deployed 13.7 GWh of energy storage products",
+      "url": "https://teslanorth.com/2026/10/02/tesla-q3-2026-deliveries/",
+      "original": "we produced over 464,000 vehicles, delivered over 486,000 vehicles and deployed 13.7 GWh of energy storage products"
+    },
+    {
+      "claim": "풀어 쓰면 생산 46만 4천 대, 인도 48만 6천 대, 에너지저장 배치 13.7기가와트시라는 뜻입니다",
+      "url": "https://teslanorth.com/2026/10/02/tesla-q3-2026-deliveries/",
+      "original": "we produced over 464,000 vehicles, delivered over 486,000 vehicles and deployed 13.7 GWh of energy storage products"
+    },
+    {
+      "claim": "48만 6,532대는 월가 컨센서스 46만 1,974대보다 2만 4,558대 많았습니다",
+      "url": "https://teslanorth.com/2026/10/02/tesla-q3-2026-deliveries/",
+      "original": "beating the company-compiled analyst consensus of 461,974 by 24,558 vehicles"
+    },
+    {
+      "claim": "Tesla was one of the beneficiaries, with the carmaker's EU registrations rising by about two-thirds through August.",
+      "url": "https://www.autoevolution.com/news/tesla-third-quarter-deliveries-surprise-wall-street-analysts-as-european-sales-are-booming-276474.html",
+      "original": "Tesla was one of the beneficiaries, with the carmaker's EU registrations rising by about two-thirds through August."
+    },
+    {
+      "claim": "EU 신규 등록 대수가 8월까지 1년 전보다 약 3분의 2, 66%가량 늘었다",
+      "url": "https://www.autoevolution.com/news/tesla-third-quarter-deliveries-surprise-wall-street-analysts-as-european-sales-are-booming-276474.html",
+      "original": "Tesla was one of the beneficiaries, with the carmaker's EU registrations rising by about two-thirds through August."
+    },
+    {
+      "claim": "Compared to Q2, the automaker delivered 6,406 more vehicles, which is a growth of just ~1.3% QoQ.",
+      "url": "https://teslaoracle.com/2026/10/03/tesla-tsla-q3-2026-vehicle-deliveries-grew-1-3-qoq-and-dropped-by-2-1-yoy-energy-business-also-slows-down",
+      "original": "Compared to Q2, the automaker delivered 6,406 more vehicles, which is a growth of just ~1.3% QoQ."
+    },
+    {
+      "claim": "전분기 대비로는 1.3%, 눈에 띄지 않는 증가였습니다",
+      "url": "https://teslaoracle.com/2026/10/03/tesla-tsla-q3-2026-vehicle-deliveries-grew-1-3-qoq-and-dropped-by-2-1-yoy-energy-business-also-slows-down",
+      "original": "growth of just ~1.3% QoQ"
+    },
+    {
+      "claim": "그런데 1년 전 같은 분기와 비교하면 사정이 바뀝니다",
+      "url": "https://teslaoracle.com/2026/10/03/tesla-tsla-q3-2026-vehicle-deliveries-grew-1-3-qoq-and-dropped-by-2-1-yoy-energy-business-also-slows-down",
+      "original": "Tesla delivered 497,099 cars"
+    },
+    {
+      "claim": "In Q3 2025, Tesla delivered 497,099 cars.",
+      "url": "https://teslaoracle.com/2026/10/03/tesla-tsla-q3-2026-vehicle-deliveries-grew-1-3-qoq-and-dropped-by-2-1-yoy-energy-business-also-slows-down",
+      "original": "Q3 2025 , Tesla delivered 497,099 cars."
+    },
+    {
+      "claim": "작년 3분기 인도량 49만 7,099대가 이번 분기 48만 6,532대보다 많았던 것입니다",
+      "url": "https://teslaoracle.com/2026/10/03/tesla-tsla-q3-2026-vehicle-deliveries-grew-1-3-qoq-and-dropped-by-2-1-yoy-energy-business-also-slows-down",
+      "original": "Tesla delivered 497,099 cars"
+    },
+    {
+      "claim": "테슬라오라클은 이를 두고 전년 대비로는 2.1% 줄었다고 적었습니다",
+      "url": "https://teslaoracle.com/2026/10/03/tesla-tsla-q3-2026-vehicle-deliveries-grew-1-3-qoq-and-dropped-by-2-1-yoy-energy-business-also-slows-down",
+      "original": "Tesla deliveries have dropped by 2.1%"
+    },
+    {
+      "claim": "The best indicator is the shares' price, which spiked 5% to $371 after deliveries were announced.",
+      "url": "https://www.autoevolution.com/news/tesla-third-quarter-deliveries-surprise-wall-street-analysts-as-european-sales-are-booming-276474.html",
+      "original": "The best indicator is the shares' price, which spiked 5% to $371 after deliveries were announced."
+    },
+    {
+      "claim": "발표 직후 주가는 5% 올라 371달러를 찍었다",
+      "url": "https://www.autoevolution.com/news/tesla-third-quarter-deliveries-surprise-wall-street-analysts-as-european-sales-are-booming-276474.html",
+      "original": "The best indicator is the shares' price, which spiked 5% to $371 after deliveries were announced."
+    },
+    {
+      "claim": "2분기 발표 때는 정반대였습니다",
+      "url": "https://www.autoevolution.com/news/tesla-third-quarter-deliveries-surprise-wall-street-analysts-as-european-sales-are-booming-276474.html",
+      "original": "Tesla's share price dropped 7% minutes after the announcement."
+    },
+    {
+      "claim": "Tesla's share price dropped 7% minutes after the announcement.",
+      "url": "https://www.autoevolution.com/news/tesla-third-quarter-deliveries-surprise-wall-street-analysts-as-european-sales-are-booming-276474.html",
+      "original": "Tesla's share price dropped 7% minutes after the announcement."
+    },
+    {
+      "claim": "2분기에는 발표 몇 분 만에 주가가 7% 떨어졌습니다",
+      "url": "https://www.autoevolution.com/news/tesla-third-quarter-deliveries-surprise-wall-street-analysts-as-european-sales-are-booming-276474.html",
+      "original": "Tesla's share price dropped 7% minutes after the announcement."
+    },
+    {
+      "claim": "10월 21일, 테슬라는 이 숫자 뒤에 가려진 마진과 순이익을 공개합니다",
+      "url": "https://teslanorth.com/2026/10/02/tesla-q3-2026-deliveries/",
+      "original": "Tesla will provide the full financial picture on October 21, 2026"
+    },
+    {
+      "claim": "10월 21일 전에 이미 답이 나온 질문으로 보시겠습니까",
+      "url": "https://teslanorth.com/2026/10/02/tesla-q3-2026-deliveries/",
+      "original": "Tesla will provide the full financial picture on October 21, 2026"
+    }
+  ]
+}

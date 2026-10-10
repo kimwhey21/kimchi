@@ -1,0 +1,153 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "시장의 역사",
+  "date": "2026-10-11",
+  "slug": "dow-jones-30-stocks-history",
+  "radar_origin": "목록 순서",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1783691501246-9f6575f2c786",
+    "unsplash_id": "e_LGaZB4obU",
+    "credit": "Unsplash / Cara Willenbrock"
+  },
+  "sources": [
+    {
+      "name": "위키백과(Wikipedia)",
+      "title": "Dow Jones Industrial Average",
+      "url": "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average"
+    },
+    {
+      "name": "더모틀리풀(The Motley Fool)",
+      "title": "An Unprecedented Change in the Dow",
+      "url": "https://www.fool.com/investing/general/2013/10/01/an-unprecedented-change-in-the-dow.aspx"
+    },
+    {
+      "name": "1728.org",
+      "title": "Dow Jones Industrial Average",
+      "url": "https://www.1728.org/dowjone2.htm"
+    }
+  ],
+  "tags": ["다우지수", "증시역사", "지수산출방식"],
+  "ko": {
+    "title": "100년 전 다우지수가 30종목으로 늘어난 이유",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "1896년 5월 26일, 다우존스 산업평균지수가 처음 발표됐습니다.\n그날 지수는 철도 대신 공장·제조업 회사 12곳의 주가를 모아 40.94로 시작했습니다.\n이후 지수는 두 번 크게 늘었습니다.\n1916년 20개로, 그리고 1928년 10월 1일 지금의 30개로 늘었습니다."
+      },
+      {
+        "heading": "",
+        "body": "왜 하필 30개였을까요. 그날의 이유를 당대 매체 배런스(Barron's)가 이렇게 남겼습니다.\n“the purposes of these changes are obvious: to make the averages more representative of a greatly expanded market”\n커진 시장을 더 잘 대표하려는 목적이었다는 뜻입니다.\n이어지는 문장에는 또 다른 이유가 있습니다.\n“to minimize the possibility of unusual fluctuations in any one stock distorting the averages”\n종목 하나가 튀는 움직임으로 지수 전체를 왜곡하는 일을 줄이려는 목적도 있었습니다."
+      },
+      {
+        "heading": "",
+        "body": "그런데 대표성을 넓히겠다는 목적과 달리, 다우지수는 지금도 종목 수로 보면 작은 편입니다.\n위키백과는 이 지수의 계산 방식을 이렇게 설명합니다.\n“stocks with the highest price per share have the highest weighting in the index.”\n기업 규모가 아니라 주가 자체가 영향력을 정한다는 뜻입니다.\n그 결과 제수(divisor)라는 장치가 따라붙습니다.\n1928년 10월 1일, 금융 교육 사이트 1728.org에 따르면 이 제수가 처음 등장했습니다.\n“the dow divisor made its first appearance. its value at that time was 16.67”\n당시 제수는 16.67, 지금은 그보다 훨씬 작은 숫자로 바뀌어 있습니다."
+      },
+      {
+        "heading": "",
+        "body": "위키백과에 실린 현재 제수는 이렇습니다.\n“Since June 29, 2026, the Dow Divisor is 0.16824816528350 and every $1 change in price in a particular stock within the average equates to a 5.943601 point movement.”\n2026년 6월 29일 이후 제수는 0.168, 구성 종목 한 곳의 주가가 1달러 움직이면 지수는 약 5.94포인트 움직인다는 뜻입니다.\n그러니 30종목 중 가장 비싼 주식 한 곳의 등락이 지수 전체를 가장 세게 흔듭니다."
+      },
+      {
+        "heading": "",
+        "body": "1928년 10월 1일 새로 들어온 16개 종목 가운데 지금까지 남은 것은 하나뿐입니다.\n더모틀리풀(The Motley Fool)에 따르면 그 주인공은 스탠더드오일 오브 뉴저지, 지금의 엑슨모빌입니다.\n“has remained part of the index ever since: Standard Oil of New Jersey”\n같은 매체는 1920년대 한 해 동안 다우지수가 11번이나 종목을 바꿨다고도 전합니다.\n코스피가 시가총액을 기준으로 삼는 것과 달리, 다우지수는 100년 전 그대로 주가를 기준으로 삼습니다.\n여러분이 아는 다우가 몇 퍼센트 올랐다는 말은, 사실 그 30종목 중 가장 비싼 주식 하나의 이야기에 가장 가까울지도 모릅니다."
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "1896년 5월 26일, 다우존스 산업평균지수가 처음 발표됐습니다",
+      "url": "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average",
+      "original": "may 26, 1896 ( 1896-05-26 ) (as djia"
+    },
+    {
+      "claim": "12곳의 주가를 모아 40.94로 시작했습니다",
+      "url": "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average",
+      "original": "industrial average debuted with 12 industrial stocks at a starting value of 40.94"
+    },
+    {
+      "claim": "1916년 20개로, 그리고 1928년 10월 1일 지금의 30개로 늘었습니다",
+      "url": "https://www.1728.org/dowjone2.htm",
+      "original": "october 1, 1928 it was increased to 30 companies, the same number as it is today"
+    },
+    {
+      "claim": "왜 하필 30개였을까요",
+      "url": "https://www.1728.org/dowjone2.htm",
+      "original": "october 1, 1928 it was increased to 30 companies, the same number as it is today"
+    },
+    {
+      "claim": "the purposes of these changes are obvious: to make the averages more representative of a greatly expanded market",
+      "url": "https://www.fool.com/investing/general/2013/10/01/an-unprecedented-change-in-the-dow.aspx",
+      "original": "the purposes of these changes are obvious: to make the averages more representative of a greatly expanded market"
+    },
+    {
+      "claim": "to minimize the possibility of unusual fluctuations in any one stock distorting the averages",
+      "url": "https://www.fool.com/investing/general/2013/10/01/an-unprecedented-change-in-the-dow.aspx",
+      "original": "to minimize the possibility of unusual fluctuations in any one stock distorting the averages"
+    },
+    {
+      "claim": "stocks with the highest price per share have the highest weighting in the index.",
+      "url": "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average",
+      "original": "stocks with the highest price per share have the highest weighting in the index"
+    },
+    {
+      "claim": "1928년 10월 1일, 금융 교육 사이트 1728.org에 따르면 이 제수가 처음 등장했습니다",
+      "url": "https://www.1728.org/dowjone2.htm",
+      "original": "on october 1, 1928 the dow divisor made its first appearance"
+    },
+    {
+      "claim": "the dow divisor made its first appearance. its value at that time was 16.67",
+      "url": "https://www.1728.org/dowjone2.htm",
+      "original": "the dow divisor made its first appearance. its value at that time was 16.67"
+    },
+    {
+      "claim": "its value at that time was 16.67",
+      "url": "https://www.1728.org/dowjone2.htm",
+      "original": "its value at that time was 16.67 and so the stock prices of the dow 30"
+    },
+    {
+      "claim": "당시 제수는 16.67, 지금은 그보다 훨씬 작은 숫자로 바뀌어 있습니다",
+      "url": "https://www.1728.org/dowjone2.htm",
+      "original": "its value at that time was 16.67"
+    },
+    {
+      "claim": "Since June 29, 2026, the Dow Divisor is 0.16824816528350 and every $1 change in price in a particular stock within the average equates to a 5.943601 point movement.",
+      "url": "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average",
+      "original": "every $1 change in price in a particular stock within the average equates to a 5.943601"
+    },
+    {
+      "claim": "2026년 6월 29일 이후 제수는 0.168, 구성 종목 한 곳의 주가가 1달러 움직이면 지수는 약 5.94포인트 움직인다는 뜻입니다",
+      "url": "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average",
+      "original": "since june 29, 2026 , [ update ] the dow divisor is 0.16824816528350"
+    },
+    {
+      "claim": "그러니 30종목 중 가장 비싼 주식 한 곳의 등락이 지수 전체를 가장 세게 흔듭니다",
+      "url": "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average",
+      "original": "stocks with the highest price per share have the highest weighting in the index"
+    },
+    {
+      "claim": "1928년 10월 1일 새로 들어온 16개 종목 가운데 지금까지 남은 것은 하나뿐입니다",
+      "url": "https://www.fool.com/investing/general/2013/10/01/an-unprecedented-change-in-the-dow.aspx",
+      "original": "has remained part of the index ever since: standard oil of new jersey"
+    },
+    {
+      "claim": "has remained part of the index ever since: Standard Oil of New Jersey",
+      "url": "https://www.fool.com/investing/general/2013/10/01/an-unprecedented-change-in-the-dow.aspx",
+      "original": "has remained part of the index ever since: standard oil of new jersey"
+    },
+    {
+      "claim": "같은 매체는 1920년대 한 해 동안 다우지수가 11번이나 종목을 바꿨다고도 전합니다",
+      "url": "https://www.fool.com/investing/general/2013/10/01/an-unprecedented-change-in-the-dow.aspx",
+      "original": "from 1920 to 1929, the dow changed 11 times, more than any other decade in its history"
+    },
+    {
+      "claim": "다우지수는 100년 전 그대로 주가를 기준으로 삼습니다",
+      "url": "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average",
+      "original": "stocks with the highest price per share have the highest weighting in the index"
+    },
+    {
+      "claim": "그 30종목 중 가장 비싼 주식 하나의 이야기에 가장 가까울지도 모릅니다",
+      "url": "https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average",
+      "original": "stocks with the highest price per share have the highest weighting in the index"
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "돈의 상식",
+  "date": "2026-10-11",
+  "slug": "stock-ownership-k-shaped-economy",
+  "radar_origin": "24/7 Wall St.: The Richest 1% of Americans Own 88 Times More Stock Than the Bottom Half — Here's Why It Matters",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1701831737236-f365b205f578",
+    "unsplash_id": "eHe1Jsxv-uI",
+    "credit": "Unsplash / Larry Nalzaro"
+  },
+  "sources": [
+    {
+      "name": "RSM(알에스엠)",
+      "title": "Surging equities and the trickle-up economy",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html"
+    },
+    {
+      "name": "페니캘크(PennyCalc)",
+      "title": "Who owns U.S. stocks? A history by wealth group",
+      "url": "https://pennycalc.com/stock-market-ownership/history/"
+    },
+    {
+      "name": "경제지 포춘(Fortune)",
+      "title": "What is the K-shaped economy? Wealth inequality, explained",
+      "url": "https://fortune.com/article/what-is-k-shaped-economy-wealth-inequality-explained/?rand=8593"
+    }
+  ],
+  "tags": ["주식시장", "자산격차", "K자형경제", "미국증시"],
+  "ko": {
+    "title": "사상 최고치 미국 증시, 이득은 누구에게 가장 많이 쌓였을까",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "2026년 6월 26일, S&P500은 7,343으로 마감했습니다.\n이 날짜를 기준으로 미국 회계·컨설팅사 RSM의 이코노미스트 조 브루슬러스와 투안 응우옌은 랠리의 수혜자를 계산했습니다.\n두 사람이 7월 보고서에서 내린 결론은 짧고 단호했습니다.\n“The stock market does not offset the K shape in the economy—it makes it more pronounced.”\n풀어 쓰면 \"주식시장은 경제의 K자형 격차를 상쇄하지 않습니다. 오히려 더 또렷하게 만듭니다\"라는 뜻입니다."
+      },
+      {
+        "heading": "",
+        "body": "RSM에 따르면 소득 상위 20%가 전체 기업 주식·뮤추얼펀드 지분의 87%를 쥐고 있습니다.\n“the top 20% by income holds 87% of all corporate equities and mutual fund shares—roughly $53 trillion as of mid-2026.”\n2026년 중반 기준 금액으로는 약 53조 달러, 하위 80%의 몫은 8조 달러에 그칩니다.\n연준의 분배금융계정을 분석하는 금융 사이트 페니캘크(PennyCalc)는 시선을 더 좁혀 봅니다.\n“The top 1% share rose from 42.8% in Q3 1989 to 50.9% in Q2 2026.”\n상위 1%가 쥔 주식 비중이 1989년 42.8%에서 2026년 2분기 50.9%로 늘었다는 뜻입니다.\n같은 기간 하위 50%의 몫은 거꾸로 움직였습니다.\n“Its published share was 1.1% at the start and 0.6% in the latest quarter.”\n37년 전 1.1%였던 몫이 지금은 0.6%로 줄었습니다."
+      },
+      {
+        "heading": "",
+        "body": "그렇다고 랠리의 효과가 전혀 없다는 뜻은 아닙니다.\nRSM은 주식 가치가 1조 달러 늘 때마다 소비가 직접 120억~170억 달러 늘어난다고 계산했습니다.\n이번 5조 4,000억 달러 규모 랠리를 대입하면 소비 증가분은 600억~900억 달러에 이릅니다.\n“the total spending boost is roughly $60 billion to $90 billion, or 0.3% to 0.4% of personal consumption and roughly 35 to 50 basis points”\n개인소비지출의 0.3~0.4%, 국내총생산 기여도로는 0.35~0.5%포인트에 해당하는 규모입니다.\n경제지 포춘(Fortune)에 따르면 제롬 파월 연준 의장도 지난해 12월 FOMC 회견에서 비슷한 쏠림을 언급했습니다.\n“if you listen to the earnings reports for consumer-facing companies that tend to deal with low- and moderate-income people”\n저소득·중간소득층을 상대하는 기업들의 실적 발표를 들어보면 드러나는 게 있다는 뜻입니다.\n“and so it's clearly a thing.”\n파월은 그 현상을 \"분명히 존재한다\"는 한마디로 정리했습니다."
+      },
+      {
+        "heading": "",
+        "body": "그래서 랠리가 만든 소비 증가분은 누구에게 더 많이 돌아갈까요.\nRSM의 계산은 이렇습니다.\n“between 42% and 71% of all wealth-effect spending from the rally goes to the top 20%”\n이번 랠리로 늘어난 소비 지출의 42~71%가 소득 상위 20%에게 돌아간다는 뜻입니다.\n범위가 넓은 이유를 RSM은 추정 방식과 측정 기간에 따라 달라지기 때문이라고 밝혔습니다.\n그래도 방향은 한쪽으로 뚜렷합니다 — 숫자는 브루슬러스 쪽입니다."
+      },
+      {
+        "heading": "",
+        "body": "이 간극에 이름을 붙인 것은 RSM이 처음이 아닙니다.\n모건스탠리의 리사 샬렛은 지난해 11월 리서치 노트에서 이런 표현을 썼습니다.\n“a concept that captures the widening chasm between the 'haves' and 'have-nots.'”\n부자와 그렇지 않은 사람 사이에 벌어지는 틈을 담은 개념, 이른바 'K자형 경제'입니다.\n미국 증시가 사상 최고치를 쓰는 동안 그 이득이 소수에게 더 많이 쌓인다면, 서학개미로 미국 주식을 사 모으는 한국 투자자는 이 랠리에서 어느 줄에 서 있는 것일까요?"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "claim": "2026년 6월 26일, S&P500은 7,343으로 마감했습니다",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "close 7,343, jun 26, 2026"
+    },
+    {
+      "claim": "The stock market does not offset the K shape in the economy—it makes it more pronounced.",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "the stock market does not offset the K shape in the economy—it makes it more pronounced."
+    },
+    {
+      "claim": "두 사람이 7월 보고서에서 내린 결론은 짧고 단호했습니다",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "the stock market does not offset the K shape in the economy—it makes it more pronounced."
+    },
+    {
+      "claim": "the top 20% by income holds 87% of all corporate equities and mutual fund shares—roughly $53 trillion as of mid-2026.",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "the top 20% by income holds 87% of all corporate equities and mutual fund shares—roughly $53 trillion as of mid-2026."
+    },
+    {
+      "claim": "2026년 중반 기준 금액으로는 약 53조 달러, 하위 80%의 몫은 8조 달러에 그칩니다",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "the bottom 80% holds about $8 trillion"
+    },
+    {
+      "claim": "RSM에 따르면 소득 상위 20%가 전체 기업 주식·뮤추얼펀드 지분의 87%를 쥐고 있습니다",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "the top 20% by income holds 87% of all corporate equities and mutual fund shares"
+    },
+    {
+      "claim": "The top 1% share rose from 42.8% in Q3 1989 to 50.9% in Q2 2026.",
+      "url": "https://pennycalc.com/stock-market-ownership/history/",
+      "original": "the top 1% share rose from 42.8% in q3 1989 to 50.9% in q2 2026."
+    },
+    {
+      "claim": "상위 1%가 쥔 주식 비중이 1989년 42.8%에서 2026년 2분기 50.9%로 늘었다는 뜻입니다",
+      "url": "https://pennycalc.com/stock-market-ownership/history/",
+      "original": "the top 1% share rose from 42.8% in q3 1989 to 50.9% in q2 2026."
+    },
+    {
+      "claim": "같은 기간 하위 50%의 몫은 거꾸로 움직였습니다",
+      "url": "https://pennycalc.com/stock-market-ownership/history/",
+      "original": "its published share was 1.1% at the start and 0.6% in the latest quarter."
+    },
+    {
+      "claim": "Its published share was 1.1% at the start and 0.6% in the latest quarter.",
+      "url": "https://pennycalc.com/stock-market-ownership/history/",
+      "original": "its published share was 1.1% at the start and 0.6% in the latest quarter."
+    },
+    {
+      "claim": "37년 전 1.1%였던 몫이 지금은 0.6%로 줄었습니다",
+      "url": "https://pennycalc.com/stock-market-ownership/history/",
+      "original": "its published share was 1.1% at the start and 0.6% in the latest quarter."
+    },
+    {
+      "claim": "RSM은 주식 가치가 1조 달러 늘 때마다 소비가 직접 120억~170억 달러 늘어난다고 계산했습니다",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "every $1 trillion in equity gains produces between $12 billion and $17 billion in direct consumer spending"
+    },
+    {
+      "claim": "이번 5조 4,000억 달러 규모 랠리를 대입하면 소비 증가분은 600억~900억 달러에 이릅니다",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "the total spending boost is roughly $60 billion to $90 billion"
+    },
+    {
+      "claim": "the total spending boost is roughly $60 billion to $90 billion, or 0.3% to 0.4% of personal consumption and roughly 35 to 50 basis points",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "the total spending boost is roughly $60 billion to $90 billion, or 0.3% to 0.4% of personal consumption and roughly 35 to 50 basis points"
+    },
+    {
+      "claim": "개인소비지출의 0.3~0.4%, 국내총생산 기여도로는 0.35~0.5%포인트에 해당하는 규모입니다",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "0.3% to 0.4% of personal consumption and roughly 35 to 50 basis points of gross domestic product"
+    },
+    {
+      "claim": "제롬 파월 연준 의장도 지난해 12월 FOMC 회견에서 비슷한 쏠림을 언급했습니다",
+      "url": "https://fortune.com/article/what-is-k-shaped-economy-wealth-inequality-explained/?rand=8593",
+      "original": "we hear about this a lot,\" powell said"
+    },
+    {
+      "claim": "if you listen to the earnings reports for consumer-facing companies that tend to deal with low- and moderate-income people",
+      "url": "https://fortune.com/article/what-is-k-shaped-economy-wealth-inequality-explained/?rand=8593",
+      "original": "if you listen to the earnings reports for consumer-facing companies that tend to deal with low- and moderate-income people"
+    },
+    {
+      "claim": "and so it's clearly a thing.",
+      "url": "https://fortune.com/article/what-is-k-shaped-economy-wealth-inequality-explained/?rand=8593",
+      "original": "and so it's clearly a thing."
+    },
+    {
+      "claim": "파월은 그 현상을 \"분명히 존재한다\"는 한마디로 정리했습니다",
+      "url": "https://fortune.com/article/what-is-k-shaped-economy-wealth-inequality-explained/?rand=8593",
+      "original": "and so it's clearly a thing."
+    },
+    {
+      "claim": "between 42% and 71% of all wealth-effect spending from the rally goes to the top 20%",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "between 42% and 71% of all wealth-effect spending from the rally goes to the top 20%"
+    },
+    {
+      "claim": "이번 랠리로 늘어난 소비 지출의 42~71%가 소득 상위 20%에게 돌아간다는 뜻입니다",
+      "url": "https://rsmus.com/insights/economics/surging-equities-and-the-trickle-up-economy.html",
+      "original": "between 42% and 71% of all wealth-effect spending from the rally goes to the top 20%"
+    },
+    {
+      "claim": "모건스탠리의 리사 샬렛은 지난해 11월 리서치 노트에서 이런 표현을 썼습니다",
+      "url": "https://fortune.com/article/what-is-k-shaped-economy-wealth-inequality-explained/?rand=8593",
+      "original": "a concept that captures the widening chasm between the 'haves' and 'have-nots.'"
+    },
+    {
+      "claim": "a concept that captures the widening chasm between the 'haves' and 'have-nots.'",
+      "url": "https://fortune.com/article/what-is-k-shaped-economy-wealth-inequality-explained/?rand=8593",
+      "original": "a concept that captures the widening chasm between the 'haves' and 'have-nots.'"
+    }
+  ]
+}
