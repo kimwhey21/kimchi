@@ -101,3 +101,32 @@ class UnsplashPingTest(unittest.TestCase):
         self.assertEqual(unsplash_ping.ping(doc, "key", name="m.json", ledger=ledger, get=get), (0, []))
         self.assertEqual(get.call_count, 1)
         self.assertIn("/photos/abc/download", get.call_args.args[0])
+
+
+class ChallengePageTest(unittest.TestCase):
+    def test_bot_challenge_is_not_page_text_and_browser_is_tried_only_when_allowed(self):
+        """2026-10-11: 봇 검사 화면(200 'Just a moment…')을 본문으로 읽어 '인용이 없다'로 막았다 — 못 연 것으로 보고, 이 맥에서만 크롬으로 다시 연다."""
+        import os
+        from unittest import mock
+        from src import evidence_check as ec
+        page = mock.Mock(text="<html><title>Just a moment...</title><body>checking</body></html>", raise_for_status=lambda: None)
+        with mock.patch.object(ec.requests, "get", return_value=page), mock.patch.object(ec, "_browser_text", return_value="real body") as br:
+            ec._CACHE.clear()
+            with mock.patch.dict(os.environ, {"EVIDENCE_BROWSER": ""}):
+                self.assertIsNone(ec.page_text("https://example.com/a"))
+            br.assert_not_called()
+            ec._CACHE.clear()
+            with mock.patch.dict(os.environ, {"EVIDENCE_BROWSER": "1"}):
+                self.assertEqual(ec.page_text("https://example.com/a"), "real body")
+        ec._CACHE.clear()
+
+
+class NoFetchDomainTest(unittest.TestCase):
+    def test_sites_the_mac_cannot_open_are_refused_at_writing_time(self):
+        """2026-10-11: 루틴이 쓸 때는 열렸지만 맥의 게시 직전 검사가 못 여는 사이트 — 관문에서 미리 막는다(열어 보지도 않는다)."""
+        from src import evidence_check as ec
+        doc = {"sources": [{"name": "x", "url": "https://www.autoevolution.com/news/a.html"}],
+               "evidence": [{"claim": "가", "url": "https://www.autoevolution.com/news/a.html", "original": "a" * 30}]}
+        issues = ec.evidence_issues(doc, fetch=lambda u: (_ for _ in ()).throw(AssertionError("열지 않는다")), numbers=False)
+        self.assertTrue(any("autoevolution.com" in i and "다른 출처" in i for i in issues), issues)
+        self.assertIsNone(ec._blocked_domain("https://theprint.in/x"))

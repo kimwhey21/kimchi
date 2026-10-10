@@ -30,6 +30,8 @@ def blockers(path: Path) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    import os
+    os.environ.setdefault("EVIDENCE_BROWSER", "1")   # 이 맥에서는 봇 검사에 막힌 출처를 크롬으로 한 번 더 연다(2026-10-11)
     args = sys.argv[1:] if argv is None else argv
     if len(args) != 1:
         print("사용법: python -m scripts.pre_post_check <원고.json>")

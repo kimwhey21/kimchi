@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import html
+import os
 import re
 
 import requests
@@ -31,18 +32,49 @@ def normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip().lower()
 
 
+_CHALLENGE = re.compile(r"just a moment|checking your browser|enable javascript and cookies|attention required", re.I)
+
+
+def _browser_text(url: str) -> str | None:
+    """진짜 크롬(창 없음)으로 연 본문 — 봇 검사(Cloudflare 등)가 프로그램 요청만 막는 사이트용(2026-10-11: theprint·teslaoracle은 열리고
+    autoevolution은 크롬도 막는다). 이 맥의 게시 직전 검사에서만 쓴다(EVIDENCE_BROWSER=1). 못 열면 None."""
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return None
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True, channel="chrome", args=["--disable-blink-features=AutomationControlled"])
+            page = browser.new_context(user_agent=_UA["User-Agent"], locale="en-US").new_page()
+            page.goto(url, wait_until="domcontentloaded", timeout=40000)
+            page.wait_for_timeout(6000)
+            title, body = page.title(), page.inner_text("body")
+            browser.close()
+    except Exception as exc:  # noqa: BLE001 — 센다: 못 열면 None으로 돌려 부른 쪽이 '열 수 없음'을 적는다
+        print(f"[안내] 크롬으로도 출처를 열지 못했습니다 {url[:80]}: {exc.__class__.__name__}")
+        return None
+    if _CHALLENGE.search(title) or _CHALLENGE.search(body[:400]):
+        print(f"[안내] 크롬으로도 봇 검사 화면입니다 {url[:80]}")
+        return None
+    return normalize(body)
+
+
 def page_text(url: str) -> str | None:
-    """주소의 본문 글자(태그·스크립트 뺌, 정규화). 못 열면 None."""
+    """주소의 본문 글자(태그·스크립트 뺌, 정규화). 못 열면 None. 봇 검사 화면(200으로 오는 'Just a moment…')은 못 연 것으로 본다."""
     if url in _CACHE:
         return _CACHE[url]
+    text = None
     try:
         r = requests.get(url, headers=_UA, timeout=25)
         r.raise_for_status()
         raw = re.sub(r"(?is)<(script|style|noscript)[^>]*>.*?</\1>", " ", r.text)
-        text = normalize(re.sub(r"<[^>]+>", " ", raw))
+        title = re.search(r"(?is)<title[^>]*>(.*?)</title>", r.text)
+        if not (title and _CHALLENGE.search(title.group(1))):
+            text = normalize(re.sub(r"<[^>]+>", " ", raw))
     except requests.RequestException as exc:
         print(f"[안내] 출처를 열지 못했습니다 {url[:80]}: {exc}")
-        text = None
+    if text is None and os.environ.get("EVIDENCE_BROWSER") == "1":
+        text = _browser_text(url)
     _CACHE[url] = text
     return text
 
@@ -118,6 +150,16 @@ def number_mismatches(claim: str, original: str) -> list[tuple[float, float]]:
     return bad
 
 
+# 게시 직전 검사(이 맥)가 크롬으로도 열지 못하는 출처(봇 검사) — 루틴이 쓸 때 열렸어도 맥에서 막혀 글이 버려진다(2026-10-09~11
+# 잡지 세 편). 쓰는 단계(관문)에서 막아 다른 출처를 찾게 한다. 새로 막히는 사이트가 보이면 여기에 더한다.
+NO_FETCH_DOMAINS = ("autoevolution.com", "stocktwits.com", "freedom969.com")
+
+
+def _blocked_domain(url: str) -> str | None:
+    host = re.sub(r"^https?://(www\.)?", "", url).split("/")[0].lower()
+    return next((d for d in NO_FETCH_DOMAINS if host == d or host.endswith("." + d)), None)
+
+
 def evidence_issues(doc: dict, fetch=None, numbers: bool = True, events: bool = False) -> list[str]:
     """`numbers=False`면 큰따옴표 인용만 본다(잡지 밖의 글 — 숫자는 시세 대조·엔진이 맡는다)."""
     fetch = fetch or page_text      # 부를 때 찾는다(시험이 page_text를 바꿔 끼울 수 있게)
@@ -139,6 +181,10 @@ def evidence_issues(doc: dict, fetch=None, numbers: bool = True, events: bool = 
             continue
         if len(normalize(original)) < MIN_ORIGINAL:
             issues.append(f"근거 '{str(e.get('claim'))[:40]}'의 원문(original)이 비었거나 {MIN_ORIGINAL}자보다 짧습니다")
+            continue
+        if _blocked_domain(url):
+            issues.append(f"근거 '{str(e.get('claim'))[:40]}'의 출처({_blocked_domain(url)})는 게시 직전 검사에서 열리지 않습니다"
+                          " — 같은 사실을 담은 다른 출처를 쓰십시오")
             continue
         text = fetch(url)
         if text is None:
