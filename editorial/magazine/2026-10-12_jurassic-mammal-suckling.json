@@ -1,0 +1,71 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "과학",
+  "date": "2026-10-12",
+  "slug": "jurassic-mammal-suckling",
+  "radar_origin": "Phys.org: Jurassic fossil reveals ancient origins of how mammals drink milk",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1579571274591-51ace815723a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8cGxhdHlwdXMlMjBzd2ltbWluZ3xlbnwwfDB8fHwxNzkxNzM5MzUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "unsplash_id": "HPQCzu9aXKE",
+    "credit": "Unsplash / David Clode"
+  },
+  "sources": [
+    {"name": "NPR", "title": "This surprising mammal fossil is giving scientists something to chew on", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on"},
+    {"name": "사이뉴스(Sci.News)", "title": "Jurassic Fossil Shows Mammal-Like Throat Evolved Far Earlier Than Thought", "url": "https://www.sci.news/paleontology/megacauda-sungei-15117.html"}
+  ],
+  "tags": ["고생물학", "쥐라기", "포유류진화"],
+  "ko": {
+    "title": "쥐라기의 작은 동물은 왜 이미 포유류였을까",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "해마다 같은 박물관을 찾아가 새로 들어온 화석을 들여다보는 연구자들이 있습니다. 중국 내몽골에서 나온 화석들이 해마다 랴오닝고생물박물관으로 옮겨지기 때문입니다.\n이 지역은 깃털 공룡과 날아다니는 파충류 화석이 쏟아져 나온 곳으로 이미 유명합니다. 시카고대학교의 고생물학자 저시 루오는 그 명성조차 부족한 표현이라고 말합니다.\n“그곳을 핫스팟이라 부르는 것 자체가 사실 절제된 표현입니다.”"
+      },
+      {
+        "heading": "",
+        "body": "그러던 어느 해, 두꺼운 혈암 암괴 속의 화석 한 점이 연구진의 눈길을 사로잡았습니다. NPR은 이 순간을 그렇게 전했습니다.\n뼈와 연조직 흔적이 거의 온전하게 남아 있었지만, 검은 뼈가 어두운 암석에 묻혀 있어 맨눈으로는 구분하기 어려웠습니다.\n연구진은 X선 형광 분광법으로 뼈를 색으로 드러내 촬영했습니다. 루오는 초기 포유류 화석이 원래 흔치 않다고 말합니다.\n“초기 포유류 화석은, 사실 극히 드뭅니다.”"
+      },
+      {
+        "heading": "",
+        "body": "이 동물은 치와와만 한 크기였습니다. NPR에 따르면 같은 시대 대부분의 동물이 그보다 훨씬 작았던 것과 비교하면 거인입니다.\n본대학교의 토마스 마르틴은 이 동물의 생활 방식을 이렇게 요약합니다.\n“포유류의 수생 생활에 대한 가장 오래된 증거입니다.”\n골반과 뒷다리, 큰 꼬리는 오리너구리를 닮았습니다. 루오는 그 이유를 이렇게 짚습니다.\n“큰 꼬리는 헤엄에 유리합니다.”\n하지만 이빨과 턱은 달랐습니다.\n“이빨과 턱은 오리너구리와는 많이 다를 것입니다. 그래서 머리는 영락없이 포식자의 것입니다.”\n배 속에서는 작은 도롱뇽의 뼈 조각이 나왔습니다."
+      },
+      {
+        "heading": "",
+        "body": "진짜 발견은 헤엄이나 사냥이 아니라 목 안쪽에 있었습니다. 루오의 시선을 붙든 것은 쌀알만 한 설골 뼈 몇 조각이었습니다.\n“제 눈이 바로 이 작은 설골 뼈들에 멈췄습니다.”\nCT로 그 뼈와 입천장, 뼈 고리를 다시 맞춰 보니 근육과 골격 구조 전체가 드러났습니다.\n“우리는 아주 높은 확신으로 근육과 골격 구조 전체를 복원할 수 있었습니다.”\n그 구조는 음식을 이빨로 씹은 뒤 한 덩이씩 삼키는 동작과 어미젖을 빠는 동작, 둘 다를 가능하게 하는 것이었습니다.\n“이빨로 음식을 다 씹어서”, 그리고 “어미의 젖을 빠는 그 능력이 우리 생물학을 그야말로 규정했습니다.”"
+      },
+      {
+        "heading": "",
+        "body": "이 연구에 참여하지 않은 캘거리대학교의 고생물학자 제시카 시오도어는 외부 평가자로서 이 구조를 다시 봤습니다. 사이뉴스(Sci.News)가 그 반응을 전했습니다.\n“전체 구조가 현생 포유류에서 보는 것과 더 닮아 보입니다.”\n그는 이 특징이 이렇게 오래전부터 있었다는 사실에 놀랐다고 말합니다.\n“이렇게 오래되고 이렇게 근본적이라는 게 저에게는 놀랍습니다.”\n마르틴도 이 능력의 의미를 덧붙입니다.\n“이 능력은 포유류가 영양이 풍부한 젖을 먹을 수 있게 해 주는 핵심 적응입니다.”"
+      },
+      {
+        "heading": "",
+        "body": "숫자, 그러니까 이 경우엔 연대가 답을 정합니다. 사이뉴스에 따르면 화석의 나이는 약 1억 6,500만 년 전, 공룡이 땅을 지배하던 중기 쥐라기입니다.\n루오는 포유류가 그 시절 결코 주인공이 아니었다고 말합니다.\n“포유류는 공룡의 시대에 결코 지배적이지 않았습니다.”\n그럼에도 씹고 삼키고 젖을 빠는 이 세 가지가 한 몸에 이미 갖춰져 있었다는 것, 그것이 이번 화석의 핵심입니다.\n“그 모든 것이 놀라운 화석 하나에 다 들어 있습니다.”"
+      },
+      {
+        "heading": "",
+        "body": "이 동물의 이름은 메가카우다 숭게이. 포유류라는 이름 자체가 젖샘, 유선에서 왔습니다.\n우리가 당연하게 여기는 그 능력의 뿌리가 1억 6,500만 년 전의 작은 턱과 목구멍 안에 이미 있었다면, 지금 당연하게 여기는 또 다른 것들은 과연 얼마나 오래된 것일까요?"
+      }
+    ]
+  },
+  "evidence": [
+    {"claim": "그곳을 핫스팟이라 부르는 것 자체가 사실 절제된 표현입니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "To say it's [a] hot spot is actually [an] understatement,"},
+    {"claim": "두꺼운 혈암 암괴 속의 화석 한 점이 연구진의 눈길을 사로잡았습니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "A decade ago, a specimen in a thick slab of shale caught their eye."},
+    {"claim": "초기 포유류 화석은, 사실 극히 드뭅니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "Early fossil mammals — in fact, they are exceedingly rare,"},
+    {"claim": "치와와만 한 크기였습니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "The fossil was about the size of a chihuahua, but somewhat hard to discern from the rock surrounding it."},
+    {"claim": "포유류의 수생 생활에 대한 가장 오래된 증거입니다", "url": "https://www.sci.news/paleontology/megacauda-sungei-15117.html", "original": "It is the earliest evidence of an aquatic lifestyle in mammals,"},
+    {"claim": "큰 꼬리는 헤엄에 유리합니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "The big tail is good for swimming,"},
+    {"claim": "이빨과 턱은 오리너구리와는 많이 다를 것입니다. 그래서 머리는 영락없이 포식자의 것입니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "its teeth and the jaw would be very different from platypus."},
+    {"claim": "제 눈이 바로 이 작은 설골 뼈들에 멈췄습니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "My eyes zeroed in on these tiny hyoid bones,"},
+    {"claim": "우리는 아주 높은 확신으로 근육과 골격 구조 전체를 복원할 수 있었습니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "we are able with great confidence to reconstruct the whole muscular skeletal machinery,"},
+    {"claim": "이빨로 음식을 다 씹어서", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "chew down all the food with our teeth,"},
+    {"claim": "어미의 젖을 빠는 그 능력이 우리 생물학을 그야말로 규정했습니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "That ability to suckle mother's milk literally defined our biology,"},
+    {"claim": "전체 구조가 현생 포유류에서 보는 것과 더 닮아 보입니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "The whole setup looks more like what we see in modern mammals."},
+    {"claim": "이렇게 오래되고 이렇게 근본적이라는 게 저에게는 놀랍습니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "That's amazing to me that it's this old and this fundamental."},
+    {"claim": "이 능력은 포유류가 영양이 풍부한 젖을 먹을 수 있게 해 주는 핵심 적응입니다", "url": "https://www.sci.news/paleontology/megacauda-sungei-15117.html", "original": "This ability is a key adaptation that allows mammals to feed on nutrient-rich milk"},
+    {"claim": "화석의 나이는 약 1억 6,500만 년 전", "url": "https://www.sci.news/paleontology/megacauda-sungei-15117.html", "original": "some 165 million years ago"},
+    {"claim": "포유류는 공룡의 시대에 결코 지배적이지 않았습니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "Mammals, they're never dominant in the age of dinosaurs,"},
+    {"claim": "그 모든 것이 놀라운 화석 하나에 다 들어 있습니다", "url": "https://www.wunc.org/2026-10-07/this-surprising-mammal-fossil-is-giving-scientists-something-to-chew-on", "original": "It's all there in one remarkable fossil,"},
+    {"claim": "그 능력의 뿌리가 1억 6,500만 년 전의 작은 턱과 목구멍 안에", "url": "https://www.sci.news/paleontology/megacauda-sungei-15117.html", "original": "some 165 million years ago"}
+  ]
+}

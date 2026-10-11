@@ -1,0 +1,58 @@
+{
+  "kind": "feature",
+  "series": "매거진",
+  "group": "기업과 기술",
+  "date": "2026-10-12",
+  "slug": "mckinsey-ai-jobs-mobility",
+  "radar_origin": "Fortune: McKinsey research shows AI creating more jobs than automation displaces — but 11 million A",
+  "featured_photo": {
+    "url": "https://images.unsplash.com/photo-1643359905563-f747213c9703?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8cm9ib3QlMjBhcm0lMjBmYWN0b3J5JTIwd29ya2VyfGVufDB8MHx8fDE3OTE3MzkzMjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "unsplash_id": "ehPAxjAtw8Q",
+    "credit": "Unsplash / Natalia Dziubek"
+  },
+  "sources": [
+    {"name": "포춘", "title": "McKinsey: AI will create more jobs than it kills — after destroying 11 million", "url": "https://fortune.com/2026/10/03/ai-job-displacement-creation-new-careers-11-million-americans-workforce-mobility/"},
+    {"name": "WTVR", "title": "AI could force 11 million Americans into new careers by 2035, report finds", "url": "https://www.wtvr.com/business/jobs-employment/ai-could-force-11-million-americans-into-new-careers-by-2035-report-finds"}
+  ],
+  "tags": ["AI일자리", "맥킨지", "자동화"],
+  "ko": {
+    "title": "맥킨지의 AI 일자리: 늘어나는 곳과 줄어드는 곳이 다릅니다",
+    "narrative": [
+      {
+        "heading": "",
+        "body": "맥킨지 글로벌 인스티튜트가 미국 일자리를 저울에 올렸습니다. 한쪽에는 사라지는 일자리, 다른 쪽에는 새로 생기는 일자리.\n저울은 거의 수평이었습니다. 그런데 보고서 저자들이 정작 문제 삼은 것은 저울의 기울기가 아니었습니다.\n“다음 10년의 과제는 이동이지, 부족이 아닙니다.”"
+      },
+      {
+        "heading": "",
+        "body": "포춘에 따르면 맥킨지는 AI와 자동화가 2035년까지 미국 일자리 약 3,600만 개의 수요를 줄일 것으로 봤습니다.\n같은 기간 다른 분야의 성장이 만들어 내는 일자리는 약 4,100만 개입니다. 숫자만 보면 일자리는 줄지 않고 오히려 늘어납니다.\n문제는 그 사이에서, 지금 일하는 사람이 직접 건너가야 한다는 점입니다. 맥킨지의 기본 시나리오는 약 1,100만 명, 전체 근로자의 7%가량이 지금 하는 일을 완전히 떠나야 한다고 봤습니다."
+      },
+      {
+        "heading": "",
+        "body": "그 이동이 쉬운 길은 아닙니다. 지역 방송 WTVR가 전한 보고서 내용에 따르면, 근로자의 70% 이상이 어느 정도의 재창조를 거쳐야 할 수 있습니다.\n게다가 새로 늘어나는 일자리의 약 60%는 상위 두 임금 분위에 몰려 있습니다. 사무·행정과 소매·영업, 운송·물류에서 줄고 의료와 건설, 관리직에서 느는 흐름입니다.\n지금 사무직에 있는 사람이 내일 바로 그 자리로 옮겨 가기는 쉽지 않다는 뜻입니다."
+      },
+      {
+        "heading": "",
+        "body": "도시경제학자 리처드 플로리다는 다른 쪽에서 이 흐름을 봅니다. 포춘과의 인터뷰에서 그는 일자리가 줄어드는 것 자체를 부정하지 않았습니다.\n“어느 정도 일자리 대체는 있을 것으로 봅니다.”\n하지만 곧바로 이렇게 덧붙였습니다.\n“다만 이 분야가 가장 많은 일을 만들어 낼 영역이기도 하다고 생각합니다.”\n플로리다는 과거 농업과 제조업에서 사람이 빠져나간 뒤에도 전체 일자리는 늘었던 역사를 근거로 듭니다."
+      },
+      {
+        "heading": "",
+        "body": "그렇다면 숫자는 어느 편일까요? 전체 합계로는 새로 생기는 일자리가 사라지는 일자리보다 많습니다.\n하지만 그 합계 안에서 적지 않은 사람이 직종을 통째로 바꿔야 하고, 그중 다수가 임금이 낮은 쪽에서 밀려난다는 사실은 합계가 가려 줍니다.\n한국도 같은 숫자 게임에서 자유롭지 않습니다. 콜센터·단순 사무 자동화는 이미 국내 기업 현장에서도 진행 중인 흐름입니다."
+      },
+      {
+        "heading": "",
+        "body": "플로리다의 말을 조금 비틀면 이렇게도 들립니다. 지금 많은 회사가 뽑고 있는 사람은, 결국 자기 자리를 대신할 도구를 만드는 사람입니다.\n“이제 우리는 우리 자신을 대체할 사람을 뽑고 있습니다.”\n여러분의 일 가운데, 지금 뽑히고 있는 그 사람이 대신할 수 있는 부분은 얼마나 될까요?"
+      }
+    ]
+  },
+  "evidence": [
+    {"claim": "다음 10년의 과제는 이동이지, 부족이 아닙니다", "url": "https://fortune.com/2026/10/03/ai-job-displacement-creation-new-careers-11-million-americans-workforce-mobility/", "original": "The next decade's challenge is mobility, not scarcity,"},
+    {"claim": "2035년까지 미국 일자리 약 3,600만 개의 수요를 줄일 것으로 봤습니다", "url": "https://fortune.com/2026/10/03/ai-job-displacement-creation-new-careers-11-million-americans-workforce-mobility/", "original": "AI and automation will cut demand for about 36 million U.S. jobs by 2035"},
+    {"claim": "만들어 내는 일자리는 약 4,100만 개입니다", "url": "https://fortune.com/2026/10/03/ai-job-displacement-creation-new-careers-11-million-americans-workforce-mobility/", "original": "growth elsewhere creates about 41 million"},
+    {"claim": "약 1,100만 명, 전체 근로자의 7%가량이 지금 하는 일을 완전히 떠나야 한다고 봤습니다", "url": "https://fortune.com/2026/10/03/ai-job-displacement-creation-new-careers-11-million-americans-workforce-mobility/", "original": "In its base case, about 11 million workers, roughly 7% of the workforce, would need to leave their occupations entirely"},
+    {"claim": "근로자의 70% 이상이 어느 정도의 재창조를 거쳐야 할 수 있습니다", "url": "https://www.wtvr.com/business/jobs-employment/ai-could-force-11-million-americans-into-new-careers-by-2035-report-finds", "original": "More than 70 percent of workers could require some level of reinvention,"},
+    {"claim": "새로 늘어나는 일자리의 약 60%는 상위 두 임금 분위에 몰려 있습니다", "url": "https://www.wtvr.com/business/jobs-employment/ai-could-force-11-million-americans-into-new-careers-by-2035-report-finds", "original": "roughly 60% of growing employment expected to fall within the top two wage quintiles"},
+    {"claim": "어느 정도 일자리 대체는 있을 것으로 봅니다", "url": "https://fortune.com/2026/10/03/ai-job-displacement-creation-new-careers-11-million-americans-workforce-mobility/", "original": "I think that there will be some displacement,"},
+    {"claim": "다만 이 분야가 가장 많은 일을 만들어 낼 영역이기도 하다고 생각합니다", "url": "https://fortune.com/2026/10/03/ai-job-displacement-creation-new-careers-11-million-americans-workforce-mobility/", "original": "But I think this is also the area we're going to create the most work."},
+    {"claim": "이제 우리는 우리 자신을 대체할 사람을 뽑고 있습니다", "url": "https://fortune.com/2026/10/03/ai-job-displacement-creation-new-careers-11-million-americans-workforce-mobility/", "original": "Now we're hiring to replace ourselves."}
+  ]
+}
