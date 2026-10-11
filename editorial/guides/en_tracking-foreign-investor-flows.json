@@ -1,0 +1,90 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-11",
+  "checked": "2026-10-11",
+  "slug": "tracking-foreign-investor-flows",
+  "category_id": 153,
+  "tags": ["Korea foreign investor flows", "KRX trading by investor", "foreign net buying Korea stocks", "FSS foreign investment report"],
+  "related": [
+    {
+      "title": "KOSPI 200 Index Methodology: How KRX Picks the 200",
+      "url": "https://fermata.it.kr/kospi-200-explained/"
+    },
+    {
+      "title": "Korean Analyst Ratings: Why 'Sell' Almost Never Appears (2026)",
+      "url": "https://fermata.it.kr/korean-analyst-ratings/"
+    },
+    {
+      "title": "USDKRW vs KOSPI Correlation: Does a Weaker Won Sink Stocks?",
+      "url": "https://fermata.it.kr/usdkrw-and-the-kospi/"
+    }
+  ],
+  "radar_origin": "list order (Category H: how to read) — search queue's top lines today ('kospi vs kosdaq' 5.5위, 'kosdaq vs kospi' 7.2위, 'krx kospi 200 index methodology' 5.7위, 'kospi and kosdaq' 9.7위, etc.) were fix-type lines whose two-edit weekly quota was already spent this week (kospi-200-kosdaq-150-year-end-targets-2026 fixed 2026-10-05, kospi-trading-hours fixed 2026-10-06). The remaining 'new article' lines ('englishdart', 'dart filing', 'dart korea', 'kospi200 kosdaq150 2026 year end target forecast') all duplicate pages already live under different slugs (English DART guide; the just-fixed year-end-targets guide) per the live post list (wp-json categories=153). Fell back to the topic list. Yesterday (2026-10-10) was Category A (access, omnibus-account-korea-explained), so picked a different category. Checked Category D (dividends) first: its one unwritten item, korea-dividend-reform-2026, duplicates korea-dividend-calendar, which already covers the 2023 record-date reform and 2026 adoption status in detail. Checked Category B (tax): korean-dividend-withholding-for-us-residents and korea-capital-gains-tax-for-foreigners are already covered by korea-us-tax-treaty-forms and real-cost-korean-stocks; reclaiming-korean-withholding-tax looked open but research turned up only an old 2011 Clearstream notice and an unconfirmed 2024-2025 BDO proposal for the refund procedure — not two current, agreeing sources, so skipped rather than publish a shaky tax-procedure claim. Moved to Category H: tracking-foreign-investor-flows is genuinely unwritten and not covered by any live post.",
+  "ko": {
+    "title": "Korea Foreign Investor Flows: How to Check Net Buying on KRX",
+    "narrative": [
+      {
+        "heading": "The short answer: start with KRX's own data portal",
+        "body": "If you want to know whether foreigners are net buying or net selling Korean stocks, the fastest and most direct source is the one the market itself runs: the Korea Exchange's own data portal, data.krx.co.kr. It is free, needs no account or login, and breaks trading down by investor type — foreign, institutional, individual and a few smaller categories — for the previous business day. It is the same table that daily news lines like \"foreigners net sold ₩2.5 trillion\" are built from.\n\nThis guide walks through where that data actually sits on the KRX site and what it looks like once you open it, how to read the separate monthly figures Korea's Financial Supervisory Service (FSS) publishes, and where the mechanics for checking a single stock — rather than the whole market — get less certain. As of October 2026, every source named here is free and public; none require a brokerage account to view."
+      },
+      {
+        "heading": "Where it lives, and what the page actually shows",
+        "body": "On data.krx.co.kr, the data sits under Statistics → Basic Data → Stock → Trading → <b>Trading by Investor</b> — Korea Exchange's own label for the page. A related entry in the same menu group, \"Trading by investor (individual issue),\" applies the same idea to a single stock instead of the whole market; more on that below, including what we could not confirm about it.\n\nThe home-page version of this panel shows three market tabs — KOSPI, KOSDAQ and KONEX — each defaulting to the previous business day. The table itself has three columns: Sell, Buy and Net Buying, with every figure in units of <b>KRW 1 billion</b>. A separate panel on the same page applies the identical breakdown to KOSPI 200 futures and options. None of it requires creating an account or paying for a data feed — it is the same raw table that feeds the \"foreigners net sold ₩X trillion\" line in daily market wrap-ups."
+      },
+      {
+        "heading": "The bigger picture: FSS's monthly scoreboard",
+        "body": "KRX's page answers \"what happened on the last trading day.\" For the broader monthly trend — and for how much of the Korean market foreigners own in total — the source is a different regulator: the <b>Financial Supervisory Service (FSS)</b>, which releases a monthly report titled \"Foreign Securities Investment Trends\" covering both stocks and bonds.\n\nThe August 2026 edition, released Friday, September 18, 2026, is a useful example of what the report contains. It showed foreign investors making a net purchase of about ₩344 billion in domestic listed shares — their first month of net buying in 2026 — while pulling a net ₩4.74 trillion out of the listed bond market (₩3.94 trillion in net selling plus ₩801 billion in bonds that matured). The same report put total foreign holdings of Korean listed shares at ₩2,280.6 trillion at the end of August, equal to 34.8% of the market's total capitalization.\n\nWe reached these figures through The Korea Herald's report on the release, not the FSS's own document directly — the regulator's report title, the Friday release pattern, and the exact numbers above should be read as confirmed through that secondary coverage."
+      },
+      {
+        "heading": "Checking a single stock, not the whole market",
+        "body": "Everything above is market-wide. If what you actually want is whether foreigners were buying or selling one company — Samsung Electronics, SK Hynix, whichever stock you hold — the picture is less settled than the market-wide numbers above.\n\nKRX's own site lists a dedicated page for this, \"Trading by investor (individual issue),\" in the same menu group as the market-wide table. We could not load that page's table directly to confirm its exact columns, date filters, or whether it defaults to a single day or a range, so we are not going to describe it as though we had opened it.\n\nThe free tool many individual investors in Korea use for this instead is Naver Finance's per-stock investor page, commonly reached from a stock's own listing under an investor-flow tab — several Korean-language market newsletters cite it as their source for daily foreign and institutional net buying by ticker. We did not independently confirm that page's current layout for this guide either. If you rely on either page, check what you are actually looking at — value or volume, one day or several — before drawing a conclusion from it."
+      },
+      {
+        "heading": "Reading the number right: value, not shares, and rarely cumulative",
+        "body": "Two things are easy to misread in KRX's own table. First, the Sell, Buy and Net Buying columns are in won — KRW 1 billion units — not in shares. A ₩500 stock and a ₩500,000 stock can show similar-looking \"net buying\" figures that represent very different numbers of shares changing hands. Second, the home-page table defaults to a single day. A string of daily net-selling headlines does not, by itself, tell you whether foreigners have been selling for a week or for six months — for that longer trend, the monthly FSS report above, or KRX's own date-range filters on its statistics page (not the home-page snapshot), are the tools built for the job.\n\nNeither source tells you <i>why</i> foreigners bought or sold on a given day. A single day's net buying can reflect an index fund's rebalancing trade as easily as a change in view on the company — the number is a flow statistic, not a verdict."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "We confirmed the menu path, the three market tabs (KOSPI, KOSDAQ, KONEX), and the column labels (Sell, Buy, Net Buying, in units of KRW 1 billion) for KRX's \"Trading by Investor\" panel by opening data.krx.co.kr directly in October 2026. We confirmed the August 2026 Foreign Securities Investment Trends figures — the ₩344 billion net stock purchase, the ₩4.74 trillion net bond withdrawal, and the ₩2,280.6 trillion / 34.8% total foreign holdings figure — through The Korea Herald's September 18, 2026 report on the FSS release; we were unable to load the FSS's own report page directly to cross-check its original wording. We could not open or confirm the layout of KRX's own \"Trading by investor (individual issue)\" page, so we do not describe its columns or filters in this guide. We also did not independently verify the current layout of Naver Finance's per-stock investor page, though outside sources commonly cite it as a free tool for the same kind of data by ticker. This is not investment advice."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "For the market-wide question — are foreigners net buying or net selling Korean stocks, and by how much — Korea Exchange's own \"Trading by Investor\" data on data.krx.co.kr is the first and most direct stop, and it is free. For the bigger monthly trend, and for how much of the market foreigners own in total, the Financial Supervisory Service's monthly \"Foreign Securities Investment Trends\" report is the official scoreboard; the figures above are from its August 2026 edition, as reported in September 2026.\n\nFor a single stock, we could not confirm the exact layout of KRX's own per-issue page or Naver Finance's investor tab directly for this guide, so treat the specifics there as something to verify yourself before relying on them. Either way, a single day's net-buying figure is a flow statistic, not a signal about where a stock is headed next — this is not investment advice."
+    }
+  },
+  "sources": [
+    {"name": "Korea Exchange — Trading by Investor data portal", "url": "https://data.krx.co.kr/contents/MDC/MAIN/main/index.cmd?locale=en"},
+    {"name": "The Korea Herald — Foreign securities investment trends, August 2026 (FSS)", "url": "https://biz.heraldcorp.com/article/10877750"}
+  ],
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "FSS August 2026 report: foreigners net bought KRW 344 billion in Korean stocks; foreign holdings are 34.8% of market cap",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea Foreign Investor Flows",
+        "left": {"label": "FSS foreign net stock buying, Aug 2026", "value": "+₩344B"},
+        "right": {"label": "Foreign share of market cap", "value": "34.8%"}
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "KRX's daily Trading by Investor data compared with the FSS's monthly Foreign Securities Investment Trends report",
+      "args": {
+        "title": "Two official sources, two different questions",
+        "subtitle": "KRX daily data · FSS monthly report",
+        "source": "Korea Exchange data portal; FSS report via The Korea Herald, September 2026",
+        "columns": ["Source", "Frequency", "Scope", "Units"],
+        "rows": [
+          ["KRX Trading by Investor", "Daily", "By investor type", "KRW, billions"],
+          ["FSS Investment Trends", "Monthly", "Stock + bond holdings", "KRW trillions, % of cap"]
+        ]
+      },
+      "section": 2
+    }
+  ]
+}
