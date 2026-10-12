@@ -390,7 +390,7 @@ def duplicate_paragraph_issues(doc: dict) -> list[str]:
     return []
 
 
-MAGAZINE_HOOK_FROM = "2026-10-13"   # 잡지 훅 꼴(2026-10-12 결정: "재미없어 훅킹도 없고 궁금하지도 않다") — 이 날짜 원고부터
+MAGAZINE_HOOK_FROM = "2026-10-13"   # 잡지 훅 꼴(2026-10-12 결정) — 이 날짜 원고부터
 _OPEN_DATELINE = re.compile(r"^(지난 |이번 주|올해 |\d{4}년|\d{1,2}월 \d{1,2}일)")
 _ATTRIBUTION = re.compile(r"전했습니다|라고 전했|에 따르면|라고 짚었|보도했습니다|라고 밝혔")
 ATTRIBUTION_MAX = 3

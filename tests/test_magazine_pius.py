@@ -99,7 +99,7 @@ class DefaultForm(unittest.TestCase):
 
 
 class HookForm(unittest.TestCase):
-    """2026-10-12 결정("재미없어 훅킹도 없고 궁금하지도 않다"): 10/13 원고부터 훅 꼴."""
+    """2026-10-12 결정: 10/13 원고부터 훅 꼴."""
 
     def test_dateline_opening_and_missing_question_and_attribution_tails_are_refused(self) -> None:
         doc = _doc()
