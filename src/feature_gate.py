@@ -78,7 +78,7 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     blocking.extend(editorial_quality.collect_issues(ko))
     blocking.extend(editorial_title.collect_issues(
         ko, kind=str(doc.get("series") or "기준표"), notes_out=notes,
-        recent_titles=recent_titles(doc, path)))   # 제목·소제목, 모든 글 공통 (같은 목록의 최근 제목과 뼈대 대조)
+        recent_titles=recent_titles(doc, path), date=str(doc.get("date") or "")))   # 제목·소제목, 모든 글 공통 (같은 목록의 최근 제목과 뼈대 대조)
     blocking.extend(feature_checks.collect_issues(doc, graphics=graphics, notes_out=notes))
     if str(doc.get("series") or "") == "매거진":
         blocking.extend(feature_checks.magazine_issues(doc))   # 잡지 꼴(브리핑·코너·출처·사진), 2026-09-13

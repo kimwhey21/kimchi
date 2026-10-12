@@ -555,7 +555,8 @@ def frame_issues(title: str, recent_titles: list[str] | None) -> list[str]:
 # 금지 규칙으로는 다양성이 나오지 않는다. 그래서 문을 **고르는 문**으로 바꾼다: 원고에 후보 셋 이상을 축을
 # 달리해 적고(`ko.title_candidates`), 관문이 후보마다 독자 피드와의 **거리 점수**를 매겨 가장 먼 것을 제목으로
 # 요구한다. 후보는 셋 다 나가도 되는 제목이어야 한다 — 점수는 '다름'을 재지 '좋음'을 재지 않는다.
-CANDIDATE_KINDS = ("시황", "프리뷰", "기준표", "주간 결산", "다음 주 일정", "이벤트")   # 독자 피드에 실리는 글 전부
+CANDIDATE_KINDS = ("시황", "프리뷰", "기준표", "주간 결산", "다음 주 일정", "이벤트", "매거진")   # 독자 피드 글 + 잡지(2026-10-12)
+MAGAZINE_CANDIDATES_FROM = "2026-10-13"   # 잡지 제목 후보는 이 날짜 원고부터(그전 원고는 후보 없이 쓰였다)
 CANDIDATE_MIN = 3
 RARE_AXES = ("1인칭", "내 돈", "인용", "감춤 이유")   # 예문집에 있지만 거의 안 쓰는 축 — 최근 열 편에 없으면 +1
 
@@ -623,9 +624,11 @@ def rank_candidates(candidates: list[str], recent_titles: list[str] | None,
 
 
 def candidate_issues(ko: dict, recent_titles: list[str] | None, price_data: dict | None = None,
-                     kind: str | None = None) -> list[str]:
+                     kind: str | None = None, date: str | None = None) -> list[str]:
     """후보 셋 이상·축 둘 이상, 후보는 셋 다 낱개 규칙을 지키고, 제목은 후보 가운데 점수가 가장 높은 것."""
     if kind not in CANDIDATE_KINDS:
+        return []
+    if kind == "매거진" and str(date or "") < MAGAZINE_CANDIDATES_FROM:
         return []
     title = str(ko.get("title") or "").strip()
     raw = ko.get("title_candidates")
@@ -798,7 +801,7 @@ def collect_title_issues(title: str, price_data: dict | None = None,
 def collect_issues(doc: dict, price_data: dict | None = None, *,
                    kind: str | None = None, min_sections: int | None = None,
                    notes_out: list[str] | None = None,
-                   recent_titles: list[str] | None = None) -> list[str]:
+                   recent_titles: list[str] | None = None, date: str | None = None) -> list[str]:
     """제목 + 소제목 규칙을 한 번에. 모든 발행 경로가 이 함수를 부릅니다.
 
     `doc`은 `{"title", "narrative", ...}`(시황의 ko) 또는 `{"ko": {...}}`(기준표·프리뷰)
@@ -807,7 +810,7 @@ def collect_issues(doc: dict, price_data: dict | None = None, *,
     ko = doc.get("ko") if isinstance(doc.get("ko"), dict) else doc
     issues = collect_title_issues(ko.get("title", ""), price_data, notes_out=notes_out,
                                   recent_titles=recent_titles, kind=kind)
-    issues += candidate_issues(ko, recent_titles, price_data, kind)   # 후보 셋에서 가장 먼 것(2026-09-18)
+    issues += candidate_issues(ko, recent_titles, price_data, kind, date)   # 후보 셋에서 가장 먼 것(2026-09-18)
     names: set[str] = set()
     for entry in (price_data or {}).get("watchlist", {}).values():
         for key in ("name", "name_en"):

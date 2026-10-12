@@ -8,7 +8,7 @@ from pathlib import Path
 
 from src import evidence_check as ec
 
-FIXTURE = Path(__file__).resolve().parent / "fixtures" / "magazine_sample.json"
+FIXTURE = Path(__file__).resolve().parent / "fixtures" / "magazine_sample_pius.json"   # 근거 시험은 근거 25개짜리 옛 견본으로(10/12까지의 꼴)
 
 
 class EvidenceTest(unittest.TestCase):

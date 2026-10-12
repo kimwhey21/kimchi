@@ -87,11 +87,34 @@ class DefaultForm(unittest.TestCase):
         self.assertNotIn("q", [k for k, _ in post["blocks"]])
         self.assertNotIn("간단 브리핑", "\n".join(t for _, t in post["blocks"]))
 
-    def test_naver_post_has_short_paragraphs_and_no_headings(self) -> None:
+    def test_naver_post_has_short_paragraphs_and_hook_headings(self) -> None:
+        """훅 꼴(2026-10-13~): 도입에는 소제목이 없고 둘째 절부터 소제목이 실린다 — 그 뒤 자료 출처."""
         post = naver_post.build(FIXTURE)
         heads = [t for k, t in post["blocks"] if k == "h"]
-        self.assertEqual(heads, ["자료 출처"])
+        self.assertEqual(heads, [s["heading"] for s in _doc()["ko"]["narrative"][1:]] + ["자료 출처"])
         body = [t for k, t in post["blocks"] if k == "p"][: -len(_doc()["sources"])]
         self.assertTrue(all(len(p) <= 170 for p in body))
-        self.assertGreaterEqual(len(body), 40)
+        self.assertGreaterEqual(len(body), 20)
         self.assertTrue(any(p.startswith("“") for p in body))      # 인용 문단이 그대로 따로 실린다
+
+
+class HookForm(unittest.TestCase):
+    """2026-10-12 결정("재미없어 훅킹도 없고 궁금하지도 않다"): 10/13 원고부터 훅 꼴."""
+
+    def test_dateline_opening_and_missing_question_and_attribution_tails_are_refused(self) -> None:
+        doc = _doc()
+        doc["ko"]["narrative"][0]["body"] = "10월 9일 금요일, 베이조스가 인터뷰에서 말했다고 포춘이 전했습니다.\n그는 주 3일을 말했습니다."
+        issues = feature_checks.hook_issues(doc)
+        self.assertTrue(any("날짜나 출처로" in i for i in issues))
+        self.assertTrue(any("물음이 없습니다" in i for i in issues))
+        doc = _doc()
+        doc["ko"]["narrative"][2]["body"] += "\n" + "\n".join(["로이터가 전했습니다."] * 4)
+        self.assertTrue(any("꼬리가" in i for i in feature_checks.hook_issues(doc)))
+
+    def test_sections_after_the_intro_need_headings(self) -> None:
+        doc = _doc(); doc["ko"]["narrative"][3]["heading"] = ""
+        self.assertTrue(any("소제목이 없습니다" in i for i in feature_checks.hook_issues(doc)))
+
+    def test_older_manuscripts_keep_the_no_heading_form(self) -> None:
+        old = json.loads((ROOT / "tests" / "fixtures" / "magazine_sample_pius.json").read_text(encoding="utf-8"))
+        self.assertEqual(feature_checks.pius_issues(old), [])

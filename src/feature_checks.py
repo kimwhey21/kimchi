@@ -390,15 +390,54 @@ def duplicate_paragraph_issues(doc: dict) -> list[str]:
     return []
 
 
+MAGAZINE_HOOK_FROM = "2026-10-13"   # 잡지 훅 꼴(2026-10-12 결정: "재미없어 훅킹도 없고 궁금하지도 않다") — 이 날짜 원고부터
+_OPEN_DATELINE = re.compile(r"^(지난 |이번 주|올해 |\d{4}년|\d{1,2}월 \d{1,2}일)")
+_ATTRIBUTION = re.compile(r"전했습니다|라고 전했|에 따르면|라고 짚었|보도했습니다|라고 밝혔")
+ATTRIBUTION_MAX = 3
+HOOK_HEADING_MAX = 30
+_QUESTION = re.compile(r"\?|까요[.…]|을까요|일까요")
+
+
+def hook_issues(doc: dict) -> list[str]:
+    """잡지 훅 꼴(MAGAZINE_HOOK_FROM부터) — 첫 절은 소제목 없는 도입(물음과 길 안내), 나머지 절은 주장·물음 소제목,
+    첫 문단은 날짜·출처로 열지 않는다, '○○가 전했습니다' 꼬리는 세 번까지."""
+    issues: list[str] = []
+    ko = doc.get("ko") or doc
+    sections = ko.get("narrative") or []
+    if not sections:
+        return issues
+    if str(sections[0].get("heading") or "").strip():
+        issues.append("첫 절은 소제목 없는 도입입니다 — 물음과 '오늘은 무엇을 보겠습니다'로 엽니다(`heading`을 비웁니다).")
+    for index, section in enumerate(sections[1:], start=2):
+        heading = str(section.get("heading") or "").strip()
+        if not heading:
+            issues.append(f"절 {index}에 소제목이 없습니다 — 둘째 절부터 주장이나 물음으로 된 짧은 소제목을 붙입니다.")
+        elif len(heading) > HOOK_HEADING_MAX:
+            issues.append(f"절 {index} 소제목이 {len(heading)}자입니다 — {HOOK_HEADING_MAX}자 이하.")
+    intro = [p.strip() for p in str(sections[0].get("body") or "").split("\n") if p.strip()]
+    if intro and (_OPEN_DATELINE.search(intro[0]) or _ATTRIBUTION.search(intro[0])):
+        issues.append(f"첫 문단이 날짜나 출처로 엽니다('{intro[0][:40]}…') — 뜻밖의 대비나 물음으로 엽니다(기사체 금지).")
+    if not any(_QUESTION.search(p) for p in intro[:4]):
+        issues.append("도입(첫 절 앞 네 문단)에 독자가 풀고 싶어질 물음이 없습니다 — '왜 …했을까요?' 같은 물음을 세웁니다.")
+    tails = sum(len(_ATTRIBUTION.findall(str(s.get("body") or ""))) for s in sections)
+    if tails > ATTRIBUTION_MAX:
+        issues.append(f"'○○가 전했습니다·○○에 따르면' 꼬리가 {tails}번입니다 — 매체 이름은 처음 한 번 밝히고 {ATTRIBUTION_MAX}번 이하로 씁니다.")
+    return issues
+
+
 def pius_issues(doc: dict) -> list[str]:
-    """잡지 기본 꼴(피우스형) — 문단 호흡·소제목 없음·직접 인용. `magazine_issues`가 부른다. 브리핑은 없다(2026-10-02)."""
+    """잡지 기본 꼴(피우스형) — 문단 호흡·직접 인용. `magazine_issues`가 부른다. 브리핑은 없다(2026-10-02).
+    소제목: MAGAZINE_HOOK_FROM 전 원고는 소제목 없음, 그 뒤 원고는 훅 꼴(`hook_issues`)."""
     issues: list[str] = []
     # 간단 브리핑은 잡지 어디에도 싣지 않는다(2026-10-02 사장님 결정 — 피우스형 시험 첫 편 뒤). 있어도 보지 않는다.
     ko = doc.get("ko") or doc
     sections = ko.get("narrative") or []
-    for index, section in enumerate(sections, start=1):
-        if str(section.get("heading") or "").strip():
-            issues.append(f"절 {index}에 소제목이 있습니다 — 피우스형은 소제목 없이 문단만 씁니다(`heading`을 비웁니다).")
+    if str(doc.get("date") or "") >= MAGAZINE_HOOK_FROM:
+        issues += hook_issues(doc)
+    else:
+        for index, section in enumerate(sections, start=1):
+            if str(section.get("heading") or "").strip():
+                issues.append(f"절 {index}에 소제목이 있습니다 — 피우스형은 소제목 없이 문단만 씁니다(`heading`을 비웁니다).")
     long_paras, many_sents = [], []
     for section in sections:
         for para in str(section.get("body") or "").split("\n"):
