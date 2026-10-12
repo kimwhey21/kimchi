@@ -1,56 +1,62 @@
-[밸류에이션] US · 2026-10-12 · FWD PER 중앙값 25.0
+[밸류에이션] US · 2026-10-12 · FWD PER 중앙값 24.8
   (목표가까지 = 목표주가가 지금 주가보다 몇 % 높은가 · 주가 위치 = 지금 주가가 목표주가보다 몇 % 낮은가 — 둘은 다른 숫자)
   종목            FWD PER      목표가까지      주가 위치     52주고점 대비    애널
-  마이크론              5.0     +51.1%     -33.8%       -18.0%    46
-  엔비디아             14.4     +43.4%     -30.3%        -5.8%    59
-  머크               15.6      +8.5%      -7.8%        -7.2%    25
-  메타               20.8     +11.2%     -10.1%        -7.8%    58
-  마이크로소프트          22.6      +9.8%      -8.9%        -3.4%    53
-  알파벳              23.1     +22.1%     -18.1%       -13.9%    54
-  아마존              25.0     +26.3%     -20.8%        -8.6%    58
-  디어               27.3     +11.7%     -10.5%       -13.9%    23
-  월마트              34.5     +13.9%     -12.2%       -17.6%    40
-  애플               35.1      -2.5%      +2.6%        -2.5%    39
-  인텔               50.3     +12.7%     -11.3%       -26.4%    43
-  코인베이스            58.7     +17.8%     -15.1%       -51.9%    33
-  테슬라             175.4      +4.0%      -3.8%       -23.3%    38
+  마이크론              4.8     +57.2%     -36.4%       -21.2%    46
+  엔비디아             14.2     +45.2%     -31.1%        -7.0%    59
+  머크               15.6      +8.7%      -8.0%        -7.3%    25
+  메타               21.5      +7.5%      -7.0%        -4.7%    58
+  마이크로소프트          22.9      +8.6%      -7.9%        -2.3%    53
+  알파벳              23.2     +21.8%     -17.9%       -13.7%    54
+  아마존              24.8     +27.7%     -21.7%        -9.6%    58
+  디어               27.8      +9.6%      -8.8%       -12.3%    23
+  월마트              35.1     +12.1%     -10.8%       -16.3%    40
+  애플               35.6      -3.8%      +4.0%        -1.3%    39
+  인텔               48.7     +16.5%     -14.2%       -28.8%    43
+  코인베이스            59.0     +17.1%     -14.6%       -51.7%    33
+  테슬라             173.2      +5.3%      -5.0%       -24.2%    38
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 0 하향 0 (의견 유지 21건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 0 하향 0 (의견 유지 26건은 뺐습니다)
   빈 결과도 결과입니다 — 그 주에 의견 변경이 없었다는 뜻입니다. 날짜는 야후가 기록한 날로, 보도일과 하루 다를 수 있습니다(감사 F-188: 웰스파고 코인베이스 건 엔진 10/2, 보도 10/1) — '같은 날'이라고 쓰기 전에 출처에서 날짜를 확인하십시오.
 
-[월가 리포트] US · 오늘 · 24건 (상향 8 하향 4 신규 10 목표가 상향 0 하향 0) · 출처 marketbeat
-  ALL    ▲ 상향     Wells Fargo & Company     Underweight → Underperform 
-  ALSN   ▲ 상향     Citigroup                 Neutral → Buy            
-  BMRN   ▲ 상향     Raymond James Financial   Outperform → Strong-Buy  
-  BRO    ▲ 상향     Keefe, Bruyette & Woods   Underperform → Outperform 
+[월가 리포트] US · 오늘 · 476건 (상향 17 하향 13 신규 45 목표가 상향 115 하향 204) · 출처 marketbeat
+  ADBE   ▼ 하향     Wells Fargo & Company     Overweight → Underweight $270.00 → $225.00
+  ALL    ▲ 상향     Wells Fargo & Company     Underweight → Equal Weight $250.00 → $236.00
+  ALSN   ▲ 상향     Citigroup                 Neutral → Buy            $135.00
+  ASTS   ▲ 상향     Deutsche Bank Aktiengese  Hold → Buy               $93.00
+  BIIB   ▲ 상향     JPMorgan Chase & Co.      Neutral → Overweight     $210.00 → $300.00
+  BMRN   ▲ 상향     Raymond James Financial   Outperform → Strong-Buy  $109.00
+  BRO    ▲ 상향     Keefe, Bruyette & Woods   Underperform → Outperform $77.00
+  BWIN   ▼ 하향     TD Cowen                  Buy → Hold               $37.00 → $32.50
+  BWIN   ▼ 하향     Keefe, Bruyette & Woods   Outperform → Market Perform $32.50
   BX     ▲ 상향     Citigroup                 Market Outperform → Buy  
-  BXDC   ▲ 상향     Citigroup                 Neutral → Buy            
-  HUBS   ▼ 하향     Barclays                  Overweight → Buy         
+  BXDC   ▲ 상향     Citigroup                 Neutral → Buy            $23.00 → $20.00
+  CHRW   ▼ 하향     Deutsche Bank Aktiengese  Buy → Hold               $153.00
+  CRM    ▼ 하향     Barclays                  Overweight → Positive    
+  CRM    ▼ 하향     Wells Fargo & Company     Buy → Underweight        
+  CRM    ▲ 상향     Bank of America           Underperform → Buy       $160.00 → $285.00
+  HUBG   ▲ 상향     Robert W. Baird           Neutral → Outperform     $29.00
+  HUBS   ▼ 하향     Barclays                  Overweight → Equal Weight $240.00
   HUBS   ▼ 하향     UBS Group                 Positive → Cautious      $240.00
+  HUM    ▲ 상향     Raymond James Financial   Market Perform → Outperform $520.00
   INSM   ▼ 하향     Wolfe Research            Outperform → Peer Perform 
-  MANH   ▲ 상향     Morgan Stanley            Negative → Overweight    $250.00
-  TRNO   ▲ 상향     BMO Capital Markets       Market Perform → Outperform 
+  LBRX   ▲ 상향     Raymond James Financial   Buy                      
+  MANH   ▲ 상향     Morgan Stanley            Equal Weight → Overweight $180.00 → $250.00
+  MNDY   ▼ 하향     Barclays                  Overweight → Equal Weight $100.00
+  RBLX   ▼ 하향     Wells Fargo & Company     Overweight → Cautious    
+  RDY    ▲ 상향     BNP Paribas Exane         Outperform               $14.80
+  ROIV   ▼ 하향     Wolfe Research            Outperform → Peer Perform 
+  TMUS   ▲ 상향     Raymond James Financial   Market Perform → Outperform $170.00
+  TRNO   ▲ 상향     BMO Capital Markets       Market Perform → Outperform $75.00
+  TYL    ▲ 상향     Wells Fargo & Company     Equal Weight → Overweight $335.00 → $400.00
   UWMC   ▼ 하향     BTIG Research             Buy → Neutral            
-  BBNX   · 신규     Jefferies Financial Grou  Buy                      $30.00
-  HOOD   · 신규     Evercore                  Outperform               
-  IDXX   · 신규     KeyCorp                   Sector Weight            
-  KARD   · 신규     UBS Group                 Buy                      
-  MMED   · 신규     Jefferies Financial Grou  Hold                     $22.00
-  NKTR   · 신규     UBS Group                 Overweight → Neutral     $53.00
-  ODTX   · 신규     UBS Group                 Buy                      
-  PTGX   · 신규     UBS Group                 Buy                      $184.00
-  VYLR   · 신규     UBS Group                 Buy                      
-  WULF   · 신규     TD Cowen                  Buy                      
-  AMSF   · 목표가    Morgan Stanley                                     $40.00
-  CIZN   · 목표가    Morgan Stanley                                     $29.00
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
   D-9   2026-10-21  테슬라  (뉴욕 16:00)
+  D-9   2026-10-21  메타  (뉴욕 16:00)
   D-16  2026-10-28  마이크로소프트  (뉴욕 16:00)
-  D-16  2026-10-28  메타  (뉴욕 16:00)
   D-16  2026-10-28  알파벳  (뉴욕 16:00)
   D-17  2026-10-29  인텔  (뉴욕 16:00)
   D-17  2026-10-29  아마존  (뉴욕 16:00)
