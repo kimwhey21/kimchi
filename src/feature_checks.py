@@ -132,6 +132,7 @@ def deadline_issue(doc: dict) -> str | None:
 # **"레이더로 고른 글이 더 읽혔나"를 셀 수 없다.** 붙인 장치의 효과를 못 재면 그 장치를 지울지
 # 늘릴지도 근거 없이 정하게 된다. 한 줄로 남긴다 — 어느 제목에서 출발했는지, 아니면 안 썼는지.
 RADAR_SERIES = {"기준표", "가이드", "Guide", "매거진"}
+GUIDE_FRAME_HEADING = re.compile(r"한 문장으로 답|한마디로 답|결론부터|이렇게 확인했습니다|직접 확인한 것|직접 확인했습니다|직접 열어 ?봤습니다|확인해 봤습니다")
 RADAR_NONE = {"목록 순서", "레이더 실패", "list order", "radar failed"}
 # 이 날짜부터 쓴 원고에만 요구한다. 그 전 글에는 이 필드가 없었고, 이미 공개된 글을 뒤늦게
 # 막으면 관문이 "틀리게 우는 검사"가 된다 — 그런 검사는 곧 무시당한다(tests/test_rule_files.py 머리말).
@@ -196,6 +197,14 @@ def collect_issues(doc: dict, graphics: int | None = None,
     problem = radar_origin_issue(doc)
     if problem:
         issues.append(problem)
+
+    # 가이드의 어색한 틀 소제목(2026-10-12 결정) — '한 문장으로 답하면'·'이번에는 이렇게 확인했습니다' 같은 절을 두지 않는다
+    if str(doc.get("series") or "") == "가이드":
+        for s in sections:
+            heading = str(s.get("heading") or "")
+            if GUIDE_FRAME_HEADING.search(heading):
+                issues.append(f"소제목 '{heading}' — '한 문장으로 답하면'·'직접 확인' 같은 틀 절을 두지 않습니다. "
+                              "첫 문단에서 바로 답하고, 확인한 것은 필요한 절 본문에 녹이십시오(docs/routine_guide_ko.md).")
 
     # 표지 사진은 `url`로 적는다. 루틴이 샌드박스에 받은 `output/…` 경로를 `local_path`로 적으면 관문은 통과하고
     # 발행 러너에서 "표지 사진이 없습니다"로 죽는다(2026-09-20 wall_street_sign, 2026-09-26 samsung_semiconductor —

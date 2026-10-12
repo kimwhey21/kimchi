@@ -94,5 +94,18 @@ class GuideRulesTest(unittest.TestCase):
         self.assertIn("지어내지 않습니다", en)
 
 
+class GuideFrameHeadingTest(unittest.TestCase):
+    def test_awkward_frame_sections_are_refused(self) -> None:
+        """2026-10-12 결정: '1. 액면분할, 한 문장으로 답하면'·'6. 이번에는 이렇게 확인했습니다' 같은 틀 절은 관문이 막는다."""
+        from src import feature_checks
+        bad = [{"heading": "1. 액면분할, 한 문장으로 답하면", "body": "10월 12일 기준"},
+               {"heading": "6. 이번에는 이렇게 확인했습니다", "body": "x"}]
+        doc = {"series": "가이드", "ko": {"title": "제목", "narrative": bad}}
+        issues = [i for i in feature_checks.collect_issues(doc, graphics=4) if "틀 절" in i]
+        self.assertEqual(len(issues), 2)
+        doc["ko"]["narrative"] = [{"heading": "액면분할은 조각 수만 늘립니다", "body": "10월 12일 기준"}]
+        self.assertFalse([i for i in feature_checks.collect_issues(doc, graphics=4) if "틀 절" in i])
+
+
 if __name__ == "__main__":
     unittest.main()
