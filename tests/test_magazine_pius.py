@@ -111,6 +111,12 @@ class HookForm(unittest.TestCase):
         doc["ko"]["narrative"][2]["body"] += "\n" + "\n".join(["로이터가 전했습니다."] * 4)
         self.assertTrue(any("꼬리가" in i for i in feature_checks.hook_issues(doc)))
 
+    def test_roadmap_in_the_intro_is_refused(self) -> None:
+        """2026-10-13 결정: 길안내('오늘은 세 가지를 보겠습니다')는 쓰지 않는다."""
+        doc = _doc(); doc["ko"]["narrative"][0]["body"] += "\n오늘은 세 가지를 보겠습니다. 그림, 셈법, 숫자입니다."
+        self.assertTrue(any("길안내" in i for i in feature_checks.hook_issues(doc)))
+        self.assertFalse(any("길안내" in i for i in feature_checks.hook_issues(_doc())))
+
     def test_sections_after_the_intro_need_headings(self) -> None:
         doc = _doc(); doc["ko"]["narrative"][3]["heading"] = ""
         self.assertTrue(any("소제목이 없습니다" in i for i in feature_checks.hook_issues(doc)))

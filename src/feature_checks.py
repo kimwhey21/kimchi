@@ -395,6 +395,7 @@ _OPEN_DATELINE = re.compile(r"^(지난 |이번 주|올해 |\d{4}년|\d{1,2}월 \
 _ATTRIBUTION = re.compile(r"전했습니다|라고 전했|에 따르면|라고 짚었|보도했습니다|라고 밝혔")
 ATTRIBUTION_MAX = 3
 HOOK_HEADING_MAX = 30
+_ROADMAP = re.compile(r"(두|세|네|다섯) 가지(를|만) 보겠습니다|오늘은 .{0,20}(보겠습니다|살펴보겠습니다|따라가 보겠습니다)")
 _QUESTION = re.compile(r"\?|까요[.…]|을까요|일까요")
 
 
@@ -417,6 +418,8 @@ def hook_issues(doc: dict) -> list[str]:
     intro = [p.strip() for p in str(sections[0].get("body") or "").split("\n") if p.strip()]
     if intro and (_OPEN_DATELINE.search(intro[0]) or _ATTRIBUTION.search(intro[0])):
         issues.append(f"첫 문단이 날짜나 출처로 엽니다('{intro[0][:40]}…') — 뜻밖의 대비나 물음으로 엽니다(기사체 금지).")
+    if any(_ROADMAP.search(p) for p in intro):
+        issues.append("도입에 길안내('오늘은 세 가지를 보겠습니다')가 있습니다 — 물음을 세우고 바로 본문으로 들어갑니다.")
     if not any(_QUESTION.search(p) for p in intro[:4]):
         issues.append("도입(첫 절 앞 네 문단)에 독자가 풀고 싶어질 물음이 없습니다 — '왜 …했을까요?' 같은 물음을 세웁니다.")
     tails = sum(len(_ATTRIBUTION.findall(str(s.get("body") or ""))) for s in sections)
