@@ -1,0 +1,135 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-14",
+ "slug": "ptj-2027-supply",
+ "radar_origin": "Hedge-fund legend Paul Tudor Jones says the stock market faces a really challenging 2027.",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1689732888407-310424e3a372?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c3RvY2stZXhjaGFuZ2V8ZW58MHwwfHx8MTc5MTkxMTMwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "VLpWpv3oDB4",
+  "credit": "Unsplash / Austin Hervias"
+ },
+ "sources": [
+  {
+   "name": "야후파이낸스",
+   "title": "Paul Tudor Jones warns 2027 could be challenging for stocks (2026-10-13)",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html"
+  },
+  {
+   "name": "위키백과",
+   "title": "Dot-com bubble",
+   "url": "https://en.wikipedia.org/wiki/Dot-com_bubble"
+  }
+ ],
+ "tags": [
+  "폴튜더존스",
+  "주식공급",
+  "닷컴버블"
+ ],
+ "ko": {
+  "title": "폴 튜더 존스의 ‘내년이 어렵다’는 경고, 믿어도 될까? 확인할 것은 이것입니다",
+  "title_candidates": [
+   "존스가 내년 증시를 걱정하는 이유는 실적이 아니라 물량입니다",
+   "폴 튜더 존스의 ‘내년이 어렵다’는 경고, 믿어도 될까? 확인할 것은 이것입니다",
+   "존스는 지금을 1999년에 견줬다: 그 뒤 한 해의 숫자"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "주가를 흔드는 것은 기업 실적이라고들 생각합니다.\n그런데 헤지펀드 투자자 폴 튜더 존스가 내년 증시를 걱정하며 짚은 것은 실적이 아니라 시장에 풀릴 주식의 물량입니다.\n사려는 돈이 아니라 쏟아질 주식이 문제라면, 내년의 위험은 어디서 올까요?"
+   },
+   {
+    "heading": "존스는 내년을 ‘정말 어려운 해’라 불렀습니다",
+    "body": "존스는 CNBC 방송 ‘스쿼크 박스’에 나와 내년 증시를 이렇게 말했습니다. 야후파이낸스가 옮긴 기사가 그 발언을 정리했습니다.\n“2027년은 주식시장에 정말, 정말 어려운 해가 될 것입니다.”\n그가 근거로 든 것은 수급, 곧 주식을 사고파는 돈과 물량의 흐름입니다.\n“아마 2002년 이후 미국 주식시장이 마주한 가장 부정적인 수급 구도일 것입니다.”\n그는 자신의 자리도 숨기지 않았습니다. 공매도는 빌린 주식을 먼저 팔았다가 값이 내리면 되사서 갚아 차익을 얻는 거래입니다.\n“한 해 내내 팔아 둔 쪽에 서 있겠습니다. 싸다고 할 만한 것이 거의 없습니다.”"
+   },
+   {
+    "heading": "주식이 늘어나면 왜 부담일까",
+    "body": "자사주 매입은 회사가 자기 주식을 사들여 시장에 도는 물량을 줄이는 일입니다. 기업 인수합병(M&A)도 상장 주식을 줄입니다.\n존스는 이 둘이 지난 상승장을 받쳐 왔다고 봅니다. 그런데 이제 방향이 바뀐다는 것입니다.\n앤트로픽·오픈AI 같은 AI 기업의 대규모 상장이 거론되고, AI 설비 투자 자금을 대려는 추가 주식 발행도 이어질 것이라고 그는 말했습니다.\n주식은 많아지는데 사려는 돈이 그대로라면 값은 버티기 어렵다는 계산입니다.\n존스는 이 장면이 낯설지 않다고 했습니다.\n“1998년과 1999년, 그리고 2000년부터 2002년까지 신규 상장과 주식 발행이 쏟아졌습니다.”"
+   },
+   {
+    "heading": "그때의 숫자는 이랬습니다",
+    "body": "위키백과의 닷컴 버블 항목을 보면 나스닥 종합지수는 2000년 3월 10일 5,048.62로 정점을 찍었습니다.\n나스닥100은 2002년 10월 9일 저점에서 1,114까지 하락해 고점보다 78% 낮았습니다.\n신규 상장이 쏟아진 시기와 이 하락이 겹친다는 것이 존스의 비유입니다."
+   },
+   {
+    "heading": "1999년을 닮았다면, 그 뒤 한 해는",
+    "body": "존스는 지금을 1999년에 견줬습니다. 닷컴 거품이 꺼지기 1년쯤 전이라는 것입니다.\n그런데 이 비유에는 불편한 구석이 있습니다. 위키백과에 따르면 1995년부터 2000년까지 나스닥 종합지수는 400% 올랐습니다.\n1999년을 닮았다면 그 뒤 한 해는 하락이 아니라 정점으로 달려가던 시간이었습니다.\n숫자는 어느 쪽 편일까요? 물량 경고의 방향은 과거 기록과 맞아떨어지지만, 시점은 같은 기록이 장담해 주지 않습니다."
+   },
+   {
+    "heading": "적자 이야기는 덤이었습니다",
+    "body": "존스는 재정적자도 위험으로 꼽았습니다.\n“시장이 우리를 몰아붙이기 전에는 이 적자를 절대 고치지 못할 것입니다.”\n그는 지금이 그 분기점인지 묻고 이렇게 답했습니다.\n“누가 머리에 총을 들이대면 60 대 40으로 우리는 그 길에 와 있다고 하겠습니다.”"
+   },
+   {
+    "heading": "한국 투자자에게는 무엇이 다를까",
+    "body": "미국 대형주에 투자하는 펀드나 ETF(주식처럼 거래되는 펀드)를 들고 있다면 이 이야기는 남의 일이 아닙니다.\n존스의 전망을 따르라는 말이 아닙니다. 한 투자자의 전망이고, 그가 틀릴 수도 있습니다.\n숫자로 확인할 수 있는 것은 따로 있습니다. 앞으로 잡힐 AI 기업의 상장 일정과, 자사주 매입 규모가 줄어드는지입니다.\n실적표를 보던 눈으로 이번에는 상장 일정표를 본다면, 내년의 위험은 어디서 먼저 모습을 드러낼까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "정말, 정말 어려운 해가 될 것입니다",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "2027 is going to be really, really challenging for the stock market"
+  },
+  {
+   "claim": "2027년은",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "2027 is going to be really, really challenging for the stock market"
+  },
+  {
+   "claim": "2002년 이후",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "You've probably got the most negative flow picture for the U.S. stock market that we've had, say, since 2002."
+  },
+  {
+   "claim": "한 해 내내 팔아 둔 쪽에 서 있겠습니다",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "I'll be short the whole year. There just — there's little value"
+  },
+  {
+   "claim": "1998년과 1999년, 그리고 2000년부터 2002년까지",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "You had all this issuance, all these IPOs in '98 and '99, and really 2000, 2001, 2002."
+  },
+  {
+   "claim": "2000년 3월 10일 5,048.62",
+   "url": "https://en.wikipedia.org/wiki/Dot-com_bubble",
+   "original": "On Friday March 10, 2000, the NASDAQ Composite stock market index peaked at 5,048.62."
+  },
+  {
+   "claim": "2002년 10월 9일 저점에서 1,114까지 하락해 고점보다 78% 낮았습니다",
+   "url": "https://en.wikipedia.org/wiki/Dot-com_bubble",
+   "original": "At its trough on October 9, 2002, the NASDAQ-100 had dropped to 1,114, down 78% from its peak."
+  },
+  {
+   "claim": "닷컴 거품이 꺼지기 1년쯤 전",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "Jones compared the current market environment to 1999, roughly one year before the dot-com bubble burst in 2000."
+  },
+  {
+   "claim": "지금을 1999년에 견줬습니다",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "Jones compared the current market environment to 1999, roughly one year before the dot-com bubble burst in 2000."
+  },
+  {
+   "claim": "1995년부터 2000년까지 나스닥 종합지수는 400% 올랐습니다",
+   "url": "https://en.wikipedia.org/wiki/Dot-com_bubble",
+   "original": "Between 1995 and 2000, the Nasdaq Composite stock market index rose 400%."
+  },
+  {
+   "claim": "1999년을 닮았다면",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "Jones compared the current market environment to 1999, roughly one year before the dot-com bubble burst in 2000."
+  },
+  {
+   "claim": "시장이 우리를 몰아붙이기 전에는 이 적자를 절대 고치지 못할 것입니다",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "We're never going to fix these deficits until the market makes us to."
+  },
+  {
+   "claim": "60 대 40",
+   "url": "https://sg.finance.yahoo.com/news/paul-tudor-jones-warns-2027-151936443.html",
+   "original": "And if you put a gun to my head, I'd say 60-40, we're down that path"
+  }
+ ]
+}

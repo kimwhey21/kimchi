@@ -1,0 +1,126 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-10-14",
+ "slug": "ecuador-dollar-suicide",
+ "radar_origin": "Ecuador’s president tried to kill the dollar. Here’s what that means for Venezuela, Argentina and the Rest of Latin America",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8dXMlMjBkb2xsYXJ8ZW58MHwwfHx8MTc5MTkxMTMwOXww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "8lnbXtxFGZw",
+  "credit": "Unsplash / Alexander Grey"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Ecuador's president tried to kill the dollar (2026-10-13)",
+   "url": "https://fortune.com/2026/10/13/dollarization-ecuador-rafael-correa-currency-venezuela-argentina-latin-america/"
+  },
+  {
+   "name": "위키백과",
+   "title": "Jamil Mahuad",
+   "url": "https://en.wikipedia.org/wiki/Jamil_Mahuad"
+  },
+  {
+   "name": "위키백과",
+   "title": "Dollarization",
+   "url": "https://en.wikipedia.org/wiki/Dollarization"
+  }
+ ],
+ "tags": [
+  "에콰도르",
+  "달러화",
+  "통화"
+ ],
+ "ko": {
+  "title": "에콰도르는 왜 ‘화폐 자살’이라던 달러를 끝내 못 버렸을까",
+  "title_candidates": [
+   "에콰도르는 왜 ‘화폐 자살’이라던 달러를 끝내 못 버렸을까",
+   "남의 나라 돈을 쓰는 나라: 에콰도르가 얻은 것과 잃은 것",
+   "달러를 ‘화폐 자살’이라 부른 대통령: 에콰도르가 지키려는 것"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "에콰도르 사람들은 미국 달러로 장을 봅니다.\n그런데 이 나라에는 그 달러를 ‘화폐 자살’이라 부르며 없애려 한 대통령이 있었습니다.\n남의 나라 돈을 쓰는 일은 위험한 도박일까요, 든든한 안전장치일까요?"
+   },
+   {
+    "heading": "자기 돈이 무너진 뒤에야 달러가 왔습니다",
+    "body": "에콰도르가 달러를 들인 것은 자기 돈이 바닥난 뒤였습니다. 경제지 포춘에 실린 글은 1999년 에콰도르 화폐 수크레가 파국적으로 곤두박질치기 시작했다고 적습니다.\n2000년 첫 주에만 수크레가 27.7% 더 떨어져 달러당 28,000수크레의 사상 최저를 찍었다고 합니다.\n위키백과의 하밀 마우아드 항목을 보면, 당시 대통령 마우아드는 물가를 잡겠다며 은행 계좌를 동결했습니다.\n재임 중 경제는 크게 쪼그라들었고 물가상승률은 최대 60%까지 올랐습니다.\n그는 원주민 시위가 일주일 이어진 끝에 사임해야 했습니다."
+   },
+   {
+    "heading": "에콰도르 곁에는 엘살바도르도 있었습니다",
+    "body": "위키백과 달러화 항목은 에콰도르와 엘살바도르가 각각 2000년과 2001년에 완전한 달러 경제가 됐다고 적습니다.\n두 나라 모두 위기를 겪고 나서 자기 돈을 내려놓았다는 점이 같고, 이유는 서로 달랐다고 이 항목은 덧붙입니다."
+   },
+   {
+    "heading": "달러를 ‘화폐 자살’이라 부른 대통령",
+    "body": "포춘 글을 쓴 사람은 경제학자 스티브 행키와 프란시스코 살레스입니다. 이들은 라파엘 코레아 전 대통령이 달러화를 이렇게 불렀다고 전합니다.\n“엄청난 실수, 그리고 화폐 자살이다.”\n달러를 없애는 길에서 가장 노골적이었던 것은 중앙은행이 정부에 직접 돈을 빌려주기 시작한 일이라고 이 글은 짚습니다.\n글쓴이들의 표현으로는 이렇습니다.\n“사실상 이것은 코레아가 뒷받침 없는 ‘에콰달러’를 찍어 낼 수 있게 한 것이다.”\n중앙은행이 내놓은 전자화폐 프로그램도 있었는데, 국민이 외면해 결국 중단됐다고 합니다."
+   },
+   {
+    "heading": "달러를 지킨 것은 법이 아니라 여론이었습니다",
+    "body": "포춘 글에 따르면 오늘날 에콰도르에서 달러화에 대한 지지는 약 90%에 이릅니다.\n달러를 쓰면 중앙은행이 돈을 마음대로 찍을 수 없습니다. 정부가 쓸 돈이 모자라도 윤전기를 돌려 메울 수 없다는 뜻입니다.\n그래서 이 제도는 돈을 찍어 쓰고 싶은 정부에게 가장 불편하고, 물가가 무너진 경험이 있는 국민에게 가장 든든합니다."
+   },
+   {
+    "heading": "달러화에도 값이 있습니다",
+    "body": "달러화는 공짜가 아닙니다. 금리와 환율로 경기를 조절할 수단을 내려놓는 일이기 때문입니다.\n포춘 글의 두 저자는 달러화를 옹호하는 쪽의 글쓴이라, 이 대가를 길게 다루지 않습니다. 한쪽에서 쓴 글이라는 점은 감안하고 읽어야 합니다.\n남의 돈을 쓰는 것은 도박일까요, 안전장치일까요?\n에콰도르의 답은 지지율 약 90%였지만, 환율이라는 조절 장치를 내려놓은 대가까지 따져 보고 낸 답인지는 따로 살펴볼 일입니다."
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "2000년 첫 주에만 수크레가 27.7% 더 떨어져 달러당 28,000수크레의 사상 최저",
+   "url": "https://fortune.com/2026/10/13/dollarization-ecuador-rafael-correa-currency-venezuela-argentina-latin-america/",
+   "original": "During the first week of 2000, the sucre shed another 27.7% and hit an all-time low of 28,000 to the dollar."
+  },
+  {
+   "claim": "1999년 에콰도르 화폐 수크레가",
+   "url": "https://fortune.com/2026/10/13/dollarization-ecuador-rafael-correa-currency-venezuela-argentina-latin-america/",
+   "original": "In 1999, Ecuador’s sucre began a catastrophic plunge."
+  },
+  {
+   "claim": "은행 계좌를 동결했습니다",
+   "url": "https://en.wikipedia.org/wiki/Jamil_Mahuad",
+   "original": "He declared a freeze in bank accounts in order to control rampant inflation."
+  },
+  {
+   "claim": "물가상승률은 최대 60%까지 올랐습니다",
+   "url": "https://en.wikipedia.org/wiki/Jamil_Mahuad",
+   "original": "Under Mahuad's recession-plagued term, the economy shrank significantly, and inflation reached levels of up to 60 percent."
+  },
+  {
+   "claim": "원주민 시위가 일주일 이어진 끝에 사임해야 했습니다",
+   "url": "https://en.wikipedia.org/wiki/Jamil_Mahuad",
+   "original": "Mahuad was forced to resign after a week of demonstrations by indigenous Ecuadorians"
+  },
+  {
+   "claim": "2000년과 2001년에 완전한 달러 경제",
+   "url": "https://en.wikipedia.org/wiki/Dollarization",
+   "original": "Ecuador and El Salvador became fully dollarized economies in 2000 and 2001 respectively, for different reasons."
+  },
+  {
+   "claim": "엄청난 실수, 그리고 화폐 자살이다",
+   "url": "https://fortune.com/2026/10/13/dollarization-ecuador-rafael-correa-currency-venezuela-argentina-latin-america/",
+   "original": "As president, he called it “an immense error” and “monetary suicide.”"
+  },
+  {
+   "claim": "화폐 자살",
+   "url": "https://fortune.com/2026/10/13/dollarization-ecuador-rafael-correa-currency-venezuela-argentina-latin-america/",
+   "original": "As president, he called it “an immense error” and “monetary suicide.”"
+  },
+  {
+   "claim": "뒷받침 없는 ‘에콰달러’를 찍어 낼 수 있게 한 것이다",
+   "url": "https://fortune.com/2026/10/13/dollarization-ecuador-rafael-correa-currency-venezuela-argentina-latin-america/",
+   "original": "In effect, this allowed Correa to print unbacked “ecuadollars.”"
+  },
+  {
+   "claim": "지지는 약 90%에 이릅니다",
+   "url": "https://fortune.com/2026/10/13/dollarization-ecuador-rafael-correa-currency-venezuela-argentina-latin-america/",
+   "original": "Today, dollarization enjoys roughly 90% approval."
+  },
+  {
+   "claim": "지지율 약 90%",
+   "url": "https://fortune.com/2026/10/13/dollarization-ecuador-rafael-correa-currency-venezuela-argentina-latin-america/",
+   "original": "Today, dollarization enjoys roughly 90% approval."
+  }
+ ]
+}
