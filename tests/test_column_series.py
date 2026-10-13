@@ -102,3 +102,15 @@ class ColumnProofTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CoverColourTest(unittest.TestCase):
+    """표지 숫자(2026-10-13): 내린 값은 파랑, 오른 값·부호 없는 값은 원래 색."""
+
+    def test_sign_decides_colour(self) -> None:
+        from src import feature_graphics as fg
+        self.assertEqual(fg._side_colour({"value": "-10.09%"}, fg.UP), fg.DOWN)
+        self.assertEqual(fg._side_colour({"value": "−5.46%"}, fg.INK), fg.DOWN)
+        self.assertEqual(fg._side_colour({"value": "+4.61%"}, fg.UP), fg.UP)
+        self.assertEqual(fg._side_colour({"value": "5.31%"}, fg.INK), fg.INK)
+        self.assertEqual(fg._side_colour({"value": "1,200원", "down": True}, fg.UP), fg.DOWN)

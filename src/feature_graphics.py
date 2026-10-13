@@ -14,6 +14,7 @@
 """
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -186,6 +187,15 @@ def checklist(items: list[dict], output_path: Path,
     return output_path
 
 
+_NEGATIVE = re.compile(r"^\s*[-−–]\s*\d")
+
+
+def _side_colour(side: dict, default: str) -> str:
+    """표지 숫자 색(2026-10-13): 내린 값(`-`로 시작)이나 `down` 표시는 파랑, 그 밖은 원래 색. 한국 화면은 빨강이 상승이다 —
+    전에는 왼쪽 숫자가 늘 빨강이라 '-10.09%'도 빨갛게 그려졌다."""
+    return DOWN if side.get("down") or _NEGATIVE.match(str(side.get("value") or "")) else default
+
+
 def cover(output_path: Path, kicker: str, subject: str,
           left: dict | None = None, right: dict | None = None,
           note: str = "") -> Path:
@@ -257,7 +267,7 @@ def cover(output_path: Path, kicker: str, subject: str,
     for i, side in enumerate(sides):
         y = top + i * 240
         draw.text((x, y), side["label"], font=korean_font(24), fill=SUB)
-        colour = DOWN if side.get("down") else (UP if i == 0 else INK)
+        colour = _side_colour(side, UP if i == 0 else INK)
         value_font = korean_font(72, bold=True)
         if draw.textlength(side["value"], font=value_font) > right_limit - x:
             value_font = korean_font(60, bold=True)
@@ -313,7 +323,7 @@ def cover_square(output_path: Path, kicker: str, subject: str,
     side = left or right
     if side:
         value = str(side["value"])
-        colour = DOWN if side.get("down") else UP
+        colour = _side_colour(side, UP)
         for value_size in (112, 96, 84, 72, 60, 50):
             value_font = korean_font(value_size, bold=True)
             if draw.textlength(value, font=value_font) <= size - 2 * pad:
@@ -540,7 +550,7 @@ def icon_cover(output_path: Path, kicker: str, subject: str, icon: str,
                       side["label"], font=label_font, fill=SUB)
             draw.text((cx_side - draw.textlength(side["value"], font=value_font) / 2, base_y + 30),
                       side["value"], font=value_font,
-                      fill=DOWN if side.get("down") else UP)
+                      fill=_side_colour(side, UP))
     if note:
         centered(note, height - 74, korean_font(18), SUB)
     output_path.parent.mkdir(parents=True, exist_ok=True)
