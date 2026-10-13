@@ -68,6 +68,8 @@ MAC_JOBS = {"naver_sync": 30, "gsc_queries": "10:30",
             "daily_summary": "22:30", "bench_nightly": "23:10"}
 # 쉬게 한 루틴 — 이 기간에는 그 원고를 기다리지 않는다(2026-10-06 결정: 한국어 글이 나갈 곳이 없는 동안).
 # 기간이 지나도 루틴을 다시 켜지 않았으면 증명서·원고 감시가 다시 '없음'을 알린다 — 그것이 다시 정하라는 신호다.
+# 그만둔 루틴 — 기다리지 않는다(2026-10-13 한국어 가이드 중단: 시황 블로그의 하루 한 편을 다른 글로 바꾸기로).
+STOPPED_ARTIFACTS = {"한국어 가이드": dt.date(2026, 10, 14)}   # 이 날부터 기다리지 않는다
 PAUSED_ARTIFACTS = ({"미국장 프리뷰", "주말 Checkpoint", "주간 결산", "다음 주 일정"},   # 한국어 가이드는 10/7 저녁 다시 켬(시황 블로그에 가이드만 올린다)
                     dt.date(2026, 10, 7), dt.date(2026, 10, 20))
 MAC_WEEKLY = {"threads_refresh": (6, "21:30"), "search_snapshot": (6, "22:00")}   # 월요일 네이버 전수 점검은 10/8 내렸다   # (weekday, 시각)
@@ -245,6 +247,7 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
     names, start, end = PAUSED_ARTIFACTS
     if start <= day <= end:
         out = [row for row in out if row[0] not in names]
+    out = [row for row in out if not (row[0] in STOPPED_ARTIFACTS and day >= STOPPED_ARTIFACTS[row[0]])]
     if now is not None and now.date() == day:
         out = [row for row in out if now.time() >= dt.time(*map(int, ARTIFACT_DUE[row[0]].split(":")))]
     return out
