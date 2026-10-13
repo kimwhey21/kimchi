@@ -21,7 +21,8 @@ from src import editorial_title, title_feed
 
 ROOT = Path(__file__).resolve().parent.parent
 KINDS = {"kr": "시황", "us": "시황", "preview": "프리뷰", "checkpoint": "기준표",
-         "weekly": "주간 결산", "weekahead": "다음 주 일정", "event": "이벤트", "magazine": "매거진"}   # 잡지는 잡지 목록과 대조(2026-10-12)
+         "weekly": "주간 결산", "weekahead": "다음 주 일정", "event": "이벤트", "magazine": "매거진",   # 잡지는 잡지 목록과 대조(2026-10-12)
+         "column": "칼럼"}                                                                    # 칼럼은 칼럼 목록과(2026-10-13)
 
 
 def render(candidates: list[str], recent: list[str], price_data: dict | None, kind: str,
@@ -70,11 +71,11 @@ def main(argv: list[str] | None = None) -> int:
     if a.doc:
         doc = json.loads(a.doc.read_text(encoding="utf-8"))
         ko = doc.get("ko") or {}
-        series = title_feed.series_of(doc)
+        series = title_feed.series_of(doc) or str(doc.get("series") or "") or None   # 잡지·칼럼은 피드 밖 갈래다
         kind = {"한국장": "시황", "미국장": "시황"}.get(series or "", series or "시황")
-        if kind == "매거진":
+        if kind in ("매거진", "칼럼"):
             from src import feature_gate
-            recent = feature_gate.recent_titles(doc, a.doc)   # 관문과 같은 목록 — 최근 잡지 제목
+            recent = feature_gate.recent_titles(doc, a.doc)   # 관문과 같은 목록 — 같은 시리즈의 최근 제목
         else:
             recent = title_feed.feed_titles(doc, a.doc)
         candidates = [str(c) for c in (ko.get("title_candidates") or []) if str(c).strip()]
@@ -84,13 +85,13 @@ def main(argv: list[str] | None = None) -> int:
         print(render(candidates, recent, doc.get("price_data"), kind, chosen=str(ko.get("title") or "")))
         return 0
     if not a.which or not a.candidates:
-        ap.error("<kr|us|preview|checkpoint|weekly|weekahead|event|magazine> 와 후보를 주거나 --doc <원고>를 주세요.")
+        ap.error("<kr|us|preview|checkpoint|weekly|weekahead|event|magazine|column> 와 후보를 주거나 --doc <원고>를 주세요.")
     price = json.loads(a.price.read_text(encoding="utf-8")) if a.price else None
     # 관문과 같은 목록(최근 5편, 2026-09-26) — 전에는 10편과 비교해 같은 후보라도 점수가 달라, 여기서 동점인 후보가
     # 관문에서 '가장 먼 후보가 아니다'로 막힐 수 있었다(kr 9/21 관문 [5,2,4] vs 여기 [4,2,4]).
-    if a.which == "magazine":
+    if a.which in ("magazine", "column"):
         from src import feature_gate
-        recent = feature_gate.recent_titles({"series": "매거진"})
+        recent = feature_gate.recent_titles({"series": KINDS[a.which]})
     else:
         recent = title_feed.feed_titles()
     print(render([c for c in a.candidates if c.strip()], recent, price, KINDS[a.which]))

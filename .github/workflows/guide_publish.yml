@@ -12,6 +12,7 @@ on:
     branches: [main]
     paths:
       - "editorial/guides/*.json"
+      - "editorial/columns/*.json"      # 오늘의 한 편(2026-10-13) — 본진엔 안 올리고 관문·그림만 돌린다
   workflow_dispatch:
     inputs:
       path:
@@ -55,8 +56,8 @@ jobs:
           elif [ "${{ github.event_name }}" = "push" ] && \
                [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
             FILES=$(git diff --name-only --diff-filter=d \
-                      "${{ github.event.before }}" "${{ github.sha }}" -- editorial/guides \
-                    | grep -E '^editorial/guides/[^/]+\.json$' | tr '\n' ' ' || true)
+                      "${{ github.event.before }}" "${{ github.sha }}" -- editorial/guides editorial/columns \
+                    | grep -E '^editorial/(guides|columns)/[^/]+\.json$' | tr '\n' ' ' || true)
           fi
           echo "올릴 원고: ${FILES:-(없음)}"
           echo "files=$FILES" >> "$GITHUB_OUTPUT"

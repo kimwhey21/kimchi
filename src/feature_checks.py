@@ -47,7 +47,8 @@ SERIES_LIMITS = {"프리뷰": {"graphics": 8, "max_same_kind": 2, "min_beginner"
                  # 유입 편성(2026-09-12): 상시 가이드는 표·차트 둘이면 되고
                  # 글의 힘은 질문에 바로 답하는 본문에 있다. 이벤트 글은 일정표 + 차트.
                  "가이드": {"graphics": 2}, "Guide": {"graphics": 2}, "이벤트": {"graphics": 2},
-                 "매거진": {"graphics": 0}}   # 두 번째 네이버 블로그(2026-09-13): 데이터 그래픽 없이 사진 한 장
+                 "매거진": {"graphics": 0},   # 두 번째 네이버 블로그(2026-09-13): 데이터 그래픽 없이 사진 한 장
+                 "칼럼": {"graphics": 3, "max_same_kind": 2}}   # 오늘의 한 편(2026-10-13): 표지 + 그날 시세 그림 둘 이상
 
 # 영어 가이드(series "Guide", lang "en")는 한국어 제목 문법·문체 검사를 받지 않는다. 대신 아래 셋을 본다 —
 # 제목 길이(구글 결과에 잘리지 않는 70자), 절 수(SECTION_FLOORS), 본문에 확인 연도. 2026-09-12 실측:
@@ -400,7 +401,7 @@ _QUESTION = re.compile(r"\?|까요[.…]|을까요|일까요")
 
 
 def hook_issues(doc: dict) -> list[str]:
-    """잡지 훅 꼴(MAGAZINE_HOOK_FROM부터) — 첫 절은 소제목 없는 도입(물음과 길 안내), 나머지 절은 주장·물음 소제목,
+    """훅 꼴(잡지는 MAGAZINE_HOOK_FROM부터, 칼럼은 처음부터) — 첫 절은 소제목 없는 도입(물음), 나머지 절은 주장·물음 소제목,
     첫 문단은 날짜·출처로 열지 않는다, '○○가 전했습니다' 꼬리는 세 번까지."""
     issues: list[str] = []
     ko = doc.get("ko") or doc
@@ -408,7 +409,7 @@ def hook_issues(doc: dict) -> list[str]:
     if not sections:
         return issues
     if str(sections[0].get("heading") or "").strip():
-        issues.append("첫 절은 소제목 없는 도입입니다 — 물음과 '오늘은 무엇을 보겠습니다'로 엽니다(`heading`을 비웁니다).")
+        issues.append("첫 절은 소제목 없는 도입입니다 — 물음으로 열고 바로 본문으로 들어갑니다(`heading`을 비웁니다).")
     for index, section in enumerate(sections[1:], start=2):
         heading = str(section.get("heading") or "").strip()
         if not heading:

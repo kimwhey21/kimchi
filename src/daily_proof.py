@@ -70,6 +70,7 @@ MAC_JOBS = {"naver_sync": 30, "gsc_queries": "10:30",
 # 기간이 지나도 루틴을 다시 켜지 않았으면 증명서·원고 감시가 다시 '없음'을 알린다 — 그것이 다시 정하라는 신호다.
 # 그만둔 루틴 — 기다리지 않는다(2026-10-13 한국어 가이드 중단: 시황 블로그의 하루 한 편을 다른 글로 바꾸기로).
 STOPPED_ARTIFACTS = {"한국어 가이드": dt.date(2026, 10, 14)}   # 이 날부터 기다리지 않는다
+COLUMN_FROM = dt.date(2026, 10, 14)   # 오늘의 한 편(칼럼) 루틴 첫 실행일 — 이 날부터 한국장이 열린 날마다 기다린다
 PAUSED_ARTIFACTS = ({"미국장 프리뷰", "주말 Checkpoint", "주간 결산", "다음 주 일정"},   # 한국어 가이드는 10/7 저녁 다시 켬(시황 블로그에 가이드만 올린다)
                     dt.date(2026, 10, 7), dt.date(2026, 10, 20))
 MAC_WEEKLY = {"threads_refresh": (6, "21:30"), "search_snapshot": (6, "22:00")}   # 월요일 네이버 전수 점검은 10/8 내렸다   # (weekday, 시각)
@@ -203,7 +204,7 @@ def changed_today(day: dt.date, root: Path = ROOT) -> set[str]:
 # 원고마다 "이 시각(KST)이 지나야 없다고 말한다" — 낮에 손으로 돌려도 아직 쓸 때가 안 된 글을 빠졌다고 하지 않게(2026-10-05 13:17 시험 실행).
 ARTIFACT_DUE = {"한국장 시세": "16:45", "종가 사진": "16:05", "한국장 시황": "17:40", "미국장 시황": "09:00", "미국장 시세": "08:00", "미국장 프리뷰": "22:30", "잡지 3편": "03:30",
                 "한국어 가이드": "14:00", "영어 가이드": "12:00", "주말 Checkpoint": "10:00", "주간 결산": "11:00",
-                "다음 주 일정": "21:00", "주간 점검": "09:30"}
+                "다음 주 일정": "21:00", "주간 점검": "09:30", "오늘의 칼럼": "21:00"}
 
 
 def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
@@ -225,6 +226,9 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
             n_close = 0
         out.append(("종가 사진", n_close >= 2000, f"data/krx_close/{d}.json 전 종목 {n_close}개(2,000개 이상이어야)"))
         out.append(("한국장 시황", has(f"editorial/kr_{d}.json"), f"editorial/kr_{d}.json"))
+        if day >= COLUMN_FROM:
+            n_col = len(list((root / "editorial" / "columns").glob(f"{d}_*.json")))
+            out.append(("오늘의 칼럼", n_col >= 1, f"editorial/columns/{d}_* {n_col}편"))
     if 1 <= wd <= 5 and prev not in US_HOLIDAYS:
         if has(f"data/price_us_{prev}.json"):
             out.append(("미국장 시황", has(f"editorial/us_{prev}.json"), f"editorial/us_{prev}.json"))

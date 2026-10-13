@@ -78,6 +78,9 @@ def _kicker(doc: dict) -> str:
     if series == "Guide" and _date_or_none(doc.get("checked")):
         day = _date_or_none(doc.get("checked"))
         return f"{label} · Checked {_MONTHS_EN[day.month - 1]} {day.day}, {day.year}"
+    if series == "칼럼" and _date_or_none(doc.get("date")):
+        day = _date_or_none(doc.get("date"))
+        return f"오늘의 한 편 · {day.month}월 {day.day}일 장 마감 뒤"
     if series == "이벤트" and _date_or_none(doc.get("event_date")):
         day = _date_or_none(doc.get("event_date"))
         return f"이벤트 · {day.month}월 {day.day}일"
@@ -250,7 +253,8 @@ def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict
 # 이벤트도 — 한국어 글은 네이버가 주력이다. 영어 가이드("Guide")는 구글 유입의 전부라
 # 그대로 공개다. 이 표에 없는 시리즈는 publish.
 LIVE_STATUS = {"프리뷰": "private", "기준표": "private",
-               "가이드": "private", "주간 결산": "private", "다음 주 일정": "private", "이벤트": "private"}
+               "가이드": "private", "주간 결산": "private", "다음 주 일정": "private", "이벤트": "private",
+               "칼럼": "private"}   # 오늘의 한 편(2026-10-13) — 시황 블로그(네이버)에만
 
 
 # 한국어 글을 본진에 아예 올리지 않는다(2026-09-26). 위 표에서 `private`인 시리즈가 한국어 글이다 — 그 글은 방문자에게 404였고

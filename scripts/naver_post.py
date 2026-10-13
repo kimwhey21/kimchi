@@ -34,7 +34,8 @@ FIXED_TAGS = {"kr": ["코스피", "주식시황", "코스피마감", "페르마�
               "주간 결산": ["주간증시", "코스피", "미국증시", "주식시황", "페르마타"],      # 주말 편성(2026-09-12)
               "다음 주 일정": ["다음주증시", "증시일정", "실적발표", "주식시황", "페르마타"],
               "가이드": ["주식", "주식공부", "주식초보", "페르마타"],                    # 유입 편성(2026-09-12)
-              "이벤트": ["증시일정", "주식시황", "페르마타"]}
+              "이벤트": ["증시일정", "주식시황", "페르마타"],
+              "칼럼": ["주식", "코스피", "주식시황", "페르마타"]}                       # 오늘의 한 편(2026-10-13)
 GRAPHIC_PREFERENCE = ["number_cards", "movers_list", "stock_spotlight", "price_history", "flow_compare",
                       "investor_flows", "sector_bars", "rate_compare", "fact_table", "checklist", "calendar_strip"]
 TELEGRAM_URL = "https://t.me/fermata_kr"
@@ -273,6 +274,12 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         url = ""      # 본진은 비공개(2026-09-22) — 가리킬 공개 주소가 없다
         category = "가이드"
         tags = list(FIXED_TAGS["가이드"])
+    elif doc.get("series") == "칼럼":
+        # 오늘의 한 편(2026-10-13): 시황 블로그의 하루 한 편. 제목이 곧 물음이라 머리를 붙이지 않는다.
+        prefix = ""
+        url = ""
+        category = "시황"
+        tags = list(FIXED_TAGS["칼럼"])
     elif doc.get("series") == "이벤트":
         prefix = "증시 이벤트 " + _kdate(str(doc.get("event_date") or date_str))
         slug = doc.get("slug") or Path(path).stem.replace("_", "-")
@@ -311,6 +318,7 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
     take = _plain((ko.get("closing") or {}).get("body", ""))
     magazine = doc.get("series") == "매거진"
     preview = doc.get("series") == "프리뷰"
+    column = doc.get("series") == "칼럼"
     # 본문 전문을 싣는 글(시황·프리뷰)은 본진과 같은 차례로 간다 — Fermata's Take가 맨 아래다
     # (2026-09-15).
     # 2026-09-22부터 **한국어 글은 전부 전문**이다. 요약본 + 인용구 Take +
@@ -341,7 +349,7 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         leftovers = _graphics(graphics_dir, limit=4) if not by_section else []
         for i, section in enumerate(full):
             heading = re.sub(r"^\s*\d{1,2}\.\s*", "", str(section.get("heading", "")))
-            if heading or not pius:   # 피우스형은 소제목 없이 문단만(빈 소제목을 빈 줄로 찍지 않는다)
+            if heading or not (pius or column):   # 피우스형·칼럼 도입은 소제목 없이 문단만(빈 소제목을 빈 줄로 찍지 않는다)
                 blocks.append(("h", heading))
             paras = _plain(section.get("body", ""))
             blocks += [("p", p) for p in (_chunks(paras, max_sentences=2, max_chars=170) if pius else _chunks(paras))]
@@ -369,7 +377,8 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         blocks += _story_blocks(ko, graphics_dir)
     if take and full_body:
         # 본진 마무리 절과 같은 자리·같은 분량이다(요약본처럼 두 문단만 자르지 않는다).
-        blocks.append(("h", "Fermata's Take"))
+        # 칼럼은 마무리 절 이름을 원고에서 받는다(기본 「Fermata의 시선」, 2026-10-13).
+        blocks.append(("h", str((ko.get("closing") or {}).get("heading") or "Fermata의 시선") if column else "Fermata's Take"))
         blocks += [("p", x) for x in _chunks(take)]
     check = ((ko.get("closing") or {}).get("check") or {}).get("what")
     if check:
