@@ -21,6 +21,7 @@ from __future__ import annotations
 import datetime as dt
 import re
 import sys
+import time
 from pathlib import Path
 
 import requests
@@ -107,7 +108,14 @@ def admin_issues(loc: str, login_status: int, login_body: str, admin_status: int
 def check(session: requests.Session | None = None, now: dt.datetime | None = None) -> list[str]:
     s = session or requests.Session()
     now = now or dt.datetime.now(KST)
-    get = lambda path, **kw: s.get(BASE + path, headers=UA, timeout=60, **kw)   # noqa: E731
+    def get(path: str, **kw):
+        # 공유 호스팅이 응답을 중간에 끊는 일이 있다(2026-10-13 19:30 ChunkedEncodingError로 점검 전체가 죽음) — 한 번만 다시 받는다.
+        # 두 번째도 끊기면 그대로 올린다(사이트가 실제로 아픈 것이니 실패로 알려야 한다).
+        try:
+            return s.get(BASE + path, headers=UA, timeout=60, **kw)
+        except (requests.exceptions.ConnectionError, requests.exceptions.ChunkedEncodingError):
+            time.sleep(10)
+            return s.get(BASE + path, headers=UA, timeout=60, **kw)
     issues: list[str] = []
     # 2026-10-01: 카페24 봇 검사 화면이 200으로 오자 사이트맵·날짜·태그가 일곱 갈래로 엉뚱하게 실패했다 — 먼저 가려 한 줄로 말한다
     home = get("/")

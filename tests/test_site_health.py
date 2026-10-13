@@ -105,3 +105,30 @@ class TagPresence(unittest.TestCase):
         self.assertEqual(len(got), 2)
         self.assertIn("GA4", got[0]); self.assertIn("애드센스", got[1])
 
+
+
+class DroppedConnectionTest(unittest.TestCase):
+    """2026-10-13 19:30: 응답이 중간에 끊겨(ChunkedEncodingError) 점검 전체가 죽었다 — 한 번은 다시 받고, 두 번 끊기면 실패로 올린다."""
+
+    def _session(self, *effects):
+        from unittest import mock
+        s = mock.Mock()
+        s.get.side_effect = list(effects)
+        return s
+
+    def test_one_drop_is_retried(self):
+        from unittest import mock
+        import requests
+        blocked = mock.Mock(status_code=403, text="")
+        s = self._session(requests.exceptions.ChunkedEncodingError("cut"), blocked)
+        with mock.patch.object(sh.time, "sleep"):
+            issues = sh.check(session=s)
+        self.assertEqual(s.get.call_count, 2)
+        self.assertTrue(issues)
+
+    def test_two_drops_still_fail(self):
+        from unittest import mock
+        import requests
+        s = self._session(requests.exceptions.ChunkedEncodingError("cut"), requests.exceptions.ConnectionError("down"))
+        with mock.patch.object(sh.time, "sleep"), self.assertRaises(requests.exceptions.ConnectionError):
+            sh.check(session=s)
