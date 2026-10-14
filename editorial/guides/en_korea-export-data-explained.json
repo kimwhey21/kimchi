@@ -1,0 +1,165 @@
+{
+ "kind": "feature",
+ "series": "Guide",
+ "lang": "en",
+ "date": "2026-10-14",
+ "checked": "2026-10-14",
+ "slug": "korea-export-data-explained",
+ "category_id": 153,
+ "tags": [
+  "korea export data",
+  "South Korea exports",
+  "Korea semiconductor exports",
+  "Korea trade balance",
+  "Korea first 10 days exports"
+ ],
+ "radar_origin": "list order (Category F: macro) — search queue's two 'new' lines duplicate published guides (english-dart-guide, kospi-200-kosdaq-150-year-end-targets-2026) and the week's two edits to the year-end targets guide were already done (2026-10-12, 2026-10-13). Yesterday's guide was Category H, so picked F; korea-export-data-explained is its first unpublished item.",
+ "sources": [
+  {
+   "name": "Korea Times",
+   "title": "Korea's Sept. exports hit record $120.9 bil. on robust chip sales",
+   "url": "https://www.koreatimes.co.kr/economy/20261001/koreas-sept-exports-hit-record-1209-bil-on-robust-chip-sales"
+  },
+  {
+   "name": "Al Jazeera",
+   "title": "South Korea's exports hit record high on AI boom",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom"
+  },
+  {
+   "name": "Korea Times",
+   "title": "Exports double in first 10 days of October on chips",
+   "url": "https://www.koreatimes.co.kr/economy/20261012/exports-double-in-first-10-days-of-october-on-chips"
+  },
+  {
+   "name": "SBS",
+   "title": "Early October Exports Surge to $26.1 Billion Led by Semiconductors, Reaching Record High",
+   "url": "https://news.sbs.co.kr/english/article.do?news_id=N1008792756"
+  }
+ ],
+ "related": [
+  {
+   "title": "USDKRW vs KOSPI",
+   "url": "https://fermata.it.kr/usdkrw-and-the-kospi/"
+  },
+  {
+   "title": "SK Hynix vs Micron",
+   "url": "https://fermata.it.kr/sk-hynix-vs-micron/"
+  },
+  {
+   "title": "Korea vs Taiwan semiconductors",
+   "url": "https://fermata.it.kr/korea-vs-taiwan-semiconductors/"
+  }
+ ],
+ "ko": {
+  "title": "Korea Export Data Explained: Monthly and 10-Day Prints (2026)",
+  "narrative": [
+   {
+    "heading": "Korea export data: what the headline number is, and who publishes it",
+    "body": "Korea's export figure is the first hard economic number of every month, and it is a useful read on global demand because Korea sells chips, ships and cars to nearly everyone. The monthly total is published by the Ministry of Trade, Industry and Resources on the first day of the following month. Korea Customs Service publishes two earlier, partial readings, covering the first 10 days and the first 20 days of each month. All of them are preliminary customs figures, in US dollars, and they get revised."
+   },
+   {
+    "heading": "The latest reading: September 2026 set a record, and chips were half of it",
+    "body": "As of October 2026, the latest full month is September. According to the Korea Times, citing the trade ministry's October 1 release, exports rose 83.5% from a year earlier to a record $120.9 billion. Al Jazeera, citing customs data, reports the same total. Semiconductor exports were $60.3 billion, up 263% by the Korea Times' count, and the first month the category topped $60 billion. Al Jazeera puts chips at nearly half of all exports, which is also what the arithmetic gives: $60.3 billion out of $120.9 billion is about 50%. Imports were $71.09 billion, leaving what the Korea Times calls an unprecedented surplus of $49.85 billion."
+   },
+   {
+    "heading": "Where the exports went: China and the US each took about a fifth",
+    "body": "The Korea Times breaks September down by market. China took $26 billion, the fourth straight month above $20 billion. The United States took $24.33 billion, Southeast Asia $21.29 billion and the European Union $8.65 billion. Outside chips the picture is mixed: petroleum products were $7.22 billion, but automobiles fell 5.5% to $6.05 billion, which the ministry linked to fewer working days around the Chuseok holiday and weaker used-car shipments. A single headline growth rate can hide a lot of difference between sectors."
+   },
+   {
+    "heading": "The 10-day and 20-day prints: how to read them without being fooled",
+    "body": "The first-10-days figure arrives around the 11th and is the earliest sign of the month. It is noisy for two reasons. First, it counts only the days that have passed, and the number of working days can differ sharply from the year before, so Korean reports quote a daily average alongside the total. Second, it is a customs reading made before the month is complete. For October 1 to 10, 2026, the Korea Times, reporting Korea Customs Service data released on October 12, gives total exports of $26.1 billion, a record for that period, with chips at $12.1 billion, up 170.9%. SBS reports the same $26.1 billion total. Treat it as a direction, not a monthly forecast."
+   },
+   {
+    "heading": "Why the number matters for Korean stocks",
+    "body": "Korea's listed market is heavily tied to exports, and chip exports in particular. When memory prices and shipment volumes rise, as they have through 2026, the export line is where it shows up before it appears in company earnings. The trade ministry says Korea is on track for $1 trillion in exports this year, with January to September alone above $800 billion. The previous annual record was about $709 billion for 2025. The same minister flagged global protectionism and Middle East tensions as the main risks. For an investor, the practical use is to check whether the chip line keeps growing and whether other sectors are following it."
+   },
+   {
+    "heading": "What we could and could not verify",
+    "body": "We confirmed the September 2026 total of $120.9 billion, the 83.5% growth rate and the $60.3 billion chip figure in both the Korea Times and Al Jazeera. The import figure, the $49.85 billion surplus and the market breakdown come from the Korea Times alone, so treat them as reported by one outlet. The first-10-days total of $26.1 billion was confirmed in the Korea Times and SBS. Outlets differ slightly on year-to-date totals, with one reporting a figure above $800 billion and another $814.5 billion, so we quote only the lower bound. Some outlets describe early-October growth as a doubling while the Korea Times' own prior-year figure implies a smaller rise, so we do not quote a growth rate for that period. We did not open the Korea Customs Service release table itself."
+   }
+  ],
+  "closing": {
+   "heading": "The takeaway",
+   "body": "Korea's export data comes in three steps: a 10-day print around the 11th, a 20-day print around the 21st, and the full month from the trade ministry on the first. As of October 2026 the story is simple: September exports hit a record $120.9 billion and chips were about half of them. Read the sector split and the working-day count before trusting any single growth rate.\n\nAll figures are preliminary and can be revised. This guide describes data as of October 14, 2026 and is not tax or investment advice."
+  }
+ },
+ "graphics": [
+  {
+   "kind": "cover",
+   "featured": true,
+   "alt": "Korea's September 2026 exports of $120.9 billion, of which chips were $60.3 billion",
+   "args": {
+    "kicker": "Investor Guide",
+    "subject": "Korea Export Data, Explained",
+    "left": {
+     "label": "September 2026 exports (record)",
+     "value": "$120.9B"
+    },
+    "right": {
+     "label": "of which semiconductors",
+     "value": "$60.3B"
+    }
+   }
+  },
+  {
+   "kind": "fact_table",
+   "alt": "Korea's September 2026 exports by destination",
+   "args": {
+    "title": "Where Korea's September 2026 exports went",
+    "subtitle": "Preliminary figures, US dollars",
+    "columns": [
+     "Destination",
+     "Exports (Sept. 2026)"
+    ],
+    "rows": [
+     [
+      "China",
+      "$26.00B"
+     ],
+     [
+      "United States",
+      "$24.33B"
+     ],
+     [
+      "Southeast Asia",
+      "$21.29B"
+     ],
+     [
+      "European Union",
+      "$8.65B"
+     ]
+    ],
+    "source": "Korea Times, October 1, 2026, citing the Ministry of Trade, Industry and Resources.",
+    "note": "Preliminary customs-based figures; subject to revision."
+   },
+   "section": 3
+  },
+  {
+   "kind": "checklist",
+   "alt": "How to read a Korean export print",
+   "args": {
+    "title": "Before you trust a Korea export headline",
+    "subtitle": "Four checks",
+    "items": [
+     {
+      "label": "Check how many working days the period had",
+      "why": "Holidays such as Chuseok can move the total without any change in demand."
+     },
+     {
+      "label": "Look at the chip line separately",
+      "why": "Chips were about half of September's total, so the rest of the economy can look very different."
+     },
+     {
+      "label": "Know which release you are reading",
+      "why": "10-day and 20-day prints come from Korea Customs Service; the full month comes from the trade ministry."
+     },
+     {
+      "label": "Remember the numbers are preliminary",
+      "why": "Revisions happen, and outlets sometimes differ on year-to-date totals."
+     }
+    ]
+   },
+   "section": 4
+  }
+ ]
+}
