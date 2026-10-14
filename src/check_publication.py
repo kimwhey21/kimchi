@@ -71,6 +71,10 @@ def _wordpress_post(slug: str) -> dict | None:
     return posts[0] if posts else None
 
 
+# 매일 영어 시황을 검색에서 뺀 날(2026-10-14) — 이 날부터는 사이트맵에 없는 것이 정상이다
+DAILY_NOINDEX_FROM = "2026-10-14"
+
+
 def _sitemap_post_urls() -> set[str] | None:
     """사이트맵(/wp-sitemap.xml)에 실린 글 주소 전부. 못 읽으면 None.
 
@@ -202,13 +206,19 @@ def check_market(market: str, check_site: bool, sitemap_urls: set[str] | None = 
             )
         link = str(post.get("link") or "")
         # 비공개 글은 사이트맵에 **없는 것이 정상이다** — 워드프레스가 일부러 뺀다.
-        # 공개 글(영어판)만 사이트맵에 실렸는지 본다.
-        if (wanted == "publish" and sitemap_urls is not None and link
-                and link.rstrip("/") not in {u.rstrip("/") for u in sitemap_urls}):
-            problems.append(
-                f"{market} {trading_date} [{lang}]: 글은 공개됐는데 사이트맵(/wp-sitemap.xml)에 없습니다 ({link}). "
-                "사이트맵이 멈췄습니다 — 검색엔진이 새 글을 못 찾습니다(2026-09-08·09-12에 겪은 일)."
-            )
+        # 공개 글(영어판)은 DAILY_NOINDEX_FROM부터 검색 제외라(11번 조각) 사이트맵에 **없어야** 한다 — 실려 있으면 제외가 풀린 것이다.
+        in_sitemap = bool(link) and sitemap_urls is not None and link.rstrip("/") in {u.rstrip("/") for u in sitemap_urls}
+        if wanted == "publish" and sitemap_urls is not None and link:
+            if trading_date >= DAILY_NOINDEX_FROM and in_sitemap:
+                problems.append(
+                    f"{market} {trading_date} [{lang}]: 매일 시황은 검색 제외인데 사이트맵(/wp-sitemap.xml)에 실려 있습니다 ({link}). "
+                    "11번 조각의 사이트맵 제외가 풀렸습니다."
+                )
+            elif trading_date < DAILY_NOINDEX_FROM and not in_sitemap:
+                problems.append(
+                    f"{market} {trading_date} [{lang}]: 글은 공개됐는데 사이트맵(/wp-sitemap.xml)에 없습니다 ({link}). "
+                    "사이트맵이 멈췄습니다 — 검색엔진이 새 글을 못 찾습니다(2026-09-08·09-12에 겪은 일)."
+                )
         if not problems:
             # 한국어는 비공개가 정상이다(2026-09-16) — "공개 확인"이라고 찍으면 로그가 거짓말을 한다.
             print(f"{market} {trading_date} [{lang}]: {wanted} 확인 (id={post.get('id')})")

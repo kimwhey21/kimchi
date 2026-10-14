@@ -8,19 +8,46 @@
 function fermata_noindex_pages() {
 	return array( 1047, 1610, 1439, 1604, 697, 698, 226 ); // checkpoint, guide(한국어), weekly, threads-callback, 한국어 소개·연락처·개인정보(2026-09-27 전수 점검 — 영어 사이트 사이트맵에 한국어 쪽이 있었다)
 }
+// 매일 영어 시황(Daily 121·Korea Close 684·Wall Street Close 685)과 그 목록(76·분류)은 검색에서 뺀다(2026-10-14) —
+// AI로 매일 쓰는 글이 구글 스팸 정책의 '대량 생산 콘텐츠'로 읽히지 않게. 글·목록은 방문자에게 그대로 열린다. 가이드(153)는 그대로 색인.
+function fermata_daily_cats() {
+	return array( 121, 684, 685 );
+}
+function fermata_is_daily_noindex() {
+	return ( is_singular( 'post' ) && has_category( fermata_daily_cats() ) ) || is_page( 76 ) || is_category( fermata_daily_cats() );
+}
 add_filter( 'rank_math/frontend/robots', function ( $robots ) {
 	if ( is_page( fermata_noindex_pages() ) ) {
 		$robots['index'] = 'noindex';
+	}
+	if ( fermata_is_daily_noindex() ) {
+		$robots['index'] = 'noindex';
+		$robots['follow'] = 'follow';
 	}
 	return $robots;
 } );
 add_filter( 'wp_sitemaps_posts_query_args', function ( $args, $post_type ) {
 	if ( 'page' === $post_type ) {
 		$old = isset( $args['post__not_in'] ) ? (array) $args['post__not_in'] : array();
-		$args['post__not_in'] = array_merge( $old, fermata_noindex_pages() );
+		$args['post__not_in'] = array_merge( $old, fermata_noindex_pages(), array( 76 ) );
+	}
+	if ( 'post' === $post_type ) {
+		$args['category__not_in'] = fermata_daily_cats();
 	}
 	return $args;
 }, 10, 2 );
+
+// AI 사용 표시(2026-10-14): 구글 '도움이 되는 콘텐츠' 안내가 묻는 "자동화·AI 사용이 방문자에게 분명한가"에 답한다 — 영어 글 끝에 작게.
+add_filter( 'the_content', function ( $content ) {
+	if ( ! is_singular( 'post' ) || ! in_the_loop() || ! is_main_query() ) {
+		return $content;
+	}
+	if ( ! has_category( array_merge( fermata_daily_cats(), array( 153 ) ) ) ) {
+		return $content;
+	}
+	return $content . '<p class="fermata-ai-note" style="font-size:12px;line-height:1.5;color:#8b929b;margin-top:28px;">'
+		. 'Drafted with AI assistance and reviewed by the Fermata Editorial Team.</p>';
+}, 20 );
 
 // 3번: 공개 글은 전부 영어인데 홈 제목·설명·언어 표시가 한국어였다. 홈과 영어 목록 페이지(Daily 76·Guides 77·전체 105)를
 // 영어로 표시한다. 관리자 화면 Rank Math '홈페이지' 칸에는 옛 한국어 값이 남아 있지만 이 조각이 덮어쓴다 —

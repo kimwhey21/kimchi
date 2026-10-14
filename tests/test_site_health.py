@@ -132,3 +132,22 @@ class DroppedConnectionTest(unittest.TestCase):
         s = self._session(requests.exceptions.ChunkedEncodingError("cut"), requests.exceptions.ConnectionError("down"))
         with mock.patch.object(sh.time, "sleep"), self.assertRaises(requests.exceptions.ConnectionError):
             sh.check(session=s)
+
+
+class RobotsTest(unittest.TestCase):
+    """2026-10-14: 개별 종목·Daily는 검색 제외, 가이드는 검색에 열림."""
+
+    def _page(self, robots):
+        return f'<head><meta name="robots" content="{robots}"/></head>'
+
+    def test_expected_state_passes(self):
+        bodies = {"/stocks/005930/": self._page("follow, noindex"), "/category/daily/": self._page("noindex, follow"),
+                  sh.GUIDE_PAGE: self._page("follow, index, max-snippet:-1")}
+        self.assertEqual(sh.robots_issues(bodies), [])
+
+    def test_reopened_stock_page_and_closed_guide_are_reported(self):
+        bodies = {"/stocks/005930/": self._page("follow, index"), "/category/daily/": self._page("noindex, follow"),
+                  sh.GUIDE_PAGE: self._page("noindex, follow")}
+        issues = sh.robots_issues(bodies)
+        self.assertEqual(len(issues), 2)
+        self.assertIn("/stocks/005930/", issues[0])

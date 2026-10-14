@@ -25,6 +25,11 @@ jobs:
       - name: 한글 폰트 설치
         run: sudo apt-get update && sudo apt-get install -y fonts-nanum
 
+      # 본진 코드 조각(PHP) 문법 검사(2026-10-14) — 이 맥에는 PHP가 없어 문법 오류가 있는 조각을 올리면 사이트가 통째로 멈출 수 있다.
+      # 러너에는 PHP가 깔려 있다. 올리는 쪽(deploy_list_style.deploy)도 Code Snippets의 code_error를 보고 멈추지만, 올리기 전에 여기서 먼저 잡는다.
+      - name: PHP 문법 검사
+        run: for f in templates/*.php templates/wp_snippets/*.php; do php -l "$f" || exit 1; done
+
       - name: 의존성 설치
         run: pip install -r requirements.txt
 

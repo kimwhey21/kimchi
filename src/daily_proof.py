@@ -70,7 +70,9 @@ MAC_JOBS = {"naver_sync": 30, "gsc_queries": "10:30",
 # 기간이 지나도 루틴을 다시 켜지 않았으면 증명서·원고 감시가 다시 '없음'을 알린다 — 그것이 다시 정하라는 신호다.
 # 그만둔 루틴 — 기다리지 않는다(2026-10-13 한국어 가이드 중단: 시황 블로그의 하루 한 편을 다른 글로 바꾸기로).
 STOPPED_ARTIFACTS = {"한국어 가이드": dt.date(2026, 10, 14)}   # 이 날부터 기다리지 않는다
-COLUMN_FROM = dt.date(2026, 10, 14)   # 오늘의 한 편(칼럼) 루틴 첫 실행일 — 이 날부터 한국장이 열린 날마다 기다린다
+COLUMN_FROM = dt.date(2026, 10, 14)
+EN_GUIDE_TWICE_FROM = dt.date(2026, 10, 15)   # 영어 가이드가 주 2편(화·금)이 된 뒤 — 그 밖의 요일은 기다리지 않는다
+EN_GUIDE_DAYS = (1, 4)                         # 화·금(월=0)   # 오늘의 한 편(칼럼) 루틴 첫 실행일 — 이 날부터 한국장이 열린 날마다 기다린다
 PAUSED_ARTIFACTS = ({"미국장 프리뷰", "주말 Checkpoint", "주간 결산", "다음 주 일정"},   # 한국어 가이드는 10/7 저녁 다시 켬(시황 블로그에 가이드만 올린다)
                     dt.date(2026, 10, 7), dt.date(2026, 10, 20))
 MAC_WEEKLY = {"threads_refresh": (6, "21:30"), "search_snapshot": (6, "22:00")}   # 월요일 네이버 전수 점검은 10/8 내렸다   # (weekday, 시각)
@@ -239,7 +241,8 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
     n_mag = len(list((root / "editorial" / "magazine").glob(f"{d}_*.json")))
     out.append(("잡지 3편", n_mag >= 3, f"editorial/magazine/{d}_* {n_mag}편"))
     out.append(("한국어 가이드", touched("editorial/guides/ko_", ".json"), "editorial/guides/ko_* 오늘 커밋"))
-    out.append(("영어 가이드", touched("editorial/guides/en_", ".json"), "editorial/guides/en_* 오늘 커밋"))
+    if day < EN_GUIDE_TWICE_FROM or wd in EN_GUIDE_DAYS:
+        out.append(("영어 가이드", touched("editorial/guides/en_", ".json"), "editorial/guides/en_* 오늘 커밋"))
     if wd in (5, 6):
         out.append(("주말 Checkpoint", touched("editorial/features/", ".json"), "editorial/features/* 오늘 커밋"))
     if wd == 5:

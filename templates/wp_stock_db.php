@@ -784,6 +784,9 @@ foreach ( array( 'rank_math/frontend/description', 'rank_math/opengraph/facebook
 }
 add_filter( 'rank_math/frontend/robots', function ( $r ) {
 	if ( is_page( 'stocks' ) && ! fs_current_code() && ( ! empty( $_GET['pg'] ) || ! empty( $_GET['m'] ) ) ) { $r['index'] = 'noindex'; $r['follow'] = 'follow'; }
+	// 개별 종목 페이지 2,765개는 검색에서 뺀다(2026-10-14) — 구글 스팸 정책의 '대량 생산 페이지'는 "검색에서 제외하라"가 처방이다.
+	// 방문자는 그대로 쓴다. 목록·순위표·외국인 수급·SKHY 프리미엄(손으로 만든 데이터 페이지)은 그대로 둔다.
+	if ( fs_current_code() ) { $r['index'] = 'noindex'; $r['follow'] = 'follow'; }
 	return $r;
 }, 99 );
 function fs_canonical( $u ) {
@@ -802,22 +805,22 @@ add_filter( 'option_rank_math_modules', function ( $modules ) {
 	return is_array( $modules ) ? array_values( array_diff( $modules, array( 'sitemap' ) ) ) : $modules;
 } );
 
-// 사이트맵: 종목 페이지 전부
+// 사이트맵: 종목 데이터 페이지(목록·순위표·외국인 수급·SKHY 프리미엄) — 개별 종목은 2026-10-14부터 검색 제외
 add_action( 'wp_sitemaps_init', function ( $sitemaps ) {
 	if ( ! class_exists( 'FS_Stock_Sitemap' ) ) {
 		class FS_Stock_Sitemap extends WP_Sitemaps_Provider {
 			public function __construct() { $this->name = 'stocks'; $this->object_type = 'stocks'; }
 			public function get_url_list( $page_num, $object_subtype = '' ) {
-				$rows = array_slice( fs_index(), ( $page_num - 1 ) * 2000, 2000 ); $out = array();
+				$out = array();
 				if ( 1 === (int) $page_num ) {
 					foreach ( array_keys( fs_lists() ) as $k ) { $out[] = array( 'loc' => home_url( '/stocks/lists/' . $k . '/' ) ); }
 					if ( fs_flows() ) { $out[] = array( 'loc' => home_url( '/stocks/foreign-flows/' ) ); }
 					if ( fs_skhy() ) { $out[] = array( 'loc' => home_url( '/stocks/skhy-premium/' ) ); }
 				}
-				foreach ( $rows as $r ) { $out[] = array( 'loc' => home_url( '/stocks/' . $r[0] . '/' ) ); }
+				// 개별 종목 주소는 싣지 않는다(2026-10-14, 검색 제외) — 데이터 페이지만 남는다
 				return $out;
 			}
-			public function get_max_num_pages( $object_subtype = '' ) { return max( 1, (int) ceil( count( fs_index() ) / 2000 ) ); }
+			public function get_max_num_pages( $object_subtype = '' ) { return 1; }
 		}
 	}
 	$sitemaps->registry->add_provider( 'stocks', new FS_Stock_Sitemap() );

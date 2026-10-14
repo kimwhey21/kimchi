@@ -31,7 +31,7 @@ STRINGS = {
     "en": {"lang": "en", "locale": "en_US", "related": "Related",
            "method_label": "How we checked",
            "checked": "Checked {date} against the sources below.",
-           "byline": "Written by the Fermata editorial desk · fermata.it.kr",
+           "byline": "Written by the Fermata Editorial Team · fermata.it.kr",
            "footer": "This article is for information only and is not a recommendation to buy or sell any security."},
 }
 

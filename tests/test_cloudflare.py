@@ -20,8 +20,10 @@ class PurgeTest(unittest.TestCase):
         done = mock.Mock(json=lambda: {"success": True})
         with mock.patch.dict(os.environ, {"CLOUDFLARE_API_TOKEN": "t"}), \
                 mock.patch.object(cloudflare.requests, "get", return_value=zones) as get, \
-                mock.patch.object(cloudflare.requests, "post", return_value=done) as post:
+                mock.patch.object(cloudflare.requests, "post", return_value=done) as post, \
+                mock.patch.object(cloudflare, "warm") as warm:
             self.assertTrue(cloudflare.purge_all())
+        warm.assert_called_once()   # 비운 뒤 다시 채운다(2026-10-14)
         self.assertEqual(get.call_args.kwargs["params"], {"name": "fermata.it.kr"})
         self.assertIn("/zones/z1/purge_cache", post.call_args.args[0])
         self.assertEqual(post.call_args.kwargs["json"], {"purge_everything": True})

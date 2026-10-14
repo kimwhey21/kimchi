@@ -112,6 +112,22 @@ class CheckPublicationTest(unittest.TestCase):
         self.assertEqual(fresh, [])
         self.assertEqual(skipped, [])
 
+    def test_daily_post_must_stay_out_of_sitemap_after_noindex(self) -> None:
+        """2026-10-14부터 매일 시황은 검색 제외 — 사이트맵에 없는 것이 정상이고, 실려 있으면 알린다."""
+        post = {"id": 2, "status": "publish", "modified_gmt": "2026-10-15T12:53:52",
+                "link": "https://fermata.it.kr/kospi-falls/"}
+        with tempfile.TemporaryDirectory() as tmp:
+            data = Path(tmp) / "data"; editorial = Path(tmp) / "editorial"; data.mkdir(); editorial.mkdir()
+            (data / "price_us_2026-10-14.json").write_text("{}", encoding="utf-8")
+            (editorial / "us_2026-10-14.json").write_text(json.dumps({"en": {"title": "Title"}}), encoding="utf-8")
+            with mock.patch.object(cp, "DATA_DIR", data), mock.patch.object(cp, "EDITORIAL_DIR", editorial), \
+                    mock.patch.object(cp, "_actual_trading_date", return_value="2026-10-14"), \
+                    mock.patch.object(cp, "_wordpress_post", return_value=post):
+                absent = cp.check_market("us", check_site=True, sitemap_urls={"https://fermata.it.kr/other/"})
+                present = cp.check_market("us", check_site=True, sitemap_urls={"https://fermata.it.kr/kospi-falls"})
+        self.assertEqual(absent, [])
+        self.assertTrue(any("검색 제외인데" in x for x in present), present)
+
     def test_missing_post_is_reported(self) -> None:
         problems = self._check("2026-09-04", None)
         self.assertTrue(any("사이트에 글이 없습니다" in p for p in problems), problems)

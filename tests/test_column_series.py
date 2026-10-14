@@ -20,8 +20,11 @@ def _doc() -> dict:
 
 
 def _blocking(doc: dict) -> list[str]:
+    from unittest import mock
     try:
-        feature_gate.run(doc, graphics=len(doc["graphics"]), path=SAMPLE)
+        # 최근 칼럼 제목과의 대조는 그날 원고에 따라 달라진다 — 견본 시험은 빈 목록과 대조한다
+        with mock.patch.object(feature_gate, "recent_titles", return_value=[]):
+            feature_gate.run(doc, graphics=len(doc["graphics"]), path=SAMPLE)
     except feature_gate.FeatureGateError as exc:
         return [line[2:] for line in str(exc).splitlines() if line.startswith("- ")]
     return []
@@ -133,3 +136,18 @@ class MagazineTitleQuoteTest(unittest.TestCase):
         doc = self._doc("monetary suicide")
         doc["date"] = "2026-10-14"
         self.assertEqual(feature_checks.title_quote_issues(doc), [])
+
+
+class EnglishGuideTwiceWeeklyTest(unittest.TestCase):
+    """영어 가이드 주 2편(화·금, 2026-10-15부터) — 증명서는 그 요일에만 기다린다."""
+
+    def _names(self, day: dt.date) -> list[str]:
+        with tempfile.TemporaryDirectory() as tmp:
+            return [n for n, _, _ in daily_proof.expected_artifacts(day, set(), Path(tmp))]
+
+    def test_only_tuesday_and_friday(self) -> None:
+        self.assertIn("영어 가이드", self._names(dt.date(2026, 10, 14)))       # 수 — 바뀌기 전날까지는 매일
+        self.assertNotIn("영어 가이드", self._names(dt.date(2026, 10, 15)))    # 목
+        self.assertIn("영어 가이드", self._names(dt.date(2026, 10, 16)))       # 금
+        self.assertIn("영어 가이드", self._names(dt.date(2026, 10, 20)))       # 화
+        self.assertNotIn("영어 가이드", self._names(dt.date(2026, 10, 18)))    # 일

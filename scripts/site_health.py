@@ -5,7 +5,8 @@
 publish_check.yml이 평일 19:30(17:05 종목 수집 뒤)과 다음 날 10:00(07:50 수급 수집 뒤)에 돌린다. 카페24는 동시 요청에 약해
 한 장씩 차례로 연다. 보는 것:
   1. /wp-sitemap.xml이 돌려보내기 없이 200이고 종목 묶음이 있는가 — Rank Math 사이트맵이 켜지면 종목 사이트맵이 404가 된다
-  2. 종목 사이트맵에 종목 2,000개 이상·순위표·외국인 수급 주소가 있는가
+  2. 종목 사이트맵에 순위표·외국인 수급·SKHY 주소가 있고 **개별 종목 주소는 없는가**(2026-10-14부터 개별 종목·매일 시황은 검색 제외),
+     개별 종목·Daily는 noindex, 가이드는 index인가(구글이 보는 본진은 가이드와 데이터 페이지뿐이어야 한다)
   3. 홈·목록·종목·순위표·외국인 수급·Daily·ads.txt·IndexNow 열쇠가 열리는가
   4. 홈의 KOSPI 날짜가 우리가 커밋한 마지막 한국장 시세 날짜와 같은가, 외국인 수급 날짜가 밀리지 않았는가
   5. 관리자 화면 접근 규칙(2026-09-30): Cloudflare 사용자 지정 규칙 「관리자 화면 한국만」이 /wp-admin·/wp-login.php를
@@ -34,6 +35,23 @@ BASE = "https://fermata.it.kr"
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"}
 LISTS = ("highest-dividend-yield", "most-foreign-owned", "cheapest-by-pb", "largest-kosdaq")
 PAGES = ["/", "/stocks/", "/stocks/005930/", "/stocks/foreign-flows/", "/stocks/skhy-premium/", *[f"/stocks/lists/{s}/" for s in LISTS], "/category/daily/"]
+GUIDE_PAGE = "/kospi-200-explained/"   # 색인돼야 하는 가이드 표본
+# 검색에서 빼기로 한 화면(2026-10-14) — noindex여야 한다
+NOINDEX_PAGES = ("/stocks/005930/", "/category/daily/")
+_ROBOTS = re.compile(r'<meta name="robots" content="([^"]*)"')
+
+
+def robots_issues(bodies: dict[str, str]) -> list[str]:
+    """검색 제외 표시가 정한 대로인가 — 개별 종목·Daily는 noindex, 가이드는 index."""
+    issues = []
+    for path in NOINDEX_PAGES:
+        found = _ROBOTS.search(bodies.get(path, ""))
+        if not found or "noindex" not in found.group(1):
+            issues.append(f"{path}에 noindex가 없습니다 — 검색에서 빼기로 한 화면이 다시 열렸습니다(16번·11번 조각)")
+    found = _ROBOTS.search(bodies.get(GUIDE_PAGE, ""))
+    if not found or "noindex" in found.group(1):
+        issues.append(f"가이드 {GUIDE_PAGE}의 robots가 '{found.group(1) if found else '없음'}'입니다 — 가이드는 검색에 열려 있어야 합니다")
+    return issues
 KST = dt.timezone(dt.timedelta(hours=9))
 
 
@@ -127,14 +145,15 @@ def check(session: requests.Session | None = None, now: dt.datetime | None = Non
         issues.append(f"/wp-sitemap.xml HTTP {r.status_code} {r.headers.get('Location') or ''} — 종목 사이트맵이 빠졌습니다(Rank Math 사이트맵이 켜졌는지 보십시오)")
     else:
         maps = [s.get(u, headers=UA, timeout=60).text for u in parts]
-        sm, n = maps[0], sum(m.count("<loc>") for m in maps)
-        if n < 2000:
-            issues.append(f"종목 사이트맵 주소가 {n}개뿐입니다")
+        sm = maps[0]
+        codes = sum(len(re.findall(r"/stocks/\d{6}/</loc>", m)) for m in maps)
+        if codes:
+            issues.append(f"사이트맵에 개별 종목 주소가 {codes}개 있습니다 — 2026-10-14부터 검색 제외라 빠져 있어야 합니다(16번 조각)")
         for path in ["/stocks/foreign-flows/", "/stocks/skhy-premium/", *[f"/stocks/lists/{x}/" for x in LISTS]]:
             if f"{BASE}{path}</loc>" not in sm:
                 issues.append(f"종목 사이트맵에 {path}가 없습니다")
     bodies = {}
-    for path in PAGES:
+    for path in [*PAGES, GUIDE_PAGE]:
         r = get(path)
         bodies[path] = r.text
         if r.status_code != 200:
@@ -147,6 +166,7 @@ def check(session: requests.Session | None = None, now: dt.datetime | None = Non
         issues.append(f"IndexNow 열쇠 파일 HTTP {r.status_code}")
     issues += date_issues(bodies.get("/", ""), bodies.get("/stocks/foreign-flows/", ""), kr_dates(), now)
     issues += tag_issues(bodies.get("/", ""))
+    issues += robots_issues(bodies)
     trace = get("/cdn-cgi/trace").text
     found = re.search(r"^loc=(\w+)", trace, re.M)
     if not found:

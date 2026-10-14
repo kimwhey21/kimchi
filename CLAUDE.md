@@ -91,7 +91,7 @@
   다시 확인한다. 피드를 더할 때는 **직접 받아 보고 출력까지 읽는다** — 죽은 피드와 잡음은 둘 다 "오늘 화제가 없다"로 보인다.
 - **영어 가이드의 주제는 뉴스가 아니라 서치콘솔 검색어가 정한다.** 이 맥의 `~/.market-brief-google/gsc_queries.py`가 매일 10:30 KST
   (launchd `kr.it.fermata.gscqueries`)에 검색어를 긁어 `data/search_queries.json`으로 커밋하고, 루틴이 `python -m src.search_queue`로
-  "오늘 무엇을 할지"를 읽는다(루틴은 서치콘솔에 로그인할 수 없다). **주 7편은 새 글 5편 + 기존 글 고치기 2편이다.** 큐의
+  "오늘 무엇을 할지"를 읽는다(루틴은 서치콘솔에 로그인할 수 없다). **주 2편(화·금, 2026-10-14부터 — 대량 생산으로 읽히지 않게)이고 배분은 `docs/routine_guide_en.md`가 정한다.** 큐의
   `gain`은 순서를 매기려고 만든 어림치이니 **글에 적지 말 것**. 영어 가이드에서 레이더(`--set en_kr`)는 주제가 아니라 **상시 글이
   낡았는지**를 보는 자리로만 쓴다. **큐는 검색 의도를 본다** — `search_queue.intent`가 행동(how to·buy·broker·etf·tax·hours)
   1.3배, 정의(what is·difference) 0.7배. 순위 밀린 글은 제목·첫 소제목·첫 문장에 검색어를 그대로 넣는다. `related` 제목은 발행 때
@@ -207,7 +207,7 @@
   않는다. 지난주 판정(맞음·빗나감)은 이 글에 넣지 않는다 — 사용자가 아직 정하지 않았다.
 - **유입 편성**: 새 시리즈 셋이 기준표 파이프라인에 표 한 줄씩으로 있다 — **가이드**(한국어 상시, 매일 13:00 KST, 주 7편,
   `docs/routine_guide_ko.md`, `editorial/guides/ko_<slug>.json`, 분류 **509**(`/guide/`), 머리말은 최상위 `checked` 날짜),
-  **Guide**(영어, 매일 11:00 KST, 주 7편, `docs/routine_guide_en.md`, `editorial/guides/en_<slug>.json`, `lang: "en"` — 관문이 한국어
+  **Guide**(영어, 화·금 11:00 KST, 주 2편, `docs/routine_guide_en.md`, `editorial/guides/en_<slug>.json`, `lang: "en"` — 관문이 한국어
   검사 대신 영어 검사(`feature_checks.collect_issues_en`)와 영어 출처 목록(`source_check.EN_SOURCES`)을 쓴다, 분류 **153**(`/guides/`);
   주제 60개를 아홉 갈래로 나눠 어제와 다른 갈래에서 고른다), **이벤트**(일요일 다음 주 일정 루틴이 그 주의 큰 이벤트 하나를
   `editorial/events/<날짜>_<slug>.json`으로 더 쓴다, 분류 Weekly, 머리말은 `event_date`). 한 목록에 두 언어를 섞지 않는다.
