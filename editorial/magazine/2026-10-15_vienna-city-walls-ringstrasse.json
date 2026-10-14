@@ -1,0 +1,181 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장의 역사",
+ "date": "2026-10-15",
+ "slug": "vienna-city-walls-ringstrasse",
+ "radar_origin": "Big Think: City walls conquered the ancient world and then disappeared. Why?",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1590612673391-17b643e5039a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Vmllbm5hJTIwUmluZ3N0cmFzc2V8ZW58MHwwfHx8MTc5MTk5NzcxMHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "LxvLWhpT3ZU",
+  "credit": "Unsplash / Arno Senoner"
+ },
+ "sources": [
+  {
+   "name": "위키백과",
+   "title": "Ringstraße",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe"
+  },
+  {
+   "name": "위키백과",
+   "title": "City wall",
+   "url": "https://en.wikipedia.org/wiki/City_wall"
+  },
+  {
+   "name": "빈 역사 위키",
+   "title": "Ringstraße (Wien Geschichte Wiki)",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe"
+  }
+ ],
+ "tags": [
+  "성벽의역사",
+  "빈",
+  "링슈트라세"
+ ],
+ "ko": {
+  "title": "황제가 성벽을 허물라고 한 이유, 빈 링슈트라세에서 볼 것 세 가지",
+  "title_candidates": [
+   "황제가 성벽을 허물라고 한 이유, 빈 링슈트라세에서 볼 것 세 가지",
+   "사자왕의 몸값으로 쌓은 성벽은 왜 허물렸을까",
+   "성벽을 허문 땅은 누구의 것이었나: 빈 링슈트라세의 돈 이야기"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "빈의 성벽은 잉글랜드 왕의 몸값으로 쌓았습니다.\n그 성벽을 수백 년 뒤 황제가 직접 허물라고 명령했습니다.\n성벽은 언제 쓸모를 잃었을까요?\n그리고 허문 자리는 무엇이 됐을까요?"
+   },
+   {
+    "heading": "몸값으로 쌓은 성벽",
+    "body": "위키백과 빈 링슈트라세 항목에 따르면 성벽은 13세기에 세워졌습니다.\n십자군에서 돌아오다 빈 근처에서 붙잡힌 잉글랜드 왕 사자왕 리처드를 풀어 주는 대가로 받은 몸값이 쌓는 돈이 됐습니다.\n1529년 오스만군의 빈 포위와 1618년 30년 전쟁 뒤에는 성벽을 더 단단히 보강했습니다.\n성 밖에는 폭 약 500미터의 빈터가 있었고, 군사 방어를 위해 건물도 나무도 둘 수 없었습니다."
+   },
+   {
+    "heading": "18세기 말에 이미 쓸모를 잃었습니다",
+    "body": "18세기 말이 되자 이 방어선은 낡은 것이 됐습니다.\n위키백과 성벽 항목은 화약이 발명되면서 성벽이 덜 효과적이 됐다고 설명합니다. 공성포가 성벽을 뚫을 수 있게 됐기 때문입니다.\n빈 사람들은 성 밖 빈터에 가로등과 산책길을 내고 노점을 세웠습니다.\n1850년에는 성 밖 마을들이 시에 편입되면서 성벽이 교통을 막는 장애물이 됐습니다.\n그리고 1857년 황제 프란츠 요제프 1세가 ‘짐의 뜻이다(Es ist Mein Wille)’로 시작하는 칙령으로 성벽과 해자를 허물라고 명령했습니다.\n“이것은 나의 뜻이다.”"
+   },
+   {
+    "heading": "허문 땅은 누구의 것이었나",
+    "body": "성벽이 서 있던 땅은 주인이 분명하지 않았습니다.\n빈 시가 운영하는 빈 역사 위키(Wien Geschichte Wiki)에 따르면 시와 국가 사이에 격렬한 다툼이 있었습니다.\n오스만군의 포위 이후 이 땅은 군대의 영향 아래 있었기 때문입니다.\n황제의 결정으로 땅은 국가 재무 기관에 맡겨졌다가, 1859년 5월 14일 새로 만든 기금으로 넘어갔습니다.\n이 기금은 땅을 파는 일과 여러 국가 건물을 짓는 비용을 맡았습니다."
+   },
+   {
+    "heading": "설계는 공모로, 철거는 사진부터",
+    "body": "황제는 설계도 공모로 정하게 했습니다.\n빈 역사 위키는 런던·파리·베를린·바르셀로나와 달리 공개 공모를 열었다고 설명합니다.\n1858년 한 해에 모인 응모작은 85편이었습니다.\n철거 전에는 사진도 남겼습니다. 사라지기 전에 찍은 사진이 적어도 55장이고, 대부분 1858년에 찍혔습니다.\n철거가 끝난 것은 1870년대 초였고, 링슈트라세는 1865년 5월 1일 프란츠 요제프 1세가 문을 열었습니다."
+   },
+   {
+    "heading": "성벽 자리에는 궁전이 들어섰습니다",
+    "body": "그 자리에는 귀족과 부유한 개인들이 서둘러 링슈트라세 양식의 궁전을 지었습니다.\n링슈트라세 공사가 모두 끝난 것은 1913년 육군성 청사가 완공되면서였고, 그때는 이미 이 양식이 유행에서 밀려 있었습니다.\n성벽을 허문 뒤에도 땅을 팔고 건물을 올리는 데 반세기 넘게 걸린 셈입니다.\n도시가 자라면 지키려던 것이 길을 막는 일이 생깁니다.\n여러분이 사는 도시에서 지금 가장 먼저 허물릴 ‘성벽’은 무엇일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "13세기",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "which had originally been erected during the 13th century"
+  },
+  {
+   "claim": "사자왕 리처드를 풀어 주는 대가로 받은 몸값",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "These walls were initially funded by the ransom payment obtained from the release of Richard the Lionheart"
+  },
+  {
+   "claim": "1529년 오스만군의 빈 포위와 1618년 30년 전쟁",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "The fortifications were subsequently reinforced following the Ottoman Siege of Vienna in 1529 and the Thirty Years' War in 1618"
+  },
+  {
+   "claim": "폭 약 500미터",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "approximately 500 meters wide, where construction and vegetation were prohibited for military defensive purposes"
+  },
+  {
+   "claim": "18세기 말",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "By the late 18th century, these fortifications had become obsolete."
+  },
+  {
+   "claim": "화약이 발명되면서 성벽이 덜 효과적이 됐다고",
+   "url": "https://en.wikipedia.org/wiki/City_wall",
+   "original": "the invention of gunpowder rendered walls less effective, as siege cannons could then be used to blast through walls"
+  },
+  {
+   "claim": "1850년에는",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "In 1850, the suburbs, known as Vorstädte (now comprising Districts 2 to 9), were incorporated into the municipality."
+  },
+  {
+   "claim": "교통을 막는 장애물",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "This expansion made the city walls an obstacle to traffic."
+  },
+  {
+   "claim": "1857년 황제 프란츠 요제프 1세가",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "in 1857, Emperor Franz Joseph I issued the decree"
+  },
+  {
+   "claim": "이것은 나의 뜻이다",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "ordering the demolition of the city walls and moats"
+  },
+  {
+   "claim": "성벽과 해자를 허물라고 명령했습니다",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "ordering the demolition of the city walls and moats"
+  },
+  {
+   "claim": "격렬한 다툼",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe",
+   "original": "Es entstand ein heftig geführter Disput"
+  },
+  {
+   "claim": "1859년 5월 14일",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe",
+   "original": "bevor es schließlich am 14. Mai 1859 dem neu gegründeten und beim Ministerium des Innern eingerichteten"
+  },
+  {
+   "claim": "땅을 파는 일과 여러 국가 건물을 짓는 비용",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe",
+   "original": "Dieser Fonds war für die Abwicklung der Grundstücksverkäufe sowie für die anfallenden Kosten von mehreren Staatsbauten zuständig."
+  },
+  {
+   "claim": "런던·파리·베를린·바르셀로나와 달리 공개 공모",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe",
+   "original": "Anders als in den europäischen Metropolen London, Paris, Berlin oder Barcelona wurde ein öffentlicher Wettbewerb ausgeschrieben."
+  },
+  {
+   "claim": "응모작은 85편",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe",
+   "original": "gelangten insgesamt 85 Projekte im Ministerium des Innern ein"
+  },
+  {
+   "claim": "1858년 한 해에",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe",
+   "original": "von Ende Jänner bis Ende Juli 1858"
+  },
+  {
+   "claim": "적어도 55장이고, 대부분 1858년",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe",
+   "original": "Fotoserie von zumindest 55 verschiedenen Lichtbildern, die größtenteils im Jahr 1858 entstanden"
+  },
+  {
+   "claim": "1870년대 초",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe",
+   "original": "zog sich bis in die frühen 1870er Jahre hin"
+  },
+  {
+   "claim": "1865년 5월 1일",
+   "url": "https://www.geschichtewiki.wien.gv.at/Ringstra%C3%9Fe",
+   "original": "Eröffnung der Ringstraße durch Kaiser Franz Joseph I. am 1. Mai 1865."
+  },
+  {
+   "claim": "1913년 육군성 청사가 완공",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "The construction work on the Ring was not finished until 1913 with the completion of the Ministry of War"
+  },
+  {
+   "claim": "반세기 넘게",
+   "url": "https://en.wikipedia.org/wiki/Ringstra%C3%9Fe",
+   "original": "The construction work on the Ring was not finished until 1913 with the completion of the Ministry of War"
+  }
+ ]
+}

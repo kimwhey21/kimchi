@@ -1,0 +1,151 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-15",
+ "slug": "gallup-ai-fear-managers",
+ "radar_origin": "Phys.org: Workers who fear AI replacement show worse workplace behavior",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1577412647305-991150c7d163?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8ZW1wdHklMjBvZmZpY2UlMjBkZXNrfGVufDB8MHx8fDE3OTE5OTc2OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "PG8NyM_Mcts",
+  "credit": "Unsplash / Adolfo Félix"
+ },
+ "sources": [
+  {
+   "name": "갤럽",
+   "title": "Using AI More Does Not Reassure Workers, Managers Do (2026-09-09)",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx"
+  },
+  {
+   "name": "arXiv",
+   "title": "GPTs are GPTs: An Early Look at the Labor Market Impact Potential of Large Language Models",
+   "url": "https://arxiv.org/abs/2303.10130"
+  }
+ ],
+ "tags": [
+  "AI와일자리",
+  "직장인불안",
+  "갤럽"
+ ],
+ "ko": {
+  "title": "AI를 매일 쓰는 직원은 왜 더 불안할까? 갤럽이 본 직장의 차이",
+  "title_candidates": [
+   "AI를 매일 쓰는 직원은 왜 더 불안할까? 갤럽이 본 직장의 차이",
+   "AI 불안, 직원 탓일까 회사 탓일까: 갤럽 조사에서 확인할 것 세 가지",
+   "AI 쓰는 날이 늘수록 불안도 커질까? 갤럽이 확인한 두 가지"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "AI를 가장 자주 쓰는 사람이 AI 때문에 일자리를 잃을까 가장 많이 걱정합니다.\n도구에 익숙해지면 두려움이 줄 것 같은데, 미국 직장인 조사는 반대로 나왔습니다.\n같은 AI를 쓰는데도 어떤 직장에서는 불안이 커지고, 어떤 직장에서는 가라앉습니다.\n차이를 만드는 것은 기술일까요, 사람일까요?"
+   },
+   {
+    "heading": "자주 쓰는 사람의 걱정은 두 배였습니다",
+    "body": "미국 여론조사 기관 갤럽은 직장인을 2023년부터 2026년 1분기까지 네 차례 같은 방식으로 따라가며 물었습니다.\n매일 또는 주에 여러 번 AI를 쓰는 사람은 가끔 쓰는 사람보다 5년 안에 일자리가 없어질까 걱정할 확률이 두 배 넘게 높았습니다.\n일자리가 곧 사라질 가능성이 매우 높다고 답한 직장인은 대부분의 조사에서 3~4% 정도였고, 자주 쓰는 사람 쪽은 이보다 훨씬 많았습니다.\n그 격차가 가장 컸던 해는 2024년으로 6.7%포인트였습니다.\n갤럽 연구원 크리스토스 마크리디스는 이유를 이렇게 짚었습니다.\n“같은 도구가 일을 빠르게 해 주지만, 그 일을 하는 사람이 필요 없어지는 것은 아닌지 묻게 만들 수도 있습니다.”"
+   },
+   {
+    "heading": "불안은 몰입과 이직 생각으로 이어졌습니다",
+    "body": "같은 사람을 시간순으로 비교한 결과도 있습니다.\n일자리가 없어질 가능성이 어느 정도 있다고 답했을 때, 그 사람은 그렇지 않았을 때보다 업무 몰입도가 표준편차로 0.20만큼 낮았습니다.\n표준편차는 점수가 평균에서 얼마나 떨어졌는지 재는 단위입니다.\n번아웃은 0.18 높았고, 이직을 적극적으로 알아볼 확률은 4.1%포인트 높았습니다.\n갤럽은 이것이 실제 해고가 아니라 직장인의 예상을 잰 것이라고 밝혔습니다."
+   },
+   {
+    "heading": "그런데 상사가 다르면 숫자도 달랐습니다",
+    "body": "불안은 누구에게나 같은 크기로 오지 않았습니다.\n회사가 내 안녕을 챙기거나 나를 존중한다고 강하게 동의한 직장인은 일자리 걱정을 말할 확률이 6~7포인트 낮았습니다.\n자주 쓰는 사람만 따로 보면 효과가 더 컸습니다.\n존중받는다고 느끼는 사람은 AI 사용과 불안의 연결이 6.8포인트 작았고, 회사가 나를 챙긴다고 느끼는 사람은 11.1포인트 작았습니다.\n가끔 쓰는 사람은 관리 방식이 좋든 나쁘든 걱정에 큰 차이가 없었습니다."
+   },
+   {
+    "heading": "직업 탓도 있지만 전부는 아닙니다",
+    "body": "불안에는 직업의 성격도 한몫합니다.\n논문 저장소 arXiv에 올라온 ‘GPTs are GPTs’ 연구는 언어모델이 직업별 업무를 얼마나 할 수 있는지 쟀습니다.\n미국 노동자의 약 80%는 업무의 10% 이상이, 약 19%는 업무의 절반 이상이 영향받을 수 있다는 결론입니다.\n갤럽은 이 노출 지표를 직장인에게 붙여 보고, AI에 더 노출된 직업일수록 일자리 걱정이 크다는 것을 확인했습니다.\n다만 노출도가 비슷한 두 사람도 걱정의 크기가 달랐고, 갤럽은 그 틈을 조직과 관리자의 몫으로 봤습니다."
+   },
+   {
+    "heading": "같은 19%라도 뜻은 다릅니다",
+    "body": "갤럽 조사에서 2026년 1분기에 자기 일자리가 AI로 없어질 가능성이 어느 정도 이상이라고 답한 직장인은 약 19%였습니다.\n앞서 본 논문의 19%는 업무의 절반 이상이 영향받을 수 있는 노동자 비율로, 직장인의 마음이 아니라 직업의 업무 구성을 잰 값입니다.\n숫자가 같아도 하나는 일의 구조이고 하나는 사람의 예상입니다.\n이 조사는 미국 직장인이 대상이라 한국에서도 같은지는 알 수 없습니다.\n여러분의 팀은 AI를 쓰라고 하면서, 그 일이 내 역할을 어떻게 바꾸는지도 설명해 주고 있나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "두 배 넘게",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "more than twice as likely to fear their jobs will be eliminated within five years"
+  },
+  {
+   "claim": "3~4%",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "roughly 3% to 4% of workers say their job is very likely to be eliminated within five years"
+  },
+  {
+   "claim": "6.7%포인트",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "The gap reached its widest point in 2024, at 6.7 percentage points."
+  },
+  {
+   "claim": "네 차례",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "The findings draw from four waves of nationally representative data collected from employed adults in the U.S."
+  },
+  {
+   "claim": "2023년부터 2026년 1분기까지",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "between 2023 and early 2026"
+  },
+  {
+   "claim": "같은 도구가 일을 빠르게 해 주지만, 그 일을 하는 사람이 필요 없어지는 것은 아닌지 묻게 만들 수도 있습니다",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "The same tool that speeds up a task can also raise the question of whether the person doing the task is becoming redundant."
+  },
+  {
+   "claim": "표준편차로 0.20만큼 낮았습니다",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "scored 0.20 standard deviations lower on employee engagement than when they reported no such concern"
+  },
+  {
+   "claim": "번아웃은 0.18 높았고",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "The same pattern held for burnout (0.18 standard deviations higher)"
+  },
+  {
+   "claim": "4.1%포인트 높았습니다",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "job search activity (4.1 points more likely to be actively looking)"
+  },
+  {
+   "claim": "6~7포인트 낮았습니다",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "Employees who strongly agree on either item are about six to seven points less likely to report displacement concern"
+  },
+  {
+   "claim": "6.8포인트 작았고",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "the association between frequent AI use and displacement fear is 6.8 points smaller"
+  },
+  {
+   "claim": "11.1포인트 작았습니다",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "an 11.1-point smaller association for those who feel the organization cares about their wellbeing"
+  },
+  {
+   "claim": "약 80%는 업무의 10% 이상이, 약 19%는 업무의 절반 이상이",
+   "url": "https://arxiv.org/abs/2303.10130",
+   "original": "around 80% of the U.S. workforce could have at least 10% of their work tasks affected by the introduction of LLMs, while approximately 19% of workers may see at least 50% of their tasks impacted"
+  },
+  {
+   "claim": "노출된 직업일수록",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "workers in more AI-exposed jobs are also more likely to fear that their jobs could be displaced by AI"
+  },
+  {
+   "claim": "약 19%였습니다",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "roughly 19% of all workers, as of the first quarter of 2026, say their job is somewhat or very likely to be eliminated by AI"
+  },
+  {
+   "claim": "2026년 1분기",
+   "url": "https://www.gallup.com/workplace/713231/ai-not-reassure-workers-managers-do.aspx",
+   "original": "as of the first quarter of 2026, say their job is somewhat or very likely to be eliminated by AI"
+  },
+  {
+   "claim": "업무의 절반 이상이 영향받을 수 있는 노동자 비율",
+   "url": "https://arxiv.org/abs/2303.10130",
+   "original": "approximately 19% of workers may see at least 50% of their tasks impacted"
+  }
+ ]
+}
