@@ -45,7 +45,7 @@ add_filter( 'the_content', function ( $content ) {
 	if ( ! has_category( array_merge( fermata_daily_cats(), array( 153 ) ) ) ) {
 		return $content;
 	}
-	return $content . '<p class="fermata-ai-note" style="font-size:12px;line-height:1.5;color:#8b929b;margin-top:28px;">'
+	return $content . '<p class="fermata-ai-note" style="font-size:12px;line-height:1.5;color:#8b929b;max-width:760px;margin:28px auto 0;">'
 		. 'Drafted with AI assistance and reviewed by the Fermata Editorial Team.</p>';
 }, 20 );
 
