@@ -1,8 +1,10 @@
 {
- "base": {},
- "day": "2026-10-13",
- "issues": {
+ "base": {
   "# 페이지에서 가격·날짜를 못 읽었습니다(HTTP #)": 1,
   "작업 publish_check.yml (#): 실패": 1
+ },
+ "day": "2026-10-14",
+ "issues": {
+  "본진 us # [en]: 글은 공개됐는데 사이트맵(/wp-sitemap.xml)에 없습니다 (https://fermata.it.kr/editorial-us-#en/). 사이트맵이 멈췄습니다 — 검색엔진이 새 글을 못 찾습니다(#·#에 겪은 일).": 1
  }
 }
