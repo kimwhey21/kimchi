@@ -114,3 +114,22 @@ class CoverColourTest(unittest.TestCase):
         self.assertEqual(fg._side_colour({"value": "+4.61%"}, fg.UP), fg.UP)
         self.assertEqual(fg._side_colour({"value": "5.31%"}, fg.INK), fg.INK)
         self.assertEqual(fg._side_colour({"value": "1,200원", "down": True}, fg.UP), fg.DOWN)
+
+
+class MagazineTitleQuoteTest(unittest.TestCase):
+    """잡지 제목의 따옴표 인용(2026-10-14): 외국어에서 옮긴 말은 막고, 한국어 원문이 근거 표에 있으면 둔다."""
+
+    def _doc(self, original: str) -> dict:
+        return {"date": "2026-10-15", "ko": {"title": "에콰도르는 왜 ‘화폐 자살’이라던 달러를 끝내 못 버렸을까"},
+                "evidence": [{"claim": "화폐 자살", "url": "https://x", "original": original}]}
+
+    def test_translated_quote_blocked(self) -> None:
+        self.assertTrue(feature_checks.title_quote_issues(self._doc("he called it “monetary suicide.”")))
+
+    def test_korean_original_allowed(self) -> None:
+        self.assertEqual(feature_checks.title_quote_issues(self._doc("그는 이를 ‘화폐 자살’이라 불렀다")), [])
+
+    def test_older_manuscripts_untouched(self) -> None:
+        doc = self._doc("monetary suicide")
+        doc["date"] = "2026-10-14"
+        self.assertEqual(feature_checks.title_quote_issues(doc), [])

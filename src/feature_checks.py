@@ -463,6 +463,27 @@ def pius_issues(doc: dict) -> list[str]:
     return issues
 
 
+MAGAZINE_TITLE_QUOTE_FROM = "2026-10-15"   # 이 날짜 원고부터 — 제목 속 번역 인용 금지
+_TITLE_QUOTE = re.compile(r"[‘'“\"]([^’'”\"]{2,30})[’'”\"]")
+_HANGUL = re.compile(r"[가-힣]")
+
+
+def title_quote_issues(doc: dict) -> list[str]:
+    """잡지 제목의 따옴표 인용은 한국어 원문이 근거 표에 있을 때만(2026-10-14). 외국어 인용을 옮긴 말(`monetary suicide` →
+    「화폐 자살」)을 제목에 올리면 국내 독자는 처음 보는 말을 제목에서 만난다 — 본문에서는 뜻을 풀어 쓸 수 있지만 제목은 풀 자리가 없다."""
+    if str(doc.get("date") or "") < MAGAZINE_TITLE_QUOTE_FROM:
+        return []
+    ko = doc.get("ko") or doc
+    issues: list[str] = []
+    for quoted in _TITLE_QUOTE.findall(str(ko.get("title") or "")):
+        korean = [e for e in doc.get("evidence") or [] if isinstance(e, dict) and quoted in str(e.get("claim") or "")
+                  and _HANGUL.search(str(e.get("original") or ""))]
+        if not korean:
+            issues.append(f"제목의 따옴표 '{quoted}' — 외국어에서 옮긴 인용은 제목에 넣지 않습니다(국내 독자에게 처음 보는 말이 됩니다). "
+                          "한국어 원문이 근거 표에 있는 말만 따옴표로 올리고, 아니면 뜻을 우리말로 풀어 제목을 쓰십시오.")
+    return issues
+
+
 def magazine_issues(doc: dict) -> list[str]:
     """본문 길이·절 수·출처 표기·코너 — 잡지 한 편의 꼴. 본진에 안 가는 글이라 여기서만 본다(브리핑은 싣지 않는다)."""
     issues: list[str] = []
@@ -488,6 +509,7 @@ def magazine_issues(doc: dict) -> list[str]:
     if not (doc.get("featured_photo") or {}).get("url"):
         issues.append("표지 사진(`featured_photo.url`)이 없습니다 — 참고 블로그는 글마다 사진 한 장. 대조표를 눈으로 보고 고른 Unsplash 주소.")
     issues += position_issues(body)
+    issues += title_quote_issues(doc)
     return issues
 
 
