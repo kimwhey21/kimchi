@@ -1,0 +1,136 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장의 역사",
+ "date": "2026-10-16",
+ "slug": "great-moon-hoax-penny-press",
+ "radar_origin": "Big Think: Before Jules Verne, Edgar Allan Poe imagined the Space Age",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1720731375441-80fa2aa8e87b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8ZnVsbCUyMG1vb24lMjBuaWdodCUyMHNreXxlbnwwfDB8fHwxNzkyMDg0MzU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "eZXPRcXFcbA",
+  "credit": "Unsplash / Nan Zhou"
+ },
+ "sources": [
+  {
+   "name": "JSTOR 데일리",
+   "title": "How the Sun Conned the World With “The Great Moon Hoax”",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax"
+  },
+  {
+   "name": "위키백과",
+   "title": "Great Moon Hoax",
+   "url": "https://en.wikipedia.org/wiki/Great_Moon_Hoax"
+  }
+ ],
+ "tags": [
+  "달사기극",
+  "페니프레스",
+  "가짜뉴스의역사"
+ ],
+ "ko": {
+  "title": "정정 보도 없이 부수가 늘었다: 달 박쥐 인간 보도의 뒷이야기",
+  "title_candidates": [
+   "정정 보도 없이 부수가 늘었다: 달 박쥐 인간 보도의 뒷이야기",
+   "가짜 뉴스로 가장 많이 팔린 신문: 1835년 달 사기극에서 볼 것",
+   "달에 박쥐 인간이 산다던 1835년 신문, 독자는 왜 믿었을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "달에 키 4피트, 그러니까 120센티미터쯤의 ‘박쥐 인간’이 산다는 기사가 신문에 실렸습니다. 구릿빛 털에 막 같은 날개를 가진 생명체였습니다.\n거짓이었는데도 신문은 끝내 정정하지 않았고, 부수는 오히려 늘었다고 합니다.\n1835년 여름 뉴욕에서 있었던 일입니다. 가짜 뉴스는 왜 팔릴까요, 그리고 그때 신문은 무엇을 팔고 있었을까요?"
+   },
+   {
+    "heading": "진짜 천문학자의 이름을 빌렸습니다",
+    "body": "기사를 낸 곳은 뉴욕의 신문 ‘선(Sun)’입니다. JSTOR 데일리는 이 이야기가 실제 천문학자 존 허셜의 남아프리카 관측 여행이라는 ‘진실의 씨앗’ 위에 지어졌다고 설명합니다.\n기사 쓴 사람은 신문 편집자 리처드 애덤스 로크였고, 글쓴이로 내세운 앤드루 그랜트 박사는 지어낸 인물이었습니다.\n기사는 허셜이 거대한 망원경으로 달을 들여다봤다는 형식을 취했습니다. 그 안의 한 대목은 이렇습니다.\n“그 동물은 새끼를 사람처럼 품에 안고 다녔고, 오두막도 야만 부족 상당수의 것보다 더 잘, 더 높게 지어져 있었다.”\n물론 허셜이 한 말이 아니라 로크가 지어낸 문장입니다."
+   },
+   {
+    "heading": "페니 프레스라는 장사법",
+    "body": "이 신문은 ‘페니 프레스(penny press)’였습니다. 한 부에 1페니, 즉 아주 싼 값에 길거리에서 팔던 신문입니다.\nJSTOR 데일리는 불과 살인, 스캔들을 노동자와 이민자 독자에게 내놓은 타블로이드 같은 신문이었다고 적었습니다.\n위키백과는 이런 신문이 수입의 큰 몫을 광고로 얻었고, 그 방식은 독자가 많아야 유지됐다고 설명합니다.\n독자가 곧 광고 단가를 뜻하는 구조에서 ‘달 이야기’는 가장 잘 팔리는 상품이었습니다."
+   },
+   {
+    "heading": "부수는 얼마나 늘었을까",
+    "body": "JSTOR 데일리는 달에 생명이 산다는 보도 이후 이 신문이 한때 세계에서 가장 많이 읽히는 신문이 됐다며 부수를 1만 9,360부라고 소개합니다. 소식이 불티나게 팔려 인쇄 부수도 더 늘려야 했습니다.\n하지만 위키백과는 같은 이야기를 조심스럽게 다룹니다. 대중적으로 알려진 부수 증가 폭은 분명 부풀려졌다는 것입니다.\n사기극이라는 사실은 몇 주 동안 드러나지 않았고, 드러난 뒤에도 신문은 정정 보도를 내지 않았다고 합니다.\n숫자 하나가 곧 사실이 되는 과정까지 이 이야기의 일부인 셈입니다."
+   },
+   {
+    "heading": "독자들은 왜 믿었을까",
+    "body": "당시 사람들은 대체로, 적어도 처음에는 이 기사를 믿었다고 JSTOR 데일리는 전합니다. 예일대에서는 교수와 학생들이 다음 회를 기다렸고, 선교사들은 달의 박쥐 인간에게 성경을 전할 방법을 고민했습니다.\n경쟁 신문이 가짜라고 폭로한 뒤에도 같은 이야기를 담은 소책자는 4만 부나 팔렸습니다.\n이 사건을 연구한 학자 이슈트반 코르넬 비더는 로크가 풍자하려던 것이 당시 유행한 ‘다수의 세계’ 이론이었다고 짚습니다.\n그리고 풍자가 실패한 이유를 이렇게 말합니다.\n“풍자가 나빠서가 아니라 너무 훌륭해서였다. 적어도 잠깐은, 사람들이 그것을 당연하게 받아들였다.”"
+   },
+   {
+    "heading": "같은 해 달에 간 작가가 한 명 더 있었습니다",
+    "body": "에드거 앨런 포는 그해 6월 열기구로 달에 다녀온다는 단편 「한스 팔의 비할 데 없는 모험」을 한 잡지에 실었습니다. JSTOR 데일리는 이 이야기를 이어 쓰려던 포의 계획이 로크의 기사에 가려졌다고 전합니다.\n위키백과도 포의 이야기가 같은 해 8월 기사보다 앞섰지만 풍자와 익살이 짙어 로크의 것만큼 성공하지는 못했다고 적었습니다.\n포는 훗날 그 신문에 대서양을 열기구로 사흘 만에 건넜다는 기사를 실었는데, 이것도 사기극이었습니다.\n광고로 먹고사는 매체가 가장 잘 팔리는 이야기를 고르는 구조는 이때 시작된 걸까요? 오늘 내 화면에 먼저 뜨는 이야기는 누구의 장사일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1835년 여름",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax",
+   "original": "The birth of the penny press, the first mass media, was very much mixed up with fake news, including the Great Moon Hoax of 1835."
+  },
+  {
+   "claim": "키 4피트, 그러니까 120센티미터쯤",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax",
+   "original": "The ultimate “discovery,” however, was that the place was simply buzzing with four-foot-tall creatures with copper-colored hair and membranous wings."
+  },
+  {
+   "claim": "그 동물은 새끼를 사람처럼 품에 안고 다녔고",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax",
+   "original": "“It carried its young in its arms like a human being, and its huts were constructed better and higher than those of many tribes of human savages.”"
+  },
+  {
+   "claim": "글쓴이로 내세운 앤드루 그랜트 박사는 지어낸 인물",
+   "url": "https://en.wikipedia.org/wiki/Great_Moon_Hoax",
+   "original": "but Grant was fictitious."
+  },
+  {
+   "claim": "한 부에 1페니",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax",
+   "original": "cost a penny and was hawked on the street by newsboys trying to scrape together enough pennies to avoid having to sleep on the street."
+  },
+  {
+   "claim": "수입의 큰 몫을 광고로",
+   "url": "https://en.wikipedia.org/wiki/Great_Moon_Hoax",
+   "original": "which received much of their income from advertisements,"
+  },
+  {
+   "claim": "1만 9,360부",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax",
+   "original": "And the paper really hit the big time, and quickly became the most widely read newspaper in the world (circulation: 19,360!) when it started reporting that the Moon was inhabited."
+  },
+  {
+   "claim": "부수 증가 폭은 분명 부풀려졌다",
+   "url": "https://en.wikipedia.org/wiki/Great_Moon_Hoax",
+   "original": "However, the degree to which the hoax increased the paper's circulation has certainly been exaggerated in popular accounts of the event."
+  },
+  {
+   "claim": "몇 주 동안 드러나지 않았고",
+   "url": "https://en.wikipedia.org/wiki/Great_Moon_Hoax",
+   "original": "It was not discovered to be a hoax for several weeks after its publication and, even then, the newspaper did not issue a retraction."
+  },
+  {
+   "claim": "소책자는 4만 부나",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax",
+   "original": "Afterwards, people would insist they were in on it from the first, yet a pamphlet repeating the story sold an astronomical forty thousand copies."
+  },
+  {
+   "claim": "풍자가 나빠서가 아니라 너무 훌륭해서였다",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax",
+   "original": "But Locke’s satire failed “not because it was bad, but because it was too good; people took it for granted—at least for a short period of time.”"
+  },
+  {
+   "claim": "그해 6월",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax",
+   "original": "Poe’s own story, “The Unparalleled Adventure of One Hans Pfaall,” published in"
+  },
+  {
+   "claim": "같은 해 8월 기사보다",
+   "url": "https://en.wikipedia.org/wiki/Great_Moon_Hoax",
+   "original": "The Poe Moon hoax was less successful than Locke's because of the satiric and comical tone of the account."
+  },
+  {
+   "claim": "대서양을 열기구로 사흘 만에",
+   "url": "https://daily.jstor.org/how-the-sun-conned-the-world-with-the-moon-hoax",
+   "original": "In 1844, the paper, still edited by Locke, published an"
+  }
+ ]
+}

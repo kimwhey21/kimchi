@@ -1,0 +1,136 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-16",
+ "slug": "fed-beige-book-ai-hiring-freeze",
+ "radar_origin": "24/7 Wall St.: AI Isn’t Coming for American Jobs Someday. The Fed Says It’s Already Happening.",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1718220216044-006f43e3a9b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8ZW1wdHklMjBvZmZpY2UlMjBkZXNrc3xlbnwwfDB8fHwxNzkyMDg0MTkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "pYlBAu3de0w",
+  "credit": "Unsplash / Bernd Dittrich"
+ },
+ "sources": [
+  {
+   "name": "연준 베이지북",
+   "title": "Beige Book - October 2026: Summary of Commentary",
+   "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-summary.htm"
+  },
+  {
+   "name": "연준 베이지북",
+   "title": "Beige Book - October 2026: Dallas",
+   "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-dallas.htm"
+  },
+  {
+   "name": "연준 베이지북",
+   "title": "Beige Book - October 2026: Minneapolis",
+   "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-minneapolis.htm"
+  },
+  {
+   "name": "24/7 월스트리트",
+   "title": "AI Isn’t Coming for American Jobs Someday. The Fed Says It’s Already Happening. (2026-10-15)",
+   "url": "https://247wallst.com/investing/2026/10/15/ai-isnt-coming-for-american-jobs-someday-the-fed-says-its-already-happening/"
+  }
+ ],
+ "tags": [
+  "연준",
+  "베이지북",
+  "AI와고용"
+ ],
+ "ko": {
+  "title": "사람을 뽑지 않아도 일이 돌아간다: 연준 보고서가 짚은 채용의 변화",
+  "title_candidates": [
+   "사람을 뽑지 않아도 일이 돌아간다: 연준 보고서가 짚은 채용의 변화",
+   "퇴직자 자리를 왜 안 채울까? 연준 보고서에 적힌 기업들의 속사정",
+   "연준이 본 채용 시장: 해고는 없는데 새 일자리는 왜 줄까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "해고 통보를 받은 사람은 거의 없는데, 일자리가 조용히 줄고 있다면 어떻게 알 수 있을까요?\n미국 연방준비제도(연준)가 10월 경기 보고서에서 그 흔적을 적었습니다. 12개 지역 가운데 다섯 곳에서 인공지능에 투자해 생산성을 높인 기업이 사람을 덜 쓰려 한다는 내용입니다.\n인공지능이 일자리를 없애는 걸까요, 아니면 생겼어야 할 일자리가 안 생기는 걸까요?"
+   },
+   {
+    "heading": "연준은 정확히 무엇을 적었을까",
+    "body": "이 보고서의 이름은 베이지북(Beige Book)입니다. 각 지역 연방준비은행이 지역 기업인들에게 들은 경기 상황을 모아 정리한 문서입니다.\n연준 베이지북 요약은 전체 고용이 거의 그대로라고 적었습니다. 세 지역은 소폭 늘었고, 다섯 지역은 약간 늘었고, 네 지역은 뚜렷한 변화가 없었습니다.\n그런데 같은 요약 속에 이런 대목이 있습니다. 다섯 지역에서 일부 기업이 인공지능으로 생산성을 높인 뒤 자연감소로 인원을 줄이거나, 채용을 미루거나, 앞으로 일자리가 덜 생길 것으로 내다봤다는 것입니다.\n자연감소는 퇴직자의 자리를 새로 채우지 않아 인원이 저절로 줄어드는 방식을 말합니다."
+   },
+   {
+    "heading": "해고가 아니라 ‘뽑지 않음’이었습니다",
+    "body": "미국 경제 매체 24/7 월스트리트는 이 점을 먼저 짚었습니다. 보고서는 인공지능 때문에 해고가 널리 일어났다고 말하지 않는다는 것입니다.\n미니애폴리스 지역의 정보기술 인력 업체들이 들려준 말이 그 예입니다. 인공지능이 해고를 일으키는 건 아니지만 새 일자리가 생기는 속도를 늦추고 있다는 것입니다.\n댈러스 지역에서는 한 회계 업계 관계자가 큰 회계법인들이 신입 채용 계약을 미루고 있다고 전했습니다. 인공지능 덕에 일이 효율적으로 처리되어 신입이 예상만큼 많이 필요하지 않을 수 있어서입니다.\n떠나는 사람은 없는데 들어올 사람의 자리가 사라지는 셈입니다."
+   },
+   {
+    "heading": "그래도 일은 새로 생기고 있습니다",
+    "body": "반대쪽 장면도 보고서에 있습니다. 댈러스의 한 인력 파견 업체는 인공지능 에이전트로 이틀 동안 180시간이 넘는 면접을 진행했습니다.\n그러자 그 결과를 검토하고 결정을 내릴 사람이 필요해져 채용 담당자를 새로 뽑았다고 합니다.\n위스콘신의 한 인력 관련 담당자는 현장의 온도를 이렇게 전했습니다.\n“예전에 비해 채용 속도가 느려졌지만, 기회는 여전히 많이 있습니다.”\n24/7 월스트리트도 같은 단서를 답니다. 인공지능과 기술 업계 감원의 관계가 늘 단순하지 않고, 기업들이 약한 수요와 자금 조달 비용, 지난 과잉 채용에 반응하기도 한다는 것입니다."
+   },
+   {
+    "heading": "기업의 돈은 어디로 가고 있을까",
+    "body": "같은 매체는 아마존, 마이크로소프트, 알파벳, 메타가 올해 인공지능 설비투자로 모두 7,570억 달러를 쓰면서 동시에 인력 감축도 추진하고 있다고 정리했습니다.\n사람에게 쓰던 돈이 기계와 데이터센터로 옮겨 가는 그림입니다. 다만 7,570억 달러는 그 매체가 소개한 투자은행 추정치이고, 연준 보고서에 있는 숫자는 아닙니다.\n연준 보고서에는 다른 숫자가 있습니다. 대부분의 지역에서 소비는 전반적으로 정체였고, 절반이 넘는 지역에서 소비가 소득 높은 가구에 크게 기대고 있다고 했습니다."
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까요",
+    "body": "정리하면 지금까지 드러난 것은 대량 해고가 아니라 채용의 속도 조절입니다. 신입과 새 일자리의 문이 먼저 좁아지고 있다는 신호이고, 아직은 다섯 지역의 이야기입니다.\n해고율이 오르지 않아도 일자리의 질은 달라질 수 있습니다. 이 보고서가 가리키는 사람은 ‘잘린 사람’이 아니라 ‘뽑히지 못한 사람’입니다.\n여러분의 회사에서 올해 퇴직자의 빈자리는 채워졌나요? 일자리의 변화를 볼 때 해고 소식만큼 채용 공고의 수도 함께 살펴야 하지 않을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "12개 지역 가운데 다섯 곳",
+   "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-summary.htm",
+   "original": "Five Districts reported that some firms had either reduced staffing levels (through attrition), delayed hiring, or anticipated less job creation after increasing productivity by investing in AI."
+  },
+  {
+   "claim": "세 지역은 소폭 늘었고, 다섯 지역은 약간 늘었고, 네 지역은",
+   "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-summary.htm",
+   "original": "While three Districts described modest increases, five reported slight increases, and four reported no significant change."
+  },
+  {
+   "claim": "다섯 지역에서 일부 기업이",
+   "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-summary.htm",
+   "original": "Five Districts reported that some firms had either reduced staffing levels (through attrition), delayed hiring, or anticipated less job creation after increasing productivity by investing in AI."
+  },
+  {
+   "claim": "인공지능이 해고를 일으키는 건 아니지만",
+   "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-minneapolis.htm",
+   "original": "IT staffing contacts reported that artificial intelligence was not causing layoffs but was dampening the creation of new jobs."
+  },
+  {
+   "claim": "이틀 동안 180시간이 넘는 면접",
+   "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-dallas.htm",
+   "original": "citing the example of having AI agents conduct more than 180 hours of interviews in a two-day period and needing workers to review and make decisions."
+  },
+  {
+   "claim": "예전에 비해 채용 속도가 느려졌지만, 기회는 여전히 많이 있습니다",
+   "url": "https://www.federalreserve.gov/monetarypolicy/beigebook202610-minneapolis.htm",
+   "original": "“Hiring has slowed compared with what we were seeing before, but there are still plenty of opportunities out there.”"
+  },
+  {
+   "claim": "7,570억 달러를 쓰면서",
+   "url": "https://247wallst.com/investing/2026/10/15/ai-isnt-coming-for-american-jobs-someday-the-fed-says-its-already-happening/",
+   "original": "Amazon, Microsoft, Alphabet, and Meta are collectively spending $757 billion on AI capex in 2026 while simultaneously pursuing job reductions."
+  },
+  {
+   "claim": "7,570억 달러는",
+   "url": "https://247wallst.com/investing/2026/10/15/ai-isnt-coming-for-american-jobs-someday-the-fed-says-its-already-happening/",
+   "original": "Goldman Sachs estimated that"
+  },
+  {
+   "claim": "절반이 넘는 지역에서",
+   "url": "https://247wallst.com/investing/2026/10/15/ai-isnt-coming-for-american-jobs-someday-the-fed-says-its-already-happening/",
+   "original": "More than half reported that spending depended heavily on higher-income households."
+  },
+  {
+   "claim": "10월 경기 보고서",
+   "url": "https://247wallst.com/investing/2026/10/15/ai-isnt-coming-for-american-jobs-someday-the-fed-says-its-already-happening/",
+   "original": "The Federal Reserve’s October 2026 Beige Book offers one of the clearest indications yet that artificial intelligence is affecting American jobs."
+  },
+  {
+   "claim": "24/7 월스트리트는 이 점을 먼저",
+   "url": "https://247wallst.com/investing/2026/10/15/ai-isnt-coming-for-american-jobs-someday-the-fed-says-its-already-happening/",
+   "original": "Importantly, the Beige Book doesn’t say AI caused widespread layoffs in five districts."
+  },
+  {
+   "claim": "24/7 월스트리트도 같은 단서를",
+   "url": "https://247wallst.com/investing/2026/10/15/ai-isnt-coming-for-american-jobs-someday-the-fed-says-its-already-happening/",
+   "original": "Companies also respond to weak demand, financing costs, and previous overhiring."
+  }
+ ]
+}
