@@ -18355,6 +18355,12 @@
 "pref": false,
 "web": "www.adbiotech.com"
 },
+"179880": {
+"corp": null,
+"en": "",
+"name": "",
+"pref": false
+},
 "179900": {
 "corp": "00961774",
 "en": "Uti Inc.",
@@ -20703,6 +20709,16 @@
 "name": "Boratr",
 "pref": false,
 "web": "www.boratr.co.kr"
+},
+"250030": {
+"corp": "01158632",
+"en": "Jincostech Co., Ltd.",
+"founded": "2010",
+"industry": "Chemicals",
+"ksic": "20423",
+"name": "Jincostech",
+"pref": false,
+"web": "www.jincostech.com"
 },
 "250060": {
 "corp": "01165155",
