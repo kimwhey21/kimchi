@@ -25,6 +25,11 @@ def _paras(doc: dict) -> list[str]:
     return [p for s in doc["ko"]["narrative"] for p in s["body"].split("\n") if p.strip()]
 
 
+FIXTURE_RECENT = ["사상 최고치 미국 증시, 이득은 누구에게 가장 많이 쌓였을까", "테슬라는 왜 추정치를 넘기고도 물음표를 남겼을까",
+                  "네 돌 맞은 미국 강세장, 금리를 버텨낼까요?", "맥킨지의 AI 일자리: 늘어나는 곳과 줄어드는 곳이 다릅니다",
+                  "쥐라기의 작은 동물은 왜 이미 포유류였을까"]
+
+
 class DefaultForm(unittest.TestCase):
     def test_the_new_fixture_passes(self) -> None:
         doc = _doc()
@@ -38,7 +43,10 @@ class DefaultForm(unittest.TestCase):
         from src import evidence_check
         doc = copy.deepcopy(_doc())
         page = evidence_check.normalize(" ".join(e["original"] for e in doc["evidence"]))
-        with mock.patch.object(evidence_check, "page_text", lambda url: page):
+        # 최근 잡지 제목과의 대조는 그날 원고에 따라 달라진다(2026-10-15 실제 잡지가 같은 '세 가지'로 끝나 막혔다) — 견본을 쓴 날(10/12)의
+        # 실제 최근 다섯 편으로 고정한다(제목 후보 점수가 이 목록으로 매겨졌다)
+        with mock.patch.object(evidence_check, "page_text", lambda url: page), \
+                mock.patch.object(feature_gate, "recent_titles", return_value=FIXTURE_RECENT):
             result = feature_gate.run(doc, graphics=0, path=FIXTURE)
         self.assertEqual(result["blocking"], [])
 

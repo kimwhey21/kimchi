@@ -105,7 +105,8 @@ class GateTest(unittest.TestCase):
     def test_the_fixture_passes_the_whole_feature_gate(self) -> None:
         from unittest import mock
         from src import evidence_check   # 옛 꼴 견본은 근거 표가 없는 예시다 — 근거 검사는 test_evidence_check가 본다(2026-10-06)
-        with mock.patch.object(evidence_check, "evidence_issues", return_value=[]):
+        with mock.patch.object(evidence_check, "evidence_issues", return_value=[]), \
+                mock.patch.object(feature_gate, "recent_titles", return_value=[]):   # 그날 원고에 흔들리지 않게(2026-10-15)
             result = feature_gate.run(copy.deepcopy(_doc()), graphics=0, path=FIXTURE)
         self.assertEqual(result["blocking"], [])
 
