@@ -18356,10 +18356,14 @@
 "web": "www.adbiotech.com"
 },
 "179880": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01028933",
+"en": "Melcon Co., Ltd.",
+"founded": "2003",
+"industry": "Machinery",
+"ksic": "292",
+"name": "Melcon",
+"pref": false,
+"web": "www.melcon.co.kr"
 },
 "179900": {
 "corp": "00961774",
