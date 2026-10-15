@@ -1,54 +1,56 @@
-[밸류에이션] US · 2026-10-15 · FWD PER 중앙값 24.3
+[밸류에이션] US · 2026-10-15 · FWD PER 중앙값 24.4
   (목표가까지 = 목표주가가 지금 주가보다 몇 % 높은가 · 주가 위치 = 지금 주가가 목표주가보다 몇 % 낮은가 — 둘은 다른 숫자)
   종목            FWD PER      목표가까지      주가 위치     52주고점 대비    애널
-  마이크론              4.5     +70.7%     -41.4%       -27.2%    46
-  엔비디아             13.9     +48.5%     -32.7%        -9.1%    59
-  머크               15.9      +7.6%      -7.1%        -6.1%    25
-  메타               21.3     +10.3%      -9.3%        -5.4%    58
-  마이크로소프트          22.5     +10.6%      -9.6%        -3.6%    53
-  알파벳              22.8     +23.8%     -19.2%       -14.9%    54
-  아마존              24.3     +30.4%     -23.3%       -11.5%    58
+  마이크론              4.6     +67.6%     -40.3%       -25.8%    46
+  엔비디아             13.6     +51.3%     -33.9%       -10.7%    59
+  머크               15.6      +9.3%      -8.5%        -7.5%    25
+  메타               21.3     +10.4%      -9.4%        -5.5%    58
+  마이크로소프트          22.8     +10.2%      -9.3%        -2.6%    53
+  알파벳              22.9     +23.3%     -18.9%       -14.5%    54
+  아마존              24.4     +30.1%     -23.1%       -11.3%    58
   디어               28.6      +6.7%      -6.3%        -9.8%    23
-  애플               35.8      -4.0%      +4.2%        -1.5%    39
-  월마트              36.0      +9.1%      -8.3%       -14.1%    40
-  인텔               46.7     +20.3%     -16.9%       -31.1%    43
-  코인베이스            57.4     +22.7%     -18.5%       -53.7%    33
-  테슬라             169.3      +8.4%      -7.7%       -26.4%    38
+  애플               35.7      -3.7%      +3.8%        -1.8%    39
+  월마트              36.6      +8.0%      -7.4%       -12.8%    40
+  인텔               45.3     +23.8%     -19.2%       -33.0%    43
+  코인베이스            61.1     +15.4%     -13.3%       -50.8%    33
+  테슬라             167.1      +9.8%      -8.9%       -27.3%    38
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 24건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 31건은 뺐습니다)
   2026-10-15 ▲ 월마트          Deutsche Bank: Hold → Buy
 
-[월가 리포트] US · 오늘 · 28건 (상향 10 하향 3 신규 9 목표가 상향 0 하향 0) · 출처 marketbeat
-  CASY   ▲ 상향     Royal Bank Of Canada      Sector Perform → Outperform $825.00
-  CROX   ▲ 상향     Barclays                  Positive → Overweight    $139.00
+[월가 리포트] US · 오늘 · 428건 (상향 20 하향 11 신규 43 목표가 상향 97 하향 140) · 출처 marketbeat
+  ACI    ▼ 하향     JPMorgan Chase & Co.      Overweight → Neutral     $14.00
+  ACI    ▼ 하향     The Goldman Sachs Group   Buy → Neutral            $13.00
+  BAC    ▲ 상향     Robert W. Baird           Neutral → Outperform     $62.00
+  BDRBF  ▲ 상향     National Bank Financial   Sector Perform → Outperform 
+  BHF    ▲ 상향     JPMorgan Chase & Co.      Underweight → Neutral    $63.00 → $55.00
+  BWA    ▲ 상향     Bank of America           Neutral → Buy            $78.00 → $85.00
+  CASY   ▲ 상향     Royal Bank Of Canada      Sector Perform → Outperform $910.00 → $825.00
+  CCC    ▼ 하향     William Blair             Market Perform           
+  CCC    ▼ 하향     Jefferies Financial Grou  Buy → Hold               $7.75
+  CLVT   ▼ 하향     William Blair             Market Perform           
+  CROX   ▲ 상향     Barclays                  Equal Weight → Overweight $118.00 → $139.00
   CRUS   ▼ 하향     KeyCorp                   Overweight → Sector Weight 
-  CX     ▲ 상향     Citigroup                 Neutral → Buy            
-  FTRE   ▲ 상향     Deutsche Bank Aktiengese  Hold → Buy               
-  IONS   ▲ 상향     UBS Group                 Neutral → Buy            $88.00
+  CX     ▲ 상향     Citigroup                 Neutral → Buy            $13.70 → $12.00
+  DCH    ▼ 하향     Bank of America           Buy → Underperform       $5.00
+  FTRE   ▲ 상향     Deutsche Bank Aktiengese  Hold → Buy               $20.00 → $25.00
+  IONS   ▲ 상향     UBS Group                 Neutral → Buy            $46.00 → $88.00
   JCDXF  ▲ 상향     Deutsche Bank Aktiengese  Hold → Buy               
-  PARR   ▼ 하향     The Goldman Sachs Group   Buy → Neutral            
-  QNT    ▲ 상향     Morgan Stanley            Overweight               $62.00
+  KMX    ▲ 상향     Bank of America           Underperform → Buy       $50.00 → $65.00
+  LAC    ▲ 상향     Canaccord Genuity Group   Hold → Speculative Buy   
+  MT     ▲ 상향     JPMorgan Chase & Co.      Neutral → Overweight     
+  PARR   ▼ 하향     The Goldman Sachs Group   Buy → Neutral            $90.00 → $94.00
+  QNT    ▲ 상향     Morgan Stanley            Equal Weight → Overweight $78.00 → $62.00
+  REGN   ▲ 상향     UBS Group                 Neutral → Buy            $660.00 → $978.00
   RXO    ▼ 하향     Citigroup                 Neutral → Market Perform 
+  RXO    ▼ 하향     Citizens Jmp              Outperform → Market Perform 
   SGBAF  ▲ 상향     Oddo Bhf                  Outperform               
-  SMG    ▲ 상향     UBS Group                 Neutral → Buy            
-  WMT    ▲ 상향     Deutsche Bank Aktiengese  Hold → Buy               
-  AU     · 신규     The Goldman Sachs Group   Reduce → Buy             $104.00
-  CRSP   · 신규     UBS Group                 Buy → Neutral            $52.00
-  GFI    · 신규     The Goldman Sachs Group   Neutral                  $38.00
-  HAWK   · 신규     Piper Sandler             Overweight               $22.00
-  MTN    · 신규     Citigroup                 Market Perform           
-  RAPP   · 신규     UBS Group                 Strong-Buy → Buy         $71.00
-  RDW    · 신규     Piper Sandler             Neutral                  $11.00
-  WVE    · 신규     UBS Group                 Buy                      $11.00
-  YSS    · 신규     Piper Sandler             Neutral                  $9.00
-  APPS   · 목표가    Roth Capital                                       $19.00
-  ASND   · 목표가    UBS Group                                          $269.00
-  BBIO   · 목표가    UBS Group                                          $92.00
-  NFLX   · 목표가    Jefferies Financial Grou                           $85.00
-  PTCT   · 목표가    UBS Group                                          $90.00
-  QURE   · 목표가    UBS Group                                          $48.00
+  SIEGY  ▼ 하향     Jefferies Financial Grou  Buy → Hold               
+  SMG    ▲ 상향     UBS Group                 Neutral → Buy            $78.00 → $70.00
+  TXRH   ▲ 상향     Stephens                  Equal Weight → Overweight $205.00
+  WMT    ▲ 상향     Deutsche Bank Aktiengese  Hold → Buy               $113.00 → $136.00
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
@@ -96,9 +98,9 @@
   13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 지금의 포지션이 아닙니다.
 
 [미 거시] 최근 90일
-  미 10년물 국채금리           5.21  [2026-10-13 기준]  (+0.66) 기간 최저 4.55(2026-07-17) 최고 5.31(2026-10-05)
-  미 2년물 국채금리            4.79  [2026-10-13 기준]  (+0.61) 기간 최저 4.15(2026-08-13) 최고 4.92(2026-09-28)
-  장단기 금리차(10년-2년)       0.37  [2026-10-14 기준]  (+0.00) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
+  미 10년물 국채금리           5.19  [2026-10-14 기준]  (+0.64) 기간 최저 4.55(2026-07-17) 최고 5.31(2026-10-05)
+  미 2년물 국채금리            4.82  [2026-10-14 기준]  (+0.64) 기간 최저 4.15(2026-08-13) 최고 4.92(2026-09-28)
+  장단기 금리차(10년-2년)       0.33  [2026-10-15 기준]  (-0.04) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
   연방기금금리                3.75  [2026-09-01 기준]  (+0.12) 기간 최저 3.63(2026-07-01) 최고 3.75(2026-09-01)
   미 소비자물가지수           336.30  [2026-09-01 기준]  (+3.48) 기간 최저 332.81(2026-07-01) 최고 336.30(2026-09-01)
 
