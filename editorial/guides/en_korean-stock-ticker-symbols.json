@@ -1,0 +1,170 @@
+{
+ "kind": "feature",
+ "series": "Guide",
+ "lang": "en",
+ "date": "2026-10-16",
+ "checked": "2026-10-16",
+ "slug": "korean-stock-ticker-symbols",
+ "category_id": 153,
+ "tags": [
+  "korean stock ticker format",
+  "korean stock ticker symbols",
+  "005930.KS",
+  "KOSDAQ .KQ suffix",
+  "Korea stock code"
+ ],
+ "radar_origin": "list order (Category A: access) — search queue's top lines point to guides that already exist (kospi-200-kosdaq-150-year-end-targets-2026, kospi-trading-hours) and this week's two fix slots were used on 2026-10-12 and 2026-10-13, so wrote a new guide. Yesterday's guide was not Category A; korean-stock-ticker-symbols is the first unwritten topic in A that can be confirmed from two independent sources.",
+ "sources": [
+  {
+   "name": "Korea Exchange",
+   "title": "Korea Stock Exchange: extension of equity local code (via Mondo Visione, October 2003)",
+   "url": "https://mondovisione.com/media-and-resources/news/korea-stock-exchange-extension-of-equity-local-code-2011124/"
+  },
+  {
+   "name": "Yahoo Finance",
+   "title": "Samsung Electronics (005930.KS)",
+   "url": "https://finance.yahoo.com/quote/005930.KS/"
+  },
+  {
+   "name": "Yahoo Finance",
+   "title": "EcoPro BM (247540.KQ)",
+   "url": "https://finance.yahoo.com/quote/247540.KQ/"
+  },
+  {
+   "name": "TradingView",
+   "title": "KRX:005930 Samsung Electronics",
+   "url": "https://www.tradingview.com/symbols/KRX-005930/"
+  }
+ ],
+ "related": [
+  {
+   "title": "How to Buy Samsung Electronics Stock From the US",
+   "url": "https://fermata.it.kr/how-to-buy-samsung-electronics-abroad/"
+  },
+  {
+   "title": "KOSPI vs KOSDAQ",
+   "url": "https://fermata.it.kr/kospi-vs-kosdaq/"
+  },
+  {
+   "title": "Korean ADR list",
+   "url": "https://fermata.it.kr/korean-adrs-for-us-investors/"
+  }
+ ],
+ "ko": {
+  "title": "Korean Stock Ticker Symbols: 6-Digit Codes, .KS and .KQ Explained",
+  "narrative": [
+   {
+    "heading": "Korean stock ticker format: a six-digit number, sometimes with a suffix",
+    "body": "A Korean stock is identified by a six-digit number. Samsung Electronics is 005930. Whether you also need a suffix depends on the platform. TradingView, as of October 2026, writes the symbol with an exchange prefix, KRX:005930, and says Samsung is traded under the ticker 005930 on the Korea Exchange. Yahoo Finance writes the same company as 005930.KS. Both point to the same stock; they are two house styles for the same code. If a search for the bare number returns nothing, try the other style before concluding the stock is missing."
+   },
+   {
+    "heading": "What the suffix means: .KS for the main board, .KQ for KOSDAQ",
+    "body": "On Yahoo Finance, as of October 2026, Samsung Electronics (005930.KS) is shown on the exchange labeled KSE, which stands for Korea Stock Exchange, in Korean won. EcoPro BM (247540.KQ) is shown on the exchange labeled KOSDAQ, also in won. So the ending tells you which board a stock sits on: .KS for the main KOSPI board, .KQ for KOSDAQ. The suffix is a data-provider convention, not part of the code itself. Other platforms use different endings or none, which is why the six digits are the part to copy and the suffix is the part to adjust."
+   },
+   {
+    "heading": "Why the code has leading zeros",
+    "body": "The six digits are a number with zeros in front, and the zeros matter. According to a Korea Stock Exchange notice carried by Mondo Visione and dated October 2, 2003, the exchange moved local codes for all Korean equities from five digits to six digits, effective October 6, 2003, because it expected a shortage of codes. Samsung Electronics went from 05930 to 005930, with a zero added to the front. SK hynix is 000660 on Yahoo Finance (000660.KS). A spreadsheet that treats the code as a plain number will strip the leading zeros and turn 000660 into 660, so format the column as text before you paste codes in."
+   },
+   {
+    "heading": "Common and preferred shares have different codes",
+    "body": "One company can have more than one listed share class, and each class has its own code. On Yahoo Finance, as of October 2026, 005935.KS is listed under the name Samsung Electronics Co., Ltd., the same company name as 005930.KS. The two codes differ by the last digit, but they are listed as separate securities. If the quote you see does not match the stock you meant to look up, check the last digit before anything else. Do not assume that a code ending in a different number is a typo."
+   },
+   {
+    "heading": "Code, ISIN and the broker's own symbol are three different things",
+    "body": "The six-digit code is a local code. The ISIN is the 12-character international identifier. TradingView lists Samsung Electronics with the ISIN KR7005930003, which contains the local code 005930 in the middle. The Korea Stock Exchange notice states that ISINs of Korean equities were not changed when local codes went from five digits to six. Your broker may use yet another symbol, for example for a US-listed depositary receipt or an over-the-counter line, so a Korean code only helps if the broker actually offers the Korean listing. Check the exchange name on the order screen before you buy."
+   },
+   {
+    "heading": "What we could and could not verify",
+    "body": "We confirmed the five-to-six-digit change, the October 6, 2003 effective date and the unchanged ISINs in the Korea Stock Exchange notice. We confirmed 005930 for Samsung Electronics in both TradingView and Yahoo Finance, and the KS and KQ endings by opening the Yahoo Finance pages for Samsung Electronics, SK hynix, Samsung's second share class and EcoPro BM. We did not find a Yahoo Finance help page that states the suffix rule in words, so the explanation of .KS and .KQ comes from what those pages display. We could not confirm from a Korea Exchange page how the codes are assigned or whether the digits carry a meaning, so this guide does not explain any pattern in them, and we did not confirm how every broker formats Korean symbols."
+   }
+  ],
+  "closing": {
+   "heading": "The takeaway",
+   "body": "Copy the six-digit code, keep the leading zeros, and adjust the ending to the platform: 005930.KS on Yahoo Finance, KRX:005930 on TradingView. Use .KQ for KOSDAQ names and check the last digit when a company has more than one share class.\n\nThis guide describes symbols as shown on the sources above as of October 16, 2026, and is not tax or investment advice."
+  }
+ },
+ "graphics": [
+  {
+   "kind": "cover",
+   "featured": true,
+   "alt": "Samsung Electronics ticker written two ways: 005930.KS and KRX:005930",
+   "args": {
+    "kicker": "Investor Guide",
+    "subject": "Korean Stock Ticker Symbols",
+    "left": {
+     "label": "Yahoo Finance",
+     "value": "005930.KS"
+    },
+    "right": {
+     "label": "TradingView",
+     "value": "KRX:005930"
+    }
+   }
+  },
+  {
+   "kind": "fact_table",
+   "alt": "How four Korean stocks are written on Yahoo Finance",
+   "args": {
+    "title": "The same six digits, different endings",
+    "subtitle": "As shown on Yahoo Finance, October 2026",
+    "columns": [
+     "Company",
+     "Yahoo symbol",
+     "Exchange label"
+    ],
+    "rows": [
+     [
+      "Samsung Electronics",
+      "005930.KS",
+      "KSE"
+     ],
+     [
+      "Samsung Electronics (second class)",
+      "005935.KS",
+      "KSE"
+     ],
+     [
+      "SK hynix",
+      "000660.KS",
+      "KSE"
+     ],
+     [
+      "EcoPro BM",
+      "247540.KQ",
+      "KOSDAQ"
+     ]
+    ],
+    "source": "Yahoo Finance quote pages, checked October 16, 2026.",
+    "note": "The suffix is a data-provider convention, not part of the Korean code."
+   },
+   "section": 2
+  },
+  {
+   "kind": "checklist",
+   "alt": "Checks before you look up a Korean stock code",
+   "args": {
+    "title": "Before you search for a Korean stock code",
+    "subtitle": "Four checks",
+    "items": [
+     {
+      "label": "Keep all six digits",
+      "why": "Codes carry leading zeros; a spreadsheet that drops them returns the wrong stock or nothing."
+     },
+     {
+      "label": "Match the suffix to the platform",
+      "why": "Yahoo Finance uses .KS and .KQ; TradingView uses the KRX prefix."
+     },
+     {
+      "label": "Check the last digit",
+      "why": "A second share class has its own code."
+     },
+     {
+      "label": "Confirm the exchange on the order screen",
+      "why": "A depositary receipt or over-the-counter line is not the Korean listing."
+     }
+    ]
+   },
+   "section": 4
+  }
+ ]
+}
