@@ -80,7 +80,7 @@ def _kicker(doc: dict) -> str:
         return f"{label} · Checked {_MONTHS_EN[day.month - 1]} {day.day}, {day.year}"
     if series == "칼럼" and _date_or_none(doc.get("date")):
         day = _date_or_none(doc.get("date"))
-        return f"오늘의 한 편 · {day.month}월 {day.day}일 장 마감 뒤"
+        return f"오늘의 한 편 · {day.month}월 {day.day}일" + ("" if day.weekday() >= 5 else " 장 마감 뒤")   # 주말엔 장이 없다
     if series == "이벤트" and _date_or_none(doc.get("event_date")):
         day = _date_or_none(doc.get("event_date"))
         return f"이벤트 · {day.month}월 {day.day}일"

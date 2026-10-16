@@ -26,14 +26,19 @@ class FeatureGateError(ValueError):
 
 
 def column_price_files(doc: dict, root: Path = ROOT) -> tuple[Path | None, Path | None]:
-    """칼럼이 대조할 시세 파일 — (그날 한국장, 원고 날짜 전 닷새 안의 가장 최근 미국장). 없으면 None."""
+    """칼럼이 대조할 시세 파일 — (그날 한국장, 원고 날짜 전 닷새 안의 가장 최근 미국장). 없으면 None.
+    주말·휴장일(2026-10-17부터 칼럼이 매일 돈다)에는 그날 한국장 파일이 없으므로 사흘 안의 가장 최근 한국장 파일(대개 금요일)과 대조한다."""
     import datetime as dt
     day = str(doc.get("date") or "")
     kr = root / "data" / f"price_kr_{day}.json"
     try:
         floor = (dt.date.fromisoformat(day) - dt.timedelta(days=5)).isoformat()
+        kr_floor = (dt.date.fromisoformat(day) - dt.timedelta(days=3)).isoformat()
     except ValueError:
         return (kr if kr.exists() else None), None
+    if not kr.exists():
+        recent = sorted(q for q in (root / "data").glob("price_kr_*.json") if f"price_kr_{kr_floor}" <= q.stem < f"price_kr_{day}")
+        kr = recent[-1] if recent else kr
     us = sorted(q for q in (root / "data").glob("price_us_*.json") if f"price_us_{floor}" <= q.stem < f"price_us_{day}")
     return (kr if kr.exists() else None), (us[-1] if us else None)
 

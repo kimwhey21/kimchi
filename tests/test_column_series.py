@@ -116,7 +116,23 @@ class ColumnProofTest(unittest.TestCase):
         self.assertNotIn("오늘의 칼럼", self._arts(dt.date(2026, 10, 13), []))
         self.assertFalse(self._arts(dt.date(2026, 10, 14), [])["오늘의 칼럼"])
         self.assertTrue(self._arts(dt.date(2026, 10, 14), ["editorial/columns/2026-10-14_x.json"])["오늘의 칼럼"])
-        self.assertNotIn("오늘의 칼럼", self._arts(dt.date(2026, 10, 17), []))   # 토요일
+        self.assertNotIn("오늘의 칼럼", self._arts(dt.date(2026, 10, 11), []))   # 매일 돌기 전의 일요일
+        self.assertFalse(self._arts(dt.date(2026, 10, 17), [])["오늘의 칼럼"])    # 10/17(토)부터 주말에도 기다린다
+        self.assertTrue(self._arts(dt.date(2026, 10, 18), ["editorial/columns/2026-10-18_x.json"])["오늘의 칼럼"])
+
+    def test_weekend_kicker_and_price_files(self) -> None:
+        """주말 칼럼(2026-10-17부터): 머리말에 '장 마감 뒤'가 없고, 숫자는 금요일 한국장·미국장 파일과 대조한다."""
+        doc = _doc()
+        doc["date"] = "2026-10-17"
+        self.assertEqual(publish_feature._kicker(doc), "오늘의 한 편 · 10월 17일")
+        with tempfile.TemporaryDirectory() as tmp:
+            data = Path(tmp) / "data"; data.mkdir()
+            for name in ("price_kr_2026-10-16.json", "price_us_2026-10-16.json", "price_kr_2026-10-12.json"):
+                (data / name).write_text("{}", encoding="utf-8")
+            kr, us = feature_gate.column_price_files({"date": "2026-10-18"}, Path(tmp))
+            self.assertEqual((kr.name, us.name), ("price_kr_2026-10-16.json", "price_us_2026-10-16.json"))
+            kr, _ = feature_gate.column_price_files({"date": "2026-10-21"}, Path(tmp))   # 닷새 지난 한국장 파일은 쓰지 않는다
+            self.assertIsNone(kr)
 
 
 if __name__ == "__main__":

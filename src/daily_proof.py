@@ -71,6 +71,7 @@ MAC_JOBS = {"naver_sync": 30, "gsc_queries": "10:30",
 # 그만둔 루틴 — 기다리지 않는다(2026-10-13 한국어 가이드 중단: 시황 블로그의 하루 한 편을 다른 글로 바꾸기로).
 STOPPED_ARTIFACTS = {"한국어 가이드": dt.date(2026, 10, 14)}   # 이 날부터 기다리지 않는다
 COLUMN_FROM = dt.date(2026, 10, 14)
+COLUMN_DAILY_FROM = dt.date(2026, 10, 17)   # 이 날부터 칼럼은 주말·휴장일에도 돈다(매일 20:00)
 EN_GUIDE_TWICE_FROM = dt.date(2026, 10, 15)   # 영어 가이드가 주 2편(화·금)이 된 뒤 — 그 밖의 요일은 기다리지 않는다
 EN_GUIDE_DAYS = (1, 4)                         # 화·금(월=0)   # 오늘의 한 편(칼럼) 루틴 첫 실행일 — 이 날부터 한국장이 열린 날마다 기다린다
 PAUSED_ARTIFACTS = ({"미국장 프리뷰", "주말 Checkpoint", "주간 결산", "다음 주 일정"},   # 한국어 가이드는 10/7 저녁 다시 켬(시황 블로그에 가이드만 올린다)
@@ -228,7 +229,7 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
             n_close = 0
         out.append(("종가 사진", n_close >= 2000, f"data/krx_close/{d}.json 전 종목 {n_close}개(2,000개 이상이어야)"))
         out.append(("한국장 시황", has(f"editorial/kr_{d}.json"), f"editorial/kr_{d}.json"))
-        if day >= COLUMN_FROM:
+        if COLUMN_FROM <= day < COLUMN_DAILY_FROM:
             n_col = len(list((root / "editorial" / "columns").glob(f"{d}_*.json")))
             out.append(("오늘의 칼럼", n_col >= 1, f"editorial/columns/{d}_* {n_col}편"))
     if 1 <= wd <= 5 and prev not in US_HOLIDAYS:
@@ -238,6 +239,9 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
             out.append(("미국장 시세", False, f"data/price_us_{prev}.json 없음 — 미국 휴장이 아니면 수집 실패"))
     if wd < 5 and d not in US_HOLIDAYS:
         out.append(("미국장 프리뷰", has(f"editorial/previews/us_{d}.json"), f"editorial/previews/us_{d}.json"))
+    if day >= COLUMN_DAILY_FROM:   # 매일(주말·휴장일 포함)
+        n_col = len(list((root / "editorial" / "columns").glob(f"{d}_*.json")))
+        out.append(("오늘의 칼럼", n_col >= 1, f"editorial/columns/{d}_* {n_col}편"))
     n_mag = len(list((root / "editorial" / "magazine").glob(f"{d}_*.json")))
     out.append(("잡지 3편", n_mag >= 3, f"editorial/magazine/{d}_* {n_mag}편"))
     out.append(("한국어 가이드", touched("editorial/guides/ko_", ".json"), "editorial/guides/ko_* 오늘 커밋"))
