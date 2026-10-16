@@ -25,6 +25,19 @@ class FeatureGateError(ValueError):
     pass
 
 
+def column_price_files(doc: dict, root: Path = ROOT) -> tuple[Path | None, Path | None]:
+    """칼럼이 대조할 시세 파일 — (그날 한국장, 원고 날짜 전 닷새 안의 가장 최근 미국장). 없으면 None."""
+    import datetime as dt
+    day = str(doc.get("date") or "")
+    kr = root / "data" / f"price_kr_{day}.json"
+    try:
+        floor = (dt.date.fromisoformat(day) - dt.timedelta(days=5)).isoformat()
+    except ValueError:
+        return (kr if kr.exists() else None), None
+    us = sorted(q for q in (root / "data").glob("price_us_*.json") if f"price_us_{floor}" <= q.stem < f"price_us_{day}")
+    return (kr if kr.exists() else None), (us[-1] if us else None)
+
+
 def recent_titles(doc: dict, path: Path | None = None, count: int = 5) -> list[str]:
     """독자가 보는 최근 제목들. 프리뷰·기준표·주간·이벤트는 네이버 피드 한 줄(`title_feed` — 한국장·미국장 시황과
     섞여 보인다, 2026-09-18), 가이드·잡지는 같은 시리즈 목록. 이 원고 자신(같은 파일·같은 slug)은 뺀다(2026-09-09)."""
@@ -85,14 +98,18 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
         blocking.extend(feature_checks.magazine_issues(doc))   # 잡지 꼴(브리핑·코너·출처·사진), 2026-09-13
     if str(doc.get("series") or "") == "칼럼":
         blocking.extend(feature_checks.hook_issues(doc))   # 잡지와 같은 훅 꼴 — 소제목 없는 도입·물음·길안내 없음
-        # 숫자 대조: 그날 한국장 시세 파일과(시황과 같은 검사, 1위 종목 누락은 보지 않는다). 파일이 없으면 막는다.
-        price_file = ROOT / "data" / f"price_kr_{doc.get('date')}.json"
-        if not price_file.exists():
-            blocking.append(f"숫자 — 대조할 한국장 시세 파일이 없습니다: {price_file.name} (칼럼은 그날 장이 열린 날에만 씁니다)")
-        else:
-            found = editorial_facts.collect_issues(ko, json.loads(price_file.read_text(encoding="utf-8")),
-                                                   lang="ko", require_lead=False)
-            blocking.extend(f"숫자 — {i}" for i in found)
+        # 숫자 대조(시황과 같은 검사, 1위 종목 누락은 보지 않는다): 그날 한국장 시세 파일과, 칼럼이 미국장도 다루므로(2026-10-16)
+        # 어젯밤 미국장 시세 파일(원고 날짜 전 가장 최근 것)과도. 미국장 파일은 프리뷰처럼 '오늘'을 다른 날로 본다. 둘 다 없으면 막는다.
+        kr_file, us_file = column_price_files(doc)
+        if kr_file is None and us_file is None:
+            blocking.append(f"숫자 — 대조할 시세 파일이 없습니다(한국장 {doc.get('date')}·그 전 닷새 안의 미국장) — 장이 열린 날에만 씁니다")
+        if kr_file is not None:
+            found = editorial_facts.collect_issues(ko, json.loads(kr_file.read_text(encoding="utf-8")), lang="ko", require_lead=False)
+            blocking.extend(f"숫자 — [{kr_file.stem}] {i}" for i in found)
+        if us_file is not None:
+            found = editorial_facts.collect_issues(ko, json.loads(us_file.read_text(encoding="utf-8")), lang="ko",
+                                                   other_day=editorial_facts._OTHER_DAY_PREVIEW, require_lead=False)
+            blocking.extend(f"숫자 — [{us_file.stem}] {i}" for i in found)
     blocking.extend(feature_checks.naver_issues(doc))   # 네이버용 본문(2026-09-12): 오래 읽히는 시리즈는 완전한 글로
     if str(doc.get("series") or "") == "프리뷰":
         # 숫자 대조(2026-09-25). 프리뷰에는 이 검사가 없었다 — 9/23·9/24 프리뷰가 덮어써진 시세로 나갔고 아무도 몰랐다.

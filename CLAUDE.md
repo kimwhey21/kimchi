@@ -214,9 +214,9 @@
   `guide_publish.yml`·`weekly_publish.yml`이 자동화 스위치대로 공개한다. 문턱은 가이드 절 5·시각자료 2·출처 2, Guide 절 5·2·2, 이벤트
   절 4·2·2. 한국어 가이드·이벤트는 네이버에 전문, 본진에는 올리지 않는다(아래 「발행 워크플로우」). 옛 한국어 종목 허브
   (`/stocks/<영어 slug>/`, 38개)는 2026-09-26에 없앴고 옛 주소는 13번 조각이 301로 넘긴다. 그 자리는 아래 「본진 종목 데이터베이스」다.
-- **오늘의 한 편(칼럼)**: 평일 20:00 KST 루틴(`docs/routine_column.md`)이 그날 한국장 물음 하나를 `editorial/columns/<날짜>_<slug>.json`(시리즈
+- **오늘의 한 편(칼럼)**: 평일 20:00 KST 루틴(`docs/routine_column.md`)이 그날 한국장 또는 어젯밤 미국장(2026-10-16부터) 물음 하나를 `editorial/columns/<날짜>_<slug>.json`(시리즈
   "칼럼")으로 커밋하면 맥이 시황 블로그에 바로 올린다 — 시황 블로그에는 이 글만, 하루 한 편, 쓴 날에만. 문턱은 절 5·시각자료 3·출처 3,
-  훅 꼴(`feature_checks.hook_issues`), 숫자는 그날 시세 파일과 대조(`feature_gate`). 본진에는 올리지 않는다(`LIVE_STATUS` private).
+  훅 꼴(`feature_checks.hook_issues`), 숫자는 그날 한국장·어젯밤 미국장 시세 파일과 대조(`feature_gate.column_price_files`). 본진에는 올리지 않는다(`LIVE_STATUS` private).
 - 그림을 그린 뒤에는 **`Read` 툴로 직접 본다.** 축을 한 종목이 독차지하거나 이름이 막대와 어긋나는 것은 코드만 봐서는 안 보인다.
   `src/graphic_checks.py`가 그림의 데이터와 제목이 어긋나는 것을 잡지만 전부는 아니다.
 

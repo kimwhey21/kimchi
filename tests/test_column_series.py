@@ -41,8 +41,24 @@ class ColumnGateTest(unittest.TestCase):
 
     def test_missing_price_file_is_blocked(self) -> None:
         doc = _doc()
-        doc["date"] = "2026-10-11"   # 토요일 — 시세 파일이 없다
-        self.assertTrue(any("대조할 한국장 시세 파일이 없습니다" in i for i in _blocking(doc)))
+        doc["date"] = "2027-03-01"   # 한국장·미국장 시세 파일이 모두 없는 날
+        self.assertTrue(any("대조할 시세 파일이 없습니다" in i for i in _blocking(doc)))
+
+    def test_us_story_numbers_are_checked_against_last_night(self) -> None:
+        """칼럼은 어젯밤 미국장도 다룬다(2026-10-16) — 미국장 숫자는 원고 날짜 전 가장 최근 미국장 시세 파일과 대조한다."""
+        kr, us = feature_gate.column_price_files({"date": "2026-10-16"})
+        self.assertEqual(us.name, "price_us_2026-10-15.json")
+        doc = _doc()
+        doc["date"] = "2026-10-16"
+        pd = json.loads(us.read_text(encoding="utf-8"))
+        nv = next(v for v in pd["watchlist"].values() if v["name"] == "엔비디아")
+        wrong = round(abs(nv["change_pct"]) + 1.0, 2)
+        doc["ko"]["narrative"][2]["body"] += f"\n어젯밤 뉴욕에서 엔비디아는 {wrong}% 하락했습니다."
+        from unittest import mock
+        with mock.patch.object(feature_gate, "column_price_files", return_value=(None, us)):   # 미국장 파일만 — 한국장 파일이 생겨도 흔들리지 않게
+            self.assertTrue(any("엔비디아" in i and "price_us_2026-10-15" in i for i in _blocking(doc)))
+            doc["ko"]["narrative"][2]["body"] = doc["ko"]["narrative"][2]["body"].replace(f"{wrong}%", f"{abs(nv['change_pct']):.2f}%")
+            self.assertFalse(any("숫자" in i for i in _blocking(doc)))
 
     def test_hook_form_applies(self) -> None:
         doc = _doc()
