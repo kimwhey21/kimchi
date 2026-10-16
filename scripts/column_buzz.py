@@ -38,9 +38,9 @@ SKIP = {"코스피", "코스닥", "원/달러 환율", "다우존스", "S&P500",
 def candidates(day: str, root: Path = ROOT) -> list[dict]:
     """그날 한국장 + 그 전 가장 최근 미국장 시세 파일의 종목(지수·환율·금리·원자재는 뺀다)."""
     out: list[dict] = []
-    kr = root / "data" / f"price_kr_{day}.json"
-    us = sorted(q for q in (root / "data").glob("price_us_*.json") if q.stem < f"price_us_{day}")
-    for market, path in (("한국", kr if kr.exists() else None), ("미국", us[-1] if us else None)):
+    from src.feature_gate import column_price_files   # 관문과 같은 파일 — 주말·휴장일엔 사흘 안의 최근 한국장(2026-10-17)
+    kr, us = column_price_files({"date": day}, root)
+    for market, path in (("한국", kr), ("미국", us)):
         if path is None:
             continue
         data = json.loads(path.read_text(encoding="utf-8"))

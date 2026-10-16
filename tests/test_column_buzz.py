@@ -47,6 +47,10 @@ class RankTest(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 cb.rank("2026-10-16", pause=0)
 
+    def test_weekend_uses_friday_korea_file(self):
+        names = [c["name"] for c in cb.candidates("2026-10-17", self._root())]   # 토요일 — 금요일 한국장 파일이 대신
+        self.assertEqual(names, ["대한항공", "테슬라"])
+
     def test_no_price_files_stop(self):
         with self.assertRaises(SystemExit):
             cb.candidates("2027-03-01", Path(tempfile.mkdtemp()))
