@@ -91,6 +91,15 @@ def story(name: str, titles: list[str]) -> tuple[str, int, list[str]]:
     return word, len(cluster), cluster[:3]
 
 
+def variety(name: str, titles: list[str]) -> int:
+    """묶음 안 제목이 얼마나 제각각인가(%) — 앞 18자가 서로 다른 제목의 비율. 참고 숫자일 뿐 판정이 아니다.
+    보도자료는 여러 매체가 같은 문장을 받아 써서 낮은 편이고, 큰 사건은 매체마다 다른 각도로 써서 높은 편이다
+    (2026-10-16 실측: 효성중공업 공장 준공 47%·두산에너빌리티 인사 57%·기아 시범 서비스 69%·테슬라 로드스터 85%)."""
+    word, _, _ = story(name, titles)
+    core = [t for t in titles if word and word in _words(t)]
+    return round(len({t[:18] for t in core}) / len(core) * 100) if core else 0
+
+
 def count(name: str, get=requests.get) -> tuple[int, list[str]]:
     r = get(RSS.format(q=quote(f'"{name}" when:1d')), headers=UA, timeout=30)
     r.raise_for_status()
@@ -109,7 +118,7 @@ def rank(day: str, get=requests.get, pause: float = 0.4) -> list[dict]:
             failed.append(f"{c['name']}({type(e).__name__})")
             continue
         word, size, sample = story(c["name"], titles)
-        rows.append({**c, "articles": n, "word": word, "story": size, "titles": sample or titles[:3]})
+        rows.append({**c, "articles": n, "word": word, "story": size, "variety": variety(c["name"], titles), "titles": sample or titles[:3]})
         time.sleep(pause)
     if len(failed) * 3 > len(cands):
         raise SystemExit(f"기사 수를 {len(failed)}/{len(cands)}종목 받지 못했습니다: {', '.join(failed[:8])}")
@@ -127,10 +136,11 @@ def main(argv: list[str] | None = None) -> int:
     print(f"== {a.day} 국내 매체가 한 이야기에 몰린 종목(구글 뉴스 한국판 지난 하루, 종목당 100건이 상한) ==")
     for r in rows[: a.top]:
         pct = f"{r['pct']:+.2f}%" if isinstance(r.get("pct"), (int, float)) else "?"
-        print(f"{r['story']:>4}건 '{r['word']}'  {r['name']} — 기사 {r['articles']}건 ({r['market']}, {r['file'][6:]} {pct})")
+        print(f"{r['story']:>4}건 '{r['word']}'  {r['name']} — 기사 {r['articles']}건 · 제목 갈래 {r['variety']}% ({r['market']}, {r['file'][6:]} {pct})")
         for t in r["titles"]:
             print(f"        · {t[:80]}")
     print("기사 수는 소재를 고르는 근거일 뿐입니다 — 숫자는 시세 파일에서만, 사실은 출처를 열어 확인합니다.")
+    print("'제목 갈래'는 참고 숫자입니다: 보도자료(인사·행사·준공·시범 서비스)는 같은 문장을 받아 써서 낮은 편, 큰 사건은 높은 편. 판정은 제목을 읽고 하십시오.")
     return 0
 
 
