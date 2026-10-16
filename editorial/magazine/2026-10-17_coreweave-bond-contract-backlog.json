@@ -1,0 +1,162 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-17",
+ "slug": "coreweave-bond-contract-backlog",
+ "radar_origin": "Fortune: A look inside the $52 billion hole that CoreWeave needs to climb out of",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1683322499436-f4383dd59f5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Y2FibGVzJTIwcmFja3xlbnwwfDB8fHwxNzkyMTcwNTIwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "PSpf_XgOM5w",
+  "credit": "Unsplash / Scott Rodgerson"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "A look inside the $52 billion hole that CoreWeave needs to climb out of (2026-10-16)",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/"
+  },
+  {
+   "name": "크립토 브리핑",
+   "title": "CoreWeave shares plunge 16% as bond yields near 15% (2026-10-14)",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/"
+  }
+ ],
+ "tags": [
+  "코어위브",
+  "AI인프라",
+  "채권수익률"
+ ],
+ "ko": {
+  "title": "계약은 쌓이는데 이자는 15%: 코어위브 빚을 읽는 법",
+  "title_candidates": [
+   "코어위브 채권 수익률 15%, 계약 1,037억 달러는 방패가 될까",
+   "코어위브는 왜 계약이 쌓일수록 더 불안해 보일까",
+   "계약은 쌓이는데 이자는 15%: 코어위브 빚을 읽는 법",
+   "코어위브 채권이 흔든 AI 투자, 확인할 것 세 가지"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "계약이 쌓인 회사의 채권이 연 15%에 가까운 수익률을 기록했습니다.\n미국 AI 클라우드 기업 코어위브(CoreWeave) 이야기입니다.\n회사는 앞으로 받을 계약이 1,037억 달러어치라고 말합니다. 그런데 채권 시장은 그 계약보다 빚을 먼저 봤습니다.\n계약이 많은 회사와 빚이 많은 회사, 시장은 어느 쪽 얼굴을 믿고 있을까요?"
+   },
+   {
+    "heading": "채권 시장이 먼저 흔들렸습니다",
+    "body": "코어위브가 2032년 7월 만기로 낸 연 9.625% 이자 채권은 10월 13일 장중 수익률이 15%까지 올랐습니다. 이날 종가는 14.5%였습니다.\n채권 수익률은 채권값이 떨어질수록 오릅니다. 처음 약속한 이자보다 5%포인트 넘게 높은 수익률은, 투자자들이 이 회사에 빌려준 돈을 그만큼 위험하게 본다는 뜻입니다.\n주식은 다음 날 따라 내려갔습니다. 크립토 브리핑에 따르면 14일 코어위브 주가는 한때 16% 하락했고, 오라클은 약 7%, 네비우스는 9~10% 밀렸습니다."
+   },
+   {
+    "heading": "계약 잔고는 방패, 빚은 칼날입니다",
+    "body": "코어위브가 내세우는 방패는 계약 잔고입니다. 2분기 공시에 적힌 '잔여 이행 의무(RPO)'가 1,037억 달러입니다.\nRPO는 고객이 이미 서명했지만 아직 매출로 잡히지 않은 계약 금액입니다. 그중 41%는 2028년까지 받기로 돼 있습니다.\n경제지 포춘은 이 계약이 쓰든 안 쓰든 값을 치르는 '테이크 오어 페이(take or pay)' 조건이라, 고객이 빠져나가기 어렵다고 짚었습니다.\n다른 쪽에는 빚이 있습니다. 같은 공시에서 리스 부채가 163억 달러, 총부채가 356억 달러로 합치면 약 520억 달러입니다."
+   },
+   {
+    "heading": "번 돈보다 이자가 더 컸습니다",
+    "body": "상반기 매출은 46억 달러였지만 영업비용이 매출을 넘어서 순손실이 14억 달러에 이르렀습니다.\n2분기만 보면 매출이 두 배로 늘어 25억 8,000만 달러였습니다. 문제는 장부의 다른 쪽입니다.\n같은 분기 이자 비용은 약 6억 4,000만 달러로, 회사의 조정 영업이익보다 컸습니다.\n올해 코어위브가 주식과 부채로 모은 돈도 300억~350억 달러 안팎입니다. 자주 돈을 빌리는 회사는 시장이 부르는 이자가 오르면 곧바로 부담이 커집니다."
+   },
+   {
+    "heading": "브루클린 다리를 팔겠다는 회의론",
+    "body": "모두가 계약 잔고를 믿는 것은 아닙니다. 회계사이자 탐사 기자로 와튼스쿨에서 가르친 적이 있는 프랜신 매케나는 포춘에 이렇게 말했습니다.\n“코어위브가 마이크로소프트가 계약을 지켜 주고 막대한 빚과 손실에서 건져 줄 것이라 기대한다면, 저는 그들에게 팔고 싶은 브루클린 다리가 하나 있습니다.”\n브루클린 다리를 판다는 말은 영어권에서 터무니없는 말을 믿는 사람을 비꼴 때 쓰는 표현입니다.\n그의 의심은 계약이 가짜라는 뜻이 아니라, 계약만으로 빚과 손실이 사라지지는 않는다는 쪽에 가깝습니다."
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "10월 15일 S&P500은 0.33% 올랐지만 나스닥은 제자리였고, 종목 수를 똑같이 반영한 동일가중지수는 1.36% 올랐습니다.\n포춘이 옮긴 시장 반응으로는 돈이 기술주 밖으로 옮겨 간 하루였습니다.\n계약은 1,037억 달러이고 이자는 번 돈보다 큽니다. 두 숫자가 모두 맞아서 시장이 갈팡질팡합니다.\n앞으로 확인할 것은 채권 수익률이 15% 아래에서 안정되는지, 다음 실적에서 영업이익이 분기 이자 6억 4,000만 달러를 따라잡는지, 다음 자금 조달에 어떤 이자를 요구받는지입니다.\n계약서에 적힌 1,037억 달러가 이자를 감당할 만큼 빨리 매출로 바뀔까요, 아니면 이자가 먼저 도착할까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1,037억 달러어치",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/",
+   "original": "the company has $103.7 billion of \"remaining performance obligations\" (rpos)"
+  },
+  {
+   "claim": "연 15%에 가까운 수익률",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "hit a 15% yield intraday on october 13"
+  },
+  {
+   "claim": "연 9.625% 이자 채권은 10월 13일 장중 수익률이 15%까지 올랐습니다",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "coreweave's 9.625% senior unsecured notes due july 2032 hit a 15% yield intraday on october 13"
+  },
+  {
+   "claim": "이날 종가는 14.5%였습니다",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "they closed that session at 14.5%"
+  },
+  {
+   "claim": "5%포인트 넘게 높은 수익률은",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "a yield sitting more than five percentage points above the coupon"
+  },
+  {
+   "claim": "14일 코어위브 주가는 한때 16% 하락했고",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "coreweave shares fell by as much as 16% on october 14, 2026"
+  },
+  {
+   "claim": "오라클은 약 7%, 네비우스는 9~10% 밀렸습니다",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "oracle shares fell roughly 7% on the same day, while nebius dropped about 9% to 10%"
+  },
+  {
+   "claim": "1,037억 달러입니다",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/",
+   "original": "the company has $103.7 billion of \"remaining performance obligations\" (rpos)"
+  },
+  {
+   "claim": "그중 41%는 2028년까지",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/",
+   "original": "41% of which is scheduled to be paid to coreweave through 2028"
+  },
+  {
+   "claim": "리스 부채가 163억 달러, 총부채가 356억 달러로 합치면 약 520억 달러",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/",
+   "original": "it had operating lease liabilities of $16.3 billion and total debt of $35.6 billion"
+  },
+  {
+   "claim": "상반기 매출은 46억 달러였지만 영업비용이 매출을 넘어서 순손실이 14억 달러에 이르렀습니다",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/",
+   "original": "the company only made $4.6 billion in revenue for the first six months, and its operating expenses exceeded its sales, leaving it with a net loss of $1.4 billion on the bottom line in the period"
+  },
+  {
+   "claim": "2분기만 보면 매출이 두 배로 늘어 25억 8,000만 달러였습니다",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "revenue in the second quarter of 2026 doubled to $2.58 billion"
+  },
+  {
+   "claim": "같은 분기 이자 비용은 약 6억 4,000만 달러로, 회사의 조정 영업이익보다 컸습니다",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "in q2 2026, its interest expense came in at around $640 million. that figure was larger than the company's adjusted operating income for the quarter"
+  },
+  {
+   "claim": "300억~350억 달러 안팎입니다",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "coreweave has raised somewhere in the range of $30 to $35 billion in combined debt and equity capital during 2026"
+  },
+  {
+   "claim": "“코어위브가 마이크로소프트가 계약을 지켜 주고 막대한 빚과 손실에서 건져 줄 것이라 기대한다면, 저는 그들에게 팔고 싶은 브루클린 다리가 하나 있습니다.”",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/",
+   "original": "if coreweave is counting on microsoft to honor its contracts and bail them out of extreme debt and losses i have a bridge in brooklyn i'd like to sell them"
+  },
+  {
+   "claim": "10월 15일 S&P500은 0.33% 올랐지만 나스닥은 제자리였고, 종목 수를 똑같이 반영한 동일가중지수는 1.36% 올랐습니다",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/",
+   "original": "while the s&p 500 gained 0.33% yesterday, the tech-heavy nasdaq was flat, and the equal-weight s&p was up a solid 1.36%"
+  },
+  {
+   "claim": "계약은 1,037억 달러이고 이자는 번 돈보다 큽니다",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/",
+   "original": "the company has $103.7 billion of \"remaining performance obligations\" (rpos)"
+  },
+  {
+   "claim": "채권 수익률이 15% 아래에서 안정되는지, 다음 실적에서 영업이익이 분기 이자 6억 4,000만 달러를 따라잡는지, 다음 자금 조달에 어떤 이자를 요구받는지입니다",
+   "url": "https://cryptobriefing.com/coreweave-shares-plunge-bond-yields-15/",
+   "original": "whether coreweave's bond yields stabilize below the 15% mark or keep climbing"
+  },
+  {
+   "claim": "계약서에 적힌 1,037억 달러가 이자를 감당할 만큼 빨리 매출로 바뀔까요, 아니면 이자가 먼저 도착할까요?",
+   "url": "https://fortune.com/2026/10/16/coreweave-debt-leases-profit-revenue-stock/",
+   "original": "the company has $103.7 billion of \"remaining performance obligations\" (rpos)"
+  }
+ ]
+}

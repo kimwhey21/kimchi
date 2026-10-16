@@ -1,0 +1,147 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-10-17",
+ "slug": "el-nino-height-color-signals",
+ "radar_origin": "Phys.org: NASA satellites observe historic 2026 El Niño",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1518837695005-2083093ee35b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8b2NlYW4lMjB3YXZlcyUyMGhvcml6b258ZW58MHwwfHx8MTc5MjE3MDUyNXww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "6ArTTluciuA",
+  "credit": "Unsplash / Matt Hardy"
+ },
+ "sources": [
+  {
+   "name": "미국 항공우주국(NASA)",
+   "title": "NASA Satellites Observe Historic 2026 El Niño (2026-10-15)",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/"
+  },
+  {
+   "name": "미국 항공우주국(NASA)",
+   "title": "El Niño Is Underway (2026-06-18)",
+   "url": "https://science.nasa.gov/earth/earth-observatory/el-nino-is-underway/"
+  },
+  {
+   "name": "어스닷컴(Earth.com)",
+   "title": "El Niño is back, and satellites show it is getting stronger (2026-06-18)",
+   "url": "https://www.earth.com/image/el-nino-is-back-and-satellites-show-it-is-getting-stronger/"
+  }
+ ],
+ "tags": [
+  "엘니뇨",
+  "NASA위성",
+  "기후"
+ ],
+ "ko": {
+  "title": "1950년 이후 가장 센 엘니뇨일까, 위성이 보는 신호는 이것입니다",
+  "title_candidates": [
+   "1950년 이후 가장 센 엘니뇨일까, 위성이 보는 신호는 이것입니다",
+   "NASA는 왜 엘니뇨를 바다의 높이와 색으로 읽을까",
+   "바다가 푸르러진 이유: NASA 위성이 본 엘니뇨의 먹이 신호",
+   "올겨울 날씨는 이 바다가 정합니다: 엘니뇨 위성 신호 셋"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "바다의 색이 바뀌고 있습니다. 적도 태평양에서 초록빛이 줄고 푸른빛이 번졌습니다.\n미국 항공우주국(NASA) 위성이 잡아낸 장면이고, 원인은 엘니뇨입니다.\nNASA는 수온 지도만 보지 않습니다. 바다의 높이와 색까지 함께 봅니다.\n수온 하나면 충분할 텐데, 왜 굳이 높이와 색까지 볼까요?"
+   },
+   {
+    "heading": "바닷물은 데워지면 부풀어 오릅니다",
+    "body": "물은 따뜻해지면 부피가 늘어납니다. 그래서 위성으로 바다 높이를 재면 열이 어디에 쌓였는지 알 수 있습니다.\nNASA의 센티넬-6(Sentinel-6) 위성은 레이더 고도계로 바다 전체의 높이를 10일마다 재고, 오차는 인치의 몇 분의 1까지 줄였습니다.\n올해는 일부 해역이 평년보다 30~40센티미터 높아졌습니다.\n서쪽 인도네시아와 호주 북부 바다는 15~20센티미터 낮아졌습니다. 물이 동쪽으로 쏠려 간 모습입니다."
+   },
+   {
+    "heading": "첫 신호는 1월 미크로네시아 앞바다였습니다",
+    "body": "가장 이른 단서는 1월에 나타났습니다. 미크로네시아 근처 서태평양에서 켈빈파(Kelvin wave)라는 따뜻한 물의 파동이 위성에 잡혔습니다.\n켈빈파는 아주 길고 느리게 움직이는 물의 파동입니다. 바닷속 고속도로처럼 서쪽의 열을 동쪽으로 실어 나릅니다.\n4월 초에는 이 파동이 동태평양에 닿았고 수온이 오르기 시작했습니다.\nNASA 해수면 위성 임무의 프로젝트 과학자 조시 윌리스는 이렇게 표현했습니다.\n“켈빈파는 엘니뇨의 심장 박동 같습니다. 해수면 위성 덕분에 바닷속을 들여다보며 그 박동을 하나하나 지켜볼 수 있습니다.”\n따뜻한 물 위의 공기가 데워져 오르면 기압이 바뀌고, 적도를 따라 아시아 쪽으로 부는 무역풍이 약해지거나 방향을 바꿉니다.\n그러면 동쪽 바다의 수면이 더 오르고 물은 더 따뜻해집니다. 이 연쇄가 시작되는 것이 엘니뇨입니다."
+   },
+   {
+    "heading": "바다가 푸르러진 것은 먹이가 줄어서입니다",
+    "body": "바다 색 변화는 NASA의 PACE 위성이 읽었습니다. 올해는 2024년에 발사된 이 위성이 처음 맞는 엘니뇨입니다.\n적도 태평양에는 원래 식물성 플랑크톤이 많아 초록빛을 띠는 곳이 있습니다. 식물성 플랑크톤(phytoplankton)은 바다 먹이사슬의 바닥을 이루는 아주 작은 식물입니다.\n이 생물은 차갑고 영양이 풍부한 물에서 잘 자랍니다. 그런데 엘니뇨에서는 무역풍이 약해져 깊은 바다의 영양분이 표면으로 올라오지 못합니다.\n먹이가 줄면 플랑크톤이 줄고, 초록빛이 옅어지면서 바다는 더 푸르게 보입니다. 다른 바다 생물도 새 먹이터를 찾아 옮겨 가야 합니다."
+   },
+   {
+    "heading": "6월에는 큰 엘니뇨일지 확신하지 못했습니다",
+    "body": "NOAA(미국 해양대기청)는 6월 11일 엘니뇨를 선언했습니다. 중부와 동부 적도 태평양의 수온이 몇 달 연속 평년보다 0.5도 이상 높았기 때문입니다.\n과학 매체 어스닷컴은 NASA 연구원 세브린 푸르니에의 설명을 정리했습니다. 6월 8일 서태평양 상황이 1997년 같은 시점과 닮았다는 것입니다.\n1997년은 뒤에 이례적으로 강한 엘니뇨가 나타난 해입니다. 다만 2026년은 동태평양이 더 천천히 따뜻해졌고 켈빈파도 적게 쌓였습니다.\n푸르니에의 판단은 조심스러웠습니다.\n“지금으로서는 큰 엘니뇨가 될 것 같습니다. 다만 앞으로 어떻게 될지 알려면 더 많은 관측이 필요합니다.”\n4개월이 지난 10월에 NOAA는 1950년 이후 가장 강한 엘니뇨가 지금 진행 중일 확률이 83%라고 밝혔습니다."
+   },
+   {
+    "heading": "일상에서는 어디서 느끼게 될까요",
+    "body": "엘니뇨는 대략 2~7년마다 찾아오는 자연스러운 기후 현상입니다. 보통 미국 남서부에는 비를 더 내리고, 인도네시아와 호주 같은 서태평양 나라에는 가뭄을 부릅니다.\nNASA는 농부와 소방관, 해안 주민이 이미 영향을 겪고 있다고 전합니다.\n수온은 오르고, 바다는 부풀고, 색까지 변했습니다. 세 신호가 가리키는 결과는 이번 겨울 어느 나라의 가뭄과 폭우로 나타날까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "바다 전체의 높이를 10일마다 재고, 오차는 인치의 몇 분의 1까지 줄였습니다",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/",
+   "original": "measure water height for the entire ocean every 10 days, down to fractions of an inch"
+  },
+  {
+   "claim": "30~40센티미터 높아졌습니다",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/",
+   "original": "elevating local sea levels in some areas by as much as 1 to 1.3 feet (30 to 40 centimeters)"
+  },
+  {
+   "claim": "15~20센티미터 낮아졌습니다",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/",
+   "original": "sea levels that are six to eight inches (15 to 20 centimeters) lower than normal are visible around indonesia and northern australia"
+  },
+  {
+   "claim": "가장 이른 단서는 1월에 나타났습니다",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/",
+   "original": "one of the first clues appeared in satellite imagery in january 2026, when a swell of warm water called a kelvin wave was spotted near micronesia in the western pacific"
+  },
+  {
+   "claim": "4월 초에는 이 파동이 동태평양에 닿았고",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/",
+   "original": "by early april, those kelvin waves had reached the eastern pacific"
+  },
+  {
+   "claim": "“켈빈파는 엘니뇨의 심장 박동 같습니다. 해수면 위성 덕분에 바닷속을 들여다보며 그 박동을 하나하나 지켜볼 수 있습니다.”",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/",
+   "original": "kelvin waves are like the heartbeat of el niño"
+  },
+  {
+   "claim": "올해는 2024년에 발사된 이 위성이 처음 맞는 엘니뇨입니다",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/",
+   "original": "this year's el niño is the first since pace launched in 2024"
+  },
+  {
+   "claim": "NOAA(미국 해양대기청)는 6월 11일 엘니뇨를 선언했습니다.",
+   "url": "https://science.nasa.gov/earth/earth-observatory/el-nino-is-underway/",
+   "original": "noaa declared an el niño on june 11, after sea surface temperatures in the central and eastern equatorial pacific measured at least 0.5 degrees celsius above average for several consecutive months"
+  },
+  {
+   "claim": "중부와 동부 적도 태평양의 수온이 몇 달 연속 평년보다 0.5도 이상 높았기 때문입니다.",
+   "url": "https://science.nasa.gov/earth/earth-observatory/el-nino-is-underway/",
+   "original": "noaa declared an el niño on june 11, after sea surface temperatures in the central and eastern equatorial pacific measured at least 0.5 degrees celsius above average for several consecutive months"
+  },
+  {
+   "claim": "6월 8일 서태평양 상황이 1997년 같은 시점과 닮았다는 것입니다",
+   "url": "https://www.earth.com/image/el-nino-is-back-and-satellites-show-it-is-getting-stronger/",
+   "original": "conditions in the western pacific on june 8 resembled those seen at the same point in 1997, when an exceptionally strong el niño later emerged"
+  },
+  {
+   "claim": "1997년은 뒤에 이례적으로 강한 엘니뇨가 나타난 해입니다.",
+   "url": "https://www.earth.com/image/el-nino-is-back-and-satellites-show-it-is-getting-stronger/",
+   "original": "conditions in the western pacific on june 8 resembled those seen at the same point in 1997, when an exceptionally strong el niño later emerged"
+  },
+  {
+   "claim": "다만 2026년은 동태평양이 더 천천히 따뜻해졌고 켈빈파도 적게 쌓였습니다.",
+   "url": "https://www.earth.com/image/el-nino-is-back-and-satellites-show-it-is-getting-stronger/",
+   "original": "warm conditions in the eastern pacific have developed more slowly in 2026, and fewer kelvin waves had accumulated by the same date"
+  },
+  {
+   "claim": "“지금으로서는 큰 엘니뇨가 될 것 같습니다. 다만 앞으로 어떻게 될지 알려면 더 많은 관측이 필요합니다.”",
+   "url": "https://www.earth.com/image/el-nino-is-back-and-satellites-show-it-is-getting-stronger/",
+   "original": "for now, it looks like it's going to be a big one"
+  },
+  {
+   "claim": "4개월이 지난 10월에 NOAA는 1950년 이후 가장 강한 엘니뇨가 지금 진행 중일 확률이 83%라고 밝혔습니다.",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/",
+   "original": "there's an 83% chance that the strongest el niño since 1950 is currently unfolding"
+  },
+  {
+   "claim": "엘니뇨는 대략 2~7년마다 찾아오는 자연스러운 기후 현상입니다.",
+   "url": "https://science.nasa.gov/earth/nasa-satellites-observe-historic-2026-el-nino/",
+   "original": "el niño is a natural climate pattern that emerges roughly every two to seven years"
+  }
+ ]
+}
