@@ -1,56 +1,56 @@
-[밸류에이션] US · 2026-10-16 · FWD PER 중앙값 24.4
+[밸류에이션] US · 2026-10-16 · FWD PER 중앙값 23.9
   (목표가까지 = 목표주가가 지금 주가보다 몇 % 높은가 · 주가 위치 = 지금 주가가 목표주가보다 몇 % 낮은가 — 둘은 다른 숫자)
   종목            FWD PER      목표가까지      주가 위치     52주고점 대비    애널
-  마이크론              4.6     +67.6%     -40.3%       -25.8%    46
-  엔비디아             13.6     +51.3%     -33.9%       -10.7%    59
-  머크               15.6      +9.3%      -8.5%        -7.5%    25
-  메타               21.3     +10.4%      -9.4%        -5.5%    58
-  마이크로소프트          22.7     +10.5%      -9.5%        -2.6%    53
-  알파벳              22.9     +23.3%     -18.9%       -14.5%    54
-  아마존              24.4     +30.1%     -23.1%       -11.3%    58
-  디어               28.6      +6.7%      -6.3%        -9.8%    23
-  애플               35.7      -3.7%      +3.8%        -1.8%    39
-  월마트              36.5      +8.0%      -7.4%       -12.8%    40
-  인텔               45.3     +23.8%     -19.2%       -33.0%    43
-  코인베이스            61.1     +15.4%     -13.3%       -50.8%    33
-  테슬라             167.1      +9.8%      -8.9%       -27.3%    38
+  마이크론              4.2     +77.6%     -43.7%       -30.0%    46
+  엔비디아             13.5     +53.5%     -34.9%       -12.0%    59
+  머크               15.7      +8.7%      -8.0%        -7.0%    25
+  메타               20.5     +14.8%     -12.9%        -9.0%    58
+  알파벳              22.3     +26.4%     -20.9%       -16.6%    54
+  마이크로소프트          22.3     +12.7%     -11.3%        -4.5%    53
+  아마존              23.9     +32.6%     -24.6%       -13.0%    58
+  디어               28.2      +8.1%      -7.5%       -11.0%    23
+  애플               35.9      -4.1%      +4.3%        -1.3%    39
+  월마트              36.8      +7.2%      -6.7%       -12.1%    40
+  인텔               42.7     +31.4%     -23.9%       -36.9%    43
+  코인베이스            58.0     +22.5%     -18.4%       -53.6%    33
+  테슬라             163.6     +12.2%     -10.9%       -28.9%    38
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 26건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 1 하향 0 (의견 유지 27건은 뺐습니다)
   2026-10-15 ▲ 월마트          Deutsche Bank: Hold → Buy
 
-[월가 리포트] US · 오늘 · 32건 (상향 5 하향 8 신규 16 목표가 상향 0 하향 0) · 출처 marketbeat
-  ASM    ▲ 상향     Roth Capital              Neutral → Buy            
-  B      ▼ 하향     Canadian Imperial Bank o  Outperform → Neutral     $49.00
+[월가 리포트] US · 오늘 · 366건 (상향 13 하향 17 신규 41 목표가 상향 50 하향 123) · 출처 marketbeat
+  ASM    ▲ 상향     Roth Capital              Neutral → Buy            $8.00 → $7.00
+  B      ▼ 하향     Canadian Imperial Bank o  Sector Outperform → Neutral $57.00 → $49.00
+  CCC    ▼ 하향     CJS Securities            Market Perform           
+  CLDT   ▼ 하향     Morgan Stanley            Outperform               
+  CPRI   ▲ 상향     Raymond James Financial   Outperform → Strong-Buy  $20.00
+  EAT    ▲ 상향     Raymond James Financial   Outperform → Strong-Buy  $270.00 → $260.00
+  EFX    ▼ 하향     Oppenheimer               Outperform → Market Perform 
+  EMN    ▼ 하향     JPMorgan Chase & Co.      Overweight → Neutral     $82.00 → $66.00
+  ENGN   ▼ 하향     Citigroup                 Market Perform → Hold    
   ERIC   ▼ 하향     Danske                    Buy → Hold               
-  FMC    ▼ 하향     Jefferies Financial Grou  Buy → Hold               $5.00
+  FMC    ▼ 하향     Jefferies Financial Grou  Buy → Hold               $14.00 → $5.00
   FMC    ▼ 하향     Royal Bank Of Canada      Sector Perform → Sell    
   FMX    ▲ 상향     Benchmark                 Overweight               
-  GEF    ▲ 상향     Raymond James Financial   Market Perform → Outperform 
-  KARD   ▼ 하향     William Blair             Outperform → Neutral     
-  KVYO   ▲ 상향     The Goldman Sachs Group   Neutral → Buy            
+  FMX    ▲ 상향     JPMorgan Chase & Co.      Neutral → Overweight     $126.00 → $151.00
+  FOXA   ▲ 상향     Bank of America           Underperform → Buy       $54.00 → $85.00
+  FOXA   ▼ 하향     Oppenheimer               Market Perform           
+  FOXA   ▼ 하향     Jefferies Financial Grou  Hold                     
+  FOXA   ▼ 하향     KeyCorp                   Sector Weight            
+  FOXA   ▲ 상향     Raymond James Financial   Strong-Buy               
+  GEF    ▲ 상향     Raymond James Financial   Market Perform → Outperform $90.00
   LYG    ▼ 하향     Royal Bank Of Canada      Outperform → Sector Perform 
-  MCO    ▼ 하향     Jefferies Financial Grou  Neutral                  
+  MCO    ▼ 하향     Jefferies Financial Grou  Neutral                  $560.00
+  MDXH   ▼ 하향     Craig Hallum              Buy → Hold               
+  MDXH   ▼ 하향     Lake Street Capital       Buy → Hold               $0.50
+  MLM    ▲ 상향     DA Davidson               Neutral → Buy            $610.00
+  OPK    ▲ 상향     Barrington Research       Market Perform → Outperform $2.25
+  OXY    ▲ 상향     Roth Capital              Neutral → Buy            $70.00
+  SMTC   ▲ 상향     Northland Securities      Market Perform → Outperform $186.00
   VRNS   ▼ 하향     Royal Bank Of Canada      Outperform → Neutral     
-  ZETA   ▲ 상향     The Goldman Sachs Group   Neutral → Buy            
-  AAPG   · 신규     William Blair             Outperform               
-  BAND   · 신규     Morgan Stanley            Underweight → Equal Weight $56.00
-  CON    · 신규     Jefferies Financial Grou  Buy                      $47.00
-  CYTK   · 신규     William Blair             Outperform               
-  EWTX   · 신규     William Blair             Outperform               
-  IDXX   · 신규     The Goldman Sachs Group   Buy                      $740.00
-  IDYA   · 신규     William Blair             Outperform               
-  IMNM   · 신규     William Blair             Outperform               
-  PVLA   · 신규     William Blair             Outperform               
-  RCUS   · 신규     William Blair             Outperform               
-  RVMD   · 신규     William Blair             Market Perform → Outperform 
-  RYTM   · 신규     William Blair             Outperform               
-  TEO    · 신규     Santander                 Outperform               
-  TNGX   · 신규     William Blair             Outperform               
-  WVE    · 신규     William Blair             Outperform               
-  ZTS    · 신규     The Goldman Sachs Group   Buy → Neutral            $74.00
-  MLCO   · 목표가    Capital One Financial                              $5.50
+  ZETA   ▲ 상향     The Goldman Sachs Group   Neutral → Buy            $30.00 → $45.00
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
@@ -99,9 +99,9 @@
   13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 지금의 포지션이 아닙니다.
 
 [미 거시] 최근 90일
-  미 10년물 국채금리           5.19  [2026-10-14 기준]  (+0.59) 기간 최저 4.60(2026-07-20) 최고 5.31(2026-10-05)
-  미 2년물 국채금리            4.82  [2026-10-14 기준]  (+0.61) 기간 최저 4.15(2026-08-13) 최고 4.92(2026-09-28)
-  장단기 금리차(10년-2년)       0.33  [2026-10-15 기준]  (-0.06) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
+  미 10년물 국채금리           5.10  [2026-10-15 기준]  (+0.50) 기간 최저 4.60(2026-07-20) 최고 5.31(2026-10-05)
+  미 2년물 국채금리            4.77  [2026-10-15 기준]  (+0.56) 기간 최저 4.15(2026-08-13) 최고 4.92(2026-09-28)
+  장단기 금리차(10년-2년)       0.35  [2026-10-16 기준]  (-0.04) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
   연방기금금리                3.75  [2026-09-01 기준]  (+0.12) 기간 최저 3.63(2026-07-01) 최고 3.75(2026-09-01)
   미 소비자물가지수           336.30  [2026-09-01 기준]  (+3.48) 기간 최저 332.81(2026-07-01) 최고 336.30(2026-09-01)
 
