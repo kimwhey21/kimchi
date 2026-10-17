@@ -1,0 +1,117 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-10-18",
+ "slug": "enceladus-salt-ocean",
+ "radar_origin": "Phys.org: Salt crystals could hold clues to life beneath Enceladus's ice",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1731778572747-315c9089bc69?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8ZnJvemVuJTIwaWNlJTIwY3JhY2t8ZW58MHwwfHx8MTc5MjI1Njc5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "D2q_N-3g388",
+  "credit": "Unsplash / Anastasia Zolotukhina"
+ },
+ "sources": [
+  {
+   "name": "유니버스 투데이",
+   "title": "Enceladus' Salty Surprise",
+   "url": "https://www.universetoday.com/87018/enceladus-salty-surprise/"
+  },
+  {
+   "name": "위키백과",
+   "title": "Enceladus",
+   "url": "https://en.wikipedia.org/wiki/Enceladus"
+  },
+  {
+   "name": "영국 오픈대학교",
+   "title": "OU academics reveal the hidden information in icy moon surface salts",
+   "url": "https://research.open.ac.uk/news/ou-academics-reveal-hidden-information-icy-moon-surface-salts"
+  }
+ ],
+ "tags": [
+  "엔셀라두스",
+  "토성",
+  "소금",
+  "우주생물학"
+ ],
+ "ko": {
+  "title": "토성의 작은 위성이 뿜은 얼음에서 바닷물이 나왔다: 소금이 말해 준 것 세 가지",
+  "title_candidates": [
+   "엔셀라두스의 소금 한 알갱이는 어떻게 바다의 증거가 됐을까",
+   "토성의 작은 위성이 뿜은 얼음에서 바닷물이 나왔다: 소금이 말해 준 것 세 가지",
+   "지름 504km 얼음 위성의 바다를 소금이 증명할 수 있을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "미국 애리조나주 폭밖에 안 되는 얼음 위성에 바다가 있다는 증거가, 소금 알갱이였습니다.\n토성의 위성 엔셀라두스(Enceladus)는 지름이 504km에 불과합니다.\n그런데 이 작은 얼음 덩어리가 내뿜는 물방울에서 바닷물의 성분이 나왔습니다.\n소금 한 알갱이가 왜 외계 생명의 단서가 되는 걸까요?"
+   },
+   {
+    "heading": "카시니는 얼음 알갱이를 맛봤습니다",
+    "body": "미국 항공우주국(NASA)의 토성 탐사선 카시니(Cassini)는 2005년 엔셀라두스의 남극 근처에서 얼음 입자가 뿜어져 나오는 모습을 처음 발견했습니다.\n연구진은 2008년과 2009년에 카시니가 이 분출물 속을 직접 통과하며 모은 자료를 분석했습니다.\n유니버스 투데이에 따르면 위성 가까이에서는 나트륨과 칼륨이 풍부한 큰 소금 알갱이가 많았습니다.\n탐사선 안의 분석 장치는 얼음 알갱이가 부딪히면 증발하는 기체의 성분을 읽어 냈습니다. 카시니 프로젝트 과학자 린다 스필커(Linda Spilker)는 이 일의 의미를 이렇게 말했습니다.\n“카시니 같은 탐사선이 토성 가까이 날아가 소금을 맛보고 얼음 알갱이의 충돌을 느끼지 못했다면, 과학자들은 이 외곽 태양계 천체들이 얼마나 흥미로운지 결코 알지 못했을 것입니다.”"
+   },
+   {
+    "heading": "왜 소금이 바다의 증거일까",
+    "body": "물이 얼어붙을 때는 소금이 얼음 밖으로 밀려나 순수한 얼음에 가까운 덩어리가 됩니다. 그러니 소금이 가득한 알갱이가 계속 나온다면 그 근원은 언 얼음이 아니라 소금물일 가능성이 큽니다.\n카시니 팀의 과학자인 하이델베르크대학교의 프랑크 포스트베르크(Frank Postberg)는 이렇게 말했습니다.\n“얼음 표면 아래에 소금물이 있지 않고서는, 모든 ‘호랑이 줄무늬’에서 소금이 풍부한 알갱이가 꾸준히 나오는 현상을 설명할 그럴듯한 방법이 지금은 없습니다.”\n호랑이 줄무늬(tiger stripes)는 위성 남극을 가로지르는 깊고 긴 균열이고, 분출은 그 균열에서 일어납니다."
+   },
+   {
+    "heading": "소금이 말해 주는 바다의 성격",
+    "body": "위키백과에 정리된 연구를 보면 소금기 있는 알갱이는 무거워서 대부분 위성 표면으로 다시 떨어지고, 소금이 적은 가벼운 알갱이는 빠르게 날아가 토성의 E 고리로 흘러갑니다.\n그래서 E 고리의 나트륨 염 함량은 질량 기준 0.5~2%로 낮습니다.\n분출물에서 확인된 성분은 나트륨과 염소, 탄산염입니다. 위키백과는 이 조성이 소금기 있는 지하 바다에서 왔음을 가리킨다고 설명합니다.\n한 모형은 이 바다의 산성도가 pH 11~12로 알칼리성이 강할 것이라고 추정합니다. 이것은 직접 잰 값이 아니라 모형의 계산이라는 점을 기억해 둘 만합니다."
+   },
+   {
+    "heading": "생명과 이어지는 곳",
+    "body": "유니버스 투데이에 따르면 분출은 초당 200kg의 수증기를 음속의 몇 배 속도로 내뿜습니다. 그만큼 많은 물이 어딘가에 고여 있어야 한다는 뜻입니다.\n유럽우주국(ESA)의 카시니 프로젝트 과학자 니콜라 알토벨리(Nicolas Altobelli)는 이렇게 평가했습니다.\n“이번 발견은 생명이 나타나기에 알맞은 환경 조건이 가스 행성을 도는 얼음 천체에서도 유지될 수 있음을 보여 주는 결정적인 새 증거입니다.”\n바닷물, 열, 유기 화합물이 한곳에 모여 있다는 것이 이 위성에 쏠린 기대의 이유입니다."
+   },
+   {
+    "heading": "이번에는 표면의 소금을 읽는 연구",
+    "body": "영국 오픈대학교 연구진은 얼음 위성의 표면에 쌓인 소금에서 내부 사정을 읽을 수 있다고 설명합니다.\n실험실에서 위성 표면 수준의 극저온을 흉내 내 소금물이 어떻게 어는지 보았더니, 얼어붙는 속도에 따라 서로 다른 소금 광물이 만들어졌습니다.\n소금의 종류가 곧 바닷물이 표면으로 올라오는 동안 겪은 조건을 알려 준다는 뜻입니다. 연구진은 유럽우주국의 주스(JUICE)와 NASA의 유로파 클리퍼(Europa Clipper)가 적외선 카메라로 이런 소금을 찾아낼 수 있다고 봅니다.\n맛볼 수 없는 거리에서 소금의 종류를 읽는 일이 얼음 위성 탐사의 새 방법이 되는 셈입니다.\n얼음 아래 바다를 직접 보지 못하더라도, 표면에 남은 소금 한 알갱이에서 바다의 이력을 읽을 수 있다면 우리는 어디까지 알아낼 수 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "지름이 504km에 불과합니다",
+   "url": "https://www.universetoday.com/87018/enceladus-salty-surprise/",
+   "original": "on a little 504-km-wide moon barely the width of Arizona"
+  },
+  {
+   "claim": "2005년",
+   "url": "https://www.universetoday.com/87018/enceladus-salty-surprise/",
+   "original": "Cassini first discovered the jets of water ice particles in 2005"
+  },
+  {
+   "claim": "2008년과 2009년",
+   "url": "https://www.universetoday.com/87018/enceladus-salty-surprise/",
+   "original": "using data obtained from flybys in 2008 and 2009 during which Cassini flew directly through the plumes"
+  },
+  {
+   "claim": "카시니 같은 탐사선이 토성 가까이 날아가 소금을 맛보고",
+   "url": "https://www.universetoday.com/87018/enceladus-salty-surprise/",
+   "original": "Without an orbiter like Cassini to fly close to Saturn and its moons -- to taste salt and feel the bombardment of ice grains -- scientists would never have known how interesting these outer solar system worlds are"
+  },
+  {
+   "claim": "얼음 표면 아래에 소금물이 있지 않고서는",
+   "url": "https://www.universetoday.com/87018/enceladus-salty-surprise/",
+   "original": "There currently is no plausible way to produce a steady outflow of salt-rich grains from solid ice across all the tiger stripes other than salt water under Enceladus's icy surface"
+  },
+  {
+   "claim": "0.5~2%",
+   "url": "https://en.wikipedia.org/wiki/Enceladus",
+   "original": "explaining its salt-poor composition of 0.5–2% of sodium salts by mass"
+  },
+  {
+   "claim": "pH 11~12",
+   "url": "https://en.wikipedia.org/wiki/Enceladus",
+   "original": "has an alkaline pH of 11 to 12"
+  },
+  {
+   "claim": "초당 200kg",
+   "url": "https://www.universetoday.com/87018/enceladus-salty-surprise/",
+   "original": "constantly spraying water vapor at a rate of 200 kg (400 pounds) every second"
+  },
+  {
+   "claim": "이번 발견은 생명이 나타나기에 알맞은 환경 조건이",
+   "url": "https://www.universetoday.com/87018/enceladus-salty-surprise/",
+   "original": "This finding is a crucial new piece of evidence showing that environmental conditions favorable to the emergence of life can be sustained on icy bodies orbiting gas giant planets"
+  }
+ ]
+}

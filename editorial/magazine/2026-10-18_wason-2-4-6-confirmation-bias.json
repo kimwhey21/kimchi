@@ -1,0 +1,101 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-10-18",
+ "slug": "wason-2-4-6-confirmation-bias",
+ "radar_origin": "The Big Picture (배리 리트홀츠): Top? Beware Your Confirmation Bias",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1764250766584-c0259d99908f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8bWF6ZXxlbnwwfDB8fHwxNzkyMjU2Nzk5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "rn2p-4hYTvU",
+  "credit": "Unsplash / Imkara Visual"
+ },
+ "sources": [
+  {
+   "name": "위키백과",
+   "title": "Confirmation bias",
+   "url": "https://en.wikipedia.org/wiki/Confirmation_bias"
+  },
+  {
+   "name": "디시전 랩",
+   "title": "Confirmation Bias (The Decision Lab)",
+   "url": "https://thedecisionlab.com/biases/confirmation-bias"
+  }
+ ],
+ "tags": [
+  "확증편향",
+  "투자심리",
+  "행동경제학"
+ ],
+ "ko": {
+  "title": "시장이 정점이라고 믿는 투자자는 어떤 숫자만 확인할까",
+  "title_candidates": [
+   "2, 4, 6 다음 숫자는 무엇일까: 정점론자가 놓치는 시험 하나",
+   "확증편향 실험은 정말 틀렸을까, 투자자가 가져갈 판단 기준",
+   "시장이 정점이라고 믿는 투자자는 어떤 숫자만 확인할까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "숫자 세 개 ‘2, 4, 6’이 어떤 규칙을 따르는지 맞혀 보라는 과제가 있었습니다.\n정답은 ‘숫자가 커지는 순서’라는 아주 단순한 규칙이었는데, 참가자들은 훨씬 복잡한 규칙을 내놓았습니다.\n시장이 정점이라고 믿는 사람은 이 실험의 참가자와 얼마나 다를까요?"
+   },
+   {
+    "heading": "숫자 세 개로 만든 실험",
+    "body": "영국 심리학자 피터 웨이슨(Peter Wason)이 1960년에 낸 실험입니다. 위키백과에 따르면 참가자는 ‘2, 4, 6’이 규칙에 맞는다는 말만 듣고, 직접 숫자 세 개를 말해 규칙에 맞는지 확인했습니다.\n실제 규칙은 오름차순이었습니다. 하지만 참가자들은 ‘가운데 숫자가 처음과 끝의 평균’처럼 훨씬 구체적인 규칙을 내놓곤 했습니다.\n규칙이 ‘앞의 수보다 2씩 크다’라고 믿는 사람은 (11, 13, 15)처럼 그 규칙에 맞는 숫자를 던졌습니다. (11, 12, 19)처럼 그 규칙을 깨는 숫자는 시험하지 않았습니다.\n맞는다는 답이 돌아와도 가설은 더 단단해질 뿐, 틀렸는지는 알 수 없습니다."
+   },
+   {
+    "heading": "깨 보는 숫자는 왜 던지지 않았을까",
+    "body": "웨이슨은 이 결과를 반증보다 확인을 좋아하는 성향으로 읽었고, 그래서 이것을 확증편향이라 불렀습니다.\n그런데 이 해석은 나중에 도전을 받았습니다. 위키백과에 따르면 클레이먼과 하(Klayman and Ha)는 1987년 논문에서 이 실험이 확증 편향을 증명하지는 못한다고 주장했습니다.\n사람들이 한 일은 자기 가설과 맞는 쪽으로 시험하는 것, 곧 ‘긍정 검사 전략’이었다는 것입니다.\n이 과제는 정답이 너무 넓어서 맞는 숫자만 던져서는 얻는 정보가 거의 없습니다. 같은 과제의 이름표를 바꾸자 참가자들은 훨씬 잘 풀었습니다."
+   },
+   {
+    "heading": "그래도 남는 것은 눈이 멀어지는 쪽",
+    "body": "실험 해석은 흔들렸지만, 확증편향이라는 이름이 가리키는 현상까지 사라진 것은 아닙니다.\n행동과학 연구 기관 디시전 랩은 사람들이 반대되는 증거를 만나도 그것을 자기 생각을 지지하는 쪽으로 해석하는 경향이 있다고 정리합니다.\n독일 철학자 아르투어 쇼펜하우어(Arthur Schopenhauer)는 1844년 『의지와 표상으로서의 세계』 둘째 권에 이렇게 썼습니다.\n“일단 받아들인 가설은 그것을 확인해 주는 모든 것에는 날카로운 눈을 달아 주고, 반박하는 모든 것에는 눈을 멀게 한다.”"
+   },
+   {
+    "heading": "정점론과 바닥론에 대입해 보면",
+    "body": "이 구조를 시장에 대입해 보는 것은 우리의 비유일 뿐, 위 실험이 투자자를 직접 다룬 것은 아닙니다.\n‘지금이 정점이다’라는 가설을 세운 투자자가 (11, 13, 15) 식으로만 시험한다면, 모아 오는 것은 약해진 지표뿐입니다. ‘바닥이다’라는 가설을 세운 사람도 거울처럼 같은 일을 합니다.\n(11, 12, 19) 식 시험은 ‘정점이 아니라면 어떤 숫자가 나와야 하는가’를 먼저 적어 두는 일입니다.\n그 숫자가 나타나면 가설을 접을 수 있고, 나타나지 않는다면 그때 비로소 가설은 한 번 이긴 것입니다."
+   },
+   {
+    "heading": "내 확신을 깨뜨릴 숫자 하나",
+    "body": "어떤 전망을 가장 강하게 믿고 있는지 떠올려 보십시오. 그 전망이 틀렸다면 가장 먼저 어떤 숫자가 달라져 있을까요?\n그 숫자를 지금 적어 두고 한 달 뒤에 열어 보는 것, 이것이 이 실험이 남긴 가장 값싼 점검입니다.\n처음 물음에 돌아가면, 정점이라고 믿는 사람이 ‘2, 4, 6’ 참가자와 달라지는 곳은 딱 하나입니다. 깨 보는 숫자를 던지느냐입니다."
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "2, 4, 6",
+   "url": "https://en.wikipedia.org/wiki/Confirmation_bias",
+   "original": "They were told that (2,4,6) fits the rule."
+  },
+  {
+   "claim": "1960년에 낸 실험",
+   "url": "https://en.wikipedia.org/wiki/Confirmation_bias",
+   "original": "In Peter Wason's initial experiment published in 1960"
+  },
+  {
+   "claim": "(11, 13, 15)",
+   "url": "https://en.wikipedia.org/wiki/Confirmation_bias",
+   "original": "they would offer a triple that fitted (confirmed) this rule, such as (11,13,15) rather than a triple that violated (falsified) it, such as (11,12,19)"
+  },
+  {
+   "claim": "(11, 12, 19)",
+   "url": "https://en.wikipedia.org/wiki/Confirmation_bias",
+   "original": "they would offer a triple that fitted (confirmed) this rule, such as (11,13,15) rather than a triple that violated (falsified) it, such as (11,12,19)"
+  },
+  {
+   "claim": "1987년 논문",
+   "url": "https://en.wikipedia.org/wiki/Confirmation_bias",
+   "original": "Klayman and Ha's 1987 paper argues that the Wason experiments do not actually demonstrate a bias towards confirmation"
+  },
+  {
+   "claim": "1844년",
+   "url": "https://en.wikipedia.org/wiki/Confirmation_bias",
+   "original": "In the second volume of his The World as Will and Representation (1844), German philosopher Arthur Schopenhauer observed"
+  },
+  {
+   "claim": "일단 받아들인 가설은 그것을 확인해 주는 모든 것에는",
+   "url": "https://en.wikipedia.org/wiki/Confirmation_bias",
+   "original": "An adopted hypothesis gives us lynx-eyes for everything that confirms it and makes us blind to everything that contradicts it"
+  }
+ ]
+}
