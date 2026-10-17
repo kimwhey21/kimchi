@@ -1,7 +1,9 @@
 {
- "base": {},
- "day": "2026-10-16",
- "issues": {
+ "base": {
   "맥 bench_nightly: 마지막 신호 # #": 1
+ },
+ "day": "2026-10-17",
+ "issues": {
+  "맥 bench_nightly: 마지막 신호 # #": 2
  }
 }
