@@ -1,0 +1,151 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-10-19",
+ "slug": "bleached-coral-recovery",
+ "radar_origin": "Phys.org: Scientists discover a way to reverse coral bleaching at record speed",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1621775595317-4de3a6646c6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Y29yYWwlMjByZWVmJTIwYmxlYWNoZWR8ZW58MHwwfHx8MTc5MjM0MzM2NHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "ovgWaprcWQM",
+  "credit": "Unsplash / Naja Bertolt Jensen"
+ },
+ "sources": [
+  {
+   "name": "유로뉴스",
+   "title": "'They're not dead yet': bleached corals recover in record time after touching healthy clones (2026-10-15)",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones"
+  },
+  {
+   "name": "KQED",
+   "title": "Stanford scientists find new way to revive bleached coral (2026-10-14)",
+   "url": "https://www.kqed.org/science/2002324/stanford-scientists-find-new-way-to-revive-bleached-coral"
+  }
+ ],
+ "tags": [
+  "산호백화",
+  "스탠퍼드",
+  "기후와바다"
+ ],
+ "ko": {
+  "title": "죽어 가던 산호는 왜 이웃에 닿자 색을 되찾았을까",
+  "title_candidates": [
+   "죽어 가던 산호는 왜 이웃에 닿자 색을 되찾았을까",
+   "7주 만에 색을 되찾은 산호, 바다에 쓰려면 넘어야 할 벽",
+   "산호 백화 되돌리기 실험: 바다에 쓰기 전 알아 둘 것 세 가지"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "하얗게 탈색된 산호는 이미 죽은 산호로 취급받아 왔습니다.\n그런데 실험실에서 탈색된 산호 조각 다섯 개가 모두 7주 안에 색을 되찾았습니다.\n약도, 수온 조절도 아니었습니다. 건강한 이웃에 닿아 있었다는 것만 달랐습니다.\n탈색은 정말 되돌릴 수 있는 일일까요, 실험실 안에서만 되는 일일까요?"
+   },
+   {
+    "heading": "쓰러진 시료에서 시작됐습니다",
+    "body": "발견은 우연이었습니다. 2025년 스탠퍼드대 연구실 수조에서 산호 두 조각이 서로 기대어 쓰러졌습니다.\n하나는 건강했고 하나는 탈색돼 있었는데, 맞닿은 자리에서 탈색된 쪽이 색을 되찾기 시작했습니다.\n연구를 이끈 박사과정 대니 콜린스는 이렇게 말했습니다.\n“탈색된 산호가 죽어 가고 있을지 몰라도, 아직 죽은 것은 아닙니다.”\n유로뉴스는 이 연구가 과학 저널 사이언스 어드밴시스에 실렸다고 전했습니다."
+   },
+   {
+    "heading": "맞닿은 자리에서 조류가 건너갔습니다",
+    "body": "산호는 몸속에 사는 미세한 조류(藻類)에게서 에너지를 얻습니다. 바닷물이 너무 뜨거워지면 이 조류를 내보내는데, 이것이 백화(탈색)입니다.\n현미경으로 보니 두 산호는 조직이 붙어 작은 통로를 만들었고, 그 길로 조류와 영양분이 건너갔습니다.\n사흘 만에 건강한 쪽의 유익한 조류가 탈색된 쪽으로 옮겨 가기 시작했습니다.\n스탠퍼드 해양학자 스티브 팔룸비는 이 조류의 증식을 이렇게 표현했습니다.\n“조류가 밀려들어 산호에서 지금까지 관찰된 가장 빠른 속도로 분열을 시작합니다.”\n둘째 주에는 조류 수가 나흘마다 두 배가 됐는데, 야생 산호보다 약 10배 빠른 속도입니다."
+   },
+   {
+    "heading": "열 쌍 중 살아남은 쪽은 어디였나",
+    "body": "콜린스는 같은 군체에서 떼어 낸 건강한 조각과 탈색된 조각을 열 쌍 만들었습니다.\n다섯 쌍은 맞닿게 두었고, 나머지 다섯 쌍은 몇 밀리미터 떨어뜨려 놓았습니다.\n7주 안에 맞닿은 탈색 조각 다섯 개가 모두 회복했고, 떨어져 있던 조각은 죽었습니다.\n약 일주일이 지나자 일부는 혼자 회복할 만큼 조류를 받았고, 접촉이 끝난 뒤에도 회복은 이어졌습니다.\n스탠퍼드대 교수 피오렌차 미켈리는 지금까지의 통념을 이렇게 짚었습니다.\n“탈색된 산호는 포기한 대상으로 여겨지는 경우가 많습니다. 폭염 뒤 회복이 매우 느리고, 아예 안 되기도 하니까요.”"
+   },
+   {
+    "heading": "그래도 바다에 바로 쓰기는 어렵습니다",
+    "body": "한계가 분명합니다. 조직이 붙으려면 두 산호의 유전자가 같아야 합니다.\n망가진 산호마다 건강한 복제본이 있어야 한다는 뜻이라 산호초 전체에 쓰기에는 비현실적이라고 연구진도 인정합니다.\nKQED는 연구진이 조류만 따로 길러 탈색된 산호에 퍼뜨리는 방법을 찾고 있고, 하와이와 팔라우에서 현장 시험을 계획한다고 전했습니다.\n팔룸비는 이 방법이 열을 막아 주지는 못한다고 선을 그었습니다.\n“이것은 회복의 이야기입니다. 폭염을 무디게 하지는 못하고, 그 뒤처리를 도울 뿐입니다.”"
+   },
+   {
+    "heading": "산호초가 걸려 있는 무게",
+    "body": "산호초는 바다 바닥의 0.01%를 덮을 뿐이지만 해양 생물의 4분의 1이 기대어 삽니다.\n전 세계 산호 모니터링 네트워크에 따르면 지난 40년 동안 살아 있는 산호의 약 10%가 사라졌습니다.\n2023년에서 2024년 사이에만 거의 9%가 줄어 단일 연도 최대 감소를 기록했습니다.\n탈색이 닥치는 간격은 이제 5~6년으로 짧아졌는데, 이 기술이 현장에서 통할 때쯤 산호는 몇 번의 폭염을 더 겪게 될까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "다섯 개가 모두 7주 안에",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "within seven weeks, all five bleached fragments put in contact with their healthy clones had recovered."
+  },
+  {
+   "claim": "2025년 스탠퍼드대 연구실",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "the discovery happened by accident in 2025, when steve palumbi, a professor of oceans and marine biologist at stanford's doerr school of sustainability, noticed two pieces of coral that had fallen against each other in a laboratory tank."
+  },
+  {
+   "claim": "탈색된 산호가 죽어 가고 있을지 몰라도, 아직 죽은 것은 아닙니다.",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "while bleached corals may be dying, they are not dead yet"
+  },
+  {
+   "claim": "사흘 만에",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "within three days, beneficial algae had begun moving from the healthy corals into the bleached ones."
+  },
+  {
+   "claim": "조류가 밀려들어 산호에서 지금까지 관찰된 가장 빠른 속도로 분열을 시작합니다.",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "they flood in and start dividing at the fastest rates seen in corals"
+  },
+  {
+   "claim": "나흘마다 두 배",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "during the second week, the algae doubled in number every four days – about 10 times faster than in wild corals"
+  },
+  {
+   "claim": "열 쌍",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "collins then arranged 10 pairs of coral fragments, each containing a healthy and bleached piece from the same colony."
+  },
+  {
+   "claim": "다섯 쌍은 맞닿게 두었고",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "five pairs were placed in contact with one another, and the others were kept a few millimetres apart."
+  },
+  {
+   "claim": "7주 안에 맞닿은 탈색 조각 다섯 개가 모두 회복했고",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "within seven weeks, all five bleached fragments put in contact with their healthy clones had recovered."
+  },
+  {
+   "claim": "약 일주일이 지나자",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "after about a week, some had received enough algae to recover on their own."
+  },
+  {
+   "claim": "탈색된 산호는 포기한 대상으로 여겨지는 경우가 많습니다. 폭염 뒤 회복이 매우 느리고, 아예 안 되기도 하니까요.",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "bleached corals are often considered a lost cause because recovery after a heatwave is very slow, if it happens at all"
+  },
+  {
+   "claim": "이것은 회복의 이야기입니다. 폭염을 무디게 하지는 못하고, 그 뒤처리를 도울 뿐입니다.",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "this is a recovery story. it doesn't blunt heatwaves; it just helps the aftermath."
+  },
+  {
+   "claim": "하와이와 팔라우",
+   "url": "https://www.kqed.org/science/2002324/stanford-scientists-find-new-way-to-revive-bleached-coral",
+   "original": "he hopes to test the method at field sites in hawaii and palau in the coming months to years."
+  },
+  {
+   "claim": "0.01%",
+   "url": "https://www.kqed.org/science/2002324/stanford-scientists-find-new-way-to-revive-bleached-coral",
+   "original": "reefs are critical habitats, making up just 0.01% of the ocean floor; they support a quarter of all marine life ."
+  },
+  {
+   "claim": "약 10%가 사라졌습니다",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "the world's reefs have lost nearly 10 per cent of their living coral over the past four decades."
+  },
+  {
+   "claim": "거의 9%가 줄어",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "between 2023 and 2024 alone, it fell almost 9 per cent during a global bleaching event – the largest single-year decline ever recorded."
+  },
+  {
+   "claim": "5~6년",
+   "url": "https://www.euronews.com/2026/10/15/theyre-not-dead-yet-bleached-corals-recover-in-record-time-after-touching-healthy-clones",
+   "original": "global bleaching now occurs roughly every five to six years, leaving reefs less time to recover between bouts of extreme heat."
+  }
+ ]
+}

@@ -1,0 +1,166 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-10-19",
+ "slug": "gen-z-betting-or-investing",
+ "radar_origin": "Fortune: For Gen Z, everything looks like an investment. But it isn’t",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1676270891810-7da36dd02c85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c3BvcnRzJTIwYmV0dGluZyUyMHBob25lfGVufDB8MHx8fDE3OTIzNDMzNzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "aiLNV9h4MA0",
+  "credit": "Unsplash / (Augustin-Foto) Jonas Augustin"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "More than half of Gen Z investors have funneled cash into sports betting—but they're not coming close to breaking even (2026-10-05)",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/"
+  },
+  {
+   "name": "뱅크오브아메리카 인스티튜트",
+   "title": "One in five Americans call sports betting an investment. For Gen Z, it's twice as many — and they don't come close to breaking even (포춘 보도, 2026-09-07)",
+   "url": "https://fortune.com/2026/09/07/americans-sports-gambling-investment-gen-z-75-cents-dollar-wagered/"
+  }
+ ],
+ "tags": [
+  "Z세대",
+  "스포츠베팅",
+  "투자심리"
+ ],
+ "ko": {
+  "title": "1달러를 걸면 80센트가 돌아온다: Z세대 베팅 숫자 읽는 법",
+  "title_candidates": [
+   "1달러를 걸면 80센트가 돌아온다: Z세대 베팅 숫자 읽는 법",
+   "스포츠 베팅이 투자처럼 보이는 곳은 어디일까",
+   "Z세대는 투자와 도박을 정말 헷갈릴까: 연구자들의 답"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "스포츠 베팅을 투자라고 부르는 사람이 미국에서 다섯 명 중 한 명입니다. Z세대에서는 다섯 명 중 두 명입니다.\n그런데 같은 은행이 결제 기록을 열어 보니, 베팅 플랫폼에 보낸 돈 1달러당 돌려받은 돈은 세대를 가리지 않고 75센트에 못 미쳤습니다.\n투자라 부르는 비율이 가장 높은 세대가 돈을 가장 많이 잃은 것도 아닙니다. 이 숫자는 누구 편일까요?"
+   },
+   {
+    "heading": "투자라 부르는 사람이 두 배입니다",
+    "body": "뱅크오브아메리카 인스티튜트는 미국인의 5분의 1이 스포츠 베팅을 투자로 본다고 밝혔습니다. Z세대는 5분의 2입니다.\n핀테크 업체 베터먼트가 미국 개인투자자 1,000명을 조사했더니, Z세대 투자자의 52%가 지난 1년 사이 투자하려던 돈을 스포츠 베팅에 썼습니다.\n한 달에 여러 번 그렇게 한다는 사람이 14%였습니다.\n베팅을 장기 재무 전략의 일부로 의도해서 둔다는 응답도 26%였습니다."
+   },
+   {
+    "heading": "결제 기록은 다른 이야기를 합니다",
+    "body": "은행은 베팅 플랫폼을 오간 결제를 추적했습니다. 올해 모든 세대가 매달 보낸 돈 1달러당 75센트도 돌려받지 못했습니다.\nZ세대는 가장 나아서 대부분 80센트 넘게 돌려받았지만, 본전에는 한참 못 미칩니다.\n포춘은 판돈에 수수료가 미리 얹혀 있기 때문이라고 설명합니다. 베팅 업체가 모든 판에 붙이는 이 수수료를 비그(vig)라 부릅니다.\n여러 번 걸수록 이 수수료가 쌓이니 판이 이어질수록 이익을 내기 어렵습니다.\n설문 자료로는 스포츠 베팅을 하는 사람의 4분의 1 가까이가 매일 걸고, 3분의 1은 매주 겁니다."
+   },
+   {
+    "heading": "Z세대는 둘을 헷갈리는 걸까요",
+    "body": "뉴욕대 나타샤 슐 교수는 단순한 오해로 보지 않습니다.\n“Z세대가 투자와 도박의 차이를 이해하지 못한다고는 생각하지 않습니다.”\n그가 보기에 문제는 화면입니다. 투자 앱은 점점 게임처럼 바뀌고, 주식 거래 플랫폼에는 예측 시장이 들어오고 있습니다.\n“요즘 금융 플랫폼과 베팅 플랫폼은 둘 사이의 경계를 더 흐릿하게 만드는 것 같습니다.”\n스포츠 핸디캐퍼(경기 결과를 분석해 베팅 판단을 파는 사람)로 일하는 Z세대 팟캐스터 잭 허시는 이렇게 말합니다.\n“저는 스포츠 베팅도 다른 시장을 대하듯 접근합니다.”"
+   },
+   {
+    "heading": "베팅 가구의 통장 잔액은 얇습니다",
+    "body": "숫자를 한 걸음 물려서 보면 상황이 다릅니다. 우선 Z세대 전체가 베팅에 빠져 있는 것은 아닙니다.\n어번 인스티튜트의 전국 조사에서 Z세대 성인 가운데 지난 1년 동안 스포츠에 돈을 건 사람은 17%였습니다.\n그래도 그 가운데 15%는 베팅하지 않았을 때보다 저축을 덜 했다고 답했습니다.\n뱅크오브아메리카 인스티튜트 자료로는 베팅 가구의 2026년 예금 잔액 중앙값이 베팅하지 않는 가구의 59%였습니다.\n뉴욕 연방준비은행 연구는 40세 미만 베팅 이용자의 카드 연체가 합법화 뒤 26% 늘었다고 밝혔습니다."
+   },
+   {
+    "heading": "예측 시장이 경계를 더 흐립니다",
+    "body": "뱅크오브아메리카 인스티튜트에 따르면 월드컵 기간 합법 스포츠 베팅 거래량에서 예측 시장이 차지한 비중은 연초 9%에서 27%로 뛰었습니다.\n7월 온라인 베팅 활동에서는 Z세대와 밀레니얼이 88%를 차지했고, Z세대만 48%로 처음 밀레니얼을 앞질렀습니다.\n투자 앱 화면과 베팅 앱 화면이 닮아 갈수록, 내 돈이 지금 어느 쪽에 있는지는 무엇으로 구분할 수 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "75센트에 못 미쳤습니다",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "bofa, which tracked payments flowing to and from betting platforms, found that customers across every generation recovered less than 75 cents for every dollar they sent in each month this year."
+  },
+  {
+   "claim": "Z세대는 5분의 2입니다.",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "research from the bank of america institute found that one in five americans view sports betting as an investment . among gen z, that figure doubles to two in five."
+  },
+  {
+   "claim": "다섯 명 중 한 명입니다",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "research from the bank of america institute found that one in five americans view sports betting as an investment . among gen z, that figure doubles to two in five."
+  },
+  {
+   "claim": "1,000명",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "a recent betterment survey of 1,000 u.s. retail investors dug deeper. it found that 52% of gen z investors redirected money intended for investing into sports betting in the past year, and 14% said they do so multiple times a month."
+  },
+  {
+   "claim": "52%가 지난 1년",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "it found that 52% of gen z investors redirected money intended for investing into sports betting in the past year, and 14% said they do so multiple times a month."
+  },
+  {
+   "claim": "14%였습니다",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "it found that 52% of gen z investors redirected money intended for investing into sports betting in the past year, and 14% said they do so multiple times a month."
+  },
+  {
+   "claim": "26%였습니다",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "meanwhile, 26% of gen z investors said they treat sports betting as a deliberate part of their long-term financial strategy."
+  },
+  {
+   "claim": "5분의 1이 스포츠 베팅을 투자로 본다고",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "research from the bank of america institute found that one in five americans view sports betting as an investment . among gen z, that figure doubles to two in five."
+  },
+  {
+   "claim": "1달러당 75센트도 돌려받지 못했습니다",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "bofa, which tracked payments flowing to and from betting platforms, found that customers across every generation recovered less than 75 cents for every dollar they sent in each month this year."
+  },
+  {
+   "claim": "대부분 80센트 넘게",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "gen z fared best, with most getting back more than 80 cents per dollar—but that's still well short of breaking even."
+  },
+  {
+   "claim": "4분의 1 가까이가 매일 걸고, 3분의 1은 매주 겁니다",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "survey data cited by bofa found that nearly a quarter of sports bettors wager daily, while another third bet weekly."
+  },
+  {
+   "claim": "“Z세대가 투자와 도박의 차이를 이해하지 못한다고는 생각하지 않습니다.”",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "i don't think it's that gen z doesn't understand the difference between investing and gambling."
+  },
+  {
+   "claim": "“요즘 금융 플랫폼과 베팅 플랫폼은 둘 사이의 경계를 더 흐릿하게 만드는 것 같습니다.”",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "contemporary financial and betting platforms kind of make the boundary between the two more porous."
+  },
+  {
+   "claim": "“저는 스포츠 베팅도 다른 시장을 대하듯 접근합니다.”",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "i personally approach sports opportunities as i approach any other market"
+  },
+  {
+   "claim": "17%였습니다",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "urban found that 17% of gen z adults had bet on sports in the past year."
+  },
+  {
+   "claim": "15%는",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "still, 15% of gen z sports bettors told the urban institute they've saved less money than they would have if they weren't betting."
+  },
+  {
+   "claim": "59%였습니다",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "bofa found that median deposit balances for betting households in 2026 were just 59% of those of non-betting households."
+  },
+  {
+   "claim": "26% 늘었다고",
+   "url": "https://fortune.com/2026/10/05/gen-z-investors-sports-gambling-economy-lose-money-statistics-bank-of-america/",
+   "original": "a federal reserve bank of new york study found that credit card delinquencies among sports bettors under 40 jumped 26% after legalization."
+  },
+  {
+   "claim": "연초 9%에서 27%로",
+   "url": "https://fortune.com/2026/09/07/americans-sports-gambling-investment-gen-z-75-cents-dollar-wagered/",
+   "original": "prediction-market activity jumped to 27% of all legal u.s. sports-betting volume during the world cup, up from just 9% at the start of the year."
+  },
+  {
+   "claim": "88%를 차지했고",
+   "url": "https://fortune.com/2026/09/07/americans-sports-gambling-investment-gen-z-75-cents-dollar-wagered/",
+   "original": "gen z and millennials made up 88% of all betting activity in july, and gen z alone accounted for nearly half of that (48%)"
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-19",
+ "slug": "dynamic-pricing-three-faces",
+ "radar_origin": "Fortune: While consumers are angry about high-tech ways to set prices, a study of dynamic pricing found half the U.S. changes it recorded were decreases",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1789989472911-af4e93a5156f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c3VwZXJtYXJrZXQlMjBzaGVsZiUyMHByaWNlJTIwdGFnfGVufDB8MHx8fDE3OTIzNDMzNzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "2KqTbhbTNmk",
+  "credit": "Unsplash / Zoshua Colah"
+ },
+ "sources": [
+  {
+   "name": "AP통신",
+   "title": "While consumers are angry about high-tech ways to set prices, a study of dynamic pricing found half the U.S. changes it recorded were decreases (2026-10-18, 포춘 게재)",
+   "url": "https://fortune.com/2026/10/18/dynamic-pricing-surveillance-prices-consumer-data-digital-labels-algorithmic/"
+  },
+  {
+   "name": "포춘",
+   "title": "FTC moves to make retailers disclose use of 'personalized pricing' as technology now enables broad consumer surveillance (2026-08-24)",
+   "url": "https://fortune.com/2026/08/24/ftc-retailers-personalized-pricing-consumer-surveillance/"
+  }
+ ],
+ "tags": [
+  "동적가격",
+  "가격책정",
+  "소비자보호"
+ ],
+ "ko": {
+  "title": "인하가 절반인데도 소비자가 화난 이유: 가격표의 세 얼굴",
+  "title_candidates": [
+   "인하가 절반인데도 소비자가 화난 이유: 가격표의 세 얼굴",
+   "내가 보는 가격은 남도 보는 가격일까: 미국 규제가 겨눈 곳",
+   "마트 가격표가 전자식으로 바뀌면 값이 정말 출렁일까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "가격이 자주 바뀌면 오르기만 할 것 같습니다.\n그런데 웹 데이터 업체 데코도가 지난해 미국 상품 가격 변동을 추적해 보니, 기록된 변화의 약 절반은 인하였습니다.\n그래도 소비자는 화가 나 있고, 주 정부와 연방거래위원회(FTC)는 규제에 나서고 있습니다.\n값이 바뀌는 것과 나를 보고 값이 바뀌는 것은 같은 일일까요?"
+   },
+   {
+    "heading": "값이 바뀌는 방식은 세 가지입니다",
+    "body": "AP통신이 포춘에 실은 해설은 가격 책정 방식을 셋으로 나눕니다.\n첫째는 수요와 공급에 따라 값을 올리고 내리는 동적 가격입니다. 출발일이 가까워질수록 달라지는 항공권, 퇴근 시간에 오르는 우버 요금이 그 예입니다.\n둘째는 지역·소득·검색 기록 같은 개인 정보로 사람마다 다른 값을 내미는 개인 맞춤 가격입니다. 규제 당국과 시민단체는 이를 감시 가격이라 부릅니다.\n셋째는 소프트웨어가 값을 추천하거나 정하는 알고리즘 가격이고, 인공지능이 판매 패턴을 읽어 수요를 예측해 거듭니다."
+   },
+   {
+    "heading": "전자 가격표는 값을 흔들까요",
+    "body": "종이 가격표를 전자 화면으로 바꾸는 매장이 월마트, 홀푸드 같은 미국 대형 유통업체로 번지고 있습니다.\n소비자 단체는 이 화면이 언젠가 급등 요금이나 맞춤 가격에 쓰일 수 있다고 우려합니다.\n유통 기술 업체 렐렉스 솔루션스의 아사 파콰는 현실은 다르다고 말합니다.\n“식료품과 일반 상품에서 항공사나 차량 호출 앱처럼 하루 중에 가격을 바꾸는 일은 지금도 극히 드뭅니다.”\n한 식료품 체인의 가격을 추적한 연구진도 전자 가격표를 들인 뒤 급등 요금은 사실상 없었다고 확인했습니다."
+   },
+   {
+    "heading": "규제가 겨누는 것은 ‘왜 변하나’입니다",
+    "body": "FTC는 8월 개인 맞춤 가격에 대한 집행 방침 초안을 내놓고 9월 18일까지 의견을 받았습니다. 개인 정보로 값을 정하면서 알리지 않으면 부당하거나 기만적인 행위로 볼 수 있다는 경고입니다.\n앤드루 퍼거슨 FTC 위원장은 이렇게 말했습니다.\n“소비자는 표시된 가격이 다른 모두가 보는 가격과 같다고 기대합니다. 소매업체가 내 개인 정보로 추정한 지불 의사 금액이 아닙니다.”\nFTC는 2025년 1월 보고서에서 가격 맞춤 도구를 파는 중개업체들이 식료품·의류 소매업체를 포함해 최소 250곳의 고객과 일했다고 밝혔습니다.\n메릴랜드, 뉴저지, 코네티컷은 개인 정보로 값을 정하는 일에 제한을 두는 법을 최근 만들었습니다."
+   },
+   {
+    "heading": "실제 사례는 어디까지 갔나",
+    "body": "캘리포니아 검사들은 2022년 타깃을 고소했습니다. 타깃 앱이 매장에 들어서기 전에는 낮은 값을 보여 주다 들어서면 올렸다는 주장이었습니다.\n타깃은 500만 달러에 합의했고, 값을 올리는 데 위치 기반 기술을 쓰지 않기로 했습니다.\n타깃은 개인의 데이터나 행동으로 값을 맞춘 적이 없다고 밝혔습니다.\n같은 상품이 다른 값으로 보였다고 곧 개인 정보를 쓴 것은 아닙니다. 인스타카트는 구매자를 무작위로 나눠 값을 비교한 시험이었다며 이를 접었습니다."
+   },
+   {
+    "heading": "숫자는 누구 편일까",
+    "body": "값을 낮추는 경우가 절반이라는 데코도의 집계는 값이 바뀌면 곧 인상이라는 통념을 흔듭니다.\n하지만 기업이 개인 정보를 얼마나 쓰는지는 아직 분명하지 않다고 AP통신은 짚었습니다. 절반의 인하가 나머지 절반의 이유를 지워 주지는 않습니다.\n무게가 더 실리는 쪽은 집 밖의 숫자일 수 있습니다. 미국 노동통계국에 따르면 7월 과일과 채소 값은 1년 전보다 5.1% 올랐습니다.\n농무부 자료로는 소득 하위 20% 가구가 2024년 세전 소득의 33%를 식비에 썼고, 중간 소득 가구는 12.2%였습니다.\n식료품값이 이만큼 무거운 가구일수록 가격표가 누구에게나 같은 숫자인지가 더 절실한 물음입니다. 내가 보는 가격표는 지금 모두에게 같은 숫자일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "인하였습니다",
+   "url": "https://fortune.com/2026/10/18/dynamic-pricing-surveillance-prices-consumer-data-digital-labels-algorithmic/",
+   "original": "about half the u.s. changes it recorded were decreases, contrary to consumers' assumptions that dynamic pricing only raises prices"
+  },
+  {
+   "claim": "지난해 미국 상품 가격 변동을 추적해 보니",
+   "url": "https://fortune.com/2026/10/18/dynamic-pricing-surveillance-prices-consumer-data-digital-labels-algorithmic/",
+   "original": "decodo, a web data company, tracked price changes in 2025 across products ranging from electronics to clothing and home improvement supplies."
+  },
+  {
+   "claim": "“식료품과 일반 상품에서 항공사나 차량 호출 앱처럼 하루 중에 가격을 바꾸는 일은 지금도 극히 드뭅니다.”",
+   "url": "https://fortune.com/2026/10/18/dynamic-pricing-surveillance-prices-consumer-data-digital-labels-algorithmic/",
+   "original": "changing prices throughout the day, the way airlines or rideshare apps do, is exceedingly rare in grocery and general merchandise today"
+  },
+  {
+   "claim": "급등 요금은 사실상 없었다고",
+   "url": "https://fortune.com/2026/10/18/dynamic-pricing-surveillance-prices-consumer-data-digital-labels-algorithmic/",
+   "original": "researchers who tracked prices at an unnamed grocery chain found \"virtually no surge pricing\" after the labels were introduced."
+  },
+  {
+   "claim": "9월 18일까지",
+   "url": "https://fortune.com/2026/08/24/ftc-retailers-personalized-pricing-consumer-surveillance/",
+   "original": "the proposal is open for public comment through sept. 18."
+  },
+  {
+   "claim": "“소비자는 표시된 가격이 다른 모두가 보는 가격과 같다고 기대합니다. 소매업체가 내 개인 정보로 추정한 지불 의사 금액이 아닙니다.”",
+   "url": "https://fortune.com/2026/08/24/ftc-retailers-personalized-pricing-consumer-surveillance/",
+   "original": "when consumers see a listed price, they expect it to be the same price that everyone else sees, not the retailer's estimate of how much they are willing to pay based on their personal data"
+  },
+  {
+   "claim": "최소 250곳의 고객",
+   "url": "https://fortune.com/2026/10/18/dynamic-pricing-surveillance-prices-consumer-data-digital-labels-algorithmic/",
+   "original": "an ftc staff report released in january 2025 found that intermediaries offering tools that can tailor prices and promotions worked with at least 250 clients, including grocery and clothing retailers."
+  },
+  {
+   "claim": "2022년 타깃을 고소했습니다",
+   "url": "https://fortune.com/2026/10/18/dynamic-pricing-surveillance-prices-consumer-data-digital-labels-algorithmic/",
+   "original": "california prosecutors sued target in 2022, alleging that the retailer's app displayed lower prices before shoppers entered stores and raised them once they were inside."
+  },
+  {
+   "claim": "500만 달러에 합의했고",
+   "url": "https://fortune.com/2026/10/18/dynamic-pricing-surveillance-prices-consumer-data-digital-labels-algorithmic/",
+   "original": "target agreed to a $5 million settlement and a ban on using so-called geofencing technology to increase prices."
+  },
+  {
+   "claim": "41%",
+   "url": "https://fortune.com/2026/10/18/dynamic-pricing-surveillance-prices-consumer-data-digital-labels-algorithmic/",
+   "original": "simon-kucher, a global consulting company, surveyed more than 2,200 business leaders in 28 countries and 39 industries last year, and 41% said they used ai software to gather market intelligence, including competitors' prices."
+  },
+  {
+   "claim": "5.1% 올랐습니다",
+   "url": "https://fortune.com/2026/08/24/ftc-retailers-personalized-pricing-consumer-surveillance/",
+   "original": "in july, prices for fruits and vegetables rose 5.1% from a year ago, while nonalcoholic beverages rose 4.1%, according to the bureau of labor statistics."
+  },
+  {
+   "claim": "33%를 식비에 썼고, 중간 소득 가구는 12.2%였습니다",
+   "url": "https://fortune.com/2026/08/24/ftc-retailers-personalized-pricing-consumer-surveillance/",
+   "original": "in 2024, those in the lowest quintile spent an average $5,498 on food—equivalent to 33% of their pretax income—compared to 12.2% for households in the middle income quintile, according to the usda."
+  }
+ ]
+}
