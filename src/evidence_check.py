@@ -32,7 +32,10 @@ def normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip().lower()
 
 
-_CHALLENGE = re.compile(r"just a moment|checking your browser|enable javascript and cookies|attention required", re.I)
+# 403을 본문 화면으로 주는 사이트(2026-10-20 kfgo: 크롬에도 '403 forbidden … administrative rules')도 못 연 것으로 본다 —
+# 그 짧은 화면을 본문으로 읽으면 '원문이 출처 페이지에 없습니다'로 잘못 보고된다
+_CHALLENGE = re.compile(r"just a moment|checking your browser|enable javascript and cookies|attention required"
+                        r"|403 forbidden|access denied|forbidden by administrative rules", re.I)
 
 
 def _browser_text(url: str) -> str | None:
@@ -152,7 +155,7 @@ def number_mismatches(claim: str, original: str) -> list[tuple[float, float]]:
 
 # 게시 직전 검사(이 맥)가 크롬으로도 열지 못하는 출처(봇 검사) — 루틴이 쓸 때 열렸어도 맥에서 막혀 글이 버려진다(2026-10-09~11
 # 잡지 세 편). 쓰는 단계(관문)에서 막아 다른 출처를 찾게 한다. 새로 막히는 사이트가 보이면 여기에 더한다.
-NO_FETCH_DOMAINS = ("autoevolution.com", "stocktwits.com", "freedom969.com")
+NO_FETCH_DOMAINS = ("autoevolution.com", "stocktwits.com", "freedom969.com", "kfgo.com")
 
 
 def _blocked_domain(url: str) -> str | None:

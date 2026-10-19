@@ -130,3 +130,12 @@ class NoFetchDomainTest(unittest.TestCase):
         issues = ec.evidence_issues(doc, fetch=lambda u: (_ for _ in ()).throw(AssertionError("열지 않는다")), numbers=False)
         self.assertTrue(any("autoevolution.com" in i and "다른 출처" in i for i in issues), issues)
         self.assertIsNone(ec._blocked_domain("https://theprint.in/x"))
+
+
+class ForbiddenPageTest(unittest.TestCase):
+    """403을 본문 화면으로 주는 출처(2026-10-20)는 '원문 없음'이 아니라 '열 수 없음'이다."""
+
+    def test_forbidden_screen_is_not_page_text(self) -> None:
+        from src import evidence_check as ec
+        self.assertTrue(ec._CHALLENGE.search("403 forbidden request forbidden by administrative rules."))
+        self.assertEqual(ec._blocked_domain("https://kfgo.com/2026/10/13/x/"), "kfgo.com")
