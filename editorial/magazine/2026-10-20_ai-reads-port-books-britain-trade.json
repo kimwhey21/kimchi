@@ -1,0 +1,136 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-20",
+ "slug": "ai-reads-port-books-britain-trade",
+ "radar_origin": "Phys.org: AI reads centuries-old handwriting to reveal Britain's vast historic shipping trade",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1702753390015-d4abffb87306?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8b2xkJTIwbWFudXNjcmlwdCUyMGhhbmR3cml0aW5nfGVufDB8MHx8fDE3OTI0Mjk4NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "rNxfMnfnenE",
+  "credit": "Unsplash / Afonso Azevedo Neves"
+ },
+ "sources": [
+  {
+   "name": "미라지 뉴스",
+   "title": "AI Unlocks Britain's Historic Shipping Trade in Old Handwriting (2026-10-19)",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/"
+  },
+  {
+   "name": "영국 국립기록관",
+   "title": "Merchant trade records: port books 1565-1799",
+   "url": "https://www.nationalarchives.gov.uk/help-with-your-research/research-guides/merchant-trade-records-port-books-1565-1799/"
+  }
+ ],
+ "tags": [
+  "인공지능",
+  "항구장부",
+  "영국무역사"
+ ],
+ "ko": {
+  "title": "영국 무역의 80%는 어디로 향했을까: 인공지능이 읽은 수백 년 전 항구 장부",
+  "title_candidates": [
+   "영국 무역의 80%는 어디로 향했을까: 인공지능이 읽은 수백 년 전 항구 장부",
+   "대영제국의 단골은 식민지가 아니었다? 항구 장부 10만 쪽이 말하는 것",
+   "항구 장부 10만 쪽을 읽은 인공지능, 대영제국의 장사 상대는 누구였을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "대영제국이라고 하면 바다 건너 식민지와 벌인 장사가 먼저 떠오릅니다.\n그런데 수백 년 된 항구 장부를 인공지능으로 읽어 보니, 영국 해외 무역의 중심은 먼 식민지가 아니라 바로 건너편 유럽이었습니다.\n장부는 오래전부터 그 자리에 있었는데, 왜 이제야 그 사실이 드러났을까요?"
+   },
+   {
+    "heading": "관세를 적은 장부가 200년치 남았습니다",
+    "body": "문제의 장부는 항구 장부(port book)입니다. 영국 항구의 세관원들이 수출입 물건에 매긴 관세를 적은 기록입니다.\n영국 국립기록관(The National Archives) 안내문에 따르면 장부는 1565년부터 1799년까지 쓰였고, 살아남은 것만 약 2만 권입니다.\n초기 기록은 라틴어가 섞여 있고 1660년쯤부터 대부분 영어로 바뀝니다. 읽기 쉬운 장부가 아니라는 뜻입니다.\n국립기록관은 이 장부를 인터넷으로 볼 수 없고 직접 가서 봐야 한다고 안내합니다."
+   },
+   {
+    "heading": "인공지능에게 필기체부터 가르쳤습니다",
+    "body": "사우샘프턴대 연구진이 이 장부를 읽는 일에 인공지능을 썼습니다. 대학 보도자료를 실은 뉴스 사이트 미라지 뉴스(Mirage News)가 전했습니다.\n영국 국립기록관 큐(Kew)에 있는 양피지 장부 약 10만 쪽을 스캔한 뒤, 글자를 알아보는 프로그램으로 누가 누구와 무엇을 거래했는지 모았습니다.\n수석 연구자 크레이그 램버트(Craig Lambert) 교수는 이렇게 말했습니다.\n“세관원마다 다른 필기체와, 몇십 년 사이 달라진 철자를 인공지능에게 가르쳤습니다.”\n그는 사람이 일일이 확인하는 일은 여전히 필요했지만 속도가 크게 빨라졌다고 덧붙였습니다."
+   },
+   {
+    "heading": "1697년 영국 무역의 80%는 유럽이었습니다",
+    "body": "결과는 상식과 어긋났습니다. 1696~97년 기록에서 영국 해외 무역의 기록된 가치 가운데 약 80%가 유럽 시장에서 나왔습니다.\n영국 무역과 이어진 항구·해상 지점이 가장 많은 15개 나라 가운데 10곳이 유럽이었습니다. 1위는 프랑스로 157곳, 2위는 네덜란드로 68곳, 3위는 인도로 59곳이었습니다.\n공동 책임자 존 맥알리어(John McAleer) 부교수는 이렇게 말했습니다.\n“수백 년 전에도 유럽이 영국의 주된 해외 무역 지역이었습니다. 중요한 세계 연결이 있었지만 핵심 거래는 여전히 가까운 바다에서 이뤄졌습니다.”"
+   },
+   {
+    "heading": "석탄이 1위, 맥주 원료가 뒤를 이었습니다",
+    "body": "무엇을 실어 날랐는지도 드러났습니다. 가장 자주 기록된 물건은 석탄으로 101,000건이 넘는 화물 기록에 나옵니다.\n그 뒤를 맥아(맥주 원료), 밀, 철, 양모, 포도주가 이었습니다.\n1696~97년 한 해에만 곰, 표범, 늑대, 너구리, 수달 등 동물 가죽 50만 장이 넘게 들어왔습니다.\n중국산 아이들 장난감, 양의 창자, 활시위도 있었고, 만병통치약으로 알려진 베네치아 트리클(Venice treacle)이라는 옛 약도 거래됐습니다."
+   },
+   {
+    "heading": "읽을 수 있어야 기록이 됩니다",
+    "body": "대영제국의 무역 지도는 이번 작업으로 한 번 다시 그려졌습니다. 사우샘프턴대 연구진은 3,000곳이 넘는 항구를 찾아내 누구나 볼 수 있는 지도로 올렸습니다.\n기록은 있어도 읽을 수 없으면 없는 것과 같습니다. 이번에는 그 열쇠가 인공지능이었습니다.\n이 이야기에서 더 놀라운 것은 인공지능의 속도일까요, 오래 믿어 온 직관이 장부와 달랐다는 사실일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1565년부터 1799년까지",
+   "url": "https://www.nationalarchives.gov.uk/help-with-your-research/research-guides/merchant-trade-records-port-books-1565-1799/",
+   "original": "The books were kept by local customs officials at ports all around England and Wales between 1565 and 1799."
+  },
+  {
+   "claim": "약 2만 권",
+   "url": "https://www.nationalarchives.gov.uk/help-with-your-research/research-guides/merchant-trade-records-port-books-1565-1799/",
+   "original": "Although there are some 20,000 port books among our records, many did not survive"
+  },
+  {
+   "claim": "1660년쯤부터",
+   "url": "https://www.nationalarchives.gov.uk/help-with-your-research/research-guides/merchant-trade-records-port-books-1565-1799/",
+   "original": "Before 1600 many entries in port books are in Latin – by 1660 most are in English."
+  },
+  {
+   "claim": "약 10만 쪽",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "they scanned some 100-thousand pages from the delicate, leather-bound parchment books at the national archives in kew."
+  },
+  {
+   "claim": "세관원마다 다른 필기체와",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "we taught ai to read the unique handwriting belonging to many different port officials and also the change in spelling of words across the decades."
+  },
+  {
+   "claim": "1696~97년 기록에서",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "taking 1696-97 as an example, european markets accounted for around 80 percent of the recorded value of england's overseas trade"
+  },
+  {
+   "claim": "약 80%가 유럽 시장에서 나왔습니다",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "european markets accounted for around 80 percent of the recorded value of england's overseas trade"
+  },
+  {
+   "claim": "15개 나라 가운데 10곳이 유럽",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "of the top 15 countries by number of recorded maritime locations connected to british trade, 10 were in europe."
+  },
+  {
+   "claim": "프랑스로 157곳, 2위는 네덜란드로 68곳, 3위는 인도로 59곳",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "france ranked highest with 157 identified maritime sites, followed by 68 in the netherlands, while india ranked third with 59."
+  },
+  {
+   "claim": "수백 년 전에도 유럽이 영국의 주된 해외 무역 지역이었습니다",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "it's interesting to note that even centuries ago, europe was britain's principal overseas trading region, and although britain had important global connections, most of its core trade was still being done closer to its own shores."
+  },
+  {
+   "claim": "101,000건이 넘는 화물 기록",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "coal was the commodity most frequently recorded in the customs data, appearing in more than 101,000 cargo entries"
+  },
+  {
+   "claim": "동물 가죽 50만 장이 넘게",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "in the records for 1696-97 alone, historians identified over 500,000 imported animal skins, including bear, panther, wolf, raccoon, and otter"
+  },
+  {
+   "claim": "1696~97년 한 해에만",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "in the records for 1696-97 alone, historians identified over 500,000 imported animal skins, including bear, panther, wolf, raccoon, and otter"
+  },
+  {
+   "claim": "3,000곳이 넘는 항구",
+   "url": "https://www.miragenews.com/ai-unlocks-britains-historic-shipping-trade-in-1762661/",
+   "original": "the team identified over three thousand individual ports at home and abroad."
+  }
+ ]
+}

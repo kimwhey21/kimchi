@@ -1,0 +1,140 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-20",
+ "slug": "zandi-treasury-yield-vicious-cycle",
+ "radar_origin": "Fortune: The U.S. national debt is approaching the point where bond traders see ‘mounting risk’ of a ‘vicious cycle,’ Moody’s top economist says",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1589726393469-fcd6f4ce1c24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8dHJlYXN1cnklMjBidWlsZGluZyUyMHdhc2hpbmd0b258ZW58MHwwfHx8MTc5MjQyOTg0MHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "vRkxkKxnJqw",
+  "credit": "Unsplash / Malek Jamal"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "The U.S. national debt is approaching the point where bond traders see ‘mounting risk’ of a ‘vicious cycle,’ Moody’s top economist says (2026-10-19)",
+   "url": "https://fortune.com/2026/10/19/moodys-top-economist-debt-yields-borrowing-concern/"
+  },
+  {
+   "name": "로이터",
+   "title": "IMF says higher bond yields underscore urgency of fiscal consolidation (2026-10-14)",
+   "url": "https://kfgo.com/2026/10/13/imf-says-higher-bond-yields-underscore-urgency-of-fiscal-consolidation/"
+  }
+ ],
+ "tags": [
+  "미국국채",
+  "국가부채",
+  "국채금리"
+ ],
+ "ko": {
+  "title": "금리는 세계가 같이 오르는데 마크 잰디는 왜 미국만 경고할까",
+  "title_candidates": [
+   "금리는 세계가 같이 오르는데 마크 잰디는 왜 미국만 경고할까",
+   "마크 잰디의 국채 경고, 믿어도 될까? 가려 볼 숫자는 이것입니다",
+   "국채 금리 1%포인트 상승, 이자가 적자의 절반을 넘은 미국에서 일어나는 일"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "빚이 40조 달러를 넘어도 미국은 걱정할 것 없다는 말이 오래 통했습니다. 세계에서 가장 큰 경제이기 때문입니다.\n그런데 무디스의 수석 이코노미스트 마크 잰디(Mark Zandi)는 같은 미국 국채 시장에서 첫 불편한 신호를 봤다고 적었습니다.\n금리가 오르는 건 세계가 다 마찬가지라는 반론도 만만치 않습니다.\n그가 본 것은 위기의 시작일까요, 평범한 금리 상승일까요?"
+   },
+   {
+    "heading": "잰디가 짚은 것은 금리가 오르는 속도입니다",
+    "body": "잰디는 일요일 밤 늦게 낸 메모에서 미국이 악순환의 초기 신호를 보이고 있다고 적었습니다. 경제지 포춘이 이 메모를 전했습니다.\n그는 투자자들이 쌓여 가는 위험의 대가로 더 높은 금리를 요구하는 것처럼 보인다고 썼습니다.\n“미국 10년 만기 국채 금리는 올해 약 1%포인트 올랐습니다. 주요 경제국 가운데 가장 큰 폭의 하나이고, 이자 부담이 큰 나라일수록 대체로 더 많이 올랐습니다.”\n국채 금리는 정부가 돈을 빌릴 때 내는 이자율입니다. 오르면 빚을 새로 내거나 갚을 때마다 더 많은 이자를 내야 합니다."
+   },
+   {
+    "heading": "이자가 적자의 절반을 넘습니다",
+    "body": "포춘에 따르면 미국 재무부는 10월에 끝나는 회계연도의 적자를 2조 달러로 확정했습니다. 그 가운데 절반이 넘는 돈이 이자 지급에 들어갔습니다.\n국내총생산(GDP) 대비 정부 부채 비율은 126%입니다. 한 해 경제가 만드는 가치보다 빚이 1.26배라는 뜻입니다.\n잰디가 걱정하는 장면은 이렇습니다.\n“악순환이 자리 잡을 수 있습니다. 금리가 오르면 이자 부담과 빚이 늘고, 그것이 다시 금리를 더 밀어 올립니다.”"
+   },
+   {
+    "heading": "미국만 오르는 게 아니라는 반론",
+    "body": "반론의 근거도 있습니다. 국제통화기금(IMF)은 이번 달 선진국 장기 금리가 가파르게 올랐다고 밝혔습니다.\n통신사 로이터에 따르면 주요 7개국(G7)의 평균 10년 금리는 2월부터 9월까지 110bp(베이시스포인트) 넘게 올라 거의 20년 만의 최고였습니다.\n스콧 베선트 재무장관은 이 점을 짚으며, 미국 금리 상승이 걱정스러운 경우는 세계 흐름과 달리 미국만 ‘특이하게’ 오를 때라고 말했습니다.\n미국만 튀는 것이 아니라면 잰디의 경고는 과장일까요?"
+   },
+   {
+    "heading": "그래도 미국이 다른 이유",
+    "body": "잰디의 답은 국채의 자리에 있습니다.\n“미국만 재정 대가를 치를 처지는 아닙니다. 그래도 미국 국채는 세계의 기준이라서, 가장 중요한 나라입니다.”\n기준이라는 말은 다른 금리를 매기는 출발점이라는 뜻입니다. 이 기준이 오르면 기업 대출과 다른 나라 국채 금리도 함께 영향을 받기 쉽습니다."
+   },
+   {
+    "heading": "이자 비용이 닿을 곳",
+    "body": "IMF는 정부가 돈을 빌리는 평균 비용이 2021년 2.3%에서 2031년 3.7%로 오를 것으로 내다봤습니다.\n미국의 이자 지급은 GDP의 5.3%까지 늘 전망입니다. 코로나 이전에는 2.8%였고, 지금 사회보장 지출과 비슷한 크기입니다.\nG7과 스페인은 1년 안에 만기가 돌아오는 빚이 약 30%에 가까워졌습니다. 만기가 짧을수록 높아진 금리가 비용에 더 빨리 반영됩니다."
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "숫자는 잰디의 말을 반쯤 받쳐 줍니다. 금리는 올랐고, 이자는 적자의 절반을 넘었으며, 갚아야 할 이자는 더 늘 전망입니다.\n다만 오름세가 세계적이라는 점은 미국만의 문제라는 해석을 아직 어렵게 합니다.\n기준이 되는 금리가 흔들릴 때 변동금리 대출이나 해외 투자처럼 그 금리에 묶인 내 돈은 어디에 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "40조 달러",
+   "url": "https://fortune.com/2026/10/19/moodys-top-economist-debt-yields-borrowing-concern/",
+   "original": "The national debt burden now stands at more than $40 trillion, but the U.S. remains the largest economy on the planet—why worry?"
+  },
+  {
+   "claim": "미국 10년 만기 국채 금리는 올해 약 1%포인트 올랐습니다",
+   "url": "https://fortune.com/2026/10/19/moodys-top-economist-debt-yields-borrowing-concern/",
+   "original": "“The 10-year Treasury yield is up about a percentage point this year, among the biggest increases of any major economy, and the countries with the heaviest interest burdens have generally seen the biggest increases."
+  },
+  {
+   "claim": "2조 달러로 확정했습니다",
+   "url": "https://fortune.com/2026/10/19/moodys-top-economist-debt-yields-borrowing-concern/",
+   "original": "His warning comes as the U.S. Treasury confirmed a $2 trillion deficit for the fiscal year ending in October, more than half of which was on interest payments alone."
+  },
+  {
+   "claim": "126%입니다",
+   "url": "https://fortune.com/2026/10/19/moodys-top-economist-debt-yields-borrowing-concern/",
+   "original": "At the time of writing, the U.S. ratio stands at 126%."
+  },
+  {
+   "claim": "한 해 경제가 만드는 가치보다 빚이 1.26배",
+   "url": "https://fortune.com/2026/10/19/moodys-top-economist-debt-yields-borrowing-concern/",
+   "original": "At the time of writing, the U.S. ratio stands at 126%."
+  },
+  {
+   "claim": "악순환이 자리 잡을 수 있습니다",
+   "url": "https://fortune.com/2026/10/19/moodys-top-economist-debt-yields-borrowing-concern/",
+   "original": "“A vicious cycle threatens to take hold, with higher rates adding to the interest payments and debt load, which in turn pushes rates up even more.”"
+  },
+  {
+   "claim": "110bp(베이시스포인트) 넘게",
+   "url": "https://kfgo.com/2026/10/13/imf-says-higher-bond-yields-underscore-urgency-of-fiscal-consolidation/",
+   "original": "The Group of Seven’s average 10-year government bond yield rose over 110 basis points between February and September, reaching its highest level in nearly two decades, the IMF said."
+  },
+  {
+   "claim": "2월부터 9월까지",
+   "url": "https://kfgo.com/2026/10/13/imf-says-higher-bond-yields-underscore-urgency-of-fiscal-consolidation/",
+   "original": "The Group of Seven’s average 10-year government bond yield rose over 110 basis points between February and September, reaching its highest level in nearly two decades, the IMF said."
+  },
+  {
+   "claim": "세계의 기준이라서",
+   "url": "https://fortune.com/2026/10/19/moodys-top-economist-debt-yields-borrowing-concern/",
+   "original": "“The U.S. isn’t the only country approaching a fiscal reckoning, but given that Treasuries are the global benchmark, it is far and away the most important one.”"
+  },
+  {
+   "claim": "‘특이하게’",
+   "url": "https://fortune.com/2026/10/19/moodys-top-economist-debt-yields-borrowing-concern/",
+   "original": "Treasury Secretary Scott Bessent has noted this, suggesting higher U.S. yields would be a cause for concern if they were “idiosyncratic” rather than matching a global trend."
+  },
+  {
+   "claim": "2021년 2.3%에서 2031년 3.7%",
+   "url": "https://kfgo.com/2026/10/13/imf-says-higher-bond-yields-underscore-urgency-of-fiscal-consolidation/",
+   "original": "The IMF said the effective average cost of government financing was projected to rise to 3.7% by 2031 from 2.3% in 2021."
+  },
+  {
+   "claim": "GDP의 5.3%까지",
+   "url": "https://kfgo.com/2026/10/13/imf-says-higher-bond-yields-underscore-urgency-of-fiscal-consolidation/",
+   "original": "In the US, interest payments were expected to reach 5.3% of GDP, up from 2.8% of GDP before the COVID pandemic, roughly equal to its projected expenditure on Social Security."
+  },
+  {
+   "claim": "코로나 이전에는 2.8%",
+   "url": "https://kfgo.com/2026/10/13/imf-says-higher-bond-yields-underscore-urgency-of-fiscal-consolidation/",
+   "original": "In the US, interest payments were expected to reach 5.3% of GDP, up from 2.8% of GDP before the COVID pandemic, roughly equal to its projected expenditure on Social Security."
+  },
+  {
+   "claim": "약 30%에 가까워졌습니다",
+   "url": "https://kfgo.com/2026/10/13/imf-says-higher-bond-yields-underscore-urgency-of-fiscal-consolidation/",
+   "original": "within one year was now approaching 30%"
+  }
+ ]
+}

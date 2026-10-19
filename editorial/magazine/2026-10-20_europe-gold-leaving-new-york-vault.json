@@ -1,0 +1,160 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장의 역사",
+ "date": "2026-10-20",
+ "slug": "europe-gold-leaving-new-york-vault",
+ "radar_origin": "Fortune: Europe sent its gold to the U.S. for safekeeping during World War II. Central banks are now reshuffling their reserves for a new era of uncertainty",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1610375461246-83df859d849d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Z29sZCUyMGJhcnN8ZW58MHwwfHx8MTc5MjQyOTgyOHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "iYsrkq5qq0Q",
+  "credit": "Unsplash / Jingming Pan"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Europe sent its gold to the U.S. for safekeeping during World War II. Central banks are now reshuffling their reserves for a new era of uncertainty (2026-10-18)",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/"
+  },
+  {
+   "name": "뉴욕 연방준비은행",
+   "title": "Gold Vault",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault"
+  }
+ ],
+ "tags": [
+  "금보유",
+  "중앙은행",
+  "뉴욕연준"
+ ],
+ "ko": {
+  "title": "네덜란드는 뉴욕의 금 78톤을 런던으로 옮겼습니다: 중앙은행이 따지는 것은 이것입니다",
+  "title_candidates": [
+   "네덜란드는 뉴욕의 금 78톤을 런던으로 옮겼습니다: 중앙은행이 따지는 것은 이것입니다",
+   "금고 80피트 아래 맡긴 금을 유럽은 왜 이제 빼 갈까",
+   "독일과 이탈리아 의원들은 왜 뉴욕 금고의 금을 빼라고 할까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "지구에서 가장 안전한 금고로 꼽히던 곳에서, 유럽 나라들이 금을 꺼내고 있습니다.\n맨해튼 땅속 80피트에 있는 뉴욕 연방준비은행 금고입니다. 그 안의 금은 상당수가 전쟁 중에 안전하라고 맡긴 것입니다.\n맡긴 지 한참 지나 이제 와서 빼 가는 걸 보면, 금고가 달라진 걸까요, 맡긴 나라의 계산이 달라진 걸까요?"
+   },
+   {
+    "heading": "금고의 주인은 뉴욕 연은이 아닙니다",
+    "body": "이 금고의 금은 뉴욕 연방준비은행의 것이 아닙니다. 미국 정부와 외국 정부, 다른 나라 중앙은행, 국제기구가 맡긴 금을 지켜 주는 관리인 역할입니다.\n뉴욕 연방준비은행은 금고가 맨해튼의 단단한 암반 위에 있고 지면 아래 80피트라고 설명합니다.\n금고 안의 금은 대부분 2차 세계대전 중과 그 뒤에, 여러 나라가 금 보유량을 안전한 곳에 두려고 보낸 것이라고 합니다.\n2024년 기준으로 금괴는 약 507,000개, 무게로는 6,331톤입니다."
+   },
+   {
+    "heading": "보관량은 1973년에 정점을 찍었습니다",
+    "body": "금고의 금은 늘다가 1973년에 가장 많아졌습니다. 미국이 외국 정부에 달러를 금으로 바꿔 주던 일을 멈춘 직후였습니다.\n그때는 12,000톤이 넘었습니다. 지금은 그 절반쯤입니다.\n경제지 포춘은 미국 달러가 금본위제를 벗어난 뒤 보관량이 서서히 줄어 왔다고 전했습니다.\n그래도 뉴욕 연방준비은행은 이곳이 여전히 세계에서 가장 큰, 알려진 통화용 금 보관소라고 밝힙니다."
+   },
+   {
+    "heading": "프랑스는 전부, 네덜란드는 런던으로",
+    "body": "최근 두 건이 눈에 띕니다. 프랑스는 2025년 7월부터 2026년 1월 사이에 뉴욕 금고의 금을 전부 뺐습니다.\n네덜란드 중앙은행은 지난달 뉴욕의 금 78톤 넘게와 캐나다의 금 7톤을 런던으로 옮긴다고 발표했습니다. 이유로 ‘커지는 지정학적 불안’과 ‘위기 대응 능력’ 강화를 들었습니다.\n총재 올라프 슬라이펜은 런던이 세계 최대 금 거래 중심지라 영국 중앙은행에 둔 금이 더 쉽게 쓰인다고 짚었습니다.\n그는 이렇게 말했습니다.\n“쓸 일이 없기를 바랍니다. 그래도 우리의 회복력과 대비 태세는 더 단단히 해야 합니다.”"
+   },
+   {
+    "heading": "집으로 가져오면 끝일까요",
+    "body": "금을 도로 가져가는 것만이 답은 아닙니다. 네덜란드는 자기 땅이 아니라 런던으로 옮겼습니다.\n세계금협회(World Gold Council)의 선임 애널리스트 크리샨 고팔은 이 흐름을 이렇게 풉니다.\n“중앙은행들은 보관 위험, 실물 접근성, 시장 유동성 세 가지를 놓고 점점 더 따져 보고 있습니다.”\n유동성이란 필요할 때 값을 크게 깎지 않고 팔 수 있는 정도를 말합니다.\n고팔은 금 위치를 옮긴다고 해서 중앙은행이 금을 팔 준비를 한다는 뜻은 아니라고 덧붙였습니다.\n그는 한 가지를 더 짚었습니다.\n“안전하다는 것만으로는 이제 충분하지 않습니다. 위기 때 쓸 수 있고, 팔 수 있고, 흩어져 있어야 합니다.”"
+   },
+   {
+    "heading": "이사는 처음이 아닙니다",
+    "body": "금 이사 자체는 새롭지 않습니다. 독일은 2000년에 런던의 금 930톤을 프랑크푸르트로 옮겼고, 2013년부터 2017년까지 뉴욕과 파리의 금 674톤을 더 가져갔습니다.\n네덜란드는 2014년에 뉴욕의 122.5톤을 암스테르담으로, 오스트리아는 2015년부터 2018년까지 런던의 90톤을 가져왔습니다.\n달라진 것은 분위기입니다. 독일과 이탈리아 의원들은 미국에서 금을 더 빼라고 요구했고, 도널드 트럼프 대통령의 유럽 적대 발언을 이유로 들었습니다.\n독일 중앙은행은 뉴욕의 금이 위험하다는 걱정을 일축했습니다. 미국이 금융시장 신뢰를 흔들면 스스로 손해를 본다는 이유였습니다."
+   },
+   {
+    "heading": "금 이야기는 내 돈에도 같은 물음을 던집니다",
+    "body": "이 이야기에서 가져갈 것은 금값 전망이 아닙니다. 어디에 맡겼는지, 필요할 때 꺼낼 수 있는지를 따지는 눈입니다.\n중앙은행도 금이 있다는 사실만으로는 안심하지 않고 접근성과 거래 가능성까지 확인합니다.\n내가 가진 자산도 같은 물음 앞에 서 있습니다. 급하게 현금이 필요한 날, 지금 가진 것은 바로 쓸 수 있는 곳에 있나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "2차 세계대전 중과 그 뒤에",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault",
+   "original": "Much of the gold in the vault arrived during and after World War II as many countries wanted to store their gold reserves in a safe location."
+  },
+  {
+   "claim": "지면 아래 80피트",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault",
+   "original": "The vault is able to support this weight because it rests on the bedrock of Manhattan Island, 80 feet below street level and 50 feet below sea level."
+  },
+  {
+   "claim": "80피트에 있는",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault",
+   "original": "rests on the bedrock of Manhattan Island, 80 feet below street level"
+  },
+  {
+   "claim": "약 507,000개",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault",
+   "original": "As of 2024, the vault housed approximately 507,000 gold bars, with a combined weight of 6,331 metric tons."
+  },
+  {
+   "claim": "6,331톤",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault",
+   "original": "As of 2024, the vault housed approximately 507,000 gold bars, with a combined weight of 6,331 metric tons."
+  },
+  {
+   "claim": "2024년 기준",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault",
+   "original": "As of 2024, the vault housed approximately 507,000 gold bars, with a combined weight of 6,331 metric tons."
+  },
+  {
+   "claim": "1973년에 가장 많아졌습니다",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault",
+   "original": "Holdings in the gold vault continued to increase and peaked in 1973, shortly after the United States suspended convertibility of dollars into gold for foreign governments."
+  },
+  {
+   "claim": "1973년에",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault",
+   "original": "Holdings in the gold vault continued to increase and peaked in 1973, shortly after the United States suspended convertibility of dollars into gold for foreign governments."
+  },
+  {
+   "claim": "12,000톤이 넘었습니다",
+   "url": "https://www.newyorkfed.org/aboutthefed/goldvault",
+   "original": "At its peak, the vault contained over 12,000 tons of monetary gold."
+  },
+  {
+   "claim": "그 절반쯤",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/",
+   "original": "The stockpile reached a high in the early 1970s but began a gradual slide after the U.S. took the dollar off the gold standard and is now about half of its peak."
+  },
+  {
+   "claim": "2025년 7월부터 2026년 1월",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/",
+   "original": "France removed all of its gold from the New York Fed between July 2025 and January 2026."
+  },
+  {
+   "claim": "78톤 넘게와 캐나다의 금 7톤",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/",
+   "original": "Then the Dutch central bank, known as the De Nederlandsche Bank (DNB), moved more than 78 tons of gold in New York and seven tons in Canada to London, citing “increasing geopolitical unrest” and the need to improve its “crisis preparedness.”"
+  },
+  {
+   "claim": "‘커지는 지정학적 불안’",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/",
+   "original": "citing “increasing geopolitical unrest” and the need to improve its “crisis preparedness.”"
+  },
+  {
+   "claim": "쓸 일이 없기를 바랍니다",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/",
+   "original": "“We expect that we will never need to use them, but we do need to strengthen our resilience and preparedness,” Olaf Sleijpen said."
+  },
+  {
+   "claim": "보관 위험, 실물 접근성, 시장 유동성 세 가지",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/",
+   "original": "Central banks are increasingly optimizing across three considerations: custody risk, physical accessibility, and market liquidity."
+  },
+  {
+   "claim": "안전하다는 것만으로는 이제 충분하지 않습니다",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/",
+   "original": "“But the emerging picture is one in which security alone is no longer enough,” Gopaul said. “For some central banks, gold must also be accessible, tradable, and distributed across locations that remain dependable under stress.”"
+  },
+  {
+   "claim": "930톤을 프랑크푸르트로 옮겼고, 2013년부터 2017년까지 뉴욕과 파리의 금 674톤",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/",
+   "original": "Germany transferred 930 tons from London to Frankfurt in 2000, then sent 674 tons from New York and Paris to Frankfurt between 2013 and 2017,"
+  },
+  {
+   "claim": "122.5톤을 암스테르담으로, 오스트리아는 2015년부터 2018년까지 런던의 90톤",
+   "url": "https://fortune.com/2026/10/18/gold-reserves-central-banks-repatriation-new-york-fed-trump-europe-geopolitical-unrest/",
+   "original": "The Netherlands shifted 122.5 tons from New York to Amsterdam in 2014, and Austria repatriated 90 tons from London between 2015 and 2018."
+  }
+ ]
+}
