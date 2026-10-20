@@ -6106,10 +6106,14 @@
 "web": "www.taekyung.co.kr"
 },
 "0158S0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01754737",
+"en": "Elice Inc.",
+"founded": "2015",
+"industry": "Software & game publishing",
+"ksic": "58222",
+"name": "Elice",
+"pref": false,
+"web": "elice.io/"
 },
 "016090": {
 "corp": "00113614",
