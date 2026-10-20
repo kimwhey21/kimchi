@@ -1,5 +1,8 @@
 {
  "base": {},
- "day": "2026-10-19",
- "issues": {}
+ "day": "2026-10-20",
+ "issues": {
+  "글 없음: 영어 가이드 (editorial/guides/en_* 오늘 커밋)": 1,
+  "맥 bench_nightly: 마지막 신호 # #": 1
+ }
 }
