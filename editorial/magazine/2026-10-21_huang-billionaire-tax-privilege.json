@@ -1,0 +1,74 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-21",
+ "slug": "huang-billionaire-tax-privilege",
+ "radar_origin": "As billionaires fight a tax hike, Jensen Huang says paying $8 billion is a ‘privilege’: ‘I’m just afraid of being poor’",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1521747116042-5a810fda9664?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8Z29sZGVuJTIwZ2F0ZSUyMGJyaWRnZXxlbnwwfDB8fHwxNzkyNTE2NDQ0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "1kf69eE7VR4",
+  "credit": "Unsplash / Joonyeop Baek"
+ },
+ "sources": [
+  {"name": "포춘", "title": "Jensen Huang says he is perfectly fine with California's billionaire tax (2026-01-07)", "url": "https://fortune.com/2026/01/07/jensen-huang-billionaire-tax-california-talent"},
+  {"name": "포춘", "title": "Jensen Huang, California billionaire tax, Ro Khanna, Stanford (2026-04-23)", "url": "https://www.fortune.com/2026/04/23/jensen-huang-california-billionaire-tax-ok-ro-khanna-stanford/"},
+  {"name": "머니토크뉴스", "title": "Jensen Huang Calls His $8 Billion Tax Bill a ‘Privilege’ (2026-09-23)", "url": "https://www.moneytalksnews.com/jensen-huang-calls-his-billion-tax-bill-a-privilege-im-a-cpa-and-heres-where-hes-right/"},
+  {"name": "NBC 베이에어리어", "title": "Prop 40 billionaire tax (2026-09-28)", "url": "https://www.nbcbayarea.com/news/local/prop-40-billionaire-tax/4149849/"}
+ ],
+ "tags": ["젠슨황", "억만장자세", "캘리포니아"],
+ "ko": {
+  "title": "젠슨 황은 왜 80억 달러짜리 세금을 반길까",
+  "title_candidates": [
+   "젠슨 황은 왜 80억 달러짜리 세금을 반길까",
+   "캘리포니아 억만장자세 투표 전에 볼 것: 젠슨 황의 80억 달러",
+   "억만장자세 앞에서 볼 것: 젠슨 황의 80억 달러 계산"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "세금 고지서가 80억 달러를 넘는데, 그 돈을 낼 수 있다는 사실이 특권이라고 말한 사람이 있습니다.\n엔비디아 창업자 젠슨 황입니다.\n그가 사는 캘리포니아에서는 재산이 10억 달러를 넘는 사람에게 일회성 세금을 매기자는 안이 이번 가을 주민투표에 오릅니다.\n내야 할 사람이 반기는 말을 하는 것은 진심일까요, 계산일까요?"
+   },
+   {
+    "heading": "세율은 5%, 납부는 다섯 해에 나눕니다",
+    "body": "캘리포니아 억만장자세는 2026년 12월 31일 기준 순자산이 10억 달러를 넘는 개인이나 부부에게 재산의 5%를 한 번 내게 합니다.\nNBC 베이에어리어에 따르면 이 세금은 다섯 해에 나눠 낼 수 있습니다.\n경제지 포춘은 이 세금이 젠슨 황에게 80억 달러 넘게 들 것이라고 어림했습니다.\n같은 기사에서 포춘은 그의 재산을 약 1,670억 달러로 적었습니다."
+   },
+   {
+    "heading": "‘특권’이라는 말은 이렇게 나왔습니다",
+    "body": "머니토크뉴스가 9월 하순에 옮긴 그의 말입니다.\n“5년에 걸쳐 80억 달러의 세금을 낼 수 있다는 사실은 특권입니다.”\n“저는 세금 내는 것이 두려운 게 아닙니다. 가난해지는 것이 두려울 뿐입니다.”\n1월에 포춘이 전한 첫 반응은 더 담담했습니다.\n“저는 전혀 문제없습니다. 그 생각은 한 번도 마음에 걸린 적이 없습니다.”"
+   },
+   {
+    "heading": "그가 떠나지 않는 이유는 세율이 아니라 사람입니다",
+    "body": "황이 든 이유는 세금이 아니라 인재였습니다. 포춘이 1월에 옮긴 말입니다.\n“우리가 실리콘밸리에서 일하는 것은 그곳에 인재가 모여 있기 때문입니다.”\n“인재가 있는 곳이면 어디든 우리는 사무실을 둡니다.”\n회사가 움직일 곳은 사람이 정하고, 세금은 그다음이라는 계산입니다.\n포춘은 뉴욕타임스를 인용해 피터 틸이 캘리포니아 밖에서 보내는 시간을 늘리는 방안을 알아봤다고 전했습니다. 확정된 이주가 아니라 보도된 계획입니다."
+   },
+   {
+    "heading": "다른 편은 현금이 아니라 지분을 이야기합니다",
+    "body": "창업자 팔머 럭키는 포춘 4월 기사에 실린 글에서 이렇게 썼습니다.\n“당신들은 나 같은 창업자가 회사 지분을 큼직하게 팔도록 몰아붙이고 있습니다.”\n재산이 대부분 회사 지분인 사람은 세금을 치르려면 그 지분을 팔아야 한다는 뜻입니다.\n개빈 뉴섬 주지사와 주지사 후보 사비에르 베세라 같은 지도자들도 이 안에 반대한다고 NBC 베이에어리어는 전했습니다."
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "황의 몫을 다섯 해로 나누면 해마다 내는 돈은 재산의 5%를 다섯으로 나눈 만큼, 곧 재산의 1% 남짓입니다. 이 값은 우리가 한 어림셈입니다.\n그에게 ‘특권’이라는 말은 감당할 수 있는 크기를 알고 하는 말일 수 있습니다.\n그 크기가 지분을 팔아야 하는 창업자에게도 같을까요?\n세금을 낼 수 있다는 것이 특권이라면, 내지 않으려고 떠나는 사람은 무엇을 지키려는 걸까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {"claim": "세금 고지서가 80억 달러를 넘는데", "url": "https://www.fortune.com/2026/04/23/jensen-huang-california-billionaire-tax-ok-ro-khanna-stanford/", "original": "The one-time billionaires tax would cost him more than $8 billion"},
+  {"claim": "재산이 10억 달러를 넘는 사람에게", "url": "https://www.nbcbayarea.com/news/local/prop-40-billionaire-tax/4149849/", "original": "individuals or couples whose net worth exceeds $1 billion as of Dec. 31, 2026"},
+  {"claim": "2026년 12월 31일 기준 순자산이 10억 달러를 넘는 개인이나 부부에게 재산의 5%를", "url": "https://www.nbcbayarea.com/news/local/prop-40-billionaire-tax/4149849/", "original": "individuals or couples whose net worth exceeds $1 billion as of Dec. 31, 2026"},
+  {"claim": "재산의 5%를 한 번 내게 합니다", "url": "https://www.nbcbayarea.com/news/local/prop-40-billionaire-tax/4149849/", "original": "would owe a one-time tax equal to 5% of their wealth."},
+  {"claim": "다섯 해에 나눠 낼 수 있습니다", "url": "https://www.nbcbayarea.com/news/local/prop-40-billionaire-tax/4149849/", "original": "The tax could be paid in five annual installments."},
+  {"claim": "80억 달러 넘게 들 것이라고", "url": "https://www.fortune.com/2026/04/23/jensen-huang-california-billionaire-tax-ok-ro-khanna-stanford/", "original": "The one-time billionaires tax would cost him more than $8 billion"},
+  {"claim": "약 1,670억 달러로", "url": "https://www.fortune.com/2026/04/23/jensen-huang-california-billionaire-tax-ok-ro-khanna-stanford/", "original": "the eighth richest person in the world, with a net worth of about $167 billion"},
+  {"claim": "5년에 걸쳐 80억 달러의 세금을 낼 수 있다는 사실은 특권입니다", "url": "https://www.moneytalksnews.com/jensen-huang-calls-his-billion-tax-bill-a-privilege-im-a-cpa-and-heres-where-hes-right/", "original": "The fact that I can afford to pay $8 billion in taxes over five years is a privilege."},
+  {"claim": "저는 세금 내는 것이 두려운 게 아닙니다. 가난해지는 것이 두려울 뿐입니다", "url": "https://www.moneytalksnews.com/jensen-huang-calls-his-billion-tax-bill-a-privilege-im-a-cpa-and-heres-where-hes-right/", "original": "I'm not afraid of paying taxes"},
+  {"claim": "저는 전혀 문제없습니다. 그 생각은 한 번도 마음에 걸린 적이 없습니다", "url": "https://fortune.com/2026/01/07/jensen-huang-billionaire-tax-california-talent", "original": "I'm perfectly fine with it, it never crossed my mind once."},
+  {"claim": "우리가 실리콘밸리에서 일하는 것은 그곳에 인재가 모여 있기 때문입니다", "url": "https://fortune.com/2026/01/07/jensen-huang-billionaire-tax-california-talent", "original": "We work in Silicon Valley because that's where the talent pool is."},
+  {"claim": "인재가 있는 곳이면 어디든 우리는 사무실을 둡니다", "url": "https://fortune.com/2026/01/07/jensen-huang-billionaire-tax-california-talent", "original": "Wherever there's talent, we have an office."},
+  {"claim": "당신들은 나 같은 창업자가 회사 지분을 큼직하게 팔도록 몰아붙이고 있습니다", "url": "https://www.fortune.com/2026/04/23/jensen-huang-california-billionaire-tax-ok-ro-khanna-stanford/", "original": "You are fighting to force founders like me to sell huge chunks of our companies"},
+  {"claim": "재산의 5%를 다섯으로 나눈 만큼, 곧 재산의 1% 남짓입니다", "url": "https://www.nbcbayarea.com/news/local/prop-40-billionaire-tax/4149849/", "original": "would owe a one-time tax equal to 5% of their wealth."},
+  {"claim": "머니토크뉴스가 9월 하순에 옮긴 그의 말입니다", "url": "https://www.moneytalksnews.com/jensen-huang-calls-his-billion-tax-bill-a-privilege-im-a-cpa-and-heres-where-hes-right/", "original": "The fact that I can afford to pay $8 billion in taxes over five years is a privilege."},
+  {"claim": "1월에 포춘이 전한 첫 반응은 더 담담했습니다", "url": "https://fortune.com/2026/01/07/jensen-huang-billionaire-tax-california-talent", "original": "I'm perfectly fine with it, it never crossed my mind once."},
+  {"claim": "포춘이 1월에 옮긴 말입니다", "url": "https://fortune.com/2026/01/07/jensen-huang-billionaire-tax-california-talent", "original": "We work in Silicon Valley because that's where the talent pool is."},
+  {"claim": "포춘 4월 기사에 실린 글에서 이렇게 썼습니다", "url": "https://www.fortune.com/2026/04/23/jensen-huang-california-billionaire-tax-ok-ro-khanna-stanford/", "original": "You are fighting to force founders like me to sell huge chunks of our companies"}
+ ]
+}

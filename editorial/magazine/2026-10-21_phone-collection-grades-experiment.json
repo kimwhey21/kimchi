@@ -1,0 +1,146 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-10-21",
+ "slug": "phone-collection-grades-experiment",
+ "radar_origin": "Collecting phones during college lessons raises grades, large randomized trial finds",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1758270704262-ecc82b23dc37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8bGVjdHVyZSUyMGhhbGx8ZW58MHwwfHx8MTc5MjUxNjQ0OHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "RDf6Cvns88Q",
+  "credit": "Unsplash / Vitaly Gariev"
+ },
+ "sources": [
+  {
+   "name": "Knowledge at Wharton",
+   "title": "Can Classroom Cell Phone Bans Boost Grades? (2026-02-03)",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/"
+  },
+  {
+   "name": "실리콘 캐널스",
+   "title": "Field Notes: collecting phones in lectures raised grades (2026-08-24)",
+   "url": "https://siliconcanals.com/t-india-college-phone-collection-randomised-trial-grades/"
+  }
+ ],
+ "tags": [
+  "휴대폰금지",
+  "교육",
+  "무작위대조실험"
+ ],
+ "ko": {
+  "title": "1만 7천 명의 휴대폰을 걷었더니: 성적 말고 볼 것 세 가지",
+  "title_candidates": [
+   "휴대폰을 걷은 교실에서 성적이 오른 학생은 누구였을까",
+   "수업 중 휴대폰을 걷으면 성적이 오를까? 대규모 실험의 답",
+   "1만 7천 명의 휴대폰을 걷었더니: 성적 말고 볼 것 세 가지"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "수업 중에 휴대폰을 걷으면 성적이 오른다는 말은 너무 당연해서 오히려 믿기 어렵습니다.\n그래서 인도의 대학 열 곳이 학생 1만 6,955명을 두 무리로 나눠 한 학기 동안 직접 재 봤습니다.\n결과는 숫자로 나왔는데, 그 숫자가 크다고 해야 할지 작다고 해야 할지가 이 글의 물음입니다.\n휴대폰 하나 치웠을 뿐인데 성적은 얼마나 달라질까요, 그리고 누구에게서 달라질까요?"
+   },
+   {
+    "heading": "휴대폰을 나무 상자에 넣은 교실",
+    "body": "실험은 인도 오디샤주의 대학 열 곳에서 2024년 봄 학기에 이뤄졌다고 실리콘 캐널스는 소개합니다.\n학과와 학기별로 묶은 무리를 무작위로 수거 쪽과 평소대로 쪽에 배정했고, 이런 방식을 무작위 대조 실험(randomized controlled trial)이라고 부릅니다.\n수거 쪽 학생은 강의가 시작될 때 휴대폰을 정해진 나무 상자에 넣어야 했습니다.\n두 무리가 처음부터 비슷하니, 나중에 생긴 차이는 휴대폰 때문이라고 말할 수 있는 방법입니다."
+   },
+   {
+    "heading": "성적 차이는 표준편차로 쟀습니다",
+    "body": "연구진이 이전 성적을 반영해 계산한 평균 효과는 0.086 표준편차였다고 실리콘 캐널스는 적었습니다.\n표준편차(standard deviation)는 학생들 성적이 평균에서 흩어진 폭을 재는 눈금입니다.\n0.086이면 그 폭의 10분의 1이 안 되는 만큼 오른 것이라서, 천지가 바뀐 크기는 아닙니다.\nKnowledge at Wharton은 같은 효과를 0.07 표준편차로 적었습니다. 어느 쪽이든 폭의 10분의 1 안팎입니다."
+   },
+   {
+    "heading": "효과는 성적이 낮던 학생에게 몰렸습니다",
+    "body": "이전 학점이 낮던 학생은 0.161 표준편차 올라 평균 효과의 약 1.9배였다고 실리콘 캐널스는 전했습니다.\n이공계 과목에서는 휴대폰 금지가 성적에 거의 영향이 없었다고 Knowledge at Wharton은 적었습니다.\n와튼스쿨의 알프 숭구(Alp Sungu) 교수는 달라진 교실의 모습을 이렇게 설명했습니다.\n“휴대폰이 손이 닿지 않는 곳으로 가자 교실의 분위기가 눈에 띄게 달라졌습니다.”\n평균은 작아도, 가장 도움이 필요한 쪽에서 더 크게 움직였다는 뜻입니다."
+   },
+   {
+    "heading": "잃은 것은 없었을까",
+    "body": "연구는 금지가 학생의 행복감이나 학습 동기를 해쳤다는 증거를 찾지 못했다고 Knowledge at Wharton은 전했습니다.\n다만 뒤처질까 불안한 마음(FOMO)은 조금 늘었습니다.\n숭구 교수는 이 불안이 금지가 넓어지면 줄 수 있다고 봅니다.\n“모두의 휴대폰이 치워져 있으면 놓칠 일도 줄어듭니다.”\n그는 학생들이 이점을 직접 겪고 나면 거부감도 줄어든다고 말했습니다."
+   },
+   {
+    "heading": "이 실험이 닿지 않은 학생들도 있습니다",
+    "body": "Knowledge at Wharton이 짚은 한계가 있습니다.\n이 연구는 대학 강의에서 수업 시간만 금지한 경우를 시험했습니다.\n더 어린 학생에게 같은 정책을 쓰면 결과가 다를 수 있다고 이 매체는 적었습니다.\n그렇다면 휴대폰을 걷을지 묻기 전에, 우리 교실에서 성적이 가장 낮은 학생에게 무엇이 달라질지부터 물어야 하지 않을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "학생 1만 6,955명을",
+   "url": "https://siliconcanals.com/t-india-college-phone-collection-randomised-trial-grades/",
+   "original": "The randomised trial covered 16,955 undergraduate and postgraduate students during the spring 2024 semester"
+  },
+  {
+   "claim": "대학 열 곳에서 2024년 봄 학기에 이뤄졌다고",
+   "url": "https://siliconcanals.com/t-india-college-phone-collection-randomised-trial-grades/",
+   "original": "The randomised trial covered 16,955 undergraduate and postgraduate students during the spring 2024 semester"
+  },
+  {
+   "claim": "인도의 대학 열 곳이",
+   "url": "https://siliconcanals.com/t-india-college-phone-collection-randomised-trial-grades/",
+   "original": "Across 10 higher education institutions in Odisha, India"
+  },
+  {
+   "claim": "강의가 시작될 때 휴대폰을 정해진 나무 상자에 넣어야 했습니다",
+   "url": "https://siliconcanals.com/t-india-college-phone-collection-randomised-trial-grades/",
+   "original": "students had to deposit their devices in designated wooden boxes"
+  },
+  {
+   "claim": "평균 효과는 0.086 표준편차였다고",
+   "url": "https://siliconcanals.com/t-india-college-phone-collection-randomised-trial-grades/",
+   "original": "assignment to phone collection increased GPA by 0.086 standard deviations"
+  },
+  {
+   "claim": "0.086이면 그 폭의 10분의 1이 안 되는 만큼",
+   "url": "https://siliconcanals.com/t-india-college-phone-collection-randomised-trial-grades/",
+   "original": "assignment to phone collection increased GPA by 0.086 standard deviations"
+  },
+  {
+   "claim": "같은 효과를 0.07 표준편차로 적었습니다",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/",
+   "original": "by 0.07 standard deviations"
+  },
+  {
+   "claim": "폭의 10분의 1 안팎입니다",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/",
+   "original": "by 0.07 standard deviations"
+  },
+  {
+   "claim": "0.161 표준편차 올라 평균 효과의 약 1.9배였다고",
+   "url": "https://siliconcanals.com/t-india-college-phone-collection-randomised-trial-grades/",
+   "original": "students with lower prior GPAs gained 0.161 standard deviations, roughly 1.9 times the average estimate"
+  },
+  {
+   "claim": "이공계 과목에서는 휴대폰 금지가 성적에 거의 영향이 없었다고",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/",
+   "original": "had little effect on grades"
+  },
+  {
+   "claim": "휴대폰이 손이 닿지 않는 곳으로 가자 교실의 분위기가 눈에 띄게 달라졌습니다",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/",
+   "original": "Once phones are out of reach, classrooms dynamics noticeably shifted"
+  },
+  {
+   "claim": "교실의 모습을 이렇게 설명했습니다",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/",
+   "original": "Once phones are out of reach, classrooms dynamics noticeably shifted"
+  },
+  {
+   "claim": "모두의 휴대폰이 치워져 있으면 놓칠 일도 줄어듭니다",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/",
+   "original": "If everyone's phone is away, there's less happening to miss."
+  },
+  {
+   "claim": "숭구 교수는 이 불안이 금지가 넓어지면 줄 수 있다고 봅니다",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/",
+   "original": "If everyone's phone is away, there's less happening to miss."
+  },
+  {
+   "claim": "이점을 직접 겪고 나면 거부감도 줄어든다고 말했습니다",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/",
+   "original": "Resistance declines once students experience the benefits firsthand"
+  },
+  {
+   "claim": "행복감이나 학습 동기를 해쳤다는 증거를 찾지 못했다고",
+   "url": "https://knowledge.wharton.upenn.edu/article/can-classroom-cell-phone-bans-boost-grades/",
+   "original": "the study finds no evidence that the bans hurt students' well-being or motivation levels"
+  }
+ ]
+}

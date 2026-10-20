@@ -1,0 +1,146 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-21",
+ "slug": "fed-hike-jobs-gap",
+ "radar_origin": "Fed to skip October but raise rates again in December, nearly all economists say - Reuters",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1650175075197-db08f1f59af5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8aW50ZXJlc3QlMjByYXRlcyUyMHNpZ258ZW58MHwwfHx8MTc5MjUxNjQzNHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "86Z5DaEryII",
+  "credit": "Unsplash / J Torres"
+ },
+ "sources": [
+  {
+   "name": "연준 9월 FOMC 의사록",
+   "title": "Minutes of the Federal Open Market Committee, September 15-16, 2026",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm"
+  },
+  {
+   "name": "Scotsman Guide",
+   "title": "Fed policymakers saw multiple 2026 rate hikes as likely, September FOMC minutes show",
+   "url": "https://www.scotsmanguide.com/news/fed-policymakers-saw-multiple-2026-rate-hikes-as-likely-september-fomc-minutes-show/"
+  }
+ ],
+ "tags": [
+  "연준",
+  "FOMC",
+  "고용지표"
+ ],
+ "ko": {
+  "title": "다음 연준 회의 전에 볼 것: 물가와 일자리가 서로 다른 말을 합니다",
+  "title_candidates": [
+   "다음 연준 회의 전에 볼 것: 물가와 일자리가 서로 다른 말을 합니다",
+   "연준은 왜 일자리 2만 9천 개 늘어난 달에 금리를 올렸을까",
+   "금리를 올린 연준과 멈춘 일자리, 이 어긋남은 어디까지 갈까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "연준이 금리를 올린 달에 미국 일자리는 2만 9천 개밖에 늘지 않았습니다.\n금리를 올린 날은 9월 16일이고, 일자리 숫자는 10월 2일에 나왔습니다.\n물가는 높다고 하고 일자리는 힘이 빠졌다고 하니, 연준이 읽은 숫자와 그 뒤에 나온 숫자가 어긋나 보입니다.\n연말까지 한 번 더 올려야 한다는 쪽과 일자리가 먼저라는 쪽, 어느 숫자가 더 무거울까요?"
+   },
+   {
+    "heading": "연준은 반대표 없이 올렸습니다",
+    "body": "연준 9월 FOMC 의사록은 위원 모두가 정책금리 목표 범위를 0.25%포인트 올려 3.75~4%로 정하는 데 동의했다고 적었습니다.\n이 결정에 반대표는 없었습니다.\n그 안에 이미 다음 인상의 문이 열려 있었습니다."
+   },
+   {
+    "heading": "회의 때 연준이 본 일자리와 물가",
+    "body": "의사록에 적힌 회의 시점의 평가는 이렇습니다.\n“일자리 증가는 노동력 증가 속도를 따라가고 있고, 실업률은 거의 변하지 않았다.”\n물가는 더 높게 봤습니다.\n“회의 시점에 얻을 수 있는 정보는 물가가 여전히 높다는 것을 보여 주었다.”\n물가가 오른 이유로 의사록은 과거의 관세 인상, 국제 정세 속 에너지 비용, 인공지능 투자와 얽힌 가격을 꼽았습니다."
+   },
+   {
+    "heading": "보름 뒤 나온 숫자는 다른 그림이었습니다",
+    "body": "미국 노동통계국은 9월 비농업 일자리가 2만 9천 개 늘었다고 10월 2일 발표했다고 Scotsman Guide는 전했습니다.\n8만 개를 넘던 시장 전망에 크게 못 미쳤습니다.\n같은 매체에 따르면 앞선 두 달치 일자리도 합쳐 6만 개 낮춰 잡혔습니다.\n8월 개인소비지출(PCE) 물가는 전체 3.4%, 근원 3%로 전문가 예상 3.7%와 3.3%보다 낮았습니다.\nPCE는 소비자가 쓰는 돈에 붙은 가격을 재는 지표입니다. 물가는 예상보다 낮았고, 일자리는 예상보다 약했습니다."
+   },
+   {
+    "heading": "그래도 의사록은 한 번을 더 말했습니다",
+    "body": "그래도 의사록은 연내에 한 번 더 올리는 쪽으로 기울어 있었습니다.\n“대부분의 참석자는 연말까지 연방기금금리 목표 범위를 한 번 더 올리는 것이 적절할 것이라고 판단했다.”\n다만 참석자들은 매 회의를 열린 마음으로 맞고, 이후 결정은 새로 들어오는 정보에 달렸다고 강조했습니다.\n일자리 숫자는 이 의사록이 쓰인 회의보다 나중에 나왔습니다."
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "물가 숫자는 인상 쪽 편이고, 일자리 숫자는 멈춤 쪽 편입니다.\n금리는 수요를 눌러 물가를 잡는 도구인데, 물가를 민 힘이 관세와 에너지라면 금리가 닿는 곳은 일자리일 수 있습니다. 이것은 우리의 해석입니다.\n이달 28일에 끝나는 다음 회의에서 연준은 어느 숫자를 먼저 읽을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "미국 일자리는 2만 9천 개밖에 늘지 않았습니다",
+   "url": "https://www.scotsmanguide.com/news/fed-policymakers-saw-multiple-2026-rate-hikes-as-likely-september-fomc-minutes-show/",
+   "original": "U.S. employers added just 29,000 nonfarm jobs in September, the Bureau of Labor Statistics reported on Oct. 2, landing well below consensus forecasts north of 80,000."
+  },
+  {
+   "claim": "금리를 올린 날은 9월 16일이고, 일자리 숫자는 10월 2일에 나왔습니다",
+   "url": "https://www.scotsmanguide.com/news/fed-policymakers-saw-multiple-2026-rate-hikes-as-likely-september-fomc-minutes-show/",
+   "original": "U.S. employers added just 29,000 nonfarm jobs in September, the Bureau of Labor Statistics reported on Oct. 2, landing well below consensus forecasts north of 80,000."
+  },
+  {
+   "claim": "위원 모두가 정책금리 목표 범위를 0.25%포인트 올려 3.75~4%로 정하는 데 동의했다고",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+   "original": "all members agreed to raise the target range for the federal funds rate 1/4 percentage point to 3-3/4 to 4 percent"
+  },
+  {
+   "claim": "이 결정에 반대표는 없었습니다",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+   "original": "Voting against this action"
+  },
+  {
+   "claim": "일자리 증가는 노동력 증가 속도를 따라가고 있고, 실업률은 거의 변하지 않았다",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+   "original": "Job gains have kept pace with the workforce, and the unemployment rate has changed little."
+  },
+  {
+   "claim": "의사록에 적힌 회의 시점의 평가는 이렇습니다",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+   "original": "Job gains have kept pace with the workforce, and the unemployment rate has changed little."
+  },
+  {
+   "claim": "회의 시점에 얻을 수 있는 정보는 물가가 여전히 높다는 것을 보여 주었다",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+   "original": "The information available at the time of the meeting indicated that inflation remained elevated."
+  },
+  {
+   "claim": "물가가 오른 이유로 의사록은 과거의 관세 인상",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+   "original": "a development the staff attributed mostly to the effects of past tariff increases, higher energy and input costs stemming from geopolitical developments"
+  },
+  {
+   "claim": "9월 비농업 일자리가 2만 9천 개 늘었다고 10월 2일 발표했다고",
+   "url": "https://www.scotsmanguide.com/news/fed-policymakers-saw-multiple-2026-rate-hikes-as-likely-september-fomc-minutes-show/",
+   "original": "U.S. employers added just 29,000 nonfarm jobs in September, the Bureau of Labor Statistics reported on Oct. 2, landing well below consensus forecasts north of 80,000."
+  },
+  {
+   "claim": "8만 개를 넘던 시장 전망에 크게 못 미쳤습니다",
+   "url": "https://www.scotsmanguide.com/news/fed-policymakers-saw-multiple-2026-rate-hikes-as-likely-september-fomc-minutes-show/",
+   "original": "U.S. employers added just 29,000 nonfarm jobs in September, the Bureau of Labor Statistics reported on Oct. 2, landing well below consensus forecasts north of 80,000."
+  },
+  {
+   "claim": "앞선 두 달치 일자리도 합쳐 6만 개 낮춰 잡혔습니다",
+   "url": "https://www.scotsmanguide.com/news/fed-policymakers-saw-multiple-2026-rate-hikes-as-likely-september-fomc-minutes-show/",
+   "original": "The BLS also downwardly revised a combined 60,000 jobs from the prior two months"
+  },
+  {
+   "claim": "전체 3.4%, 근원 3%로 전문가 예상 3.7%와 3.3%보다 낮았습니다",
+   "url": "https://www.scotsmanguide.com/news/fed-policymakers-saw-multiple-2026-rate-hikes-as-likely-september-fomc-minutes-show/",
+   "original": "headline PCE inflation at 3.4% and core inflation at 3%"
+  },
+  {
+   "claim": "대부분의 참석자는 연말까지 연방기금금리 목표 범위를 한 번 더 올리는 것이 적절할 것이라고 판단했다",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+   "original": "most participants assessed that another increase in the target range for the federal funds rate would likely be appropriate by year end"
+  },
+  {
+   "claim": "연내에 한 번 더 올리는 쪽으로 기울어 있었습니다",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+   "original": "most participants assessed that another increase in the target range for the federal funds rate would likely be appropriate by year end"
+  },
+  {
+   "claim": "참석자들은 매 회의를 열린 마음으로 맞고",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm",
+   "original": "Participants emphasized, however, that they approached each meeting with an open mind and decisions at future meetings would depend on incoming information"
+  },
+  {
+   "claim": "이달 28일에 끝나는 다음 회의에서",
+   "url": "https://www.scotsmanguide.com/news/fed-policymakers-saw-multiple-2026-rate-hikes-as-likely-september-fomc-minutes-show/",
+   "original": "the upcoming two-day FOMC meeting, which concludes Oct. 28"
+  }
+ ]
+}
