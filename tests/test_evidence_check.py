@@ -138,4 +138,26 @@ class ForbiddenPageTest(unittest.TestCase):
     def test_forbidden_screen_is_not_page_text(self) -> None:
         from src import evidence_check as ec
         self.assertTrue(ec._CHALLENGE.search("403 forbidden request forbidden by administrative rules."))
-        self.assertEqual(ec._blocked_domain("https://kfgo.com/2026/10/13/x/"), "kfgo.com")
+
+
+class ReaderFallbackTest(unittest.TestCase):
+    """맥이 직접·크롬으로 못 여는 출처는 읽기 서비스로 한 번 더 읽는다(2026-10-21)."""
+
+    def test_reader_used_after_browser_fails(self) -> None:
+        import os
+        from unittest import mock
+        from src import evidence_check as ec
+        ec._CACHE.clear()
+        blocked = mock.Mock(); blocked.raise_for_status.side_effect = ec.requests.HTTPError("403")
+        good = mock.Mock(text="Title: x\nMarkdown Content:\nThe real sentence is here.", raise_for_status=lambda: None)
+        with mock.patch.object(ec.requests, "get", side_effect=[blocked, good]), \
+                mock.patch.object(ec, "_browser_text", return_value=None), \
+                mock.patch.dict(os.environ, {"EVIDENCE_BROWSER": "1"}):
+            self.assertIn(ec.normalize("The real sentence is here."), ec.page_text("https://example.com/r1"))
+
+    def test_reader_error_screen_is_not_text(self) -> None:
+        from unittest import mock
+        from src import evidence_check as ec
+        bad = mock.Mock(text="Title: \nWarning: Target URL returned error 403: Forbidden", raise_for_status=lambda: None)
+        with mock.patch.object(ec.requests, "get", return_value=bad):
+            self.assertIsNone(ec._reader_text("https://example.com/r2"))

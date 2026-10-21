@@ -62,6 +62,25 @@ def _browser_text(url: str) -> str | None:
     return normalize(body)
 
 
+READER = "https://r.jina.ai/"
+
+
+def _reader_text(url: str) -> str | None:
+    """읽기 서비스(r.jina.ai)가 받아 온 본문 — 이 맥의 접속 자체를 막는 사이트용(2026-10-21: kfgo는 403, moneytalksnews는 크롬에도
+    봇 검사 화면. 둘 다 이 경로로는 원문이 그대로 있었다). 크롬 다음 마지막 길이다. 대상 사이트가 오류를 주면 None."""
+    try:
+        r = requests.get(READER + url, headers=_UA, timeout=60)
+        r.raise_for_status()
+    except requests.RequestException as exc:
+        print(f"[안내] 읽기 서비스로도 출처를 열지 못했습니다 {url[:80]}: {exc.__class__.__name__}")
+        return None
+    head = r.text[:600]
+    if _CHALLENGE.search(head) or re.search(r"returned error \d{3}", head, re.I):
+        print(f"[안내] 읽기 서비스도 막힌 화면을 받았습니다 {url[:80]}")
+        return None
+    return normalize(r.text)
+
+
 def page_text(url: str) -> str | None:
     """주소의 본문 글자(태그·스크립트 뺌, 정규화). 못 열면 None. 봇 검사 화면(200으로 오는 'Just a moment…')은 못 연 것으로 본다."""
     if url in _CACHE:
@@ -77,7 +96,7 @@ def page_text(url: str) -> str | None:
     except requests.RequestException as exc:
         print(f"[안내] 출처를 열지 못했습니다 {url[:80]}: {exc}")
     if text is None and os.environ.get("EVIDENCE_BROWSER") == "1":
-        text = _browser_text(url)
+        text = _browser_text(url) or _reader_text(url)
     _CACHE[url] = text
     return text
 
@@ -155,7 +174,7 @@ def number_mismatches(claim: str, original: str) -> list[tuple[float, float]]:
 
 # 게시 직전 검사(이 맥)가 크롬으로도 열지 못하는 출처(봇 검사) — 루틴이 쓸 때 열렸어도 맥에서 막혀 글이 버려진다(2026-10-09~11
 # 잡지 세 편). 쓰는 단계(관문)에서 막아 다른 출처를 찾게 한다. 새로 막히는 사이트가 보이면 여기에 더한다.
-NO_FETCH_DOMAINS = ("autoevolution.com", "stocktwits.com", "freedom969.com", "kfgo.com")
+NO_FETCH_DOMAINS = ("autoevolution.com", "stocktwits.com", "freedom969.com")
 
 
 def _blocked_domain(url: str) -> str | None:
