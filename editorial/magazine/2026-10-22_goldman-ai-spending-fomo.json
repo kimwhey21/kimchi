@@ -1,0 +1,145 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-22",
+ "slug": "goldman-ai-spending-fomo",
+ "radar_origin": "Fortune: The AI boom is nearly $5 trillion short of paying for itself, Gartner says",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8ZGF0YSUyMGNlbnRlciUyMHNlcnZlcnN8ZW58MHwwfHx8MTc5MjYwMjY3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "M5tzZtFCOfs",
+  "credit": "Unsplash / Taylor Vick"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Goldman Sachs finds insecurity is a key part of the AI boom (2026-05-06)",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/"
+  },
+  {
+   "name": "타이베이 타임스",
+   "title": "Citadel’s Griffin snaps up Situational Awareness fund (Reuters, 2026-08-03)",
+   "url": "https://www.taipeitimes.com/News/biz/archives/2026/08/03/2003861821"
+  }
+ ],
+ "tags": [
+  "AI투자",
+  "골드만삭스",
+  "빅테크"
+ ],
+ "ko": {
+  "title": "골드만삭스 회의론자는 왜 빅테크의 AI 투자를 두려움이 떠받친다고 볼까",
+  "title_candidates": [
+   "골드만삭스 회의론자는 왜 빅테크의 AI 투자를 두려움이 떠받친다고 볼까",
+   "주가가 떨어져도 빅테크가 AI에 돈을 쓰는 이유는 수익이 아닙니다",
+   "AI 투자를 움직이는 것은 계산기일까 두려움일까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "골드만삭스는 2년 전 이렇게 예측했습니다. 빅테크 주가가 시장보다 오래 부진하면 AI 투자를 줄일 것이라고요.\n결과는 정반대였습니다. 주가는 뒤처졌는데 돈은 더 들어갔습니다.\n예측한 사람은 같은 회사의 AI 회의론자 제임스 코벨로입니다. 그는 이유를 수익이 아닌 다른 데서 찾았습니다.\nAI에 쏟는 돈을 움직이는 것은 계산기일까요, 두려움일까요?"
+   },
+   {
+    "heading": "2년 전 예측은 어디서 틀렸나",
+    "body": "경제지 포춘은 골드만삭스의 4월 보고서 두 건을 묶어 소개했습니다. 하나는 AI 설비를 짓는 데 얼마가 드는지, 다른 하나는 그 돈이 실제로 일하는지를 봅니다.\n코벨로는 2024년 보고서에서 빅테크 주가가 시장보다 오래 못하면 투자를 줄일 것이라고 적었습니다.\n그러나 마이크로소프트·아마존·구글·메타는 주가가 S&P 500에 뒤처지는 동안에도 AI 인프라 지출을 크게 늘렸습니다."
+   },
+   {
+    "heading": "돈은 어디서 나오고 있나",
+    "body": "포춘에 따르면 이 회사들은 영업활동에서 번 현금을 다 쓰고 이제 빚으로 짓고 있습니다.\n데이터센터 관련 채권 발행은 2025년 한 해에만 두 배로 늘어 1,820억 달러가 됐습니다.\n골드만삭스 글로벌 인스티튜트는 2026년부터 2031년까지 AI 설비투자가 모두 7조 6,000억 달러에 이른다고 어림했습니다. 예측이 아니라 기준 추정이라고 못박았습니다."
+   },
+   {
+    "heading": "두려움이 수익보다 셌습니다",
+    "body": "코벨로의 진단은 한 문장입니다.\n“주주보다 AI 군비 경쟁에 끼는 것을 앞세운 빅테크에게는, 뒤처질까 봐 두려운 마음이 나쁜 주가보다 더 강한 동기로 드러났다.”\n군비 경쟁은 이기려는 싸움이 아니라 지지 않으려는 싸움입니다. 투자 계산서가 맞아서가 아니라 안 하면 뒤처진다는 불안이 지갑을 연다는 얘기입니다."
+   },
+   {
+    "heading": "누가 돈을 벌고 있나",
+    "body": "포춘이 소개한 코벨로의 또 다른 지적은 이익이 한곳에 몰린다는 것입니다.\n챗GPT가 나온 뒤 엔비디아의 순이익은 약 20배로 불었지만, 빅테크의 이익 증가는 훨씬 작았고 기업과 모델 개발사는 적자를 보고 있다고 그는 씁니다.\n“이번 사이클에서 반도체 회사는 사슬에서 자기보다 위에 있는 모두를 희생시키며 잘나가고 있다.”"
+   },
+   {
+    "heading": "두려움이 거꾸로 작동한 곳",
+    "body": "같은 AI 바람이 거꾸로 분 사례도 있습니다. 타이베이 타임스가 옮긴 로이터 보도입니다.\nAI 종목에 베팅한 헤지펀드 시추에이셔널 어웨어니스의 포트폴리오는 7월에 가치가 67% 줄었고, 펀드는 160억 달러 규모의 공개 주식 대부분을 팔아야 했습니다.\n창업자는 투자자에게 이렇게 썼습니다.\n“우리는 여러분을 실망시켰습니다.”\n시티델이 그 주식의 상당 부분을 사들이며 나섰지만, 이 이야기는 누가 옳았느냐가 아니라 두 방향의 압력이 같은 시장에 있다는 것을 보여 줍니다."
+   },
+   {
+    "heading": "완충 구간은 넓지 않다고 합니다",
+    "body": "골드만삭스 글로벌 인스티튜트는 지금을 최악의 시나리오보다 기본 시나리오에 가깝다고 평가합니다. 다만 단서가 붙습니다.\n“완충 구간이 넓지는 않다”는 것입니다.\n두려움이 지출을 떠받치는 동안에는 숫자가 흔들려도 돈이 계속 들어갑니다. 다음 분기 실적 발표에서 빅테크가 설비투자를 이야기하는 목소리는 수익을 말하는 쪽일까요, 뒤처지지 않겠다는 쪽일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "2년 전",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "Covello had explicitly predicted in its original 2024 report that if hyperscaler stocks underperformed the market for a sustained period, those companies would cut their AI capital expenditure."
+  },
+  {
+   "claim": "4월 보고서 두 건",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "In two separate reports published in April, Goldman Sachs examined the great AI infrastructure build-out"
+  },
+  {
+   "claim": "1,820억 달러",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "Data center debt issuance doubled to $182 billion in 2025 alone."
+  },
+  {
+   "claim": "7조 6,000억 달러",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "projecting roughly $7.6 trillion in cumulative AI capital expenditure between 2026 and 2031"
+  },
+  {
+   "claim": "뒤처질까 봐 두려운 마음이 나쁜 주가보다 더 강한 동기로 드러났다",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "FOMO has proven a stronger incentive than poor stock performance as hyperscalers have prioritized being involved in the AI arms race over their current shareholders."
+  },
+  {
+   "claim": "약 20배",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "Since the launch of ChatGPT, Nvidia’s net income has grown roughly 20x."
+  },
+  {
+   "claim": "이번 사이클에서 반도체 회사는 사슬에서 자기보다 위에 있는 모두를 희생시키며 잘나가고 있다",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "the chip companies are thriving at the expense of everyone above them in the chain."
+  },
+  {
+   "claim": "67% 줄었고",
+   "url": "https://www.taipeitimes.com/News/biz/archives/2026/08/03/2003861821",
+   "original": "the Situational Awareness portfolio lost 67 percent of its value last month, and the fund was forced to unwind most of its US$16 billion public equities book."
+  },
+  {
+   "claim": "160억 달러 규모",
+   "url": "https://www.taipeitimes.com/News/biz/archives/2026/08/03/2003861821",
+   "original": "the Situational Awareness portfolio lost 67 percent of its value last month, and the fund was forced to unwind most of its US$16 billion public equities book."
+  },
+  {
+   "claim": "우리는 여러분을 실망시켰습니다",
+   "url": "https://www.taipeitimes.com/News/biz/archives/2026/08/03/2003861821",
+   "original": "“We let you down,” Aschenbrenner wrote to his investors in a letter seen by Reuters."
+  },
+  {
+   "claim": "완충 구간이 넓지는 않다",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "though the buffer is not wide."
+  },
+  {
+   "claim": "2024년 보고서에서",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "Covello had explicitly predicted in its original 2024 report that if hyperscaler stocks underperformed the market for a sustained period, those companies would cut their AI capital expenditure."
+  },
+  {
+   "claim": "2025년 한 해에만",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "Data center debt issuance doubled to $182 billion in 2025 alone."
+  },
+  {
+   "claim": "2026년부터 2031년까지",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "projecting roughly $7.6 trillion in cumulative AI capital expenditure between 2026 and 2031"
+  },
+  {
+   "claim": "S&P 500",
+   "url": "https://dc.fortune.com/2026/05/06/is-ai-a-bubble-goldman-sachs-skeptics-overhyped/",
+   "original": "have dramatically increased their spending on AI infrastructure even as their stocks have lagged the S&P 500."
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-10-22",
+ "slug": "career-risk-fund-manager-fired",
+ "radar_origin": "Klement on Investing (요아힘 클레멘트): Career risk trumps investment risk",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1561900478-5001f6b4d8ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8dGlnaHRyb3BlJTIwYmFsYW5jZXxlbnwwfDB8fHwxNzkyNjAyNjg2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "fCzSfVIQlVY",
+  "credit": "Unsplash / Loic Leray"
+ },
+ "sources": [
+  {
+   "name": "클레멘트 온 인베스팅",
+   "title": "Career risk trumps investment risk (2026-10-21)",
+   "url": "https://klementoninvesting.substack.com/p/career-risk-trumps-investment-risk"
+  },
+  {
+   "name": "CFA 인스티튜트",
+   "title": "The Investment Risk You’ve Never Calculated (2016-06-17)",
+   "url": "https://rpc.cfainstitute.org/blogs/enterprising-investor/2016/the-investment-risk-youve-never-calculated"
+  }
+ ],
+ "tags": [
+  "커리어위험",
+  "펀드매니저",
+  "연기금"
+ ],
+ "ko": {
+  "title": "펀드매니저는 왜 지수 곁을 떠나지 못할까? 내 수수료가 사는 것은 이것입니다",
+  "title_candidates": [
+   "펀드매니저는 왜 지수 곁을 떠나지 못할까? 내 수수료가 사는 것은 이것입니다",
+   "이겨도 해고 확률이 그대로라면 매니저는 무엇을 지킬까?",
+   "앞면이면 내가 이기고 뒷면이면 네가 진다는 계약을 매니저는 어떻게 읽을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "펀드매니저가 연기금에 이기는 성적을 내도, 해고될 확률은 줄지 않는다는 연구가 나왔습니다.\n반대로 지면 확률이 빠르게 올라갑니다. 이기면 본전이고 지면 잘리는 계약입니다.\n이런 계약서 앞에서 매니저는 무엇을 가장 먼저 지키려 할까요?"
+   },
+   {
+    "heading": "20년 치 연금 계좌를 뜯어 봤습니다",
+    "body": "투자 전략가 요아힘 클레멘트가 자신의 뉴스레터 클레멘트 온 인베스팅(Klement on Investing)에서 이탈리아 연구를 소개했습니다.\n연구자는 루치아 스포토르노와 자코모 노체로입니다. 이들은 2003년부터 2023년까지 이탈리아 기업 연금이 맡긴 개별 위탁 계좌를 직접 모아 분석했습니다.\n개별 위탁 계좌(SMA)는 연기금 한 곳이 매니저 한 명에게 따로 맡기는 계좌입니다. 해고 사유가 성과 하나로 가려지기 때문에 좋은 실험장이라고 클레멘트는 봅니다."
+   },
+   {
+    "heading": "해고는 진 쪽에만 따라옵니다",
+    "body": "결과는 간단합니다. 기준 지수보다 못하면 해고 확률이 크게, 빠르게 올라갔습니다.\n그런데 기준 지수를 이겨도 해고 확률은 줄지 않았습니다. 클레멘트는 이렇게 정리합니다.\n“연기금이 개별 위탁 계좌로 내미는 거래는 말 그대로 ‘앞면이면 내가 이기고, 뒷면이면 네가 진다’입니다.”"
+   },
+   {
+    "heading": "그러면 매니저는 이렇게 합니다",
+    "body": "클레멘트는 평생 운용사 쪽에서 일해 온 사람입니다. 그의 말은 현장에서 나온 것입니다.\n“내 경력 대부분을 운용사에서 보낸 사람으로서, 커리어 위험이 현실이고 많은 투자 판단을 누른다는 것을 안다.”\n연구가 보여 준 행동은 둘입니다. 먼저 하락장 방어에 집중해 베타(beta)를 1보다 낮춥니다.\n베타는 시장이 움직일 때 내 포트폴리오가 얼마나 따라 움직이는지를 나타내는 값입니다.\n다음으로 기준 지수에서 너무 벗어나지 않으려고 적극적 위험을 줄입니다. 그러면 연기금은 적극 운용 수수료를 내고 반쯤만 적극적인 포트폴리오를 받습니다."
+   },
+   {
+    "heading": "업계 설문도 같은 말을 했습니다",
+    "body": "CFA 인스티튜트의 블로그 글 하나가 비슷한 현장 목소리를 전합니다. 오래된 글이라 연구와 시점은 다르지만 같은 방향입니다.\n독자 774명 가운데 78%가 성과 부진에 따른 커리어 위험이 자기 회사에 영향을 준다고 답했고, 가장 많은 28%는 부진이 1~2년 이어지면 일자리가 불안해진다고 했습니다."
+   },
+   {
+    "heading": "성과 보수도 방패가 못 됩니다",
+    "body": "이익을 나누는 성과 보수가 매니저를 대담하게 만들지 않을까요?\n클레멘트는 아니라고 답합니다. 성과 보수는 불확실하고 커리어 위험이 행동을 지배하기 때문에, 전체 수수료에서 성과 보수가 차지하는 몫은 작습니다.\n같은 일을 여러 매니저가 나눠 맡으면 더 방어적이 됩니다. 언제든 다른 매니저가 그 자리를 받을 수 있기 때문입니다.\n내가 내는 수수료가 적극 운용에 대한 값이라면, 그 포트폴리오는 정말 지수와 다르게 움직이도록 만들어져 있을까요, 아니면 해고당하지 않도록 만들어져 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "2003년부터 2023년까지",
+   "url": "https://klementoninvesting.substack.com/p/career-risk-trumps-investment-risk",
+   "original": "Using a hand-collected dataset of Italian occupational pension funds over the period 2003–2023"
+  },
+  {
+   "claim": "연기금이 개별 위탁 계좌로 내미는 거래는 말 그대로 ‘앞면이면 내가 이기고, 뒷면이면 네가 진다’입니다",
+   "url": "https://klementoninvesting.substack.com/p/career-risk-trumps-investment-risk",
+   "original": "The deal the pension fund offers with an SMA literally is ‘heads, I win, tails, you lose.’"
+  },
+  {
+   "claim": "내 경력 대부분을 운용사에서 보낸 사람으로서, 커리어 위험이 현실이고 많은 투자 판단을 누른다는 것을 안다",
+   "url": "https://klementoninvesting.substack.com/p/career-risk-trumps-investment-risk",
+   "original": "As someone who has worked most of his career on the buy side, I know that career risk is real and overrides many investment considerations."
+  },
+  {
+   "claim": "독자 774명 가운데 78%가",
+   "url": "https://rpc.cfainstitute.org/blogs/enterprising-investor/2016/the-investment-risk-youve-never-calculated",
+   "original": "Of the 774 respondents, 78% said that career risk due to underperformance is a factor at their firms"
+  },
+  {
+   "claim": "가장 많은 28%는 부진이 1~2년 이어지면",
+   "url": "https://rpc.cfainstitute.org/blogs/enterprising-investor/2016/the-investment-risk-youve-never-calculated",
+   "original": "the largest number (28%) said that between one to two years was the time period when job security would start to be an issue"
+  },
+  {
+   "claim": "1보다 낮춥니다",
+   "url": "https://klementoninvesting.substack.com/p/career-risk-trumps-investment-risk",
+   "original": "their portfolio beta drops below 1.0 so that in a bear market they lose less than the benchmark"
+  }
+ ]
+}

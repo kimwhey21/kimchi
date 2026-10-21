@@ -1,0 +1,147 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-10-22",
+ "slug": "el-nino-1982-1997-damage",
+ "radar_origin": "The Conversation: El Niño is threatening California’s fragile coast again – the 1982-83 El Niño opened eyes to the serious erosion risks",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1611459712781-7734bd6242ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Y2FsaWZvcm5pYSUyMHBpZXIlMjBzdG9ybSUyMHdhdmVzfGVufDB8MHx8fDE3OTI2MDI2NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "npKfSWvvr6M",
+  "credit": "Unsplash / KC Welch"
+ },
+ "sources": [
+  {
+   "name": "더 컨버세이션",
+   "title": "El Niño is threatening California’s fragile coast again (2026-10-21)",
+   "url": "https://theconversation.com/el-nino-is-threatening-californias-fragile-coast-again-the-1982-83-el-nino-opened-eyes-to-the-serious-erosion-risks-293298"
+  },
+  {
+   "name": "해안연구저널",
+   "title": "Comparative Impacts of the 1982-83 and 1997-98 El Nino Winters on the Central California Coast (2000)",
+   "url": "https://journals.flvc.org/jcr/article/view/80923"
+  }
+ ],
+ "tags": [
+  "엘니뇨",
+  "캘리포니아해안",
+  "해수면"
+ ],
+ "ko": {
+  "title": "센 엘니뇨가 덜 부순 겨울은 왜 있었을까",
+  "title_candidates": [
+   "센 엘니뇨가 덜 부순 겨울은 왜 있었을까",
+   "센 엘니뇨는 곧 큰 피해일까? 1982년과 1997년이 가른 것은 이것입니다",
+   "센 엘니뇨가 덜 부순 겨울은 왜 있었을까",
+   "올겨울 엘니뇨가 1982년을 닮을지 1997년을 닮을지는 파도와 만조가 정합니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "엘니뇨가 더 셌는데 피해는 오히려 절반도 안 된 겨울이 있었습니다.\n1982~83년과 1997~98년 두 겨울, 캘리포니아 중부 해안 이야기입니다.\n1982~83년 엘니뇨는 캘리포니아 역사상 가장 파괴적인 엘니뇨 겨울 가운데 하나로 꼽힙니다.\n올겨울 엘니뇨가 역대 최강급이라는 전망 앞에서, 더 센 엘니뇨는 왜 덜 부쉈을까요?"
+   },
+   {
+    "heading": "지수로는 1997년이 더 셌습니다",
+    "body": "해안연구저널(Journal of Coastal Research)에 실린 논문은 두 겨울을 나란히 놓았습니다. 연구자는 커트 스토를라치 등 세 사람입니다.\n대부분의 지수로는 1997~98년 엘니뇨가 더 강했는데도, 중부 캘리포니아 해안의 피해는 1982~83년 겨울에 약 1,400만 달러로 1997~98년의 두 배를 넘었습니다.\n세기만 보면 답이 거꾸로 나오는 셈입니다."
+   },
+   {
+    "heading": "파도가 하필 만조와 겹쳤습니다",
+    "body": "논문은 차이를 두 갈래로 설명합니다. 먼저 날씨와 바다입니다.\n1982~83년에는 큰 파도가 남쪽에서 부는 센 바람, 그리고 아주 높은 조수와 같은 때 몰려왔습니다. 파도가 해안 가까이서 부서지니 같은 크기라도 부딪히는 힘이 더 컸습니다.\n1997~98년에는 가장 큰 파도가 낮은 조수 때 들어왔고 바람도 약했습니다."
+   },
+   {
+    "heading": "바닷물이 한 자나 높아졌습니다",
+    "body": "엘니뇨 때 바다가 높아지는 까닭을 더 컨버세이션(The Conversation) 기고가 풀었습니다. 글쓴이는 캘리포니아 해안을 거의 60년 연구한 해안지질학자 게리 그릭스입니다.\n적도의 무역풍이 약해지면 서태평양의 따뜻한 물이 동쪽으로 밀려옵니다. 그 일부가 켈빈파(Kelvin wave) — 바닷속을 따라 해안으로 올라오는 따뜻한 물의 덩어리 — 가 되어 캘리포니아로 북상합니다.\n물은 데워지면 부풀기 때문에 해수면이 몇 주씩 높아집니다. 1982~83년에는 예상 만조보다 샌디에이고에서 약 30센티미터, 샌프란시스코에서는 60센티미터 가까이 높았습니다.\n그릭스는 이렇게 씁니다.\n“캘리포니아의 해안 절벽과 해변은 거칠어 보이지만, 강한 엘니뇨 앞에서는 놀랄 만큼 약할 수 있습니다.”"
+   },
+   {
+    "heading": "방파제가 운을 나눠 줬을까",
+    "body": "1997~98년에 피해가 줄어든 이유로 논문은 해안 방호도 꼽습니다. 1982~83년에 크게 부서진 곳 대부분이 그 뒤 더 튼튼한 방파벽과 석축으로 보호됐다는 것입니다.\n그렇다고 안심할 일은 아닙니다. 그릭스에 따르면 2022~23년 겨울에는 엘니뇨 없이 높은 파도와 해수면만으로도 캘리포니아 해안에서 47억 달러의 경제적 손실이 났습니다.\n1982~83년과 거의 같은 조합이 40년 만에 다시 나타난 것입니다."
+   },
+   {
+    "heading": "올겨울은 어느 쪽을 닮을까",
+    "body": "그릭스는 2026~27년 엘니뇨가 역대 가장 센 축에 들 것으로 봅니다. 남부 캘리포니아는 이미 엘니뇨가 키운 태평양 허리케인의 파도에 해변이 깎이고 집이 부서졌습니다.\n그는 이번에도 “엘니뇨는 저마다 다르다”고 덧붙입니다. 같은 세기라도 파도와 만조가 어떻게 겹치느냐에 따라 결과가 갈릴 수 있다는 뜻입니다.\n방호벽이 늘었다는 믿음과 파도가 언제 오느냐라는 운 가운데, 올겨울 해안은 어느 쪽에 더 크게 걸려 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1982~83년과 1997~98년 두 겨울",
+   "url": "https://journals.flvc.org/jcr/article/view/80923",
+   "original": "Comparative Impacts of the 1982-83 and 1997-98 EI Nino Winters on the Central California Coast"
+  },
+  {
+   "claim": "1982~83년 엘니뇨",
+   "url": "https://theconversation.com/el-nino-is-threatening-californias-fragile-coast-again-the-1982-83-el-nino-opened-eyes-to-the-serious-erosion-risks-293298",
+   "original": "one of the most destructive El Niño winters in California history"
+  },
+  {
+   "claim": "1997~98년에는 가장 큰 파도가 낮은 조수 때",
+   "url": "https://journals.flvc.org/jcr/article/view/80923",
+   "original": "During the 1997-98 winter, however, the largest waves arrived during lower tides and coincided with lower wind velocities."
+  },
+  {
+   "claim": "1997~98년에 피해가 줄어든 이유",
+   "url": "https://journals.flvc.org/jcr/article/view/80923",
+   "original": "Another important factor contributing to the disproportionate damage between the winters was the higher percentage of shoreline that had been armored by 1997."
+  },
+  {
+   "claim": "2026~27년 엘니뇨",
+   "url": "https://theconversation.com/el-nino-is-threatening-californias-fragile-coast-again-the-1982-83-el-nino-opened-eyes-to-the-serious-erosion-risks-293298",
+   "original": "likely to be one of the strongest on record"
+  },
+  {
+   "claim": "약 1,400만 달러",
+   "url": "https://journals.flvc.org/jcr/article/view/80923",
+   "original": "the coastline of central California sustained approximately $14 million in damages during the 1982-83 winter, more than double the economic impact experienced during the 1997-98 winter"
+  },
+  {
+   "claim": "두 배를 넘었습니다",
+   "url": "https://journals.flvc.org/jcr/article/view/80923",
+   "original": "the coastline of central California sustained approximately $14 million in damages during the 1982-83 winter, more than double the economic impact experienced during the 1997-98 winter"
+  },
+  {
+   "claim": "샌디에이고에서 약 30센티미터, 샌프란시스코에서는 60센티미터 가까이",
+   "url": "https://theconversation.com/el-nino-is-threatening-californias-fragile-coast-again-the-1982-83-el-nino-opened-eyes-to-the-serious-erosion-risks-293298",
+   "original": "sea levels were elevated above predicted high tides by about a foot in San Diego to nearly 2 feet in San Francisco"
+  },
+  {
+   "claim": "거의 60년",
+   "url": "https://theconversation.com/el-nino-is-threatening-californias-fragile-coast-again-the-1982-83-el-nino-opened-eyes-to-the-serious-erosion-risks-293298",
+   "original": "I have studied coastal geology and oceanography in California for nearly six decades"
+  },
+  {
+   "claim": "캘리포니아의 해안 절벽과 해변은 거칠어 보이지만, 강한 엘니뇨 앞에서는 놀랄 만큼 약할 수 있습니다",
+   "url": "https://theconversation.com/el-nino-is-threatening-californias-fragile-coast-again-the-1982-83-el-nino-opened-eyes-to-the-serious-erosion-risks-293298",
+   "original": "California’s coastal bluffs and beaches look rugged, but they can be surprisingly fragile in the face of a powerful El Niño."
+  },
+  {
+   "claim": "47억 달러의 경제적 손실",
+   "url": "https://theconversation.com/el-nino-is-threatening-californias-fragile-coast-again-the-1982-83-el-nino-opened-eyes-to-the-serious-erosion-risks-293298",
+   "original": "high seas and waves alone caused an estimated $4.7 billion in economic losses along California’s coast"
+  },
+  {
+   "claim": "40년 만에",
+   "url": "https://theconversation.com/el-nino-is-threatening-californias-fragile-coast-again-the-1982-83-el-nino-opened-eyes-to-the-serious-erosion-risks-293298",
+   "original": "The simultaneous occurrence of large storm waves, high tides and elevated sea levels were almost identical to the El Niño conditions in early 1983, 40 years earlier."
+  },
+  {
+   "claim": "엘니뇨는 저마다 다르다",
+   "url": "https://theconversation.com/el-nino-is-threatening-californias-fragile-coast-again-the-1982-83-el-nino-opened-eyes-to-the-serious-erosion-risks-293298",
+   "original": "though every El Niño is different"
+  },
+  {
+   "claim": "1997~98년 엘니뇨가 더 강했는데도",
+   "url": "https://journals.flvc.org/jcr/article/view/80923",
+   "original": "Although most indices suggest the 1997-98 El Nino-Southern Oscillation (ENSO) was more intense than the 1982-83 ENSO event"
+  },
+  {
+   "claim": "1982~83년에는 큰 파도가 남쪽에서 부는 센 바람, 그리고 아주 높은 조수와",
+   "url": "https://journals.flvc.org/jcr/article/view/80923",
+   "original": "During 1982-83, the large wave events tended to coincide with more southerly and higher velocity winds"
+  },
+  {
+   "claim": "1982~83년에 크게 부서진 곳 대부분이",
+   "url": "https://journals.flvc.org/jcr/article/view/80923",
+   "original": "Most areas significantly damaged in 1982-83 winter were protected by more substantial seawalls or revetments during the 1997-98 ENSO event."
+  }
+ ]
+}
