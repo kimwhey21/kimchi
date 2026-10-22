@@ -962,10 +962,14 @@
 "web": "samjinfood.com"
 },
 "0013Y0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01749559",
+"en": "Msbio. Inc.",
+"founded": "2015",
+"industry": "Medical & precision instruments",
+"ksic": "27199",
+"name": "Msbio",
+"pref": false,
+"web": "www.msbio.co.kr/"
 },
 "001420": {
 "corp": "00154055",
