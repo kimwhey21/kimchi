@@ -1,0 +1,131 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-10-23",
+ "slug": "great-wealth-transfer-boomers-no-inheritance",
+ "radar_origin": "Fortune: Gen Z expects to inherit $124 trillion—but retired boomers are ‘spending their kids’ inheritance’",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1779598374240-deda8ee9a767?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8b2xkJTIwY291cGxlJTIwaG91c2UlMjBwb3JjaHxlbnwwfDB8fHwxNzkyNjg5MDU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "om3fAZyTuT8",
+  "credit": "Unsplash / Jackson Barger"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Gen Z expects to inherit money and assets but their boomer parents aren't planning on leaving anything behind",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind"
+  },
+  {
+   "name": "에이콘스",
+   "title": "The Great Wealth Transfer",
+   "url": "https://www.acorns.com/learn/investing/great-wealth-transfer/"
+  }
+ ],
+ "tags": [
+  "상속",
+  "세대",
+  "노후"
+ ],
+ "ko": {
+  "title": "124조 달러 대물림은 누구의 몫일까",
+  "title_candidates": [
+   "물려줄 생각이 없는 부모, 기다리는 자녀",
+   "124조 달러 대물림은 누구의 몫일까",
+   "부모 재산으로 노후를 설계해도 될까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "자녀들은 부모의 재산을 기다리는데, 부모 가운데 절반 넘는 사람은 물려줄 계획이 없다고 답했습니다.\n역사상 가장 큰 재산 이동이 온다는 계산 한편에는 이런 엇갈림이 있습니다.\n124조 달러가 오간다는 계산에서 내 몫은 정말 어디에 있을까요?"
+   },
+   {
+    "heading": "계산서에 적힌 큰 숫자",
+    "body": "자산운용 컨설팅 회사 세룰리 어소시에이츠(Cerulli Associates)는 2048년까지 베이비붐 세대와 그 윗세대에서 약 124조 달러가 넘어간다고 추산합니다.\n투자 앱 에이콘스가 정리한 이 추산에서 약 105조 달러는 상속인에게, 약 18조 달러는 자선 단체로 갑니다.\n전체의 약 81%인 100조 달러가량이 베이비붐 세대 이상의 가구에서 나옵니다.\n세대별로는 밀레니얼 세대가 25년 전체로 가장 많은 약 46조 달러를 받는 것으로 추산됩니다."
+   },
+   {
+    "heading": "기다리는 쪽의 마음",
+    "body": "경제지 포춘이 소개한 노스웨스턴 뮤추얼 조사는 성인 4,500명 넘게를 대상으로 했습니다.\n포춘에 따르면 Z세대의 절반 넘게와 밀레니얼 세대의 60%에 가까운 사람이 안정된 노후를 위해 상속에 기대고 있다고 답했습니다.\n이 조사에서 편안한 은퇴에 필요하다고 본 금액은 2020년 95만 1,000달러에서 지금은 146만 달러로 늘었습니다."
+   },
+   {
+    "heading": "물려줄 쪽의 마음",
+    "body": "같은 조사에서 베이비붐 세대의 20%를 조금 넘는 사람만 유산을 남길 것으로 예상했습니다.\n포춘은 절반이 넘는 사람이 아예 남기지 않을 계획이라고 전했습니다.\n자녀에게 남기는 것이 가장 중요한 재정 목표라고 답한 사람은 11%뿐이었습니다.\n60%는 유언장이 있지만, 포춘은 그 안에 현금이나 집 문서보다 장례 지침이 더 많을 것이라고 짚었습니다."
+   },
+   {
+    "heading": "돈의 쓸 곳을 묻지 않는 사람들",
+    "body": "포춘은 개인 재무 코치 제임스 베켓(James Beckett)의 말을 실었습니다.\n그는 평생 모은 돈이 있는데도 즐겁지 않은 일터에서 계속 일하다 세상을 떠나는 사람들이 안타깝다고 했습니다.\n“그들은 자동 조종 상태로 돈을 모으면서, 그 돈이 무엇을 위한 것인지는 생각하지 않습니다.”\n다만 포춘이 소개한 조사는 부모들이 왜 남기지 않으려는지는 묻지 않았습니다."
+   },
+   {
+    "heading": "숫자에서 내 몫을 읽는 법",
+    "body": "124조 달러는 전체를 더한 숫자일 뿐, 내 부모가 무엇을 남길지는 알려 주지 않습니다.\n노후 계획에 부모의 재산을 넣기 전에, 가족끼리 그 돈이 어디로 갈지 먼저 물어본 적이 있는지 돌아볼 일입니다.\n물려받을 돈을 기다리는 것과 물려줄 생각을 확인하는 것 중, 우리 집은 어느 쪽을 먼저 했을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "124조 달러",
+   "url": "https://www.acorns.com/learn/investing/great-wealth-transfer/",
+   "original": "an estimated $124 trillion in assets are passed down from Baby Boomers and the Silent Generation"
+  },
+  {
+   "claim": "약 105조 달러",
+   "url": "https://www.acorns.com/learn/investing/great-wealth-transfer/",
+   "original": "Of that total, about $105 trillion is expected to go to heirs and roughly $18 trillion to charity."
+  },
+  {
+   "claim": "약 81%인 100조 달러",
+   "url": "https://www.acorns.com/learn/investing/great-wealth-transfer/",
+   "original": "about 81% of all transfers, roughly $100 trillion, come from Boomer and older households"
+  },
+  {
+   "claim": "약 46조 달러",
+   "url": "https://www.acorns.com/learn/investing/great-wealth-transfer/",
+   "original": "Millennials are projected to inherit the most of any generation over the full 25 years, about $46 trillion."
+  },
+  {
+   "claim": "성인 4,500명",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind",
+   "original": "surveyed more than 4,500 adults and found only a select few can expect a windfall of cash when their parents pass away."
+  },
+  {
+   "claim": "60%에 가까운",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind",
+   "original": "more than half of Gen Zers and nearly 60% of millennials reported that they’re depending on their inheritance"
+  },
+  {
+   "claim": "95만 1,000달러",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind",
+   "original": "In 2020, respondents said they needed $951,000 to retire comfortably"
+  },
+  {
+   "claim": "20%를 조금 넘는",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind",
+   "original": "Little over 20% of baby boomers expect to leave an inheritance."
+  },
+  {
+   "claim": "절반이 넘는 사람이 아예 남기지 않을",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind",
+   "original": "over half of the boomers surveyed are explicitly planning not to leave an inheritance behind."
+  },
+  {
+   "claim": "146만 달러",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind",
+   "original": "that figure has surged to $1.46 million"
+  },
+  {
+   "claim": "11%뿐",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind",
+   "original": "only 11% of boomers said leaving something for the kids is their top financial goal."
+  },
+  {
+   "claim": "60%는 유언장",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind",
+   "original": "60% do have a will in place"
+  },
+  {
+   "claim": "자동 조종 상태로 돈을 모으면서",
+   "url": "https://fortune.com/article/gen-z-expects-to-inherit-money-and-assets-but-their-boomer-parents-arent-planning-on-leaving-anything-behind",
+   "original": "They go on auto-pilot accumulating wealth and not thinking about what it's for."
+  }
+ ]
+}
