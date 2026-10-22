@@ -99,6 +99,30 @@ class CandidateGateTest(unittest.TestCase):
         self.assertTrue(any("제목 규칙에 걸립니다" in i and "등락률" in i for i in issues), issues)
 
 
+class MagazineScoreTest(unittest.TestCase):
+    """잡지만 길이·두 마디·견본 꼬리를 감점한다(2026-10-22) — 2026-10-22 실제 후보 셋과 그 위 다섯 편."""
+    RECENT = [
+        "인하가 절반인데도 소비자가 화난 이유: 가격표의 세 얼굴",
+        "다음 연준 회의 전에 볼 것: 물가와 일자리가 서로 다른 말을 합니다",
+        "젠슨 황은 왜 80억 달러짜리 세금을 반길까",
+        "1만 7천 명의 휴대폰을 걷었더니: 성적 말고 볼 것 세 가지",
+        "센 엘니뇨가 덜 부순 겨울은 왜 있었을까",
+    ]
+    LONG = "펀드매니저는 왜 지수 곁을 떠나지 못할까? 내 수수료가 사는 것은 이것입니다"
+    SHORT = "이겨도 해고 확률이 그대로라면 매니저는 무엇을 지킬까?"
+
+    def test_the_short_single_clause_wins_for_magazine(self) -> None:
+        ranked = editorial_title.rank_candidates([self.LONG, self.SHORT], self.RECENT, None, "매거진")
+        self.assertEqual(ranked[0]["title"], self.SHORT)
+        why = " ".join(next(r for r in ranked if r["title"] == self.LONG)["why"])
+        for needle in ("32자", "두 마디", "꼬리"):
+            self.assertIn(needle, why)
+
+    def test_other_series_scores_are_unchanged(self) -> None:
+        self.assertEqual(title_distance(self.LONG, self.RECENT), title_distance(self.LONG, self.RECENT, "시황"))
+        self.assertNotIn("32자", " ".join(title_distance(self.LONG, self.RECENT, "시황")[1]))
+
+
 class CliTest(unittest.TestCase):
     def test_cli_names_the_same_winner_as_the_gate(self) -> None:
         out = title_pick.render([OLD, PICK, LOWER], FEED, PRICE, "시황", chosen=LOWER)

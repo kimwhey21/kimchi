@@ -576,7 +576,28 @@ def title_axes_all(title: str) -> set[str]:
     return axes
 
 
-def title_distance(title: str, recent_titles: list[str] | None) -> tuple[int, list[str]]:
+# 잡지 제목 점수(2026-10-22): 축마다 가산하니 두 마디를 이어 축을 여럿 담은 긴 제목이 늘 이겼고(10/13~22 평균 35자,
+# 견본 꼬리 '볼 것 세 가지·이것입니다'가 30편 중 11편), 앞 글과 꼴을 바꾸면 주는 가산이 세 편 중 한 편을 억지 꼴로 밀었다.
+# 잡지만 길이·두 마디·견본 꼬리를 감점하고 꼴 바꾸기 가감은 하지 않는다.
+MAGAZINE_TITLE_MAX = 32
+_MAGAZINE_TAIL = re.compile(r"이것입니다|세 가지|볼 것|읽는 법|알아 둘 것")
+_TWO_CLAUSE = re.compile(r"\S[:?]\s+\S")
+
+
+def magazine_title_score(title: str, recent_titles: list[str] | None) -> tuple[int, list[str]]:
+    text = str(title or "").strip()
+    score, why = 0, []
+    if len(text) > MAGAZINE_TITLE_MAX:
+        score -= 2; why.append(f"-2 {len(text)}자(잡지 제목은 {MAGAZINE_TITLE_MAX}자 안)")
+    if _TWO_CLAUSE.search(text):
+        score -= 2; why.append("-2 콜론·물음표로 두 마디를 이음")
+    tail = _MAGAZINE_TAIL.search(text)
+    if tail and any(_MAGAZINE_TAIL.search(str(r)) for r in (recent_titles or [])[-5:]):
+        score -= 3; why.append(f"-3 '{tail.group(0)}' 꼬리가 최근 다섯 편에 있음")
+    return score, why
+
+
+def title_distance(title: str, recent_titles: list[str] | None, kind: str | None = None) -> tuple[int, list[str]]:
     """독자 피드와 얼마나 다른가 — (점수, 이유). 높을수록 멀다. 최근 네 편과 재고, 드문 축은 열 편과 잰다."""
     recent = [str(r) for r in (recent_titles or []) if str(r).strip()][-10:]
     near = recent[-4:]
@@ -596,7 +617,7 @@ def title_distance(title: str, recent_titles: list[str] | None) -> tuple[int, li
         score += 1; why.append("+1 최근 네 편에 없던 주인공")
     for s in hits:
         score -= 1; why.append(f"-1 '{s}'가 최근 네 편에 있음")
-    if near:
+    if near and kind != "매거진":
         prev = near[-1]
         if heading_shape(text) != heading_shape(prev):
             score += 1; why.append(f"+1 바로 앞 글({heading_shape(prev)})과 다른 꼴({heading_shape(text)})")
@@ -608,6 +629,9 @@ def title_distance(title: str, recent_titles: list[str] | None) -> tuple[int, li
         score -= 2; why.append("-2 대비 꼴이 최근 네 편에 있음")
     if revealed_reason(text) and any(revealed_reason(r) for r in near):
         score -= 2; why.append("-2 답 노출형이 최근 네 편에 있음")
+    if kind == "매거진":
+        extra, more = magazine_title_score(text, recent)
+        score += extra; why += more
     return score, why
 
 
@@ -620,7 +644,7 @@ def rank_candidates(candidates: list[str], recent_titles: list[str] | None,
         if not c:
             continue
         issues = collect_title_issues(c, price_data, recent_titles=recent_titles, kind=kind)
-        score, why = title_distance(c, recent_titles)
+        score, why = title_distance(c, recent_titles, kind)
         rows.append({"title": c, "ok": not issues, "issues": issues, "score": score, "why": why})
     rows.sort(key=lambda r: (not r["ok"], -r["score"]))
     return rows
