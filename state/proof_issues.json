@@ -1,10 +1,9 @@
 {
  "base": {
-  "글 없음: 영어 가이드 (editorial/guides/en_* 오늘 커밋)": 1,
-  "맥 bench_nightly: 마지막 신호 # #": 1
- },
- "day": "2026-10-21",
- "issues": {
   "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 1
+ },
+ "day": "2026-10-22",
+ "issues": {
+  "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 2
  }
 }
