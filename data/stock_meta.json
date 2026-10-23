@@ -1162,10 +1162,14 @@
 "web": "www.greenoptics.com/"
 },
 "0015M0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "00534729",
+"en": "DTS Inc.",
+"founded": "2000",
+"industry": "Machinery",
+"ksic": "292",
+"name": "DTS",
+"pref": false,
+"web": "dasants.com"
 },
 "0015N0": {
 "corp": "01381805",
