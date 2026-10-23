@@ -1,0 +1,117 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장의 역사",
+ "date": "2026-10-24",
+ "slug": "roman-roads-itiner-e",
+ "radar_origin": "Big Think: Mapped: Every known (and suspected) road in the Roman Empire",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1597679315475-35fc74a7717e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8cm9tYW4lMjByb2FkfGVufDB8MHx8fDE3OTI3NzU1NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "UHFh9dJ9w58",
+  "credit": "Unsplash / Adriano Pucciarelli"
+ },
+ "sources": [
+  {
+   "name": "NPR",
+   "title": "A new study expands on all the roads that led to Rome (2025-11-06)",
+   "url": "https://www.publicradioeast.org/2025-11-06/a-new-study-expands-on-all-the-roads-that-led-to-rome"
+  },
+  {
+   "name": "네이처 아시아",
+   "title": "Itiner-e: A high-resolution dataset of roads of the Roman Empire (Scientific Data 보도자료)",
+   "url": "https://www.natureasia.com/en/info/press-releases/detail/9144"
+  }
+ ],
+ "tags": [
+  "로마제국",
+  "도로의역사",
+  "전염병과교역"
+ ],
+ "ko": {
+  "title": "로마 도로 지도에서 확실한 길은 얼마나 될까",
+  "title_candidates": [
+   "로마 도로 지도에서 확실한 길은 얼마나 될까",
+   "로마 도로 지도, 이 숫자부터 읽어 보세요",
+   "로마의 길이 장사만큼 병도 실어 나른 이유"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "로마의 길은 물건만 실어 나르지 않았습니다.\n병과 믿음도 같은 길로 퍼졌다고 이 지도를 만든 역사학자는 말합니다.\n길이 늘어날수록 제국은 더 단단해졌을까요, 더 쉽게 전염됐을까요?"
+   },
+   {
+    "heading": "30만 킬로미터짜리 지도가 새로 나왔습니다",
+    "body": "톰 브루흐만스를 비롯한 연구팀이 로마 제국의 도로를 모은 데이터셋 이티너이(Itiner-e)를 내놓았습니다.\n네이처 아시아가 소개한 보도자료에 따르면 150년경 로마 제국의 도로 299,171킬로미터가 담겼습니다.\n이전에 알려진 도로 길이보다 10만 킬로미터 넘게 늘어난 것입니다.\n미국 공영라디오 NPR은 마일로 18만 마일이 넘는 길이라고 소개했습니다."
+   },
+   {
+    "heading": "확실히 아는 길은 3%도 안 됩니다",
+    "body": "정확한 위치까지 확인된 길은 2.7%뿐입니다.\n89.8%는 대략적인 위치만 알려져 있고, 7.4%는 있었을 것이라고 추정한 길입니다.\n연구팀은 이 데이터셋으로 도로망이 시간에 따라 어떻게 변했는지는 보여 줄 수 없다고 한계도 밝혔습니다."
+   },
+   {
+    "heading": "길은 장사만 실어 나르지 않았습니다",
+    "body": "NPR에 따르면 연구진은 이 지도가 종교, 이주, 교역, 심지어 전염병이 2,000년 전 제국에 퍼진 방식을 연구하는 데 도움이 되기를 기대합니다.\n브루흐만스는 이렇게 말합니다.\n“병이 함께 이동할 수 있습니다. 굳게 믿는 신앙도 함께 이동할 수 있습니다.”\n그리고 이렇게 덧붙입니다.\n“그런 일들은 모두 길 위에서 일어납니다.”"
+   },
+   {
+    "heading": "당나귀가 로마까지 가는 시간도 잴 수 있습니다",
+    "body": "브루흐만스는 이 지도가 장난기 어린 질문에도 답해 준다고 말합니다.\n당나귀 한 마리가 고대 도시 안티오크(Antioch)에서 로마까지 가려면 얼마나 걸리는지 같은 것입니다.\n길 하나가 상품, 병, 믿음을 한꺼번에 나른다면 오늘의 광케이블과 항공망은 무엇을 함께 실어 나르고 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "299,171킬로미터",
+   "url": "https://www.natureasia.com/en/info/press-releases/detail/9144",
+   "original": "The dataset includes 299,171 kilometres of roads"
+  },
+  {
+   "claim": "150년경",
+   "url": "https://www.natureasia.com/en/info/press-releases/detail/9144",
+   "original": "roads throughout the Roman Empire around the year 150 CE"
+  },
+  {
+   "claim": "10만 킬로미터 넘게",
+   "url": "https://www.natureasia.com/en/info/press-releases/detail/9144",
+   "original": "The findings increase the known length of the Empire’s road system by over 100,000 kilometres"
+  },
+  {
+   "claim": "18만 마일",
+   "url": "https://www.publicradioeast.org/2025-11-06/a-new-study-expands-on-all-the-roads-that-led-to-rome",
+   "original": "Their map includes more than 180,000 miles of Roman roads."
+  },
+  {
+   "claim": "2.7%",
+   "url": "https://www.natureasia.com/en/info/press-releases/detail/9144",
+   "original": "the precise locations of only 2.7% of the roads are known with certainty"
+  },
+  {
+   "claim": "89.8%",
+   "url": "https://www.natureasia.com/en/info/press-releases/detail/9144",
+   "original": "while 89.8% are less precisely known"
+  },
+  {
+   "claim": "7.4%",
+   "url": "https://www.natureasia.com/en/info/press-releases/detail/9144",
+   "original": "and 7.4% are hypothesised"
+  },
+  {
+   "claim": "2,000년 전",
+   "url": "https://www.publicradioeast.org/2025-11-06/a-new-study-expands-on-all-the-roads-that-led-to-rome",
+   "original": "help historians study how religion, migration, trade and even pandemics spread across the Roman Empire 2,000 years ago."
+  },
+  {
+   "claim": "병이 함께 이동할 수 있습니다",
+   "url": "https://www.publicradioeast.org/2025-11-06/a-new-study-expands-on-all-the-roads-that-led-to-rome",
+   "original": "Disease can travel along."
+  },
+  {
+   "claim": "굳게 믿는 신앙도 함께 이동할 수 있습니다",
+   "url": "https://www.publicradioeast.org/2025-11-06/a-new-study-expands-on-all-the-roads-that-led-to-rome",
+   "original": "Strongly held belief can travel along."
+  },
+  {
+   "claim": "그런 일들은 모두 길 위에서 일어납니다",
+   "url": "https://www.publicradioeast.org/2025-11-06/a-new-study-expands-on-all-the-roads-that-led-to-rome",
+   "original": "Those things, they happen over the roads"
+  }
+ ]
+}

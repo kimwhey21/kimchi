@@ -1,0 +1,136 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-24",
+ "slug": "saudi-pipeline-hormuz",
+ "radar_origin": "Fortune: Saudi Arabia wants to send 10 million barrels of oil a day around Hormuz. A former Treasury official says it may barely move prices",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1714901423336-1884cd3fb50f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8b2lsJTIwcGlwZWxpbmV8ZW58MHwwfHx8MTc5Mjc3NTUyNHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "el8EOJhVjEU",
+  "credit": "Unsplash / Wolfgang Weiser"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Saudi Arabia wants to send 10 million barrels of oil a day around Hormuz. A former Treasury official says it may barely move prices (2026-10-23)",
+   "url": "https://fortune.com/2026/10/23/aramco-east-west-pipeline-10-million-barrels-oil-prices-strait-of-hormuz/"
+  },
+  {
+   "name": "오일프라이스",
+   "title": "Saudi Arabia Plans Massive Expansion of Oil Pipeline to Bypass Hormuz",
+   "url": "https://oilprice.com/Latest-Energy-News/World-News/Saudi-Arabia-Plans-Massive-Expansion-of-Oil-Pipeline-to-Bypass-Hormuz.html"
+  }
+ ],
+ "tags": [
+  "호르무즈",
+  "사우디송유관",
+  "국제유가"
+ ],
+ "ko": {
+  "title": "사우디 송유관 증설, 지금 확인할 것은 딱 두 가지입니다",
+  "title_candidates": [
+   "송유관을 키운 사우디, 호르무즈 위험은 줄었을까",
+   "사우디 송유관 증설이 기름값을 못 낮추는 이유",
+   "사우디 송유관 증설, 지금 확인할 것은 딱 두 가지입니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "사우디가 하루 1,000만 배럴의 기름을 호르무즈 해협 밖으로 돌리겠다고 나섰습니다.\n그런데 미국 재무부 출신 경제학자는 이 계획이 기름값을 거의 못 움직일 수도 있다고 말합니다.\n막힌 길 옆에 새 길을 넓히면 정체가 풀릴까요, 아니면 새 길도 막힐까요?"
+   },
+   {
+    "heading": "사우디가 꺼낸 숫자는 1,000만 배럴입니다",
+    "body": "사우디아라비아는 홍해 쪽으로 기름을 보내는 송유관 용량을 2~3년 안에 하루 1,000만 배럴로 늘리겠다고 밝혔습니다.\n동서 송유관(East-West pipeline)은 사우디 동쪽 유전의 원유를 호르무즈 해협을 거치지 않고 내보내는 길입니다.\n에너지 전문 매체 오일프라이스에 따르면 이 관의 현재 최대 용량은 하루 700만 배럴이고, 실제로는 580만 배럴쯤 흐릅니다.\n사우디 에너지장관 압둘아지즈 빈 살만 왕자는 에너지 안보를 재는 잣대를 이렇게 말했습니다.\n“에너지 회복력은 유지하고, 고치고, 우회하고, 대체하고, 되살리는 능력으로도 재야 합니다.”"
+   },
+   {
+    "heading": "전직 재무부 관료는 고개를 저었습니다",
+    "body": "경제지 포춘이 의견을 물은 길버트 메트칼프는 미국 재무부에서 환경·에너지를 맡았던 전직 관료이고, 지금은 MIT 슬론 경영대학원 방문교수입니다.\n그는 사우디가 계획을 이뤄도 시장에 더해지는 기름이 크지 않다고 봅니다.\n“사우디가 송유관 흐름을 하루 1,000만 배럴로 늘릴 수 있다면, 그건 큰 ‘만약’이지만, 세계 시장에 기름이 2%쯤 더 들어가는 셈입니다.”\n기름값에 미치는 영향은 이렇게 짚었습니다.\n“기름값을 조금 낮출 수는 있지만, 불확실성이 큽니다.”"
+   },
+   {
+    "heading": "그 길이 안전하다는 보장도 없습니다",
+    "body": "메트칼프는 송유관이 가진 약점도 함께 말했습니다.\n“송유관은 드론과 미사일 공격에 취약합니다. 사우디 석유 시설 대부분이 그렇듯이요.”\n그는 송유관으로 기름을 더 보내도 해협을 다시 여는 압력이 줄지 않을 것으로 봅니다.\n“송유관으로 기름을 더 보낸다고 호르무즈 해협을 여는 압력이 크게 줄 것 같지는 않습니다.”"
+   },
+   {
+    "heading": "해협 쪽 숫자는 어느 편일까",
+    "body": "포춘은 데이터 업체 케이플러(Kpler) 집계로 9월에 호르무즈를 지난 원유가 하루 평균 900만 배럴에 못 미쳤다고 전합니다.\n같은 달 사우디의 원유 생산량은 국제에너지기구(IEA) 집계로 하루 800만 배럴쯤까지 회복됐습니다.\n송유관이 계획대로 커져도 해협이 막힌 세계에서 이 길이 맡는 몫은 일부라는 것이 메트칼프의 셈법입니다."
+   },
+   {
+    "heading": "한국 독자에게도 남의 일이 아닙니다",
+    "body": "한국도 중동산 원유에 크게 기대는 나라라서 이 해협 소식은 곧 휘발유값 소식입니다.\n그래서 앞으로 확인할 것은 둘입니다. 송유관의 실제 흐름이 지금 하루 700만 배럴인 한도를 넘어서는지, 그리고 하루 900만 배럴에 못 미쳤던 해협 통과량이 어떻게 달라지는지입니다.\n송유관이 늘어나면 해협은 덜 중요해질까요, 아니면 송유관 자체가 새 표적이 될까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "하루 1,000만 배럴의 기름을",
+   "url": "https://oilprice.com/Latest-Energy-News/World-News/Saudi-Arabia-Plans-Massive-Expansion-of-Oil-Pipeline-to-Bypass-Hormuz.html",
+   "original": "to 10 million barrels per day (bpd) within two to three years"
+  },
+  {
+   "claim": "하루 1,000만 배럴로",
+   "url": "https://oilprice.com/Latest-Energy-News/World-News/Saudi-Arabia-Plans-Massive-Expansion-of-Oil-Pipeline-to-Bypass-Hormuz.html",
+   "original": "to 10 million barrels per day (bpd) within two to three years"
+  },
+  {
+   "claim": "하루 700만 배럴",
+   "url": "https://oilprice.com/Latest-Energy-News/World-News/Saudi-Arabia-Plans-Massive-Expansion-of-Oil-Pipeline-to-Bypass-Hormuz.html",
+   "original": "has a maximum capacity of 7 million bpd at present"
+  },
+  {
+   "claim": "580만 배럴쯤",
+   "url": "https://oilprice.com/Latest-Energy-News/World-News/Saudi-Arabia-Plans-Massive-Expansion-of-Oil-Pipeline-to-Bypass-Hormuz.html",
+   "original": "currently carries about 5.8 million bpd"
+  },
+  {
+   "claim": "유지하고, 고치고, 우회하고, 대체하고, 되살리는 능력으로도",
+   "url": "https://oilprice.com/Latest-Energy-News/World-News/Saudi-Arabia-Plans-Massive-Expansion-of-Oil-Pipeline-to-Bypass-Hormuz.html",
+   "original": "must also be measured by the ability to maintain, repair, reroute, substitute and recover"
+  },
+  {
+   "claim": "하루 1,000만 배럴로 늘릴 수 있다면",
+   "url": "https://fortune.com/2026/10/23/aramco-east-west-pipeline-10-million-barrels-oil-prices-strait-of-hormuz/",
+   "original": "If—and this is a big if—the Saudis can increase pipeline flow to 10 million barrels per day"
+  },
+  {
+   "claim": "기름이 2%쯤 더 들어가는",
+   "url": "https://fortune.com/2026/10/23/aramco-east-west-pipeline-10-million-barrels-oil-prices-strait-of-hormuz/",
+   "original": "it will put about 2% more oil into the global marketplace"
+  },
+  {
+   "claim": "기름값을 조금 낮출 수는 있지만",
+   "url": "https://fortune.com/2026/10/23/aramco-east-west-pipeline-10-million-barrels-oil-prices-strait-of-hormuz/",
+   "original": "That could lower prices a bit, but there's a lot of uncertainty here"
+  },
+  {
+   "claim": "송유관은 드론과 미사일 공격에 취약합니다",
+   "url": "https://fortune.com/2026/10/23/aramco-east-west-pipeline-10-million-barrels-oil-prices-strait-of-hormuz/",
+   "original": "The pipeline is vulnerable to drone and missile attacks, as is much of the Saudi petroleum infrastructure"
+  },
+  {
+   "claim": "해협을 여는 압력이 크게 줄 것 같지는 않습니다",
+   "url": "https://fortune.com/2026/10/23/aramco-east-west-pipeline-10-million-barrels-oil-prices-strait-of-hormuz/",
+   "original": "I don't think moving more oil to the pipeline takes much pressure off opening the Strait of Hormuz"
+  },
+  {
+   "claim": "900만 배럴에 못 미쳤다고",
+   "url": "https://fortune.com/2026/10/23/aramco-east-west-pipeline-10-million-barrels-oil-prices-strait-of-hormuz/",
+   "original": "oil exports through Hormuz averaged just under 9 million barrels a day in September"
+  },
+  {
+   "claim": "하루 700만 배럴인 한도",
+   "url": "https://oilprice.com/Latest-Energy-News/World-News/Saudi-Arabia-Plans-Massive-Expansion-of-Oil-Pipeline-to-Bypass-Hormuz.html",
+   "original": "has a maximum capacity of 7 million bpd at present"
+  },
+  {
+   "claim": "하루 900만 배럴에 못 미쳤던",
+   "url": "https://fortune.com/2026/10/23/aramco-east-west-pipeline-10-million-barrels-oil-prices-strait-of-hormuz/",
+   "original": "oil exports through Hormuz averaged just under 9 million barrels a day in September"
+  },
+  {
+   "claim": "800만 배럴쯤까지",
+   "url": "https://fortune.com/2026/10/23/aramco-east-west-pipeline-10-million-barrels-oil-prices-strait-of-hormuz/",
+   "original": "recovered to about 8 million in September"
+  }
+ ]
+}

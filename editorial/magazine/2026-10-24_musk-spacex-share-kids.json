@@ -1,0 +1,156 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-10-24",
+ "slug": "musk-spacex-share-kids",
+ "radar_origin": "24/7 Wall St.: Elon Musk Wants to Give Every Kid in America a SpaceX Share. The Tax Rules Behind the Gift",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1517976487492-5750f3195933?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8cm9ja2V0JTIwbGF1bmNofGVufDB8MHx8fDE3OTI3NzU1MzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "OHOU-5UVIYQ",
+  "credit": "Unsplash / SpaceX"
+ },
+ "sources": [
+  {
+   "name": "알자지라",
+   "title": "Musk pledges $10bn in SpaceX shares for US children: Who really gains? (2026-10-21)",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains"
+  },
+  {
+   "name": "인베스트먼트뉴스",
+   "title": "Musk's SpaceX gift puts Trump Accounts' stock rules to the test (2026-10-21)",
+   "url": "https://www.investmentnews.com/equities/musks-spacex-gift-puts-trump-accounts-stock-rules-to-the-test/268678"
+  }
+ ],
+ "tags": [
+  "일론머스크",
+  "트럼프계좌",
+  "아이주식"
+ ],
+ "ko": {
+  "title": "머스크가 아이들에게 줄 주식은 정말 공짜일까",
+  "title_candidates": [
+   "머스크가 아이들에게 줄 주식은 정말 공짜일까",
+   "머스크의 아이 주식 선물이 숙제가 될 수 있는 이유",
+   "머스크의 아이 주식 선물, 받기 전에 확인할 것은 딱 둘입니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "SpaceX 주식 한 주를 받으면 아이 계좌에는 약 146달러가 생깁니다.\n그런데 그 한 주는 가족이 거절할 수도, 마음대로 팔 수도 없는 선물일 수 있습니다.\n공짜 주식은 아이의 종잣돈일까요, 보여 주기식 이벤트일까요?"
+   },
+   {
+    "heading": "한 주씩, 7,300만 명에게",
+    "body": "일론 머스크는 내년에 미국 아이 모두에게 자신이 가진 스페이스X 주식을 한 주씩 주겠다고 X에 적었습니다.\n알자지라에 따르면 그는 이렇게도 덧붙였습니다.\n“이번 일은 많은 선물 가운데 첫 번째가 될 것입니다.”\n미국 인구조사국 자료로 18세 미만 아이는 약 7,300만 명입니다. 금요일 종가 146.03달러로 곱하면 약 107억 달러입니다.\n인베스트먼트뉴스는 같은 인구조사국 수치를 약 7,200만 명으로 셉니다.\n주가가 1달러 움직이면 선물 값은 7,300만 달러 달라집니다. 이 주식은 상장 직후 고점에서 35.3% 내려온 상태입니다."
+   },
+   {
+    "heading": "머스크에게는 얼마나 큰 돈일까",
+    "body": "머스크가 직접 가진 스페이스X 주식은 48억 주입니다. 7,300만 주를 내놓아도 1.5%쯤 줄 뿐입니다.\n다만 알자지라가 월스트리트저널을 인용해 전한 바로는 그는 대부분의 주식을 2027년 6월까지 팔거나 거래할 수 없습니다.\n그래서 이 선물이 어떤 길로 아이들에게 가는지가 관건이 됐습니다."
+   },
+   {
+    "heading": "주식은 어떤 계좌로 들어갈까",
+    "body": "트럼프 계좌(Trump Accounts)는 18세 미만 미국 아이를 위한 세금 유예 투자 계좌입니다. 7,000만 개 가까이 열렸습니다.\n재무부가 9월 30일 공개한 규칙으로 기부자는 이 계좌에 개별 회사 주식도 넣을 수 있게 됐습니다.\n가족과 친구가 정기적으로 넣는 돈은 저위험 지수 펀드로만 굴릴 수 있습니다."
+   },
+   {
+    "heading": "받는 쪽은 고를 수 없습니다",
+    "body": "인베스트먼트뉴스에 따르면 받는 가족은 기부된 주식을 거절할 수 없습니다. 보통 5년이 지나거나 아이가 17세가 되는 해 말까지는 팔 수도 없습니다.\n케이토연구소(Cato Institute)의 애덤 마이클은 이 점을 짚었습니다.\n“내 아이의 계좌에 어떤 자산이 들어올지 고를 수 없습니다.”\n자산운용사 다코타 웰스 매니지먼트의 로버트 파블릭은 더 직설적이었습니다.\n“홍보용 이벤트처럼 느껴집니다.”"
+   },
+   {
+    "heading": "세금은 누구 편일까",
+    "body": "값이 오른 주식을 자선단체에 주면 양도소득세를 피하고 대개 소득공제도 받을 수 있다고 알자지라는 설명합니다.\n같은 주식을 팔면 세금이 최대 25억 달러쯤 나올 수 있다는 계산도 소개했습니다.\n공짜로 받은 주식 한 주가 아이에게 종잣돈이 될지, 팔 수 없는 숙제가 될지는 결국 그 주가가 어디에 있느냐에 달렸습니다.\n내 아이 계좌에 내가 고르지 않은 주식이 들어온다면, 여러분은 그 선물을 받아들이시겠습니까?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "약 146달러",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "At Friday's closing price of $146.03, the pledge would be worth about $10.7bn."
+  },
+  {
+   "claim": "이번 일은 많은 선물 가운데 첫 번째가 될 것입니다",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "This will be the first of many"
+  },
+  {
+   "claim": "약 7,300만 명",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "About 73 million children under 18 live in the US, according to US Census Bureau data."
+  },
+  {
+   "claim": "146.03달러",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "At Friday's closing price of $146.03, the pledge would be worth about $10.7bn."
+  },
+  {
+   "claim": "약 107억 달러",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "At Friday's closing price of $146.03, the pledge would be worth about $10.7bn."
+  },
+  {
+   "claim": "약 7,200만 명",
+   "url": "https://www.investmentnews.com/equities/musks-spacex-gift-puts-trump-accounts-stock-rules-to-the-test/268678",
+   "original": "The U.S. Census Bureau counted roughly 72 million children under 18."
+  },
+  {
+   "claim": "7,300만 달러",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "Every $1 move in the share price will change the gift's value by about $73m."
+  },
+  {
+   "claim": "35.3%",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "SpaceX shares have fallen 35.3 percent since peaking days after the listing."
+  },
+  {
+   "claim": "48억 주",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "Musk owns 4.8 billion shares in SpaceX outright, according to a filing with the US Securities and Exchange Commission"
+  },
+  {
+   "claim": "1.5%쯤",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "Giving away 73 million shares would reduce his outright holding by about 1.5 percent"
+  },
+  {
+   "claim": "2027년 6월까지",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "Musk cannot sell or trade most of his SpaceX shares until June 2027, the Wall Street Journal reported."
+  },
+  {
+   "claim": "7,000만 개 가까이",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "Nearly 70 million Trump accounts have been opened, one for every child under 18 with a Social Security number"
+  },
+  {
+   "claim": "18세 미만 미국 아이",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "Nearly 70 million Trump accounts have been opened, one for every child under 18 with a Social Security number"
+  },
+  {
+   "claim": "9월 30일 공개한 규칙",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "Under Treasury rules published on September 30, donors can now gift individual company stock to children via the accounts."
+  },
+  {
+   "claim": "5년이 지나거나 아이가 17세가 되는 해 말까지는",
+   "url": "https://www.investmentnews.com/equities/musks-spacex-gift-puts-trump-accounts-stock-rules-to-the-test/268678",
+   "original": "they generally cannot sell it until five years have passed or until the end of the calendar year in which the child turns 17"
+  },
+  {
+   "claim": "내 아이의 계좌에 어떤 자산이 들어올지 고를 수 없습니다",
+   "url": "https://www.investmentnews.com/equities/musks-spacex-gift-puts-trump-accounts-stock-rules-to-the-test/268678",
+   "original": "you have no choice in the asset that is being deposited into your child's account"
+  },
+  {
+   "claim": "홍보용 이벤트처럼 느껴집니다",
+   "url": "https://www.investmentnews.com/equities/musks-spacex-gift-puts-trump-accounts-stock-rules-to-the-test/268678",
+   "original": "It feels like a publicity stunt"
+  },
+  {
+   "claim": "세금이 최대 25억 달러쯤",
+   "url": "https://www.aljazeera.com/amp/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "a tax bill of up to about $2.5bn"
+  }
+ ]
+}
