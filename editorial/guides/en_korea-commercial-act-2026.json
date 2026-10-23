@@ -1,0 +1,183 @@
+{
+  "kind": "feature",
+  "series": "Guide",
+  "lang": "en",
+  "date": "2026-10-23",
+  "checked": "2026-10-23",
+  "slug": "korea-commercial-act-2026",
+  "category_id": 153,
+  "tags": [
+    "Korea Commercial Act",
+    "Korea treasury share cancellation",
+    "Korea cumulative voting",
+    "Korea corporate governance",
+    "Korea discount"
+  ],
+  "radar_origin": "list order",
+  "related": [
+    {
+      "title": "MSCI Korea 2026",
+      "url": "https://fermata.it.kr/korea-is-still-an-emerging-market-what-mscis-2026-decision-means-for-foreign-investors/"
+    },
+    {
+      "title": "KOSPI 200",
+      "url": "https://fermata.it.kr/kospi-200-explained/"
+    },
+    {
+      "title": "Korean Stock Taxes",
+      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Legal500 (Kim & Chang)",
+      "title": "Third Amendment to Korean Commercial Code on Mandatory Treasury Share Cancellation",
+      "url": "https://www.legal500.com/developments/thought-leadership/third-amendment-to-korean-commercial-code-on-mandatory-treasury-share-cancellation/"
+    },
+    {
+      "name": "Legal500 (Kim & Chang)",
+      "title": "Introduction of Directors' Duty to Protect Shareholders' Interests and Other Changes",
+      "url": "https://www.legal500.com/developments/thought-leadership/introduction-of-directors-duty-to-protect-shareholders-interests-and-other-changes-to-regulatory-framework-on-corporate-governance/"
+    },
+    {
+      "name": "Sodali",
+      "title": "Korea's New Treasury Share Rules and What They Mean for Companies",
+      "url": "https://sodali.com/resources/insights/koreas-new-treasury-share-rules-and-what-they-mean-for-companies"
+    },
+    {
+      "name": "Sodali",
+      "title": "Korea Implements Commercial Code Reform, Initiating Governance Updates",
+      "url": "https://sodali.com/resources/insights/korea-implements-commercial-code-reform-initiating-governance-updates"
+    },
+    {
+      "name": "Financial News (fnnews)",
+      "title": "Noh Dong-il column on the Commercial Act amendments, March 16, 2026",
+      "url": "https://en.fnnews.com/news/202603161909363763"
+    },
+    {
+      "name": "Asiae",
+      "title": "Mandatory treasury share cancellation, February 2026",
+      "url": "https://view.asiae.co.kr/en/article/2026022319155920599"
+    },
+    {
+      "name": "The Korea Times",
+      "title": "Treasury stock cancellation rule feared to pressure SK, Lotte, HD Hyundai",
+      "url": "https://www.koreatimes.co.kr/business/companies/20260226/treasury-stock-cancellation-rule-feared-to-pressure-sk-lotte-hd-hyundai"
+    }
+  ],
+  "ko": {
+    "title": "Korea Commercial Act 2026: Three Amendments, Three Dates",
+    "narrative": [
+      {
+        "heading": "Korea's Commercial Act reform is three laws, and all three are now in force",
+        "body": "If you came here asking whether Korea's Commercial Act reform has actually happened: yes, in stages. Korea passed three separate amendments to its Commercial Act between July 2025 and February 2026. The <b>first</b> widened directors' duties and took effect on July 22, 2025. The <b>third</b>, which forces companies to cancel treasury shares, took effect on March 6, 2026. The <b>second</b>, which makes cumulative voting hard to opt out of at large listed companies, took effect on September 10, 2026.\n\nThe three are easy to confuse because news coverage lumps them together as \"the Commercial Act revision.\" They change different things, on different dates, for different groups of companies. All dates below are as of October 2026, and each was confirmed in at least two independent sources listed under How we checked."
+      },
+      {
+        "heading": "First amendment: directors now owe a duty to shareholders, not just the company",
+        "body": "The National Assembly passed the first amendment on July 3, 2025, and it took effect on July 22, 2025, after cabinet review and presidential approval. Kim &amp; Chang's summary, republished by Legal500, and Sodali's governance note both describe the core change the same way: directors' duty of loyalty is expanded from \"the company\" to the company <b>and its shareholders</b>, with directors also required to treat all shareholders fairly.\n\nSupporters say this gives minority shareholders a legal basis to challenge decisions that favor a controlling family. Critics, as summarized in a March 2026 Financial News column, say the word \"shareholders\" is not defined precisely and could expose directors to claims when different shareholders' interests conflict. As of October 2026 we did not find a court ruling that tests the new wording, so what it means in practice is still open."
+      },
+      {
+        "heading": "The second amendment: cumulative voting stops being optional at large companies",
+        "body": "The second amendment passed on August 25, 2025, was approved by the State Council on September 2, 2025, and was promulgated on September 9, 2025. Its main provisions took effect one year later, on <b>September 10, 2026</b>.\n\nTwo changes matter most for investors. First, a listed company with total assets of <b>KRW 2 trillion or more</b> can no longer write cumulative voting out of its articles of incorporation. Cumulative voting lets a shareholder pool all of their votes behind one director candidate instead of splitting them across every seat, which makes it easier for a minority holder to win a board seat. Second, the number of audit committee members who must be elected separately from the controlling shareholder's votes rises from one to at least two at large listed companies.\n\nThe cumulative-voting rule applies from each company's <b>first shareholder meeting that elects directors after the law took effect</b>, so the first real tests are the 2027 annual meetings, not a single day in September. Business groups have warned that the changes could make it easier for activist investors to win board seats."
+      },
+      {
+        "heading": "The third amendment: treasury shares must be cancelled within one year",
+        "body": "The third amendment cleared the Legislation and Judiciary Committee on February 23, 2026, passed the National Assembly on February 25, 2026, and took effect on March 6, 2026. In principle, a company must now <b>cancel treasury shares within one year of acquiring them</b>. Treasury shares are redefined as shares without any rights: no voting, no dividends, no pre-emptive subscription.\n\nA company can still hold or dispose of treasury shares, but only under a holding and disposal plan that shareholders approve at the annual meeting, and only for purposes such as employee compensation or business goals written into its articles. Disposals generally have to be offered to all shareholders pro rata. Sodali reports an administrative fine of up to KRW 50 million for failing to cancel without an approved plan. The board can now approve a cancellation itself; previously it needed a special shareholder resolution and creditor-protection steps, as if it were a capital reduction.\n\nSodali counted the early market effect: 102 listed companies resolved to cancel treasury shares during the March 2026 meeting season, totaling KRW 15.8 trillion, about 70% of the KRW 21.4 trillion cancelled across all of 2025."
+      },
+      {
+        "heading": "What the three amendments change side by side",
+        "body": "The table below puts the three on one page: what each changes, when it took effect and who it applies to. Use the effective date, not the passage date, when you check whether a rule is already binding.\n\nFor a foreign investor the practical difference is that the first amendment is about legal standing, the second is about board seats at the largest companies, and the third is about what a company does with its own cash. Only the third produces an event you can look up in a filing: a board resolution to cancel shares."
+      },
+      {
+        "heading": "How to check whether a company you own is affected",
+        "body": "Start with the annual meeting notice. Under the third amendment, a company that wants to keep treasury shares must put a holding and disposal plan on the agenda, so the notice shows whether it plans to keep or cancel. Sodali notes that companies holding 2026 meetings after March 6 may also need to amend their articles.\n\nFor the second amendment, check total assets against the KRW 2 trillion line in the company's latest annual report, then read the director election agenda at the next annual meeting for cumulative voting and separate audit committee elections. Disclosures are filed on DART, the regulator's electronic disclosure system, where an English interface exists for many large companies; see our guide to <a href=\"https://fermata.it.kr/how-to-research-a-korean-company-in-english-dart-kind-and-what-the-translation-leaves-out/\">researching a Korean company in English</a>. For where this fits in the broader governance story, see <a href=\"https://fermata.it.kr/korea-is-still-an-emerging-market-what-mscis-2026-decision-means-for-foreign-investors/\">our guide to MSCI's 2026 decision</a>."
+      },
+      {
+        "heading": "What we could and could not verify",
+        "body": "<b>Confirmed in two or more independent sources:</b> the passage and effective dates of the first amendment (July 3 and July 22, 2025); the passage, promulgation and effective dates of the second (August 25, September 9, 2025 and September 10, 2026); the KRW 2 trillion cumulative-voting threshold; and the passage and effective dates of the third (February 25 and March 6, 2026) and its one-year cancellation rule.\n\n<b>Found in only one source, so not stated as fact:</b> the date from which the 3% cap on combined holdings applies to independent audit committee candidates, the independent director share rising to one-third of the board, and mandatory hybrid shareholder meetings from January 2027. We also could not reconcile how long the grace period lasts for treasury shares held before March 6, 2026: Sodali describes a six-month grace period, while Kim &amp; Chang's note frames the total as one year and six months from the effective date. Both agree a grace period exists; check the addendum to the statute for the exact end date.\n\nWe did not read the statute text itself, only law-firm and press summaries, and we found no court rulings under the new wording."
+      }
+    ],
+    "closing": {
+      "heading": "The takeaway",
+      "body": "The reform is real and mostly in force: directors' duties since July 22, 2025, mandatory treasury share cancellation since March 6, 2026, and cumulative voting that large companies cannot opt out of since September 10, 2026. What it will change in practice depends on how companies behave at the 2027 annual meetings and how courts read the new wording of directors' duties.\n\nFor an investor, the useful habit is to check the effective date of each rule, then look for the company-level filing that shows it being used: a cancellation resolution, a treasury share plan on a meeting agenda or a cumulative-voting vote.\n\nThis guide reflects law-firm and press summaries as of October 2026. Confirm current terms in the statute or a company's filings before you act. This is not tax or investment advice."
+    }
+  },
+  "graphics": [
+    {
+      "kind": "cover",
+      "featured": true,
+      "alt": "Korea Commercial Act: three amendments and their effective dates",
+      "args": {
+        "kicker": "Investor Guide",
+        "subject": "Korea Commercial Act",
+        "left": {
+          "label": "Treasury shares: cancel within",
+          "value": "1 year"
+        },
+        "right": {
+          "label": "Cumulative voting asset line",
+          "value": "KRW 2T"
+        }
+      }
+    },
+    {
+      "kind": "fact_table",
+      "alt": "The three Korean Commercial Act amendments compared by change, effective date and scope",
+      "section": 5,
+      "args": {
+        "title": "Three amendments, three dates",
+        "columns": [
+          "Amendment",
+          "Change",
+          "In force",
+          "Scope"
+        ],
+        "rows": [
+          [
+            "First",
+            "Duty to shareholders",
+            "Jul 22, 2025",
+            "All firms"
+          ],
+          [
+            "Second",
+            "Cumulative voting",
+            "Sep 10, 2026",
+            "Assets KRW 2T+"
+          ],
+          [
+            "Third",
+            "Treasury shares: 1 year",
+            "Mar 6, 2026",
+            "Listed firms"
+          ]
+        ],
+        "note": "Dates as of October 2026. Summaries from Kim & Chang (via Legal500) and Sodali; the statute text was not read.",
+        "source": "Legal500 (Kim & Chang), Sodali, Financial News"
+      }
+    },
+    {
+      "kind": "checklist",
+      "alt": "Three checks for a Korean company under the new Commercial Act",
+      "section": 6,
+      "args": {
+        "title": "Is your Korean holding affected?",
+        "subtitle": "Three checks",
+        "items": [
+          {
+            "label": "Read the annual meeting notice",
+            "why": "A company keeping treasury shares must put a holding and disposal plan to a shareholder vote."
+          },
+          {
+            "label": "Check total assets against KRW 2 trillion",
+            "why": "Above the line, cumulative voting can no longer be written out of the articles."
+          },
+          {
+            "label": "Look for a cancellation filing on DART",
+            "why": "A board resolution to cancel treasury shares is the visible sign the third amendment is working."
+          }
+        ]
+      }
+    }
+  ]
+}
