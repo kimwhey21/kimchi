@@ -1,9 +1,10 @@
 {
  "base": {
-  "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 1
- },
- "day": "2026-10-22",
- "issues": {
   "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 2
+ },
+ "day": "2026-10-23",
+ "issues": {
+  "# 페이지에서 가격·날짜를 못 읽었습니다(HTTP #)": 1,
+  "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 3
  }
 }
