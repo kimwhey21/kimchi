@@ -49,7 +49,7 @@ class MethodBlockTest(unittest.TestCase):
         self.assertIn("확인한 것", render(DOC, "가이드", lang="ko"))
 
     def test_a_byline_is_always_present_and_can_be_overridden(self) -> None:
-        self.assertIn("Fermata", render(DOC, "Investor Guide", lang="en"))
+        self.assertIn("Written by KimHui", render(DOC, "Investor Guide", lang="en"))
         self.assertIn("Someone Else", render({**DOC, "byline": "Someone Else"}, "가이드", lang="ko"))
 
 

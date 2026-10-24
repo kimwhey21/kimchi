@@ -45,8 +45,10 @@ add_filter( 'the_content', function ( $content ) {
 	if ( ! has_category( array_merge( fermata_daily_cats(), array( 153 ) ) ) ) {
 		return $content;
 	}
+	// 글쓴이는 필명 KimHui(2026-10-25) — 그 전에 올린 글 본문에 박힌 옛 서명도 화면에서는 같은 이름으로 보인다.
+	$content = str_replace( 'Written by the Fermata Editorial Team', 'Written by KimHui', $content );
 	return $content . '<p class="fermata-ai-note" style="font-size:12px;line-height:1.5;color:#8b929b;max-width:760px;margin:28px auto 0;">'
-		. 'Drafted with AI assistance and reviewed by the Fermata Editorial Team.</p>';
+		. 'Drafted with AI assistance and reviewed by <a href="https://fermata.it.kr/author/kimhui/" style="color:inherit;">KimHui</a>.</p>';
 }, 20 );
 
 // 3번: 공개 글은 전부 영어인데 홈 제목·설명·언어 표시가 한국어였다. 홈과 영어 목록 페이지(Daily 76·Guides 77·전체 105)를
