@@ -1,0 +1,141 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-25",
+ "slug": "dimon-combs-buffett-call",
+ "radar_origin": "Fortune: Jamie Dimon poached Warren Buffett’s protégé to run a $10 billion fund—he says Buffett’s response was ‘at least he’s going to you’",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8YmFuayUyMGJ1aWxkaW5nfGVufDB8MHx8fDE3OTI4NjE4NTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "2_K82gx9Uk8",
+  "credit": "Unsplash / Etienne Martin"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Jamie Dimon poached Warren Buffett's protégé to run a $10 billion fund (2026-10-24)",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/"
+  },
+  {
+   "name": "비즈니스 인사이더",
+   "title": "Key Warren Buffett lieutenant Todd Combs is leaving Berkshire Hathaway to join JPMorgan (2025-12-08)",
+   "url": "https://finance.yahoo.com/news/key-warren-buffett-lieutenant-todd-194604833.html"
+  }
+ ],
+ "tags": [
+  "제이미다이먼",
+  "워런버핏",
+  "버크셔해서웨이"
+ ],
+ "ko": {
+  "title": "버핏의 투자 책임자는 왜 JP모건으로 갔을까",
+  "title_candidates": [
+   "버핏의 투자 책임자는 왜 JP모건으로 갔을까",
+   "다이먼의 전화 한 통, 버핏이 막지 않은 이유",
+   "다이먼이 산 것은 콤스일까, 버핏의 그림자일까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "제이미 다이먼 JP모건체이스 최고경영자가 워런 버핏의 투자 책임자 한 명을 데려갔습니다. 그리고 버핏에게 직접 전화를 걸었습니다.\n사람을 내준 쪽의 대답은 만류도 항의도 아니었다고 합니다.\n사람을 내준 쪽은 왜 그랬을까요, 사람을 얻은 쪽은 무엇을 산 것일까요?"
+   },
+   {
+    "heading": "버핏은 이렇게 답했다고 합니다",
+    "body": "다이먼은 지난해 12월 버크셔 해서웨이 소유 보험사 가이코(Geico)의 최고경영자였던 토드 콤스(Todd Combs)를 데려왔습니다. 100억 달러 규모 투자 그룹을 맡기려는 것이었습니다.\n콤스는 2010년부터 버크셔에서 주식 고르는 일을 맡은 투자 책임자 두 명 가운데 한 사람이었습니다.\n경제지 포춘에 따르면 다이먼은 올해 1월 미국 상공회의소 행사에서 버핏에게 직접 전화했다고 밝혔습니다.\n“자유 국가니까, 사람은 자기 결정을 하는 겁니다.”\n“제가 워런에게 전화했습니다. 그는 달가워하지 않았겠지만 이렇게 말했습니다. ‘어디든 갈 거라면, 적어도 자네한테 가는 거지.’”\n버핏이 직접 한 말이 아니라 다이먼이 전한 말입니다. 포춘은 버핏의 비서가 이 설명이 정확하다고 확인했다고 적었습니다."
+   },
+   {
+    "heading": "버핏의 공개 반응도 같은 결이었습니다",
+    "body": "버핏은 발표 때 낸 보도자료에서 콤스가 JP모건의 흥미롭고 중요한 일자리를 받아들이려고 사임했다고 밝혔습니다.\n“토드는 가이코에서 훌륭한 인재를 많이 뽑았고, 회사의 지평을 넓혔습니다.”\n“JP모건은 으레 그렇듯 좋은 결정을 했습니다.”\n비즈니스 인사이더가 전한 내용입니다.\n발표 당일 버크셔 B주는 장 시작 전 거래에서 0.6% 하락했고 JP모건 주가는 0.5% 올랐습니다.\n주가가 크게 흔들릴 만한 숫자는 아니었습니다."
+   },
+   {
+    "heading": "다이먼이 산 것은 사람일까, 이름일까",
+    "body": "메릴랜드대 금융학 교수 데이비드 캐스(David Kass)는 버핏 블로그를 운영합니다.\n포춘이 옮긴 비즈니스 인사이더 인터뷰에서 그는 이렇게 풀었습니다.\n“다이먼은 콤스를 버핏 본인의 가까운 대리인으로 봤을 수 있습니다.”\n“다이먼은 버핏을 고용할 수는 없었지만, 제자 한 명은 고용할 수 있었습니다.”\n증명된 사실이 아니라 한 교수의 해석입니다. 다만 이 해석이 맞다면 다이먼은 사람과 함께 버핏의 이름이 주는 신뢰를 얻으려 한 셈입니다."
+   },
+   {
+    "heading": "약속한 돈은 번 돈이 아닙니다",
+    "body": "포춘이 인용한 최근 발표에 따르면 콤스의 투자 그룹은 처음 배정된 100억 달러 가운데 50억 달러를 이미 투자하기로 약속했습니다.\n약속은 투자하기로 정했다는 뜻이지 이미 벌었다는 뜻이 아닙니다. 성과를 가를 숫자는 아직 나오지 않았습니다.\n그사이 버크셔의 자리는 모두 바뀌었습니다. 그레그 에이블(Greg Abel)이 1월에 버핏의 뒤를 이어 최고경영자가 됐습니다.\n96세의 버핏은 지난달 이사회 의장에서도 물러나 아들 하워드에게 자리를 넘겼습니다."
+   },
+   {
+    "heading": "사람이 자산인 회사는 무엇을 지킬까",
+    "body": "은행은 판을 키울 사람을 얻었고, 버크셔는 그 자리를 새 체제로 채우는 중입니다.\n사람이 곧 자산인 조직에서 핵심 인물이 떠나려 할 때, 막는 것과 보내 주는 것 가운데 무엇이 회사를 더 지킬까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "지난해 12월",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "hired former geico ceo todd combs away from berkshire hathaway in december 2025"
+  },
+  {
+   "claim": "100억 달러 규모",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "hand-picking him to lead a $10 billion investment group as part of jpmorgan's security and resiliency initiative"
+  },
+  {
+   "claim": "2010년부터",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "combs, a former hedge fund manager, had been at berkshire since 2010"
+  },
+  {
+   "claim": "올해 1월",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "during a u.s. chamber of commerce event this january"
+  },
+  {
+   "claim": "자유 국가니까, 사람은 자기 결정을 하는 겁니다",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "\"it's a free country, and people make their own decisions,\" dimon said."
+  },
+  {
+   "claim": "제가 워런에게 전화했습니다",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "\"i did call warren. he probably wouldn't have preferred it, but he said, 'if he's going anywhere, at least he's going to you.'\""
+  },
+  {
+   "claim": "토드는 가이코에서 훌륭한 인재를 많이 뽑았고",
+   "url": "https://finance.yahoo.com/news/key-warren-buffett-lieutenant-todd-194604833.html",
+   "original": "\"todd made many great hires at geico and broadened its horizons,\" buffett wrote."
+  },
+  {
+   "claim": "JP모건은 으레 그렇듯 좋은 결정을 했습니다",
+   "url": "https://finance.yahoo.com/news/key-warren-buffett-lieutenant-todd-194604833.html",
+   "original": "\"jpmorgan, as usually is the case , has made a good decision.\""
+  },
+  {
+   "claim": "0.6% 하락",
+   "url": "https://finance.yahoo.com/news/key-warren-buffett-lieutenant-todd-194604833.html",
+   "original": "berkshire's class b shares fell 0.6% in premarket trading on monday, while jpmorgan shares rose 0.5%."
+  },
+  {
+   "claim": "0.5% 올랐",
+   "url": "https://finance.yahoo.com/news/key-warren-buffett-lieutenant-todd-194604833.html",
+   "original": "berkshire's class b shares fell 0.6% in premarket trading on monday, while jpmorgan shares rose 0.5%."
+  },
+  {
+   "claim": "다이먼은 콤스를 버핏 본인의 가까운 대리인으로 봤을 수 있습니다",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "\"dimon may very well have viewed combs as a close proxy for buffett himself,\" kass told the outlet."
+  },
+  {
+   "claim": "다이먼은 버핏을 고용할 수는 없었지만, 제자 한 명은 고용할 수 있었습니다",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "\"although dimon could not hire buffett, he could hire one of his protégés.\""
+  },
+  {
+   "claim": "100억 달러 가운데 50억 달러",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "his investment group has already committed $5 billion of the $10 billion initially allocated to it, according to a recent announcement"
+  },
+  {
+   "claim": "1월에",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "greg abel, who took over as ceo from buffett in january"
+  },
+  {
+   "claim": "96세의",
+   "url": "https://fortune.com/article/jamie-dimon-poached-warren-buffett-protege-todd-combs-at-least-hes-going-to-you-finance-banks-ceo/",
+   "original": "the 96-year-old also officially stepped down as chairman last month"
+  }
+ ]
+}

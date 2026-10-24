@@ -1,0 +1,161 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-10-25",
+ "slug": "markets-always-different-this-time",
+ "radar_origin": "A Wealth of Common Sense (벤 칼슨): Markets Are Always Different This Time",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1508107536691-b1449928187d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8bGlicmFyeSUyMG9sZCUyMGJvb2tzfGVufDB8MHx8fDE3OTI4NjE4Njl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "GWCvnsMtiBg",
+  "credit": "Unsplash / Annie Spratt"
+ },
+ "sources": [
+  {
+   "name": "벤 칼슨",
+   "title": "Markets Are Always Different This Time, A Wealth of Common Sense (2026-10-23)",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/"
+  },
+  {
+   "name": "위키백과",
+   "title": "Regulation FD",
+   "url": "https://en.wikipedia.org/wiki/Regulation_FD"
+  }
+ ],
+ "tags": [
+  "시장구조",
+  "공정공시",
+  "투자심리"
+ ],
+ "ko": {
+  "title": "판매 수수료 8.5%였던 시장에서 우리가 놓치는 것",
+  "title_candidates": [
+   "판매 수수료 8.5%였던 시장에서 우리가 놓치는 것",
+   "1960년 시장과 지금 시장, 무엇이 달라졌을까",
+   "시장 구조는 바뀌었고 사람은 그대로입니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "오늘의 시장은 예전과 정말로 다릅니다. 1960년 신문에 실린 S&P 500 구성표를 오늘 것과 나란히 놓으면 업종 비율부터 딴판입니다.\n비용도, 규칙도, 알려진 정보의 양도 달라졌습니다.\n그렇다면 시장이 달라진 것과 사람이 달라진 것은 같은 말일까요?"
+   },
+   {
+    "heading": "1960년 지수는 산업재가 대부분이었습니다",
+    "body": "투자 칼럼니스트 벤 칼슨은 오래된 신문에서 이 표를 찾은 친구의 이야기로 글을 엽니다. 신문은 1960년 것이었습니다.\n그 신문 속 S&P 500은 산업재 425곳, 철도 25곳, 유틸리티(전기·가스 같은 공공 서비스) 50곳이었습니다.\n오늘은 산업재 83곳, 금융 76곳, 정보기술 75곳, 헬스케어 60곳으로 훨씬 다양합니다.\n산업재가 기술주보다 수는 많지만 시장 비중은 기술주가 훨씬 크다고 칼슨은 각주에 적었습니다.\n구성이 이렇게 다르니 옛 밸류에이션(이익에 견준 주가 수준)과 오늘을 그대로 비교하기는 어렵다는 것이 그의 지적입니다."
+   },
+   {
+    "heading": "거래하는 데만도 큰돈이 들었습니다",
+    "body": "칼슨은 제이슨 츠바이크(Jason Zweig)의 글을 인용해 옛 시장의 비용을 짚습니다.\n소액 투자자의 중개 수수료는 흔히 2% 이상이었고, 펀드 판매 수수료는 처음 낼 때 5~8%였습니다.\n판매 수수료는 펀드에 처음 돈을 넣을 때 떼는 수수료입니다. 뱅가드의 첫 인덱스펀드도 8.5%였습니다.\n1997년까지 주식은 8분의 1달러 단위로 거래됐습니다. 사려는 값과 팔려는 값의 차이가 12.5센트였다는 뜻입니다.\n1달러짜리 소형주가 매수 호가로 마감한 다음 날 매도 호가 1.125달러에 거래되면, 값은 그대로인데 수익률은 12.5%로 찍혔습니다."
+   },
+   {
+    "heading": "규칙을 바꾼 것은 2000년의 한 규정입니다",
+    "body": "미국 증권거래위원회(SEC)는 2000년 8월 공정공시 규정(Regulation FD)을 내놨습니다.\n위키백과는 이 규정이 일부 큰손만 시장을 움직일 정보를 먼저 받는 관행을 없애려던 것이라고 설명합니다.\n회사가 중요한 정보를 모두에게 동시에 내놓게 되자 헤지펀드 같은 큰손이 비공개 정보로 이기기 어려워졌다고 칼슨은 봅니다.\n그는 이 규정을 이렇게 평가합니다.\n“이번 세기 시장 구조에서 아무도 얘기하지 않는, 아마도 가장 중요한 변화입니다.”\n전설적인 투자자가 예전처럼 나오지 않는 이유 하나로도 그는 이 변화를 꼽습니다."
+   },
+   {
+    "heading": "밀켄이 읽은 책은 거의 읽히지 않았습니다",
+    "body": "마이클 밀켄(Michael Milken)은 1970년대에 하이일드 채권 시장을 사실상 만든 인물입니다.\n하이일드 채권은 신용등급이 낮아 이자를 많이 주는 채권으로, 흔히 정크본드라고 부릅니다.\n칼슨은 로빈 위글스워스(Robin Wigglesworth)의 새 책 『어 파뷸러스 뎁트』에서 이 이야기를 가져옵니다.\n밀켄은 대학 시절 월터 브래독 히크먼의 오래된 책을 읽었습니다. 1900년부터 1943년까지 회사채 성과를 조사한 책입니다.\n결론은 위험이 큰 채권일수록 이자가 높고 부도도 많지만, 높은 이자가 부도 손실을 넘어선다는 것이었습니다.\n밀켄의 훗날 동료는 그 책의 운명을 이렇게 말했습니다.\n“그 책을 읽은 사람은 아마 2,000명쯤이고, 그중 1,999명은 무시했을 겁니다.”\n밀켄은 1980년대에 정크본드 시장을 사실상 쥐락펴락했습니다. 결말은 좋지 않았다고 칼슨은 덧붙입니다."
+   },
+   {
+    "heading": "바뀌지 않은 것은 시장이 아니라 사람입니다",
+    "body": "칼슨의 결론은 이 한 문장입니다.\n“인간의 본성은 모든 시장 사이클을 관통하는 단 하나의 상수입니다.”\n정보와 데이터가 훨씬 많은 세상일수록 미래에 대한 과신과 싸워야 한다고 그는 말합니다.\n비용은 내려가고 규칙은 공평해졌습니다. 그렇다면 ‘이번에는 다르다’고 믿고 싶어지는 마음은 얼마나 달라졌을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1960년",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "came across the business section in an old newspaper from 1960"
+  },
+  {
+   "claim": "산업재 425곳, 철도 25곳",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "425 industrials 25 rail companies 50 utilities"
+  },
+  {
+   "claim": "공공 서비스) 50곳",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "425 industrials 25 rail companies 50 utilities"
+  },
+  {
+   "claim": "산업재 83곳, 금융 76곳, 정보기술 75곳, 헬스케어 60곳",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "industrials 83 financials 76 information technology 75 health care 60"
+  },
+  {
+   "claim": "2% 이상",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "brokerage costs regularly hit 2% or even more."
+  },
+  {
+   "claim": "5~8%",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "sales loads, or commissions, typically ranged between 5% and 8% up front"
+  },
+  {
+   "claim": "8.5%였습니다",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "vanguard's first index fund had a sales load of 8.5%"
+  },
+  {
+   "claim": "1997년까지",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "until 1997, stocks traded in price increments of 1/8th"
+  },
+  {
+   "claim": "8분의 1달러",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "until 1997, stocks traded in price increments of 1/8th"
+  },
+  {
+   "claim": "12.5센트",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "until 1997, stocks traded in price increments of 1/8th, or a \"spread\" of 12.5 cents"
+  },
+  {
+   "claim": "1.125달러",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "paid the ask price of $1.125"
+  },
+  {
+   "claim": "12.5%로",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "just like that, a 12.5% return"
+  },
+  {
+   "claim": "2000년 8월",
+   "url": "https://en.wikipedia.org/wiki/Regulation_FD",
+   "original": "promulgated by the u.s. securities and exchange commission (sec) in august 2000"
+  },
+  {
+   "claim": "이번 세기 시장 구조에서 아무도 얘기하지 않는",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "reg fd is probably the most important change to the market structure this century that no one ever talks about."
+  },
+  {
+   "claim": "1970년대",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "michael milken essentially created the high yield bond market in the 1970s"
+  },
+  {
+   "claim": "1900년부터 1943년까지",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "an exhaustive study on the performance of corporate bonds between 1900 and 1943"
+  },
+  {
+   "claim": "2,000명쯤이고, 그중 1,999명은 무시했을",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "\"maybe 2,000 people read hickman's book, and 1,999 ignored it.\""
+  },
+  {
+   "claim": "1980년대",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "milken would go on to more or less control the junk bond market in the 1980s"
+  },
+  {
+   "claim": "인간의 본성은 모든 시장 사이클을 관통하는",
+   "url": "https://awealthofcommonsense.com/2026/10/markets-are-always-different-this-time/",
+   "original": "human nature is the one constant across all market cycles."
+  }
+ ]
+}
