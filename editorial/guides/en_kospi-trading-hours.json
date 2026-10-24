@@ -1,266 +1,291 @@
 {
-  "kind": "feature",
-  "series": "Guide",
-  "lang": "en",
-  "date": "2026-09-15",
-  "checked": "2026-10-06",
-  "slug": "koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know",
-  "category_id": 153,
-  "radar_origin": "search queue: kospi trading hours (65.6위, 전용 글 있음, 2026-09-18 이후 손대지 않음) — 글은 이미 제목·첫 소제목·첫 문장에 검색어가 있어서 ①검색어 누락이 아니었다. 대신 ②숫자가 낡았다: 본문이 '9월 14일 하루' 데이터뿐이었는데, 그 뒤 애프터마켓 첫 주 거래 실적(일평균 1.1조원·거래량 5485만주·정규장의 4.6%·개인 90.4%)과 거래소 특별감시 TF, 2027년 12시간/24시간 로드맵이 새로 나왔다. 셋 다 서로 다른 매체 둘 이상(SBS Biz·DigitalToday·Asia Economy, 로드맵은 DigitalToday·Herald Biz)에서 맞춰 추가했다.",
-  "tags": [
-    "kospi trading hours",
-    "KRX after-market",
-    "Korea stock market hours",
-    "Nextrade NXT",
-    "Korea price limit"
-  ],
-  "related": [
-    {
-      "title": "How to Buy Korean Stocks From the US in 2026: Brokers and Fees",
-      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
-    },
-    {
-      "title": "KOSPI vs KOSDAQ: Company Counts, Listing Bars and Risk (2026)",
-      "url": "https://fermata.it.kr/kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you/"
-    },
-    {
-      "title": "English DART: How to Read Korean Company Filings (2026)",
-      "url": "https://fermata.it.kr/how-to-research-a-korean-company-in-english-dart-kind-and-what-the-translation-leaves-out/"
-    }
-  ],
-  "sources": [
-    {
-      "name": "Korea Exchange",
-      "title": "After-market launch, September 14, 2026",
-      "url": "https://global.krx.co.kr/"
-    },
-    {
-      "name": "The Korea Herald",
-      "title": "KRX to extend trading hours from Monday",
-      "url": "https://www.koreaherald.com/article/10871647"
-    },
-    {
-      "name": "Korea JoongAng Daily",
-      "title": "KRX revamps after-market trading, extends session until 8 p.m.",
-      "url": "https://www.koreajoongangdaily.com/business/krx-revamps-aftermarket-stock-trading-extends-session-until-8-pm/12872784"
-    },
-    {
-      "name": "Bloomberg",
-      "title": "Korea Tests Global Investor Appetite With Longer Trading Hours",
-      "url": "https://www.bloomberg.com/news/articles/2026-09-13/korea-tests-global-investor-appetite-with-longer-trading-hours"
-    },
-    {
-      "name": "SBS Biz",
-      "title": "Korea Exchange after-market averages 1.1 trillion won a day in first week",
-      "url": "https://biz.sbs.co.kr/amp/article/20000336067"
-    },
-    {
-      "name": "DigitalToday",
-      "title": "KRX after-market one-week average: 1 trillion won daily turnover, retail 90 percent",
-      "url": "https://www.digitaltoday.co.kr/en/view/106155/krx-after-market-one-week-average-1-trillion-won-daily-turnover-retail-90-percent"
-    },
-    {
-      "name": "Asia Economy",
-      "title": "First-week after-market data and the nine-person surveillance task force",
-      "url": "https://core.asiae.co.kr/article/2026092117535880342"
-    },
-    {
-      "name": "DigitalToday",
-      "title": "Korea stock market trading hours extension: Korea Exchange targets 12-hour trading by end-2027",
-      "url": "https://www.digitaltoday.co.kr/en/view/108577/korea-stock-market-trading-hours-extension-korea-exchange-12-hour-trading-by-end-2027"
-    },
-    {
-      "name": "Herald Biz",
-      "title": "Korea Exchange to pursue 12-hour trading from June, 24-hour system targeted for December 2027",
-      "url": "https://www.heraldk.com/article/2026011314371405449"
-    }
-  ],
-  "ko": {
-    "title": "KOSPI Trading Hours: 09:00–15:30, Now Until 8 p.m.",
-    "narrative": [
-      {
-        "heading": "KOSPI trading hours: 09:00–15:30 KST, plus an after-market to 20:00",
-        "body": "KOSPI trading hours have not moved for the regular session: it runs 09:00 to 15:30 Korea Standard Time, weekdays, with no lunch break. What changed is what happens after it.\n\nOn Monday, September 14, 2026, the Korea Exchange launched an after-market session running 16:00 to 20:00 KST. Combined with the 08:00 pre-market on Nextrade, Korea's alternative trading system, the country's tradable day now stretches to roughly twelve hours, against about six and a half for the regular session alone.\n\nThis is a real change in mechanism, not just a longer clock. The old after-hours arrangement ran 16:00 to 18:00 and collected orders into a single-price auction executed every ten minutes. The new session matches buy and sell orders continuously, the same way the regular session does, right through to 20:00.\n\nFor a foreign investor the practical gain is time-zone arithmetic, covered further below: the 16:00 to 20:00 window lands in the early morning on the US East Coast rather than the middle of the night."
-      },
-      {
-        "heading": "Korea stock market hours at a glance",
-        "body": "Regular session (KOSPI and KOSDAQ): 09:00–15:30 KST, Monday to Friday, no lunch break.\n\nAfter-market on the Korea Exchange: 16:00–20:00 KST since September 14, 2026, with continuous matching rather than the old ten-minute auctions.\n\nPre-market on Nextrade (NXT), the alternative venue: from 08:00 KST.\n\nIn US Eastern time the regular session is 20:00–02:30 the previous evening during daylight time (an hour earlier on standard time), and the after-market is 03:00–07:00.\n\nSettlement is T+2 in Korean business days, so a Korean holiday that is not on your calendar moves your settlement date. The sections below cover what exactly changed, what trades in the new session, and the price-limit and halt rules that apply throughout the day."
-      },
-      {
-        "heading": "What exactly changed on September 14",
-        "body": "Four things are worth pinning down, because the detail decides whether the new session is useful for what you want to do.\n\nThe mechanism changed from a ten-minute single-price auction to continuous matching. Orders now execute the moment a buy and a sell price meet, until 20:00.\n\nThe instrument list is broad but not complete. Most KOSPI and KOSDAQ stocks and depositary receipts qualify; KONEX is out entirely, and exchange-traded funds and exchange-traded notes were excluded at launch. Investment-warning issues, administrative issues and very low liquidity names are also excluded. The Korea Herald counted 831 KOSPI and 1,811 KOSDAQ listings at launch, and KRX said more than 95% of eligible stocks would be tradable.\n\nBroker participation is close to universal by value: Korea JoongAng Daily reported 38 securities firms joining at launch, representing 95.2% of the market by trading value. If your broker routes to KRX at all, the after-market is very likely available.\n\nThe daily price limit does not loosen after hours. Prices may still move up or down by as much as 30% from the previous day's close, the same band as the regular session."
-      },
-      {
-        "heading": "The first day showed exactly why liquidity matters",
-        "body": "The debut session is the best available evidence on what the extended hours actually feel like, and it was not calm. On the first day, Korea JoongAng Daily reported, the after-market triggered 1,637 volatility interruptions.\n\nA volatility interruption, or VI, is Korea's automatic cooling brake: when a price jumps beyond a threshold band, continuous trading in that stock pauses and a short call auction takes its place before trading resumes. Over sixteen hundred of them in a four-hour window is not a market failure — it is the mechanism doing its job in a session where order books are thin.\n\nKorean market coverage described the first evening in the same terms, reporting wild swings driven by low liquidity, and Bloomberg framed the extension as Korea testing global investor appetite with longer hours. That is the structural reality: the session got longer, but the money did not arrive in proportion. Depth and spreads in the after-market are materially worse than between 09:00 and 15:30.\n\nThe sensible reading has not changed from the day the extension was announced. Use the evening session to react to news at a civilised hour, to trim or add at the margin, or to trade a large-cap that has real evening volume. Do not use it to build or exit a position of size. The price you can get at 11:00 is not necessarily available at 19:00, and on the evidence of day one, the gap can be violent."
-      },
-      {
-        "heading": "Three weeks in: the after-market settled near 4.6% of the regular session",
-        "body": "Day one was the extreme case, not the baseline. Over the after-market's first full week, September 14 to 18, 2026, Korea Exchange data reported by SBS Biz and DigitalToday showed average daily turnover of 1.1 trillion won on 54.85 million shares — about 4.6% of the regular session's trading value. That is a small fraction of the main market, but a long way from a sliver.\n\nThe investor mix barely moved from the debut session: retail investors took 90.4% of the week's turnover, foreign investors 6.7%, institutions 2.6%. Of the 2,763 listed issues eligible for after-market trading, 2,379 — 86.1%, per DigitalToday and Asia Economy — actually saw at least one execution during the week. That is well above the roughly 600 stocks the old NXT-only after-hours arrangement offered, but short of the \"more than 95%\" eligibility KRX had promised before launch. Eligible to trade and actually traded are not the same number.\n\nKorea Exchange also opened a nine-person special surveillance task force through the end of 2026, split across monitoring, prevention and short-selling oversight, to cross-check night-session trades against regular-session trading for signs of manipulation, SBS Biz and Asia Economy reported. The exchange said it would extend the task force if conditions warranted and respond firmly to any violations found."
-      },
-      {
-        "heading": "What's next: a 12-hour trading day, and a 24-hour system under review",
-        "body": "The September 14 launch is step one of a longer plan Korea Exchange first laid out in January 2026 and reaffirmed as the after-market bedded in. The exchange wants to add a dedicated premarket session ahead of the main open and link the premarket, main session and after-market into a single order book, pushing the tradable day toward 12 hours; as of early October 2026 the exact premarket hours were still undecided, pending talks with financial regulators, DigitalToday reported.\n\nA Korea Exchange stock-market-division official, Jin Dong-hwa, said the exchange is also leaving the door open to a full 24-hour trading system, with a target around December 2027 — the same December 2027 date the exchange had already cited in January 2026, before the after-market existed. A final decision on round-the-clock trading will be reviewed separately, since night trading would raise costs for brokerages and asset managers. A parallel plan would shorten settlement from T+2 to T+1."
-      },
-      {
-        "heading": "Price limits, volatility interruptions and circuit breakers",
-        "body": "The safety machinery runs across all sessions and is worth knowing before you place an order into a fast-moving Korean stock.\n\nThe daily price limit is 30% up or down from the base price, widened to that band in 2015, and it applies to ordinary shares, depositary receipts, ETFs, ETNs and beneficiary certificates on both boards. When a stock is pinned at the limit, the price is at the floor but that does not mean you can trade at the floor — sellers queue behind unfilled orders and the pressure spills into the next session.\n\nBelow that sits the volatility interruption. A dynamic VI fires when a single order moves the price beyond roughly a 2% to 6% band depending on the security; a static VI fires when cumulative moves push the price about 10% from its reference. Either way, continuous trading stops and a call auction runs for about two minutes, ending at a randomised moment so the reopening cannot be gamed.\n\nAt the index level, Korea runs a three-stage market-wide circuit breaker keyed to the KOSPI's fall from the previous close: an 8% decline held for a minute halts trading 20 minutes, 15% triggers a second 20-minute halt, and 20% ends the session. Market-wide breakers are not applied in the last 40 minutes before the close. A narrower tool, the sidecar, suspends program trading for five minutes when KOSPI 200 futures move 5% and hold it for a minute.\n\nIf a market order into a moving Korean stock appears to hang, a VI is the likeliest explanation, and it is routine rather than alarming."
-      },
-      {
-        "heading": "Nextrade is a second venue, not the same market",
-        "body": "Korea has had an alternative trading system since 2025. Nextrade, usually written NXT, runs its own pre-market from 08:00 and its own after-market to 20:00, and it is the reason the twelve-hour figure works.\n\nThe important difference is breadth. Per Korea JoongAng Daily, NXT offers trading in roughly 600 stocks, concentrated in large caps, against the thousands listed on KRX. It is a venue for the most liquid names, not a parallel market for everything. Foreign participation there has grown quickly, but so has the gap between what you can trade on NXT and what you can trade on the main exchange.\n\nFor most foreign investors this is a routing detail rather than a decision: your broker sends the order where it can be filled. It matters when you are trying to trade outside regular hours and the name is not among NXT's roughly 600, or when you are comparing quoted prices between venues at the same moment."
-      },
-      {
-        "heading": "When all of this is open in your time zone",
-        "body": "Korea Standard Time is UTC+9, which is 13 hours ahead of US Eastern during daylight time and 14 hours ahead during standard time. That turns the Korean day inside out for anyone in the Americas.\n\nOn US daylight time, the regular session's 09:00 to 15:30 KST is 20:00 to 02:30 US Eastern, starting the previous evening. The new after-market, 16:00 to 20:00 KST, is 03:00 to 07:00 US Eastern — early morning rather than the small hours. The NXT pre-market at 08:00 KST is 19:00 US Eastern the previous evening. On US standard time each of those shifts an hour earlier.\n\nFor European investors the after-market lands in the morning too: 16:00 to 20:00 KST is roughly 08:00 to 12:00 in London during British Summer Time.\n\nSettlement is unchanged at T+2, counted in Korean business days, so Korean market holidays that are not on your calendar will move your settlement date."
-      },
-      {
-        "heading": "What we could and could not verify, including a correction",
-        "body": "A correction first. An earlier version of this guide stated that the extended sessions began on June 29, 2026 and described a 07:00 to 08:00 pre-market run by the Korea Exchange. Checking the primary reporting on September 15, 2026, the KRX after-market began on Monday, September 14, 2026, and the 08:00 pre-market belongs to Nextrade rather than to KRX. We have corrected both points and we could not confirm any KRX pre-market at 07:00. If you need the exact current session table, KRX's own trading hours page is the authority.\n\nWhat we did verify, from reporting published on September 13 to 15, 2026, and updated with first-week data published September 21 to 22, 2026: the 16:00 to 20:00 hours, the switch from a ten-minute single-price auction to continuous matching, the exclusion of ETFs, ETNs and KONEX, the 831 KOSPI and 1,811 KOSDAQ listing counts, the 38 participating brokers at 95.2% of market trading value, the 30% price band applying after hours, the 1,637 volatility interruptions on day one, Nextrade's roughly 600 stocks with an 08:00 pre-market, the first week's 1.1 trillion won average daily turnover (4.6% of the regular session) and 86.1% of eligible issues traded, the nine-person surveillance task force, and the stated roadmap toward a 12-hour day and a possible 24-hour system around December 2027.\n\nWhat we could not verify: how the excluded-stock list is maintained day to day, whether the ETF and ETN exclusion is permanent or staged, what hours the planned premarket session will run, and whether the surveillance task force has found any violations since it started."
-      }
-    ],
-    "closing": {
-      "heading": "The takeaway",
-      "body": "Korea's tradable day is now about twelve hours, and since September 14, 2026 the evening session matches orders continuously rather than batching them every ten minutes. For an investor outside Korea that is a genuine convenience: the 16:00 to 20:00 window is early morning in New York rather than the middle of the night.\n\nTreat it as a window for reacting, not for sizing. Day one produced 1,637 volatility interruptions in four hours, which is what a thin order book looks like when the machinery is working correctly. The regular session, 09:00 to 15:30 KST, is still where the market actually is.\n\nThis is information, not investment advice. Session rules are new and still settling; confirm the current table with KRX or your broker before you trade the evening session."
-    },
-    "excerpt": "Korea's regular session runs 09:00–15:30 KST, no lunch break. Since September 14, 2026 an after-market runs to 20:00 KST. What trades then, and what doesn't."
+ "kind": "feature",
+ "series": "Guide",
+ "lang": "en",
+ "date": "2026-09-15",
+ "checked": "2026-10-25",
+ "slug": "koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know",
+ "category_id": 153,
+ "radar_origin": "search queue: kospi trading hours (65.6위, 전용 글 있음, 2026-09-18 이후 손대지 않음) — 글은 이미 제목·첫 소제목·첫 문장에 검색어가 있어서 ①검색어 누락이 아니었다. 대신 ②숫자가 낡았다: 본문이 '9월 14일 하루' 데이터뿐이었는데, 그 뒤 애프터마켓 첫 주 거래 실적(일평균 1.1조원·거래량 5485만주·정규장의 4.6%·개인 90.4%)과 거래소 특별감시 TF, 2027년 12시간/24시간 로드맵이 새로 나왔다. 셋 다 서로 다른 매체 둘 이상(SBS Biz·DigitalToday·Asia Economy, 로드맵은 DigitalToday·Herald Biz)에서 맞춰 추가했다. | 2026-10-25: 서머타임 종료(영국 10/25·미국 11/1) 시간표, 10/15 서킷브레이커 실측, 첫날 VI 1,637·1,112 집계 차이, 연말 휴장일을 더함",
+ "tags": [
+  "kospi trading hours",
+  "KRX after-market",
+  "Korea stock market hours",
+  "Nextrade NXT",
+  "Korea price limit"
+ ],
+ "related": [
+  {
+   "title": "How to Buy Korean Stocks From the US in 2026: Brokers and Fees",
+   "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
   },
-  "graphics": [
-    {
-      "kind": "cover",
-      "featured": true,
-      "alt": "Korea's trading day now runs about twelve hours, with a KRX after-market from 4 p.m. to 8 p.m. launched September 14, 2026",
-      "args": {
-        "kicker": "Investor Guide",
-        "subject": "Korea's Trading Day, Now to 8 p.m.",
-        "left": {
-          "label": "After-market",
-          "value": "16:00-20:00"
-        },
-        "right": {
-          "label": "Day one VIs",
-          "value": "1,637"
-        }
-      }
+  {
+   "title": "KOSPI vs KOSDAQ: Company Counts, Listing Bars and Risk (2026)",
+   "url": "https://fermata.it.kr/kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you/"
+  },
+  {
+   "title": "English DART: How to Read Korean Company Filings (2026)",
+   "url": "https://fermata.it.kr/how-to-research-a-korean-company-in-english-dart-kind-and-what-the-translation-leaves-out/"
+  }
+ ],
+ "sources": [
+  {
+   "name": "Korea Exchange",
+   "title": "After-market launch, September 14, 2026",
+   "url": "https://global.krx.co.kr/"
+  },
+  {
+   "name": "The Korea Herald",
+   "title": "KRX to extend trading hours from Monday",
+   "url": "https://www.koreaherald.com/article/10871647"
+  },
+  {
+   "name": "Korea JoongAng Daily",
+   "title": "KRX revamps after-market trading, extends session until 8 p.m.",
+   "url": "https://www.koreajoongangdaily.com/business/krx-revamps-aftermarket-stock-trading-extends-session-until-8-pm/12872784"
+  },
+  {
+   "name": "Bloomberg",
+   "title": "Korea Tests Global Investor Appetite With Longer Trading Hours",
+   "url": "https://www.bloomberg.com/news/articles/2026-09-13/korea-tests-global-investor-appetite-with-longer-trading-hours"
+  },
+  {
+   "name": "SBS Biz",
+   "title": "Korea Exchange after-market averages 1.1 trillion won a day in first week",
+   "url": "https://biz.sbs.co.kr/amp/article/20000336067"
+  },
+  {
+   "name": "DigitalToday",
+   "title": "KRX after-market one-week average: 1 trillion won daily turnover, retail 90 percent",
+   "url": "https://www.digitaltoday.co.kr/en/view/106155/krx-after-market-one-week-average-1-trillion-won-daily-turnover-retail-90-percent"
+  },
+  {
+   "name": "Asia Economy",
+   "title": "First-week after-market data and the nine-person surveillance task force",
+   "url": "https://core.asiae.co.kr/article/2026092117535880342"
+  },
+  {
+   "name": "DigitalToday",
+   "title": "Korea stock market trading hours extension: Korea Exchange targets 12-hour trading by end-2027",
+   "url": "https://www.digitaltoday.co.kr/en/view/108577/korea-stock-market-trading-hours-extension-korea-exchange-12-hour-trading-by-end-2027"
+  },
+  {
+   "name": "Herald Biz",
+   "title": "Korea Exchange to pursue 12-hour trading from June, 24-hour system targeted for December 2027",
+   "url": "https://www.heraldk.com/article/2026011314371405449"
+  },
+  {
+   "name": "Korea JoongAng Daily",
+   "title": "Stocks plunge as circuit breakers hit Kospi, Kosdaq for first time in over two months",
+   "url": "https://www.koreajoongangdaily.com/business/stocks-plunge-as-circuit-breakers-hit-kospi-kosdaq-for-first-time-in-over-two-months/12922302"
+  },
+  {
+   "name": "Seoul Economic Daily",
+   "title": "Circuit Breaker Halts KOSDAQ Trading for 20 Minutes After Plunge",
+   "url": "https://en.sedaily.com/finance/2026/10/15/circuit-breaker-halts-kosdaq-trading-for-20-minutes-after"
+  },
+  {
+   "name": "SBS",
+   "title": "Kospi and Kosdaq Trigger Level 1 Circuit Breakers Amid Over 8% Plunge",
+   "url": "https://news.sbs.co.kr/english/article.do?news_id=N1008799152"
+  },
+  {
+   "name": "The Asia Business Daily",
+   "title": "KRX Aftermarket Debut Sees Mass Triggering of Volatility Interruption Mechanisms",
+   "url": "https://view.asiae.co.kr/en/article/2026091518034132669"
+  }
+ ],
+ "ko": {
+  "title": "KOSPI Trading Hours: 09:00–15:30, Now Until 8 p.m.",
+  "narrative": [
+   {
+    "heading": "KOSPI trading hours: 09:00–15:30 KST, plus an after-market to 20:00",
+    "body": "KOSPI trading hours have not moved for the regular session: it runs 09:00 to 15:30 Korea Standard Time, weekdays, with no lunch break. What changed is what happens after it.\n\nOn Monday, September 14, 2026, the Korea Exchange launched an after-market session running 16:00 to 20:00 KST. Combined with the 08:00 pre-market on Nextrade, Korea's alternative trading system, the country's tradable day now stretches to roughly twelve hours, against about six and a half for the regular session alone.\n\nThis is a real change in mechanism, not just a longer clock. The old after-hours arrangement ran 16:00 to 18:00 and collected orders into a single-price auction executed every ten minutes. The new session matches buy and sell orders continuously, the same way the regular session does, right through to 20:00.\n\nFor a foreign investor the practical gain is time-zone arithmetic, covered further below: the 16:00 to 20:00 window lands in the early morning on the US East Coast rather than the middle of the night."
+   },
+   {
+    "heading": "Korea stock market hours at a glance",
+    "body": "Regular session (KOSPI and KOSDAQ): 09:00–15:30 KST, Monday to Friday, no lunch break.\n\nAfter-market on the Korea Exchange: 16:00–20:00 KST since September 14, 2026, with continuous matching rather than the old ten-minute auctions.\n\nPre-market on Nextrade (NXT), the alternative venue: from 08:00 KST.\n\nIn US Eastern time the regular session is 20:00–02:30 the previous evening during daylight time (an hour earlier on standard time), and the after-market is 03:00–07:00.\n\nSettlement is T+2 in Korean business days, so a Korean holiday that is not on your calendar moves your settlement date. The sections below cover what exactly changed, what trades in the new session, and the price-limit and halt rules that apply throughout the day."
+   },
+   {
+    "heading": "What exactly changed on September 14",
+    "body": "Four things are worth pinning down, because the detail decides whether the new session is useful for what you want to do.\n\nThe mechanism changed from a ten-minute single-price auction to continuous matching. Orders now execute the moment a buy and a sell price meet, until 20:00.\n\nThe instrument list is broad but not complete. Most KOSPI and KOSDAQ stocks and depositary receipts qualify; KONEX is out entirely, and exchange-traded funds and exchange-traded notes were excluded at launch. Investment-warning issues, administrative issues and very low liquidity names are also excluded. The Korea Herald counted 831 KOSPI and 1,811 KOSDAQ listings at launch, and KRX said more than 95% of eligible stocks would be tradable.\n\nBroker participation is close to universal by value: Korea JoongAng Daily reported 38 securities firms joining at launch, representing 95.2% of the market by trading value. If your broker routes to KRX at all, the after-market is very likely available.\n\nThe daily price limit does not loosen after hours. Prices may still move up or down by as much as 30% from the previous day's close, the same band as the regular session."
+   },
+   {
+    "heading": "The first day showed exactly why liquidity matters",
+    "body": "The debut session is the best available evidence on what the extended hours actually feel like, and it was not calm. On the first day, Korea JoongAng Daily reported, the after-market triggered 1,637 volatility interruptions. That figure adds static and dynamic triggers separately; counting a stock once when both fired together, the Korea Exchange's own tally was 1,112, The Asia Business Daily and DigitalToday reported. By September 18 the daily count had fallen to 553.\n\nA volatility interruption, or VI, is Korea's automatic cooling brake: when a price jumps beyond a threshold band, continuous trading in that stock pauses and a short call auction takes its place before trading resumes. More than a thousand of them in a four-hour window is not a market failure — it is the mechanism doing its job in a session where order books are thin.\n\nKorean market coverage described the first evening in the same terms, reporting wild swings driven by low liquidity, and Bloomberg framed the extension as Korea testing global investor appetite with longer hours. That is the structural reality: the session got longer, but the money did not arrive in proportion. Depth and spreads in the after-market are materially worse than between 09:00 and 15:30.\n\nThe sensible reading has not changed from the day the extension was announced. Use the evening session to react to news at a civilised hour, to trim or add at the margin, or to trade a large-cap that has real evening volume. Do not use it to build or exit a position of size. The price you can get at 11:00 is not necessarily available at 19:00, and on the evidence of day one, the gap can be violent."
+   },
+   {
+    "heading": "Three weeks in: the after-market settled near 4.6% of the regular session",
+    "body": "Day one was the extreme case, not the baseline. Over the after-market's first full week, September 14 to 18, 2026, Korea Exchange data reported by SBS Biz and DigitalToday showed average daily turnover of 1.1 trillion won on 54.85 million shares — about 4.6% of the regular session's trading value. That is a small fraction of the main market, but a long way from a sliver.\n\nThe investor mix barely moved from the debut session: retail investors took 90.4% of the week's turnover, foreign investors 6.7%, institutions 2.6%. Of the 2,763 listed issues eligible for after-market trading, 2,379 — 86.1%, per DigitalToday and Asia Economy — actually saw at least one execution during the week. That is well above the roughly 600 stocks the old NXT-only after-hours arrangement offered, but short of the \"more than 95%\" eligibility KRX had promised before launch. Eligible to trade and actually traded are not the same number.\n\nKorea Exchange also opened a nine-person special surveillance task force through the end of 2026, split across monitoring, prevention and short-selling oversight, to cross-check night-session trades against regular-session trading for signs of manipulation, SBS Biz and Asia Economy reported. The exchange said it would extend the task force if conditions warranted and respond firmly to any violations found."
+   },
+   {
+    "heading": "What's next: a 12-hour trading day, and a 24-hour system under review",
+    "body": "The September 14 launch is step one of a longer plan Korea Exchange first laid out in January 2026 and reaffirmed as the after-market bedded in. The exchange wants to add a dedicated premarket session ahead of the main open and link the premarket, main session and after-market into a single order book, pushing the tradable day toward 12 hours; as of early October 2026 the exact premarket hours were still undecided, pending talks with financial regulators, DigitalToday reported.\n\nA Korea Exchange stock-market-division official, Jin Dong-hwa, said the exchange is also leaving the door open to a full 24-hour trading system, with a target around December 2027 — the same December 2027 date the exchange had already cited in January 2026, before the after-market existed. A final decision on round-the-clock trading will be reviewed separately, since night trading would raise costs for brokerages and asset managers. A parallel plan would shorten settlement from T+2 to T+1."
+   },
+   {
+    "heading": "Price limits, volatility interruptions and circuit breakers",
+    "body": "The safety machinery runs across all sessions and is worth knowing before you place an order into a fast-moving Korean stock.\n\nThe daily price limit is 30% up or down from the base price, widened to that band in 2015, and it applies to ordinary shares, depositary receipts, ETFs, ETNs and beneficiary certificates on both boards. When a stock is pinned at the limit, the price is at the floor but that does not mean you can trade at the floor — sellers queue behind unfilled orders and the pressure spills into the next session.\n\nBelow that sits the volatility interruption. A dynamic VI fires when a single order moves the price beyond roughly a 2% to 6% band depending on the security; a static VI fires when cumulative moves push the price about 10% from its reference. Either way, continuous trading stops and a call auction runs for about two minutes, ending at a randomised moment so the reopening cannot be gamed.\n\nAt the index level, Korea runs a three-stage market-wide circuit breaker keyed to the KOSPI's fall from the previous close: an 8% decline held for a minute halts trading 20 minutes, 15% triggers a second 20-minute halt, and 20% ends the session. Market-wide breakers are not applied in the last 40 minutes before the close. A narrower tool, the sidecar, suspends program trading for five minutes when KOSPI 200 futures move 5% and hold it for a minute.\n\nOctober 15, 2026 showed the first stage in action. KOSDAQ hit it at 12:23 p.m. KST, down 8.01% at 757.88, and KOSPI followed at about 12:38 p.m., down 8.00% at 5,528.05, according to Korea JoongAng Daily and SBS. Each board stopped for 20 minutes and reopened with a 10-minute single-price auction, the Seoul Economic Daily reported. It was the first time both boards had tripped the breaker on the same day since late July. KOSPI closed down 7.57% at 5,554.22 and KOSDAQ down 7.65% at 760.82, figures that match our own two-source closing records for that day. In US Eastern time the halts landed just before midnight on October 14.\n\nIf a market order into a moving Korean stock appears to hang, a VI is the likeliest explanation, and it is routine rather than alarming."
+   },
+   {
+    "heading": "Nextrade is a second venue, not the same market",
+    "body": "Korea has had an alternative trading system since 2025. Nextrade, usually written NXT, runs its own pre-market from 08:00 and its own after-market to 20:00, and it is the reason the twelve-hour figure works.\n\nThe important difference is breadth. Per Korea JoongAng Daily, NXT offers trading in roughly 600 stocks, concentrated in large caps, against the thousands listed on KRX. It is a venue for the most liquid names, not a parallel market for everything. Foreign participation there has grown quickly, but so has the gap between what you can trade on NXT and what you can trade on the main exchange.\n\nFor most foreign investors this is a routing detail rather than a decision: your broker sends the order where it can be filled. It matters when you are trying to trade outside regular hours and the name is not among NXT's roughly 600, or when you are comparing quoted prices between venues at the same moment."
+   },
+   {
+    "heading": "When all of this is open in your time zone",
+    "body": "Korea Standard Time is UTC+9 all year; Korea does not use daylight saving time. Your offset to Korea changes twice a year, and both changes fall right now: Britain left summer time on Sunday, October 25, 2026, and the US leaves daylight time on Sunday, November 1, 2026.\n\nUntil November 1, US Eastern is 13 hours behind Korea: the 09:00 to 15:30 KST regular session runs 20:00 to 02:30 US Eastern, starting the previous evening, and the 16:00 to 20:00 KST after-market runs 03:00 to 07:00. <b>From November 1, US Eastern is 14 hours behind</b>, so the regular session runs 19:00 to 01:30 the previous evening and the after-market 02:00 to 06:00. The NXT pre-market at 08:00 KST moves from 19:00 to 18:00 US Eastern the previous evening.\n\nIn London, now on GMT, Korea is nine hours ahead. The regular session runs midnight to 06:30 and the after-market 07:00 to 11:00, an hour earlier than during British Summer Time.\n\nSettlement is unchanged at T+2, counted in Korean business days, so Korean market holidays that are not on your calendar move your settlement date. The remaining 2026 closures are Christmas Day (Friday, December 25) and the year-end closing on Thursday, December 31, followed by New Year's Day on Friday, January 1, 2027."
+   },
+   {
+    "heading": "What we could and could not verify, including a correction",
+    "body": "A correction first. An earlier version of this guide stated that the extended sessions began on June 29, 2026 and described a 07:00 to 08:00 pre-market run by the Korea Exchange. Checking the primary reporting on September 15, 2026, the KRX after-market began on Monday, September 14, 2026, and the 08:00 pre-market belongs to Nextrade rather than to KRX. We have corrected both points and we could not confirm any KRX pre-market at 07:00. If you need the exact current session table, KRX's own trading hours page is the authority.\n\nWhat we did verify, from reporting published on September 13 to 15, 2026, and updated with first-week data published September 21 to 22, 2026: the 16:00 to 20:00 hours, the switch from a ten-minute single-price auction to continuous matching, the exclusion of ETFs, ETNs and KONEX, the 831 KOSPI and 1,811 KOSDAQ listing counts, the 38 participating brokers at 95.2% of market trading value, the 30% price band applying after hours, the day-one volatility interruptions (1,637 counted separately, 1,112 by the exchange's count), Nextrade's roughly 600 stocks with an 08:00 pre-market, the first week's 1.1 trillion won average daily turnover (4.6% of the regular session) and 86.1% of eligible issues traded, the nine-person surveillance task force, and the stated roadmap toward a 12-hour day and a possible 24-hour system around December 2027.\n\nWe also checked, on October 25, 2026, the October 15 circuit-breaker times against three reports, the two first-day volatility counts against each other (they measure different things, as explained above), and the 2026 daylight-saving dates for the US and UK.\n\nWhat we could not verify: monthly after-market turnover after the first week (we found no Korea Exchange release or two matching reports for it), how the excluded-stock list is maintained day to day, whether the ETF and ETN exclusion is permanent or staged, what hours the planned premarket session will run, and whether the surveillance task force has found any violations since it started."
+   }
+  ],
+  "closing": {
+   "heading": "The takeaway",
+   "body": "Korea's tradable day is now about twelve hours, and since September 14, 2026 the evening session matches orders continuously rather than batching them every ten minutes. For an investor outside Korea that is a genuine convenience: the 16:00 to 20:00 window is 02:00 to 06:00 in New York from November 1, rather than the middle of the evening.\n\nTreat it as a window for reacting, not for sizing. Day one produced 1,112 volatility interruptions in four hours by the exchange's own count, which is what a thin order book looks like when the machinery is working correctly. The regular session, 09:00 to 15:30 KST, is still where the market actually is.\n\nThis is information, not investment advice. Session rules are new and still settling; confirm the current table with KRX or your broker before you trade the evening session."
+  },
+  "excerpt": "Korea's regular session runs 09:00–15:30 KST, no lunch break. Since September 14, 2026 an after-market runs to 20:00 KST. What trades then, and what doesn't."
+ },
+ "graphics": [
+  {
+   "kind": "cover",
+   "featured": true,
+   "alt": "Korea's trading day now runs about twelve hours, with a KRX after-market from 4 p.m. to 8 p.m.; 1,112 volatility interruptions on day one by the exchange's count",
+   "args": {
+    "kicker": "Investor Guide",
+    "subject": "Korea's Trading Day, Now to 8 p.m.",
+    "left": {
+     "label": "After-market",
+     "value": "16:00-20:00"
     },
-    {
-      "kind": "fact_table",
-      "section": 0,
-      "alt": "Korean trading sessions as of September 2026 with the equivalent US Eastern times on daylight time",
-      "args": {
-        "title": "Korean sessions, and when that is in New York",
-        "subtitle": "US Eastern times shown for daylight time; subtract an hour on standard time",
-        "columns": [
-          "Session",
-          "Korea time",
-          "US Eastern"
-        ],
-        "rows": [
-          [
-            "NXT pre-market",
-            "08:00 KST",
-            "19:00 prev. day"
-          ],
-          [
-            "Regular session",
-            "09:00-15:30",
-            "20:00-02:30"
-          ],
-          [
-            "KRX after-market",
-            "16:00-20:00",
-            "03:00-07:00"
-          ],
-          [
-            "Settlement",
-            "T+2",
-            "Korean business days"
-          ]
-        ],
-        "source": "Korea Exchange, Nextrade",
-        "note": "The regular session is unchanged. Only the evening session was added on September 14, 2026."
-      }
-    },
-    {
-      "kind": "fact_table",
-      "section": 1,
-      "alt": "What changed in the Korean after-hours session: continuous matching replaced ten-minute single-price auctions and the session runs two hours longer",
-      "args": {
-        "title": "Old after-hours versus the new after-market",
-        "subtitle": "Effective Monday, September 14, 2026",
-        "columns": [
-          "",
-          "Before",
-          "From Sept 14"
-        ],
-        "rows": [
-          [
-            "Hours",
-            "16:00-18:00",
-            "16:00-20:00"
-          ],
-          [
-            "Matching",
-            "Single price, every 10 min",
-            "Continuous"
-          ],
-          [
-            "Price band",
-            "30%",
-            "30%"
-          ],
-          [
-            "ETFs and ETNs",
-            "Included",
-            "Excluded at launch"
-          ],
-          [
-            "Brokers",
-            "-",
-            "38 firms, 95.2% by value"
-          ]
-        ],
-        "source": "Korea JoongAng Daily, The Korea Herald",
-        "note": "KONEX, investment-warning and very low liquidity issues are also excluded."
-      }
-    },
-    {
-      "kind": "fact_table",
-      "section": 4,
-      "alt": "Korea Exchange after-market trading on day one versus the first full week, September 14 to 18, 2026",
-      "args": {
-        "title": "Day one versus week one",
-        "subtitle": "Korea Exchange after-market, September 14-18, 2026",
-        "columns": [
-          "",
-          "Day one (Sept 14)",
-          "Week-one avg (Sept 14-18)"
-        ],
-        "rows": [
-          [
-            "Turnover",
-            "1.82 trillion won",
-            "1.1 trillion won"
-          ],
-          [
-            "Share of regular session",
-            "6.6%",
-            "4.6%"
-          ],
-          [
-            "Retail share",
-            "93%",
-            "90.4%"
-          ],
-          [
-            "Issues traded",
-            "n/a",
-            "2,379 of 2,763 (86.1%)"
-          ]
-        ],
-        "source": "Korea JoongAng Daily, SBS Biz, DigitalToday",
-        "note": "Day-one figures are from the launch session; the week-one column is the average across the first five trading days."
-      }
+    "right": {
+     "label": "Day-one VIs, KRX count",
+     "value": "1,112"
     }
-  ]
+   }
+  },
+  {
+   "kind": "fact_table",
+   "section": 0,
+   "alt": "Korean trading sessions as of September 2026 with the equivalent US Eastern times on daylight time",
+   "args": {
+    "title": "Korean sessions, and when that is in New York",
+    "subtitle": "US Eastern shown before and after daylight time ends on November 1, 2026",
+    "columns": [
+     "Session",
+     "Korea time",
+     "US East, to Oct 31",
+     "US East, from Nov 1"
+    ],
+    "rows": [
+     [
+      "NXT pre-market",
+      "08:00",
+      "19:00 prev. day",
+      "18:00 prev. day"
+     ],
+     [
+      "Regular session",
+      "09:00-15:30",
+      "20:00-02:30",
+      "19:00-01:30"
+     ],
+     [
+      "KRX after-market",
+      "16:00-20:00",
+      "03:00-07:00",
+      "02:00-06:00"
+     ],
+     [
+      "Settlement",
+      "T+2",
+      "Korean business days",
+      "Korean business days"
+     ]
+    ],
+    "source": "Korea Exchange, Nextrade",
+    "note": "The regular session is unchanged. Only the evening session was added on September 14, 2026."
+   }
+  },
+  {
+   "kind": "fact_table",
+   "section": 1,
+   "alt": "What changed in the Korean after-hours session: continuous matching replaced ten-minute single-price auctions and the session runs two hours longer",
+   "args": {
+    "title": "Old after-hours versus the new after-market",
+    "subtitle": "Effective Monday, September 14, 2026",
+    "columns": [
+     "",
+     "Before",
+     "From Sept 14"
+    ],
+    "rows": [
+     [
+      "Hours",
+      "16:00-18:00",
+      "16:00-20:00"
+     ],
+     [
+      "Matching",
+      "Single price, every 10 min",
+      "Continuous"
+     ],
+     [
+      "Price band",
+      "30%",
+      "30%"
+     ],
+     [
+      "ETFs and ETNs",
+      "Included",
+      "Excluded at launch"
+     ],
+     [
+      "Brokers",
+      "-",
+      "38 firms, 95.2% by value"
+     ]
+    ],
+    "source": "Korea JoongAng Daily, The Korea Herald",
+    "note": "KONEX, investment-warning and very low liquidity issues are also excluded."
+   }
+  },
+  {
+   "kind": "fact_table",
+   "section": 4,
+   "alt": "Korea Exchange after-market trading on day one versus the first full week, September 14 to 18, 2026",
+   "args": {
+    "title": "Day one versus week one",
+    "subtitle": "Korea Exchange after-market, September 14-18, 2026",
+    "columns": [
+     "",
+     "Day one (Sept 14)",
+     "Week-one avg (Sept 14-18)"
+    ],
+    "rows": [
+     [
+      "Turnover",
+      "1.82 trillion won",
+      "1.1 trillion won"
+     ],
+     [
+      "Share of regular session",
+      "6.6%",
+      "4.6%"
+     ],
+     [
+      "Retail share",
+      "93%",
+      "90.4%"
+     ],
+     [
+      "Issues traded",
+      "n/a",
+      "2,379 of 2,763 (86.1%)"
+     ]
+    ],
+    "source": "Korea JoongAng Daily, SBS Biz, DigitalToday",
+    "note": "Day-one figures are from the launch session; the week-one column is the average across the first five trading days."
+   }
+  }
+ ]
 }
