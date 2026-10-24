@@ -1,144 +1,229 @@
 {
-  "kind": "feature",
-  "series": "Guide",
-  "lang": "en",
-  "date": "2026-09-15",
-  "checked": "2026-09-21",
-  "slug": "kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you",
-  "category_id": 153,
-  "tags": [
-    "KOSPI vs KOSDAQ",
-    "KOSPI",
-    "KOSDAQ",
-    "Korea Exchange",
-    "Korean stock market"
-  ],
-  "radar_origin": "search queue: kospi vs kosdaq (5.4위, 1페이지 위쪽 — 첫 소제목·첫 문장에 검색어 없어서 고침)",
-  "related": [
-    {
-      "title": "Can Foreigners Buy Korean Stocks? What Changed in 2026",
-      "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
-    },
-    {
-      "title": "Taxes on Korean Stocks for Foreign Investors (2026)",
-      "url": "https://fermata.it.kr/the-real-cost-of-owning-korean-stocks-taxes-and-fees-foreign-investors-pay-in-2026/"
-    },
-    {
-      "title": "Korea Stock Market Hours 2026: Sessions, Price Limits, Halts",
-      "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know/"
-    }
-  ],
-  "ko": {
-    "title": "KOSPI vs KOSDAQ: Korea's Two Boards, Explained",
-    "narrative": [
-      {
-        "heading": "KOSPI vs KOSDAQ: two boards, one exchange group",
-        "body": "KOSPI vs KOSDAQ is the first split to understand before you research a single Korean stock. Every company trades on one of two boards run by the Korea Exchange (KRX), and which one it's on tells you roughly how old the company is, how large it is, and how much volatility to expect — before you've looked at a single number on the income statement.\n\nThe two aren't separate markets the way the NYSE and Nasdaq are sometimes loosely described — both boards are operated by the same exchange group — but the companies listed on each, and what that listing tells you about a company, are genuinely different. You'll see both names constantly in Korean financial data and screeners, so knowing the difference matters even before you decide whether to buy."
-      },
-      {
-        "heading": "What KOSPI is",
-        "body": "KOSPI (Korea Composite Stock Price Index) is Korea's main board, launched in 1956, and functions the way the NYSE does in the U.S. — home to large, established companies with long track records. Samsung Electronics, SK Hynix, and most of the names foreign investors already recognize trade here.\n\nTo list on KOSPI, a company generally needs at least three years of operating history plus minimum size, profitability, and governance standards — the bar is built for maturity, not early growth."
-      },
-      {
-        "heading": "What KOSDAQ is",
-        "body": "KOSDAQ launched in 1996, modeled in part on the U.S. Nasdaq, to give smaller, high-growth companies — concentrated in technology, biotech, and entertainment — access to public capital without meeting KOSPI's maturity bar.\n\nNotably, KOSDAQ doesn't require the three-year operating history KOSPI does, which is exactly why earlier-stage and currently-unprofitable companies list there. It's a smaller market overall, and a more volatile one — that's the direct consequence of listing companies earlier in their life cycle."
-      },
-      {
-        "heading": "Side by side",
-        "body": "The practical differences are easiest to see side by side, in the table below. KOSPI listings launched in 1956 and lean toward large, established, already-profitable companies; KOSDAQ listings launched in 1996 and lean toward smaller, growth-stage companies, often in technology, biotech, and entertainment.\n\nThe listing bar reflects that split — KOSPI generally requires at least three years of operating history plus size and profitability thresholds, while KOSDAQ requires no minimum operating history at all. What that means for you as an investor: a KOSPI listing leans toward blue-chip stability, and a KOSDAQ listing leans toward more volatility, and more room for a growth story to work or fail."
-      },
-      {
-        "heading": "The market-cap gap",
-        "body": "The size difference between the two boards is not subtle, and 2026 has only underlined it. According to Korea Exchange data, KOSPI's total market capitalization stood at approximately ₩5,567.1 trillion (roughly $4.14 trillion) as of September 14, 2026, while KOSDAQ's stood at approximately ₩455.1 trillion (roughly $338 billion) — KOSDAQ runs at under a tenth the size of KOSPI despite listing thousands of companies.\n\nThat gap held through a volatile year for both boards. Korea Times reported that the combined value of Korea's exchanges first crossed ₩6,000 trillion (about $4.07 trillion) in April 2026; the combined figure went on to top ₩8,000 trillion in intraday trading in June before falling back to roughly ₩6,000 trillion by mid-September as heavyweight chip stocks pulled back. Through that whole swing, KOSDAQ stayed under a tenth of KOSPI's size — a useful sanity check when you're evaluating a single KOSDAQ name: the board itself is built for smaller, less-established companies, so size and volatility that would be unusual on KOSPI are closer to normal here."
-      },
-      {
-        "heading": "How to tell which board a stock is on",
-        "body": "Korean tickers are six-digit numeric codes (for example, Samsung Electronics is 005930), and the code format itself doesn't tell you which board a company trades on — unlike some markets where a suffix gives it away instantly.\n\nYour broker's instrument detail page will label the listing venue directly, and that's the most reliable place to check before you assume you're looking at a blue-chip when it's actually a small, early-stage KOSDAQ name, or vice versa. The Korea Exchange's own market data and most financial data providers will also show the listing board directly next to the ticker."
-      }
-    ],
-    "closing": {
-      "heading": "The takeaway",
-      "body": "Which board a Korean stock trades on isn't a technicality — it's a quick proxy for company maturity, size, and the kind of volatility you should expect. A KOSPI listing leans toward stability; a KOSDAQ listing leans toward growth and risk in both directions. Neither is automatically the better choice — it depends on what you're actually looking for — but check the board before you check anything else.\n\nMarket capitalization figures above are Korea Exchange data as of September 14, 2026, cross-checked against Korea Times' reporting on the market's April 2026 milestone; both change daily, so confirm current figures before you rely on them. This guide is for informational purposes only and is not investment advice."
-    },
-    "excerpt": "KOSPI is Korea's main board — Samsung, SK Hynix, listed since 1956. KOSDAQ is the growth board, under a tenth its size. What each says about a stock."
+ "kind": "feature",
+ "series": "Guide",
+ "lang": "en",
+ "date": "2026-09-15",
+ "checked": "2026-10-25",
+ "slug": "kospi-vs-kosdaq-what-the-board-a-korean-stock-trades-on-actually-tells-you",
+ "category_id": 153,
+ "tags": [
+  "KOSPI vs KOSDAQ",
+  "KOSDAQ vs KOSPI",
+  "difference between KOSPI and KOSDAQ",
+  "Korea Exchange",
+  "Korean stock market"
+ ],
+ "radar_origin": "search queue: kospi vs kosdaq (5.5위, 노출 63) — 2026-10-25 우리 데이터로 다시 씀",
+ "related": [
+  {
+   "title": "Korean Stock Ticker Symbols",
+   "url": "https://fermata.it.kr/korean-stock-ticker-symbols/"
   },
-  "graphics": [
-    {
-      "kind": "cover",
-      "featured": true,
-      "alt": "KOSPI market cap versus KOSDAQ market cap, September 2026",
-      "args": {
-        "kicker": "Investor Guide",
-        "subject": "KOSPI vs KOSDAQ",
-        "left": {
-          "label": "KOSPI market cap (Sep 2026)",
-          "value": "₩5,567T"
-        },
-        "right": {
-          "label": "KOSDAQ market cap (Sep 2026)",
-          "value": "₩455T"
-        }
-      }
+  {
+   "title": "Can Foreigners Buy Korean Stocks?",
+   "url": "https://fermata.it.kr/how-foreigners-can-now-buy-korean-stocks-without-a-korean-brokerage-account/"
+  },
+  {
+   "title": "Korea Stock Market Hours",
+   "url": "https://fermata.it.kr/koreas-trading-day-just-doubled-hours-price-limits-and-halts-foreign-investors-should-know/"
+  }
+ ],
+ "sources": [
+  {
+   "name": "Naver Finance",
+   "title": "KOSPI listings by market capitalization (close of October 23, 2026)",
+   "url": "https://m.stock.naver.com/domestic/capitalization/KOSPI"
+  },
+  {
+   "name": "Naver Finance",
+   "title": "KOSDAQ listings by market capitalization (close of October 23, 2026)",
+   "url": "https://m.stock.naver.com/domestic/capitalization/KOSDAQ"
+  },
+  {
+   "name": "Baker McKenzie",
+   "title": "South Korea: principal listing and maintenance requirements (updated February 1, 2026)",
+   "url": "https://resourcehub.bakermckenzie.com/en/resources/cross-border-listings-guide/asia-pacific/south-korea-stock-exchange/topics/principal-listing-and-maintenance-requirements-and-procedures"
+  },
+  {
+   "name": "PwC",
+   "title": "Going public in Korea: KOSPI and KOSDAQ listing requirements",
+   "url": "https://www.pwccn.com/en/going-public/kr-2023.pdf"
+  },
+  {
+   "name": "Korea Exchange",
+   "title": "KRX Data Marketplace (index and market capitalization statistics)",
+   "url": "https://data.krx.co.kr/"
+  },
+  {
+   "name": "Yahoo Finance",
+   "title": "Samsung Electronics (005930.KS)",
+   "url": "https://finance.yahoo.com/quote/005930.KS/"
+  },
+  {
+   "name": "Yahoo Finance",
+   "title": "Alteogen (196170.KQ)",
+   "url": "https://finance.yahoo.com/quote/196170.KQ/"
+  }
+ ],
+ "ko": {
+  "title": "KOSPI vs KOSDAQ: 2,764 Korean Stocks Measured Side by Side",
+  "narrative": [
+   {
+    "heading": "KOSPI vs KOSDAQ: the short answer, in numbers",
+    "body": "KOSPI vs KOSDAQ comes down to this: both are boards of the same exchange, the Korea Exchange (KRX), but KOSPI holds the large, older companies and KOSDAQ holds the smaller, younger ones. At the close on October 23, 2026, we counted <b>940 stock listings on KOSPI worth ₩4,546 trillion</b> (about $3.43 trillion at ₩1,326.6 per dollar) and <b>1,824 on KOSDAQ worth ₩424 trillion</b> (about $319 billion).\n\nSo KOSDAQ has nearly twice as many listings and less than a tenth of the value. Every number in this guide comes from that same closing list, which we pulled for all 2,764 listings (common and preferred shares, excluding ETFs and ETNs) and matched against our own company database. Most comparisons you will find stop at the definitions. This one measures what the boards actually hold."
+   },
+   {
+    "heading": "KOSPI is the main board, and two chipmakers now carry it",
+    "body": "KOSPI is Korea's main board. A company applying to list there must have been operating for at least three years, a rule Baker McKenzie's listing guide (updated February 1, 2026) and PwC's listing summary both state; PwC also lists a shareholders' equity floor of ₩30 billion. The bar is built for maturity, and it shows: the median founding year of a KOSPI company in our data is 1977.\n\nThe bigger story in October 2026 is concentration. Samsung Electronics' common shares alone were <b>27.5% of KOSPI's total value</b> on October 23, and the ten largest listings were 61.7%. Companies classed as semiconductors and electronic components under Korea's standard industry codes made up 54.7%. Together with SK Hynix, the two memory makers were 47.7% of the board: when a foreign investor says \"I bought Korea,\" nearly half of that is two companies."
+   },
+   {
+    "heading": "KOSDAQ is the growth board, and four in ten of its companies lose money",
+    "body": "KOSDAQ opened in July 1996 as Korea's market for younger, faster-growing companies, and it does not require the three-year operating history KOSPI does. A technology-growth route lets a company list with as little as ₩1 billion of equity or a ₩9 billion market value (Baker McKenzie, February 2026).\n\nThat shows up in the numbers. The median KOSDAQ listing was worth <b>₩68.9 billion</b> on October 23, against ₩208.2 billion on KOSPI, and 62% of KOSDAQ listings were worth less than ₩100 billion. The median founding year is 2000. Using each company's latest reported return on equity in our database, <b>42.9% of KOSDAQ companies had a negative ROE</b>, meaning they lost money over their last reported year, against 25.8% on KOSPI.\n\nKOSDAQ is also far less top-heavy. Its largest company, the biotech Alteogen, was 3.6% of the board, and its ten largest were 17.4%. The biggest groups by number of companies are semiconductors and components (251), software and games (185), machinery (184) and pharmaceuticals (133)."
+   },
+   {
+    "heading": "Who owns each board, and how often it trades",
+    "body": "Foreign investors sit mostly on KOSPI. Weighted by company size, overseas investors held <b>38.4% of KOSPI</b> on our latest readings, against 11.3% of KOSDAQ. For the typical (median) company the gap is smaller but still clear: 5.0% foreign-held on KOSPI and 2.4% on KOSDAQ.\n\nKOSDAQ makes up for its size with turnover. On October 23, KOSPI traded ₩17.0 trillion, about 0.37% of its value, while KOSDAQ traded ₩5.8 trillion, about 1.37% of its value. Relative to size, KOSDAQ shares changed hands roughly 3.7 times as often that day. That is one day, not an average, so treat it as a snapshot."
+   },
+   {
+    "heading": "Which board swings more? In 2026, the answer depends on what you hold",
+    "body": "The usual rule is that KOSDAQ is the volatile board. Our autumn 2026 data only half agrees. From August 28 to October 23, 2026, KOSPI fell from 6,788.88 to 5,550.30, a drop of 18.2%, while KOSDAQ fell from 838.41 to 751.69, a drop of 10.3%. Across the 34 sessions in that window for which we hold closing prices confirmed by two sources, KOSPI moved 3% or more in a day nine times and KOSDAQ six times. On October 15 they fell together, KOSPI by 7.57% and KOSDAQ by 7.65%.\n\nThe reason is the concentration above. An index that is more than half chipmakers moves like a chip stock. Single stocks still follow the old rule, though: on October 23, <b>11.6% of KOSDAQ listings moved 5% or more</b> in one session, against 7.7% on KOSPI. So if you buy the KOSPI index, your risk is how much rides on Samsung and SK Hynix. If you buy an individual KOSDAQ name, your risk is the company itself."
+   },
+   {
+    "heading": "How to tell which board a Korean stock is on",
+    "body": "Korean tickers are six-digit numbers on both boards, so the number alone does not tell you. The suffix does. On Yahoo Finance and many data terminals, <b>.KS means KOSPI and .KQ means KOSDAQ</b>: Samsung Electronics is 005930.KS and Alteogen is 196170.KQ. Your broker's quote page will also name the board directly.\n\nBoards are not permanent. Large KOSDAQ companies sometimes move to KOSPI, and a stock's board can change what index funds hold it, so check the label again before relying on an old note."
+   },
+   {
+    "heading": "What we could and could not verify",
+    "body": "We verified the listing counts, market values, trading values and one-day moves from the full KOSPI and KOSDAQ closing lists published on Naver Finance for October 23, 2026. The board totals match the change in both indices since the Korea Exchange's September 14 figures (₩5,567.1 trillion for KOSPI and ₩455.1 trillion for KOSDAQ) to within 2%. Index closes come from our own daily files, which accept a close only when two independent sources agree. Three trading days in the window (September 1, 28 and 29) are missing from those files, so the count of big-move days covers 34 of 37 sessions.\n\nReturn on equity and foreign ownership come from our company database, refreshed on a rolling basis; the readings used here are from October 16 to October 23, 2026. Industry groups follow Korea's standard industry classification (KSIC) as recorded in company filings. We did not check the current KRX rulebook line by line; the listing thresholds above come from Baker McKenzie and PwC summaries, and the exchange can change them."
+   }
+  ],
+  "closing": {
+   "heading": "The takeaway",
+   "body": "Check the board before you check anything else, but read it correctly. KOSDAQ tells you the company is probably small, young and more likely to be losing money. KOSPI tells you the company is probably large and established, and in 2026 it also tells you that the index itself is mostly a bet on memory chips.\n\nAll figures are as of the close on October 23, 2026, unless stated otherwise, and they change daily. This guide is for information only and is not investment advice."
+  },
+  "excerpt": "We measured all 2,764 KOSPI and KOSDAQ listings: size, losses, foreign ownership, turnover and swings. What each board really tells you about a Korean stock."
+ },
+ "graphics": [
+  {
+   "kind": "cover",
+   "featured": true,
+   "alt": "KOSPI versus KOSDAQ total market value at the close on October 23, 2026",
+   "args": {
+    "kicker": "Investor Guide",
+    "subject": "KOSPI vs KOSDAQ",
+    "left": {
+     "label": "KOSPI value, Oct 23, 2026",
+     "value": "₩4,546T"
     },
-    {
-      "kind": "fact_table",
-      "alt": "Side-by-side comparison of KOSPI and KOSDAQ: launch year, typical company, listing bar, and market cap",
-      "args": {
-        "title": "KOSPI vs KOSDAQ, side by side",
-        "subtitle": "Two boards, one exchange group",
-        "source": "Korea Exchange (Sep 14, 2026)",
-        "columns": [
-          "",
-          "KOSPI",
-          "KOSDAQ"
-        ],
-        "rows": [
-          [
-            "Launched",
-            "1956",
-            "1996"
-          ],
-          [
-            "Typical company",
-            "Established, profitable",
-            "Smaller, high-growth"
-          ],
-          [
-            "Listing bar",
-            "3+ yrs + profit tests",
-            "No minimum history"
-          ],
-          [
-            "Market cap (Sep 14, 2026)",
-            "₩5,567.1T (~$4.14T)",
-            "₩455.1T (~$338B)"
-          ]
-        ]
-      },
-      "section": 3
-    },
-    {
-      "kind": "checklist",
-      "alt": "Three things to check before judging a Korean stock by its ticker",
-      "args": {
-        "title": "Before you judge a Korean stock by its ticker",
-        "subtitle": "KOSPI vs KOSDAQ, in practice",
-        "items": [
-          {
-            "label": "Check your broker's instrument page",
-            "why": "It labels the listing venue (KOSPI or KOSDAQ) directly — the six-digit ticker code alone does not."
-          },
-          {
-            "label": "Treat KOSDAQ names as higher-volatility by default",
-            "why": "No minimum operating history requirement means more early-stage and currently-unprofitable companies list here."
-          },
-          {
-            "label": "Don't assume size or board from the ticker format",
-            "why": "Korean tickers are six digits on both boards — nothing in the code itself signals which market a stock trades on."
-          }
-        ]
-      },
-      "section": 5
+    "right": {
+     "label": "KOSDAQ value, Oct 23, 2026",
+     "value": "₩424T"
     }
-  ]
+   }
+  },
+  {
+   "kind": "fact_table",
+   "alt": "KOSPI and KOSDAQ compared on listings, value, concentration, losses, foreign ownership and turnover",
+   "args": {
+    "title": "KOSPI vs KOSDAQ, measured",
+    "subtitle": "All 2,764 listings at the close on October 23, 2026",
+    "source": "Naver Finance closing lists; Fermata company database",
+    "columns": [
+     "",
+     "KOSPI",
+     "KOSDAQ"
+    ],
+    "rows": [
+     [
+      "Listings",
+      "940",
+      "1,824"
+     ],
+     [
+      "Total value",
+      "₩4,546T",
+      "₩424T"
+     ],
+     [
+      "Median listing value",
+      "₩208.2B",
+      "₩68.9B"
+     ],
+     [
+      "Largest listing's share",
+      "27.5% (Samsung)",
+      "3.6% (Alteogen)"
+     ],
+     [
+      "Top 10 share of value",
+      "61.7%",
+      "17.4%"
+     ],
+     [
+      "Negative ROE",
+      "25.8%",
+      "42.9%"
+     ],
+     [
+      "Foreign-held (size-weighted)",
+      "38.4%",
+      "11.3%"
+     ],
+     [
+      "Day's trading / value",
+      "0.37%",
+      "1.37%"
+     ]
+    ]
+   },
+   "section": 1
+  },
+  {
+   "kind": "fact_table",
+   "alt": "KOSPI and KOSDAQ index moves from August 28 to October 23, 2026",
+   "args": {
+    "title": "Which board swung more?",
+    "subtitle": "August 28 to October 23, 2026",
+    "source": "Fermata daily closes, two sources each; Naver Finance",
+    "columns": [
+     "",
+     "KOSPI",
+     "KOSDAQ"
+    ],
+    "rows": [
+     [
+      "Index, Aug 28",
+      "6,788.88",
+      "838.41"
+     ],
+     [
+      "Index, Oct 23",
+      "5,550.30",
+      "751.69"
+     ],
+     [
+      "Change",
+      "down 18.2%",
+      "down 10.3%"
+     ],
+     [
+      "Days with a 3%+ move (34 sessions)",
+      "9",
+      "6"
+     ],
+     [
+      "October 15",
+      "down 7.57%",
+      "down 7.65%"
+     ],
+     [
+      "Stocks moving 5%+ on Oct 23",
+      "7.7%",
+      "11.6%"
+     ]
+    ]
+   },
+   "section": 5
+  }
+ ]
 }
