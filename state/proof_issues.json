@@ -1,12 +1,13 @@
 {
  "base": {
-  "# 페이지에서 가격·날짜를 못 읽었습니다(HTTP #)": 1,
-  "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 3
- },
- "day": "2026-10-24",
- "issues": {
   "글 없음: 주간 결산 (editorial/weekly/review_#json)": 1,
   "글 없음: 주말 Checkpoint (editorial/features/* 오늘 커밋)": 1,
   "맥 bench_nightly: 마지막 신호 # #": 1
+ },
+ "day": "2026-10-25",
+ "issues": {
+  "글 없음: 다음 주 일정 (editorial/weekly/ahead_#json)": 1,
+  "글 없음: 주말 Checkpoint (editorial/features/* 오늘 커밋)": 2,
+  "맥 bench_nightly: 마지막 신호 # #": 2
  }
 }
