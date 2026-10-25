@@ -1,0 +1,120 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-26",
+ "slug": "midterms-market-relief",
+ "radar_origin": "Worried about this stock-market selloff? Relief may be coming after the midterms — no matter who wins.",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1782998307726-f93ec14eda24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8YmFsbG90JTIwYm94JTIwdm90aW5nfGVufDB8MHx8fDE3OTI5NDgyOTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "QpdNe6njPlw",
+  "credit": "Unsplash"
+ },
+ "sources": [
+  {
+   "name": "캐피털 그룹",
+   "title": "How U.S. midterm elections may affect markets",
+   "url": "https://www.capitalgroup.com/individual/ca/en/insights/articles/markets-midterm-elections-5-charts.html"
+  },
+  {
+   "name": "CBS",
+   "title": "After the midterm, get ready for a \"relief\" rally in stocks (2018-11-07)",
+   "url": "https://www.cbsnews.com/news/election-results-stock-market-get-ready-for-a-relief-rally-in-the-markets/"
+  }
+ ],
+ "tags": [
+  "중간선거",
+  "S&P500",
+  "선거와주가"
+ ],
+ "ko": {
+  "title": "중간선거 해의 주식은 왜 평소의 절반만 올랐을까",
+  "title_candidates": [
+   "중간선거 해의 주식은 왜 평소의 절반만 올랐을까",
+   "선거 전엔 흔들리고 뒤엔 오르는 주식, 믿어도 될까",
+   "중간선거와 주가: 선거 뒤 1년을 기다릴 수 있는 돈인가"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "미국 중간선거가 있는 해의 주식은 평소 해의 절반쯤밖에 오르지 않았습니다.\n그런데 선거가 끝난 뒤 1년은 거의 두 배로 올랐습니다.\n같은 선거가 앞에서는 주가를 누르고 뒤에서는 밀어 올린 걸까요?"
+   },
+   {
+    "heading": "중간선거 해의 성적표는 평소의 절반이었습니다",
+    "body": "미국 자산운용사 캐피털 그룹(Capital Group)은 미국 대형주 지수인 S&P 500의 90년 넘는 자료를 뜯어봤습니다.\n1931년 이후 중간선거가 있는 해의 평균 수익률은 4.7%였고, 다른 해는 9.5%였습니다.\n오른 해가 대부분이긴 해도 속도는 절반이었습니다.\n해의 앞부분에는 거의 오르지 못하다가 선거를 얼마 앞두고서야 올라가는 모양이 많았습니다."
+   },
+   {
+    "heading": "흔들림도 평소보다 컸습니다",
+    "body": "출렁임을 재는 값으로 표준편차(수익률이 평균에서 얼마나 흩어지는지를 나타내는 수치)가 있습니다.\n캐피털 그룹에 따르면 1970년 이후 중간선거 해의 중앙값은 16% 가까이였고, 다른 해는 13%였습니다.\n평소보다 덜 오르면서 더 흔들렸다는 뜻입니다.\n선거 전의 불안이 숫자에도 남아 있는 셈입니다."
+   },
+   {
+    "heading": "선거가 끝나면 무엇이 사라질까",
+    "body": "당시 도이체방크의 국제 담당 수석 이코노미스트였던 토르스텐 슬록(Torsten Slok)은 미국 CBS 방송에 이렇게 설명했습니다.\n“표가 다 집계되면 불확실성이 사라지고, 판이 어떻게 생겼는지 알게 됩니다.”\n어느 쪽이 이기느냐보다 결과를 아는 것이 더 중요하다는 뜻입니다.\n시장이 싫어하는 것은 특정 정당이 아니라 모른다는 상태라는 해석입니다."
+   },
+   {
+    "heading": "선거 뒤 1년은 거의 두 배였습니다",
+    "body": "캐피털 그룹의 계산으로는 1950년 이후 중간선거 뒤 1년 평균 수익률이 15.4%였습니다. 다른 해의 거의 두 배입니다.\n몇 해 전 CBS 방송이 전한 분석은 비슷한 이야기를 더 세게 합니다. 투자회사 LPL파이낸셜의 수석 투자전략가였던 존 린치(John Lynch)가 1946년 이후 중간선거 18번을 살폈습니다.\n모든 선거에서 S&P 500은 1년 뒤 크게 올라 있었다는 결과입니다.\n정치가 시장을 움직인다기보다, 불확실성이 걷히는 시점이 매번 비슷한 바닥과 겹쳤다는 쪽에 가깝습니다."
+   },
+   {
+    "heading": "그래도 열여덟 번의 평균일 뿐입니다",
+    "body": "린치가 본 표본은 열여덟 번입니다. 같은 일이 열아홉 번째에도 일어난다고 보장하는 숫자가 아닙니다.\n린치는 선거 자체에 쏠린 관심을 이렇게 다독였습니다.\n“사람들은 선거에 너무 신경을 쓰지만, 정부 예산에서 이미 정해진 몫은 80, 85%입니다.”\n정권이 바뀌어도 정부 지출의 대부분은 크게 바뀌지 않는다는 말입니다."
+   },
+   {
+    "heading": "계좌의 돈은 선거 뒤 1년을 기다릴 수 있을까",
+    "body": "캐피털 그룹도 선거는 장기 수익률을 좌우하는 여러 요인 가운데 하나일 뿐이라고 선을 긋습니다. 관세, 물가, 금리, 세계 경제 성장도 함께 봐야 한다는 것입니다.\n그러니 이 숫자를 날짜 맞추기의 근거로 쓰기는 어렵습니다. 선거 전에 흔들리고 선거 뒤에 오르는 평균이 있어도, 그 사이를 버틸 수 있는 돈인지는 평균이 알려 주지 않습니다.\n지금 미국 주식에 들어가 있는 돈은 선거가 끝나고도 한참 기다려도 되는 돈인가요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "선거가 끝난 뒤 1년은 거의 두 배로 올랐습니다",
+   "url": "https://www.capitalgroup.com/individual/ca/en/insights/articles/markets-midterm-elections-5-charts.html",
+   "original": "nearly twice the return of all other years during a similar period"
+  },
+  {
+   "claim": "모든 선거에서 S&P 500은 1년 뒤 크게 올라 있었다는 결과입니다",
+   "url": "https://www.cbsnews.com/news/election-results-stock-market-get-ready-for-a-relief-rally-in-the-markets/",
+   "original": "In each case, the S&P 500 (or its equivalent) had gained significantly a year after the election"
+  },
+  {
+   "claim": "1931년 이후 중간선거가 있는 해의 평균 수익률은 4.7%였고, 다른 해는 9.5%였습니다",
+   "url": "https://www.capitalgroup.com/individual/ca/en/insights/articles/markets-midterm-elections-5-charts.html",
+   "original": "the S&P 500 Index has seen an average return of 4.7% in midterm election years, about half the 9.5% average for all other years"
+  },
+  {
+   "claim": "90년 넘는 자료",
+   "url": "https://www.capitalgroup.com/individual/ca/en/insights/articles/markets-midterm-elections-5-charts.html",
+   "original": "Capital Group examined more than 90 years of data from the S&P 500 Index"
+  },
+  {
+   "claim": "1970년 이후 중간선거 해의 중앙값은 16% 가까이였고, 다른 해는 13%였습니다",
+   "url": "https://www.capitalgroup.com/individual/ca/en/insights/articles/markets-midterm-elections-5-charts.html",
+   "original": "Since 1970, midterm years have a median standard deviation of returns of nearly 16%, compared with 13% in all other years."
+  },
+  {
+   "claim": "판이 어떻게 생겼는지 알게 됩니다",
+   "url": "https://www.cbsnews.com/news/election-results-stock-market-get-ready-for-a-relief-rally-in-the-markets/",
+   "original": "we know what the playing field looks like"
+  },
+  {
+   "claim": "1950년 이후 중간선거 뒤 1년 평균 수익률이 15.4%였습니다",
+   "url": "https://www.capitalgroup.com/individual/ca/en/insights/articles/markets-midterm-elections-5-charts.html",
+   "original": "Since 1950, the average one-year return following a midterm election was 15.4%"
+  },
+  {
+   "claim": "1946년 이후 중간선거 18번을 살폈습니다",
+   "url": "https://www.cbsnews.com/news/election-results-stock-market-get-ready-for-a-relief-rally-in-the-markets/",
+   "original": "crunched the numbers for the 18 midterm elections since 1946"
+  },
+  {
+   "claim": "사람들은 선거에 너무 신경을 쓰지만, 정부 예산에서 이미 정해진 몫은 80, 85%입니다",
+   "url": "https://www.cbsnews.com/news/election-results-stock-market-get-ready-for-a-relief-rally-in-the-markets/",
+   "original": "People focus so much on the election, but how much of the"
+  },
+  {
+   "claim": "린치가 본 표본은 열여덟 번입니다",
+   "url": "https://www.cbsnews.com/news/election-results-stock-market-get-ready-for-a-relief-rally-in-the-markets/",
+   "original": "crunched the numbers for the 18 midterm elections since 1946"
+  }
+ ]
+}

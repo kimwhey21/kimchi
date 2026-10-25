@@ -1,0 +1,130 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-26",
+ "slug": "chesky-people-managers-ai",
+ "radar_origin": "Airbnb CEO Brian Chesky warns two types of people won’t survive the AI era: ‘pure people managers’ and workers who resist change",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1560250056-07ba64664864?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8bWFuYWdlciUyMGxhcHRvcCUyMHRlYW18ZW58MHwwfHx8MTc5Mjk0ODI4OHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "YDVdprpgHv4",
+  "credit": "Unsplash"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Airbnb CEO Brian Chesky warns two types of people won’t survive the AI era",
+   "url": "https://fortune.com/article/airbnb-ceo-brian-chesky-warns-two-types-of-people-wont-survive-the-ai-era-pure-people-managers-and-workers-who-resist-change/"
+  },
+  {
+   "name": "HRD 아메리카",
+   "title": "Airbnb CEO says pure people managers have no future",
+   "url": "https://www.hcamag.com/us/news/general/airbnb-ceo-says-pure-people-managers-have-no-future/575985"
+  },
+  {
+   "name": "피플매터스",
+   "title": "Airbnb CEO Brian Chesky says ‘pure people managers’ may not survive AI era",
+   "url": "https://sea.peoplemattersglobal.com/news/ai-and-emerging-tech/airbnb-ceo-brian-chesky-says-pure-people-managers-may-not-survive-ai-era-49642"
+  }
+ ],
+ "tags": [
+  "브라이언체스키",
+  "에어비앤비",
+  "AI와일자리"
+ ],
+ "ko": {
+  "title": "코드의 60%를 AI가 쓰는 회사에서 관리자가 할 일",
+  "title_candidates": [
+   "에어비앤비 CEO는 왜 회의만 하는 관리자를 지목했을까",
+   "팀원 면담만 하는 팀장은 AI 시대에 설 자리가 있을까",
+   "코드의 60%를 AI가 쓰는 회사에서 관리자가 할 일"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "AI가 일자리를 위협한다는 경고는 이제 익숙합니다. 그런데 에어비앤비 CEO 브라이언 체스키가 이번에 지목한 쪽은 개발자도 상담원도 아닌 관리자입니다.\n그것도 사람만 관리하는 관리자입니다.\n직원 면담과 회의로 하루를 채우는 팀장은 AI 시대에도 같은 자리를 지킬 수 있을까요?"
+   },
+   {
+    "heading": "체스키는 두 부류를 꼽았습니다",
+    "body": "에어비앤비 공동창업자인 체스키는 팟캐스트 ‘인베스트 라이크 더 베스트(Invest Like the Best)’에서 AI 시대에 어려워질 사람을 둘로 나눴습니다. 경제지 포춘이 이 발언을 전했습니다.\n“AI로 넘어가는 변화를 해내지 못할 사람은 두 부류입니다. 사람만 관리하는 관리자, 그리고 경직돼서 바뀌려 하지 않는 사람입니다.”\n뒤쪽은 어느 직군에나 해당하는 말이라 새롭지 않습니다. 눈에 띄는 쪽은 앞의 부류입니다.\nHRD 아메리카가 실은 같은 인터뷰의 다른 대목은 더 거칠었습니다.\n“저는 사람 관리자가 앞으로 아무 가치도 없을 거라고 생각합니다.”"
+   },
+   {
+    "heading": "‘사람만 관리한다’는 말의 뜻",
+    "body": "체스키가 말한 관리자는 팀원의 고민을 들어 주고 일정을 조율하는 데서 역할이 끝나는 사람입니다.\n“사람들의 상담사 노릇을 하며 회의만 하고 일대일 면담만 하는 관리자가 되어서는 안 됩니다.”\n일대일 면담(one-on-one)은 팀장과 팀원이 따로 마주 앉아 근황과 고민을 나누는 정기 면담입니다.\n체스키는 이런 만남 자체를 나쁘다고 하지 않았습니다. 정기 면담도, 팀원과 저녁을 먹는 일도 좋다고 했습니다.\n그가 버리자는 것은 일은 하지 않고 사람만 관리하는 권위입니다."
+   },
+   {
+    "heading": "그가 내놓은 답은 ‘일하는 관리자’",
+    "body": "체스키가 대신 내세운 이름은 ‘하이브리드 관리자(hybrid people manager)’, 또는 ‘매니저 IC(manager IC)’입니다.\nIC는 개인 기여자(individual contributor), 곧 직접 실무를 맡는 사람을 뜻합니다. 관리자이면서 동시에 자기 손으로 결과물을 만드는 사람입니다.\n체스키가 모범으로 든 사람은 애플의 전 디자인 총괄 조니 아이브(Jony Ive)입니다. 제품에 깊이 관여하면서 팀을 이끈 인물이라는 이유입니다.\n권위가 직함이 아니라 일에서 나오는 구조입니다."
+   },
+   {
+    "heading": "에어비앤비는 이미 그렇게 움직입니다",
+    "body": "체스키는 자기 회사를 사례로 들었습니다. 디자인과 개발 팀장들이 다시 코딩으로 돌아가거나 AI 코딩 도구 클로드 코드(Claude Code)를 쓰고 있다는 것입니다.\n“디자인과 엔지니어링 리더들이 다시 코딩으로 돌아가거나 클로드 코드를 쓰고 있습니다.”\n피플매터스가 정리한 에어비앤비 실적 발표를 보면 개발자가 만드는 코드의 60%가량을 AI가 쓰고 있습니다. 고객 상담의 40% 넘는 부분도 AI가 처리합니다.\n“그 덕분에 우리 팀은 더 많은 기능을 내놓고 더 빠르게 고치고 있습니다.”"
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "체스키 혼자만의 생각은 아닙니다. 코인베이스는 인력의 14%를 줄이면서 CEO 아래 조직을 다섯 단계로 평평하게 만들고 있습니다.\n시장조사업체 가트너(Gartner)는 올해 안에 기업의 20%가 AI로 중간관리직의 절반 넘게 없앨 것이라 내다봤습니다.\n그런데 같은 가트너가 관리자 3,000명 넘게 조사한 결과는 결이 다릅니다. 잘 도입한 AI 도구는 행정 업무를 줄여 코칭과 팀원 육성에 쓸 시간을 늘렸습니다.\n관리자를 없애는 AI와 관리자에게 시간을 돌려주는 AI가 같은 자료 안에 함께 있는 셈입니다."
+   },
+   {
+    "heading": "지금 우리 팀장은 어느 쪽일까",
+    "body": "체스키의 말을 그대로 받아들일 필요는 없습니다. 에어비앤비의 사정이 다른 회사에도 맞는다는 근거는 아직 없습니다.\n다만 AI가 회의록과 보고서 정리를 대신하는 날이 오면, 관리자에게 남는 일이 무엇인지는 한국 직장에서도 물어야 합니다.\n여러분 회사의 중간관리자는 지금 일을 하는 사람인가요, 일정을 조율하는 사람인가요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "두 부류입니다. 사람만 관리하는 관리자",
+   "url": "https://fortune.com/article/airbnb-ceo-brian-chesky-warns-two-types-of-people-wont-survive-the-ai-era-pure-people-managers-and-workers-who-resist-change/",
+   "original": "The two types of people who will not make the shift to AI are pure people managers"
+  },
+  {
+   "claim": "저는 사람 관리자가 앞으로 아무 가치도 없을 거라고 생각합니다",
+   "url": "https://www.hcamag.com/us/news/general/airbnb-ceo-says-pure-people-managers-have-no-future/575985",
+   "original": "I do not think people managers will have any value in the future"
+  },
+  {
+   "claim": "사람들의 상담사 노릇을 하며 회의만 하고 일대일 면담만 하는 관리자가 되어서는 안 됩니다",
+   "url": "https://www.hcamag.com/us/news/general/airbnb-ceo-says-pure-people-managers-have-no-future/575985",
+   "original": "You cannot just be these managers where you are people's therapists, and you are just doing meetings, you are doing one-on-ones."
+  },
+  {
+   "claim": "정기 면담도, 팀원과 저녁을 먹는 일도 좋다고 했습니다",
+   "url": "https://fortune.com/article/airbnb-ceo-brian-chesky-warns-two-types-of-people-wont-survive-the-ai-era-pure-people-managers-and-workers-who-resist-change/",
+   "original": "have routine check-ins, and go out to dinner with direct reports"
+  },
+  {
+   "claim": "디자인과 엔지니어링 리더들이 다시 코딩으로 돌아가거나 클로드 코드를 쓰고 있습니다",
+   "url": "https://sea.peoplemattersglobal.com/news/ai-and-emerging-tech/airbnb-ceo-brian-chesky-says-pure-people-managers-may-not-survive-ai-era-49642",
+   "original": "going back to coding or using Claude Code"
+  },
+  {
+   "claim": "개발자가 만드는 코드의 60%가량을 AI가 쓰고 있습니다",
+   "url": "https://sea.peoplemattersglobal.com/news/ai-and-emerging-tech/airbnb-ceo-brian-chesky-says-pure-people-managers-may-not-survive-ai-era-49642",
+   "original": "AI now generates nearly 60% of the code produced by Airbnb engineers"
+  },
+  {
+   "claim": "고객 상담의 40% 넘는 부분도 AI가 처리합니다",
+   "url": "https://sea.peoplemattersglobal.com/news/ai-and-emerging-tech/airbnb-ceo-brian-chesky-says-pure-people-managers-may-not-survive-ai-era-49642",
+   "original": "AI is handling more than 40% of customer support interactions"
+  },
+  {
+   "claim": "그 덕분에 우리 팀은 더 많은 기능을 내놓고 더 빠르게 고치고 있습니다",
+   "url": "https://sea.peoplemattersglobal.com/news/ai-and-emerging-tech/airbnb-ceo-brian-chesky-says-pure-people-managers-may-not-survive-ai-era-49642",
+   "original": "That means our teams are shipping more features and iterating more quickly"
+  },
+  {
+   "claim": "코인베이스는 인력의 14%를 줄이면서",
+   "url": "https://www.hcamag.com/us/news/general/airbnb-ceo-says-pure-people-managers-have-no-future/575985",
+   "original": "Coinbase is cutting 14 percent of its workforce while simultaneously flattening to five organizational layers below the CEO"
+  },
+  {
+   "claim": "기업의 20%가 AI로 중간관리직의 절반 넘게 없앨 것이라",
+   "url": "https://www.hcamag.com/us/news/general/airbnb-ceo-says-pure-people-managers-have-no-future/575985",
+   "original": "Gartner forecasts that by 2026, 20 percent of organizations will use AI to eliminate more than half of their middle management positions"
+  },
+  {
+   "claim": "관리자 3,000명 넘게 조사한 결과",
+   "url": "https://www.hcamag.com/us/news/general/airbnb-ceo-says-pure-people-managers-have-no-future/575985",
+   "original": "survey of more than 3,000 managers found that AI-driven management tools"
+  }
+ ]
+}

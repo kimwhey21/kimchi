@@ -1,0 +1,160 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장의 역사",
+ "date": "2026-10-26",
+ "slug": "black-monday-1987-liquidity",
+ "radar_origin": "목록 순서",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1618044733300-9472054094ee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8bmV3c3BhcGVyJTIwc3RvY2slMjBtYXJrZXR8ZW58MHwwfHx8MTc5Mjk0ODMwNHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "XrIfY_4cK1w",
+  "credit": "Unsplash"
+ },
+ "sources": [
+  {
+   "name": "Fed 역사 기록",
+   "title": "Stock Market Crash of 1987",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987"
+  },
+  {
+   "name": "위키백과",
+   "title": "Black Monday (1987)",
+   "url": "https://en.wikipedia.org/wiki/Black_Monday_(1987)"
+  }
+ ],
+ "tags": [
+  "블랙먼데이",
+  "1987년폭락",
+  "시장의역사"
+ ],
+ "ko": {
+  "title": "하루 22.6% 폭락이 경기침체를 부르지 않은 이유",
+  "title_candidates": [
+   "하루 22.6% 폭락이 경기침체를 부르지 않은 이유",
+   "블랙먼데이 다음 날 월가는 왜 더 두려워했을까",
+   "1987년 블랙먼데이: 폭락보다 무서웠던 화요일"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "시장이 하루에 22.6% 무너졌는데도 경제는 멀쩡했던 적이 있습니다.\n미국 다우지수가 이 정도로 하락한 날은 지금도 역사상 가장 큰 하루 낙폭으로 남아 있습니다. 그런데 이 폭락은 경기침체도, 은행 위기도 부르지 않았습니다.\n시장은 무너졌는데 경제는 왜 멀쩡했을까요?"
+   },
+   {
+    "heading": "출발점은 일곱 달 만에 오른 시장이었습니다",
+    "body": "그해 상반기 미국 주식은 거침없이 올랐습니다. Fed 역사 기록에 따르면 8월 말까지 다우지수는 일곱 달 만에 44% 올라 거품 우려를 키웠습니다.\n10월 중순에는 예상보다 큰 무역적자 발표와 달러 하락이 겹쳤습니다. 14일부터 곳곳에서 큰 하락이 이어졌고, 16일 금요일에는 하루 4.6%가 빠졌습니다.\n그날은 옵션과 선물 만기가 한꺼번에 몰리는 ‘트리플 위칭(triple witching)’과도 겹쳤습니다.\n주말에는 재무장관 제임스 베이커(James Baker)가 달러 가치를 낮추겠다고 공개적으로 말했습니다."
+   },
+   {
+    "heading": "월요일 아침, 아시아 시장이 먼저 무너졌습니다",
+    "body": "미국 시장이 열리기도 전에 아시아에서 매도가 쏟아졌습니다. 뉴질랜드 주식시장은 이날 60%나 빠졌습니다.\n뉴욕에서도 개장과 동시에 지수가 곤두박질쳤고, 다우지수는 508포인트, 22.6% 하락한 채 마감했습니다.\n당시 인텔 CEO 앤드루 그로브(Andrew Grove)는 이렇게 말했습니다.\n“누군가 ‘불이야!’ 하고 외치는 극장과 조금 비슷합니다.”\n투자자들이 금융위기가 시장에서 시장으로 번지는 모습을 처음으로 생방송 TV로 지켜본 날이기도 했습니다."
+   },
+   {
+    "heading": "범인은 ‘포트폴리오 보험’이었을까",
+    "body": "용의자로 가장 먼저 지목된 것은 포트폴리오 보험(portfolio insurance)입니다. 옵션과 파생상품을 많이 쓰는 투자 상품입니다.\nFed 역사 기록은 이 상품이 손실이 또 다른 매도를 부르는 식으로 폭락의 속도를 높였다고 정리합니다.\n그런데 위키백과가 소개한 여러 연구는 결론을 내리지 못합니다.\n포트폴리오 보험이 없던 해외 시장도 미국만큼 흔들렸기 때문입니다.\n범인 한 명으로 못 박기에는 증거가 모자란 셈입니다."
+   },
+   {
+    "heading": "더 무서웠던 것은 화요일이었습니다",
+    "body": "폭락을 조사한 브래디 위원회(Brady Commission)의 로버트 글라우버(Robert Glauber)는 나중에 이렇게 돌아봤습니다.\n“블랙먼데이는 무서웠지만, 정말 오싹했던 것은 화요일의 자금 사정이었습니다.”\n가격이 아니라 돈이 막히는 문제였습니다. 증권사들이 고객에게 받아 둔 증거금이 부족해지면서, 일부 회사는 스스로를 지탱할 자본마저 위협받았습니다.\n이 흐름이 계속되면 증권사가 줄줄이 무너지고 금융 전체로 번질 수 있었습니다."
+   },
+   {
+    "heading": "Fed는 문을 열어 두겠다고 말했습니다",
+    "body": "연준 의장 앨런 그린스펀(Alan Greenspan)은 폭락 다음 날인 20일 짧은 성명을 냈습니다.\n“연준은 경제와 금융 시스템을 떠받치는 유동성의 공급원이 될 준비가 되어 있음을 오늘 확인합니다.”\n유동성(liquidity)은 필요할 때 현금으로 바꾸거나 빌릴 수 있는 능력을 말합니다.\n위키백과에 따르면 연준은 그날 은행 시스템에 170억 달러를 풀었고, 평소보다 한 시간 일찍 시장에 개입하며 공급 의지를 보여 줬습니다."
+   },
+   {
+    "heading": "그 뒤 시장이 바꾼 것들",
+    "body": "Fed 역사 기록은 이날의 폭락이 경기침체나 은행 위기로 이어지지 않았다고 평가합니다. 시장도 빠르게 회복해 불과 두 거래일 만에 손실의 57%를 되찾았고, 2년이 채 되지 않아 폭락 전 고점을 넘어섰습니다.\n남은 제도도 있습니다. 급락하면 거래를 잠시 멈추는 서킷브레이커(circuit breaker)가 그때 만들어졌고, 지금 뉴욕증권거래소는 S&P 500이 7%, 13%, 20% 빠질 때마다 거래를 멈춥니다.\n폭락의 가격보다 폭락 속 자금 사정이 더 위험했다면, 내 계좌에서 먼저 확인할 것은 수익률일까요, 급할 때 쓸 수 있는 현금일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "예상보다 큰 무역적자 발표와 달러 하락이 겹쳤습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "disclosed a larger-than-expected trade deficit and the dollar fell in value"
+  },
+  {
+   "claim": "시장이 하루에 22.6% 무너졌는데도",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "the Dow Jones Industrial Average dropped 22.6 percent"
+  },
+  {
+   "claim": "경기침체도, 은행 위기도 부르지 않았습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "were not followed by an economic recession or a banking crisis"
+  },
+  {
+   "claim": "8월 말까지 다우지수는 일곱 달 만에 44% 올라",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "By late August, the DJIA had gained 44 percent in a matter of seven months"
+  },
+  {
+   "claim": "16일 금요일에는 하루 4.6%가 빠졌습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "the DJIA had lost 4.6 percent"
+  },
+  {
+   "claim": "14일부터 곳곳에서 큰 하락이 이어졌고",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "Beginning on October 14, a number of markets began incurring large daily losses"
+  },
+  {
+   "claim": "뉴질랜드 주식시장은 이날 60%나 빠졌습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "New Zealand's stock market fell 60 percent"
+  },
+  {
+   "claim": "다우지수는 508포인트, 22.6% 하락한 채 마감했습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "the DJIA crashed at the opening bell and eventually finished down 508 points, or 22.6 percent"
+  },
+  {
+   "claim": "누군가 ‘불이야!’ 하고 외치는 극장과 조금 비슷합니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "a little like a theater where someone yells"
+  },
+  {
+   "claim": "블랙먼데이는 무서웠지만, 정말 오싹했던 것은 화요일의 자금 사정이었습니다",
+   "url": "https://en.wikipedia.org/wiki/Black_Monday_(1987)",
+   "original": "Black Monday may have been frightening, but it was the capital-liquidity problem on Tuesday that was horrifying"
+  },
+  {
+   "claim": "연준은 경제와 금융 시스템을 떠받치는 유동성의 공급원이 될 준비가 되어 있음을 오늘 확인합니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "affirmed today its readiness to serve as a source of liquidity to support the economic and financial system"
+  },
+  {
+   "claim": "폭락 다음 날인 20일 짧은 성명",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "In a statement on October 20, 1987"
+  },
+  {
+   "claim": "은행 시스템에 170억 달러를 풀었고",
+   "url": "https://en.wikipedia.org/wiki/Black_Monday_(1987)",
+   "original": "On October 20 it injected $17 billion into the banking system"
+  },
+  {
+   "claim": "불과 두 거래일 만에 손실의 57%를 되찾았고",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "In just two trading sessions, the DJIA gained back 288 points, or 57 percent, of the total Black Monday downturn"
+  },
+  {
+   "claim": "2년이 채 되지 않아",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "Less than two years later, US stock markets surpassed their pre-crash highs"
+  },
+  {
+   "claim": "S&P 500이 7%, 13%, 20% 빠질 때마다 거래를 멈춥니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "temporarily halt trading when the S&P 500 stock index declines 7 percent, 13 percent, and 20 percent"
+  },
+  {
+   "claim": "포트폴리오 보험이 없던 해외 시장도 미국만큼 흔들렸기 때문입니다",
+   "url": "https://en.wikipedia.org/wiki/Black_Monday_(1987)",
+   "original": "Markets around the world that did not have portfolio insurance trading experienced as much turmoil and loss as the US market"
+  },
+  {
+   "claim": "손실이 또 다른 매도를 부르는 식으로 폭락의 속도를 높였다고",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1987",
+   "original": "accelerated the crash's pace as initial losses led to further rounds of selling"
+  }
+ ]
+}
