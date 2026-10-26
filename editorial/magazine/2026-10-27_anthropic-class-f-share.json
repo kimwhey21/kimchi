@@ -1,0 +1,147 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-27",
+ "slug": "anthropic-class-f-share",
+ "radar_origin": "Fortune: Anthropic’s dual-class share structure borrows ideas from Mark Zuckerberg, Elon Musk—and the New York Times",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1762163516269-3c143e04175c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8ZGF0YSUyMGNlbnRlcnxlbnwwfDB8fHwxNzkzMDM0OTk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "VHmBX7FnXw0",
+  "credit": "Unsplash / Domaintechnik"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Anthropic’s dual-class share structure borrows ideas from Mark Zuckerberg, Elon Musk—and the New York Times (2026-10-26)",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/"
+  },
+  {
+   "name": "모틀리 풀",
+   "title": "Anthropic Just Filed Its IPO Prospectus. Here's What Investors Learned (2026-10-26)",
+   "url": "https://www.fool.com/investing/2026/10/26/anthropic-just-filed-its-ipo-prospectus-here-s-what-investors-learned/"
+  }
+ ],
+ "tags": [
+  "앤트로픽",
+  "상장",
+  "차등의결권"
+ ],
+ "ko": {
+  "title": "앤트로픽의 한 주는 왜 의결권 절반을 쥘까",
+  "title_candidates": [
+   "앤트로픽의 한 주는 왜 의결권 절반을 쥘까",
+   "배당 없는 한 주가 앤트로픽을 쥐는 이유",
+   "앤트로픽 상장 서류: 숫자보다 먼저 읽을 한 주"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "주식 한 주가 회사 의결권의 절반을 쥐고, 배당은 한 푼도 받지 못합니다.\n앤트로픽(Anthropic)이 상장하면서 만들겠다는 ‘클래스 F’ 주식의 설계입니다.\n이 회사는 올해 상반기에만 매출 163억 달러를 냈다고 밝혔는데, 투자자가 먼저 읽어야 할 것은 그 숫자가 아닙니다.\n회사를 움직이는 열쇠가 한 주에 들어 있다면, 나머지 주식을 사는 사람은 무엇을 사는 걸까요?"
+   },
+   {
+    "heading": "상장 서류에 찍힌 숫자는 화려합니다",
+    "body": "투자 매체 모틀리 풀(Motley Fool)은 앤트로픽의 상장 신고서(S-1)를 풀어 쓴 기사에서 상반기 매출이 163억 달러라고 전했습니다. 작년 같은 기간의 약 14배입니다.\n순손실도 807억 달러로 적혔는데, 720억 달러 넘는 부분은 전환사채와 관련해 장부에 잡은 평가 비용입니다. 전환사채는 나중에 주식으로 바꿀 수 있는 채권으로, 회사 가치가 오르면 오히려 비용이 커집니다.\n그 비용을 빼도 영업손실은 6억 9,300만 달러가 남았고, 매출의 약 4%입니다."
+   },
+   {
+    "heading": "한 주에 50.1%를 담은 구조",
+    "body": "경제지 포춘(Fortune)에 따르면 이번 상장으로 클래스 F 주식이 딱 한 주 만들어집니다. 주인은 공동창업자 일곱 명이 소유한 유한회사입니다.\n그 한 주는 의결권 50.1%를 갖지만 경제적 권리는 없습니다.\n주식은 A, E, F, N, T 다섯 종류로 나뉩니다.\n창업자들은 각자 가진 앤트로픽 지분의 80%를 내놓겠다고 약속했습니다."
+   },
+   {
+    "heading": "낯선 구조가 아니라는 사실",
+    "body": "포춘은 지난해 미국 증시에 새로 오른 기업의 41%가 주식을 둘 이상으로 나눴다고 짚었습니다. 앞선 45년 남짓은 10% 안팎이었습니다.\n메타(Meta)의 마크 저커버그는 의결권 60.8%를 쥐고 경제적 지분은 약 14%입니다.\n저커버그는 이런 구조로 ‘페이스북의 창업자 통제권’을 지키겠다고 말해 왔습니다.\n가장 오래된 예는 뉴욕타임스입니다. 일반 투자자가 사는 A주는 이사 일부만 뽑고, 가문 신탁이 쥔 B주가 나머지 다수를 뽑습니다.\n그 신탁의 유언장은 이렇게 목적을 적었다고 포춘은 전합니다.\n“철저하게 두려움 없고, 숨은 영향력에서 자유로우며, 사사로운 이익 없이 공익에 헌신하는 신문.”"
+   },
+   {
+    "heading": "아직 비어 있는 칸",
+    "body": "모틀리 풀은 앤트로픽의 장기 컴퓨팅 약정 총액이 아직 공개되지 않았다고 짚었습니다.\n공모가도 다음 분기 실적도 아직 정해지지 않았습니다.\n그러니 지금 읽을 수 있는 것은 성장 속도와 지배 구조, 둘뿐입니다.\n성장이 빨라 보일수록 사는 쪽은 한 주가 틀린 선택을 했을 때 제동을 걸 수단이 있는지 먼저 확인할 일입니다.\n의결권 없이도 그 성장의 몫을 믿을 수 있나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "상반기 매출이 163억 달러",
+   "url": "https://www.fool.com/investing/2026/10/26/anthropic-just-filed-its-ipo-prospectus-here-s-what-investors-learned/",
+   "original": "Anthropic's revenue in the first half of 2026 came in at $16.3 billion."
+  },
+  {
+   "claim": "작년 같은 기간의 약 14배",
+   "url": "https://www.fool.com/investing/2026/10/26/anthropic-just-filed-its-ipo-prospectus-here-s-what-investors-learned/",
+   "original": "roughly 14 times the revenue it generated in the same period in 2025"
+  },
+  {
+   "claim": "순손실도 807억 달러",
+   "url": "https://www.fool.com/investing/2026/10/26/anthropic-just-filed-its-ipo-prospectus-here-s-what-investors-learned/",
+   "original": "$80.7 billion net loss for the first half"
+  },
+  {
+   "claim": "720억 달러 넘는 부분",
+   "url": "https://www.fool.com/investing/2026/10/26/anthropic-just-filed-its-ipo-prospectus-here-s-what-investors-learned/",
+   "original": "more than $72 billion of that was a non-cash accounting charge related to its convertible notes"
+  },
+  {
+   "claim": "영업손실은 6억 9,300만 달러",
+   "url": "https://www.fool.com/investing/2026/10/26/anthropic-just-filed-its-ipo-prospectus-here-s-what-investors-learned/",
+   "original": "Anthropic still posted an operating loss of $693 million, about 4% of its revenue."
+  },
+  {
+   "claim": "매출 163억 달러를 냈다",
+   "url": "https://www.fool.com/investing/2026/10/26/anthropic-just-filed-its-ipo-prospectus-here-s-what-investors-learned/",
+   "original": "Anthropic's revenue in the first half of 2026 came in at $16.3 billion."
+  },
+  {
+   "claim": "공동창업자 일곱 명",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "The IPO will create one share of Class F stock, held by an LLC owned by the seven co-founders."
+  },
+  {
+   "claim": "의결권 50.1%",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "That one share carries 50.1% of the vote and no economic rights."
+  },
+  {
+   "claim": "한 주 만들어집니다",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "The IPO will create one share of Class F stock, held by an LLC owned by the seven co-founders."
+  },
+  {
+   "claim": "A, E, F, N, T 다섯 종류",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "Anthropic's stock will come in five letters: A, E, F, N and T,"
+  },
+  {
+   "claim": "지분의 80%",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "Each co-founder has pledged to give away 80% of their Anthropic equity."
+  },
+  {
+   "claim": "41%가 주식을 둘 이상으로",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "as did 41% of all IPOs, compared with about 10% across the previous four-and-a-half decades"
+  },
+  {
+   "claim": "10% 안팎",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "as did 41% of all IPOs, compared with about 10% across the previous four-and-a-half decades"
+  },
+  {
+   "claim": "의결권 60.8%",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "giving him 60.8% of the company's total voting power"
+  },
+  {
+   "claim": "약 14%",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "His economic stake is roughly 14%"
+  },
+  {
+   "claim": "페이스북의 창업자 통제권",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "keep founder control of Facebook."
+  },
+  {
+   "claim": "숨은 영향력에서 자유로우며",
+   "url": "https://fortune.com/2026/10/26/anthropic-ipo-dual-class-share-structure-zuckerberg-musk-new-york-times/",
+   "original": "entirely fearless, free of ulterior influence and unselfishly devoted to the public welfare"
+  }
+ ]
+}

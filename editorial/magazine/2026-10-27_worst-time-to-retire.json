@@ -1,0 +1,122 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-10-27",
+ "slug": "worst-time-to-retire",
+ "radar_origin": "A Wealth of Common Sense (벤 칼슨): What If This is the Worst Time to Retire?",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1533444273691-ebf51af8fd9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8cmV0aXJlZCUyMGNvdXBsZXxlbnwwfDB8fHwxNzkzMDM1MDAwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "6D58t6uZT5M",
+  "credit": "Unsplash / James Hose Jr"
+ },
+ "sources": [
+  {
+   "name": "어 웰스 오브 커먼 센스",
+   "title": "What If This is the Worst Time to Retire? (2026-10)",
+   "url": "https://awealthofcommonsense.com/2026/10/what-if-this-is-the-worst-time-to-retire/"
+  },
+  {
+   "name": "모틀리 풀 어센트",
+   "title": "Is Now a Bad Time to Retire? (2022-12-18)",
+   "url": "https://www.fool.com/the-ascent/buying-stocks/articles/is-now-a-bad-time-to-retire/"
+  }
+ ],
+ "tags": [
+  "은퇴",
+  "수익률순서위험",
+  "4%규칙"
+ ],
+ "ko": {
+  "title": "지금이 은퇴하기 가장 나쁜 때일지 모른다는 불안",
+  "title_candidates": [
+   "지금이 은퇴하기 가장 나쁜 때일지 모른다는 불안",
+   "은퇴 첫 몇 해가 30년을 가른다는 말, 맞을까",
+   "주가가 오른 해에 은퇴하면 무엇이 달라질까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "주가가 크게 오른 해에 은퇴하는 사람은 운이 좋은 걸까요? 투자 블로거 벤 칼슨(Ben Carlson)은 그렇게 단정하지 않습니다.\n그는 블로그 어 웰스 오브 커먼 센스(A Wealth of Common Sense)에 이렇게 적었습니다.\n“지금이 은퇴하기 가장 나쁜 때 중 하나인지는 모르겠지만, 위험자산은 많이 올랐습니다.”\n자산이 가장 불어난 때가 가장 위험한 출발선일 수도 있다면, 은퇴 날짜는 무엇으로 정해야 할까요?"
+   },
+   {
+    "heading": "닷컴 거품 꼭대기에서 은퇴한 부부",
+    "body": "칼슨은 2000년 3월, 닷컴 거품이 정점이던 때에 은퇴한 부부를 압니다.\n그 정점에서 주식시장은 역사상 가장 긴 약세장 가운데 하나를 지나며 반토막이 났습니다.\n그 부부가 은퇴한 첫 10년 동안 시장은 사실상 제자리였다고 칼슨은 적었습니다.\n같은 평균 수익률이라도 나쁜 해가 앞에 오면 결과는 완전히 달라질 수 있습니다. 월급이 끊긴 뒤에는 떨어진 자산에서 생활비를 꺼내 써야 하기 때문입니다."
+   },
+   {
+    "heading": "첫 몇 해가 왜 가장 무거울까",
+    "body": "모틀리 풀 어센트(The Ascent)는 이 구조를 한 문장으로 정리합니다.\n“은퇴 초기는 앞으로 올 모든 것의 토대를 놓기 때문에 가장 중요합니다.”\n떨어지는 자산에서 예전 습관대로 돈을 꺼내는 것이 위험하다는 경고도 이어집니다.\n“시장 압력으로 가치가 떨어지는 포트폴리오에서 계속 과소비하는 것은 재앙의 지름길입니다.”"
+   },
+   {
+    "heading": "1966년에 은퇴한 사람의 계산",
+    "body": "어센트는 인튜이트 민트(Intuit Mint)의 연구를 들어, 1960년대 후반이 은퇴하기 가장 나쁜 30년의 시작이었다고 전했습니다.\n물가는 치솟았고 1969년과 1973년에 약세장이 연달아 왔습니다.\n은퇴 첫 해 자산의 4%를 꺼내 쓰는 ‘4% 규칙’을 지켰다면, 이 시기에 은퇴한 사람은 30년이 지나기 전에 돈이 바닥났을 것이라고 어센트는 계산합니다.\n처음부터 3.8%만 꺼낸 사람은 30년째에도 원래 투자금의 대부분을 갖고 있었습니다.\n아주 작은 인출률 차이가 생존을 갈랐습니다."
+   },
+   {
+    "heading": "칼슨이 권한 것은 예측이 아니라 점검입니다",
+    "body": "칼슨은 은퇴 생활이 아주 길게 이어질 수 있다고 짚었습니다.\n그가 내놓은 결론은 시점을 맞히라는 것이 아니었습니다.\n“은퇴 계획을 스트레스 테스트해 보고, 만일을 대비한 대안도 마련해 두는 것이 좋습니다.”\n주가가 오를 때 커지는 자신감이 다른 위험에 눈을 감게 만들 수 있다는 경고이기도 합니다.\n여러분의 은퇴 계획은 첫 10년 동안 주가가 제자리여도 버티게 짜여 있나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "지금이 은퇴하기 가장 나쁜 때 중 하나인지는 모르겠지만",
+   "url": "https://awealthofcommonsense.com/2026/10/what-if-this-is-the-worst-time-to-retire/",
+   "original": "I don’t know if now is one of the worst times to retire but risk assets are up a lot."
+  },
+  {
+   "claim": "2000년 3월",
+   "url": "https://awealthofcommonsense.com/2026/10/what-if-this-is-the-worst-time-to-retire/",
+   "original": "I know a couple who retired in March of 2000 at the peak of the dot-com bubble."
+  },
+  {
+   "claim": "반토막이 났습니다",
+   "url": "https://awealthofcommonsense.com/2026/10/what-if-this-is-the-worst-time-to-retire/",
+   "original": "From that peak, the stock market fell by half in one of the longest bear markets in history."
+  },
+  {
+   "claim": "첫 10년 동안 시장은 사실상 제자리",
+   "url": "https://awealthofcommonsense.com/2026/10/what-if-this-is-the-worst-time-to-retire/",
+   "original": "nowhere for the entire first decade"
+  },
+  {
+   "claim": "앞으로 올 모든 것의 토대를 놓기 때문에",
+   "url": "https://www.fool.com/the-ascent/buying-stocks/articles/is-now-a-bad-time-to-retire/",
+   "original": "The early years of retirement are the most critical as they set the foundation for what's to come."
+  },
+  {
+   "claim": "재앙의 지름길입니다",
+   "url": "https://www.fool.com/the-ascent/buying-stocks/articles/is-now-a-bad-time-to-retire/",
+   "original": "Overspending from a portfolio that is simultaneously losing value due to market pressure is a recipe for disaster."
+  },
+  {
+   "claim": "1960년대 후반이 은퇴하기 가장 나쁜 30년의 시작",
+   "url": "https://www.fool.com/the-ascent/buying-stocks/articles/is-now-a-bad-time-to-retire/",
+   "original": "According to fascinating research from Intuit Mint, the late 1960s began the worst 30-year period in which to retire."
+  },
+  {
+   "claim": "1969년과 1973년에 약세장이 연달아",
+   "url": "https://www.fool.com/the-ascent/buying-stocks/articles/is-now-a-bad-time-to-retire/",
+   "original": "Inflation was through the roof, and back-to-back bear markets hit around 1969 and 1973."
+  },
+  {
+   "claim": "30년이 지나기 전에 돈이 바닥났을 것이라고",
+   "url": "https://www.fool.com/the-ascent/buying-stocks/articles/is-now-a-bad-time-to-retire/",
+   "original": "If someone had stuck with the 4% rule, they would have run out of money after 30 years."
+  },
+  {
+   "claim": "처음부터 3.8%만 꺼낸 사람은 30년째에도",
+   "url": "https://www.fool.com/the-ascent/buying-stocks/articles/is-now-a-bad-time-to-retire/",
+   "original": "Those who withdrew 3.8% of their nest egg from the start still had most of their original investments by year 30."
+  },
+  {
+   "claim": "은퇴 계획을 스트레스 테스트해 보고",
+   "url": "https://awealthofcommonsense.com/2026/10/what-if-this-is-the-worst-time-to-retire/",
+   "original": "stress test your retirement plan"
+  },
+  {
+   "claim": "첫 10년 동안 주가가 제자리여도",
+   "url": "https://awealthofcommonsense.com/2026/10/what-if-this-is-the-worst-time-to-retire/",
+   "original": "nowhere for the entire first decade"
+  }
+ ]
+}
