@@ -452,7 +452,9 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
             # 그렇게 틀린 채 나갔다). 재시도 예약(:27·:34)이 다시 묻는다.
             problems.append(f"{entry.get('name', ticker)}({ticker}): 공식 원천에 {day} 값이 없어 확인하지 못했습니다(야후 {entry['price']})")
             continue
-        if abs(other - float(entry["price"])) > max(0.011, abs(other) * 0.00001):
+        # 차이를 반올림해 잰다(2026-10-28) — 30년물 야후 5.3·공식 5.311은 차이가 딱 0.011인데 부동소수점으로 0.01100000000000012가 되어
+        # 허용 안의 값이 막혔고 그날 아침 미국장 시세가 나가지 못했다.
+        if round(abs(other - float(entry["price"])), 9) > max(0.011, abs(other) * 0.00001):
             problems.append(f"{entry.get('name', ticker)}({ticker}): 야후 {entry['price']} / 공식 {other}")
             continue
         bad_change = _check_change(ticker, entry, series, day)

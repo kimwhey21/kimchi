@@ -73,6 +73,7 @@ STOPPED_ARTIFACTS = {"한국어 가이드": dt.date(2026, 10, 14)}   # 이 날�
 COLUMN_FROM = dt.date(2026, 10, 14)
 COLUMN_DAILY_FROM = dt.date(2026, 10, 17)   # 이 날부터 칼럼은 주말·휴장일에도 돈다(매일 20:00)
 EN_GUIDE_TWICE_FROM = dt.date(2026, 10, 15)   # 영어 가이드가 주 2편(화·금)이 된 뒤 — 그 밖의 요일은 기다리지 않는다
+EN_GUIDE_PAUSED = (dt.date(2026, 10, 25), dt.date(2026, 11, 8))   # 영어 가이드 루틴을 끄고 기존 세 편을 고쳐 색인을 잰다 — 11/8에 다시 정한다
 EN_GUIDE_DAYS = (1, 4)                         # 화·금(월=0)   # 오늘의 한 편(칼럼) 루틴 첫 실행일 — 이 날부터 한국장이 열린 날마다 기다린다
 PAUSED_ARTIFACTS = ({"미국장 프리뷰", "주말 Checkpoint", "주간 결산", "다음 주 일정"},   # 한국어 가이드는 10/7 저녁 다시 켬(시황 블로그에 가이드만 올린다)
                     dt.date(2026, 10, 7), dt.date(2026, 10, 20))
@@ -259,6 +260,8 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
     if start <= day <= end:
         out = [row for row in out if row[0] not in names]
     out = [row for row in out if not (row[0] in STOPPED_ARTIFACTS and day >= STOPPED_ARTIFACTS[row[0]])]
+    if EN_GUIDE_PAUSED[0] <= day <= EN_GUIDE_PAUSED[1]:
+        out = [row for row in out if row[0] != "영어 가이드"]
     if now is not None and now.date() == day:
         out = [row for row in out if now.time() >= dt.time(*map(int, ARTIFACT_DUE[row[0]].split(":")))]
     return out

@@ -267,6 +267,15 @@ class UsSecondSourcesTest(unittest.TestCase):
         self.assertEqual(len(problems), 1); self.assertIn("확인하지 못했습니다", problems[0])
         self.assertNotIn("close_sources", entry)
 
+    def test_a_difference_of_exactly_the_tolerance_passes(self):
+        """2026-10-28 실측: 30년물 야후 5.3·Cboe 5.311 — 차이가 딱 0.011인데 부동소수점으로 넘는다고 막혔다. 0.012는 여전히 막는다."""
+        for yahoo, ok in ((5.3, True), (5.299, False)):
+            entry = {"name": "美 30년물 금리", "price": yahoo, "change_pct": 0.0, "trading_date": "2026-10-27"}
+            with mock.patch.object(fetch_us, "second_series", return_value={"2026-10-27": 5.311}), \
+                    mock.patch.object(fetch_us, "_check_change", return_value=None):
+                problems = fetch_us._verify_second_source({"^TYX": entry})
+            self.assertEqual(problems == [], ok, (yahoo, problems))
+
     def test_change_is_checked_against_the_official_previous_close(self):
         """2026-09-23 실측: 야후 이력에 9/22 줄이 빠져 다우 등락률이 9/21 대비(-1.03%)로 나갔다 — 공식은 -0.68%.
         공식 전일 종가를 우리가 그날 커밋한 파일이 확인해 주면 고치고, 아니면 멈춘다."""
