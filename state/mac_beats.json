@@ -1,22 +1,22 @@
 {
  "beats": {
-  "bench_nightly": "2026-10-26T23:10:51+09:00",
+  "bench_nightly": "2026-10-27T23:10:49+09:00",
   "blogger_sync": "2026-10-06T23:08:20+09:00",
-  "daily_summary": "2026-10-26T22:30:12+09:00",
+  "daily_summary": "2026-10-27T22:30:13+09:00",
   "expose_weekly": "2026-10-05T08:37:00+09:00",
   "gsc_daily_index": "2026-10-06T15:16:52+09:00",
-  "gsc_queries": "2026-10-26T10:30:26+09:00",
-  "naver_sync": "2026-10-26T23:15:57+09:00",
+  "gsc_queries": "2026-10-27T10:30:29+09:00",
+  "naver_sync": "2026-10-27T23:15:45+09:00",
   "search_snapshot": "2026-10-25T22:02:28+09:00",
   "threads_refresh": "2026-10-25T21:30:06+09:00"
  },
- "generated_at": "2026-10-26T23:22:05+09:00",
+ "generated_at": "2026-10-27T23:22:05+09:00",
  "posted": {
   "blogger_blocked_today": 0,
   "blogger_today": 0,
   "fermata49_paused": null,
   "naver_blocked_today": 0,
-  "naver_today": 3
+  "naver_today": 4
  },
  "worker_ok": true
 }
