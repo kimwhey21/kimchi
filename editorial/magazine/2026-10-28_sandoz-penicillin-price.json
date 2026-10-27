@@ -1,0 +1,136 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "date": "2026-10-28",
+ "group": "기업과 기술",
+ "slug": "sandoz-penicillin-price",
+ "radar_origin": "Fortune: ‘Why do we value a Mars bar more than lifesaving medicine?’ Sandoz CEO calls for level playing field with cheap Chinese antibiotics",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1513828646384-e4d8ec30d2bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8cGhhcm1hY2V1dGljYWwlMjBmYWN0b3J5fGVufDB8MHx8fDE3OTMxMjE0OTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "xD5SWy7hMbw",
+  "credit": "Unsplash / Crystal Kwok"
+ },
+ "sources": [
+  {
+   "name": "로이터",
+   "title": "INSIGHT-How cheap Chinese antibiotics threaten Europe's last major penicillin plant (2026-10-21)",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant"
+  },
+  {
+   "name": "포춘",
+   "title": "‘Why do we value a Mars bar more than lifesaving medicine?’ Sandoz CEO calls for level playing field with cheap Chinese antibiotics (2026-10-27)",
+   "url": "https://fortune.com/2026/10/27/life-saving-medicine-sandoz-ceo-cheap-chinese-antibiotics/"
+  }
+ ],
+ "tags": [
+  "산도스",
+  "항생제",
+  "공급망"
+ ],
+ "ko": {
+  "title": "산도스 CEO는 왜 항생제를 초코바와 비교했을까",
+  "title_candidates": [
+   "산도스 CEO는 왜 항생제를 초코바와 비교했을까",
+   "지금 유럽의 마지막 페니실린 공장이 흔들리는 이유",
+   "싼 약값의 계산서는 누가 내나, 이렇게 따져 보세요"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "인류를 가장 많이 살린 약이 초콜릿바보다 싸게 팔린다는 불만이 나왔습니다.\n말한 사람은 스위스 제약사 산도스(Sandoz)의 리처드 세이너(Richard Saynor) CEO입니다.\n약값이 싸면 좋은 일인데, 약을 만드는 회사는 왜 그걸 문제 삼을까요?"
+   },
+   {
+    "heading": "쿤들 공장은 유럽에 하나 남았습니다",
+    "body": "오스트리아 알프스 자락의 쿤들(Kundl)에는 산도스 공장이 있습니다. 로이터에 따르면 페니실린을 핵심 원료부터 완제품까지 한 곳에서 만드는 유럽 유일의 공장입니다.\n이 공장에서 2,000명 넘게 일합니다. 3년 전 2억 유로를 들여 확장했고, 그중 5,000만 유로는 공공 자금이었습니다.\n세이너 CEO는 로이터와의 인터뷰에서 이렇게 말했습니다.\n“항생제 한 팩을 스위스의 허브 사탕 리콜라(Ricola) 한 봉지나 영국의 초코바 마스(Mars Bar)보다 싸게 판다는 게 속상합니다.”"
+   },
+   {
+    "heading": "싸게 사오는 쪽이 늘었습니다",
+    "body": "로이터가 유로스타트(Eurostat) 자료를 인용한 바로는, 유럽연합이 수입하는 페니실린 계열 원료에서 중국 몫이 2019년 44%에서 지난해 86%로 올랐습니다.\n같은 제품의 유럽 수출은 2000년대 초 정점의 5분의 1 수준입니다.\n값이 싸지는 것은 유럽 정부의 공공 의료 예산에는 이득입니다. 대신 쿤들 공장은 위협을 받습니다.\n공장장 스테파니 예드너(Stephanie Jedner)는 이 공장이 문을 닫으면 유럽은 이렇게 된다고 로이터에 말했습니다.\n“완전히 중국에 의존하게 될 것입니다.”"
+   },
+   {
+    "heading": "전기료는 오르는데 약값은 그대로입니다",
+    "body": "발효로 페니실린을 만드는 공정은 에너지를 많이 씁니다. 쿤들 공장은 인구 13만 명이 넘는 인스브루크 시 전체와 맞먹는 에너지를 쓴다고 합니다.\n국제에너지기구(IEA) 통계로 지난해 유럽연합의 에너지 다소비 업종 전기 요금은 중국보다 평균 50% 가까이 비쌌습니다.\n그런데 유럽의 페니실린 값은 오르지 않았거나 떨어졌습니다. 정부가 가장 싼 쪽에서 약을 사들이기 때문이라고 산도스는 주장합니다.\n세이너 CEO는 포춘 인터뷰에서 이 구조를 이렇게 표현했습니다.\n“정부는 가격은 아주 잘 보지만, 가치는 꼭 보지는 않습니다.”"
+   },
+   {
+    "heading": "그 말은 어디까지 믿을 수 있을까",
+    "body": "산도스는 이해당사자입니다. 유럽연합에 중국산 원료의 반덤핑 조사를 요청했고, 로이터는 조사가 곧 시작될 것으로 전했습니다.\n중국 외교부는 로이터에 이렇게 답했습니다.\n“중국은 모든 형태의 무역 보호주의에 일관되게 반대합니다.”\n세이너 CEO 스스로도 모든 약을 초코바 값에 견주는 것은 공정한 비교가 아니라고 인정합니다."
+   },
+   {
+    "heading": "싼 약값은 누구의 이익일까요",
+    "body": "싼 약값은 지금 당장은 보건 예산을 아껴 줍니다. 하지만 공급이 한 나라에 몰리면 보건 위기 때 대응이 어려워진다는 우려도 로이터는 전했습니다.\n세이너 CEO는 “다들 동의하지만 계산서를 내밀면 모두 자리를 뜬다”고 꼬집었습니다.\n약값을 더 내는 대신 공급을 지키기로 한다면, 그 값은 누가 낼까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "유럽 유일의 공장",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "the only one making penicillin from start to finish in Europe, including key active ingredients"
+  },
+  {
+   "claim": "2,000명 넘게",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "At the Sandoz site, which employs more than 2,000 people"
+  },
+  {
+   "claim": "2억 유로를 들여 확장",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "just three years after a €200-million ($225-million) expansion that included €50 million of public funds"
+  },
+  {
+   "claim": "5,000만 유로",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "just three years after a €200-million ($225-million) expansion that included €50 million of public funds"
+  },
+  {
+   "claim": "항생제 한 팩을 스위스의 허브 사탕 리콜라(Ricola) 한 봉지나 영국의 초코바 마스(Mars Bar)보다 싸게 판다는 게 속상합니다",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "I find it upsetting that we sell a pack of antibiotics more cheaply than a packet of Ricola in Switzerland or a Mars Bar in the UK"
+  },
+  {
+   "claim": "2019년 44%에서 지난해 86%로",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "has nearly doubled from 44% in 2019 to 86% last year, Eurostat data show"
+  },
+  {
+   "claim": "5분의 1 수준",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "Europe's exports of the same are today barely a fifth of their early 2000s peak"
+  },
+  {
+   "claim": "완전히 중국에 의존하게 될 것입니다",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "would be fully dependent"
+  },
+  {
+   "claim": "인구 13만 명이 넘는 인스브루크 시 전체와 맞먹는 에너지",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "uses as much energy as the nearby city of Innsbruck, home to over 130,000 people"
+  },
+  {
+   "claim": "평균 50% 가까이 비쌌습니다",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "EU electricity prices for energy-intensive industries averaged nearly 50% above China in 2025"
+  },
+  {
+   "claim": "정부는 가격은 아주 잘 보지만, 가치는 꼭 보지는 않습니다",
+   "url": "https://fortune.com/2026/10/27/life-saving-medicine-sandoz-ceo-cheap-chinese-antibiotics/",
+   "original": "Governments are very good at seeing the price, but they don’t necessarily see the value."
+  },
+  {
+   "claim": "중국은 모든 형태의 무역 보호주의에 일관되게 반대합니다",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "China consistently opposes all forms of trade protectionism"
+  },
+  {
+   "claim": "계산서를 내밀면 모두 자리를 뜬다",
+   "url": "https://fortune.com/2026/10/27/life-saving-medicine-sandoz-ceo-cheap-chinese-antibiotics/",
+   "original": "the moment you ask for the check, everyone has suddenly left the table"
+  },
+  {
+   "claim": "2,000명 넘게",
+   "url": "https://kathmandupost.com/world/2026/10/21/how-cheap-chinese-antibiotics-threaten-europe-s-last-major-penicillin-plant",
+   "original": "At the Sandoz site, which employs more than 2,000 people"
+  }
+ ]
+}

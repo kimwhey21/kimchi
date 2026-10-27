@@ -1,0 +1,162 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "date": "2026-10-28",
+ "group": "과학",
+ "slug": "data-center-local-jobs",
+ "radar_origin": "The Conversation: We studied 1,584 data centers – and found the buildings full of machines are tied to modest local job growth",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c2VydmVyJTIwcm9vbXxlbnwwfDB8fHwxNzkzMDM0OTk1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "2JJ3wBHu4_0",
+  "credit": "Unsplash / Kevin Ache"
+ },
+ "sources": [
+  {
+   "name": "더컨버세이션",
+   "title": "We studied 1,584 data centers – and found the buildings full of machines are tied to modest local job growth",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872"
+  },
+  {
+   "name": "뉴욕대 탠던공대",
+   "title": "Inside the Urban Machine: Where America's Data Centers Actually Live",
+   "url": "https://engineering.nyu.edu/news/inside-urban-machine-where-americas-data-centers-actually-live"
+  }
+ ],
+ "tags": [
+  "데이터센터",
+  "일자리",
+  "AI인프라"
+ ],
+ "ko": {
+  "title": "내 동네 데이터센터가 남기는 일자리, 이렇게 따져 보세요",
+  "title_candidates": [
+   "내 동네 데이터센터가 남기는 일자리, 이렇게 따져 보세요",
+   "데이터센터 일자리 1,300개는 어디에 생겼을까",
+   "데이터센터가 들어서면 동네 일자리는 정말 늘까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "데이터센터는 수십억 달러가 드는 건물이지만, 문을 연 뒤 그 안에서 일하는 사람은 몇십 명에 그칩니다.\n그런데 미국 1,584곳을 따져 본 연구에서는 데이터센터가 들어선 카운티에 일자리가 1,000~1,300개 더 생겼습니다.\n그 일자리는 어디에, 언제 생겼을까요?"
+   },
+   {
+    "heading": "건물 안이 아니라 건물 밖에서 늘었습니다",
+    "body": "마이애미대의 사이먼 뷰클러(Simon Buechler)와 캐나다 요크대의 린지 롤하이저(Lyndsey Rolheiser) 교수 등은 2000~2023년에 문을 연 데이터센터 1,584곳을 모았습니다. 위치와 개장일, 전력 용량을 카운티별 고용 자료와 맞춰 본 것입니다.\n학술 해설 매체 더컨버세이션에 실린 글에 따르면, 센터가 없는 비슷한 카운티와 견주어 변화를 쟀습니다.\n처음 2년은 건설업을 뺀 고용이 거의 달라지지 않았습니다. 3~5년이 지나서야 일자리가 1,000~1,300개 많아졌습니다.\n늘어난 곳은 운송·창고업, 전문·기술 서비스, 부동산이었습니다. 연구진은 식당과 가게에 대해 이렇게 적었습니다.\n“식당, 가게, 그 밖의 지역 서비스업에서 일자리가 늘었다는 증거는 거의 찾지 못했습니다.”"
+   },
+   {
+    "heading": "메가와트 하나에 일자리 몇 개일까",
+    "body": "연구진은 시설이 클수록 일자리도 많았다고 봅니다. 전력 용량이 1메가와트 늘면 5년 뒤 건설업 밖의 일자리가 약 7.4개 늘어납니다.\n이후 확장분까지 합치면 최종 용량 1메가와트당 약 2.7개가 됩니다. 100메가와트짜리 큰 시설이라면 센터 밖에서 대략 275개입니다.\n센터 안에서 일하는 몇십 명보다는 많지만, 건설비에 비하면 가벼운 숫자입니다."
+   },
+   {
+    "heading": "‘허허벌판’이라는 통념은 맞을까",
+    "body": "일자리가 어디서 생기는지 이야기할 때는 센터가 어디에 있는지도 봐야 합니다. 뉴욕대 탠던공대 연구진은 네이처 시티스에 낸 논문에서 계획·건설 중인 곳까지 4,283곳을 분석했습니다.\n그중 97.5%가 대도시권이나 소도시권 안에 있었습니다. 워싱턴 일대에만 610곳입니다.\n책임 연구자 마우리치오 포르피리(Maurizio Porfiri) 교수는 통념을 이렇게 짚었습니다.\n“이 데이터센터들이 허허벌판 시골에 들어서서 고용에 긍정적인 힘이 될 것이라는 서사가 널리 퍼져 있습니다.”\n다만 이 분류에는 인구 밀도가 낮고 농촌 성격이 강한 카운티도 섞여 있을 수 있다고 연구진은 밝혔습니다."
+   },
+   {
+    "heading": "이 연구가 닿지 못한 곳은 어디일까",
+    "body": "더컨버세이션의 글에 따르면 이 연구는 2023년까지 문을 연 센터만 다뤘습니다. AI용으로 지은 초대형 시설이 쏟아지기 전입니다.\n전기와 물 사용, 소음, 세금 감면은 따져 보지 않았습니다. 2025년에만 1,560억 달러어치 데이터센터 사업이 지연되거나 취소됐습니다.\n그러니 일자리 숫자만으로 이 건물이 동네에 이득이라고 말하기는 어렵습니다. 연구진도 이렇게 마무리했습니다.\n“그 추가 일자리가 비용을 정당화하는지는 여전히 열린 질문입니다.”\n우리 동네에 들어선다면, 그 계산서는 누가 먼저 열어 봐야 할까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1,000~1,300개 더 생겼습니다",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "new data centers that opened from 2000-2023 created 1,000 to 1,300 jobs in the counties where they are located, on average"
+  },
+  {
+   "claim": "1,584곳",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "We assembled detailed information on 1,584 U.S. data centers that opened between 2000 and 2023"
+  },
+  {
+   "claim": "2000~2023년",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "We assembled detailed information on 1,584 U.S. data centers that opened between 2000 and 2023"
+  },
+  {
+   "claim": "처음 2년은",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "During the first two years after a county’s first data center opened, we found little change in employment outside construction"
+  },
+  {
+   "claim": "3~5년이 지나서야 일자리가 1,000~1,300개 많아졌습니다",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "Three to five years after a center opened, we found that these counties had roughly 1,000 to 1,300 additional nonconstruction jobs"
+  },
+  {
+   "claim": "운송·창고업",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "Employment gains are concentrated in transportation and warehousing, professional and technical services and real estate"
+  },
+  {
+   "claim": "식당, 가게, 그 밖의 지역 서비스업에서 일자리가 늘었다는 증거는 거의 찾지 못했습니다",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "we found little evidence of job growth in restaurants, stores and other local services"
+  },
+  {
+   "claim": "약 7.4개",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "each additional megawatt is associated with about 7.4 more nonconstruction local jobs"
+  },
+  {
+   "claim": "약 2.7개",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "about 2.7 nonconstruction jobs per megawatt of eventual data center capacity"
+  },
+  {
+   "claim": "100메가와트짜리 큰 시설이라면 센터 밖에서 대략 275개",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "A large 100-megawatt facility, for example, would be correlated with roughly 275 additional local jobs outside the data center itself"
+  },
+  {
+   "claim": "4,283곳",
+   "url": "https://engineering.nyu.edu/news/inside-urban-machine-where-americas-data-centers-actually-live",
+   "original": "examined the locations of 4,283 data centers across the contiguous United States"
+  },
+  {
+   "claim": "97.5%가 대도시권",
+   "url": "https://engineering.nyu.edu/news/inside-urban-machine-where-americas-data-centers-actually-live",
+   "original": "97.5% of them sit inside metropolitan or micropolitan statistical areas"
+  },
+  {
+   "claim": "610곳",
+   "url": "https://engineering.nyu.edu/news/inside-urban-machine-where-americas-data-centers-actually-live",
+   "original": "The Washington region alone hosts 610 data centers"
+  },
+  {
+   "claim": "허허벌판 시골에 들어서서 고용에 긍정적인 힘이 될 것이라는 서사가 널리 퍼져 있습니다",
+   "url": "https://engineering.nyu.edu/news/inside-urban-machine-where-americas-data-centers-actually-live",
+   "original": "There is a prevailing narrative of these data centers being somewhere in the middle of nowhere, in rural areas, being a positive force for employment"
+  },
+  {
+   "claim": "2023년까지",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "It covers data centers that opened through 2023, before the current wave of massive facilities were built to power AI"
+  },
+  {
+   "claim": "1,560억 달러어치",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "delays or cancellations of US$156 billion in proposed data center projects in 2025 alone"
+  },
+  {
+   "claim": "2025년에만",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "delays or cancellations of US$156 billion in proposed data center projects in 2025 alone"
+  },
+  {
+   "claim": "그 추가 일자리가 비용을 정당화하는지는 여전히 열린 질문입니다",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "whether those additional jobs justify the costs remains an open question"
+  },
+  {
+   "claim": "수십억 달러",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "With billions of dollars flowing into new data centers across the United States"
+  },
+  {
+   "claim": "몇십 명",
+   "url": "https://theconversation.com/we-studied-1-584-data-centers-and-found-the-buildings-full-of-machines-are-tied-to-modest-local-job-growth-293872",
+   "original": "they tend to employ no more than a few dozen people in occupations such as IT technicians, engineers and security guards"
+  }
+ ]
+}

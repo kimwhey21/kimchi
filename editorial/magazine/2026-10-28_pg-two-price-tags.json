@@ -1,0 +1,146 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "date": "2026-10-28",
+ "group": "시장 읽기",
+ "slug": "pg-two-price-tags",
+ "radar_origin": "Fortune: How is P&G’s CEO getting inflation-weary shoppers to pay more? It starts with cashmere-like diapers",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1764859878528-2b512ab9d4d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8YmFieSUyMGRpYXBlcnN8ZW58MHwwfHx8MTc5MzEyMTQ3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "HRBTSTRufHg",
+  "credit": "Unsplash / Marius Muresan"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "How is P&G’s CEO getting inflation-weary shoppers to pay more? It starts with cashmere-like diapers (2026-10-27)",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/"
+  },
+  {
+   "name": "P&G",
+   "title": "P&G Announces Fiscal Year 2027 First Quarter Results (2026-10-22)",
+   "url": "https://us.pg.com/newsroom/news-releases/PG-Announces-Fiscal-Year-2027-First-Quarter-Results/"
+  }
+ ],
+ "tags": [
+  "PG",
+  "기저귀",
+  "소비재"
+ ],
+ "ko": {
+  "title": "지금 P&G 기저귀가 10% 더 비싼데도 팔리는 이유",
+  "title_candidates": [
+   "지금 P&G 기저귀가 10% 더 비싼데도 팔리는 이유",
+   "내 장바구니는 실속과 프리미엄 중 어느 쪽일까",
+   "값을 내리는 쪽과 올리는 쪽, P&G는 왜 둘 다 잡았을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "P&G는 기존 제품보다 10% 비싼 기저귀를 내놓고도, 실적을 발표한 날 주가가 6% 뛰었습니다.\n그 회사의 다른 코너에서는 평균 가격이 오히려 내려갔습니다.\n물가에 지친 소비자 앞에서 값을 올리는 일과 내리는 일을 한 회사가 동시에 해도 될까요?"
+   },
+   {
+    "heading": "프리미엄 기저귀가 맡은 일",
+    "body": "문제의 상품은 3월에 미국에서 나온 팸퍼스 아모레(Pampers Amore)입니다. 신생아·유아용으로는 2018년 이후 처음 내놓은 새 제품군입니다.\n경제지 포춘에 따르면 108개들이 한 팩이 기존 주력 제품인 스웨들러스(Swaddlers)보다 10% 비쌉니다.\n첫해 매출은 1억 달러에 이를 것으로 예상됩니다.\n회사가 내세운 것은 흡수력, 캐시미어 같은 감촉, 피부 보호입니다."
+   },
+   {
+    "heading": "다른 쪽에서는 값을 낮췄습니다",
+    "body": "같은 분기에 P&G의 유아·여성·가정용 종이 제품 부문 평균 가격은 1.2% 떨어졌습니다. 새 팩 크기도 내놨습니다.\n여유가 빠듯한 쪽에는 낮은 값을, 여유 있는 쪽에는 새 기능을 얹은 비싼 제품을 내놓는 구도입니다.\nP&G의 셰일레시 제주리카(Shailesh Jejurikar) CEO는 실적 발표문에서 이 접근을 이렇게 불렀습니다.\n“첫 분기의 탄탄한 매출·이익·현금 결과는 통합 전략을 더 날카롭게 실행한 결과입니다.”"
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "P&G 발표문을 보면 환율과 인수합병 효과를 뺀 유기적 매출이 4% 늘었습니다. 물량이 2%포인트, 비싼 제품이 더 팔린 효과가 1%포인트를 맡았고 가격 효과는 미미했습니다.\n값을 올려서 얻은 성장이 아니라 더 많이, 더 좋은 것을 사게 해서 얻은 성장이라는 뜻입니다.\n블룸버그 인텔리전스의 다이애나 고메스(Diana Gomes) 애널리스트는 분석 노트에서 이렇게 평가했습니다.\n“혁신과 가치 전략이 근본적인 성장을 되살리고 있다는 믿음을 키워 줄 것입니다.”"
+   },
+   {
+    "heading": "대신 남는 장사는 아니었습니다",
+    "body": "같은 발표문에서 매출에서 원가를 뺀 몫을 보여 주는 핵심 매출총이익률은 1년 전보다 1.5%포인트 낮아졌습니다. 원자재 비용 상승이 1.4%포인트를 차지했습니다.\nP&G는 이번 회계연도 원자재 비용 부담이 세후 약 14억 달러라고 밝혔습니다.\n팔리는 양은 늘었지만, 한 개당 남는 몫은 줄었다는 이야기입니다."
+   },
+   {
+    "heading": "물음은 새것이 낡은 뒤에 남습니다",
+    "body": "포춘이 남긴 열린 질문은 하나입니다. 지갑을 아끼는 소비자가 새로움이 사라진 뒤에도 비싼 기저귀를 살지입니다.\n여러분의 장바구니는 ‘실속 소포장’ 칸과 ‘프리미엄’ 칸 가운데 어느 쪽에 더 가깝나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "3월에 미국에서",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/",
+   "original": "launched in the U.S. in March"
+  },
+  {
+   "claim": "기존 제품보다 10% 비싼",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/",
+   "original": "a 108-pack of Amore diapers are 10% more expensive than Pampers Swaddlers"
+  },
+  {
+   "claim": "1억 달러",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/",
+   "original": "Sales are expected to hit $100 million in its first year"
+  },
+  {
+   "claim": "2018년 이후",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/",
+   "original": "Amore was P&G’s first new line for newborns and toddlers since 2018"
+  },
+  {
+   "claim": "10% 비쌉니다",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/",
+   "original": "a 108-pack of Amore diapers are 10% more expensive than Pampers Swaddlers"
+  },
+  {
+   "claim": "1.2% 떨어졌습니다",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/",
+   "original": "average prices in P&G’s baby, feminine, and family care unit fell 1.2%"
+  },
+  {
+   "claim": "통합 전략을 더 날카롭게 실행한 결과",
+   "url": "https://us.pg.com/newsroom/news-releases/PG-Announces-Fiscal-Year-2027-First-Quarter-Results/",
+   "original": "reflect sharpened execution of our integrated strategy"
+  },
+  {
+   "claim": "유기적 매출이 4% 늘었습니다",
+   "url": "https://us.pg.com/newsroom/news-releases/PG-Announces-Fiscal-Year-2027-First-Quarter-Results/",
+   "original": "Organic sales, which exclude the impacts of foreign exchange and acquisitions and divestitures, also increased four percent"
+  },
+  {
+   "claim": "물량이 2%포인트",
+   "url": "https://us.pg.com/newsroom/news-releases/PG-Announces-Fiscal-Year-2027-First-Quarter-Results/",
+   "original": "also increased four percent driven by a two percent increase from volume and a one percent increase from favorable mix"
+  },
+  {
+   "claim": "가격 효과는 미미",
+   "url": "https://us.pg.com/newsroom/news-releases/PG-Announces-Fiscal-Year-2027-First-Quarter-Results/",
+   "original": "Pricing had a minor positive impact on sales for the quarter"
+  },
+  {
+   "claim": "혁신과 가치 전략이 근본적인 성장을 되살리고 있다는 믿음을 키워 줄 것입니다",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/",
+   "original": "should bolster confidence that its innovation and value interventions are restoring underlying growth"
+  },
+  {
+   "claim": "1.5%포인트 낮아졌습니다",
+   "url": "https://us.pg.com/newsroom/news-releases/PG-Announces-Fiscal-Year-2027-First-Quarter-Results/",
+   "original": "Core gross margin and currency-neutral Core gross margin for the quarter decreased 150 basis points versus the prior year"
+  },
+  {
+   "claim": "1.4%포인트를 차지했습니다",
+   "url": "https://us.pg.com/newsroom/news-releases/PG-Announces-Fiscal-Year-2027-First-Quarter-Results/",
+   "original": "The decrease was driven by 140 basis points of higher costs from commodities"
+  },
+  {
+   "claim": "세후 약 14억 달러",
+   "url": "https://us.pg.com/newsroom/news-releases/PG-Announces-Fiscal-Year-2027-First-Quarter-Results/",
+   "original": "P&G now expects a commodity cost headwind of approximately $1.4 billion after tax"
+  },
+  {
+   "claim": "주가가 6% 뛰었습니다",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/",
+   "original": "Shares rose 6% Thursday on the results"
+  },
+  {
+   "claim": "1.2% 떨어졌습니다",
+   "url": "https://fortune.com/2026/10/27/pg-ceo-shailesh-jejurikar-earnings-inflation-prices-diapers/",
+   "original": "average prices in P&G’s baby, feminine, and family care unit fell 1.2%"
+  }
+ ]
+}
