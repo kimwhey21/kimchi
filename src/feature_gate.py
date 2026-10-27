@@ -70,11 +70,44 @@ def recent_titles(doc: dict, path: Path | None = None, count: int = 5) -> list[s
     return [title for _, title in rows[-count:]]
 
 
+def placement_issues(doc: dict) -> list[str]:
+    """그림 자리(2026-10-27). 발행(`publish_feature._build_graphics`)은 한 절에 두 장이면 멈추고, 없는 절 번호면
+    본진·네이버 모두 그 그림을 조용히 뺀다 — 10/26 칼럼이 세 장을 4절에 몰아 네이버에 못 올라갔고, 지난 원고 29편은
+    마지막 그림을 절 수와 같은 번호에 붙여 그 그림이 빠진 채 나갔다. 커밋 전에 여기서 막는다."""
+    if str(doc.get("series") or "") == "매거진":
+        return []   # 잡지는 publish_feature를 거치지 않는다(표지 사진 한 장)
+    count = len((doc.get("ko") or doc).get("narrative") or [])
+    issues, seen, featured = [], {}, 0
+    for index, spec in enumerate(doc.get("graphics") or [], 1):
+        if spec.get("featured"):
+            featured += 1
+        if "section" not in spec:
+            if not spec.get("featured"):
+                issues.append(f"그림 {index}({spec.get('kind')}) — section도 featured도 없습니다")
+            continue
+        try:
+            section = int(spec["section"])
+        except (TypeError, ValueError):
+            issues.append(f"그림 {index}({spec.get('kind')}) — section이 숫자가 아닙니다: {spec['section']!r}")
+            continue
+        if not 0 <= section < count:
+            issues.append(f"그림 {index}({spec.get('kind')}) — section {section}은 없는 절입니다(절은 0~{count - 1}, 0부터 셉니다) — "
+                          "이대로면 그림이 빠진 채 나갑니다")
+        elif section in seen:
+            issues.append(f"그림 {index}({spec.get('kind')}) — {section}절에 그림 {seen[section]}이 이미 있습니다 — 한 절에 한 장, 다른 절로 옮기십시오")
+        else:
+            seen[section] = index
+    if featured > 1:
+        issues.append(f"대표 그림(featured)이 {featured}장입니다 — 하나만 둡니다")
+    return [f"그림 자리 — {i}" for i in issues]
+
+
 def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     """다섯 검사를 모두 호출하고, 막아야 할 오류와 참고 보고를 분리한다."""
     ko = doc.get("ko") or doc
     blocking = []
     notes: list[str] = []
+    blocking.extend(placement_issues(doc))
     if not str(doc.get("series") or "").strip():
         # 시리즈 칸이 없으면 머리말·태그·관문은 기준표(Checkpoint)로 보는데 발행은 공개로 올린다(2026-09-26 점검) —
         # 한국어 Checkpoint가 본진에 공개로 나가고 알림까지 갈 수 있으므로 커밋 전에 막는다.

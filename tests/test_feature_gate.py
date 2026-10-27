@@ -52,3 +52,23 @@ class FeatureGateWiringTest(unittest.TestCase):
             with self.assertRaises(feature_gate.FeatureGateError) as caught:
                 feature_gate.run(doc, graphics=6)
         self.assertIn("밖에서 가져온 사실", str(caught.exception))
+
+
+class PlacementTest(unittest.TestCase):
+    """그림 자리(2026-10-27): 한 절에 두 장(10/26 칼럼이 네이버에 못 올라감)과 없는 절 번호(그림이 조용히 빠짐)를 막는다."""
+    def _doc(self, sections, series="칼럼"):
+        return {"series": series, "ko": {"narrative": [{"heading": "h", "body": "b"}] * 5},
+                "graphics": [{"kind": "cover", "featured": True}] + [{"kind": "fact_table", "section": s} for s in sections]}
+
+    def test_two_graphics_in_one_section_are_blocked(self) -> None:
+        issues = feature_gate.placement_issues(self._doc([4, 4, 4]))
+        self.assertEqual(len(issues), 2, issues)
+        self.assertIn("한 절에 한 장", issues[0])
+
+    def test_a_section_past_the_last_is_blocked(self) -> None:
+        issues = feature_gate.placement_issues(self._doc([1, 5]))
+        self.assertTrue(any("없는 절" in i and "0~4" in i for i in issues), issues)
+
+    def test_distinct_sections_pass_and_magazine_is_skipped(self) -> None:
+        self.assertEqual(feature_gate.placement_issues(self._doc([0, 2, 4])), [])
+        self.assertEqual(feature_gate.placement_issues(self._doc([4, 4], series="매거진")), [])
