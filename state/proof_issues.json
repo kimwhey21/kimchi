@@ -1,11 +1,11 @@
 {
  "base": {
-  "글 없음: 다음 주 일정 (editorial/weekly/ahead_#json)": 1,
-  "글 없음: 주말 Checkpoint (editorial/features/* 오늘 커밋)": 2,
-  "맥 bench_nightly: 마지막 신호 # #": 2
- },
- "day": "2026-10-26",
- "issues": {
   "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 1
+ },
+ "day": "2026-10-27",
+ "issues": {
+  "# 화면 대조 실패 — Response ended prematurely": 1,
+  "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 2,
+  "글 없음: 영어 가이드 (editorial/guides/en_* 오늘 커밋)": 1
  }
 }
