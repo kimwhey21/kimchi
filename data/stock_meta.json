@@ -6870,10 +6870,14 @@
 "web": "www.flyasiana.com"
 },
 "0205H0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "02032951",
+"en": "SK Securities No.14 Special Purpose Acquisition Company",
+"founded": "2026",
+"industry": "Brokerage & asset management",
+"ksic": "661",
+"name": "SK Securities No.14 Special Purpose Acquisition",
+"pref": false,
+"web": ""
 },
 "020710": {
 "corp": "00170026",
