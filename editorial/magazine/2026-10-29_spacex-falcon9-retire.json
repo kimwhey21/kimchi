@@ -1,0 +1,151 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-29",
+ "slug": "spacex-falcon9-retire",
+ "radar_origin": "The Conversation: Falcon 9 ushered in the modern space economy – retiring it could leave the industry vulnerable",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c3BhY2V4fGVufDB8MHx8fDE3OTMyMDc1MzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "Ptd-iTdrCJM",
+  "credit": "Unsplash / SpaceX"
+ },
+ "sources": [
+  {
+   "name": "더 컨버세이션",
+   "title": "Falcon 9 ushered in the modern space economy – retiring it could leave the industry vulnerable (2026-10-28)",
+   "url": "https://theconversation.com/falcon-9-ushered-in-the-modern-space-economy-retiring-it-could-leave-the-industry-vulnerable-294225"
+  },
+  {
+   "name": "스페이스 런치 스케줄",
+   "title": "SpaceX Is Retiring Crew Dragon and Falcon: What Replaces Them?",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/"
+  }
+ ],
+ "tags": [
+  "스페이스X",
+  "팰컨9",
+  "우주산업"
+ ],
+ "ko": {
+  "title": "스페이스X 사장은 왜 제품을 먼저 낡게 만들겠다고 했을까",
+  "title_candidates": [
+   "지금 위성 회사들은 팰컨 9의 남은 자리를 서두릅니다",
+   "스페이스X 사장은 왜 제품을 먼저 낡게 만들겠다고 했을까",
+   "팰컨 9가 사라지면 위성 회사는 어디서 출발할까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "세계에서 가장 많이 날아오른 로켓을 만든 회사가 그 로켓을 접으려 합니다.\n지난해 지구 저궤도로 향한 비행 330번 가까이 가운데 절반 넘게가 스페이스X의 팰컨 9(Falcon 9)이었습니다.\n가장 잘 팔리는 제품을 스스로 거두는 회사의 속내는 무엇이고, 그 로켓에 짐을 싣던 위성 회사들은 이제 어디로 갈까요?"
+   },
+   {
+    "heading": "자기 제품을 먼저 낡게 만들겠다는 말",
+    "body": "신호는 미국 항공우주국(NASA) 국장의 입에서 먼저 나왔습니다.\n스페이스 런치 스케줄에 따르면 재러드 아이잭먼 국장은 9월 28일 기자회견에서 이렇게 말했습니다.\n“스페이스X가 팰컨과 드래건 같은 낡은 기종을 접고 차세대 스타십에 집중하려 한다는 건 비밀이 아니라고 생각합니다.”\n드래건(Dragon)은 우주인과 화물을 나르는 스페이스X의 캡슐이고, 스타십(Starship)은 개발 중인 초대형 차세대 로켓입니다.\n스페이스X 사장 그윈 숏웰은 최근 한 행사에서 더 직설적으로 말했습니다.\n“우리 제품과 서비스를 우리가 먼저 낡게 만들지 않으면, 누군가 우리를 위해 그렇게 해 줄 방법을 찾아낼 겁니다.”"
+   },
+   {
+    "heading": "돈은 어느 쪽에서 벌리고 있을까",
+    "body": "이유 하나는 숫자에서 보입니다.\n스페이스X가 처음 내놓은 분기 실적 보고서에서 팰컨·드래건·스타십을 묶은 우주 부문은 5억 4,200만 달러 손실을 냈습니다.\n같은 보고서에서 위성 인터넷 사업 스타링크(Starlink)는 17억 달러 가까이 벌었습니다.\n스페이스 런치 스케줄은 이 실적을 이렇게 요약했습니다.\n“스타링크가 지금의 사업이고, 스타십은 내기다.”"
+   },
+   {
+    "heading": "빈자리는 누가 메울까",
+    "body": "미시간대 연구교수 모지타바 아크하반타프티는 7월부터 스페이스X가 팰컨 9 고객을 돌려보내기 시작했다고 정리했습니다.\n여유가 있는 회사는 웃돈을 내고 남은 자리를 잡습니다. 유럽 고객은 유럽우주국의 아리안 6(Ariane 6)로 몰리고, 일부는 로켓랩이 만드는 중형 로켓 뉴트론으로 눈을 돌립니다.\n남은 자리도 이미 대부분 팔렸습니다.\n2029년 초 이후에는 남은 팰컨 비행이 미국 정부 임무 몫이 될 수 있다는 보도도 있습니다.\n사람을 태우는 길은 더 좁습니다. 지금 미국이 우주정거장에 우주인을 보내는 유일한 길이 드래건인데, NASA는 보잉의 스타라이너(Starliner)를 되살리려 3억 5,900만 달러를 쓰고 있습니다."
+   },
+   {
+    "heading": "한 회사가 문이 되면 생기는 일",
+    "body": "아크하반타프티는 1900년대 미국의 스탠더드오일을 끌어옵니다.\n송유관과 철도를 쥔 회사가 운송 조건을 정하자 결국 정부가 나섰다는 이야기입니다.\n그는 더 컨버세이션에 쓴 글에서 이렇게 짚었습니다.\n“우주로 가는 문을 한 회사가 쥐면, 그 회사의 내부 결정이 산업 전체를 살릴 수도 죽일 수도 있다.”\n처방은 NASA 같은 공공 기관이 발사 물량을 여러 회사 로켓에 나눠 싣고, 위성 제작사도 한 로켓에만 묶이지 않는 규격을 쓰자는 것입니다.\n반대로 스페이스 런치 스케줄은 서두를 일이 아니라고 봅니다. 스페이스X가 국제우주정거장이 퇴역하는 2030년 무렵까지 지원하기로 했기 때문입니다."
+   },
+   {
+    "heading": "지도 앱 뒤의 로켓은 누가 정할까",
+    "body": "팰컨 9은 스마트폰 지도 앱에 쓰이는 지구 관측 위성도, 산불을 지켜보는 환경 감시 위성도 실어 날랐습니다.\n우리는 그 위성이 어느 로켓을 탔는지 거의 모르고 살았습니다.\n스타십이 약속한 날에 오지 않는다면, 그 사이 줄 선 위성들은 어디에서 출발해야 할까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "산불을 지켜보는 환경 감시 위성",
+   "url": "https://theconversation.com/falcon-9-ushered-in-the-modern-space-economy-retiring-it-could-leave-the-industry-vulnerable-294225",
+   "original": "It has carried payloads ranging from Earth-imaging sensors feeding smartphone map apps to environmental monitoring satellites that track wildfires."
+  },
+  {
+   "claim": "절반 넘게가 스페이스X의 팰컨 9",
+   "url": "https://theconversation.com/falcon-9-ushered-in-the-modern-space-economy-retiring-it-could-leave-the-industry-vulnerable-294225",
+   "original": "More than 50% of the nearly 330 spaceflights to low Earth orbit in 2025 were done on a SpaceX Falcon 9 rocket"
+  },
+  {
+   "claim": "330번 가까이",
+   "url": "https://theconversation.com/falcon-9-ushered-in-the-modern-space-economy-retiring-it-could-leave-the-industry-vulnerable-294225",
+   "original": "More than 50% of the nearly 330 spaceflights to low Earth orbit in 2025 were done on a SpaceX Falcon 9 rocket"
+  },
+  {
+   "claim": "9월 28일 기자회견",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "At a September 28 press conference, NASA Administrator Jared Isaacman said"
+  },
+  {
+   "claim": "스페이스X가 팰컨과 드래건 같은 낡은 기종을 접고",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "I do not think it’s a secret that SpaceX intends to sunset older platforms like Falcon and Dragon as they concentrate on their next-generation capability, Starship."
+  },
+  {
+   "claim": "우리 제품과 서비스를 우리가 먼저 낡게 만들지 않으면",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "If we don’t obsolete our own products and services, someone’s going to find a way to obsolete them for us."
+  },
+  {
+   "claim": "5억 4,200만 달러 손실",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "lost $542 million. Meanwhile, its Starlink internet business made nearly $1.7 billion."
+  },
+  {
+   "claim": "17억 달러 가까이 벌었습니다",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "lost $542 million. Meanwhile, its Starlink internet business made nearly $1.7 billion."
+  },
+  {
+   "claim": "스타링크가 지금의 사업이고",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "So, Starlink is the business now, and Starship is the bet."
+  },
+  {
+   "claim": "7월부터 스페이스X가 팰컨 9 고객을 돌려보내기",
+   "url": "https://theconversation.com/falcon-9-ushered-in-the-modern-space-economy-retiring-it-could-leave-the-industry-vulnerable-294225",
+   "original": "In July 2026, accounts from prospective commercial customers and satellite operators revealed that SpaceX had begun turning away Falcon 9 customers"
+  },
+  {
+   "claim": "아리안 6(Ariane 6)",
+   "url": "https://theconversation.com/falcon-9-ushered-in-the-modern-space-economy-retiring-it-could-leave-the-industry-vulnerable-294225",
+   "original": "While European customers are generally flocking to the European Space Agency’s Ariane 6 rocket"
+  },
+  {
+   "claim": "2029년 초 이후",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "Reports suggest that beyond early 2029, the remaining Falcon flights may be reserved for US government missions."
+  },
+  {
+   "claim": "3억 5,900만 달러",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "The agency is paying Boeing $359 million to bring Starliner back from the brink."
+  },
+  {
+   "claim": "유일한 길이 드래건",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "Crew Dragon is currently America’s only ride to the space station."
+  },
+  {
+   "claim": "1900년대 미국의 스탠더드오일",
+   "url": "https://theconversation.com/falcon-9-ushered-in-the-modern-space-economy-retiring-it-could-leave-the-industry-vulnerable-294225",
+   "original": "In the 1900s, Standard Oil owned critical oil production infrastructure"
+  },
+  {
+   "claim": "우주로 가는 문을 한 회사가 쥐면",
+   "url": "https://theconversation.com/falcon-9-ushered-in-the-modern-space-economy-retiring-it-could-leave-the-industry-vulnerable-294225",
+   "original": "When a single company is put in charge of controlling the gate to space, its internal corporate decisions can make or break an industry."
+  },
+  {
+   "claim": "2030년 무렵까지 지원하기로",
+   "url": "https://www.spacelaunchschedule.com/news/spacex-retiring-crew-dragon-falcon-what-replaces-them/",
+   "original": "SpaceX has agreed to support the International Space Station through its planned retirement around 2030."
+  }
+ ]
+}

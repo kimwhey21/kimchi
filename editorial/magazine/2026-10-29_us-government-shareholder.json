@@ -1,0 +1,166 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-29",
+ "slug": "us-government-shareholder",
+ "radar_origin": "24/7 Wall St.: Trump’s Washington Is Now a Shareholder in 40 Companies",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1672307613484-3254a04651fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c2lsaWNvbiUyMHdhZmVyfGVufDB8MHx8fDE3OTMyMDc1NTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "7hR3FrFs4Q0",
+  "credit": "Unsplash / Maxence Pira"
+ },
+ "sources": [
+  {
+   "name": "24/7 월스트리트",
+   "title": "Trump’s Washington Is Now a Shareholder in 40 Companies (2026-10-28)",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/"
+  },
+  {
+   "name": "로이터",
+   "title": "US to award $389 million in R&D funds for power semiconductors, critical materials (2026-10-22)",
+   "url": "https://wsau.com/?p=1028809"
+  },
+  {
+   "name": "미국 상무부",
+   "title": "Department of Commerce Announces Letters of Intent With 4 Companies for $389 Million of R&D Awards",
+   "url": "https://www.nist.gov/news-events/news/2026/10/department-commerce-announces-letters-intent-4-companies-389-million-rd"
+  }
+ ],
+ "tags": [
+  "미국정부지분",
+  "인텔",
+  "MP머티리얼스"
+ ],
+ "ko": {
+  "title": "미국 정부는 몇 개 회사의 주주일까, 아무도 모릅니다",
+  "title_candidates": [
+   "미국 정부는 몇 개 회사의 주주일까, 아무도 모릅니다",
+   "정부가 주주인 회사를 가진 내 주식은 안전할까",
+   "지금 미국 정부가 쥔 회사는 마흔 곳을 넘어섭니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "미국 정부가 주주로 들어가 있는 회사가 몇 곳인지, 정부 스스로도 정확히 세지 못합니다.\n카토연구소의 정책 분석가 태드 디헤이븐은 40곳으로 셉니다. 외교협회(CFR)는 43곳, 포춘은 7월에 30곳으로 셌습니다.\n이 보이지 않는 주주는 내가 가진 주식에 득일까요, 실일까요?"
+   },
+   {
+    "heading": "숫자를 세는 사람마다 답이 다릅니다",
+    "body": "투자 매체 24/7 월스트리트는 어느 기관도 공식 목록을 내놓지 않는다는 점을 먼저 짚었습니다.\n외교협회가 43곳까지 늘어난 것은 개발금융공사(DFC) 거래까지 넣었기 때문입니다.\n재무부 대변인은 7월에 각 기관이 지분을 '서로 다른 방식으로' 보고한다고 설명했습니다.\n아무도 한 장짜리 장부를 갖고 있지 않은 주주인 셈입니다."
+   },
+   {
+    "heading": "지난주 목요일에 네 자리가 더 생겼습니다",
+    "body": "로이터에 따르면 미국 상무부는 10월 22일 연구개발 지원금 3억 8,900만 달러를 네 회사에 주겠다고 밝혔습니다.\n조건이 붙었습니다. 정부가 의결권 없는 소수 지분을 받는다는 것입니다.\n상무부 발표문을 보면 핵융합 기업 헬리온(Helion)이 최대 1억 7,500만 달러로 가장 많이 받습니다.\n다만 아직은 최종 계약이 아니라 의향서 단계입니다. 그래서 40곳 가운데 일부는 서명 전입니다."
+   },
+   {
+    "heading": "가장 큰 지분은 인텔에 있습니다",
+    "body": "정부는 2025년 8월 인텔 주식 약 9.9%를 89억 달러에 샀습니다.\n24/7 월스트리트가 10월 27일 종가로 직접 계산한 이 지분의 가치는 약 406억 달러입니다.\n국가경제위원회 위원장 케빈 해싯은 7월에 이 지분들을 이렇게 불렀습니다.\n“국부펀드를 만드는 첫 계약금 같은 것입니다. 많은 나라가 이미 가진 그 펀드 말입니다.”\n국부펀드(sovereign wealth fund)는 나라가 자기 돈으로 주식 같은 자산을 사 모으는 기금입니다."
+   },
+   {
+    "heading": "정부가 바닥을 받쳐 주면 주가도 안전할까",
+    "body": "국방부는 2025년 7월 희토류 기업 MP머티리얼스에 4억 달러를 넣었습니다. 10년 동안 네오디뮴·프라세오디뮴 가격 하한도 킬로그램당 110달러로 묶었습니다.\n그런데 이 회사 주가는 지난 52주 동안 37.11달러에서 76.80달러 사이를 오갔습니다.\n가격 하한은 회사의 사업을 지켜 주지만, 주가까지 지켜 주지는 않았습니다."
+   },
+   {
+    "heading": "반론에서 보면 계산이 달라집니다",
+    "body": "24/7 월스트리트가 든 반론은 희석입니다. 정부가 받은 신주인수권과 전환권이 행사되면 이익을 나눌 주식 수가 늘어납니다.\n인텔이 대표적입니다. 정부는 인텔이 파운드리 사업의 51% 이상을 갖지 않게 되면 20달러에 5%를 더 살 수 있는 권리를 쥐고 있습니다.\n의결권이 없어도 공장을 어디에 지을지, 누구를 뽑을지에 정부의 눈치가 따르고, 다음 정부가 지분을 팔 수도 있습니다.\n인텔은 29일 실적을 냅니다. 숫자는 정부라는 주주가 득이었는지 실이었는지 어느 쪽 편을 들까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "공식 목록을 내놓지 않는다는 점",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "with no agency publishing an official list and no consensus on how many it actually owns"
+  },
+  {
+   "claim": "7월에 이 지분들을",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "In July 2026, National Economic Council Director Kevin Hassett said the stakes were"
+  },
+  {
+   "claim": "24/7 월스트리트가 든 반론은 희석",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "The case against starts with dilution: warrants and conversions spread profits over more shares"
+  },
+  {
+   "claim": "40곳으로 셉니다",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "Tad DeHaven, a policy analyst at the Cato Institute, says those deals bring the count of announced or completed stakes to 40."
+  },
+  {
+   "claim": "43곳",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "The Council on Foreign Relations counts 43 because it includes Development Finance Corporation deals."
+  },
+  {
+   "claim": "30곳으로 셌습니다",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "Fortune counted 30 in July."
+  },
+  {
+   "claim": "외교협회가 43곳까지",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "The Council on Foreign Relations counts 43 because it includes Development Finance Corporation deals."
+  },
+  {
+   "claim": "7월에 각 기관이",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "At the time, a Treasury spokesperson said agencies report equity “in different ways.”"
+  },
+  {
+   "claim": "10월 22일 연구개발 지원금 3억 8,900만 달러",
+   "url": "https://wsau.com/?p=1028809",
+   "original": "The US Commerce Department said on Thursday it plans to award $389 million in research and development funding to four companies"
+  },
+  {
+   "claim": "최대 1억 7,500만 달러",
+   "url": "https://www.nist.gov/news-events/news/2026/10/department-commerce-announces-letters-intent-4-companies-389-million-rd",
+   "original": "Helion will receive up to $175 million to develop, scale, and establish domestic capabilities in high-voltage power semiconductors"
+  },
+  {
+   "claim": "40곳 가운데 일부는 서명 전",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "A letter of intent comes before a final agreement, so part of DeHaven’s 40 is still unsigned."
+  },
+  {
+   "claim": "2025년 8월 인텔 주식 약 9.9%를 89억 달러에",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "In August 2025, the government agreed to buy 433.3 million shares of Intel"
+  },
+  {
+   "claim": "약 406억 달러",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "The government paid $8.9 billion for a 9.9% Intel stake that now values at roughly $40.6 billion, based on INTC's October 27 closing price."
+  },
+  {
+   "claim": "국부펀드를 만드는 첫 계약금 같은 것입니다",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "like a down payment on a sovereign wealth fund, which many countries have."
+  },
+  {
+   "claim": "2025년 7월 희토류 기업 MP머티리얼스에 4억 달러",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "On July 10, 2025, the Pentagon announced a $400 million purchase of preferred stock in MP Materials"
+  },
+  {
+   "claim": "킬로그램당 110달러",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "The deal also set a 10-year price floor of $110/kg for NdPr"
+  },
+  {
+   "claim": "37.11달러에서 76.80달러",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "Even with that support, the stock has traded between $37.11 and $76.80 over the past 52 weeks."
+  },
+  {
+   "claim": "51% 이상을 갖지 않게 되면 20달러에 5%를",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "It can buy another 5% at $20 a share, but only if Intel stops owning at least 51% of its foundry business."
+  },
+  {
+   "claim": "29일 실적",
+   "url": "https://247wallst.com/investing/2026/10/28/trumps-washington-is-now-a-shareholder-in-40-companies/",
+   "original": "Intel reports on October 29."
+  }
+ ]
+}

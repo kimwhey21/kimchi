@@ -1,0 +1,161 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-10-29",
+ "slug": "lovins-soft-energy-path",
+ "radar_origin": "The Conversation: 50 years later, Amory Lovins’ soft energy path meets electrification",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1655300256335-beef51a914fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8c29sYXIlMjBwYW5lbHMlMjByb29mfGVufDB8MHx8fDE3OTMyMDc1Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "Ja8t8nJN2I4",
+  "credit": "Unsplash / Watt A Lot"
+ },
+ "sources": [
+  {
+   "name": "더 컨버세이션",
+   "title": "50 years later, Amory Lovins’ soft energy path meets electrification",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920"
+  },
+  {
+   "name": "포린 어페어스",
+   "title": "Energy Strategy: The Road Not Taken? (1976-10)",
+   "url": "https://www.foreignaffairs.com/articles/united-states/1976-10-01/energy-strategy-road-not-taken"
+  }
+ ],
+ "tags": [
+  "에이모리러빈스",
+  "태양광",
+  "에너지전환"
+ ],
+ "ko": {
+  "title": "태양광을 믿지 않던 러빈스는 어디서 틀렸을까",
+  "title_candidates": [
+   "태양광을 믿지 않던 러빈스는 어디서 틀렸을까",
+   "내 집 전기 고지서는 러빈스의 어느 길에 있을까",
+   "50년 전 에너지 지도, 지금 다시 펼쳐야 할 때입니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "태양광이 싸질 거라고 믿지 않던 물리학자가 에너지의 미래 지도를 그렸습니다.\n이름은 에이모리 러빈스(Amory Lovins)이고, 50년 뒤 그의 지도는 반쯤만 맞았습니다.\n그런데 틀린 쪽이 맞은 쪽보다 더 많은 것을 알려 준다면, 우리는 그 지도에서 무엇을 가져와야 할까요?"
+   },
+   {
+    "heading": "공중전화 앞에서 보낸 열네 시간",
+    "body": "미국 라이스대 환경공학 교수 대니얼 코헌은 더 컨버세이션에 이 이야기를 소개했습니다.\n1976년 8월, 허리케인 벨이 뉴잉글랜드로 다가올 때 스물아홉 살 러빈스는 메인주 숲속 오두막의 공중전화 앞에 서 있었습니다.\n미국 외교 전문지 포린 어페어스(Foreign Affairs) 편집자와 14시간 동안 마지막 교정을 보는 중이었습니다.\n“폭풍이 그 지역을 덮치면 전선이 나무에 깔려 몇 주 동안 끊길 테고, 그러면 인쇄 마감을 놓칠 판이었습니다.”\n그렇게 나온 글이 10월호에 실린 「에너지 전략: 가지 않은 길?」입니다.\n반향은 컸습니다. 재인쇄 요청이 수십 년 사이 포린 어페어스의 어떤 글보다 많았고, 그해 12월에는 상원 위원회 두 곳이 그를 증인으로 불렀습니다."
+   },
+   {
+    "heading": "더 캐낼 것인가, 덜 쓸 것인가",
+    "body": "그가 그린 길은 둘이었습니다.\n하드 패스(hard path)는 늘어나는 수요에 맞춰 석탄과 우라늄으로 큰 발전소를 계속 짓는 길입니다.\n소프트 패스(soft path)는 공급이 아니라 사람이 원하는 것에서 출발합니다. 러빈스는 포린 어페어스 원문에 이렇게 썼습니다.\n“사람들이 원하는 것은 전기나 석유가 아니라, 편안한 방, 빛, 이동, 음식, 식탁 같은 실제의 것들이다.”\n필요한 것이 방을 데우는 정도의 낮은 열인데 수천 도의 불꽃이나 핵으로 전기를 만들 필요가 없다는 주장입니다. 그는 이 낭비를 이렇게 비꼬았습니다.\n“버터를 전기톱으로 써는 격이다.”"
+   },
+   {
+    "heading": "그가 틀린 곳은 태양광 값이었습니다",
+    "body": "코헌이 2025년에 인터뷰했을 때 러빈스는 솔직하게 털어놓았습니다.\n“태양광 전지는 지적으로 말도 꺼낼 수 없는 주제였습니다. 꺼내면 비웃음을 샀고, 저도 그렇게까지 싸질 거라고는 생각하지 않았습니다.”\n실제로는 달랐습니다. 태양광 패널 값은 와트당 약 100달러(현재 가치)에서 지금 세계 시장의 10센트 안팎까지 내려갔습니다.\n시추 기술이 발전해 석유와 가스가 계속 주력으로 남은 것도 그가 내다보지 못한 일입니다."
+   },
+   {
+    "heading": "그가 맞힌 곳은 총량이었습니다",
+    "body": "당시 예측은 대부분 수요가 끝없이 오른다고 보았습니다.\n러빈스의 소프트 패스는 미국의 에너지 사용 총량이 어느 지점에서 평평해질 수 있다고 보았고, 2000년의 실제 사용량과 거의 맞았습니다.\n공급을 늘리는 대신 필요를 줄이는 쪽이 현실에 더 가까웠다는 뜻입니다."
+   },
+   {
+    "heading": "전기를 아끼자던 사람의 집은 전기로 돕니다",
+    "body": "코헌이 2025년 콜로라도의 러빈스 집을 찾았을 때 그가 가장 먼저 보여 준 것은 인덕션 레인지였습니다.\n물이 눈 깜짝할 사이 끓었고, 전기실에는 배터리가 있었고, 바깥에서는 전기차 두 대가 충전 중이었습니다. 장작 난로는 치워진 뒤였습니다.\n히트펌프(heat pump)는 공기 속 열을 옮겨 써서 쓴 전기보다 몇 배 많은 열을 줍니다. 코헌은 러빈스가 놓친 것이 바로 이 전기화였다고 봅니다.\n전기를 좁은 길로만 보던 사람이 전기로 사는 집에 살고 있는 셈입니다.\n코헌의 결론은 이렇습니다. 효율과 재생에너지는 맞았고, 깨끗한 전기와 전기화는 러빈스가 생각한 것보다 훨씬 중요해졌다는 것입니다.\n우리 집의 난방과 요리, 이동은 지금 어느 길 위에 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "스물아홉 살 러빈스",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "Two U.S. Senate committees called on the 29-year-old Lovins to testify about his ideas that December"
+  },
+  {
+   "claim": "50년 뒤 그의 지도는 반쯤만 맞았습니다",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "I think Lovins got it half right about how to secure sustainable energy"
+  },
+  {
+   "claim": "1976년 8월, 허리케인 벨이",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "Hurricane Belle was barreling toward New England in August 1976 when an editor from Foreign Affairs called."
+  },
+  {
+   "claim": "14시간 동안",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "The lines held up as he and the editor worked through final edits on a 14-hour phone call."
+  },
+  {
+   "claim": "폭풍이 그 지역을 덮치면 전선이 나무에 깔려",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "If it happened to hit that area, the wires would be down with trees on them for weeks, so we’d miss the press date,"
+  },
+  {
+   "claim": "10월호",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "Published in October 1976 in the wake of the 1973 oil crisis"
+  },
+  {
+   "claim": "재인쇄 요청이 수십 년 사이",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "drew more reprint requests than any Foreign Affairs article in decades"
+  },
+  {
+   "claim": "그해 12월에는 상원 위원회 두 곳이",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "Two U.S. Senate committees called on the 29-year-old Lovins to testify about his ideas that December"
+  },
+  {
+   "claim": "사람들이 원하는 것은 전기나 석유가 아니라",
+   "url": "https://www.foreignaffairs.com/articles/united-states/1976-10-01/energy-strategy-road-not-taken",
+   "original": "but rather comfortable rooms, light, vehicular motion, food, tables, and other real things"
+  },
+  {
+   "claim": "버터를 전기톱으로 써는 격이다",
+   "url": "https://www.foreignaffairs.com/articles/united-states/1976-10-01/energy-strategy-road-not-taken",
+   "original": "like cutting butter with a chainsaw"
+  },
+  {
+   "claim": "코헌이 2025년에 인터뷰",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "Lovins told me in a 2025 interview."
+  },
+  {
+   "claim": "태양광 전지는 지적으로 말도 꺼낼 수 없는 주제였습니다",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "Photovoltaics were out of bounds intellectually; that gets you laughed out of the room, and I didn’t actually think they would get cheap enough,"
+  },
+  {
+   "claim": "와트당 약 100달러(현재 가치)에서 지금 세계 시장의 10센트",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "the price per watt of solar panels tumbled from around US$100 in current dollars in 1976 to around 10 cents in global markets today"
+  },
+  {
+   "claim": "시추 기술이 발전해",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "However, Lovins and his contemporaries failed to foresee the drilling advances that have kept oil and gas dominant."
+  },
+  {
+   "claim": "2000년의 실제 사용량과 거의 맞았습니다",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "the soft path foresaw that total U.S. energy use could plateau, and it almost exactly matched the actual level in 2000"
+  },
+  {
+   "claim": "코헌이 2025년 콜로라도의 러빈스 집을",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "When I visited Lovins’ ultra-efficient, solar-powered Colorado home in 2025, electrification took center stage."
+  },
+  {
+   "claim": "전기차 두 대가 충전 중",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "Two electric cars were charging outside."
+  },
+  {
+   "claim": "쓴 전기보다 몇 배 많은 열을",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "Heat pumps supply several times as much heat as the electricity they consume."
+  },
+  {
+   "claim": "깨끗한 전기와 전기화는 러빈스가 생각한 것보다 훨씬 중요해졌다",
+   "url": "https://theconversation.com/50-years-later-amory-lovins-soft-energy-path-meets-electrification-293920",
+   "original": "clean electricity and electrification are proving far more important than Lovins expected."
+  }
+ ]
+}
