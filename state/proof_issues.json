@@ -1,11 +1,5 @@
 {
- "base": {
-  "# 화면 대조 실패 — Response ended prematurely": 1,
-  "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 2,
-  "글 없음: 영어 가이드 (editorial/guides/en_* 오늘 커밋)": 1
- },
- "day": "2026-10-28",
- "issues": {
-  "작업 publish_check.yml (#): 실패": 1
- }
+ "base": {},
+ "day": "2026-10-29",
+ "issues": {}
 }
