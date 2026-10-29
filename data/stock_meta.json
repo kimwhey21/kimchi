@@ -3145,10 +3145,14 @@
 "web": "www.hyundai.com"
 },
 "0053F0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01543043",
+"en": "TNE Korea Co., Ltd.",
+"founded": "2014",
+"industry": "Machinery",
+"ksic": "29174",
+"name": "TNE Korea",
+"pref": false,
+"web": "www.tnekorea.com"
 },
 "005420": {
 "corp": "00160302",
