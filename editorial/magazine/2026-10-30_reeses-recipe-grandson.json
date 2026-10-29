@@ -1,0 +1,121 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-30",
+ "slug": "reeses-recipe-grandson",
+ "radar_origin": "Fortune: ‘You can’t trust the Reese’s logo’: The grandson of Reese’s inventor says Hershey’s 2027 recipe fix is ‘a stall’—and he's igniting a family feud",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Y2hvY29sYXRlfGVufDB8MHx8fDE3OTMyOTQwMjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "DHYfjAe_eeo",
+  "credit": "Unsplash / Jessica Loaiza"
+ },
+ "sources": [
+  {
+   "name": "AP통신",
+   "title": "Grandson of the inventor of Reese's Peanut Butter Cups accuses Hershey of cutting corners (2026-02-19)",
+   "url": "https://abc7news.com/post/grandson-inventor-reeses-peanut-butter-cups-accuses-hershey-cutting-corners/18620027/"
+  },
+  {
+   "name": "푸드다이브",
+   "title": "Hershey reverting back to ‘classic’ chocolate recipe for some Reese’s products (2026-04)",
+   "url": "https://www.fooddive.com/news/ccc/816369/"
+  },
+  {
+   "name": "경제지 포춘",
+   "title": "Hershey is moving back to the original recipe for Reese’s Peanut Butter Cups (2026-04-01)",
+   "url": "https://fortune.com/2026/04/01/hershey-reeses-peanut-butter-cups-original-ingredients"
+  }
+ ],
+ "tags": [
+  "리세스",
+  "허쉬",
+  "코코아가격"
+ ],
+ "ko": {
+  "title": "코코아가 비싸지자 리세스에서 사라진 것",
+  "title_candidates": [
+   "코코아가 비싸지자 리세스에서 사라진 것",
+   "리세스 포장지의 작은 글씨를 읽는 법",
+   "리세스 손자의 편지가 허쉬를 움직인 이유"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "초콜릿 회사가 자기 대표 상품의 초콜릿을 줄였다는 사실을 가장 먼저 알아챈 사람은 소비자도 애널리스트도 아니었습니다.\n리세스 땅콩버터컵을 만든 사람의 손자였습니다.\n그 편지 한 통은 세계적인 과자 회사의 다음 해 계획에까지 닿았습니다.\n레시피는 누구의 입맛으로 바뀌고, 누구의 항의로 되돌아올까요?"
+   },
+   {
+    "heading": "손자가 보낸 편지",
+    "body": "브래드 리스(Brad Reese)는 리세스 땅콩버터컵을 발명한 H.B. 리스의 손자입니다.\n그는 2월 14일 허쉬의 브랜드 담당자에게 편지를 보냈습니다. 여러 제품에서 밀크 초콜릿이 초콜릿 코팅으로, 땅콩버터가 땅콩 크림으로 바뀌었다는 항의였습니다.\n편지에는 이런 물음이 들어 있었습니다.\n“허쉬는 어떻게 리세스를 신뢰와 품질의 상징이라고 내세우면서, 그 신뢰를 만든 바로 그 재료를 조용히 바꿀 수 있습니까?”\n그는 이 편지를 자신의 링크드인에 공개했습니다."
+   },
+   {
+    "heading": "포장지에는 이미 적혀 있었습니다",
+    "body": "그가 증거로 든 것은 밸런타인데이용 ‘미니 하트’였습니다. 포장지에는 밀크 초콜릿과 땅콩버터가 아니라 ‘초콜릿 캔디와 땅콩버터 크림’이라고 적혀 있었습니다.\n리스는 AP통신 인터뷰에서 그 제품을 버렸다고 말했습니다.\n“먹을 수 없었습니다. 이해하셔야 합니다. 저는 예전에 리세스 제품을 매일 먹었습니다.”\n미국에서 ‘밀크 초콜릿’이라는 이름을 쓰려면 식품의약국(FDA) 기준을 채워야 합니다. 초콜릿 원액 10% 이상, 유고형분 12% 이상, 유지방 3.39% 이상입니다.\n기준에 못 미치는 제품은 포장지에 ‘초콜릿 캔디’처럼 다른 표현을 쓰면 됩니다."
+   },
+   {
+    "heading": "허쉬는 무엇이라고 답했나",
+    "body": "허쉬는 땅콩버터컵 자체는 예전과 같은 방식으로 만든다고 답했습니다.\n다만 제품군을 넓히면서 레시피를 조정했다는 점은 인정했습니다.\n배경에는 높은 코코아 가격도 있습니다. 허쉬를 비롯한 제조사들이 초콜릿을 덜 쓰는 실험을 해 왔기 때문입니다.\n허쉬의 재무책임자 스티븐 보스쿨(Steven Voskuil)은 지난해 투자자 설명회에서 이렇게 말했습니다.\n“지금까지 바꾼 모든 것을 놓고 보면, 소비자에게 미친 영향은 전혀 없었다고 말씀드리겠습니다.”\n손자는 그 말과 반대로 사람들이 예전만 못한 맛이라고 자주 말한다고 맞섰습니다."
+   },
+   {
+    "heading": "한 달 반 뒤 나온 ‘되돌리기’ 발표",
+    "body": "4월 1일 허쉬는 2027년부터 모든 리세스 제품에 ‘클래식 레시피’를 쓰겠다고 밝혔습니다.\n경제지 포춘에 따르면 대상은 초콜릿이 적은 코팅을 쓰던 일부 제품이고, 허쉬는 연구개발 투자도 25% 늘리겠다고 했습니다.\n식품 전문지 푸드다이브 기사에서 이 변화는 리세스 제품의 3%에 해당합니다. 그만큼 작은 비중인데도 회사가 움직인 셈입니다.\n허쉬가 낸 입장문은 같은 말을 이렇게 줄입니다.\n“허쉬 초콜릿바와 리세스 땅콩버터컵의 핵심 레시피는 바뀌지 않았습니다.”"
+   },
+   {
+    "heading": "손자는 아직 만족하지 않았습니다",
+    "body": "푸드다이브 기사 속 리스의 반응은 짧았습니다.\n“리세스의 재료를 되돌리는 것은 쉬운 일입니다. 리세스의 신뢰를 되돌리는 일은 허쉬가 아직 시작도 하지 않았습니다.”\n레시피는 돌아오겠지만, 포장지의 ‘초콜릿 캔디’가 신뢰를 얼마나 깎았는지는 숫자로 재 보기 어렵습니다.\n코코아 값이 오를 때 대표 상품의 재료를 몰래 줄이는 회사를, 소비자는 다음번에도 믿어 줄까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "2월 14일 허쉬의 브랜드 담당자에게 편지를 보냈습니다",
+   "url": "https://abc7news.com/post/grandson-inventor-reeses-peanut-butter-cups-accuses-hershey-cutting-corners/18620027/",
+   "original": "Brad Reese, 70, said in a Feb. 14 letter to Hershey's corporate brand manager that for multiple Reese's products, the company replaced milk chocolate with compound coatings and peanut butter with peanut crème."
+  },
+  {
+   "claim": "허쉬는 어떻게 리세스를 신뢰와 품질의 상징이라고 내세우면서, 그 신뢰를 만든 바로 그 재료를 조용히 바꿀 수 있습니까?",
+   "url": "https://abc7news.com/post/grandson-inventor-reeses-peanut-butter-cups-accuses-hershey-cutting-corners/18620027/",
+   "original": "How does The Hershey Co. continue to position Reese's as its flagship brand, a symbol of trust, quality and leadership, while quietly replacing the very ingredients (Milk Chocolate + Peanut Butter) that built Reese's trust in the first place?"
+  },
+  {
+   "claim": "먹을 수 없었습니다. 이해하셔야 합니다. 저는 예전에 리세스 제품을 매일 먹었습니다.",
+   "url": "https://abc7news.com/post/grandson-inventor-reeses-peanut-butter-cups-accuses-hershey-cutting-corners/18620027/",
+   "original": "It was not edible,\" Reese told The Associated Press in an interview. \"You have to understand. I used to eat a Reese's product every day."
+  },
+  {
+   "claim": "초콜릿 원액 10% 이상, 유고형분 12% 이상, 유지방 3.39% 이상입니다",
+   "url": "https://abc7news.com/post/grandson-inventor-reeses-peanut-butter-cups-accuses-hershey-cutting-corners/18620027/",
+   "original": "To be considered milk chocolate, products must contain at least 10% chocolate liquor, which is a paste made from ground cocoa beans and contains no alcohol. Products also must contain at least 12% milk solids and 3.39% milk fat."
+  },
+  {
+   "claim": "지금까지 바꾼 모든 것을 놓고 보면, 소비자에게 미친 영향은 전혀 없었다고 말씀드리겠습니다.",
+   "url": "https://abc7news.com/post/grandson-inventor-reeses-peanut-butter-cups-accuses-hershey-cutting-corners/18620027/",
+   "original": "I would say in all the changes that we've made thus far, there has been no consumer impact whatsoever."
+  },
+  {
+   "claim": "연구개발 투자도 25% 늘리겠다고 했습니다",
+   "url": "https://fortune.com/2026/04/01/hershey-reeses-peanut-butter-cups-original-ingredients",
+   "original": "The company said it plans to increase its research and development funding by 25% next year."
+  },
+  {
+   "claim": "이 변화는 리세스 제품의 3%에 해당합니다",
+   "url": "https://www.fooddive.com/news/ccc/816369/",
+   "original": "The snacking giant said it plans to incorporate the classic milk and dark chocolate recipes in the remaining 3% of Reese’s products that don’t use it."
+  },
+  {
+   "claim": "허쉬 초콜릿바와 리세스 땅콩버터컵의 핵심 레시피는 바뀌지 않았습니다.",
+   "url": "https://www.fooddive.com/news/ccc/816369/",
+   "original": "The core recipes for our Hershey's chocolate bars and Reese's peanut butter cups have not changed."
+  },
+  {
+   "claim": "리세스의 재료를 되돌리는 것은 쉬운 일입니다. 리세스의 신뢰를 되돌리는 일은 허쉬가 아직 시작도 하지 않았습니다.",
+   "url": "https://www.fooddive.com/news/ccc/816369/",
+   "original": "Restoring REESE'S ingredients is the easy part. Restoring REESE'S trust is the part The Hershey Company still hasn’t even begun,"
+  },
+  {
+   "claim": "2027년부터 모든 리세스 제품에",
+   "url": "https://www.fooddive.com/news/ccc/816369/",
+   "original": "Hershey plans to revert back to the “classic recipe” for all of its Reese’s products starting in 2027"
+  }
+ ]
+}

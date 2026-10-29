@@ -1,0 +1,136 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-30",
+ "slug": "fed-hold-pce-3-6",
+ "radar_origin": "MarketWatch: Inflation surges, PCE shows. Fed pause on rate hikes unlikely to last with prices still ri",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1753354868507-729241ac48eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c3VwZXJtYXJrZXQlMjBzaG9wcGluZyUyMGNhcnR8ZW58MHwwfHx8MTc5MzI5NDAyMXww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "6aBRyZGtdeY",
+  "credit": "Unsplash / Vitaly Gariev"
+ },
+ "sources": [
+  {
+   "name": "미국 연방준비제도(연준)",
+   "title": "Federal Reserve issues FOMC statement (2026-10-28)",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm"
+  },
+  {
+   "name": "미국 경제분석국(BEA)",
+   "title": "Personal Income and Outlays, September 2026 (2026-10-29)",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026"
+  }
+ ],
+ "tags": [
+  "연준",
+  "PCE물가",
+  "기준금리"
+ ],
+ "ko": {
+  "title": "물가는 3.6%인데 연준은 왜 금리를 올리지 않았을까",
+  "title_candidates": [
+   "물가는 3.6%인데 연준은 왜 금리를 올리지 않았을까",
+   "연준 위원 둘은 왜 금리 인상에 손을 들었나",
+   "지출은 늘었는데 장바구니는 그대로인 달"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "미국 중앙은행은 금리를 그대로 뒀습니다.\n그런데 물가는 1년 전보다 3.6% 올라 있었습니다.\n그런데 위원 열두 명 가운데 둘은 올리자고 반대표를 던졌습니다.\n경기가 강하다는 성명과 장바구니가 가벼워졌다는 숫자 가운데, 어느 쪽이 지금의 미국을 더 잘 말할까요?"
+   },
+   {
+    "heading": "연준은 멈췄고, 둘은 반대했습니다",
+    "body": "10월 28일 미국 연방준비제도(연준)의 공개시장위원회는 기준금리 목표 범위를 연 3.75~4%로 유지했습니다.\n반대한 위원은 리사 쿡과 베스 해맥으로, 두 사람은 금리를 0.25%포인트 올리자는 쪽이었습니다.\n성명은 경기를 이렇게 평가했습니다.\n“경제 활동이 강한 속도로 팽창하고 있습니다.”\n그러면서 물가에 대해서는 이렇게 적었습니다.\n“인플레이션은 여전히 높습니다.”"
+   },
+   {
+    "heading": "하루 뒤 나온 숫자는 더 뜨거웠습니다",
+    "body": "다음 날 미국 경제분석국(BEA)이 9월 통계를 내놓았습니다.\n연준이 물가의 기준으로 삼는 개인소비지출(PCE) 지표입니다.\nPCE 물가지수는 한 달 전보다 0.5%, 1년 전보다 3.6% 올랐습니다.\n식품과 에너지를 뺀 근원 지수도 1년 전보다 3.1% 올랐습니다.\n연준이 목표로 하는 물가 상승률은 2%입니다. 근원 지수로 봐도 목표보다 높습니다."
+   },
+   {
+    "heading": "돈은 더 썼는데 더 산 것은 아닙니다",
+    "body": "BEA가 발표한 9월 소비 지출은 한 달 전보다 0.5% 늘었습니다.\n하지만 물가 변동을 뺀 실질 소비는 0.1%도 늘지 않았습니다.\n소득은 0.2% 늘었지만 물가를 빼면 실질 가처분소득은 0.3% 줄었습니다.\n같은 돈으로 살 수 있는 물건이 그만큼 줄었다는 뜻입니다."
+   },
+   {
+    "heading": "저축이 완충 역할을 하고 있을까",
+    "body": "BEA에 따르면 9월 개인 저축률은 3.8%입니다.\n소득이 실질로 줄어든 달에 소비를 지키려면 저축을 덜 해야 합니다.\n성명이 말한 ‘탄탄한 가계 지출’이 물가가 오른 만큼 부풀려진 숫자라면, 연준 안의 이견도 이해가 됩니다.\n금리를 올리자는 두 위원은 이 숫자를 어떻게 읽었을까요?"
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "동결을 지지한 열 명은 경기가 강하고 소비가 버틴다는 점을 봤습니다.\n반대한 두 명은 금리 인상 쪽에 섰습니다.\n물가는 목표보다 높고, 실질 소비는 멈춰 섰습니다.\n성명은 “위원회는 물가 안정을 달성할 것”이라고 약속했습니다.\n실질 소비가 이대로 멈춘다면 연준은 어느 쪽을 먼저 지키려 할까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "기준금리 목표 범위를 연 3.75~4%로 유지했습니다",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+   "original": "The Committee decided to maintain the target range for the federal funds rate at 3-3/4 to 4 percent"
+  },
+  {
+   "claim": "금리를 0.25%포인트 올리자는 쪽이었습니다",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+   "original": "Voting against the monetary policy action were Lisa D. Cook and Beth M. Hammack, who preferred to raise the target range for the federal funds rate by 1/4 percentage point at this meeting."
+  },
+  {
+   "claim": "경제 활동이 강한 속도로 팽창하고 있습니다.",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+   "original": "Economic activity is expanding at a strong pace."
+  },
+  {
+   "claim": "인플레이션은 여전히 높습니다.",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+   "original": "Inflation remains elevated."
+  },
+  {
+   "claim": "연준이 목표로 하는 물가 상승률은 2%입니다",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+   "original": "to ensure a timely return of inflation to the Committee's 2 percent goal."
+  },
+  {
+   "claim": "위원회는 물가 안정을 달성할 것",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+   "original": "The Committee will deliver price stability."
+  },
+  {
+   "claim": "한 달 전보다 0.5%, 1년 전보다 3.6% 올랐습니다",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+   "original": "the PCE price index for September increased 0.5 percent . Excluding food and energy, the PCE price index increased 0.3 percent. From the same month one year ago, the PCE price index for September increased 3.6 percent"
+  },
+  {
+   "claim": "근원 지수도 1년 전보다 3.1% 올랐습니다",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+   "original": "Excluding food and energy, the PCE price index increased 3.1 percent from one year ago."
+  },
+  {
+   "claim": "9월 소비 지출은 한 달 전보다 0.5% 늘었습니다",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+   "original": "personal consumption expenditures (PCE) increased $113.1 billion (0.5 percent)."
+  },
+  {
+   "claim": "실질 소비는 0.1%도 늘지 않았습니다",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+   "original": "Real PCE increased $2.6 billion ( less than 0.1 percent at a monthly rate) in September."
+  },
+  {
+   "claim": "소득은 0.2% 늘었지만 물가를 빼면 실질 가처분소득은 0.3% 줄었습니다",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+   "original": "Current-dollar DPI 0.3 0.2 Real DPI 0.0 -0.3"
+  },
+  {
+   "claim": "9월 개인 저축률은 3.8%입니다",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+   "original": "Personal saving was $911.1 billion, and the personal saving rate —personal saving as a percentage of DPI—was 3.8 percent."
+  },
+  {
+   "claim": "물가는 1년 전보다 3.6% 올라 있었습니다",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+   "original": "From the same month one year ago, the PCE price index for September increased 3.6 percent"
+  },
+  {
+   "claim": "9월 통계를 내놓았습니다",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+   "original": "Personal Income and Outlays, September 2026"
+  }
+ ]
+}

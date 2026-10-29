@@ -1,0 +1,111 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-10-30",
+ "slug": "dark-matter-zwicky-rubin",
+ "radar_origin": "Big Think: Was dark matter first discovered by Fritz Zwicky or Vera Rubin?",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1604423203943-54721eff418a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c3BpcmFsJTIwZ2FsYXh5fGVufDB8MHx8fDE3OTMyOTQwMTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "45Z6hW1dQMI",
+  "credit": "Unsplash / Arnaud Mariat"
+ },
+ "sources": [
+  {
+   "name": "위키백과",
+   "title": "Fritz Zwicky",
+   "url": "https://en.wikipedia.org/wiki/Fritz_Zwicky"
+  },
+  {
+   "name": "위키백과",
+   "title": "Vera Rubin",
+   "url": "https://en.wikipedia.org/wiki/Vera_Rubin"
+  },
+  {
+   "name": "유럽입자물리연구소(CERN)",
+   "title": "Dark matter",
+   "url": "https://home.cern/science/physics/dark-matter"
+  }
+ ],
+ "tags": [
+  "암흑물질",
+  "베라루빈",
+  "프리츠츠비키"
+ ],
+ "ko": {
+  "title": "암흑물질을 처음 발견한 사람은 츠비키일까, 루빈일까",
+  "title_candidates": [
+   "암흑물질을 처음 발견한 사람은 츠비키일까, 루빈일까",
+   "암흑물질의 주인공을 한 사람으로 정할 수 없는 이유",
+   "아무도 듣지 않던 천문학자 츠비키의 계산"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "은하는 너무 빨리 돌고 있습니다.\n눈에 보이는 별의 중력만으로는 붙잡을 수 없는 속도인데도, 은하는 흩어지지 않습니다.\n이 계산이 안 맞는다는 것을 처음 알아챈 사람은 누구일까요, 그것을 세상에 믿게 만든 사람은 누구일까요?"
+   },
+   {
+    "heading": "아무도 듣지 않던 1933년의 계산",
+    "body": "스위스 출신 천문학자 프리츠 츠비키(Fritz Zwicky)는 미국 캘리포니아 공대에서 코마 은하단(Coma Cluster)을 관측했습니다. 은하가 모여 있는 거대한 무리입니다.\n위키백과에 따르면 그는 1933년 이 은하단의 움직임을 설명하려면 눈에 보이지 않는 물질이 있어야 한다고 제안했습니다.\n그가 쓴 논문에는 이런 대목이 있습니다.\n“관측된 속도를 얻으려면 코마 은하단의 평균 밀도가 빛나는 물질로 계산한 값보다 적어도 400배는 커야 합니다.”\n“이것이 확인된다면, 암흑물질이 빛나는 물질보다 훨씬 높은 밀도로 존재한다는 놀라운 결과가 나옵니다.”"
+   },
+   {
+    "heading": "그 말은 오랫동안 묻혔습니다",
+    "body": "츠비키는 생각이 앞서가는 사람이었습니다. 중성자별과 중력렌즈를 일찍 말했지만, 그의 동료들은 어떤 생각이 맞을지 알 길이 없었습니다.\n츠비키의 삶을 돌아본 스티븐 마우러(Stephen Maurer)는 이렇게 썼습니다.\n“연구자들이 중성자별, 암흑물질, 중력렌즈를 이야기할 때는 늘 같은 말로 시작합니다. ‘츠비키는 1930년대에 이 문제를 알아챘다. 그때는 아무도 귀 기울이지 않았다…’”\n계산은 있었는데, 같은 결과를 보여 줄 두 번째 관측이 없었습니다."
+   },
+   {
+    "heading": "안드로메다에서 나온 두 번째 증거",
+    "body": "그 두 번째 관측을 가져온 사람이 베라 루빈(Vera Rubin)입니다. 그는 동료 켄트 포드(Kent Ford)가 만든 분광기로 은하의 회전을 재기 시작했습니다.\n루빈은 안드로메다 은하부터 나선은하의 바깥쪽 물질이 얼마나 빨리 도는지 살폈습니다.\n위키백과 기록으로는 바깥쪽도 중심부만큼 빨리 움직이는 평평한 회전 곡선이 나왔습니다.\n별의 중력만으로 붙잡는다면 나선은하는 흩어져 버릴 속도였습니다."
+   },
+   {
+    "heading": "그래서 누가 먼저였을까",
+    "body": "루빈의 계산은 은하가 눈에 보이는 빛으로 헤아린 것보다 적어도 다섯 배에서 열 배 많은 질량을 품어야 한다고 말했습니다.\n위키백과는 이 결과가 수십 년에 걸쳐 확인되면서 암흑물질 이론을 뒷받침한 첫 설득력 있는 결과가 됐다고 정리합니다.\n이 이론은 1930년대 츠비키가 처음 제안한 것입니다.\n먼저 말한 사람과 믿게 만든 사람이 다르다면, 발견은 누구의 이름으로 남아야 할까요?"
+   },
+   {
+    "heading": "정체는 아직 아무도 모릅니다",
+    "body": "유럽입자물리연구소(CERN)는 암흑물질이 눈에 보이는 물질보다 대략 여섯 배 많고 우주의 약 27%를 차지한다고 설명합니다.\n별과 은하를 이루는 우리가 아는 물질은 우주의 5%에 불과합니다.\n정체는 아직 모릅니다. 중력으로 보이는 흔적만 있을 뿐, 빛으로는 직접 본 적이 없습니다.\n츠비키의 계산이 나온 뒤 한 세기 가까이 지났는데도 이 물음이 풀리지 않았다면, 우리가 지금 믿는 우주의 지도는 얼마나 완성된 것일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1933년 이 은하단의 움직임을 설명하려면 눈에 보이지 않는 물질이 있어야 한다고 제안했습니다",
+   "url": "https://en.wikipedia.org/wiki/Fritz_Zwicky",
+   "original": "Zwicky proposed that unseen dark matter would explain the much higher mass required"
+  },
+  {
+   "claim": "코마 은하단의 평균 밀도가 빛나는 물질로 계산한 값보다 적어도 400배는 커야 합니다",
+   "url": "https://en.wikipedia.org/wiki/Fritz_Zwicky",
+   "original": "the average density in the Coma system would thus have to be at least 400 times greater than that derived on the basis of observations of luminous matter."
+  },
+  {
+   "claim": "암흑물질이 빛나는 물질보다 훨씬 높은 밀도로 존재한다는 놀라운 결과가 나옵니다",
+   "url": "https://en.wikipedia.org/wiki/Fritz_Zwicky",
+   "original": "the surprising result would then follow that dark matter is present in very much greater density than luminous matter."
+  },
+  {
+   "claim": "츠비키는 1930년대에 이 문제를 알아챘다",
+   "url": "https://en.wikipedia.org/wiki/Fritz_Zwicky",
+   "original": "Zwicky noticed this problem in the 1930s. Back then, nobody listened..."
+  },
+  {
+   "claim": "이 이론은 1930년대 츠비키가 처음 제안한 것입니다",
+   "url": "https://en.wikipedia.org/wiki/Vera_Rubin",
+   "original": "became the first persuasive results supporting the theory of dark matter, initially proposed by Fritz Zwicky in the 1930s."
+  },
+  {
+   "claim": "적어도 다섯 배에서 열 배 많은 질량",
+   "url": "https://en.wikipedia.org/wiki/Vera_Rubin",
+   "original": "Rubin's calculations showed that galaxies must contain at least five to ten times more mass than can be observed directly based on the light emitted by ordinary matter."
+  },
+  {
+   "claim": "눈에 보이는 물질보다 대략 여섯 배 많고 우주의 약 27%를 차지한다",
+   "url": "https://home.cern/science/physics/dark-matter",
+   "original": "Dark matter seems to outweigh visible matter roughly six to one, making up about 27% of the universe."
+  },
+  {
+   "claim": "우리가 아는 물질은 우주의 5%에 불과합니다",
+   "url": "https://home.cern/science/physics/dark-matter",
+   "original": "The matter we know and that makes up all stars and galaxies only accounts for 5% of the content of the universe!"
+  }
+ ]
+}
