@@ -124,70 +124,69 @@ See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace 
 /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
 See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
   df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
-[밸류에이션] US · 2026-10-29 · FWD PER 중앙값 24.4
+[밸류에이션] US · 2026-10-29 · FWD PER 중앙값 23.3
   (목표가까지 = 목표주가가 지금 주가보다 몇 % 높은가 · 주가 위치 = 지금 주가가 목표주가보다 몇 % 낮은가 — 둘은 다른 숫자)
   종목            FWD PER      목표가까지      주가 위치     52주고점 대비    애널
-  마이크론              4.7     +58.9%     -37.1%       -21.7%    45
-  엔비디아             13.5     +52.7%     -34.5%       -11.5%    58
-  머크               15.3     +13.4%     -11.8%       -10.2%    25
-  메타               17.2     +38.5%     -27.8%       -21.5%    58
-  알파벳              21.4     +32.3%     -24.4%       -20.5%    54
-  마이크로소프트          22.4     +14.0%     -12.3%        -3.7%    53
-  아마존              24.4     +30.6%     -23.4%       -11.4%    58
-  디어               28.1      +8.3%      -7.7%       -11.2%    23
-  애플               36.0      -3.3%      +3.4%        -2.2%    38
-  월마트              36.8      +7.3%      -6.8%       -12.1%    40
-  인텔               43.9     +23.2%     -18.8%       -32.9%    42
-  코인베이스            53.8     +29.9%     -23.0%       -55.1%    33
-  테슬라             187.5      +1.6%      -1.6%       -19.0%    39
+  마이크론              4.5     +67.2%     -40.2%       -25.6%    45
+  엔비디아             13.4     +54.0%     -35.1%       -12.2%    58
+  머크               15.8      +8.8%      -8.1%        -6.7%    26
+  메타               17.5     +35.8%     -26.4%       -19.9%    58
+  알파벳              18.7     +48.0%     -32.4%       -30.5%    52
+  마이크로소프트          22.0     +14.1%     -12.4%        -3.8%    53
+  아마존              23.3     +36.4%     -26.7%       -15.1%    58
+  디어               29.0      +5.2%      -4.9%        -8.5%    23
+  애플               36.5      -4.7%      +4.9%        -0.8%    38
+  월마트              37.6      +5.1%      -4.9%       -10.3%    40
+  인텔               42.6     +27.9%     -21.8%       -35.3%    42
+  코인베이스            53.2     +31.3%     -23.8%       -55.6%    33
+  테슬라             187.1      +1.8%      -1.8%       -19.2%    39
   (내년 적자 예상: 모더나)
   (추정치 없음: 필라델피아 반도체 ETF, WTI 원유)
 
-[의견 변경] US · 최근 7일 · 상향 4 하향 1 (의견 유지 50건은 뺐습니다)
+[의견 변경] US · 최근 7일 · 상향 4 하향 2 (의견 유지 82건은 뺐습니다)
+  2026-10-29 ▼ 알파벳          Citizens: Market Outperform → Market Perform
   2026-10-27 ▼ 모더나          William Blair: Outperform → Market Perform
   2026-10-26 ▲ 인텔           New Street Research: Neutral → Buy
   2026-10-26 ▲ 테슬라          Barclays: Equal-Weight → Overweight
   2026-10-22 ▲ 테슬라          CLSA: Underperform → Hold
   2026-10-22 ▲ 테슬라          BNP Paribas: Underperform → Neutral
 
-[월가 리포트] US · 오늘 · 88건 (상향 10 하향 19 신규 4 목표가 상향 0 하향 0) · 출처 marketbeat
+[월가 리포트] US · 오늘 · 753건 (상향 18 하향 31 신규 16 목표가 상향 244 하향 175) · 출처 marketbeat
   ADYEY  ▲ 상향     Loop Capital              Hold → Buy               
   AFYA   ▲ 상향     Bank of America           Neutral → Buy            $16.00
   ALKT   ▼ 하향     William Blair             Outperform → Market Perform 
   ALKT   ▼ 하향     Citizens Jmp              Outperform → Market Perform 
   ALKT   ▼ 하향     KeyCorp                   Overweight → Sector Weight 
+  ALKT   ▼ 하향     Craig Hallum              Buy → Hold               $16.00
   ALKT   ▼ 하향     Citigroup                 Market Outperform → Market Perform 
+  ALNY   ▼ 하향     Stifel Nicolaus           Buy → Hold               $225.00
   ARCC   ▲ 상향     UBS Group                 Neutral → Buy            $21.00
   ARTV   ▼ 하향     Jefferies Financial Grou  Buy → Hold               $4.00
   BBD    ▼ 하향     Bradesco Corretora        Overweight → Neutral     
   BBD    ▼ 하향     JPMorgan Chase & Co.      Overweight → Neutral     
-  CSTM   ▲ 상향     JPMorgan Chase & Co.      Neutral → Overweight     $35.00
-  CX     ▲ 상향     Bradesco Corretora        Neutral → Outperform     
-  EBAY   ▲ 상향     Wells Fargo & Company     Underweight → Equal Weight $106.00
+  BIIB   ▲ 상향     Argus                     Hold → Buy               $280.00
+  BSX    ▼ 하향     Oppenheimer               Outperform → Market Perform 
+  CSTM   ▲ 상향     JPMorgan Chase & Co.      Neutral → Overweight     $34.00 → $35.00
+  CWT    ▲ 상향     Freedom Broker            Hold → Buy               $49.00 → $53.00
+  CX     ▲ 상향     Bradesco Corretora        Neutral → Outperform     $14.00
+  EBAY   ▲ 상향     Wells Fargo & Company     Underweight → Equal Weight $91.00 → $106.00
+  EBAY   ▲ 상향     BNP Paribas Exane         Neutral                  
+  EBAY   ▲ 상향     UBS Group                 Neutral → Buy            
+  EBAY   ▼ 하향     Oppenheimer               Underperform             
+  EBAY   ▼ 하향     Citigroup                 Buy → Market Perform     
+  EBAY   ▼ 하향     Barclays                  Overweight → Underweight 
   EC     ▲ 상향     Jefferies Financial Grou  Underperform → Hold      $19.00
+  FDX    ▲ 상향     HSBC                      Hold → Buy               $370.00
   FTNT   ▼ 하향     Bank of America           Buy → Neutral            $140.00
   GBFH   ▼ 하향     Brean Capital             Buy → Neutral            
+  GOOG   ▼ 하향     Citizens Jmp              Mkt Outperform → Market Perform 
   GOOG   ▼ 하향     Citigroup                 Market Outperform → Market Perform 
-  GOOG   ▼ 하향     Citizens Jmp              Outperform → Market Perform 
-  GSK    ▼ 하향     Jefferies Financial Grou  Buy → Hold               $55.90
-  HLT    ▲ 상향     Mizuho                    Neutral → Outperform     $421.00
-  LII    ▼ 하향     Oppenheimer               Outperform → Market Perform 
-  PGC    ▼ 하향     Raymond James Financial   Strong-Buy → Market Perform 
-  RNST   ▼ 하향     Raymond James Financial   Strong-Buy → Outperform  $45.00
-  SFM    ▼ 하향     Bank of America           Buy → Underperform       $47.00
-  SFM    ▼ 하향     Royal Bank Of Canada      Outperform → Sector Perform $49.00
-  VFC    ▲ 상향     BNP Paribas Exane         Underperform → Neutral   $16.00
-  VONOY  ▼ 하향     Oddo Bhf                  Neutral                  
-  WTFC   ▲ 상향     UBS Group                 Neutral → Buy            $180.00
-  XP     ▼ 하향     Santander                 Neutral                  
-  ABSI   · 신규     Jefferies Financial Grou  Buy                      $14.00
+  GOOGL  ▼ 하향     Citizens Jmp              Market Outperform → Market Perform 
   핵심 내용은 여기 없습니다 — 루틴이 상위 몇 건만 출처를 열어 한 줄로 붙입니다. 야후 대체 경로면 목표주가가 없습니다.
 
 [실적 일정] US · 앞으로 21일
   D-0   2026-10-29  인텔  (뉴욕 16:00)
-  D-0   2026-10-29  아마존  (뉴욕 16:00)
-  D-0   2026-10-29  머크  (뉴욕 08:00)
-  D-0   2026-10-29  코인베이스  (뉴욕 16:00)
+  D-0   2026-10-29  머크  (뉴욕 06:00)
   D-4   2026-11-02  애플  (시각 미정)
   D-8   2026-11-06  모더나  (뉴욕 07:00)
   D-19  2026-11-17  엔비디아  (시각 미정)
@@ -227,10 +226,9 @@ See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace 
   13F는 기준일로부터 45일 뒤에 공개됩니다. 지난 분기의 흔적이지 지금의 포지션이 아닙니다.
 
 [미 거시] 최근 90일
-  미 10년물 국채금리           4.99  [2026-10-27 기준]  (+0.24) 기간 최저 4.63(2026-08-04) 최고 5.31(2026-10-05)
-  미 2년물 국채금리            4.70  [2026-10-27 기준]  (+0.42) 기간 최저 4.15(2026-08-13) 최고 4.92(2026-09-28)
-  장단기 금리차(10년-2년)       0.38  [2026-10-28 기준]  (-0.09) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
-  연방기금금리                3.75  [2026-09-01 기준]  (+0.12) 기간 최저 3.63(2026-07-01) 최고 3.75(2026-09-01)/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+  미 10년물 국채금리           5.05  [2026-10-28 기준]  (+0.30) 기간 최저 4.63(2026-08-04) 최고 5.31(2026-10-05)
+  미 2년물 국채금리            4.67  [2026-10-28 기준]  (+0.39) 기간 최저 4.15(2026-08-13) 최고 4.92(2026-09-28)
+  장단기 금리차(10년-2년)       0.37  [2026-10-29 기준]  (-0.10) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
 See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
   quotes.sort_index(inplace=True)
 /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:514: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
@@ -240,6 +238,7 @@ See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace 
 See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
   df.rename(columns={
 
+  연방기금금리                3.75  [2026-09-01 기준]  (+0.12) 기간 최저 3.63(2026-07-01) 최고 3.75(2026-09-01)
   미 소비자물가지수           336.30  [2026-09-01 기준]  (+3.48) 기간 최저 332.81(2026-07-01) 최고 336.30(2026-09-01)
 
 [계절성] ^GSPC · 최근 20년
