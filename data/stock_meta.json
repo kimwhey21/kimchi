@@ -5552,10 +5552,14 @@
 "web": "https://www.sinilpharm.com"
 },
 "0127E0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01965157",
+"en": "Hanwha Plus No 6 Special Purpose Acquisition Company",
+"founded": "2025",
+"industry": "Brokerage & asset management",
+"ksic": "66199",
+"name": "Hanwha Plus No 6 Special Purpose Acquisition",
+"pref": false,
+"web": ""
 },
 "012800": {
 "corp": "00112651",
@@ -25650,10 +25654,14 @@
 "web": "www.j2kbio.com"
 },
 "420610": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01649408",
+"en": "IntelliVIX Co., Ltd.",
+"founded": "2000",
+"industry": "Software & game publishing",
+"ksic": "5822",
+"name": "IntelliVIX",
+"pref": false,
+"web": "www.intellivix.ai"
 },
 "420770": {
 "corp": "00765569",
@@ -25866,10 +25874,14 @@
 "web": "www.daehanship.com"
 },
 "439270": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01540903",
+"en": "Creatz Inc.",
+"founded": "2009",
+"industry": "Other manufacturing",
+"ksic": "33999",
+"name": "Creatz",
+"pref": false,
+"web": "mycreatz.com"
 },
 "439580": {
 "corp": "01559637",
