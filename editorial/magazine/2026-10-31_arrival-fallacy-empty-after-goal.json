@@ -1,0 +1,96 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-10-31",
+ "slug": "arrival-fallacy-empty-after-goal",
+ "radar_origin": "The Conversation: Why achieving your goals can leave you feeling so empty",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1634707983128-0236c567a345?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8bW91bnRhaW4lMjBzdW1taXQlMjBoaWtlcnxlbnwwfDB8fHwxNzkzMzgwNTY4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "XnFkS9reTaU",
+  "credit": "Unsplash / Caleb Lumingkit"
+ },
+ "sources": [
+  {
+   "name": "사이콜로지투데이",
+   "title": "Why You Feel Empty After Achieving Your Goals (Mark Shelvock)",
+   "url": "https://www.psychologytoday.com/ie/blog/navigating-the-serpentine-path/202604/why-you-feel-empty-after-achieving-your-goals"
+  },
+  {
+   "name": "애니 라이트",
+   "title": "The Emptiness of Arrival: Why Reaching the Goal Feels Like Nothing",
+   "url": "https://anniewright.com/the-emptiness-of-arrival-why-reaching-the-goal-feels-like-nothing/"
+  }
+ ],
+ "tags": [
+  "도착의착각",
+  "목표",
+  "심리"
+ ],
+ "ko": {
+  "title": "목표를 이루고 나서 공허해지는 사람들, 무슨 일이 벌어질까",
+  "title_candidates": [
+   "목표를 이루고 나서 공허해지는 사람들, 무슨 일이 벌어질까",
+   "정상에 오른 다음 날의 기분은 왜 생각과 다를까",
+   "목표에 닿으면 왜 허전해질까? 도착의 착각 읽는 법"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "가장 기뻐야 할 날 다음 날이 가장 허전했다는 사람이 의외로 많습니다.\n오래 바라던 목표에 닿았는데 기쁨은 생각보다 빨리 식습니다.\n이 허전함은 의지가 약해서일까요, 아니면 우리 머리가 원래 그렇게 만들어져 있는 걸까요?"
+   },
+   {
+    "heading": "이름이 붙어 있는 현상입니다",
+    "body": "심리학에서는 이 현상을 ‘도착의 착각(arrival fallacy)’이라고 부릅니다. 목표에 닿기만 하면 행복해질 거라고 믿는 착각이라는 뜻입니다.\n사이콜로지투데이의 심리치료사 마크 셸복은 이를 이렇게 정의합니다. 목표에서 기대한 행복과 막상 이르렀을 때 느끼는 감정 사이의 간격입니다.\n긍정심리학자 탈 벤샤하르가 만든 용어라고 애니 라이트는 설명합니다."
+   },
+   {
+    "heading": "뇌는 목표에 닿기 전에 가장 신이 납니다",
+    "body": "흔한 설명은 도파민입니다. 셸복은 목표에 닿으면 우리를 그쪽으로 몰던 도파민이 사라진다고 적었습니다.\n애니 라이트는 『도파민 네이션』의 저자 애나 렘키의 말을 인용합니다.\n“우리 뇌는 끊임없이 다음 보상을 찾도록 만들어져 있고, 짜릿한 것은 가지는 일이 아니라 쫓는 일 그 자체입니다.”\n쫓는 동안이 더 즐거웠다는 말은, 그래서 틀린 기억이 아닙니다."
+   },
+   {
+    "heading": "그래도 도파민만의 문제일까",
+    "body": "셸복은 도파민 설명이 틀리지는 않지만 거기까지만 맞다고 선을 긋습니다.\n그가 보는 더 큰 문제는 방향입니다. 목표가 정말 내 것이었는지 묻지 않고 달려온 사람은 도착해도 허전하다는 것입니다.\n그는 이럴 때 ‘다음엔 무엇을 이룰까’ 대신 이렇게 물어보라고 권합니다.\n“내가 지어 온 것은 누구의 삶이었나.”"
+   },
+   {
+    "heading": "젊은 층에서 더 크게 나타나는 신호",
+    "body": "셸복이 소개한 2023년 하버드 교육대학원 보고서에는 젊은 성인의 거의 5분의 3이 삶에서 의미나 목적이 부족하다고 답한 결과가 나옵니다.\n이 숫자가 도착의 착각과 같은 것을 재는 것은 아닙니다.\n다만 목표는 많은데 의미가 모자란다는 느낌이 드물지 않다는 점은 보여 줍니다."
+   },
+   {
+    "heading": "다음 목표를 세우기 전에",
+    "body": "허전함이 올 때 조급하게 다음 목표로 뛰어가지 말고 호기심으로 마주해 보라는 것이 셸복의 조언입니다.\n그 허전함은 목표가 틀렸다는 경고일 수도, 속도가 너무 빨랐다는 신호일 수도 있습니다.\n여러분이 이루고 싶은 다음 숫자는, 이룬 다음 날에도 여전히 여러분의 것일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "목표에서 기대한 행복과 막상 이르렀을 때 느끼는 감정 사이의 간격",
+   "url": "https://www.psychologytoday.com/ie/blog/navigating-the-serpentine-path/202604/why-you-feel-empty-after-achieving-your-goals",
+   "original": "the gap between the happiness we anticipate from a goal and what we feel once we reach it"
+  },
+  {
+   "claim": "목표에 닿으면 우리를 그쪽으로 몰던 도파민이 사라진다",
+   "url": "https://www.psychologytoday.com/ie/blog/navigating-the-serpentine-path/202604/why-you-feel-empty-after-achieving-your-goals",
+   "original": "the dopamine that drove us toward the goal dissipates once it is reached"
+  },
+  {
+   "claim": "탈 벤샤하르가 만든 용어",
+   "url": "https://anniewright.com/the-emptiness-of-arrival-why-reaching-the-goal-feels-like-nothing/",
+   "original": "coined by positive psychologist Tal Ben-Shahar"
+  },
+  {
+   "claim": "우리 뇌는 끊임없이 다음 보상을 찾도록 만들어져 있고, 짜릿한 것은 가지는 일이 아니라 쫓는 일 그 자체입니다",
+   "url": "https://anniewright.com/the-emptiness-of-arrival-why-reaching-the-goal-feels-like-nothing/",
+   "original": "our brains are wired to constantly seek the next reward, and the pursuit itself is the high, not the having"
+  },
+  {
+   "claim": "내가 지어 온 것은 누구의 삶이었나",
+   "url": "https://www.psychologytoday.com/ie/blog/navigating-the-serpentine-path/202604/why-you-feel-empty-after-achieving-your-goals",
+   "original": "Whose life have I been building, and does it reflect who I actually am, who I am becoming, and what really matters to me?"
+  },
+  {
+   "claim": "2023년 하버드 교육대학원 보고서에는 젊은 성인의 거의 5분의 3",
+   "url": "https://www.psychologytoday.com/ie/blog/navigating-the-serpentine-path/202604/why-you-feel-empty-after-achieving-your-goals",
+   "original": "nearly three in five young adults reported lacking meaning or purpose in their lives"
+  }
+ ]
+}

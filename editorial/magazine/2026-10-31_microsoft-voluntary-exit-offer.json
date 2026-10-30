@@ -1,0 +1,106 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-10-31",
+ "slug": "microsoft-voluntary-exit-offer",
+ "radar_origin": "Fortune: Microsoft’s 60,000-person buyout offer hints at a future with fewer workers and more equipment",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1718220216044-006f43e3a9b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8b2ZmaWNlJTIwYnVpbGRpbmclMjBlbXB0eSUyMGRlc2tzfGVufDB8MHx8fDE3OTMzODA1NTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "pYlBAu3de0w",
+  "credit": "Unsplash / Bernd 📷 Dittrich"
+ },
+ "sources": [
+  {
+   "name": "더넥스트웹",
+   "title": "Microsoft offers buyouts to 60,000 employees, about a quarter of its staff",
+   "url": "https://thenextweb.com/news/microsoft-buyouts-60000-employees-voluntary-exit-offer"
+  },
+  {
+   "name": "AP통신",
+   "title": "Microsoft offers 60,000 employees voluntary buyouts as AI spending accelerates (2026-10-26)",
+   "url": "https://www.wowt.com/2026/10/26/microsoft-offers-60000-employees-voluntary-buyouts-ai-spending-accelerates/?outputType=amp"
+  }
+ ],
+ "tags": [
+  "마이크로소프트",
+  "자발적퇴직",
+  "AI투자"
+ ],
+ "ko": {
+  "title": "마이크로소프트가 6만 명에게 준 선택지의 속뜻은 무엇일까",
+  "title_candidates": [
+   "마이크로소프트가 6만 명에게 준 선택지의 속뜻은 무엇일까",
+   "마이크로소프트는 왜 6만 명에게 퇴직 선택지를 줬을까",
+   "6만 명 퇴직 제안, 마이크로소프트 발표에서 확인할 것 세 가지"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "직원 네 명 가운데 한 명에게 회사를 떠나도 좋다는 제안이 갔습니다.\n해고 통보는 아닙니다. 남을지 떠날지는 본인이 정하는 ‘자발적 퇴직 제안’입니다.\n같은 시기 업계의 데이터센터 투자는 올해 7,000억 달러를 넘길 전망입니다.\n사람에게 쓰던 돈과 설비에 쓰는 돈은 정말 같은 이야기일까요?"
+   },
+   {
+    "heading": "6만 명에게 간 제안",
+    "body": "마이크로소프트(Microsoft)가 내놓은 것은 ‘자발적 퇴직 제안(Voluntary Exit Offer)’입니다. 회사가 대상자를 정해 조건을 보여 주고, 받아들일지는 본인이 정하는 제도입니다.\n더넥스트웹에 따르면 대상은 약 6만 명입니다. 지난 6월 말 기준 직원 22만 3,000명의 약 4분의 1입니다.\n결정 기한은 12월 첫째 주까지입니다."
+   },
+   {
+    "heading": "회사는 ‘줄이려는 게 아니다’라고 말합니다",
+    "body": "최고인사책임자(Chief People Officer) 에이미 콜먼은 직원에게 보낸 메모에서 이렇게 밝혔습니다.\n“이번 제안은 회사 밖의 미래를 생각 중일 수 있는 직원에게 새로운 선택지를 줍니다.”\n콜먼은 블로그에도 글을 올려 이 제도가 회사로서는 처음이라고 알렸습니다.\n“자발적 퇴직 제안은 우리에게 새로운 일입니다.”\n한 대변인은 이 제안이 직원이 덜 필요하다는 신호는 아니라고 긱와이어에 말했다고 더넥스트웹은 적었습니다."
+   },
+   {
+    "heading": "사람 대신 설비로 가는 돈",
+    "body": "AP통신이 짚은 배경은 AI 투자입니다. 업계의 데이터센터 투자가 올해 7,000억 달러를 넘길 것으로 보입니다.\n그 열풍은 메모리 칩과 컴퓨터 프로세서 같은 장비, 그리고 전기까지 더 비싸게 만들었습니다.\n경제학자들은 이 비용 상승이 적어도 올해 말까지 물가를 밀어 올릴 것으로 내다봅니다."
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "기사들이 보여 주는 것은 두 가지 사실입니다. 한쪽에서는 6만 명에게 선택지를 건넸고, 다른 쪽에서는 업계가 설비에 7,000억 달러를 씁니다.\n둘이 서로 원인이라고 말하는 기사는 없습니다. 회사도 그렇게 말하지 않습니다.\n그래서 이 숫자들은 ‘줄이는 중’의 증거가 아니라, 아직 연결 고리가 확인되지 않은 두 장면에 가깝습니다."
+   },
+   {
+    "heading": "내 회사에 같은 제안이 온다면",
+    "body": "이런 제안은 받는 쪽에서 읽는 방식이 갈립니다. 새로운 선택지로 보는 사람도, 회사가 가는 방향의 신호로 읽는 사람도 있습니다.\n여러분의 회사가 같은 문서를 돌린다면, 무엇을 보고 둘 중 하나를 고르시겠습니까?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "약 6만 명",
+   "url": "https://thenextweb.com/news/microsoft-buyouts-60000-employees-voluntary-exit-offer",
+   "original": "About 60,000 employees are eligible for the Microsoft buyouts, Bloomberg first reported."
+  },
+  {
+   "claim": "22만 3,000명",
+   "url": "https://thenextweb.com/news/microsoft-buyouts-60000-employees-voluntary-exit-offer",
+   "original": "That is about a quarter of its workforce, which stood at 223,000 at the end of June."
+  },
+  {
+   "claim": "12월 첫째 주",
+   "url": "https://thenextweb.com/news/microsoft-buyouts-60000-employees-voluntary-exit-offer",
+   "original": "Employees have until the first week of December to decide."
+  },
+  {
+   "claim": "이번 제안은 회사 밖의 미래를 생각 중일 수 있는 직원에게 새로운 선택지를 줍니다",
+   "url": "https://thenextweb.com/news/microsoft-buyouts-60000-employees-voluntary-exit-offer",
+   "original": "This offer gives eligible employees who may be considering a future outside the company a new choice"
+  },
+  {
+   "claim": "자발적 퇴직 제안은 우리에게 새로운 일입니다",
+   "url": "https://www.wowt.com/2026/10/26/microsoft-offers-60000-employees-voluntary-buyouts-ai-spending-accelerates/?outputType=amp",
+   "original": "The Voluntary Exit Offer is new for us"
+  },
+  {
+   "claim": "7,000억 달러",
+   "url": "https://www.wowt.com/2026/10/26/microsoft-offers-60000-employees-voluntary-buyouts-ai-spending-accelerates/?outputType=amp",
+   "original": "likely topping $700 billion this year"
+  },
+  {
+   "claim": "메모리 칩과 컴퓨터 프로세서",
+   "url": "https://www.wowt.com/2026/10/26/microsoft-offers-60000-employees-voluntary-buyouts-ai-spending-accelerates/?outputType=amp",
+   "original": "has made memory chips, computer processors and other equipment, as well as electricity, more expensive."
+  },
+  {
+   "claim": "6만 명에게",
+   "url": "https://www.wowt.com/2026/10/26/microsoft-offers-60000-employees-voluntary-buyouts-ai-spending-accelerates/?outputType=amp",
+   "original": "Microsoft has offered 60,000 employees, or about 27% of its global workforce, voluntary buyouts"
+  }
+ ]
+}

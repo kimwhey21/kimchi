@@ -1,0 +1,136 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-10-31",
+ "slug": "bigtech-ai-capex-nasdaq",
+ "radar_origin": "Reuters (구글뉴스 경유): Tech giants' spending spooks investors and drives bonds rally - Reuters",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1651340981821-b519ad14da7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c3RvY2slMjBleGNoYW5nZSUyMHNjcmVlbiUyMHJlZHxlbnwwfDB8fHwxNzkzMzgwNTYwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "tcJ6sJTtTWI",
+  "credit": "Unsplash / Anne Nygård"
+ },
+ "sources": [
+  {
+   "name": "로이터",
+   "title": "Nasdaq plunges 2.6% as AI spending fears spark tech selloff (2026-10-22)",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/"
+  },
+  {
+   "name": "AI위클리",
+   "title": "Big Tech's $725B AI spend faces reckoning after chip selloff",
+   "url": "https://aiweekly.co/alerts/big-techs-725b-ai-spend-faces-reckoning-after-chip-selloff"
+  }
+ ],
+ "tags": [
+  "나스닥",
+  "AI투자",
+  "반도체"
+ ],
+ "ko": {
+  "title": "빅테크 투자 7,250억 달러, 시장은 어디까지 믿을까",
+  "title_candidates": [
+   "빅테크 투자 7,250억 달러, 시장은 어디까지 믿을까",
+   "AI 이야기에 구멍이 있다는 말, 시장은 어떻게 들었을까",
+   "다우는 오르고 나스닥은 2.6% 빠진 날, 시장이 의심한 것은"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "모두가 쓸어 담던 AI 주식이 하루 만에 시장에서 가장 아픈 곳이 됐습니다.\n같은 날 다우지수는 올랐고 나스닥은 2.6% 하락했습니다. 한 시장 안에서 갈린 하루였습니다.\n빅테크가 쓰는 돈이 커질수록 기대도 함께 커져야 하는 걸까요, 아니면 부담이 먼저 커지는 걸까요?"
+   },
+   {
+    "heading": "한쪽은 웃고 한쪽은 울었습니다",
+    "body": "로이터가 전한 그날의 미국 증시 마감입니다.\n나스닥 종합지수는 694포인트, 2.60% 하락한 2만 6,008.86에 마감했습니다. S&P 500은 1.21% 하락했습니다.\n다우존스 산업평균지수는 0.02% 올랐습니다.\n필라델피아 반도체지수는 6.7% 하락해 6월 23일 이후 하루 낙폭이 가장 컸습니다."
+   },
+   {
+    "heading": "빠진 종목과 오른 종목",
+    "body": "인텔, AMD, 샌디스크, 마벨은 모두 8% 넘게 하락했습니다.\n메타는 실적이 분석가 예상을 웃돌았는데도 주가가 7.0% 하락했습니다. AI 관련 지출 탓에 10년 넘는 기간 만에 처음으로 현금 유출을 기록했기 때문입니다.\n반대로 프록터앤갬블이 5.6%, 록히드마틴이 7.0% 올랐습니다.\nAI와 거리가 먼 종목들이 오히려 지수의 방어막이 된 하루였습니다."
+   },
+   {
+    "heading": "한 시장 전략가가 짚은 구멍",
+    "body": "머피앤실베스트의 선임 자산관리 어드바이저 폴 놀트는 이렇게 말했습니다.\n“시장에서 정말 힘들어하는 곳은 기술주 한 군데뿐입니다.”\n그는 투자자들이 AI 이야기에 구멍이 있다는 것을 깨닫기 시작했다고 덧붙였습니다.\n“투자자들은 AI 이야기에 몇 군데 구멍이 있다는 걸 알아 가고 있습니다.”"
+   },
+   {
+    "heading": "기대가 얼마나 큰지 숫자로 보면",
+    "body": "AI위클리가 정리한 블룸버그 집계가 있습니다.\n알파벳·마이크로소프트·아마존·메타는 올해 달력 기준으로 AI 설비 투자에 최대 7,250억 달러를 쓰겠다고 예고했습니다.\n월가 분석가들은 이 금액이 내년에는 9,000억 달러에 가까워질 것으로 봅니다.\n투자가 늘면 그만큼 벌어들이는 돈도 늘어야 주식이 버팁니다."
+   },
+   {
+    "heading": "시장은 무엇을 팔았을까",
+    "body": "그날 시장이 판 것은 AI가 아니라 AI에 건 기대의 속도였는지 모릅니다.\n기사들은 어느 쪽인지 말하지 않습니다. 확인된 것은 숫자와 주가의 방향뿐입니다.\n투자 규모를 보고 기대를 키워 온 쪽과, 그 기대에 구멍이 있다고 보는 쪽 가운데 여러분은 어느 쪽 숫자를 더 믿고 계십니까?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "694포인트, 2.60% 하락한 2만 6,008.86",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "the Nasdaq Composite lost 694.00 points, or 2.60%, to 26,008.86."
+  },
+  {
+   "claim": "나스닥은 2.6% 하락했습니다",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "falling 2.6% in the wake of a spate of high-profile AI-related earnings results"
+  },
+  {
+   "claim": "S&P 500은 1.21% 하락했습니다",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "the S&P 500 lost 93.74 points, or 1.21%, to 7,663.43"
+  },
+  {
+   "claim": "다우존스 산업평균지수는 0.02% 올랐습니다",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "The Dow Jones Industrial Average rose 11.89 points, or 0.02%, to 52,867.98"
+  },
+  {
+   "claim": "6.7% 하락해 6월 23일",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "plunged 6.7%, its biggest daily percentage drop since June 23."
+  },
+  {
+   "claim": "8% 넘게 하락했습니다",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "all tumbled more than 8%"
+  },
+  {
+   "claim": "주가가 7.0% 하락했습니다",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "Meta Platforms' results beat analyst expectations, but its stock slid 7.0%"
+  },
+  {
+   "claim": "10년 넘는 기간 만에 처음으로 현금 유출",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "posted its first cash outflow in more than a decade due to its AI-related expenditures"
+  },
+  {
+   "claim": "프록터앤갬블이 5.6%",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "sending the stock 5.6% higher"
+  },
+  {
+   "claim": "록히드마틴이 7.0% 올랐습니다",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "Lockheed Martin climbed 7.0%"
+  },
+  {
+   "claim": "시장에서 정말 힘들어하는 곳은 기술주 한 군데뿐입니다",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "The only part of the market that is really suffering here is technology,"
+  },
+  {
+   "claim": "투자자들은 AI 이야기에 몇 군데 구멍이 있다는 걸 알아 가고 있습니다",
+   "url": "https://www.staradvertiser.com/2026/10/22/breaking-news/nasdaq-plunges-2-6-as-ai-spending-fears-spark-tech-selloff/",
+   "original": "Investors are starting to realize that there are some holes in the AI story,"
+  },
+  {
+   "claim": "최대 7,250억 달러",
+   "url": "https://aiweekly.co/alerts/big-techs-725b-ai-spend-faces-reckoning-after-chip-selloff",
+   "original": "Alphabet, Microsoft, Amazon and Meta have forecast up to $725 billion in AI-driven capex this calendar year."
+  },
+  {
+   "claim": "9,000억 달러에 가까워질",
+   "url": "https://aiweekly.co/alerts/big-techs-725b-ai-spend-faces-reckoning-after-chip-selloff",
+   "original": "Wall Street analysts compiled by Bloomberg expect that figure to climb to nearly $900 billion in 2027."
+  }
+ ]
+}
