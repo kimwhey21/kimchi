@@ -1,8 +1,12 @@
 {
- "base": {},
- "day": "2026-10-30",
- "issues": {
+ "base": {
   "네이버 잡지 게시 #편 — 오늘 원고 #편(게시 직전 검사에서 막은 원고 #편)": 1,
   "맥 bench_nightly: 마지막 신호 # #": 1
+ },
+ "day": "2026-10-31",
+ "issues": {
+  "글 없음: 오늘의 칼럼 (editorial/columns/#_* #편)": 1,
+  "맥 bench_nightly: 마지막 신호 # #": 2,
+  "작업 publish_check.yml (#): 실패": 1
  }
 }
