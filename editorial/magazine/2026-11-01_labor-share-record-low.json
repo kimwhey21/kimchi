@@ -1,0 +1,91 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-01",
+ "slug": "labor-share-record-low",
+ "radar_origin": "Fortune: U.S workers just took home their smallest share of capital since at least 1947—and the lowest",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1606857521015-7f9fcf423740?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8b2ZmaWNlJTIwZGVza3xlbnwwfDB8fHwxNzkzNDY2NjM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "YI_9SivVt_s",
+  "credit": "Unsplash / Israel Andrade"
+ },
+ "sources": [
+  {
+   "name": "로이터",
+   "title": "US workers' share of GDP skids to fresh record low (2026-08-06)",
+   "url": "https://www.devdiscourse.com/article/business/3960650-us-workers-share-of-gdp-skids-to-fresh-record-low"
+  },
+  {
+   "name": "경제지 포춘",
+   "title": "US workers smallest labor share of GDP on record (2026-01-13)",
+   "url": "https://fortune.com/2026/01/13/us-workers-smallest-labor-share-gdp-on-record/"
+  }
+ ],
+ "tags": [
+  "노동소득분배율",
+  "AI와고용",
+  "미국경제"
+ ],
+ "ko": {
+  "title": "경제는 크는데 월급 몫은 줄어드는 미국, 누가 가져갈까",
+  "title_candidates": [
+   "경제는 크는데 월급 몫은 줄어드는 미국, 누가 가져갈까",
+   "미국 노동자의 몫이 가장 작아진 해, 그 몫은 어디로 갔을까",
+   "생산성이 올라도 월급이 안 오르는 이유, 숫자 하나로 봅니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "미국 경제는 계속 커지는데, 그 경제에서 일하는 사람이 가져가는 몫은 통계를 만든 뒤 가장 작아졌습니다.\n파이는 커졌는데 내 접시는 작아진 셈입니다.\n이 숫자는 월급이 올랐는지가 아니라 누가 더 많이 가져가는지를 보여 줍니다. 몫은 어디로 갔을까요?"
+   },
+   {
+    "heading": "노동소득 비중이라는 숫자",
+    "body": "노동소득 비중(labor share)은 한 나라가 만든 생산물 가운데 일한 대가로 노동자에게 돌아가는 몫입니다.\n미국 노동통계국(BLS)은 이 비중을 생산액 가운데 노동자에게 보상으로 돌아가는 비율로 봅니다.\n나머지는 기업 이익과 자본 소득으로 갑니다.\n그래서 이 숫자가 내려가면 일하는 사람의 몫이 줄고, 기업과 투자자의 몫이 늘었다는 뜻입니다."
+   },
+   {
+    "heading": "통계가 생긴 뒤 가장 낮은 수준",
+    "body": "로이터에 따르면 올해 2분기 노동소득 비중은 52.9%로, 1분기 53.7%에서 더 내려갔습니다.\nBLS는 이것이 1947년 통계가 시작된 뒤 가장 낮은 값이라고 밝혔습니다.\n경제지 포춘이 올해 1월 보도한 2025년 3분기 53.8%가 통계 시작 이후 최저라고 전했는데, 반년 만에 그 바닥이 다시 깨진 셈입니다."
+   },
+   {
+    "heading": "생산성은 올랐는데 몫은 줄었습니다",
+    "body": "일한 시간당 생산량은 늘고 있는데 노동자의 몫은 줄었습니다.\n텍사스A&M대 노동경제학자 레이먼드 로버트슨은 포춘에 이렇게 말했습니다.\n“That decline in the share of labor has got to be either falling earnings or falling numbers of people.”\n임금이 줄었거나 일하는 사람이 줄었다는 뜻입니다.\n최근에는 자동화, 그리고 어쩌면 인공지능이 사람을 크게 늘리지 않고도 생산을 늘리게 해 준다는 분석도 있습니다."
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "로이터는 생산성 이익이 임금보다 기업 소유주와 주주 쪽으로 더 많이 가고 있다고 정리했습니다.\n로버트슨은 한 걸음 더 나아가 이렇게 말했습니다.\n“things are getting worse for workers and much better for billionaires.”\n노동자에게는 더 나빠지고 억만장자에게는 훨씬 나아지고 있다는 말입니다.\n다만 이 비중은 수십 년 이어진 흐름 위에 있고, 숫자 하나로 원인을 단정할 수는 없습니다."
+   },
+   {
+    "heading": "한국 독자에게는 무엇이 다를까",
+    "body": "이 통계는 미국 이야기이지만 두 가지는 한국에서도 확인할 수 있습니다.\n하나는 기업 이익이 늘 때 임금이 같은 속도로 따라오는지입니다. 다른 하나는 새 기술이 일하는 시간을 줄이는지, 일하는 사람을 줄이는지입니다.\n미국 기업의 이익이 큰 장세에서, 그 이익의 일부가 월급에서 왔는지 보는 일은 투자자에게도 의미가 있습니다.\n파이가 커지는 속도와 내 접시가 커지는 속도, 둘 중 무엇을 기준으로 경제를 보고 계십니까?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "52.9%로, 1분기 53.7%",
+   "url": "https://www.devdiscourse.com/article/business/3960650-us-workers-share-of-gdp-skids-to-fresh-record-low",
+   "original": "fell to 52.9% in the second quarter from 53.7%"
+  },
+  {
+   "claim": "1947년 통계가 시작된 뒤 가장 낮은 값",
+   "url": "https://www.devdiscourse.com/article/business/3960650-us-workers-share-of-gdp-skids-to-fresh-record-low",
+   "original": "the lowest since the series began in 1947"
+  },
+  {
+   "claim": "2025년 3분기 53.8%가 통계 시작 이후 최저",
+   "url": "https://fortune.com/2026/01/13/us-workers-smallest-labor-share-gdp-on-record/",
+   "original": "decreased to 53.8% in the third quarter of 2025, its lowest level since the BLS started recording this data in 1947"
+  },
+  {
+   "claim": "That decline in the share of labor has got to be either falling earnings or falling numbers of people.",
+   "url": "https://fortune.com/2026/01/13/us-workers-smallest-labor-share-gdp-on-record/",
+   "original": "That decline in the share of labor has got to be either falling earnings or falling numbers of people"
+  },
+  {
+   "claim": "things are getting worse for workers and much better for billionaires.",
+   "url": "https://fortune.com/2026/01/13/us-workers-smallest-labor-share-gdp-on-record/",
+   "original": "things are getting worse for workers and much better for billionaires"
+  }
+ ]
+}

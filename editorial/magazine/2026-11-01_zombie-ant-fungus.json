@@ -1,0 +1,111 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-01",
+ "slug": "zombie-ant-fungus",
+ "radar_origin": "The Conversation: Zombies are real – just ask the parasites taking over the bodies and brains of insects",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1596507457709-34bf5fd86f1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8Y2FycGVudGVyJTIwYW50fGVufDB8MHx8fDE3OTM0NjY2NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "xXrVvepbzRI",
+  "credit": "Unsplash / Shannon Potter"
+ },
+ "sources": [
+  {
+   "name": "더 컨버세이션",
+   "title": "Zombie ants: meet the parasitic fungi that take control of living insects",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489"
+  },
+  {
+   "name": "사이언스 프라이데이",
+   "title": "How 'Zombie' Parasites Control Their Victims' Minds (책 발췌, 2025-04-25)",
+   "url": "https://www.sciencefriday.com/articles/zombie-bugs-book-excerpt/"
+  }
+ ],
+ "tags": [
+  "좀비개미",
+  "곰팡이",
+  "과학"
+ ],
+ "ko": {
+  "title": "개미는 왜 죽기 전에 나뭇잎을 물까, 곰팡이일까 개미 자신일까",
+  "title_candidates": [
+   "개미는 왜 죽기 전에 나뭇잎을 물까, 곰팡이일까 개미 자신일까",
+   "좀비는 영화에만 있지 않습니다: 숲속 개미에게 벌어지는 일",
+   "좀비 개미가 마지막에 높은 곳으로 올라가는 이유, 아직 답이 없습니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "좀비는 영화 속 이야기가 아닙니다. 열대 숲의 개미 한 마리가 실제로 그런 일을 겪습니다.\n개미는 평소 다니던 길을 벗어나 비틀거리다가, 어느 순간 나뭇잎 뒷면을 턱으로 꽉 물고 죽습니다.\n그런데 이 개미는 정말 곰팡이에게 조종당한 걸까요, 아니면 동료를 지키려고 스스로 떠난 걸까요?"
+   },
+   {
+    "heading": "정오쯤 개미가 잎맥을 물었습니다",
+    "body": "영국 대학 연구자 지노 브리뇰리는 더 컨버세이션에 이 장면을 자세히 적었습니다.\n감염된 개미는 땅에서 25cm쯤 되는 어린나무 잎 아래에서 잎맥을 턱으로 물고 움직이지 않습니다.\n여섯 시간 안에 죽고, 이틀 뒤에는 관절 사이로 흰 털이 돋습니다. 그리고 2주 안에 머리 밑에서 자란 자루가 몸길이의 두 배에 이릅니다.\n이 자루가 포자를 공기 중에 퍼뜨려 다른 개미를 감염시킵니다."
+   },
+   {
+    "heading": "곰팡이가 뇌에 손을 댄다는 말",
+    "body": "이 곰팡이는 흔히 동충하초(Cordyceps)라고 불립니다. 곤충 몸에 기생해 자라는 곰팡이 무리입니다.\n사이언스 프라이데이가 소개한 책에 따르면 개미를 조종하는 종의 상당수는 지금은 오피오코르디셉스(Ophiocordyceps)라는 다른 속으로 분류됩니다.\n브리뇰리는 이 곰팡이가 뇌에 화학적으로 간섭해 개미가 포자를 퍼뜨리기 좋은 행동을 하게 만든다고 설명합니다.\n영화 속 좀비와 다른 점도 있습니다.\n책은 감염된 개미가 무리를 떠나 외로운 잎이나 가지를 찾아간다고 짚었습니다. 사람을 덮치는 사냥꾼이 되는 영화 속 좀비와는 반대입니다."
+   },
+   {
+    "heading": "이 일은 얼마나 오래됐을까",
+    "body": "브리뇰리는 곰팡이가 곤충에 기생한 가장 오래된 기록이 약 1억 500만 년 전 호박 속 곤충이라고 적었습니다.\n개미가 잎을 무는 행동의 확실한 증거는 약 4,800만 년 전 화석 잎에 남은 턱 자국입니다.\n지금까지 발견된 곤충 기생 곰팡이는 약 1,000종이고, 일부는 수백 종의 곤충을 감염시킬 수 있습니다.\n개미도 가만히 당하지는 않습니다. 서로 털을 손질해 포자를 떼어 내고, 오염된 방을 막고, 감염된 개미를 둥지 밖으로 옮기고, 마지막에는 둥지를 통째로 버리고 떠납니다."
+   },
+   {
+    "heading": "높이 올라가는 건 누구의 뜻일까",
+    "body": "가장 풀리지 않은 물음은 개미가 높은 곳으로 올라가는 행동입니다. 흔히 ‘정상 병(summit disease)’이라고 부릅니다.\n높이 올라가면 바람이 포자를 더 넓게 퍼뜨립니다. 동시에 감염된 개미가 가족 곁을 떠나므로 감염이 동료에게 번지는 것도 막습니다.\n브리뇰리는 이것이 곰팡이가 만든 좀비 상태인지, 개미의 이타적인 희생인지 분명하지 않다고 씁니다.\n그리고 이렇게 글을 맺습니다.\n“It leads us to wonder who, ultimately, controls whom?”\n결국 누가 누구를 조종하는 것인지 묻게 된다는 뜻입니다."
+   },
+   {
+    "heading": "우리에게 남는 질문",
+    "body": "이 이야기는 곤충 한 종의 괴담으로 끝나지 않습니다. 같은 책은 광견병 바이러스가 공격성을 높여 퍼지고, 톡소플라스마라는 기생충이 쥐의 고양이 공포를 깎는다고 설명합니다.\n행동이 곧 그 생물의 의지라고 믿고 있었다면, 이런 사례는 그 믿음에 금을 냅니다.\n내가 ‘내 뜻’이라고 느끼는 행동 가운데, 몸속 무엇인가가 대신 정한 것은 없을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "땅에서 25cm쯤",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489",
+   "original": "is now no more than about 25cm above the ground"
+  },
+  {
+   "claim": "여섯 시간 안에 죽고",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489",
+   "original": "Within six hours, she is dead"
+  },
+  {
+   "claim": "이틀 뒤에는 관절 사이로 흰 털",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489",
+   "original": "After two days, white hairs bristle from between her joints"
+  },
+  {
+   "claim": "2주 안에 머리 밑에서 자란 자루가 몸길이의 두 배",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489",
+   "original": "Within two weeks it has reached twice the length of the ant’s body"
+  },
+  {
+   "claim": "약 1억 500만 년 전",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489",
+   "original": "dates from about 105m years ago"
+  },
+  {
+   "claim": "약 4,800만 년 전 화석 잎",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489",
+   "original": "dating to around 48m years ago, comes from fossilised leaves"
+  },
+  {
+   "claim": "약 1,000종",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489",
+   "original": "about 1,000 species of fungal parasites of insects have been discovered so far"
+  },
+  {
+   "claim": "일부는 수백 종의 곤충을 감염",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489",
+   "original": "with some able to infect hundreds of different species"
+  },
+  {
+   "claim": "It leads us to wonder who, ultimately, controls whom?",
+   "url": "http://theconversation.com/zombie-ants-meet-the-parasitic-fungi-that-take-control-of-living-insects-118489",
+   "original": "It leads us to wonder who, ultimately, controls whom?"
+  }
+ ]
+}

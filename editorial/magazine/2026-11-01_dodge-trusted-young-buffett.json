@@ -1,0 +1,121 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-11-01",
+ "slug": "dodge-trusted-young-buffett",
+ "radar_origin": "24/7 Wall St.: In 1956, A Physics Professor Drove To Nebraska To Hand A Young Investor $120,000. The Inve",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1497450204135-267e19b67e07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8T21haGElMjBOZWJyYXNrYXxlbnwwfDB8fHwxNzkzNDY2ODQ4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "hIWhF5xYZn4",
+  "credit": "Unsplash / John Matychuk"
+ },
+ "sources": [
+  {
+   "name": "위키백과 호머 도지 항목",
+   "title": "Homer L. Dodge",
+   "url": "https://en.wikipedia.org/wiki/Homer_L._Dodge"
+  },
+  {
+   "name": "위키백과 워런 버핏 항목",
+   "title": "Warren Buffett",
+   "url": "https://en.wikipedia.org/wiki/Warren_Buffett"
+  }
+ ],
+ "tags": [
+  "워런버핏",
+  "투자심리",
+  "투자의역사"
+ ],
+ "ko": {
+  "title": "1956년 오마하, 신뢰는 무엇으로 증명됐을까",
+  "title_candidates": [
+   "물리학 교수는 왜 어려 보이는 투자자에게 12만 달러를 맡겼을까",
+   "1956년 오마하, 신뢰는 무엇으로 증명됐을까",
+   "12만 달러를 건넨 교수의 선택, 지금 보면 쉬워 보이는 이유"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "큰돈을 맡길 사람은 보통 나이 지긋하고 경력이 긴 사람이라고 생각합니다.\n1956년 한 물리학 교수는 반대로 했습니다. 나이보다 더 어려 보이던 청년에게 12만 달러를 맡겼습니다.\n그 청년이 훗날 세계에서 가장 유명한 투자자가 됩니다. 교수는 무엇을 보고 믿었을까요?"
+   },
+   {
+    "heading": "휴가길에 오마하에 들른 교수",
+    "body": "위키백과 호머 도지 항목에 따르면 호머 도지는 미국 오클라호마대 물리학과 교수였습니다.\n1956년 서부로 휴가를 가던 길에 그는 오마하에 들렀습니다. 젊은 워런 버핏에게 투자하기 위해서였습니다.\n항목은 버핏이 젊은데도 더 어려 보여서 많은 투자자가 큰돈을 맡기려 하지 않았다고 적습니다."
+   },
+   {
+    "heading": "맡긴 돈은 12만 달러였습니다",
+    "body": "도지는 버핏의 분석 능력을 믿고 ‘버핏 어소시에이츠’에 12만 달러를 넣으려 했습니다.\n문제가 하나 있었습니다. 위키백과는 이 투자조합이 받는 사람을 이렇게 적습니다.\n“family members or close friends only.”\n가족이나 가까운 친구만 받는다는 뜻입니다. 그래서 도지와 버핏은 따로 투자조합을 만들었습니다."
+   },
+   {
+    "heading": "같은 해에 시작된 이름",
+    "body": "위키백과 워런 버핏 항목은 버핏이 1956년 버핏 파트너십(Buffett Partnership Ltd.)을 만들었다고 적습니다.\n이 투자 회사는 나중에 섬유 제조업체 버크셔 해서웨이를 인수했습니다.\n버핏은 1970년 이 회사의 회장이자 최대 주주가 되었습니다.\n도지가 휴가길에 들른 해는 버핏의 투자 회사가 막 문을 연 해였던 셈입니다."
+   },
+   {
+    "heading": "결과를 알고 나서 보면 쉬워 보입니다",
+    "body": "위키백과는 도지가 1983년 세상을 떠날 때 재산이 수천만 달러였고, 버핏을 일찍 믿은 덕분이라고 적습니다.\n지금 보면 현명한 선택처럼 보입니다. 하지만 결과를 알고 이야기를 읽으면 그 선택이 늘 쉬워 보입니다.\n1956년의 도지가 가진 것은 청년의 분석 능력에 대한 믿음뿐이었습니다. 앞으로 몇십 년의 결과는 알 수 없었습니다.\n이 이야기는 누구를 믿으라는 뜻이 아닙니다. 누군가의 성공담을 볼 때 우리가 가진 것은 결과이지, 그때의 판단 근거가 아니라는 점을 알려 줍니다."
+   },
+   {
+    "heading": "우리에게 남는 질문",
+    "body": "맡기는 사람의 입장에서 보면 질문은 하나로 모입니다. 나이와 이력이 아니라 무엇을 보고 믿을 것인가.\n그리고 믿은 뒤에도 그 선택이 틀릴 수 있다는 점을 감당할 수 있는가.\n여러분이라면 나이보다 어려 보이는 사람에게 12만 달러를 건넬 수 있었을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1956년 서부로 휴가를 가던 길",
+   "url": "https://en.wikipedia.org/wiki/Homer_L._Dodge",
+   "original": "Homer Dodge stopped by Omaha when he was heading to the west for vacation in 1956 to invest with young Warren Buffett"
+  },
+  {
+   "claim": "12만 달러를 맡겼습니다",
+   "url": "https://en.wikipedia.org/wiki/Homer_L._Dodge",
+   "original": "wanted to put in $120,000 in Buffett Associates"
+  },
+  {
+   "claim": "도지는 버핏의 분석 능력을 믿고 ‘버핏 어소시에이츠’에 12만 달러를 넣으려 했습니다",
+   "url": "https://en.wikipedia.org/wiki/Homer_L._Dodge",
+   "original": "Homer trusted the analytical mind of Warren Buffett and wanted to put in $120,000 in Buffett Associates"
+  },
+  {
+   "claim": "family members or close friends only",
+   "url": "https://en.wikipedia.org/wiki/Homer_L._Dodge",
+   "original": "Buffett Associates was for \"family members or close friends only,\" Homer and Warren Buffett set up a separate partnership"
+  },
+  {
+   "claim": "12만 달러를 건넬 수 있었을까요",
+   "url": "https://en.wikipedia.org/wiki/Homer_L._Dodge",
+   "original": "wanted to put in $120,000 in Buffett Associates"
+  },
+  {
+   "claim": "1983년 세상을 떠날 때 재산이 수천만 달러",
+   "url": "https://en.wikipedia.org/wiki/Homer_L._Dodge",
+   "original": "Homer Dodge was worth tens of millions when he died in 1983"
+  },
+  {
+   "claim": "1956년 버핏 파트너십(Buffett Partnership Ltd.)을 만들었다고",
+   "url": "https://en.wikipedia.org/wiki/Warren_Buffett",
+   "original": "He created Buffett Partnership Ltd. in 1956"
+  },
+  {
+   "claim": "1970년 이 회사의 회장이자 최대 주주",
+   "url": "https://en.wikipedia.org/wiki/Warren_Buffett",
+   "original": "Buffett emerged as the company's chairman and majority shareholder in 1970"
+  },
+  {
+   "claim": "1956년 한 물리학 교수는",
+   "url": "https://en.wikipedia.org/wiki/Homer_L._Dodge",
+   "original": "Homer Dodge stopped by Omaha when he was heading to the west for vacation in 1956"
+  },
+  {
+   "claim": "도지가 휴가길에 들른 해는 버핏의 투자 회사가 막 문을 연 해",
+   "url": "https://en.wikipedia.org/wiki/Warren_Buffett",
+   "original": "He created Buffett Partnership Ltd. in 1956"
+  },
+  {
+   "claim": "1956년의 도지가 가진 것은",
+   "url": "https://en.wikipedia.org/wiki/Homer_L._Dodge",
+   "original": "Homer trusted the analytical mind of Warren Buffett"
+  }
+ ]
+}
