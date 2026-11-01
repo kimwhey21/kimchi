@@ -1,0 +1,111 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-02",
+ "slug": "dell-dont-ask-if-good-idea",
+ "radar_origin": "Michael Dell turned $1,000 and a college dorm room into a $302 billion company. His advice",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1672165407773-20262ff6ab13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8YXNzZW1ibGluZyUyMGNvbXB1dGVyJTIwY29tcG9uZW50c3xlbnwwfDB8fHwxNzkzNTUzMDQyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "A-5mSyPRG34",
+  "credit": "Unsplash / Rémy"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Michael Dell turned $1,000 and a college dorm room into a $302 billion company (2026-11-01)",
+   "url": "https://fortune.com/article/michael-dell-1000-dorm-room-302-billion-company-founder-advice-dont-ask/"
+  },
+  {
+   "name": "위키백과",
+   "title": "Michael Dell",
+   "url": "https://en.wikipedia.org/wiki/Michael_Dell"
+  }
+ ],
+ "tags": [
+  "마이클델",
+  "창업",
+  "델테크놀로지스"
+ ],
+ "ko": {
+  "title": "의예과 신입생이 기숙사에서 1,000달러로 시작한 이유",
+  "title_candidates": [
+   "의예과 신입생이 기숙사에서 1,000달러로 시작한 이유",
+   "좋은 생각인지 묻지 말라던 델은 왜 CEO들에게 전화했을까",
+   "마이클 델의 조언, 어디까지 따라도 될까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "컴퓨터 회사를 세운 사람이 ‘좋은 생각인지 남에게 묻지 말라’고 말했습니다.\n부모를 기쁘게 하려고 의대 준비 과정에 들어갔다가 대학 기숙사 방에서 사업을 시작한 사람의 조언입니다.\n그런데 이 사람도 사업 초창기에는 경험 많은 멘토에게 배웠습니다.\n남에게 묻지 말라는 조언은 언제 맞고 언제 틀릴까요?"
+   },
+   {
+    "heading": "의사가 되라던 대학 신입생",
+    "body": "마이클 델은 부모를 기쁘게 하려고 1983년 텍사스대 의예과에 들어갔습니다.\n경제지 포춘이 앤터프리너를 인용해 전한 이야기입니다.\n대학 생활이 반쯤 지났을 때 그의 손에 있던 사업 밑천은 1,000달러뿐이었습니다.\n고등학생 때는 신문 구독권을 팔아 1년에 1만 8,000달러를 번 적도 있습니다."
+   },
+   {
+    "heading": "묻지 말라는 조언의 근거",
+    "body": "델은 포춘과의 인터뷰에서 새 사업 아이디어를 남에게 묻는 일을 이렇게 말했습니다.\n“아이디어가 좋은지 사람들에게 물으면 대부분은 안 된다고 답할 겁니다.”\n그래서 묻지 말라는 것이 그의 결론이었습니다.\n대신 이어진 말은 위험을 받아들이라는 쪽이었습니다."
+   },
+   {
+    "heading": "위험은 받아들이되 방식에 매이지는 않았다",
+    "body": "같은 인터뷰에서 델은 위험과 실패를 피하지 않는 태도를 강조했습니다.\n“위험을 받아들이고 실패도 받아들여야 합니다.”\n그는 27세이던 1992년 포춘 500대 기업 가운데 최연소 최고경영자가 됐습니다.\n한 가지 방식에 매이지도 않았습니다. 2007년 4월 직원들에게 보낸 메모에서 그는 이렇게 썼습니다.\n“직판 모델은 혁명이었지만 종교는 아닙니다.”\n직판 모델은 중간 유통 없이 고객에게 컴퓨터를 직접 파는 델의 방식입니다."
+   },
+   {
+    "heading": "정말 아무에게도 묻지 않았을까",
+    "body": "위키백과에는 반대쪽 장면이 적혀 있습니다.\n델 컴퓨터의 초창기에 델은 모턴 마이어슨에게 멘토링을 받았습니다.\n아이디어가 좋은지는 남에게 묻지 말라고 했지만, 사업을 어떻게 키울지는 이미 해 본 사람에게 배운 셈입니다."
+   },
+   {
+    "heading": "델의 조언을 어떻게 읽을까",
+    "body": "그의 말을 합치면 선이 보입니다.\n내 아이디어가 옳은지는 남의 표가 아니라 내가 해 보고 확인할 몫입니다.\n반면 해 본 사람만 아는 방법은 묻는 편이 빠릅니다.\n여러분이 접은 아이디어가 있다면, 그때 물은 사람은 그 일을 직접 해 본 사람이었나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1983년 텍사스대 의예과",
+   "url": "https://fortune.com/article/michael-dell-1000-dorm-room-302-billion-company-founder-advice-dont-ask/",
+   "original": "To please his parents, Dell took up pre-med at the University of Texas in 1983"
+  },
+  {
+   "claim": "1,000달러뿐이었습니다",
+   "url": "https://fortune.com/article/michael-dell-1000-dorm-room-302-billion-company-founder-advice-dont-ask/",
+   "original": "Only partway into his college career, Dell had just $1,000 to invest into the business"
+  },
+  {
+   "claim": "1년에 1만 8,000달러를 번",
+   "url": "https://fortune.com/article/michael-dell-1000-dorm-room-302-billion-company-founder-advice-dont-ask/",
+   "original": "He made $18,000 in one year from that venture"
+  },
+  {
+   "claim": "아이디어가 좋은지 사람들에게 물으면 대부분은 안 된다고 답할 겁니다",
+   "url": "https://fortune.com/article/michael-dell-1000-dorm-room-302-billion-company-founder-advice-dont-ask/",
+   "original": "If you go and ask people if it's a good idea, most of them will tell you no"
+  },
+  {
+   "claim": "위험을 받아들이고 실패도 받아들여야 합니다",
+   "url": "https://fortune.com/article/michael-dell-1000-dorm-room-302-billion-company-founder-advice-dont-ask/",
+   "original": "You have to embrace risk, and you have to accept failure"
+  },
+  {
+   "claim": "27세이던 1992년",
+   "url": "https://fortune.com/article/michael-dell-1000-dorm-room-302-billion-company-founder-advice-dont-ask/",
+   "original": "By the age of 27, he had become the youngest CEO in the Fortune 500 in 1992"
+  },
+  {
+   "claim": "2007년 4월",
+   "url": "https://fortune.com/article/michael-dell-1000-dorm-room-302-billion-company-founder-advice-dont-ask/",
+   "original": "The direct model has been a revolution, but it is not a religion"
+  },
+  {
+   "claim": "직판 모델은 혁명이었지만 종교는 아닙니다",
+   "url": "https://fortune.com/article/michael-dell-1000-dorm-room-302-billion-company-founder-advice-dont-ask/",
+   "original": "The direct model has been a revolution, but it is not a religion"
+  },
+  {
+   "claim": "모턴 마이어슨",
+   "url": "https://en.wikipedia.org/wiki/Michael_Dell",
+   "original": "during the formative years of Dell Computer, Dell was mentored by Morton Meyerson"
+  }
+ ]
+}

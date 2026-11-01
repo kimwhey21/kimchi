@@ -1,0 +1,151 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-02",
+ "slug": "korea-exports-chip-dependence",
+ "radar_origin": "South Korea exports nearly double in October on AI investment boom - Reuters",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1672307613484-3254a04651fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c2VtaWNvbmR1Y3RvciUyMGNoaXAlMjB3YWZlcnxlbnwwfDB8fHwxNzkzNTUzMDMxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "7hR3FrFs4Q0",
+  "credit": "Unsplash / Maxence Pira"
+ },
+ "sources": [
+  {
+   "name": "알자지라",
+   "title": "South Korea's exports hit record high on AI boom (2026-10-02)",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom"
+  },
+  {
+   "name": "코리아타임스",
+   "title": "Exports double in 1st 20 days of October (2026-10-21)",
+   "url": "https://koreatimes.co.kr/economy/20261021/exports-double-in-1st-20-days-of-october"
+  }
+ ],
+ "tags": [
+  "한국수출",
+  "반도체",
+  "HBM"
+ ],
+ "ko": {
+  "title": "수출 기록 옆 장관이 적은 변수 둘, 오늘 볼 것",
+  "title_candidates": [
+   "수출 기록 옆 장관이 적은 변수 둘, 오늘 볼 것",
+   "수출이 두 배로 뛴 나라의 장관이 왜 변수부터 말했을까",
+   "수출 호황이 내 지갑에 닿기 전에 볼 숫자는 무엇일까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "수출이 두 배 가까이 뛴 나라의 장관이 기록을 알리면서 ‘변수’라는 말부터 꺼냈습니다.\n9월 한국 수출은 1년 전보다 83.5퍼센트 늘어난 1,209억 달러로 월간 최고치를 새로 썼습니다.\n축하해야 할 숫자인데 발표문에는 조심스러운 문장이 함께 들어 있었습니다.\n이 호황은 어디까지 믿을 수 있을까요?"
+   },
+   {
+    "heading": "기록은 이렇게 쌓였습니다",
+    "body": "알자지라 보도에 따르면 9월 수출은 1,209억 달러였습니다.\n1월부터 9월까지 합친 수출은 8,145억 달러입니다.\n10월에도 흐름은 이어졌습니다. 코리아타임스가 전한 관세청 자료로는 10월 1~20일 수출이 616억 달러로 1년 전의 두 배를 넘었습니다."
+   },
+   {
+    "heading": "그 절반 가까이를 한 업종이 만듭니다",
+    "body": "9월 반도체 수출은 260퍼센트 넘게 늘어난 603억 달러로, 전체 수출의 절반 가까이를 차지했습니다.\n10월 1~20일에는 반도체 수출이 222.5퍼센트 늘어난 275억 달러였습니다.\n전체 수출에서 반도체가 차지한 몫은 44.7퍼센트로, 1년 전보다 16.2퍼센트포인트 커졌습니다."
+   },
+   {
+    "heading": "장관은 왜 변수를 짚었을까",
+    "body": "기록을 알린 통상·산업 담당 김정관 장관은 성명에서 먼저 성과를 평가했습니다.\n“이번 성과는 우리 산업과 기업의 힘을 다시 한번 보여 주는 값진 결과입니다.”\n같은 성명에서 그는 연간 수출 1조 달러를 기대하면서도 이렇게 덧붙였습니다.\n“보호무역주의 강화와 중동 긴장은 수출에 영향을 주는 주요 변수로 남아 있습니다.”"
+   },
+   {
+    "heading": "반도체 두 회사에 기대는 구조",
+    "body": "변수를 가늠하려면 반도체 시장의 모양을 봐야 합니다.\n시장조사업체 카운터포인트리서치는 SK하이닉스와 삼성전자가 AI 반도체에 붙는 고대역폭메모리(HBM) 시장의 약 80퍼센트를 차지한다고 봅니다.\n일반 D램 시장에서도 두 회사의 몫은 60퍼센트입니다.\n알자지라가 인용한 이 추정이 맞다면, 한국 수출의 절반 가까이는 사실상 두 회사의 주문서에 달려 있습니다."
+   },
+   {
+    "heading": "주가는 이미 이 이야기를 담고 있을까",
+    "body": "알자지라는 같은 기사에서 코스피가 올해 60퍼센트 가까이 올랐다고 적었습니다.\n수출 기록이 쌓이는 동안 주가도 같은 방향으로 움직였다는 뜻입니다.\n그렇다면 이제 물음은 기록이 이어지느냐보다, 그 기록이 한 업종에 얼마나 기대고 있느냐가 됩니다.\n수출의 44.7퍼센트를 한 업종이 만든다면, 그 업종의 주문이 흔들릴 때 한국 경제의 숫자도 함께 흔들릴 수 있습니다.\n여러분이 가진 자산은 이 쏠림을 얼마나 반영하고 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "83.5퍼센트 늘어난 1,209억 달러",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "Exports jumped 83.5 percent year-on-year to $120.9bn in September"
+  },
+  {
+   "claim": "9월 수출은 1,209억 달러",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "Exports jumped 83.5 percent year-on-year to $120.9bn in September"
+  },
+  {
+   "claim": "8,145억 달러",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "Total exports from January through September hit $814.5bn"
+  },
+  {
+   "claim": "1월부터 9월까지",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "Total exports from January through September hit $814.5bn"
+  },
+  {
+   "claim": "10월에도 흐름은 이어졌습니다",
+   "url": "https://koreatimes.co.kr/economy/20261021/exports-double-in-1st-20-days-of-october",
+   "original": "Korea's exports more than doubled during the first 20 days of October"
+  },
+  {
+   "claim": "10월 1~20일 수출이 616억 달러로 1년 전의 두 배를 넘었습니다",
+   "url": "https://koreatimes.co.kr/economy/20261021/exports-double-in-1st-20-days-of-october",
+   "original": "Outbound shipments reached $61.6 billion in the Oct. 1-20 period"
+  },
+  {
+   "claim": "10월 1~20일 수출이 616억 달러로 1년 전의 두 배를 넘었습니다",
+   "url": "https://koreatimes.co.kr/economy/20261021/exports-double-in-1st-20-days-of-october",
+   "original": "Korea's exports more than doubled during the first 20 days of October"
+  },
+  {
+   "claim": "260퍼센트 넘게 늘어난 603억 달러",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "Chip shipments accounted for nearly half of exports, soaring more than 260 percent to $60.3bn"
+  },
+  {
+   "claim": "10월 1~20일에는 반도체 수출이 222.5퍼센트 늘어난 275억 달러",
+   "url": "https://koreatimes.co.kr/economy/20261021/exports-double-in-1st-20-days-of-october",
+   "original": "Chip exports jumped 222.5 percent to $27.5 billion, a record for the first 20 days of October."
+  },
+  {
+   "claim": "44.7퍼센트로, 1년 전보다 16.2퍼센트포인트 커졌습니다",
+   "url": "https://koreatimes.co.kr/economy/20261021/exports-double-in-1st-20-days-of-october",
+   "original": "Chips accounted for 44.7 percent of Korea's total exports, up 16.2 percentage points from a year earlier."
+  },
+  {
+   "claim": "이번 성과는 우리 산업과 기업의 힘을 다시 한번 보여 주는 값진 결과입니다",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "This is a valuable achievement that once again demonstrates the strength of our industries and companies"
+  },
+  {
+   "claim": "연간 수출 1조 달러를 기대하면서도",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "While we expect to achieve $1 trillion in annual exports, the strengthening of global protectionism"
+  },
+  {
+   "claim": "보호무역주의 강화와 중동 긴장은 수출에 영향을 주는 주요 변수로 남아 있습니다",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "the strengthening of global protectionism and tensions in the Middle East remain major variables affecting our exports"
+  },
+  {
+   "claim": "약 80퍼센트를 차지한다고",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "SK Hynix and Samsung Electronics together control roughly 80 percent of the global market for high-bandwidth memory"
+  },
+  {
+   "claim": "두 회사의 몫은 60퍼센트입니다",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "60 percent of the market for dynamic random-access memory"
+  },
+  {
+   "claim": "60퍼센트 가까이 올랐다고",
+   "url": "https://www.aljazeera.com/economy/2026/10/2/south-koreas-exports-hit-record-high-on-ai-boom",
+   "original": "with the benchmark Kospi rising nearly 60 percent"
+  },
+  {
+   "claim": "수출의 44.7퍼센트를 한 업종이 만든다면",
+   "url": "https://koreatimes.co.kr/economy/20261021/exports-double-in-1st-20-days-of-october",
+   "original": "Chips accounted for 44.7 percent of Korea's total exports, up 16.2 percentage points from a year earlier."
+  }
+ ]
+}

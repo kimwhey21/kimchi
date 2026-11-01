@@ -1,0 +1,96 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-02",
+ "slug": "candy-restriction-overeating",
+ "radar_origin": "Parents, let your kids eat as much candy as they want – less restriction could help reduce the urge to overeat",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1517683551739-7f3f08efba84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBjYW5keSUyMGphcnN8ZW58MHwwfHx8MTc5MzU1MzA0Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "-ayOfwsd9mY",
+  "credit": "Unsplash / Joanna Kosinska"
+ },
+ "sources": [
+  {
+   "name": "컨버세이션",
+   "title": "Parents, let your kids eat as much candy as they want (2026-11)",
+   "url": "https://theconversation.com/parents-let-your-kids-eat-as-much-candy-as-they-want-less-restriction-could-help-reduce-the-urge-to-overeat-294113"
+  },
+  {
+   "name": "미국임상영양학회지",
+   "title": "Learning to overeat: maternal use of restrictive feeding practices promotes girls' eating in the absence of hunger",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12885700%20AND%20SRC:MED&resultType=core&format=json"
+  }
+ ],
+ "tags": [
+  "아이간식",
+  "과식",
+  "식습관"
+ ],
+ "ko": {
+  "title": "사탕을 숨기면 아이는 정말 덜 먹게 될까",
+  "title_candidates": [
+   "사탕을 숨기면 아이는 정말 덜 먹게 될까",
+   "사탕 선반 높이가 아이의 식욕을 바꾼다면",
+   "할로윈 다음 날, 남은 사탕은 어디에 둘까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "사탕을 높은 선반에 숨기면 아이가 사탕을 덜 찾을 것 같지만, 연구는 반대쪽 가능성을 가리킵니다.\n눈에 보이는 제한이 오히려 아이의 관심을 키울 수 있다는 것입니다.\n할로윈이 지난 이튿날, 부엌 선반 위의 사탕 봉지가 그 증거처럼 보이는 집도 있을 것입니다.\n그렇다면 사탕을 마음껏 먹게 두는 쪽이 정말 덜 먹게 만들까요?"
+   },
+   {
+    "heading": "사탕이 있는 줄 아는 아이",
+    "body": "미국 마이애미대 소속 영양사 브린 비더는 온라인 매체 컨버세이션에 쓴 글에서 제한을 두 갈래로 나눕니다.\n그중 눈에 보이는 제한은 사탕이 집에 있다는 것을 아이가 알지만 손이 닿지 않는 곳에 두는 방식입니다.\n“제한이 눈에 띄는 방식은 의도와 달리 그 음식에 대한 아이의 관심을 키울 수 있다는 연구가 있습니다.”"
+   },
+   {
+    "heading": "9년을 따라간 연구는 무엇을 보았을까",
+    "body": "그 근거로 자주 꼽히는 것이 미국임상영양학회지에 실린 장기 연구입니다.\n연구진은 여자아이들을 5세, 7세, 9세에 걸쳐 따라가며, 어머니의 제한이 낮은 집과 높은 집에서 배고프지 않은데도 먹는 행동이 어떻게 달라지는지 보았습니다.\n그 행동은 5세에서 9세로 가는 동안 커졌고, 연구진은 과식을 부추기기 쉬운 환경에서는 특히 문제가 될 수 있다고 봤습니다.\n그러면서 이렇게 정리했습니다.\n“이 장기 자료는 어머니의 제한이 과식을 부추길 수 있다는 증거를 줍니다.”"
+   },
+   {
+    "heading": "그렇다고 무제한은 아닙니다",
+    "body": "비더는 자기 집을 예로 듭니다.\n“우리 집에서는 할로윈 밤에 세 아이가 먹는 사탕의 양을 제한하지 않습니다.”\n그러면서도 현실을 숨기지 않았습니다.\n“솔직히 말해 아이들은 보통 꽤 많이 먹습니다.”\n그가 권하는 방법은 사탕을 특별한 상으로 떼어 놓지 않고, 다른 음식과 같은 접시에 함께 내놓는 것입니다."
+   },
+   {
+    "heading": "이 연구는 어디까지 말해 줄까",
+    "body": "이 이야기에는 한계가 분명합니다.\n이 연구의 저자들은 이 결과가 남자아이나 다른 인종·민족 집단에는 그대로 들어맞지 않을 수 있다고 직접 적었습니다.\n비더의 글은 영양사의 경험과 여러 연구를 엮은 해설이지, 가정마다 결과를 보장하는 처방이 아닙니다.\n사탕을 열어 놓으면 아이가 덜 먹는다는 결론까지는 아직 가지 않은 셈입니다."
+   },
+   {
+    "heading": "우리 집 선반에서 생각해 볼 것",
+    "body": "이 글에서 가져갈 수 있는 것은 ‘숨기는 방식 자체가 관심을 키울 수 있다’는 가능성까지입니다.\n사탕을 얼마나 먹을지를 부모가 정하는 일과, 사탕에 어떤 의미를 붙이는지는 서로 다른 문제입니다.\n여러분 집의 사탕은 지금 어느 선반에 있고, 아이는 그 선반을 얼마나 자주 올려다보나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "제한이 눈에 띄는 방식은 의도와 달리 그 음식에 대한 아이의 관심을 키울 수 있다는 연구가 있습니다",
+   "url": "https://theconversation.com/parents-let-your-kids-eat-as-much-candy-as-they-want-less-restriction-could-help-reduce-the-urge-to-overeat-294113",
+   "original": "Research suggests that overt restriction can unintentionally increase kids' interest in those restricted food items"
+  },
+  {
+   "claim": "5세, 7세, 9세",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12885700%20AND%20SRC:MED&resultType=core&format=json",
+   "original": "featuring 2 maternal restriction factors (low and high), 2 weight-status factors (nonoverweight and overweight), and 3 time factors (ages 5, 7, and 9 y)"
+  },
+  {
+   "claim": "5세에서 9세로 가는 동안 커졌고",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12885700%20AND%20SRC:MED&resultType=core&format=json",
+   "original": "the developmental increase in EAH from 5 to 9 y of age may be especially problematic in obesigenic environments"
+  },
+  {
+   "claim": "이 장기 자료는 어머니의 제한이 과식을 부추길 수 있다는 증거를 줍니다",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12885700%20AND%20SRC:MED&resultType=core&format=json",
+   "original": "These longitudinal data provide evidence that maternal restriction can promote overeating."
+  },
+  {
+   "claim": "우리 집에서는 할로윈 밤에 세 아이가 먹는 사탕의 양을 제한하지 않습니다",
+   "url": "https://theconversation.com/parents-let-your-kids-eat-as-much-candy-as-they-want-less-restriction-could-help-reduce-the-urge-to-overeat-294113",
+   "original": "In my own family, I don't limit how much candy my three kids eat on Halloween night."
+  },
+  {
+   "claim": "솔직히 말해 아이들은 보통 꽤 많이 먹습니다",
+   "url": "https://theconversation.com/parents-let-your-kids-eat-as-much-candy-as-they-want-less-restriction-could-help-reduce-the-urge-to-overeat-294113",
+   "original": "I won't lie – they usually eat quite a bit."
+  }
+ ]
+}
