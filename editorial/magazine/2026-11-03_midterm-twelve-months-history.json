@@ -1,0 +1,136 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장의 역사",
+ "date": "2026-11-03",
+ "slug": "midterm-twelve-months-history",
+ "radar_origin": "Reuters (구글뉴스 경유): Investors gaming out Congress control for spending, AI outlook - Reuters",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8YmFsbG90JTIwYm94fGVufDB8MHx8fDE3OTM2NDExNjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "T9CXBZLUvic",
+  "credit": "Unsplash / Element5 Digital"
+ },
+ "sources": [
+  {
+   "name": "모틀리풀",
+   "title": "Best markets in the 12 months after a midterm election since 1874",
+   "url": "https://www.fool.com/research/midterm-election-year-stock-market-history/"
+  },
+  {
+   "name": "US뱅크",
+   "title": "Stock market performance after midterm elections",
+   "url": "https://www.usbank.com/investing/financial-perspectives/market-news/stock-market-performance-after-midterm-elections.html"
+  }
+ ],
+ "tags": [
+  "중간선거",
+  "미국증시",
+  "증시통계"
+ ],
+ "ko": {
+  "title": "선거 끝난 뒤 열두 달, 미국 주식은 정말 올랐을까",
+  "title_candidates": [
+   "선거 끝난 뒤 열두 달, 미국 주식은 정말 올랐을까",
+   "의회가 갈라지면 증시가 더 올랐다는 계산",
+   "중간선거 이튿날 증시: 통계가 말하지 않는 것"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "미국 중간선거가 끝나면 열두 달 동안 주식은 대체로 올랐습니다.\n그런데 이 평균을 낸 은행 스스로 선거가 주가를 올렸다고 보기는 어렵다고 적었습니다.\n미국 중간선거 투표일이 다가왔습니다.\n선거 이튿날부터 시작하는 열두 달은 증시가 받아 둔 약속일까요, 표본이 만든 착시일까요?"
+   },
+   {
+    "heading": "평균은 분명히 올랐습니다",
+    "body": "모틀리풀은 1874년 이후 중간선거 38번을 따져 S&P 500이 선거 뒤 열두 달 동안 평균 14% 올랐고, 그중 84%에서 플러스였다고 계산했습니다.\n비교 대상은 아무 때나 잡은 열두 달입니다.\n1871년 이후 어느 열두 달을 잡아도 평균은 11%, 플러스였던 비율은 73%였습니다.\nUS뱅크의 계산도 방향이 같습니다. 선거 뒤 열두 달 평균 수익률이 12.4%였고, 1980년 이후 선거만 보면 17.5%까지 올라갑니다."
+   },
+   {
+    "heading": "같은 선거인데 숫자는 다릅니다",
+    "body": "14%와 12.4%가 다른 것은 잣대가 다르기 때문입니다.\n모틀리풀은 배당을 포함한 수익률로 1874년부터 재고, US뱅크는 1900년부터 2025년까지 31번의 선거를 봅니다.\nUS뱅크는 주가지수도 1928년까지는 다우지수를 쓰고 그 뒤에 S&P 500을 이어 붙였습니다.\n표본이 이렇게 다르니 평균이 조금 어긋나는 것은 자연스럽습니다.\n오히려 놓치면 안 되는 것은 방향이 같다는 점이고, 동시에 그 방향이 얼마나 약한 근거인지입니다."
+   },
+   {
+    "heading": "선거 결과보다 의회 모양이 달랐습니다",
+    "body": "모틀리풀 표를 보면 의회와 백악관을 한 정당이 모두 쥔 경우 평균 수익률은 12%, 플러스 비율은 73%였습니다.\n의회가 대통령 정당과 갈라진 경우에는 평균 16%, 플러스 비율은 91%였습니다.\n반대로 대통령 정당이 의석을 얼마나 잃었는지는 관계가 약했습니다.\n모틀리풀은 어느 쪽 의회에서든 크게 진 뒤의 수익률이 간신히 진 뒤보다 낮지 않았다고 정리합니다.\n정치적 변화에 투자 수익을 걸었던 사람은 실망했을 수 있다는 말입니다."
+   },
+   {
+    "heading": "통계 검정은 효과를 확인하지 못했습니다",
+    "body": "US뱅크 연구는 평균에 기대지 말라는 경고도 함께 붙였습니다.\n표본이 31번뿐이고 손실이 30%를 넘은 해부터 수익이 50% 가까운 해까지 결과가 넓게 퍼져 있다는 이유입니다.\n통계 검정으로도 선거가 수익률을 바꿨다는 뚜렷한 차이는 확인되지 않았습니다.\n약한 성적을 낸 해는 31번 가운데 11번이 물가 충격, 금리 상승, 대공황, 전쟁, 금융 불안과 겹쳤습니다.\n선거가 아니라 경제가 주가를 흔들었다는 쪽에 무게가 실립니다."
+   },
+   {
+    "heading": "선거 뒤에 남는 것은 평소 변수입니다",
+    "body": "US뱅크는 선거가 끝나면 성장, 금리, 기업 이익처럼 평소 시장을 움직이던 변수가 다시 중심에 선다고 정리합니다.\n그래서 이 통계는 선거 이튿날에 서두르라는 신호가 아닙니다.\nUS뱅크는 보고서에 이렇게 적었습니다.\n“모든 중간선거 뒤에 주가가 오른 것은 아니며, 과거 평균이 올해 선거 뒤의 상승을 보장하지는 않는다.”\n선거가 끝나 정치라는 변수가 줄어들면, 시장은 정말 쉬어 갈 자리를 얻을까요, 아니면 금리와 이익이 곧바로 그 자리를 채울까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1874년 이후 중간선거 38번",
+   "url": "https://www.fool.com/research/midterm-election-year-stock-market-history/",
+   "original": "Across all 38 midterms since 1874, the S&P 500 has gained an average of 14% in the 12 months after Election Day and finished higher 84% of the time"
+  },
+  {
+   "claim": "평균 14%",
+   "url": "https://www.fool.com/research/midterm-election-year-stock-market-history/",
+   "original": "Across all 38 midterms since 1874, the S&P 500 has gained an average of 14% in the 12 months after Election Day and finished higher 84% of the time"
+  },
+  {
+   "claim": "84%에서",
+   "url": "https://www.fool.com/research/midterm-election-year-stock-market-history/",
+   "original": "Across all 38 midterms since 1874, the S&P 500 has gained an average of 14% in the 12 months after Election Day and finished higher 84% of the time"
+  },
+  {
+   "claim": "평균은 11%, 플러스였던 비율은 73%",
+   "url": "https://www.fool.com/research/midterm-election-year-stock-market-history/",
+   "original": "Any 12-month period since 1871 11% 73% 1,857"
+  },
+  {
+   "claim": "12.4%였고",
+   "url": "https://www.usbank.com/investing/financial-perspectives/market-news/stock-market-performance-after-midterm-elections.html",
+   "original": "U.S. stocks returned an average of 12.4% during the following 12 months"
+  },
+  {
+   "claim": "1980년 이후 선거만 보면 17.5%",
+   "url": "https://www.usbank.com/investing/financial-perspectives/market-news/stock-market-performance-after-midterm-elections.html",
+   "original": "and the average for elections since 1980 reached 17.5%"
+  },
+  {
+   "claim": "14%와 12.4%",
+   "url": "https://www.usbank.com/investing/financial-perspectives/market-news/stock-market-performance-after-midterm-elections.html",
+   "original": "U.S. stocks returned an average of 12.4% during the following 12 months"
+  },
+  {
+   "claim": "1900년부터 2025년까지 31번의 선거",
+   "url": "https://www.usbank.com/investing/financial-perspectives/market-news/stock-market-performance-after-midterm-elections.html",
+   "original": "Bloomberg market data covering 31 midterm elections from 1900 through 2025"
+  },
+  {
+   "claim": "1928년까지는 다우지수",
+   "url": "https://www.usbank.com/investing/financial-perspectives/market-news/stock-market-performance-after-midterm-elections.html",
+   "original": "The stock series uses the Dow Jones Industrial Average through 1928 and the S&P 500 thereafter."
+  },
+  {
+   "claim": "평균 수익률은 12%, 플러스 비율은 73%",
+   "url": "https://www.fool.com/research/midterm-election-year-stock-market-history/",
+   "original": "Unified government (either party) 12% 73% 15"
+  },
+  {
+   "claim": "평균 16%, 플러스 비율은 91%",
+   "url": "https://www.fool.com/research/midterm-election-year-stock-market-history/",
+   "original": "Divided government (either party) 16% 91% 23"
+  },
+  {
+   "claim": "31번뿐이고 손실이 30%를 넘은 해부터 수익이 50% 가까운 해까지",
+   "url": "https://www.usbank.com/investing/financial-perspectives/market-news/stock-market-performance-after-midterm-elections.html",
+   "original": "The sample includes only 31 elections, and outcomes ranging from losses greater than 30% to gains near 50% further limit conclusions based on averages alone."
+  },
+  {
+   "claim": "31번 가운데 11번",
+   "url": "https://www.usbank.com/investing/financial-perspectives/market-news/stock-market-performance-after-midterm-elections.html",
+   "original": "Eleven of the 31 election periods coincided with inflation shocks, rising interest rates, the Great Depression, war, financial stress, or deteriorating business conditions."
+  },
+  {
+   "claim": "모든 중간선거 뒤에 주가가 오른 것은 아니며, 과거 평균이 올해 선거 뒤의 상승을 보장하지는 않는다",
+   "url": "https://www.usbank.com/investing/financial-perspectives/market-news/stock-market-performance-after-midterm-elections.html",
+   "original": "Stocks did not rise after every midterm, and the historical averages do not guarantee gains after the 2026 election."
+  }
+ ]
+}

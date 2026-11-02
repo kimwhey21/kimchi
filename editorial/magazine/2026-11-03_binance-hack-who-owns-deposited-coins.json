@@ -1,0 +1,155 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-03",
+ "slug": "binance-hack-who-owns-deposited-coins",
+ "radar_origin": "Fortune: Bitcoin giant Strategy, unfazed by Binance hack, adds over $65 million BTC to its holdings",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8ZGF0YSUyMGNlbnRlciUyMHNlcnZlcnN8ZW58MHwwfHx8MTc5MzY0MTE1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "M5tzZtFCOfs",
+  "credit": "Unsplash"
+ },
+ "sources": [
+  {
+   "name": "알자지라",
+   "title": "Binance says $6.3bn stolen in biggest crypto heist in history: What we know (2026-10-30)",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know"
+  },
+  {
+   "name": "헬프넷시큐리티",
+   "title": "Binance hit by $6.3 billion theft in what could be the biggest crypto heist on record (2026-10-30)",
+   "url": "https://helpnetsecurity.com/2026/10/30/binance-crypto-hack"
+  }
+ ],
+ "tags": [
+  "바이낸스",
+  "가상자산해킹",
+  "거래소"
+ ],
+ "ko": {
+  "title": "해킹당한 거래소에 맡긴 코인의 주인은 누구일까",
+  "title_candidates": [
+   "해킹당한 거래소에 맡긴 코인의 주인은 누구일까",
+   "20분 만에 비워진 지갑, 비상금은 얼마나 버틸까",
+   "바이낸스 도난 사건: 이용자가 확인할 것"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "약 63억 달러를 도둑맞고도 거래소는 이용자 자산은 안전하다고 말했습니다.\n세계에서 손꼽히는 가상자산 거래소 바이낸스가 지난주 겪은 일입니다.\n거래소에 맡긴 코인은 내 것일까요, 거래소가 쥔 것일까요?\n그리고 바이낸스가 말한 ‘안전’은 무엇이 보장하고 있을까요?"
+   },
+   {
+    "heading": "20분 동안 벌어진 일",
+    "body": "블록체인 분석 업체 TRM 랩스와 체이널리시스에 따르면 도난의 대부분은 약 20분 사이에 벌어졌습니다.\nTRM은 이렇게 집계했습니다.\n“공격자가 바이낸스 지갑에서 블록체인 10곳에 걸쳐 약 63억 6,000만 달러를 옮겼다.”\n이는 2025년 2월 거래소 바이비트에서 나온 15억 달러라는 종전 기록을 크게 웃도는 규모입니다.\nTRM은 공격자가 바이낸스 지갑이 스스로 비워지도록 명령을 내렸다고 봅니다."
+   },
+   {
+    "heading": "범인 추정은 나왔지만 거래소는 신중합니다",
+    "body": "TRM은 북한 해킹 조직 트레이더트레이터의 소행이라고 높은 확신으로 평가했고, 체이널리시스도 같은 결론을 냈습니다.\n반면 바이낸스는 조사가 아직 특정인에게 책임을 돌리지 않았다는 입장입니다.\n처음에는 직원 노트북이 침입 경로일 수 있다고 했다가, 이후 침해 지점이 더 있었다고 알렸습니다.\n한국 독자에게는 낯선 이름이 아닙니다. 알자지라는 한국 국가정보원이 2022년 12월 북한 해커가 5년간 약 1조 5,000억 원어치 가상자산을 훔쳤다고 추정했다고 전했습니다."
+   },
+   {
+    "heading": "동결된 돈과 남은 구멍",
+    "body": "바이낸스는 약 30억 달러가 동결됐다고 밝혔고, 이 가운데 23억 달러 넘게는 스테이블코인 발행사 테더와 서클이 막았습니다.\n나머지 33억 달러가 어떻게 됐는지는 밝히지 않았습니다.\n바이낸스는 이용자 손실을 비상 기금과 회사 자금으로 모두 메우겠다고 했습니다.\n그런데 이 비상 기금(SAFU)은 2018년에 만들어 전액 비트코인으로 들고 있는 10억 달러 규모입니다.\n도난액은 그보다 여섯 배 넘게 큽니다."
+   },
+   {
+    "heading": "‘안전하다’는 말이 닿는 곳",
+    "body": "맥쿼리대학교의 가상자산 시장 전문가 숀 폴리는 알자지라에 이렇게 말했습니다.\n“중앙화 거래소에 맡긴 자산은 그 거래소만큼만 안전하며, 거래소가 쥔 자산이 클수록 더 큰 표적이 된다.”\n보험도 한계가 있습니다. 대부분의 범죄·사이버 보험은 도난당한 가상자산을 보장하지 않고, 가상자산 전용 보험은 소수 전문 보험사가 다루는 틈새 시장입니다.\n도난은 드문 일도 아닙니다. TRM의 보고서는 2025년 한 해에만 150건 가까운 공격으로 28억 7,000만 달러가 털렸다고 집계했습니다."
+   },
+   {
+    "heading": "시장은 어떻게 반응했나",
+    "body": "비트코인은 7만 6,368달러까지 밀려 6주 만의 최저가를 기록했습니다.\n이더리움은 3% 넘게 하락해 두 달 만의 최저가까지 갔습니다.\n다만 알자지라는 이 사건 전에도 높은 미국 금리와 상장지수펀드 매수세 약화로 가상자산이 압박받고 있었다고 짚었습니다.\n사건 하나로 가격 하락을 설명하기는 어렵다는 뜻입니다."
+   },
+   {
+    "heading": "맡긴 사람이 따져 볼 것",
+    "body": "헬프넷시큐리티가 옮긴 바이낸스의 공지를 보면, 출금은 보안 점검이 끝나는 대로 48시간 안에 재개될 예정입니다.\n점검이 끝나면 준비금 증명도 새로 공개하겠다고 약속했습니다.\n거래소가 내놓을 준비금 증명을, 내 자산을 맡긴 사람은 무엇을 보고 믿어야 할까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "약 63억 달러",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "the $6.3bn figure “may continue to increase”"
+  },
+  {
+   "claim": "약 20분 사이",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "most of the theft unfolded over about 20 minutes, starting late on Thursday"
+  },
+  {
+   "claim": "공격자가 바이낸스 지갑에서 블록체인 10곳에 걸쳐 약 63억 6,000만 달러를 옮겼다",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "“An attacker moved approximately 6.36 billion USD out of Binance wallets on 10 blockchains,” TRM reported."
+  },
+  {
+   "claim": "2025년 2월",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "That dwarfs the previous record of $1.5bn, which was stolen from the exchange Bybit in February 2025."
+  },
+  {
+   "claim": "15억 달러",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "That dwarfs the previous record of $1.5bn, which was stolen from the exchange Bybit in February 2025."
+  },
+  {
+   "claim": "2022년 12월",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "In December 2022, South Korea’s spy agency estimated that North Korean hackers had stolen about 1.5 trillion won ($1.1bn) in crypto and other virtual assets over five years."
+  },
+  {
+   "claim": "5년간 약 1조 5,000억 원",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "In December 2022, South Korea’s spy agency estimated that North Korean hackers had stolen about 1.5 trillion won ($1.1bn) in crypto and other virtual assets over five years."
+  },
+  {
+   "claim": "약 30억 달러",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "Binance said about $3bn of that has since been frozen, including more than $2.3bn by stablecoin issuers Tether and Circle"
+  },
+  {
+   "claim": "23억 달러 넘게",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "including more than $2.3bn by stablecoin issuers Tether and Circle"
+  },
+  {
+   "claim": "33억 달러",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "Binance has not stated what has happened to the remaining $3.3bn."
+  },
+  {
+   "claim": "2018년에 만들어 전액 비트코인으로 들고 있는 10억 달러",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "The stolen sum is more than six times Binance’s $1bn emergency fund, the Secure Asset Fund for Users, set up in 2018 and held entirely in Bitcoin to protect users in case of a breach."
+  },
+  {
+   "claim": "여섯 배 넘게",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "The stolen sum is more than six times Binance’s $1bn emergency fund"
+  },
+  {
+   "claim": "중앙화 거래소에 맡긴 자산은 그 거래소만큼만 안전하며, 거래소가 쥔 자산이 클수록 더 큰 표적이 된다",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "Any assets held at a centralised exchange are only as safe as the exchange itself, and the larger the exchange’s holdings, the larger a target it becomes"
+  },
+  {
+   "claim": "2025년 한 해에만 150건 가까운 공격으로 28억 7,000만 달러",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "Hackers stole $2.87bn in crypto in nearly 150 attacks in 2025, according to TRM’s 2026 Crypto Crime Report."
+  },
+  {
+   "claim": "7만 6,368달러",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "Bitcoin hit a six-week low of $76,368, while Ether fell more than 3 percent to a two-month low of $2,178."
+  },
+  {
+   "claim": "3% 넘게 하락",
+   "url": "https://aljazeera.com/news/2026/10/30/binance-says-6-3bn-stolen-in-biggest-crypto-heist-in-history-what-we-know",
+   "original": "Ether fell more than 3 percent to a two-month low of $2,178"
+  },
+  {
+   "claim": "48시간 안에",
+   "url": "https://helpnetsecurity.com/2026/10/30/binance-crypto-hack",
+   "original": "withdrawals expected to resume within 48 hours"
+  }
+ ]
+}

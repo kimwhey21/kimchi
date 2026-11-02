@@ -1,0 +1,166 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-03",
+ "slug": "alphabet-500b-cloud-doubled",
+ "radar_origin": "24/7 Wall St.: Alphabet Lost a Record $500 Billion in a Day. Is This the Buying Opportunity?",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1682559736721-c2e77ff4c650?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8ZGF0YSUyMGNlbnRlciUyMHNlcnZlcnN8ZW58MHwwfHx8MTc5MzY0MTE1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "T-IN5o3kxyA",
+  "credit": "Unsplash / Lightsaber Collection"
+ },
+ "sources": [
+  {
+   "name": "폭스비즈니스",
+   "title": "Google parent Alphabet suffers nearly $500B Wall Street wipeout amid AI spending fears (2026-10-29)",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears"
+  },
+  {
+   "name": "NBC 뉴스",
+   "title": "Google-parent Alphabet's stock price plunges, erasing more than $500 billion in value (2026-10-29)",
+   "url": "https://www.nbcnewyork.com/news/national-international/alphabet-google-stock-ai-advertising/6564812/?amp=1"
+  },
+  {
+   "name": "포브스",
+   "title": "Alphabet lost $480 billion in value on Thursday (2026-10-30)",
+   "url": "https://www.forbes.com.au/?p=212370"
+  }
+ ],
+ "tags": [
+  "알파벳",
+  "AI투자",
+  "빅테크실적"
+ ],
+ "ko": {
+  "title": "클라우드가 두 배 큰 날, 알파벳은 왜 무너졌을까",
+  "title_candidates": [
+   "클라우드가 두 배 큰 날, 알파벳은 왜 무너졌을까",
+   "구글이 구글의 광고를 깎은 날",
+   "알파벳 하루 낙폭: 시장이 매긴 값은 AI 비용이었습니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "클라우드 매출이 두 배 넘게 뛰었는데도 주가는 하루에 13%에 가깝게 빠졌습니다.\n구글의 모회사 알파벳이 실적 발표 바로 다음 날 겪은 일입니다.\n그날 사라진 시가총액은 약 4,998억 달러로, 증시 역사에서 두 번째로 큰 하루 손실이었습니다.\n시장은 이 회사의 무엇을 그렇게 세게 벌줬을까요?\n성장이 모자라서였을까요, 아니면 성장을 사 오는 돈이 너무 커서였을까요?"
+   },
+   {
+    "heading": "클라우드는 웃고 검색은 웃지 못했습니다",
+    "body": "알파벳의 3분기 매출은 1,276억 달러로 1년 전보다 25% 늘었지만 월가의 기대에는 못 미쳤습니다.\n폭스비즈니스가 정리한 숫자입니다.\n가장 아픈 곳은 검색이었습니다.\n구글 검색 매출 증가율이 직전 분기 17%에서 12%로 하락했습니다.\n반대로 클라우드는 잘했습니다.\n포브스에 따르면 구글 클라우드 매출은 1년 사이 103% 늘어 307억 달러가 됐고, 분석가 예상치 292억 달러를 웃돌았습니다.\n그런데도 실적 발표 직후 시간외 거래에서 주가는 8% 빠졌습니다."
+   },
+   {
+    "heading": "AI 모드가 광고를 줄였다는 고백",
+    "body": "NBC 뉴스는 알파벳의 한 고위 임원이 검색 광고 매출이 부진한 이유 하나로 회사 자신의 ‘AI 모드’를 꼽았다고 전했습니다.\n이 기능에서는 광고가 덜 붙는다는 설명입니다.\n필립 신들러 수석부사장은 이 기능 안의 광고 실험이 ‘유망한 결과’를 내고 있다며 풀어 가겠다고 밝혔습니다.\nJP모건 애널리스트들은 실적 발표 다음 날 아침 메모에 이렇게 적었습니다.\n“구글 검색 사업이 둔화한 폭이 예상보다 가팔랐다.”\n검색에서 번 돈으로 AI를 짓는 회사가, AI 때문에 검색에서 덜 번다면 투자자는 계산기를 다시 두드릴 수밖에 없습니다."
+   },
+   {
+    "heading": "시장이 계산한 것은 매출이 아니라 비용입니다",
+    "body": "NBC 뉴스에 따르면 알파벳은 AI를 돌리는 데 필요한 설비·에너지·임대를 대느라 1조 달러가 넘는 다년 지출 약정을 맺었습니다.\n올해 설비투자 계획은 1,950억~2,050억 달러이고, 내년에는 크게 늘 것으로 예상됩니다.\n3분기 한 분기에만 약 514억 달러를 썼습니다.\n매출은 느는데 쓰는 돈이 더 빨리 커진다면, 투자자는 성장의 값을 다시 매기게 됩니다.\n그 값매김이 하루에 4,998억 달러짜리였던 셈입니다."
+   },
+   {
+    "heading": "불안은 알파벳 밖으로 번졌습니다",
+    "body": "같은 날 나스닥 종합지수는 오전 한때 1.6% 하락했고, 필라델피아 반도체지수도 1.6% 하락했습니다.\nAI 데이터센터에 장비를 대는 반도체 기업들이 알파벳을 따라 내려간 것입니다.\n건설장비 업체 캐터필러는 실적이 예상을 웃돌았는데도 장 초반 9% 급락했습니다.\n예상을 겨우 넘긴 회사가 벌을 받는 장이라는 뜻입니다."
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까요",
+    "body": "클라우드 매출이 두 배 넘게 컸다는 사실은 AI 투자가 매출로 돌아오기 시작했다는 증거에 가깝습니다.\n반면 검색 성장률이 17%에서 12%로 내려간 것은 같은 AI가 기존 사업을 갉아먹을 수 있다는 신호입니다.\n한국 투자자에게도 남의 일이 아닙니다. 알파벳과 함께 반도체지수가 같이 하락한 것은 빅테크의 투자 계획이 반도체 종목에 곧바로 닿는 변수라는 뜻이기 때문입니다.\n시장이 AI 투자를 멈추라고 한 것은 아닙니다. 그 돈의 값을 증명하라고 한 것입니다.\n여러분이 지켜보는 AI 관련 기업의 설비투자는 매출로 돌아오고 있나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "두 배 넘게 뛰었",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "Google Cloud revenue more than doubled to $30.7 billion, an increase of 103% from a year earlier"
+  },
+  {
+   "claim": "13%에 가깝게",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "after its shares plunged nearly 13% following disappointing quarterly earnings"
+  },
+  {
+   "claim": "약 4,998억 달러",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "wiping approximately $499.8 billion from the company's market capitalization"
+  },
+  {
+   "claim": "두 번째로 큰 하루 손실",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "marking the second-largest single-day market value loss in stock market history"
+  },
+  {
+   "claim": "1,276억 달러",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "revenue of $127.6 billion, up 25% from a year earlier but below Wall Street's expectations"
+  },
+  {
+   "claim": "25% 늘었",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "revenue of $127.6 billion, up 25% from a year earlier but below Wall Street's expectations"
+  },
+  {
+   "claim": "17%에서 12%로",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "Google Search revenue grew 12% from a year earlier, down from 17% growth in the previous quarter"
+  },
+  {
+   "claim": "103% 늘어 307억 달러",
+   "url": "https://www.forbes.com.au/?p=212370",
+   "original": "Google cloud revenue grew 103% over the year to $30.7 billion, beating analysts’ $29.2 billion prediction"
+  },
+  {
+   "claim": "292억 달러",
+   "url": "https://www.forbes.com.au/?p=212370",
+   "original": "beating analysts’ $29.2 billion prediction"
+  },
+  {
+   "claim": "8% 빠졌습니다",
+   "url": "https://www.forbes.com.au/?p=212370",
+   "original": "Shares fell 8% in extended trading immediately after the company released its earnings."
+  },
+  {
+   "claim": "구글 검색 사업이 둔화한 폭이 예상보다 가팔랐다",
+   "url": "https://www.nbcnewyork.com/news/national-international/alphabet-google-stock-ai-advertising/6564812/?amp=1",
+   "original": "The “magnitude” of the slowdown in Google’s search business was “steeper than expected,” JPMorgan Chase analysts wrote in a Thursday morning note."
+  },
+  {
+   "claim": "1조 달러가 넘는",
+   "url": "https://www.nbcnewyork.com/news/national-international/alphabet-google-stock-ai-advertising/6564812/?amp=1",
+   "original": "it has committed to more than $1 trillion worth of multi-year spending agreements to fund the infrastructure, energy and leases required to run AI systems"
+  },
+  {
+   "claim": "1,950억~2,050억 달러",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "The company expects capital expenditures to reach between $195 billion and $205 billion this year"
+  },
+  {
+   "claim": "514억 달러",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "Alphabet spent approximately $51.4 billion on capital expenditures during the quarter"
+  },
+  {
+   "claim": "4,998억 달러짜리",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "wiping approximately $499.8 billion from the company's market capitalization"
+  },
+  {
+   "claim": "나스닥 종합지수는 오전 한때 1.6%",
+   "url": "https://www.nbcnewyork.com/news/national-international/alphabet-google-stock-ai-advertising/6564812/?amp=1",
+   "original": "The big drop in Alphabet shares dragged down the Nasdaq Composite index, which was down 1.6% by mid-morning."
+  },
+  {
+   "claim": "필라델피아 반도체지수도 1.6%",
+   "url": "https://www.nbcnewyork.com/news/national-international/alphabet-google-stock-ai-advertising/6564812/?amp=1",
+   "original": "followed Alphabet shares lower, with the Philadelphia semiconductor index dropping 1.6%"
+  },
+  {
+   "claim": "9% 급락",
+   "url": "https://www.nbcnewyork.com/news/national-international/alphabet-google-stock-ai-advertising/6564812/?amp=1",
+   "original": "a key supplier of the machines required to build data centers — plunged 9% early Thursday"
+  },
+  {
+   "claim": "두 배 넘게 컸다",
+   "url": "https://www.foxbusiness.com/markets/google-parent-alphabet-suffers-nearly-500b-wall-street-wipeout-amid-ai-spending-fears",
+   "original": "Google Cloud revenue more than doubled to $30.7 billion, an increase of 103% from a year earlier"
+  }
+ ]
+}
