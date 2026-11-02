@@ -24113,10 +24113,14 @@
 "web": ""
 },
 "359410": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "00579342",
+"en": "Youngkwang Co., Ltd.",
+"founded": "1999",
+"industry": "Fabricated metal products",
+"ksic": "25114",
+"name": "Youngkwang",
+"pref": false,
+"web": "ykmc.com"
 },
 "360070": {
 "corp": "01360875",
