@@ -25,6 +25,8 @@ _OWNER_QUOTE = re.compile(r"사장님[^\n]{0,2}[:：]|사장님이?\s*[\"“]")
 # 원고·시세만 올리는 커밋은 시험을 건너뛴다(관문이 검사다, CLAUDE.md). 그 밖의 것은 시험이 통과해야 올린다(감사 F-114:
 # 시험이 깨진 채 main에 올라간 푸시가 9/22 뒤 15번).
 _DATA_ONLY = ("editorial/", "data/", "state/")
+# 커밋 전에 관문을 다시 돌리는 원고(시황 kr/us는 발행 워크플로가 숫자를 막으므로 뺀다)
+_GATED = re.compile(r"editorial/(magazine|columns|guides|features|previews|weekly|events)/[^/]+\.json$")
 
 
 def _git(*args: str, check: bool = False) -> subprocess.CompletedProcess:
@@ -53,6 +55,16 @@ def main(argv: list[str] | None = None) -> int:
             plain = re.sub(r"\x1b\[[0-9;]*m", "", tests.stderr or "")
             tail = [l for l in plain.splitlines() if l.startswith(("FAIL:", "ERROR:"))][:5]
             raise SystemExit("시험이 통과하지 않아 올리지 않습니다: " + " / ".join(tail or [(tests.stderr or "")[-300:]]))
+    # 관문을 통과한 원고만 올린다(2026-11-03) — 지시문만으로는 지켜지지 않았다: 10/30 잡지 루틴이 같은 밤에 쓴 세 편을 함께 다시
+    # 검사해 두 편이 막혔는데도 커밋 명령을 이어 붙여 올렸고, 맥의 게시 직전 검사에서 막혀 버려졌다. 맥과 같은 검사를 여기서 돈다.
+    gated = [p for p in paths if _GATED.match(p) and (ROOT / p).exists()]
+    if gated:
+        from scripts import pre_post_check
+        found = {p: pre_post_check.blockers(ROOT / p) for p in gated}
+        found = {p: b for p, b in found.items() if b}
+        if found:
+            lines = [f"{Path(p).name}: {b[0][:200]}" + (f" 외 {len(b) - 1}건" if len(b) > 1 else "") for p, b in found.items()]
+            raise SystemExit("관문에 막힌 원고가 있어 올리지 않습니다 — 고친 뒤 함께 다시 올리십시오: " + " / ".join(lines))
     _git("add", "--", *paths, check=True)
     if _git("diff", "--cached", "--quiet").returncode == 0:
         print("커밋할 변화가 없습니다")

@@ -88,6 +88,21 @@ class GuardTest(unittest.TestCase):
         self.assertIn("시험이 통과하지 않아", str(ctx.exception))
         self.assertIn("unittest", calls[0])
 
+    def test_a_manuscript_blocked_by_the_gate_is_not_committed(self) -> None:
+        """2026-10-30: 잡지 루틴이 함께 다시 검사해 막힌 원고를 그대로 커밋했다 — 이제 커밋 명령이 맥과 같은 검사를 돈다."""
+        run = _Run({("diff", "--cached", "--quiet"): (1, "", "")})
+        with mock.patch.object(commit_push.subprocess, "run", run), \
+                mock.patch.object(commit_push.Path, "exists", return_value=True), \
+                mock.patch("scripts.pre_post_check.blockers", return_value=["가장 먼 후보는 ..."]):
+            with self.assertRaises(SystemExit) as ctx:
+                commit_push.main(["잡지 원고", "editorial/magazine/2026-10-30_x.json"])
+        self.assertIn("관문에 막힌 원고", str(ctx.exception))
+        self.assertFalse(any(c[:1] == ("add",) for c in run.calls))
+        with mock.patch.object(commit_push.subprocess, "run", _Run({("diff", "--cached", "--quiet"): (1, "", "")})), \
+                mock.patch.object(commit_push.Path, "exists", return_value=True), \
+                mock.patch("scripts.pre_post_check.blockers", return_value=[]), mock.patch("builtins.print"):
+            self.assertEqual(commit_push.main(["잡지 원고", "editorial/magazine/2026-10-30_x.json"]), 0)
+
     def test_commit_uses_the_noreply_address(self) -> None:
         seen = []
 

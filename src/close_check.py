@@ -194,7 +194,7 @@ def us_recheck(doc: dict) -> tuple[list[str], int, list[str]]:
                 continue
             checked += 1
             tolerance = 0.0051 if str(entry.get("unit") or "") == "%" else max(0.011, abs(other) * 0.00001)
-            if abs(other - float(entry["price"])) > tolerance:
+            if round(abs(other - float(entry["price"])), 9) > tolerance:   # 경계값이 부동소수점으로 넘지 않게(2026-11-03, fetch_us와 같은 문제)
                 issues.append(f"[미국 {day}] {name}({ticker}): 파일 {entry['price']} / 공식 {other}")
     return issues, checked, missing
 
