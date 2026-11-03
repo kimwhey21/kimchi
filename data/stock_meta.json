@@ -5934,10 +5934,14 @@
 "web": "https://www.halla.co.kr"
 },
 "0147B0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01956751",
+"en": "Lablup Inc.",
+"founded": "2015",
+"industry": "Software & game publishing",
+"ksic": "58221",
+"name": "Lablup",
+"pref": false,
+"web": "www.lablup.com/ko"
 },
 "014820": {
 "corp": "00132637",
