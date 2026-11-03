@@ -1,0 +1,116 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-04",
+ "slug": "vera-rubin-galaxy-rotation",
+ "radar_origin": "The Conversation: Why do galaxies rotate?",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1604423203943-54721eff418a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c3BpcmFsJTIwZ2FsYXh5fGVufDB8MHx8fDE3OTM3MjU4MjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "45Z6hW1dQMI",
+  "credit": "Unsplash / Arnaud Mariat"
+ },
+ "sources": [
+  {
+   "name": "카네기 과학 연구소",
+   "title": "125 objects: Vera Rubin and dark matter",
+   "url": "https://carnegiescience.edu/125-objects/6"
+  },
+  {
+   "name": "위키백과",
+   "title": "Vera Rubin",
+   "url": "https://en.wikipedia.org/wiki/Vera_Rubin"
+  },
+  {
+   "name": "위키백과 은하 회전 곡선",
+   "title": "Galaxy rotation curve",
+   "url": "https://en.wikipedia.org/wiki/Galaxy_rotation_curve"
+  }
+ ],
+ "tags": [
+  "베라루빈",
+  "암흑물질",
+  "은하"
+ ],
+ "ko": {
+  "title": "은하 가장자리 별이 느려지지 않는다는 걸 처음 잰 사람",
+  "title_candidates": [
+   "은하 가장자리 별이 느려지지 않는다는 걸 처음 잰 사람",
+   "은하의 별은 왜 가장자리에서도 느려지지 않을까",
+   "루빈이 잰 은하는 왜 뉴턴의 예상을 따르지 않았을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "태양에서 먼 행성일수록 천천히 돕니다. 중심에서 멀수록 중력이 약해지니 당연한 일입니다.\n은하도 같으리라고 천문학자들은 믿었습니다. 가장자리의 별은 느리게 돌 것이라고요.\n그런데 직접 재 보니 그렇지 않았습니다. 이 믿음은 어디서부터 틀렸을까요?"
+   },
+   {
+    "heading": "느려져야 할 별이 같은 속도로 돌았습니다",
+    "body": "은하 회전 곡선을 정리한 위키백과 문서는 뉴턴 역학의 예상을 이렇게 적습니다. 별은 은하 중심에서 멀어질수록 속도가 줄어들며 돌아야 한다는 것입니다.\n미국 천문학자 베라 루빈과 켄트 포드가 재 보니 곡선은 줄어들지 않고 ‘평평’했습니다.\n카네기 과학 연구소는 나선 은하 가장자리의 별이 중심 가까운 별만큼 빠르게 움직인다는 사실을 루빈이 알아냈다고 설명합니다."
+   },
+   {
+    "heading": "빛을 쪼개 속도를 읽었습니다",
+    "body": "비결은 분광기(spectrograph)였습니다. 별빛을 무지개처럼 갈라 파장이 얼마나 밀렸는지로 별의 움직임을 읽는 장치입니다.\n위키백과 은하 회전 곡선 문서는 루빈이 가장자리가 보이는 나선 은하의 속도 곡선을 잴 수 있는 새롭고 민감한 분광기를 썼다고 적습니다.\n루빈은 안드로메다 은하에서 시작했고, 바깥쪽 물질이 중심 가까운 물질과 거의 같은 속도로 움직인다는 것을 확인했습니다."
+   },
+   {
+    "heading": "하늘을 보려는 사람에게 닫힌 문",
+    "body": "루빈이 관측 자리에 서기까지는 다른 장벽도 있었습니다. 위키백과는 프린스턴대학이 성별을 이유로 그를 천문학 과정에 받아 주지 않았다고 적습니다.\n팔로마 천문대에서는 한 직원이 이렇게 말했다고 합니다.\n“천문대에서 쓸 수 있는 시간이 제한됩니다. 여자 화장실이 없기 때문입니다.”\n그는 그런 곳에서 측정을 쌓았습니다."
+   },
+   {
+    "heading": "보이지 않는 질량이 더 많았습니다",
+    "body": "카네기 과학 연구소에 따르면 루빈과 포드는 60개가 넘는 은하를 연구한 끝에 암흑물질의 증거를 압도적으로 쌓았습니다.\n같은 곳은 암흑물질이 우주 전체 질량의 80% 넘게 차지한다고 설명합니다.\n별이 같은 속도로 돈다는 것은, 눈에 보이지 않는 무언가가 은하를 붙잡고 있다는 뜻으로 읽힌 것입니다."
+   },
+   {
+    "heading": "암흑물질이 유일한 답일까",
+    "body": "위키백과 은하 회전 곡선 문서에는 다른 길도 적혀 있습니다. 1983년 모르데하이 밀그롬이 제안한 수정 뉴턴 역학(MOND)은 가속이 아주 작은 곳에서 뉴턴의 힘 법칙을 고쳐 중력을 더 세게 만듭니다.\n눈에 안 보이는 물질을 더할지, 법칙을 고칠지는 아직 과학자들이 다투는 문제입니다.\n루빈은 어린 시절 천문학에 끌린 이유를 이렇게 말했습니다.\n“그때도 나는 답보다 물음에 더 관심이 있었습니다.”\n우주의 대부분이 보이지 않는다면, 우리는 눈에 보이는 우주를 얼마나 안다고 말할 수 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "속도가 줄어들며",
+   "url": "https://en.wikipedia.org/wiki/Galaxy_rotation_curve",
+   "original": "should orbit the center at decreasing velocities with radial distance from the galactic center"
+  },
+  {
+   "claim": "곡선은 줄어들지 않고 ‘평평’했습니다",
+   "url": "https://en.wikipedia.org/wiki/Galaxy_rotation_curve",
+   "original": "the curves do not decrease in the expected inverse square root relationship but are \"flat\""
+  },
+  {
+   "claim": "중심 가까운 별만큼 빠르게 움직인다는",
+   "url": "https://carnegiescience.edu/125-objects/6",
+   "original": "she discovered that stars at the outer edges of spiral galaxies move just as fast as those near the center"
+  },
+  {
+   "claim": "새롭고 민감한 분광기",
+   "url": "https://en.wikipedia.org/wiki/Galaxy_rotation_curve",
+   "original": "a new sensitive spectrograph that could measure the velocity curve of edge-on spiral galaxies"
+  },
+  {
+   "claim": "천문대에서 쓸 수 있는 시간이 제한됩니다. 여자 화장실이 없기 때문입니다.",
+   "url": "https://en.wikipedia.org/wiki/Vera_Rubin",
+   "original": "your time on the observatory is limited, because we don't have a women's bathroom"
+  },
+  {
+   "claim": "60개가 넘는 은하",
+   "url": "https://carnegiescience.edu/125-objects/6",
+   "original": "After studying more than 60 galaxies, Rubin and Ford built an overwhelming case for dark matter"
+  },
+  {
+   "claim": "80% 넘게",
+   "url": "https://carnegiescience.edu/125-objects/6",
+   "original": "makes up more than 80 percent of all mass in the universe"
+  },
+  {
+   "claim": "1983년 모르데하이 밀그롬이",
+   "url": "https://en.wikipedia.org/wiki/Galaxy_rotation_curve",
+   "original": "modifies the Newtonian force law at low accelerations to enhance the effective gravitational attraction"
+  },
+  {
+   "claim": "그때도 나는 답보다 물음에 더 관심이 있었습니다",
+   "url": "https://en.wikipedia.org/wiki/Vera_Rubin",
+   "original": "Even then I was more interested in the question than in the answer"
+  }
+ ]
+}

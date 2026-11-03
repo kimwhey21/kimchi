@@ -1,0 +1,101 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-04",
+ "slug": "bezos-regret-minimization-age-80",
+ "radar_origin": "Fortune: Jeff Bezos used one simple question to decide whether to quit Wall Street and start Amazon",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1589481169991-40ee02888551?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c2VhdHRsZSUyMHNreWxpbmV8ZW58MHwwfHx8MTc5MzcyNTgxN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "UmEYn_GYqFo",
+  "credit": "Unsplash / Stephen Plopper"
+ },
+ "sources": [
+  {
+   "name": "굿리즈 작가 블로그",
+   "title": "Two Stories: The Regret Minimization Framework",
+   "url": "https://www.goodreads.com/author_blog_posts/4849364-two-stories-the-regret-minimization-framework"
+  },
+  {
+   "name": "위키백과",
+   "title": "Jeff Bezos",
+   "url": "https://en.wikipedia.org/wiki/Jeff_Bezos"
+  }
+ ],
+ "tags": [
+  "제프베이조스",
+  "의사결정",
+  "아마존"
+ ],
+ "ko": {
+  "title": "베이조스는 왜 여든 살의 자신에게 사표를 물었을까",
+  "title_candidates": [
+   "베이조스는 왜 여든 살의 자신에게 사표를 물었을까",
+   "후회 최소화라는 질문은 어디까지 믿어도 될까",
+   "보너스를 포기하기 전 48시간, 베이조스의 질문"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "아마존을 세우기로 마음먹은 제프 베이조스에게 가장 어려웠던 일은 사표를 내는 것이었습니다.\n상사가 최종 결정을 내리기 전에 이틀만 더 생각해 보라고 했기 때문입니다.\n그 이틀 동안 그는 손익을 따지는 대신 나이를 바꿔 물었습니다. 여든 살의 내가 이 선택을 후회할까요?"
+   },
+   {
+    "heading": "산책 한 번이 이틀이 됐습니다",
+    "body": "베이조스는 인터뷰에서 당시 상사에게 창업 계획을 털어놓은 순간을 이렇게 돌아봤습니다. 굿리즈 작가 블로그가 그 인터뷰를 옮겨 실었습니다.\n“그는 최종 결정을 내리기 전에 48시간만 더 생각해 보라고 나를 설득했습니다.”\n베이조스가 그 당시 일하던 곳은 헤지펀드 D. E. 쇼였습니다. 위키백과는 그가 1990년부터 1994년까지 이곳에서 일했다고 적습니다."
+   },
+   {
+    "heading": "여든 살의 나를 불러냈습니다",
+    "body": "그 이틀 동안 그가 쓴 방법이 훗날 ‘후회 최소화 틀’이라는 이름으로 알려졌습니다.\n“나는 여든 살이 된 나를 상상하고, ‘좋아, 이제 내 인생을 돌아보고 있어’라고 말해 보고 싶었습니다.”\n질문은 단순했습니다. 일흔과 여든을 넘긴 사람이 가장 오래 곱씹는 일은 해 본 실패일까요, 해 보지 못한 시도일까요?\n그가 얻은 답은 이랬습니다.\n“여든 살이 됐을 때 이걸 해 본 것을 후회하지 않으리라는 걸 알았습니다.”"
+   },
+   {
+    "heading": "잃는 것은 보너스였습니다",
+    "body": "이 질문이 쉬웠던 이유는 잃을 것이 눈에 보였기 때문입니다.\n베이조스도 그 값을 숨기지 않았습니다.\n“그렇게 하면 연말 보너스를 포기하게 됩니다.”\n그의 아내는 어떻게 반응했을까요? 베이조스는 그 말도 옮겼습니다.\n“이봐요, 당신이 무엇을 하든 나는 100퍼센트 당신 편이에요.”"
+   },
+   {
+    "heading": "결정이 가리킨 곳은 인터넷 서점이었습니다",
+    "body": "위키백과에 따르면 베이조스와 당시 아내 매켄지 스콧은 D. E. 쇼를 그만두고 빌린 차고에서 아마존을 시작했습니다.\n아마존은 온라인 서점으로 출발해 다른 상품으로 넓어졌습니다.\n보너스를 놓고 떠난 사람이 처음 판 것은 책이었던 셈입니다."
+   },
+   {
+    "heading": "이 질문은 어디까지 믿어도 될까",
+    "body": "후회 최소화 틀은 확률을 계산해 주지 않습니다.\n여든 살의 자신이 어떤 쪽을 후회할지는 결국 지금의 내가 상상하는 것이어서, 이미 마음을 정한 사람이 이유를 찾는 도구로 쓰기도 쉽습니다.\n그래서 이 틀은 답을 내는 도구라기보다, 잃을 것을 먼저 적게 만드는 도구에 가깝습니다. 투자에서도 ‘안 하면 후회할 것 같다’는 느낌이 위험을 가려서는 안 됩니다.\n지금 미루고 있는 결정이 있다면, 여든 살의 눈으로는 어느 쪽 후회가 더 클까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "그는 최종 결정을 내리기 전에 48시간만 더 생각해 보라고 나를 설득했습니다",
+   "url": "https://www.goodreads.com/author_blog_posts/4849364-two-stories-the-regret-minimization-framework",
+   "original": "He convinced me to think about it for 48 hours before making a final decision."
+  },
+  {
+   "claim": "1990년부터 1994년까지",
+   "url": "https://en.wikipedia.org/wiki/Jeff_Bezos",
+   "original": "a newly created hedge fund with a strong emphasis on mathematical modeling"
+  },
+  {
+   "claim": "여든 살이 된 나를 상상하고",
+   "url": "https://www.goodreads.com/author_blog_posts/4849364-two-stories-the-regret-minimization-framework",
+   "original": "I wanted to project myself forward to age 80"
+  },
+  {
+   "claim": "여든 살이 됐을 때 이걸 해 본 것을 후회하지 않으리라는 걸 알았습니다",
+   "url": "https://www.goodreads.com/author_blog_posts/4849364-two-stories-the-regret-minimization-framework",
+   "original": "I knew that when I was 80 I was not going to regret having tried this"
+  },
+  {
+   "claim": "연말 보너스를 포기하게 됩니다",
+   "url": "https://www.goodreads.com/author_blog_posts/4849364-two-stories-the-regret-minimization-framework",
+   "original": "When you do that, you walk away from your annual bonus."
+  },
+  {
+   "claim": "당신이 무엇을 하든 나는 100퍼센트 당신 편이에요",
+   "url": "https://www.goodreads.com/author_blog_posts/4849364-two-stories-the-regret-minimization-framework",
+   "original": "Look, you know you can count me in 100 percent, whatever you want to do."
+  },
+  {
+   "claim": "빌린 차고에서 아마존을 시작했습니다",
+   "url": "https://en.wikipedia.org/wiki/Jeff_Bezos",
+   "original": "left their jobs at D. E. Shaw and founded Amazon in a rented garage"
+  }
+ ]
+}
