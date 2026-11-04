@@ -7083,10 +7083,14 @@
 "web": "aikang.taekwang.com"
 },
 "0222E0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "02036869",
+"en": "IM Special Purpose Acquisition Company I",
+"founded": "2026",
+"industry": "Brokerage & asset management",
+"ksic": "66199",
+"name": "IM Special Purpose Acquisition Company I",
+"pref": false,
+"web": ""
 },
 "023000": {
 "corp": "00191588",
@@ -27652,10 +27656,14 @@
 "web": "www.curiosis.com"
 },
 "495910": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01378005",
+"en": "EST, Inc.",
+"founded": "2016",
+"industry": "Machinery",
+"ksic": "292",
+"name": "EST",
+"pref": false,
+"web": "www.estech.asia"
 },
 "496070": {
 "corp": "01875146",
