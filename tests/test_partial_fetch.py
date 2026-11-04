@@ -276,6 +276,21 @@ class UsSecondSourcesTest(unittest.TestCase):
                 problems = fetch_us._verify_second_source({"^TYX": entry})
             self.assertEqual(problems == [], ok, (yahoo, problems))
 
+    def test_yields_checked_against_cnbc_get_three_basis_points(self):
+        """2026-11-04 실측: Cboe 줄이 없는 아침 10년물 야후 4.95·CNBC 4.966 — CNBC로 임시 대조할 때만 0.03까지 받는다. Cboe와는 그대로 0.011."""
+        def run(cnbc):
+            entry = {"name": "美 10년물 금리", "price": 4.95, "change_pct": 0.0, "trading_date": "2026-11-03"}
+            fetch_us._CNBC_USED.discard("^TNX")
+            if cnbc:
+                fetch_us._CNBC_USED.add("^TNX")
+            with mock.patch.object(fetch_us, "second_series", return_value={"2026-11-03": 4.966}), \
+                    mock.patch.object(fetch_us, "_check_change", return_value=None):
+                out = fetch_us._verify_second_source({"^TNX": entry})
+            fetch_us._CNBC_USED.discard("^TNX")
+            return out
+        self.assertEqual(run(cnbc=True), [])
+        self.assertEqual(len(run(cnbc=False)), 1)
+
     def test_change_is_checked_against_the_official_previous_close(self):
         """2026-09-23 실측: 야후 이력에 9/22 줄이 빠져 다우 등락률이 9/21 대비(-1.03%)로 나갔다 — 공식은 -0.68%.
         공식 전일 종가를 우리가 그날 커밋한 파일이 확인해 주면 고치고, 아니면 멈춘다."""

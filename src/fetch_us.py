@@ -454,7 +454,13 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
             continue
         # 차이를 반올림해 잰다(2026-10-28) — 30년물 야후 5.3·공식 5.311은 차이가 딱 0.011인데 부동소수점으로 0.01100000000000012가 되어
         # 허용 안의 값이 막혔고 그날 아침 미국장 시세가 나가지 못했다.
-        if round(abs(other - float(entry["price"])), 9) > max(0.011, abs(other) * 0.00001):
+        tolerance = max(0.011, abs(other) * 0.00001)
+        if ticker in _YIELDS and ticker in _CNBC_USED:
+            # 금리를 CNBC로 임시 대조할 때만 3bp(2026-11-04) — Cboe 줄이 아직 없는 아침에 CNBC '마감'은 Cboe 종가(15시 ET)보다 늦게 잰
+            # 값이라 10년물이 야후 4.95·CNBC 4.966으로 갈려 수집이 네 시간 멈췄다(뒤에 나온 Cboe 공식은 4.952, 야후가 맞았다). 밤 증명서는
+            # Cboe 공식 값으로 0.011 안에서 다시 맞춘다(close_check.us_recheck).
+            tolerance = 0.03
+        if round(abs(other - float(entry["price"])), 9) > tolerance:
             problems.append(f"{entry.get('name', ticker)}({ticker}): 야후 {entry['price']} / 공식 {other}")
             continue
         bad_change = _check_change(ticker, entry, series, day)
