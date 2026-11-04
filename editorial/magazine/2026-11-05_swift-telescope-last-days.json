@@ -1,0 +1,137 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-05",
+ "slug": "swift-telescope-last-days",
+ "radar_origin": "NASA’s Swift Observatory is about to burn up in the atmosphere – the indispensable telescope helped astronomers track fast-moving events in space",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1710267224163-0ee7e0d7a7ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c3BhY2UlMjB0ZWxlc2NvcGV8ZW58MHwwfHx8MTc5MzgxMjI1NHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "63eIRNS-hHc",
+  "credit": "Unsplash / NASA Hubble Space Telescope"
+ },
+ "sources": [
+  {
+   "name": "AP 통신",
+   "title": "NASA telescope is on the verge of plunging back to Earth after failed rescue mission (2026-10-31)",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp"
+  },
+  {
+   "name": "IFLScience",
+   "title": "The Swift Space Telescope Is About To Fall Down To Earth. Its Science Will Be Used For Decades To Come",
+   "url": "https://iflscience.com/the-swift-space-telescope-is-about-to-fall-down-to-earth-its-science-will-be-used-for-decades-to-come-85075"
+  }
+ ],
+ "tags": [
+  "스위프트망원경",
+  "감마선폭발",
+  "우주과학"
+ ],
+ "ko": {
+  "title": "추락하는 망원경이 남기는 7,000편의 논문",
+  "title_candidates": [
+   "2년짜리 망원경이 22년을 버틴 비결은 무엇일까",
+   "스위프트는 왜 구조선을 기다리지 못했을까",
+   "추락하는 망원경이 남기는 7,000편의 논문"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "수명을 2년으로 잡고 쏘아 올린 망원경이 22년을 일하고 이번 주 금요일 무렵 지구로 떨어집니다.\n나사의 스위프트 천문대가 남긴 최종 성적은 감마선 폭발 2,000건 이상, 폭발하는 별 1,400개입니다.\n고칠 길이 막힌 기계가 사라질 때, 우리에게 무엇이 남을까요?"
+   },
+   {
+    "heading": "구조선은 끝내 닿지 못했습니다",
+    "body": "구조 임무는 민간 우주 기업 카탈리스트의 몫이었습니다.\n세 개의 팔을 가진 로봇 링크는 7월에 발사된 뒤 문제를 일으켰고, 망원경에서 12~15킬로미터 안쪽으로는 다가가지 못했습니다.\nAP 통신은 링크도 9월에 지구로 떨어졌다고 전했습니다.\n망원경이 내려오는 힘은 공기입니다. IFLScience는 사람이 숨 쉴 만큼은 아니지만 항력을 만들기에는 충분한 대기가 스위프트의 궤도에도 남아 있다고 설명했습니다."
+   },
+   {
+    "heading": "관제팀장은 이 날을 알고 있었습니다",
+    "body": "스위프트 관제팀을 이끈 펜실베이니아주립대의 존 노섹은 AP 통신에 담담히 말했습니다.\n“스위프트가 발사되기 전부터 이날이 오리라는 것은 알고 있었습니다.”\n“적어도 저궤도에서는, 올라간 것은 반드시 내려오게 마련입니다.”\n저궤도는 지구 가까이 도는 길을 말합니다. 그는 희망도 덧붙였습니다.\n“스위프트가 거둔 성공에서 얻은 교훈이 새로운 세대의 우주 임무에 적용되기를 간절히 바랍니다.”"
+   },
+   {
+    "heading": "타지 않고 남는 조각도 있습니다",
+    "body": "1톤 반짜리 망원경은 대부분 대기에서 타 없어질 것으로 예상됩니다.\nAP 통신은 나사 수석과학자 브래드 센코를 인용해, 납보다 밀도가 높은 텅스텐 부품과 거울 일부는 살아남을 수 있다고 전했습니다.\nIFLScience가 인용한 항공우주 엔지니어 딘 슬레이든의 말은 더 구체적입니다.\n“작고 그을린 파편 몇 개만 땅에 닿을 것으로 예상됩니다.”"
+   },
+   {
+    "heading": "장비는 사라져도 자료는 남습니다",
+    "body": "나사 천체물리부문 책임자 숀 도마갈골드먼은 스위프트가 남기는 것을 이렇게 말했습니다.\n“스위프트는 여러 파장에 걸친 관측 자료라는 놀라운 기록을 우리에게 남깁니다.”\n여러 파장이란 같은 폭발을 엑스선·자외선·가시광선으로 나눠 본다는 뜻입니다.\nIFLScience에 따르면 이 관측은 지금까지 약 7,000편의 학술 논문에 쓰였습니다.\n수명이 2년이던 기계가 22년을 일했습니다. 우주에서 잃은 장비의 값은 떨어지는 날에 매겨야 할까요, 남긴 논문으로 매겨야 할까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "수명을 2년으로 잡고",
+   "url": "https://iflscience.com/the-swift-space-telescope-is-about-to-fall-down-to-earth-its-science-will-be-used-for-decades-to-come-85075",
+   "original": "The craft was sent to space in 2004 for a two-year mission."
+  },
+  {
+   "claim": "22년을 일하고",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "the observations the telescope made during its 22 years in orbit."
+  },
+  {
+   "claim": "이번 주 금요일 무렵",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "The U.S. Space Force predicts the Swift Observatory will come crashing down on or around Friday."
+  },
+  {
+   "claim": "감마선 폭발 2,000건 이상, 폭발하는 별 1,400개",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "Its final tally: more than 2,000 gamma ray bursts and 1,400 exploding stars"
+  },
+  {
+   "claim": "7월에 발사된 뒤",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "the company's three-armed robot named Link ran into trouble after launching in July"
+  },
+  {
+   "claim": "12~15킬로미터 안쪽으로는",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "got no closer than 7 miles to 9 miles (12 kilometers to 15 kilometers) to the telescope."
+  },
+  {
+   "claim": "링크도 9월에",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "Link plunged back to Earth in September."
+  },
+  {
+   "claim": "스위프트가 발사되기 전부터 이날이 오리라는 것은",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "We've known this day would come since before Swift was launched."
+  },
+  {
+   "claim": "올라간 것은 반드시 내려오게 마련입니다",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "At least in low-Earth orbit, what goes up must come down."
+  },
+  {
+   "claim": "새로운 세대의 우주 임무에 적용되기를",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "Our fervent hope is that the lessons learned by the successes of Swift can be applied to new generations of space missions"
+  },
+  {
+   "claim": "1톤 반짜리 망원경은",
+   "url": "https://www.wpxi.com/news/local/nasa-telescope-is-verge-plunging-back-earth-after-failed-rescue-mission/QK4QDKHVCJC5RM6TAFXIPKKBZM/?outputType=amp",
+   "original": "Most of the 1 ½-ton telescope is expected to burn up in the atmosphere."
+  },
+  {
+   "claim": "작고 그을린 파편 몇 개만",
+   "url": "https://iflscience.com/the-swift-space-telescope-is-about-to-fall-down-to-earth-its-science-will-be-used-for-decades-to-come-85075",
+   "original": "Only a handful of small, scorched fragments are expected to make it down,"
+  },
+  {
+   "claim": "여러 파장에 걸친 관측 자료라는 놀라운 기록",
+   "url": "https://iflscience.com/the-swift-space-telescope-is-about-to-fall-down-to-earth-its-science-will-be-used-for-decades-to-come-85075",
+   "original": "And Swift leaves us with an extraordinary archive of multiwavelength observations"
+  },
+  {
+   "claim": "약 7,000편의 학술 논문",
+   "url": "https://iflscience.com/the-swift-space-telescope-is-about-to-fall-down-to-earth-its-science-will-be-used-for-decades-to-come-85075",
+   "original": "So far, the observations have contributed to roughly 7,000 published scientific papers."
+  },
+  {
+   "claim": "수명이 2년이던 기계가 22년을",
+   "url": "https://iflscience.com/the-swift-space-telescope-is-about-to-fall-down-to-earth-its-science-will-be-used-for-decades-to-come-85075",
+   "original": "The craft was sent to space in 2004 for a two-year mission."
+  }
+ ]
+}

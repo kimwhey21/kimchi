@@ -1,0 +1,131 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-05",
+ "slug": "bigtech-buyback-drought",
+ "radar_origin": "MarketWatch: Big Tech’s $500 billion spending spree leaves a lot less for shareholders",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c2VydmVyJTIwcm9vbXxlbnwwfDB8fHwxNzkzNzI1ODM1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "2JJ3wBHu4_0",
+  "credit": "Unsplash / Kevin Ache"
+ },
+ "sources": [
+  {
+   "name": "더 넥스트 웹",
+   "title": "Big Tech buybacks fall 83% as AI spending eats the cash, Reuters reports (2026-10-31)",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters"
+  },
+  {
+   "name": "걸프뉴스",
+   "title": "Tech giants to plow $500 billion cash hoard into more buybacks (2025-04-23)",
+   "url": "https://gulfnews.com/business/markets/tech-giants-to-plow-500-billion-cash-hoard-into-more-buybacks-1.500103134"
+  }
+ ],
+ "tags": [
+  "빅테크",
+  "자사주매입",
+  "AI투자"
+ ],
+ "ko": {
+  "title": "AI에 쓴 돈 앞에서 주주 몫은 어디로 갔을까",
+  "title_candidates": [
+   "빅테크는 왜 주주에게 돌려주던 돈을 멈췄을까",
+   "AI에 쓴 돈 앞에서 주주 몫은 어디로 갔을까",
+   "15년 만에 가장 작아진 빅테크의 주주 몫"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "주주에게 돈을 돌려주기로 유명하던 회사들이 올해는 지갑을 거의 열지 않았습니다.\n마이크로소프트·알파벳·아마존·메타·오라클 다섯 곳이 벌어들인 현금 가운데 주주에게 돌려준 몫은 9.3%였습니다.\n1년 전의 27.4%와 비교하면 3분의 1 수준입니다.\n그 돈은 어디로 갔을까요?"
+   },
+   {
+    "heading": "자사주 매입은 줄이고 배당은 지켰습니다",
+    "body": "로이터 분석을 전한 더 넥스트 웹에 따르면, 이 다섯 곳의 자사주 매입은 83% 줄어 136억 달러에 그쳤습니다.\n1년 전에는 818억 달러였습니다.\n배당은 오히려 339억 달러에서 370억 달러로 늘었습니다.\n한번 올린 배당은 내리기 어렵고 자사주 매입은 형편에 따라 줄일 수 있다는 점이 숫자에 그대로 드러납니다."
+   },
+   {
+    "heading": "줄어든 몫은 설비투자로 넘어갔습니다",
+    "body": "반대로 설비투자는 두 배가 됐습니다.\n다섯 곳의 설비투자는 5,569억 달러에 이르렀습니다.\n그 결과 잉여현금흐름은 1년 전 1,435억 달러 흑자에서 140억 달러 적자로 돌아섰습니다.\n잉여현금흐름은 영업으로 번 돈에서 설비투자를 뺀 돈입니다. 번 돈보다 투자에 쓴 돈이 더 많아졌다는 뜻입니다.\n더 넥스트 웹은 기사 제목에서 이 변화를 AI 지출이 현금을 삼켰다고 요약했습니다."
+   },
+   {
+    "heading": "에런 스탠호프가 본 환원의 끝",
+    "body": "프랭클린 템플턴의 투자운용 공동대표 에런 스탠호프는 이 변화를 한 시대의 끝으로 읽었습니다.\n“지난 15년 동안 기업들은 점점 더 자사주 매입과 배당으로 남는 자본을 주주에게 돌려줬습니다.”\n그는 앞으로의 모습도 그렸습니다.\n“지금의 체제는 주식과 채권 발행이 갈수록 늘어나는 쪽으로 특징지어질 수 있습니다.”\n주식과 채권을 더 찍는다는 것은 회사가 주주에게 돌려주기보다 시장에서 돈을 끌어 쓰는 쪽으로 기운다는 뜻입니다."
+   },
+   {
+    "heading": "1년 반 전에는 정반대로 내다봤습니다",
+    "body": "걸프뉴스가 전한 2025년 4월 블룸버그 보도는 반대 전망을 담았습니다.\n마이크로소프트·아마존·애플이 쌓아 둔 현금이 5,000억 달러를 넘는다는 내용이었고, 기사 제목은 이 돈이 더 많은 자사주 매입으로 갈 것이라고 했습니다.\n블룸버그 인텔리전스의 크레딧 애널리스트 로버트 시프먼은 이렇게 말했습니다.\n“장부에 300억, 500억, 1,000억 달러가 있다면 현금을 쌓아 둘 필요가 없습니다.”\n다만 2025년 기사의 세 회사 가운데 애플은 올해 분석의 다섯 곳에 들어 있지 않아서, 두 숫자를 같은 잣대로 이어 붙일 수는 없습니다."
+   },
+   {
+    "heading": "남은 물음은 돈이 어디서 오느냐입니다",
+    "body": "주가를 받치던 자사주 매입이 줄었다면, 주가는 AI 투자가 언제 이익으로 돌아오느냐에 더 기대게 됩니다.\n이익이 늦어질수록 회사는 주식이나 채권을 새로 찍어 돈을 구해야 할 수 있다는 것이 스탠호프의 경고입니다.\n여러분이 가진 빅테크 주식은 주주에게 돌려주는 회사의 주식일까요, 시장에서 돈을 끌어 쓰는 회사의 주식일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "주주에게 돌려준 몫은 9.3%",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters",
+   "original": "Microsoft, Alphabet, Amazon, Meta and Oracle handed 9.3% of the cash their businesses made back to shareholders."
+  },
+  {
+   "claim": "1년 전의 27.4%",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters",
+   "original": "That is the smallest share in at least 15 years, down from 27.4% a year earlier."
+  },
+  {
+   "claim": "83% 줄어 136억 달러",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters",
+   "original": "They fell 83% to $13.6bn, from $81.8bn."
+  },
+  {
+   "claim": "1년 전에는 818억 달러",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters",
+   "original": "They fell 83% to $13.6bn, from $81.8bn."
+  },
+  {
+   "claim": "339억 달러에서 370억 달러로",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters",
+   "original": "Dividends rose to $37bn from $33.9bn."
+  },
+  {
+   "claim": "5,569억 달러",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters",
+   "original": "Their capital spending doubled to $556.9bn."
+  },
+  {
+   "claim": "1,435억 달러 흑자에서 140억 달러 적자",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters",
+   "original": "That left a combined free cash flow deficit of $14bn, against a surplus of $143.5bn a year earlier."
+  },
+  {
+   "claim": "지난 15년 동안 기업들은 점점 더 자사주 매입과 배당으로",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters",
+   "original": "For the last 15 years, companies increasingly returned excess capital to shareholders through buybacks and dividends,"
+  },
+  {
+   "claim": "지금의 체제는 주식과 채권 발행이 갈수록 늘어나는 쪽으로",
+   "url": "https://thenextweb.com/news/big-tech-buybacks-fall-ai-spending-reuters",
+   "original": "The current regime may increasingly be characterized by greater equity and debt issuance"
+  },
+  {
+   "claim": "2025년 4월 블룸버그 보도",
+   "url": "https://gulfnews.com/business/markets/tech-giants-to-plow-500-billion-cash-hoard-into-more-buybacks-1.500103134",
+   "original": "companies like Microsoft Corp., Amazon.com Inc. and Apple Inc. are sitting on piles of cash worth north of $500 billion."
+  },
+  {
+   "claim": "5,000억 달러를 넘는다는 내용",
+   "url": "https://gulfnews.com/business/markets/tech-giants-to-plow-500-billion-cash-hoard-into-more-buybacks-1.500103134",
+   "original": "companies like Microsoft Corp., Amazon.com Inc. and Apple Inc. are sitting on piles of cash worth north of $500 billion."
+  },
+  {
+   "claim": "300억, 500억, 1,000억 달러가 있다면",
+   "url": "https://gulfnews.com/business/markets/tech-giants-to-plow-500-billion-cash-hoard-into-more-buybacks-1.500103134",
+   "original": "You don't need to hoard cash if you have $30, $50, $100 billion in cash on your books."
+  },
+  {
+   "claim": "2025년 기사의 세 회사",
+   "url": "https://gulfnews.com/business/markets/tech-giants-to-plow-500-billion-cash-hoard-into-more-buybacks-1.500103134",
+   "original": "companies like Microsoft Corp., Amazon.com Inc. and Apple Inc. are sitting on piles of cash worth north of $500 billion."
+  }
+ ]
+}

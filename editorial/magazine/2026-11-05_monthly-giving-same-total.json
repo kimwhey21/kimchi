@@ -1,0 +1,126 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-05",
+ "slug": "monthly-giving-same-total",
+ "radar_origin": "Why a company donating $20,000 a month counts for more than $240,000 once a year in the eyes of customers",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1580281657527-47f249e8f4df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8cGhhcm1hY2lzdHxlbnwwfDB8fHwxNzkzODEyMjQ4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "byGTytEGjBo",
+  "credit": "Unsplash / National Cancer Institute"
+ },
+ "sources": [
+  {
+   "name": "렝 교수의 더 컨버세이션 기고",
+   "title": "Why a company donating $20,000 a month counts for more than $240,000 once a year in the eyes of customers",
+   "url": "https://theconversation.com/why-a-company-donating-20-000-a-month-counts-for-more-than-240-000-once-a-year-in-the-eyes-of-customers-294841"
+  },
+  {
+   "name": "망테 교수의 더 컨버세이션 기고",
+   "title": "Why donation requests at the checkout are wearing our patience thin",
+   "url": "https://theconversation.com/why-donation-requests-at-the-checkout-are-wearing-our-patience-thin-203501"
+  }
+ ],
+ "tags": [
+  "기업기부",
+  "소비자심리",
+  "마케팅"
+ ],
+ "ko": {
+  "title": "같은 24만 달러인데 왜 나눠 낸 쪽이 더 믿음직할까",
+  "title_candidates": [
+   "기업의 기부는 왜 쪼개야 믿음이 갈까",
+   "같은 24만 달러인데 왜 나눠 낸 쪽이 더 믿음직할까",
+   "한 번에 쏟은 돈보다 매달 낸 돈이 더 큰 이유"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "같은 24만 달러를 기부하고도 어떤 회사는 칭찬을 더 받습니다.\n한 번에 낸 회사가 아니라, 매달 2만 달러씩 나눠 낸 회사입니다.\n합계가 같은 돈을 사람들은 왜 다르게 셀까요?"
+   },
+   {
+    "heading": "같은 합계를 두 가지로 말해 봤습니다",
+    "body": "콜로라도주립대 마케팅 조교수 얀이 렝은 워싱턴대 세인트루이스의 신시아 크라이더 교수 등과 이 물음을 실험으로 따져 봤습니다.\n렝 교수의 더 컨버세이션 기고에 따르면 연구는 15만 명이 넘는 사람이 참여한 일곱 번의 연구로 이뤄졌습니다.\n회사가 한 해에 한 번 낸 기부와 같은 금액을 달마다 나눠 낸 기부를 나란히 보여 주고, 어느 회사를 더 좋게 보는지 물었습니다."
+   },
+   {
+    "heading": "월 단위로 말하자 클릭이 늘었습니다",
+    "body": "실험실 밖 시험도 했습니다. 페이스북 광고에서 두 가지 문구를 비교했습니다.\n“월 단위 문구를 본 사람들은 광고를 클릭할 가능성이 약 21% 더 높았습니다.”\n한 바비큐 식당의 뉴스레터 구독자 75,514명에게 보낸 이메일에서도 결과는 같은 방향이었습니다.\n매달 기부하겠다는 약속을 읽은 구독자는 식당 누리집을 누를 가능성이 거의 두 배였습니다."
+   },
+   {
+    "heading": "이유는 약속처럼 읽히기 때문입니다",
+    "body": "연구진이 짚은 이유는 신뢰입니다.\n“사람들은 그 회사의 기부를 대의에 대한 더 진정한 약속으로 봅니다.”\n한 번 내는 돈은 행사로 보이지만 매달 내는 돈은 습관으로 보인다는 뜻입니다.\n연구진은 이 호감이 오래 가는 충성으로 이어지는지는 아직 모른다고 밝혔습니다."
+   },
+   {
+    "heading": "계산대의 기부 요청은 반대로 읽혔습니다",
+    "body": "방식이 늘 통하는 것은 아닙니다. 프랑스에서는 계산대에서 구매액을 올림해 기부하자고 묻는 방식이 널리 퍼졌고, 5,000만 유로가 넘는 돈이 모였습니다.\n사부아몽블랑대 엘로디 망테 교수는 이 방식에 대한 트윗 706건을 분석했습니다.\n망테 교수의 더 컨버세이션 기고에 따르면 기업이 기부를 요청할 때 이기적이라는 비난이 나온 비율은 61%였고, 자선단체가 직접 요청할 때는 11.8%에 그쳤습니다.\n기부액이 아니라 누가 어떤 자리에서 청하느냐가 평가를 갈랐다는 이야기입니다."
+   },
+   {
+    "heading": "남는 물음은 말하는 방식입니다",
+    "body": "렝 교수는 이 결과가 긴급 재난 상황에는 맞지 않을 수 있다고 한계를 적었습니다.\n“우리가 발견한 것이 긴급 재난 상황에는 적용되지 않을 수도 있습니다.”\n기업의 기부 소식을 볼 때, 여러분은 합계를 먼저 보나요, 나눠 낸 방식부터 보나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "같은 24만 달러를 기부하고도",
+   "url": "https://theconversation.com/why-a-company-donating-20-000-a-month-counts-for-more-than-240-000-once-a-year-in-the-eyes-of-customers-294841",
+   "original": "Why a company donating $20,000 a month counts for more than $240,000 once a year"
+  },
+  {
+   "claim": "매달 2만 달러씩",
+   "url": "https://theconversation.com/why-a-company-donating-20-000-a-month-counts-for-more-than-240-000-once-a-year-in-the-eyes-of-customers-294841",
+   "original": "Why a company donating $20,000 a month counts for more than $240,000 once a year"
+  },
+  {
+   "claim": "15만 명이 넘는 사람이 참여한 일곱 번의 연구",
+   "url": "https://theconversation.com/why-a-company-donating-20-000-a-month-counts-for-more-than-240-000-once-a-year-in-the-eyes-of-customers-294841",
+   "original": "seven studies involving more than 150,000 people"
+  },
+  {
+   "claim": "약 21% 더 높았습니다",
+   "url": "https://theconversation.com/why-a-company-donating-20-000-a-month-counts-for-more-than-240-000-once-a-year-in-the-eyes-of-customers-294841",
+   "original": "We found that people who saw the monthly version were about 21% more likely to click on the ad."
+  },
+  {
+   "claim": "뉴스레터 구독자 75,514명",
+   "url": "https://theconversation.com/why-a-company-donating-20-000-a-month-counts-for-more-than-240-000-once-a-year-in-the-eyes-of-customers-294841",
+   "original": "we emailed 75,514 customers who subscribed to its newsletters"
+  },
+  {
+   "claim": "누를 가능성이 거의 두 배",
+   "url": "https://theconversation.com/why-a-company-donating-20-000-a-month-counts-for-more-than-240-000-once-a-year-in-the-eyes-of-customers-294841",
+   "original": "Subscribers who read about the monthly donation pledge were nearly twice as likely to click through to the restaurant's website"
+  },
+  {
+   "claim": "더 진정한 약속으로 봅니다",
+   "url": "https://theconversation.com/why-a-company-donating-20-000-a-month-counts-for-more-than-240-000-once-a-year-in-the-eyes-of-customers-294841",
+   "original": "people see its charitable support as a more genuine commitment to the causes"
+  },
+  {
+   "claim": "긴급 재난 상황에는 적용되지 않을 수도 있습니다",
+   "url": "https://theconversation.com/why-a-company-donating-20-000-a-month-counts-for-more-than-240-000-once-a-year-in-the-eyes-of-customers-294841",
+   "original": "It's also possible that what we found would not apply during emergencies"
+  },
+  {
+   "claim": "5,000만 유로가 넘는 돈",
+   "url": "https://theconversation.com/why-donation-requests-at-the-checkout-are-wearing-our-patience-thin-203501",
+   "original": "more than €50 million"
+  },
+  {
+   "claim": "트윗 706건",
+   "url": "https://theconversation.com/why-donation-requests-at-the-checkout-are-wearing-our-patience-thin-203501",
+   "original": "looking at 706 Tweets"
+  },
+  {
+   "claim": "이기적이라는 비난이 나온 비율은 61%",
+   "url": "https://theconversation.com/why-donation-requests-at-the-checkout-are-wearing-our-patience-thin-203501",
+   "original": "businesses which ask for charity donations are accused of acting selfishly in 61% of cases"
+  },
+  {
+   "claim": "자선단체가 직접 요청할 때는 11.8%",
+   "url": "https://theconversation.com/why-donation-requests-at-the-checkout-are-wearing-our-patience-thin-203501",
+   "original": "in 61% of cases, compared to just 11.8% when it's the charity itself asking for money."
+  }
+ ]
+}
