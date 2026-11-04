@@ -1,12 +1,12 @@
 {
  "base": {
-  "맥 bench_nightly: 마지막 신호 # #": 4,
-  "미국장 # 공식 원천으로 다시 맞추지 못한 값 #개 — 엔비디아, 마이크론": 1
- },
- "day": "2026-11-03",
- "issues": {
   "# 화면 대조 실패 — Response ended prematurely": 1,
   "작업 market_brief.yml (us) (#): 실패": 1,
   "작업 publish_check.yml (#): 실패": 1
+ },
+ "day": "2026-11-04",
+ "issues": {
+  "작업 market_brief.yml (us) (#): 실패": 2,
+  "작업 publish_check.yml (#): 실패": 2
  }
 }
