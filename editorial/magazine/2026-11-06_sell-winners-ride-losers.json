@@ -1,0 +1,131 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-11-06",
+ "slug": "sell-winners-ride-losers",
+ "radar_origin": "목록 순서",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1651341050677-24dba59ce0fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c3RvY2slMjBtYXJrZXQlMjBzY3JlZW58ZW58MHwwfHx8MTc5Mzg5OTA5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "x07ELaNFt34",
+  "credit": "Unsplash / Anne Nygård"
+ },
+ "sources": [
+  {
+   "name": "위키백과(처분 효과)",
+   "title": "Disposition effect",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect"
+  },
+  {
+   "name": "위키백과(손실 회피)",
+   "title": "Loss aversion",
+   "url": "https://en.wikipedia.org/wiki/Loss_aversion"
+  },
+  {
+   "name": "노벨상 위원회",
+   "title": "The Prize in Economic Sciences — Press release",
+   "url": "https://www.nobelprize.org/prizes/economic-sciences/2002/press-release/"
+  }
+ ],
+ "tags": [
+  "처분효과",
+  "손실회피",
+  "행동경제학"
+ ],
+ "ko": {
+  "title": "오른 주식은 팔고 떨어진 주식은 쥐는 사람들, 왜 그럴까",
+  "title_candidates": [
+   "오른 주식은 팔고 떨어진 주식은 쥐는 사람들, 왜 그럴까",
+   "1985년 논문이 이름 붙인 투자자의 오래된 습관은 무엇일까",
+   "손실을 두 배로 느끼는 투자자는 왜 팔지 못할까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "오른 주식은 서둘러 팔고, 떨어진 주식은 오래 쥐고 있는 사람이 많습니다.\n이상한 일입니다. 이익은 키울 수 있을 때 줄이고, 손실은 줄여야 할 때 키우는 셈이니까요.\n그런데 이 습관은 초보 투자자만의 것이 아니었습니다. 전문가의 계좌에서도 같은 흔적이 나옵니다.\n사람은 왜 손해 보는 쪽을 놓지 못할까요?"
+   },
+   {
+    "heading": "이름이 붙은 것은 1985년입니다",
+    "body": "위키백과(Wikipedia)의 처분 효과(disposition effect) 항목에 따르면 1985년 논문에서 헤르시 셰프린(Hersh Shefrin)과 미어 스태트먼(Meir Statman)이 이 현상에 이름을 붙였습니다.\n출발점은 1978년 한 연구진의 글이었습니다. 개인 투자자에게 이런 성향이 있을지 모른다고 처음 짚었습니다.\n“이긴 종목은 팔고 진 종목은 끌고 가려는 성향.”\n두 연구자는 이 행동을 심리학 문헌에 비춰 설명하려 했습니다."
+   },
+   {
+    "heading": "손실은 이익보다 두 배쯤 아프다",
+    "body": "설명의 뼈대는 행동경제학자 대니얼 카너먼(Daniel Kahneman)과 아모스 트버스키(Amos Tversky)의 손실 회피입니다. 이 말이 처음 쓰인 것은 1979년입니다.\n카너먼은 이렇게 정의했다고 위키백과의 손실 회피(loss aversion) 항목은 전합니다.\n“손실에 대한 반응이 그에 상응하는 이익에 대한 반응보다 더 강하다.”\n같은 항목은 실험에서 손실이 같은 크기의 이익보다 두 배쯤 크게 받아들여지는 경향이 나타난다고 정리합니다.\n노벨상 위원회(Nobel Prize)도 카너먼이 사람의 결정이 표준 경제 이론의 예측에서 체계적으로 벗어날 수 있음을 보였다고 소개합니다."
+   },
+   {
+    "heading": "실제 계좌를 열어 보니 어땠을까",
+    "body": "테렌스 오딘(Terrance Odean)은 미국 할인 증권사 고객 계좌 1만 개의 거래를 살폈습니다. 기간은 1987년 1월부터 1993년 12월까지입니다.\n위키백과(처분 효과)에 따르면 한 해 대부분 동안 오른 종목은 하락한 종목보다 팔릴 확률이 60% 가까이 높았습니다.\n그런데 12월에는 흐름이 뒤집혔습니다. 손실 종목이 더 빨리 팔렸습니다.\n세금을 줄이려는 손실 매도가 겹치는 시기라, 심리 대신 계산이 이긴 달이었던 셈입니다."
+   },
+   {
+    "heading": "전문가라고 다르지 않았습니다",
+    "body": "펀드 매니저도 예외는 아니었습니다. 같은 항목에 소개된 프라치니(Frazzini)의 2006년 연구는 펀드 매니저에게도 이 성향이 있지만 개인 투자자보다는 덜하다고 합니다.\n대만 투자자를 본 연구에서는 이긴 종목을 팔 확률이 진 종목의 약 두 배였습니다.\n성향은 나라와 직업을 가리지 않고 나타났습니다."
+   },
+   {
+    "heading": "규칙이 감정을 이긴 실험",
+    "body": "이 성향을 줄이는 방법도 보고됩니다. 베버(Weber)와 카메러(Camerer)의 실험에서는 매 기간이 끝날 때 주식을 자동으로 팔게 하자 처분 효과가 크게 줄었습니다.\n셰프린과 스태트먼은 미리 걸어 두는 손절 주문 같은 ‘스스로 찌르기’도 한 방법으로 꼽았습니다.\n우리가 살 종목을 고르는 데는 공을 들이면서 팔 기준은 정해 두지 않을 때가 많습니다.\n지금 가장 오래 쥐고 있는 종목을, 오늘 처음 보는 종목처럼 평가할 수 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1985년 논문에서 헤르시 셰프린(Hersh Shefrin)과 미어 스태트먼(Meir Statman)이 이 현상에 이름을 붙였습니다",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect",
+   "original": "In a 1985 paper, Hersh Shefrin and Meir Statman coined the term disposition effect"
+  },
+  {
+   "claim": "1978년 한 연구진의 글",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect",
+   "original": "is a 1978 article by Gary Schlarbaum, Wilbur Lewellen and Ronald Lease."
+  },
+  {
+   "claim": "이긴 종목은 팔고 진 종목은 끌고 가려는 성향.",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect",
+   "original": "a disposition to sell the winners and ride the losers"
+  },
+  {
+   "claim": "1979년입니다",
+   "url": "https://en.wikipedia.org/wiki/Loss_aversion",
+   "original": "In 1979, Daniel Kahneman and his associate Amos Tversky originally coined the term"
+  },
+  {
+   "claim": "손실에 대한 반응이 그에 상응하는 이익에 대한 반응보다 더 강하다.",
+   "url": "https://en.wikipedia.org/wiki/Loss_aversion",
+   "original": "The response to losses is stronger than the response to corresponding gains"
+  },
+  {
+   "claim": "손실이 같은 크기의 이익보다 두 배쯤 크게",
+   "url": "https://en.wikipedia.org/wiki/Loss_aversion",
+   "original": "Empirically, losses tend to be treated as if they were twice as large as an equivalent gain."
+  },
+  {
+   "claim": "고객 계좌 1만 개",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect",
+   "original": "Using data from 10,000 customer accounts at a nationwide discount brokerage house"
+  },
+  {
+   "claim": "1987년 1월부터 1993년 12월까지",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect",
+   "original": "The period of his study was January 1987 through December 1993."
+  },
+  {
+   "claim": "팔릴 확률이 60% 가까이 높았습니다",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect",
+   "original": "a stock that was up in value was almost 60% more likely to be sold than a stock that was down in value."
+  },
+  {
+   "claim": "프라치니(Frazzini)의 2006년 연구",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect",
+   "original": "Frazzini (2006) studies the disposition effect associated with mutual fund managers."
+  },
+  {
+   "claim": "약 두 배",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect",
+   "original": "Taiwanese investors are approximately twice as likely to sell winners relative to losers."
+  },
+  {
+   "claim": "12월에는 흐름이 뒤집혔습니다",
+   "url": "https://en.wikipedia.org/wiki/Disposition_effect",
+   "original": "the pattern reversed in December, when losses were realized at a more rapid rate than gains"
+  }
+ ]
+}

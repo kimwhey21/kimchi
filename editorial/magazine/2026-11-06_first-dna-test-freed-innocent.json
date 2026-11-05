@@ -1,0 +1,106 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-06",
+ "slug": "first-dna-test-freed-innocent",
+ "radar_origin": "Big Think: The first DNA crime test didn’t catch the killer. It freed an innocent man.",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1614935151651-0bea6508db6b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8ZG5hJTIwbGFib3JhdG9yeXxlbnwwfDB8fHwxNzkzODk4ODY5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "RlOAwXt2fEA",
+  "credit": "Unsplash / Julia Koblitz"
+ },
+ "sources": [
+  {
+   "name": "기네스 세계 기록",
+   "title": "First use of DNA profiling to clear a criminal suspect",
+   "url": "https://www.guinnessworldrecords.com/world-records/first-use-of-dna-profiling-to-clear-a-criminal-suspect"
+  },
+  {
+   "name": "바이트사이즈드 브리튼",
+   "title": "DNA Forensics - first used to catch a Leicestershire murderer",
+   "url": "https://www.bitesizedbritain.co.uk/dna-forensics2111/"
+  },
+  {
+   "name": "제네틱스 언집드",
+   "title": "The accidental discovery of DNA fingerprinting (2020-03-26)",
+   "url": "https://geneticsunzipped.com/news/2020/3/26/the-accidental-discovery-of-dna-fingerprinting"
+  }
+ ],
+ "tags": [
+  "DNA지문",
+  "과학사",
+  "범죄수사"
+ ],
+ "ko": {
+  "title": "자백한 소년이 DNA 앞에서 풀려난 숨은 이유",
+  "title_candidates": [
+   "왜 첫 DNA 검사는 범인 대신 무고한 소년부터 가려냈을까",
+   "1984년 9월 10일 9시 5분, DNA 지문이 처음 나온 순간",
+   "자백한 소년이 DNA 앞에서 풀려난 숨은 이유"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "범인을 잡으려고 처음 쓴 DNA 검사는 범인을 잡지 못했습니다.\n대신 이미 자백한 사람이 범인이 아니라는 사실을 밝혀 냈습니다.\n경찰은 그 결과를 믿어야 했고, 믿은 대가로 수사를 처음부터 다시 해야 했습니다.\n자백보다 증거를 믿는 일은 왜 그렇게 어려웠을까요?"
+   },
+   {
+    "heading": "우연히 나온 기술이었습니다",
+    "body": "영국 유전학자 알렉 제프리스(Alec Jeffreys)가 DNA 지문을 처음 본 것은 1984년 9월 10일 오전 9시 5분입니다. 유전학 매체 제네틱스 언집드(Genetics Unzipped)가 그 시각까지 적어 둡니다.\nDNA 지문은 사람마다 DNA 조각의 길이 패턴이 달라 개인을 가려낼 수 있다는 원리를 씁니다. 제프리스는 그 순간을 이렇게 돌아봅니다.\n“완전한 유레카의 순간이었습니다. 눈이 번쩍 뜨이는 느낌이었죠. 황금 같은 5분 사이에 제 연구는 전혀 새로운 방향으로 달려 나갔습니다.”"
+   },
+   {
+    "heading": "경찰이 붙잡은 용의자는 자백한 소년이었습니다",
+    "body": "1983년과 1986년, 영국 레스터셔(Leicestershire)에서 두 소녀가 목숨을 잃었습니다. 기네스 세계 기록(Guinness World Records)은 이 두 사건의 수사를 세계 최초의 DNA 기반 범인 추적으로 올려 둡니다.\n용의자는 동네 소년 리처드 버클랜드(Richard Buckland)였고, 그는 두 번째 사건을 이미 자백한 상태였습니다.\n바이트사이즈드 브리튼(Bitesized Britain)에 따르면 경찰은 이때 제프리스에게 도움을 청했습니다."
+   },
+   {
+    "heading": "DNA는 자백과 반대로 말했습니다",
+    "body": "제프리스는 두 사건 현장에서 나온 DNA가 서로 일치한다는 것을 확인했습니다. 그런데 그 DNA는 버클랜드의 것이 아니었습니다.\n바이트사이즈드 브리튼은 이 결과가 형사들을 낙담시켰다고 전합니다.\n기네스 세계 기록은 버클랜드를 DNA 분석으로 혐의를 벗은 최초의 용의자로 기록합니다.\n자백이 있어도 증거가 다르면 사건은 처음으로 돌아가야 한다는 것을 DNA는 이때 처음 보여 줬습니다."
+   },
+   {
+    "heading": "범인은 친구를 대신 보냈습니다",
+    "body": "진짜 범인을 찾으려고 경찰은 지역 남성을 모두 검사하는 방식을 택했습니다.\n바이트사이즈드 브리튼은 17~34세 남성 4,000명 넘게에게서 혈액과 침을 받았다고 적고, 기네스 세계 기록은 검사 대상을 5,000명으로 적습니다. 두 기록의 인원이 달라 정확한 숫자는 단정하기 어렵습니다.\n범인을 드러낸 것은 검사 결과가 아니라 한 사람의 말이었습니다. 돈을 받고 다른 사람 행세를 하며 가짜 시료를 냈다는 이야기가 우연히 들린 것입니다.\n콜린 피치포크(Colin Pitchfork)가 자기 대신 친구에게 시료를 내게 했던 것입니다. 그의 진짜 DNA를 분석하자 현장 시료와 일치했습니다."
+   },
+   {
+    "heading": "이 사건이 남긴 질문은 무엇일까",
+    "body": "피치포크는 1988년 종신형을 선고받았습니다. 반대로 버클랜드는 DNA 덕분에 감옥에서 나올 수 있었습니다.\nDNA가 이 사건에서 가장 먼저 한 일은 범인을 짚는 것이 아니라 잘못 짚은 사람을 되돌리는 것이었습니다.\n우리는 자신 있는 말이나 그럴듯한 숫자를 증거처럼 받아들일 때가 많습니다. 다른 방향을 가리키는 작은 증거를 끝까지 믿어 줄 수 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1984년 9월 10일 오전 9시 5분",
+   "url": "https://geneticsunzipped.com/news/2020/3/26/the-accidental-discovery-of-dna-fingerprinting",
+   "original": "On the morning of 10th September 1984, at 9.05 am, Jeffreys developed the X-ray film"
+  },
+  {
+   "claim": "황금 같은 5분 사이에 제 연구는 전혀 새로운 방향으로 달려 나갔습니다",
+   "url": "https://geneticsunzipped.com/news/2020/3/26/the-accidental-discovery-of-dna-fingerprinting",
+   "original": "In five golden minutes, my research career went whizzing off in a completely new direction."
+  },
+  {
+   "claim": "1983년과 1986년",
+   "url": "https://www.guinnessworldrecords.com/world-records/first-use-of-dna-profiling-to-clear-a-criminal-suspect",
+   "original": "a double rape-murder: Linda Mann (UK) in 1983, and Dawn Ashworth 1986"
+  },
+  {
+   "claim": "두 번째 사건을 이미 자백한 상태",
+   "url": "https://www.guinnessworldrecords.com/world-records/first-use-of-dna-profiling-to-clear-a-criminal-suspect",
+   "original": "confessed to the second killing"
+  },
+  {
+   "claim": "17~34세 남성 4,000명 넘게",
+   "url": "https://www.bitesizedbritain.co.uk/dna-forensics2111/",
+   "original": "more than 4,000 men in the Leicestershire area between the ages of 17 and 34"
+  },
+  {
+   "claim": "검사 대상을 5,000명으로 적습니다",
+   "url": "https://www.guinnessworldrecords.com/world-records/first-use-of-dna-profiling-to-clear-a-criminal-suspect",
+   "original": "during the testing of 5,000 local men"
+  },
+  {
+   "claim": "1988년 종신형을 선고받았습니다",
+   "url": "https://www.guinnessworldrecords.com/world-records/first-use-of-dna-profiling-to-clear-a-criminal-suspect",
+   "original": "he was sentenced to life imprisonment in 1988"
+  }
+ ]
+}

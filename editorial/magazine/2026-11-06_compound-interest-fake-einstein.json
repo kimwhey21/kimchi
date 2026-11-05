@@ -1,0 +1,142 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-06",
+ "slug": "compound-interest-fake-einstein",
+ "radar_origin": "Big Think: A fake Einstein quote actually explains the affordability crisis",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1768207450151-30c0bf8e8091?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8c3RhY2slMjBvZiUyMGNvaW5zfGVufDB8MHx8fDE3OTM4OTkwMzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "894I850Hyl0",
+  "credit": "Unsplash / Kamil"
+ },
+ "sources": [
+  {
+   "name": "쿼트 인베스티게이터",
+   "title": "Compound Interest Is Man’s Greatest Invention",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/"
+  },
+  {
+   "name": "위키백과",
+   "title": "Compound interest",
+   "url": "https://en.wikipedia.org/wiki/Compound_interest"
+  },
+  {
+   "name": "빅싱크",
+   "title": "A fake Einstein quote actually explains the affordability crisis",
+   "url": "https://bigthink.com/starts-with-a-bang/fake-einstein-quote-affordability-crisis/"
+  }
+ ],
+ "tags": [
+  "복리",
+  "아인슈타인",
+  "가짜인용"
+ ],
+ "ko": {
+  "title": "복리를 칭찬한 아인슈타인의 말은 누가 만들었을까",
+  "title_candidates": [
+   "복리를 칭찬한 아인슈타인의 말은 누가 만들었을까",
+   "1976년 신문은 왜 아인슈타인에게 복리 이야기를 붙였을까",
+   "복리 문장이 아인슈타인 말이 된 사연, 읽는 법은 이것입니다",
+   "복리 예찬이 아인슈타인의 말이 된 숨은 이유"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "복리를 이야기할 때 가장 자주 나오는 문장은 아인슈타인이 한 말이 아닙니다.\n그가 세상을 떠난 해는 1955년인데, 복리를 그의 말로 돌린 가장 이른 기록은 1976년에야 나옵니다.\n그렇다면 이 문장은 누가, 어떻게 아인슈타인에게 붙였을까요?"
+   },
+   {
+    "heading": "복리를 칭찬하는 문장은 여럿입니다",
+    "body": "인용문 출처를 추적하는 사이트 쿼트 인베스티게이터(Quote Investigator)는 아인슈타인이 했다고 떠도는 복리 문장을 다섯 가지로 묶습니다. 그중 하나는 이렇습니다.\n“복리는 세계 8대 불가사의다.”\n나머지는 가장 강력한 힘, 상대성 이론보다 복잡한 것, 가장 위대한 수학적 발견 같은 식입니다.\n이 글은 그중 ‘가장 위대한 발명’ 문장을 따라가며, 아인슈타인이 그렇게 말했다는 뚜렷한 증거는 찾지 못했다고 밝힙니다."
+   },
+   {
+    "heading": "가장 오래된 흔적은 광고였습니다",
+    "body": "쿼트 인베스티게이터가 찾은 가장 이른 사례는 1916년 투자회사 광고입니다. 광고 속 가상의 인물이 이렇게 말합니다.\n“신사 여러분, 복리를 발명한 사람이 그 아이디어로 특허를 받아 뒀다면, 그는 의심할 여지 없이 세상이 낳은 가장 위대한 발명을 손에 쥐었을 것입니다.”\n말한 사람은 광고 문안 작성자가 만든 허구의 인물이었습니다.\n같은 광고에는 콜럼버스가 1달러를 연 6% 복리로 맡겨 뒀다면 100억 달러가 넘는 돈을 받게 된다는 계산도 실려 있었습니다."
+   },
+   {
+    "heading": "1976년, 신문이 아인슈타인을 불러냈습니다",
+    "body": "쿼트 인베스티게이터에 따르면 아인슈타인의 이름이 붙은 가장 이른 기록은 1976년 8월 월스트리트저널에 실린 은퇴자의 기고입니다. 쓴 사람은 헤이스팅스 키스(Hastings Keith)였습니다.\n기고문은 누군가 인류 최대의 발명이 무엇이냐고 묻자 아인슈타인이 복리라고 답했다는 이야기를 소개합니다.\n“그는 바퀴나 지렛대라고 답하지 않았습니다. 복리라고 말한 것으로 전해집니다.”\n기고문조차 ‘전해진다’는 말로 한 발 물러서 있습니다.\n두 달 뒤 배런스(Barron’s)가 같은 이야기를 키스 의원의 일화로 되풀이하면서 문장은 더 널리 퍼졌습니다."
+   },
+   {
+    "heading": "복리 예찬은 이미 있었습니다",
+    "body": "쿼트 인베스티게이터는 1906년 작가 잭 런던(Jack London)이 에세이에서 복리를 인간의 놀라운 발명이라고 부른 기록도 짚습니다.\n이름난 사람이 복리를 극찬한 전통이 오래돼 있었으니, 아인슈타인의 이름을 빌려 오기도 쉬웠다는 셈입니다.\n쿼트 인베스티게이터는 아인슈타인이 그런 말을 했을 가능성은 아주 낮다고 봅니다."
+   },
+   {
+    "heading": "말은 가짜여도 복리는 진짜입니다",
+    "body": "위키백과(Wikipedia)에 따르면 복리 문제는 기원전 2000~1700년쯤 바빌로니아 점토판에서 이미 나타납니다.\n1494년 루카 파치올리(Luca Pacioli)의 책에는 이자율로 72를 나누면 원금이 두 배가 되는 햇수를 얻는다는 72의 법칙이 실렸습니다.\n빅싱크(Big Think)는 같은 원리가 물가에도 작동한다고 짚습니다. 돈이 복리로 불어나는 동안 물건값도 복리로 오를 수 있다는 뜻입니다.\n예금 이자를 볼 때 물가가 오르는 속도도 같이 보고 계신가요, 아니면 이름난 한 문장만 믿고 계신가요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "그가 세상을 떠난 해는 1955년인데",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "Einstein died in 1955, and this is the earliest instance located by"
+  },
+  {
+   "claim": "1976년에야 나옵니다",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "In 1976 the Wall Street Journal published an opinion article that ascribed to Einstein the belief that"
+  },
+  {
+   "claim": "다섯 가지로 묶습니다",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "(5) Compound interest is the greatest mathematical discovery of all time."
+  },
+  {
+   "claim": "복리는 세계 8대 불가사의다.",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "Compound interest is the eighth wonder of the world."
+  },
+  {
+   "claim": "아인슈타인이 그렇게 말했다는 뚜렷한 증거는 찾지 못했다고",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "has not located any significant evidence that Einstein made this comment."
+  },
+  {
+   "claim": "1916년 투자회사 광고",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "was dated 1916. The words appeared in an advertisement for the “Security Investment Co.”"
+  },
+  {
+   "claim": "신사 여러분, 복리를 발명한 사람이 그 아이디어로 특허를 받아 뒀다면, 그는 의심할 여지 없이 세상이 낳은 가장 위대한 발명을 손에 쥐었을 것입니다.",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "Gentlemen, if the man who invented compound interest had of secured a patent on his idea he would have had without any doubt the greatest invention the world has ever produced."
+  },
+  {
+   "claim": "콜럼버스가 1달러를 연 6% 복리로 맡겨 뒀다면 100억 달러가 넘는 돈",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "If Columbus had of placed one single dollar out at 6% interest compounded annually with instructions to pay the proceeds to you today, you would have over Ten Billion Dollars coming to you."
+  },
+  {
+   "claim": "1976년 8월 월스트리트저널",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "In August 1976 an article in the Wall Street Journal contained a subsection titled"
+  },
+  {
+   "claim": "그는 바퀴나 지렛대라고 답하지 않았습니다. 복리라고 말한 것으로 전해집니다.",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "He didn’t reply the wheel or the lever. He is reported to have said, “Compound interest.”"
+  },
+  {
+   "claim": "1906년 작가 잭 런던",
+   "url": "https://quoteinvestigator.com/2011/10/31/compound-interest/",
+   "original": "In 1906 the prominent literary figure Jack London published an essay titled"
+  },
+  {
+   "claim": "기원전 2000~1700년쯤",
+   "url": "https://en.wikipedia.org/wiki/Compound_interest",
+   "original": "A clay tablet from Babylon, dating from about 2000–1700 B.C., might be the first display of the compound interest problem."
+  },
+  {
+   "claim": "1494년 루카 파치올리",
+   "url": "https://en.wikipedia.org/wiki/Compound_interest",
+   "original": "The Summa de arithmetica of Luca Pacioli (1494) gives the Rule of 72"
+  },
+  {
+   "claim": "72로 나누면",
+   "url": "https://en.wikipedia.org/wiki/Compound_interest",
+   "original": "to find the number of years for an investment at compound interest to double, one should divide the interest rate into 72."
+  }
+ ]
+}
