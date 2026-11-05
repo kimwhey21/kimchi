@@ -1,12 +1,11 @@
 {
  "base": {
-  "# 화면 대조 실패 — Response ended prematurely": 1,
-  "작업 market_brief.yml (us) (#): 실패": 1,
-  "작업 publish_check.yml (#): 실패": 1
- },
- "day": "2026-11-04",
- "issues": {
   "작업 market_brief.yml (us) (#): 실패": 2,
   "작업 publish_check.yml (#): 실패": 2
+ },
+ "day": "2026-11-05",
+ "issues": {
+  "달력: # 수능일 장 시간을 거래소 공고로 확인하고 KRX_LATE_CLOSE_CONFIRMED에 더하십시오(#일 남음)": 1,
+  "작업 publish_check.yml (#): 실패": 3
  }
 }
