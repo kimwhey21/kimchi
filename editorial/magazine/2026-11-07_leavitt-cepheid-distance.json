@@ -1,0 +1,118 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-07",
+ "slug": "leavitt-cepheid-distance",
+ "radar_origin": "Big Think: 3 original methods for measuring the distance to the stars",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1708335911223-38dae0856742?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8b2JzZXJ2YXRvcnklMjB0ZWxlc2NvcGV8ZW58MHwwfHx8MTc5Mzk4NTM2NHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "64Jn_sqwbx0",
+  "credit": "Unsplash / Renato Ulpiano"
+ },
+ "sources": [
+  {
+   "name": "위키백과",
+   "title": "Henrietta Swan Leavitt",
+   "url": "https://en.wikipedia.org/wiki/Henrietta_Swan_Leavitt"
+  },
+  {
+   "name": "위키백과",
+   "title": "Stellar parallax",
+   "url": "https://en.wikipedia.org/wiki/Stellar_parallax"
+  },
+  {
+   "name": "위키백과",
+   "title": "Cepheid variable",
+   "url": "https://en.wikipedia.org/wiki/Cepheid_variable"
+  },
+  {
+   "name": "arXiv",
+   "title": "The Legacy of Henrietta Leavitt: A Re-analysis of the First Cepheid Period-Luminosity Relation",
+   "url": "https://arxiv.org/abs/2502.17438"
+  }
+ ],
+ "tags": [
+  "헨리에타레빗",
+  "세페이드변광성",
+  "우주거리",
+  "천문학사"
+ ],
+ "ko": {
+  "title": "시급 30센트 계산원은 별까지 거리를 어떻게 쟀을까",
+  "search_phrase": "",
+  "title_candidates": [
+   "시급 30센트 계산원은 별까지 거리를 어떻게 쟀을까",
+   "별 거리를 잰 계산원 레빗, 상은 왜 오지 않았을까",
+   "하버드 계산원 레빗이 우주에 눈금을 새긴 이유"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "우주의 크기를 재는 자를 만든 사람은 망원경 앞에 앉는 일이 직업이 아니었습니다.\n하버드 천문대의 계산원 헨리에타 레빗(Henrietta Leavitt)은 사진 건판을 들여다보며 하루를 보냈습니다.\n별까지의 거리는 줄자로 잴 수 없는데, 그 자는 어디서 나왔을까요?"
+   },
+   {
+    "heading": "가까운 별은 각도로 잽니다",
+    "body": "가장 오래된 방법은 연주시차(parallax), 곧 지구가 태양 둘레를 도는 동안 별의 위치가 아주 조금 어긋나 보이는 각도입니다.\n위키백과는 이 각도가 너무 작아 19세기까지 관측되지 않았다고 정리합니다.\n독일 천문학자 베셀(Friedrich Bessel)은 1837~1838년 쾨니히스베르크 천문대에서 백조자리 61번 별을 집중 관측했습니다.\n지금은 ESA의 가이아(Gaia) 위성이 이 각도를 잽니다. 위키백과는 2018년 자료에서 15등급보다 밝은 별 시차의 평균 오차가 20~40마이크로초각이라고 소개합니다.\n다만 은하 바깥으로 나가면 각도가 너무 작아져, 다른 자가 필요해집니다."
+   },
+   {
+    "heading": "계산원이 찾은 것은 밝기의 규칙이었습니다",
+    "body": "위키백과에 따르면 레빗이 맡은 일은 사진 건판을 측정해 별의 위치와 밝기를 목록으로 만드는 것이었습니다.\n그 목록 속 소마젤란은하(Small Magellanic Cloud)의 변광성들에서 그녀는 규칙을 보았습니다.\n레빗은 이렇게 적었습니다.\n“극대와 극소에 해당하는 두 점 무리 각각에 직선을 쉽게 그을 수 있다.”\n변광성 가운데 세페이드(Cepheid)는 밝기가 규칙적으로 오르내리는 별로, 위키백과는 주기가 보통 1일에서 100일 사이라고 적습니다."
+   },
+   {
+    "heading": "주기를 알면 진짜 밝기를 압니다",
+    "body": "위키백과의 세페이드 변광성 항목은 진짜 밝기와 맥동 주기 사이에 강한 직접 관계가 있다고 정리합니다.\n주기는 시계로 잴 수 있으니, 주기에서 진짜 밝기를 읽고 하늘에서 보이는 밝기와 견주면 거리가 나옵니다.\n같은 은하 속 별들은 지구에서 거의 같은 거리에 있다고 볼 수 있어서, 레빗은 겉보기 밝기만으로도 관계를 그릴 수 있었습니다."
+   },
+   {
+    "heading": "그 일의 시급은 30센트였습니다",
+    "body": "위키백과는 레빗이 나중에 시간당 0.30달러를 받았다고 적습니다.\n그녀가 하던 일은 별을 보는 일이 아니라 건판 위의 점을 재고 세는 일이었습니다.\n바로 그 점 하나하나에서 우주의 눈금이 나왔습니다."
+   },
+   {
+    "heading": "열쇠를 쥔 사람은 상을 받지 못했습니다",
+    "body": "위키백과의 세페이드 항목에 따르면 1924년 에드윈 허블은 안드로메다은하(M31) 세페이드까지의 거리를 확정했습니다.\n레빗의 법칙으로 계산한 그 거리는 우리은하의 일부이기에는 너무 멀었습니다.\n스웨덴 수학자 미탁레플레르(Gösta Mittag-Leffler)는 레빗을 노벨상 후보로 올리려 했지만, 그는 세 해 전에 암으로 세상을 떠난 뒤였습니다.\n최근 arXiv에 올라온 재분석 논문은 레빗이 남긴 노트 자료만으로 그 관계를 다시 따져 보고, 결과가 현대 측정과 잘 맞는다고 결론 냈습니다.\n지금 우리가 믿는 우주의 크기 가운데, 눈금을 새긴 사람의 이름을 아는 것은 몇이나 될까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "19세기까지 관측되지 않았다",
+   "url": "https://en.wikipedia.org/wiki/Stellar_parallax",
+   "original": "Stellar parallax is so small that it was unobservable until the 19th century"
+  },
+  {
+   "claim": "1837~1838년",
+   "url": "https://en.wikipedia.org/wiki/Stellar_parallax",
+   "original": "carried out an intense observational campaign in 1837–1838 at Koenigsberg Observatory for the star 61 Cygni"
+  },
+  {
+   "claim": "2018년 자료에서 15등급보다 밝은 별 시차의 평균 오차가 20~40마이크로초각",
+   "url": "https://en.wikipedia.org/wiki/Stellar_parallax",
+   "original": "Data Release 2 in 2018 claims mean errors for the parallaxes of 15th magnitude and brighter stars of 20–40 microarcseconds."
+  },
+  {
+   "claim": "극대와 극소에 해당하는 두 점 무리 각각에 직선을 쉽게 그을 수 있다.",
+   "url": "https://en.wikipedia.org/wiki/Henrietta_Swan_Leavitt",
+   "original": "A straight line can be readily drawn among each of the two series of points corresponding to maxima and minima"
+  },
+  {
+   "claim": "주기가 보통 1일에서 100일 사이",
+   "url": "https://en.wikipedia.org/wiki/Cepheid_variable",
+   "original": "a well-defined stable period (typically 1–100 days) and amplitude"
+  },
+  {
+   "claim": "시간당 0.30달러",
+   "url": "https://en.wikipedia.org/wiki/Henrietta_Swan_Leavitt",
+   "original": "Later, she received $0.30 (equivalent to $10.75 in 2025) an hour for her work"
+  },
+  {
+   "claim": "1924년 에드윈 허블은 안드로메다은하(M31)",
+   "url": "https://en.wikipedia.org/wiki/Cepheid_variable",
+   "original": "In 1924, Edwin Hubble established the distance to classical Cepheid variables in the Andromeda Galaxy (M31)"
+  },
+  {
+   "claim": "세 해 전에",
+   "url": "https://en.wikipedia.org/wiki/Henrietta_Swan_Leavitt",
+   "original": "tried to nominate her for that prize in 1924, only to learn that she had died of cancer three years earlier"
+  }
+ ]
+}
