@@ -57,9 +57,10 @@ class BlockedTest(unittest.TestCase):
             collect_issues({"title": "미국 증시 반등 시작? 내일 고용보고서가 결정합니다"}), [])
 
     def test_invented_words_are_blocked(self) -> None:
-        """코앞·문턱·상한가는 벤치마크 제목 1,089개에 0회입니다."""
+        """코앞·문턱은 벤치마크 제목 1,089개에 0회입니다. 상한가는 2026-11-06에 풀었습니다(독자가 검색하는 말)."""
         issues = collect_issues({"title": "원익홀딩스 상한가 코앞! 코스피 1.64% 상승"})
-        self.assertEqual(len(issues), 2)
+        self.assertEqual(len(issues), 1)
+        self.assertFalse([i for i in issues if "상한가" in i])
 
     def test_rounded_percent_is_blocked(self) -> None:
         """editorial_facts는 소수점 없는 숫자를 건너뛰므로 제목에서 막습니다."""
