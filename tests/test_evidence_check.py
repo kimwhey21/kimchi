@@ -161,3 +161,22 @@ class ReaderFallbackTest(unittest.TestCase):
         bad = mock.Mock(text="Title: \nWarning: Target URL returned error 403: Forbidden", raise_for_status=lambda: None)
         with mock.patch.object(ec.requests, "get", return_value=bad):
             self.assertIsNone(ec._reader_text("https://example.com/r2"))
+
+
+class SecondLookTest(unittest.TestCase):
+    """2026-11-06: 지역에 따라 빈 화면을 주는 출처(wpxi) — 맥에서만, 원문이 있는 쪽(크롬 → 읽기 서비스)을 쓴다."""
+    def setUp(self) -> None:
+        ec._SECOND.clear()
+
+    def test_reader_is_used_when_chrome_returns_an_empty_shell(self) -> None:
+        from unittest import mock
+        with mock.patch.dict("os.environ", {"EVIDENCE_BROWSER": "1"}), \
+                mock.patch.object(ec, "_browser_text", return_value="[object object]"), \
+                mock.patch.object(ec, "_reader_text", return_value=ec.normalize("its 22 years in orbit")):
+            self.assertIn("22 years", ec._second_look("https://x.test/a", "its 22 years"))
+
+    def test_nothing_happens_in_the_routine_sandbox(self) -> None:
+        from unittest import mock
+        with mock.patch.dict("os.environ", {"EVIDENCE_BROWSER": ""}), mock.patch.object(ec, "_browser_text") as b:
+            self.assertIsNone(ec._second_look("https://x.test/a", "q"))
+        b.assert_not_called()

@@ -101,6 +101,21 @@ def page_text(url: str) -> str | None:
     return text
 
 
+_SECOND: dict[str, str | None] = {}
+
+
+def _second_look(url: str, original: str = "") -> str | None:
+    """열리기는 했는데 원문이 없을 때 이 맥에서만 한 번 더 — 크롬, 그다음 읽기 서비스(2026-11-06 사장님 승인: 미국 지역 방송 wpxi가 한국의
+    맥에는 4,920자짜리 빈 화면을 200으로 주고 루틴의 미국 샌드박스에는 본문을 줘서, 맞는 잡지 글이 게시 직전에 막혔다). 루틴에서는 돌지 않는다."""
+    if os.environ.get("EVIDENCE_BROWSER") != "1":
+        return None
+    # 크롬이 빈 화면이라도 글자를 돌려주면 읽기 서비스로 넘어가지 않았다(wpxi: 크롬 90자, 읽기 서비스 4,514자) — 원문이 있는 쪽을 쓴다
+    if url not in _SECOND:
+        browser = _browser_text(url)
+        _SECOND[url] = browser if browser and original and normalize(original) in browser else (_reader_text(url) or browser)
+    return _SECOND[url]
+
+
 # 일정 글(다음 주 일정·이벤트)에서 근거가 있어야 하는 사건 낱말(2026-10-06, 감사 F-029: 10/4 「다음 주 일정」이 2025년 뉴스를 섞어
 # 있지도 않은 '10월 1일부터 미국 정부 셧다운'을 사실처럼 썼다). 일정 자체(지표 발표일)는 공식 달력이 있어 여기 넣지 않는다.
 _EVENT = re.compile(r"셧다운|shutdown|파업|strike|디폴트|default|부도|폐쇄|중단|연기|철회|사임|해임|제재|sanction|탄핵|봉쇄")
@@ -209,6 +224,8 @@ def evidence_issues(doc: dict, fetch=None, numbers: bool = True, events: bool = 
                           " — 같은 사실을 담은 다른 출처를 쓰십시오")
             continue
         text = fetch(url)
+        if text is not None and normalize(original) not in text and fetch is page_text:
+            text = _second_look(url, original) or text
         if text is None:
             issues.append(f"근거 '{str(e.get('claim'))[:40]}'의 출처를 열 수 없습니다 — 열리는 출처를 쓰십시오: {url[:80]}")
         elif normalize(original) not in text:
