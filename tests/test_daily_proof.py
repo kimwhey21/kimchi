@@ -317,7 +317,9 @@ class CalendarTablesTest(unittest.TestCase):
     def test_reminders_come_at_the_right_time(self) -> None:
         c = lambda s: daily_proof.calendar_issues(dt.date.fromisoformat(s))   # noqa: E731
         self.assertEqual(c("2026-10-05"), [])
-        self.assertTrue(any("수능일 장 시간" in x for x in c("2026-11-10")))
+        with mock.patch.object(daily_proof, "KRX_LATE_CLOSE_CONFIRMED", set()):
+            self.assertTrue(any("수능일 장 시간" in x for x in c("2026-11-10")))   # 공고 확인 전에는 2주 전부터 알린다
+        self.assertFalse(any("수능일 장 시간" in x for x in c("2026-11-10")))       # 2026-11-06 거래소 발표와 대조해 확인했다
         self.assertTrue(any("2027년 휴장일(계산값)" in x for x in c("2026-12-01")))
         late = c("2027-12-02")
         self.assertTrue(any("2028년 휴장일이 stock_db" in x for x in late))
