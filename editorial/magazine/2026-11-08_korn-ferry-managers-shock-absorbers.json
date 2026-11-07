@@ -1,0 +1,168 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-08",
+ "slug": "korn-ferry-managers-shock-absorbers",
+ "radar_origin": "Fortune: ‘Shock absorbers’: Korn Ferry says managers are carrying AI change that executives aren’t ready to lead",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1572021335469-31706a17aaef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8dGVhbSUyMG1lZXRpbmclMjBvZmZpY2V8ZW58MHwwfHx8MTc5NDA3MTQ1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "Of_m3hMsoAA",
+  "credit": "Unsplash / Jud Mackrill"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "'Shock absorbers': Korn Ferry says managers are carrying AI change that executives aren't ready to lead (2026-11-07)",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/"
+  },
+  {
+   "name": "포춘",
+   "title": "AI agents are flattening corporate hierarchies (2026-06-09)",
+   "url": "https://fortune.com/2026/06/09/ai-agents-flattening-corporate-hierarchies-companies-managers-develop-new-playbook/"
+  },
+  {
+   "name": "갤럽(Gallup)",
+   "title": "Employee Engagement Remains Flat as AI Adoption Accelerates",
+   "url": "https://www.gallup.com/workplace/712433/employee-engagement-remains-flat-adoption-accelerates.aspx"
+  }
+ ],
+ "tags": [
+  "중간관리자",
+  "AI와조직",
+  "콘페리",
+  "기업과기술"
+ ],
+ "ko": {
+  "title": "경영진은 준비가 안 됐다는데, AI 전환의 짐은 누가 질까",
+  "title_candidates": [
+   "경영진은 준비가 안 됐다는데, AI 전환의 짐은 누가 질까",
+   "AI 시대 중간관리자는 충격 흡수 장치일까, 사라질 자리일까",
+   "콘페리가 본 중간관리자: AI 전환에서 맡게 된 일"
+  ],
+  "search_phrase": "",
+  "narrative": [
+   {
+    "heading": "",
+    "body": "자기 회사 최고경영진이 AI 전환을 이끌 준비가 완전히 됐다고 본 인재·고위 리더는 6%뿐이었습니다.\n그런데 그 변화를 팀원에게 풀어 설명하고 버텨 내는 일은 중간관리자 몫이 되고 있습니다.\n경영진이 준비되지 않았다면, 그 사이에서 중간관리자는 무엇으로 버틸까요?"
+   },
+   {
+    "heading": "6%와 66%, 콘페리가 잰 간격",
+    "body": "인사·조직 컨설팅 회사 콘페리(Korn Ferry)가 낸 ‘인재 동향 2027(Talent Trends 2027)’ 보고서의 숫자입니다.\n75개국이 넘는 곳의 인재·고위 리더 1,300명 넘게를 설문한 결과입니다.\n포춘에 따르면 응답자의 66%는 관리자가 팀원의 일을 감독하기보다 변화를 헤쳐 가도록 돕는 데 더 많은 시간을 쓰게 되리라 예상했습니다."
+   },
+   {
+    "heading": "충격 흡수 장치라는 표현",
+    "body": "콘페리의 시니어 클라이언트 파트너 캐시 리텔만(Cathi Rittelmann)은 보고서에서 이렇게 말했습니다.\n“관리자는 조직의 충격 흡수 장치가 될 것입니다. 이들의 일은 팀이 정확히 어디로 가는지 말해 줄 수 없을 때도 계속 움직이게 돕는 것입니다.”\n콘페리의 수전 데라베가(Susan De La Vega)는 경영진의 안내 없이 불확실성을 감당하게 하느냐는 질문에 이렇게 답했습니다.\n“흔히 그렇습니다.”\n그는 관리자들이 자기 의견을 낼 수도 없었던 AI 지시를 결국 대신 옹호하고 전달하게 된다고 말했습니다."
+   },
+   {
+    "heading": "갤럽 숫자는 관리자 편에 가깝습니다",
+    "body": "포춘이 인용한 갤럽 조사에서 5월 기준 미국 직원 25%만 회사가 AI 도입의 명확한 계획을 전했다고 답했습니다.\n같은 조사에서 회사가 AI 도입을 시작했다는 응답은 47%였습니다.\n계획 없는 도입은 현장에서 관리자가 메워야 합니다.\n갤럽 분석은 관리자 차이도 보여 줍니다. 팀의 AI 활용을 관리자가 적극 지지한다고 말한 직원의 몰입도는 48%, 그렇지 않은 직원은 30%였습니다."
+   },
+   {
+    "heading": "납작해진 조직에서 관리자는 늘 필요할까",
+    "body": "반론도 있습니다. 포춘의 6월 보도에서 콘페리 설문 직원 15,000명 중 약 41%는 지난해 회사가 관리 계층을 줄였다고 답했습니다.\n클라우드플레어(Cloudflare) 최고경영자 매슈 프린스(Matthew Prince)는 직원의 약 20%를 줄인 뒤 이렇게 썼습니다.\n“지난주에 내보낸 사람들 대부분은 측정하는 사람(measurers)이었습니다.”\n그가 말한 측정하는 사람은 중간관리자, 재무, 법무, 내부 감사, 수익 인식 담당입니다.\n시장조사 회사 스마트테크리서치의 마크 베나(Mark Vena)는 더 날카롭게 말했습니다.\n“관리의 상당 부분이 업무 흐름 보모 노릇이 됐음을 인정하는 것입니다. AI 에이전트는 아주 훌륭한 보모입니다.”"
+   },
+   {
+    "heading": "관리자는 사라질까, 일이 바뀔까",
+    "body": "같은 6월 기사에서 케임브리지 리더십 어소시에이츠의 맥스 마티나(Max Martina)는 관리 계층이 완전히 사라지지는 않을 것이라고 봤습니다.\n충격 흡수 장치가 되든 보모 역할이 줄든, 관리자의 일은 지시를 전하는 쪽에서 맥락을 설명하는 쪽으로 옮겨 가는 듯합니다.\n데라베가는 그 해법으로 리더가 먼저 도구를 익히고, 관리자가 결정의 이유를 팀보다 먼저 듣게 하라고 했습니다.\n여러분의 팀장은 AI 지시를 미리 설명받고 전달하고 있나요, 회의에서 처음 듣고 전달하고 있나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "인재·고위 리더는 6%뿐",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "Just 6% of talent and senior leaders believe their organizations’ top executives are fully prepared to lead AI-driven transformation"
+  },
+  {
+   "claim": "75개국이 넘는 곳의 인재·고위 리더 1,300명 넘게를 설문한",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "based on a survey of more than 1,300 talent and senior leaders, from CHROs to CEOs and board members, in more than 75 countries"
+  },
+  {
+   "claim": "응답자의 66%는",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "Two-thirds of respondents (66%) expect managers to spend more time helping their teams through change than overseeing their day-to-day work."
+  },
+  {
+   "claim": "보고서의 숫자",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "Just 6% of talent and senior leaders believe their organizations’ top executives are fully prepared to lead AI-driven transformation"
+  },
+  {
+   "claim": "인재 동향 2027(Talent Trends 2027)",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "according to Korn Ferry’s Talent Trends 2027 report"
+  },
+  {
+   "claim": "관리자는 조직의 충격 흡수 장치가 될 것입니다",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "“Managers will become the shock absorbers of the organization,” Cathi Rittelmann, a senior client partner at Korn Ferry"
+  },
+  {
+   "claim": "이들의 일은 팀이 정확히 어디로 가는지 말해 줄 수 없을 때도 계속 움직이게 돕는 것입니다",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "Their job will be to help teams keep moving, even when they can’t tell them exactly where things are heading."
+  },
+  {
+   "claim": "흔히 그렇습니다",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "Asked whether companies expect managers to handle AI-driven uncertainty without adequate guidance from senior leadership, De La Vega replied, “Oftentimes, yes.”"
+  },
+  {
+   "claim": "자기 의견을 낼 수도 없었던 AI 지시를 결국 대신 옹호하고 전달하게 된다고",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "“Managers end up defending and communicating for AI mandates that they had no say in and little context,” she said."
+  },
+  {
+   "claim": "5월 기준 미국 직원 25%만",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "As of May, just 25% of U.S. employees said their organizations had communicated a clear plan for integrating AI, even as 47% said their employers had begun integrating AI tools, Gallup found"
+  },
+  {
+   "claim": "회사가 AI 도입을 시작했다는 응답은 47%",
+   "url": "https://fortune.com/2026/11/07/korn-ferry-survey-ai-transformation-leaders-middle-managers/",
+   "original": "As of May, just 25% of U.S. employees said their organizations had communicated a clear plan for integrating AI, even as 47% said their employers had begun integrating AI tools, Gallup found"
+  },
+  {
+   "claim": "몰입도는 48%, 그렇지 않은 직원은 30%",
+   "url": "https://www.gallup.com/workplace/712433/employee-engagement-remains-flat-adoption-accelerates.aspx",
+   "original": "Employees who say their manager actively supports their team’s use of AI have an engagement rate of 48%, compared with 30% among employees who do not say this"
+  },
+  {
+   "claim": "콘페리 설문 직원 15,000명 중 약 41%는",
+   "url": "https://fortune.com/2026/06/09/ai-agents-flattening-corporate-hierarchies-companies-managers-develop-new-playbook/",
+   "original": "Around 41% of employees say their companies trimmed management layers last year, according to Korn Ferry’s survey of 15,000 professionals worldwide."
+  },
+  {
+   "claim": "직원의 약 20%를 줄인 뒤",
+   "url": "https://fortune.com/2026/06/09/ai-agents-flattening-corporate-hierarchies-companies-managers-develop-new-playbook/",
+   "original": "After cutting roughly 20% of the company’s workforce while posting record revenue, Prince said"
+  },
+  {
+   "claim": "지난주에 내보낸 사람들 대부분은 측정하는 사람(measurers)이었습니다",
+   "url": "https://fortune.com/2026/06/09/ai-agents-flattening-corporate-hierarchies-companies-managers-develop-new-playbook/",
+   "original": "“The vast majority of those we laid off last week were measurers,” he wrote."
+  },
+  {
+   "claim": "중간관리자, 재무, 법무, 내부 감사, 수익 인식 담당",
+   "url": "https://fortune.com/2026/06/09/ai-agents-flattening-corporate-hierarchies-companies-managers-develop-new-playbook/",
+   "original": "He defined “measurers” as those in middle management, finance, legal, internal auditing, and revenue recognition."
+  },
+  {
+   "claim": "관리의 상당 부분이 업무 흐름 보모 노릇이 됐음을 인정하는 것입니다",
+   "url": "https://fortune.com/2026/06/09/ai-agents-flattening-corporate-hierarchies-companies-managers-develop-new-playbook/",
+   "original": "“They are admitting that a lot of management became workflow babysitting, and AI agents are very good babysitters.”"
+  },
+  {
+   "claim": "AI 에이전트는 아주 훌륭한 보모입니다",
+   "url": "https://fortune.com/2026/06/09/ai-agents-flattening-corporate-hierarchies-companies-managers-develop-new-playbook/",
+   "original": "“They are admitting that a lot of management became workflow babysitting, and AI agents are very good babysitters.”"
+  },
+  {
+   "claim": "맥스 마티나(Max Martina)는 관리 계층이 완전히 사라지지는 않을",
+   "url": "https://fortune.com/2026/06/09/ai-agents-flattening-corporate-hierarchies-companies-managers-develop-new-playbook/",
+   "original": "But Max Martina, president of Cambridge Leadership Associates, emphasized that this doesn’t mean management layers will fully disappear."
+  }
+ ]
+}

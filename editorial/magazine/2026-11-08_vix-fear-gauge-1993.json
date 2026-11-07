@@ -1,0 +1,163 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장의 역사",
+ "date": "2026-11-08",
+ "slug": "vix-fear-gauge-1993",
+ "radar_origin": "월가 ‘공포지수’ 8개월 만에 최고 - 서울경제",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1584820537082-8e19daff36bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c3Rvcm0lMjBjbG91ZHMlMjBzZWF8ZW58MHwwfHx8MTc5NDA3MTQ3M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "GBkssTODNT0",
+  "credit": "Unsplash / Daniel Lerman"
+ },
+ "sources": [
+  {
+   "name": "위키백과",
+   "title": "VIX",
+   "url": "https://en.wikipedia.org/wiki/VIX"
+  },
+  {
+   "name": "시카고옵션거래소(Cboe)",
+   "title": "Cboe Volatility Index (VIX) overview",
+   "url": "https://www.cboe.com/tradable_products/vix/"
+  }
+ ],
+ "tags": [
+  "공포지수",
+  "VIX",
+  "변동성지수",
+  "시장의역사"
+ ],
+ "ko": {
+  "title": "공포지수는 누가 만들었고 무엇을 재는 숫자일까",
+  "title_candidates": [
+   "공포지수는 누가 만들었고 무엇을 재는 숫자일까",
+   "공포지수: 80.74까지 올랐던 숫자의 정체",
+   "공포지수가 낮은 날, 시장은 무엇을 값에 넣지 않았을까"
+  ],
+  "search_phrase": "공포지수",
+  "narrative": [
+   {
+    "heading": "",
+    "body": "공포지수라는 별명을 단 숫자는 정작 공포를 재지 않습니다.\n재는 것은 앞으로 30일 동안 S&P 500이 얼마나 크게 움직일 것 같은지에 대한 시장의 예상입니다.\n처음 구상한 사람도 투자자가 아니라 두 명의 금융 경제학자였습니다.\n1993년에 공개된 이 숫자는 무엇을 재려던 것이었고, 지금 우리는 공포지수를 제대로 읽고 있을까요?"
+   },
+   {
+    "heading": "논문 한 편이 먼저 있었습니다",
+    "body": "VIX의 뿌리는 메나헴 브레너(Menachem Brenner)와 댄 갈라이(Dan Galai)의 연구입니다.\n위키백과에 따르면 두 사람은 1989년부터 낸 논문들에서 변동성 지수를 만들자고 제안했습니다.\n변동성(volatility)은 가격이 얼마나 크게 오르내리는지를 가리키는 말입니다.\n위키백과가 옮긴 두 사람의 글입니다.\n“변동성 지수는 옵션과 선물에서, 주가지수가 주식시장에서 하는 것과 같은 역할을 맡을 것입니다.”\n아이디어는 논문에서 끝나지 않았습니다. 시카고옵션거래소(Cboe)는 1992년 컨설턴트 밥 웨일리(Bob Whaley)를 고용해 이 이론으로 실제 값을 계산하게 했습니다."
+   },
+   {
+    "heading": "1993년 1월 19일, 시카고에서 공개됐습니다",
+    "body": "1993년 1월 19일 시카고옵션거래소는 기자회견을 열어 이 지수의 실시간 공개를 알렸습니다.\n처음 공식은 지금의 S&P 500이 아니라 S&P 100 옵션 가격에 맞춰 짜였습니다.\n그때 만든 옛 지수는 지금 VXO라고 불립니다. 오늘의 VIX는 S&P 500 지수 옵션으로 계산합니다.\nCboe는 VIX를 S&P 500 지수 옵션 가격에 담긴, 가까운 미래 변동성에 대한 시장의 기대를 보여 주는 대표 척도로 소개합니다.\nCboe는 1993년 도입 이후 많은 이가 이 지수를 세계에서 가장 대표적인 투자 심리 지표로 여겨 왔다고도 적습니다."
+   },
+   {
+    "heading": "기록은 위기의 날에 나왔습니다",
+    "body": "2008년 11월 21일 VIX는 종가 기준 사상 최고인 80.74로 마감했습니다.\n2008년 금융위기 때의 기록입니다.\n2018년 2월 5일에는 하루 만에 103.99% 올라 37.32로 마감했습니다. 숫자가 두 배가 되는 날도 있었다는 뜻입니다.\n2020년 3월 9일에는 62.12까지 올랐습니다. 위키백과는 러시아와 사우디아라비아의 유가 전쟁과 코로나19 확산이 겹친 결과로 설명합니다.\n일주일 뒤인 3월 16일에는 82.69로 마감해 1990년 이후 가장 높은 수준이 됐습니다."
+   },
+   {
+    "heading": "풋과 콜을 함께 담는 숫자",
+    "body": "VIX는 앞으로 30일 동안 S&P 500이 얼마나 움직일지를 연율로 환산해 보여 줍니다.\n위키백과는 이를 지수 옵션 가격에서 계산한 연간 기준의 예상 변화로 풀이합니다.\n공식은 S&P 500 옵션 가운데 풋(put, 팔 권리)과 콜(call, 살 권리)을 모두 가중 평균하는 구조입니다.\n그래서 VIX가 오른다는 말은 주가가 떨어진다는 뜻이 아닙니다.\n앞으로 크게 흔들릴 수 있다는 예상의 값이 비싸졌다는 뜻입니다."
+   },
+   {
+    "heading": "낮은 숫자는 무엇을 알려 줄까",
+    "body": "위키백과 연표에는 2026년 VIX가 15 아래로 내려갔다는 줄도 있습니다.\n미국 주식시장이 비교적 좁은 범위에서 움직인 시기였다고 적혀 있습니다.\n높은 숫자가 위기의 흔적이라면, 낮은 숫자는 시장이 큰 흔들림을 값에 거의 넣지 않았다는 흔적입니다.\n공포지수라는 이름 때문에 낮으면 안전하다고 읽기 쉽지만, 이 숫자가 재는 것은 결과가 아니라 예상입니다.\n여러분은 VIX를 불안의 온도계로 보시나요, 앞으로의 흔들림에 매긴 가격표로 보시나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "앞으로 30일 동안 S&P 500이",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "VIX is a volatility index derived from S&P 500 options for the 30 days following the measurement date"
+  },
+  {
+   "claim": "1993년에 공개된",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "On January 19, 1993, the Chicago Board Options Exchange held a press conference to announce the launch of real-time reporting"
+  },
+  {
+   "claim": "1989년부터 낸 논문들",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "In a series of papers beginning in 1989, Brenner and Galai proposed the creation of a series of volatility indices"
+  },
+  {
+   "claim": "변동성 지수는 옵션과 선물에서",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "A volatility index would play the same role as the market index plays for options and futures on the index."
+  },
+  {
+   "claim": "1992년 컨설턴트 밥 웨일리(Bob Whaley)를 고용해",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "In 1992, the CBOE hired consultant Bob Whaley to calculate values for stock market volatility based on this theoretical work."
+  },
+  {
+   "claim": "1993년 1월 19일 시카고옵션거래소는 기자회견을 열어",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "On January 19, 1993, the Chicago Board Options Exchange held a press conference to announce the launch of real-time reporting"
+  },
+  {
+   "claim": "S&P 100 옵션 가격에 맞춰",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "The formula that determines the VIX is tailored to the CBOE S&P 100 Index (OEX) option prices"
+  },
+  {
+   "claim": "오늘의 VIX는 S&P 500 지수 옵션으로 계산합니다",
+   "url": "https://www.cboe.com/tradable_products/vix/",
+   "original": "is a leading measure of market expectations of near-term volatility conveyed by S&P 500"
+  },
+  {
+   "claim": "S&P 500 지수 옵션 가격에 담긴, 가까운 미래 변동성에 대한 시장의 기대",
+   "url": "https://www.cboe.com/tradable_products/vix/",
+   "original": "is a leading measure of market expectations of near-term volatility conveyed by S&P 500"
+  },
+  {
+   "claim": "1993년 도입 이후",
+   "url": "https://www.cboe.com/tradable_products/vix/",
+   "original": "Since its introduction in 1993, the VIX"
+  },
+  {
+   "claim": "2008년 11월 21일 VIX는 종가 기준 사상 최고인 80.74로",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "On November 21, 2008, the VIX closed at a record 80.74."
+  },
+  {
+   "claim": "2008년 금융위기 때의 기록",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "On November 21, 2008, the VIX closed at a record 80.74."
+  },
+  {
+   "claim": "103.99% 올라 37.32로",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "On February 5, 2018, the VIX closed 37.32 (up 103.99% from previous close)."
+  },
+  {
+   "claim": "2020년 3월 9일에는 62.12까지",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "On March 9, 2020, the VIX hit 62.12, the highest level since the 2008 financial crisis due to a combination of the 2020 Russia–Saudi Arabia oil price war and the COVID-19 pandemic"
+  },
+  {
+   "claim": "러시아와 사우디아라비아의 유가 전쟁과 코로나19 확산이 겹친",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "due to a combination of the 2020 Russia–Saudi Arabia oil price war and the COVID-19 pandemic"
+  },
+  {
+   "claim": "3월 16일에는 82.69로 마감해 1990년 이후",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "On March 16, the VIX closed at 82.69, the highest level since its inception in 1990."
+  },
+  {
+   "claim": "앞으로 30일 동안 S&P 500이 얼마나 움직일지를 연율로",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "The current VIX index value quotes the expected annualized change in the S&P 500 index over the following 30 days"
+  },
+  {
+   "claim": "S&P 500 옵션 가운데 풋(put, 팔 권리)과 콜(call, 살 권리)을 모두 가중 평균",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "It is calculated as a weighted average of out-of-the-money call and put options on the S&P 500"
+  },
+  {
+   "claim": "2026년 VIX가 15 아래로",
+   "url": "https://en.wikipedia.org/wiki/VIX",
+   "original": "2026 - Fell below 15 as U.S. equity markets traded within a relatively narrow range."
+  }
+ ]
+}
