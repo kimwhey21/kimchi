@@ -1,0 +1,127 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-09",
+ "slug": "buffett-greatness-obituary-letter",
+ "radar_origin": "Fortune: Warren Buffett says ‘accumulating great amounts of money’ doesn’t achieve greatness—He sti",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1573003139034-1693385f21a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c21hbGwlMjBob3VzZSUyMHN1YnVyYnxlbnwwfDB8fHwxNzk0MTU3ODkyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "MrmC8VQo_Aw",
+  "credit": "Unsplash / Ross Sneddon"
+ },
+ "sources": [
+  {
+   "name": "비즈니스 스탠더드",
+   "title": "Warren Buffett annual Thanksgiving letter, Berkshire Hathaway (2025-11)",
+   "url": "https://www.business-standard.com/world-news/warren-buffett-berkshire-hathaway-annual-thanksgiving-letter-125111100366_1.html"
+  },
+  {
+   "name": "포춘",
+   "title": "Warren Buffett says 'accumulating great amounts of money' doesn't achieve greatness",
+   "url": "https://fortune.com/article/warren-buffett-accumulating-great-amounts-of-money-doesnt-achieve-greatness-still-lives-in-nebraska-home-coupons/"
+  }
+ ],
+ "tags": [
+  "워런버핏",
+  "버크셔해서웨이",
+  "돈의철학"
+ ],
+ "ko": {
+  "title": "위대함은 돈이 아니라는 버핏의 편지, 가진 사람의 여유일까",
+  "title_candidates": [
+   "버핏은 왜 돈 대신 부고문부터 쓰라고 했을까",
+   "3만 1,500달러짜리 집에 사는 버핏이 위대함을 말하는 법",
+   "위대함은 돈이 아니라는 버핏의 편지, 가진 사람의 여유일까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "세계에서 손꼽히는 부자가 연례 보고서를 더는 쓰지 않겠다고 밝힌 글에서, 위대함은 돈을 쌓는다고 오지 않는다고 말했습니다.\n말한 사람은 워런 버핏입니다. 그런데 그 글을 낸 날 그가 한 일은 가족 재단에 주식을 넘기는 것이었습니다.\n돈 많은 사람의 돈 이야기는 믿어도 될까요, 가진 사람의 여유일까요?"
+   },
+   {
+    "heading": "그날 넘긴 것은 13억 달러어치 주식이었습니다",
+    "body": "인도 매체 비즈니스 스탠더드에 따르면 버핏은 13억 달러어치 주식을 바꿔 가족 재단 네 곳에 넘겼습니다.\n수전 톰슨 버핏 재단, 셔우드 재단, 하워드 G. 버핏 재단, 노보 재단입니다.\n그는 같은 글에서 연례 보고서를 더는 쓰지 않고 ‘조용해지겠다’고 밝혔습니다.\n물론 ‘어느 정도는’이라는 단서를 달았습니다."
+   },
+   {
+    "heading": "부고문부터 써 보라는 제안",
+    "body": "편지의 조언은 투자가 아니라 부고문으로 시작합니다.\n버핏은 알프레드 노벨이 신문사의 착오로 잘못 실린 자기 부고를 읽고 놀라 행동을 바꿨다고 ‘전해진다’고 적었습니다.\n“신문사의 착오를 기대하지 마십시오. 부고문에 무엇이 적히길 바라는지 정하고, 그럴 만한 삶을 사십시오.”"
+   },
+   {
+    "heading": "위대함의 목록에서 빠진 세 가지",
+    "body": "버핏이 꼽은 위대함의 조건에는 돈이 없습니다.\n“위대함은 많은 돈, 많은 세간의 주목, 정부의 막강한 권력을 쌓는다고 오지 않습니다.”\n“누군가를 수천 가지 방법 중 하나로 돕는다면, 그것이 세상을 돕는 일입니다.”\n“친절은 비용이 들지 않지만 값을 매길 수 없습니다.”\n그는 이렇게 끝맺었습니다.\n“청소 일을 하는 분도 회장만큼 한 사람의 인간이라는 점을 기억하십시오.”"
+   },
+   {
+    "heading": "말과 생활이 맞는지는 집이 알려 줍니다",
+    "body": "경제지 포춘은 버핏이 1958년에 3만 1,500달러를 주고 산 오마하의 집에 지금도 산다고 전했습니다.\n침실 다섯 개짜리인 이 집은 지금 약 140만 달러로 추정됩니다.\n2014년 주주총회에서 그는 이렇게 말했습니다.\n“생활 수준이 어느 선을 넘으면 생활비와 비례한다고 생각하지 않습니다.”\n순자산 1,650억 달러로 소개된 사람이 사는 집치고는 소박한 숫자입니다.\n내 부고문에 적히길 바라는 문장은, 지금 내 통장이 향하는 쪽과 같은 쪽을 보고 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "13억 달러어치 주식을 바꿔 가족 재단 네 곳에 넘겼습니다",
+   "url": "https://www.business-standard.com/world-news/warren-buffett-berkshire-hathaway-annual-thanksgiving-letter-125111100366_1.html",
+   "original": "The billionaire converted shares worth $1.3 billion and donated them to four family foundations"
+  },
+  {
+   "claim": "수전 톰슨 버핏 재단, 셔우드 재단, 하워드 G. 버핏 재단, 노보 재단입니다.",
+   "url": "https://www.business-standard.com/world-news/warren-buffett-berkshire-hathaway-annual-thanksgiving-letter-125111100366_1.html",
+   "original": "The Susan Thompson Buffett Foundation, The Sherwood Foundation, The Howard G Buffett Foundation, and NoVo Foundation"
+  },
+  {
+   "claim": "“신문사의 착오를 기대하지 마십시오. 부고문에 무엇이 적히길 바라는지 정하고, 그럴 만한 삶을 사십시오.”",
+   "url": "https://www.business-standard.com/world-news/warren-buffett-berkshire-hathaway-annual-thanksgiving-letter-125111100366_1.html",
+   "original": "Decide what you would like your obituary to say and live the life to deserve it"
+  },
+  {
+   "claim": "위대함은 많은 돈, 많은 세간의 주목, 정부의 막강한 권력을 쌓는다고 오지 않습니다.",
+   "url": "https://www.business-standard.com/world-news/warren-buffett-berkshire-hathaway-annual-thanksgiving-letter-125111100366_1.html",
+   "original": "Greatness does not come about through accumulating great amounts of money, great amounts of publicity or great power in government"
+  },
+  {
+   "claim": "누군가를 수천 가지 방법 중 하나로 돕는다면, 그것이 세상을 돕는 일입니다.",
+   "url": "https://www.business-standard.com/world-news/warren-buffett-berkshire-hathaway-annual-thanksgiving-letter-125111100366_1.html",
+   "original": "When you help someone in any of thousands of ways, you help the world"
+  },
+  {
+   "claim": "친절은 비용이 들지 않지만 값을 매길 수 없습니다.",
+   "url": "https://www.business-standard.com/world-news/warren-buffett-berkshire-hathaway-annual-thanksgiving-letter-125111100366_1.html",
+   "original": "Kindness is costless but also priceless"
+  },
+  {
+   "claim": "청소 일을 하는 분도 회장만큼 한 사람의 인간이라는 점을 기억하십시오.",
+   "url": "https://www.business-standard.com/world-news/warren-buffett-berkshire-hathaway-annual-thanksgiving-letter-125111100366_1.html",
+   "original": "Keep in mind that the cleaning lady is as much a human being as the Chairman"
+  },
+  {
+   "claim": "1958년에 3만 1,500달러를 주고 산 오마하의 집",
+   "url": "https://fortune.com/article/warren-buffett-accumulating-great-amounts-of-money-doesnt-achieve-greatness-still-lives-in-nebraska-home-coupons/",
+   "original": "Omaha home he bought for $31,500 back in 1958"
+  },
+  {
+   "claim": "침실 다섯 개짜리인 이 집은 지금 약 140만 달러로 추정됩니다",
+   "url": "https://fortune.com/article/warren-buffett-accumulating-great-amounts-of-money-doesnt-achieve-greatness-still-lives-in-nebraska-home-coupons/",
+   "original": "five bedroom, two-and-a-half bathroom Omaha home"
+  },
+  {
+   "claim": "지금 약 140만 달러로 추정됩니다",
+   "url": "https://fortune.com/article/warren-buffett-accumulating-great-amounts-of-money-doesnt-achieve-greatness-still-lives-in-nebraska-home-coupons/",
+   "original": "The house would be worth around $1.4 million today"
+  },
+  {
+   "claim": "2014년 주주총회에서 그는 이렇게 말했습니다.",
+   "url": "https://fortune.com/article/warren-buffett-accumulating-great-amounts-of-money-doesnt-achieve-greatness-still-lives-in-nebraska-home-coupons/",
+   "original": "Buffett said at a Berkshire Hathaway shareholders meeting in 2014"
+  },
+  {
+   "claim": "생활 수준이 어느 선을 넘으면 생활비와 비례한다고 생각하지 않습니다.",
+   "url": "https://fortune.com/article/warren-buffett-accumulating-great-amounts-of-money-doesnt-achieve-greatness-still-lives-in-nebraska-home-coupons/",
+   "original": "I do not think that standard of living equates with cost of living beyond a certain point"
+  },
+  {
+   "claim": "순자산 1,650억 달러로 소개된",
+   "url": "https://fortune.com/article/warren-buffett-accumulating-great-amounts-of-money-doesnt-achieve-greatness-still-lives-in-nebraska-home-coupons/",
+   "original": "Berkshire Hathaway mogul Buffett, worth $165 billion"
+  }
+ ]
+}

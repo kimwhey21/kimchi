@@ -1,0 +1,93 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-09",
+ "slug": "undershooting-dornbusch-model",
+ "radar_origin": "한국경제: 커지는 코스피 블루…\"5000선 밑은 ‘언더슈팅’, 패닉셀 할 때 아니다\"",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1443527394413-4b820fd08dde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8b2ZmaWNlJTIwc2t5c2NyYXBlciUyMGdsYXNzfGVufDB8MHx8fDE3OTQxNTc4ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "H0vuplqoX0c",
+  "credit": "Unsplash / Viktor Jakovlev"
+ },
+ "sources": [
+  {
+   "name": "위키백과",
+   "title": "Overshooting model",
+   "url": "https://en.wikipedia.org/wiki/Overshooting_model"
+  },
+  {
+   "name": "돈부시 논문",
+   "title": "Expectations and Exchange Rate Dynamics (Journal of Political Economy, 1976)",
+   "url": "https://typeset.io/papers/expectations-and-exchange-rate-dynamics-2lt9rxxs2n"
+  }
+ ],
+ "tags": [
+  "언더슈팅",
+  "환율",
+  "루디거돈부시"
+ ],
+ "ko": {
+  "title": "언더슈팅이 바닥이라는 뜻이 아닌 이유",
+  "search_phrase": "언더슈팅",
+  "title_candidates": [
+   "언더슈팅은 누가 어떻게 판정하는 말일까",
+   "언더슈팅이 바닥이라는 뜻이 아닌 이유",
+   "언더슈팅이라는 말, 주식에서는 무엇이 빠졌을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "증시가 급락한 이번 주, 증권가에서는 ‘언더슈팅’이라는 말이 화제가 됐습니다. 적정 수준 아래로 지나치게 떨어졌다는 뜻으로 쓰는 말입니다.\n그런데 언더슈팅이라는 말의 고향은 주식이 아니라 환율입니다.\n1976년 경제학자 루디거 돈부시(Rudiger Dornbusch)의 논문이 그 시작이었습니다.\n환율의 말이 주식으로 건너오면서 빠진 것은 무엇일까요?"
+   },
+   {
+    "heading": "시장마다 속도가 다릅니다",
+    "body": "돈부시의 출발점은 시장마다 움직이는 속도가 다르다는 것입니다.\n위키백과는 이 모형을 이렇게 정리합니다. 상품 가격은 단기에 천천히 바뀌고, 통화 가격은 유연하게 움직입니다.\n그래서 통화 공급이 갑자기 늘면 조정은 금융시장에서 먼저, 크게 일어납니다.\n돈부시 논문의 초록은 이렇게 적었습니다.\n“환율의 초기 오버슈팅은 시장마다 조정 속도가 다른 데서 나옵니다.”"
+   },
+   {
+    "heading": "넘어갔다가 돌아오는 길",
+    "body": "위키백과에 따르면 단기에는 환율이 새 장기 균형값을 넘어서 움직입니다.\n시간이 지나 상품 가격이 따라오면 외환시장은 지나친 반응을 풀고 새 균형으로 돌아옵니다.\n“단기적으로 환율은 새로운 장기 균형값을 넘어서 움직입니다.”\n눈여겨볼 것은 이 모형의 주장입니다. 시장이 균형에서 잠깐 벗어나는 것은 고장이 아니라, 속도가 다른 시장이 만나면 생기는 일이라는 것입니다."
+   },
+   {
+    "heading": "‘지나쳤다’는 말에는 기준이 필요합니다",
+    "body": "오버슈팅이든 언더슈팅이든 ‘넘어섰다’는 말은 기준선을 전제합니다.\n돈부시 모형에서 그 기준은 새 장기 균형값이고, 논문은 오버슈팅의 크기를 모형 안의 변수로 설명합니다.\n“오버슈팅의 크기와 지속 기간은 모형의 구조적 변수로 설명됩니다.”\n모형 안에서는 기준선을 방정식이 정해 줍니다.\n실제 시장에서는 그 균형값이 얼마인지 그날에는 아무도 알 수 없습니다."
+   },
+   {
+    "heading": "주식에는 방정식이 없습니다",
+    "body": "돈부시 논문은 완전한 자본 이동, 느리게 움직이는 상품 시장, 일관된 기대라는 세 가정 위에 서 있습니다.\n주식을 두고 ‘언더슈팅’이라고 말하는 쪽은 이 가정과 방정식 없이 낙폭이 컸다는 뜻으로 그 말을 빌려 씁니다.\n그래서 언더슈팅이라는 이름이 붙었다는 사실은 더 내리지 않는다는 뜻도, 바닥이라는 뜻도 아닙니다.\n‘지나쳤다’고 말하려면 먼저 ‘적정’을 말해야 합니다. 그 적정값은 누가, 언제 알 수 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1976년 경제학자 루디거 돈부시(Rudiger Dornbusch)의 논문",
+   "url": "https://typeset.io/papers/expectations-and-exchange-rate-dynamics-2lt9rxxs2n",
+   "original": "Rudiger Dornbusch - 01 Dec 1976 - Journal of Political Economy"
+  },
+  {
+   "claim": "1976년",
+   "url": "https://typeset.io/papers/expectations-and-exchange-rate-dynamics-2lt9rxxs2n",
+   "original": "Rudiger Dornbusch - 01 Dec 1976 - Journal of Political Economy"
+  },
+  {
+   "claim": "환율의 초기 오버슈팅은 시장마다 조정 속도가 다른 데서 나옵니다.",
+   "url": "https://typeset.io/papers/expectations-and-exchange-rate-dynamics-2lt9rxxs2n",
+   "original": "An initial overshooting of exchange rates is shown to derive from the differential adjustment speed of markets"
+  },
+  {
+   "claim": "단기적으로 환율은 새로운 장기 균형값을 넘어서 움직입니다.",
+   "url": "https://en.wikipedia.org/wiki/Overshooting_model",
+   "original": "in the short term, the exchange rate overshoots its new equilibrium long-term value"
+  },
+  {
+   "claim": "오버슈팅의 크기와 지속 기간은 모형의 구조적 변수로 설명됩니다.",
+   "url": "https://typeset.io/papers/expectations-and-exchange-rate-dynamics-2lt9rxxs2n",
+   "original": "The magnitude and persistence of the overshooting is developed in terms of the structural parameters of the model"
+  },
+  {
+   "claim": "완전한 자본 이동, 느리게 움직이는 상품 시장, 일관된 기대라는 세 가정",
+   "url": "https://typeset.io/papers/expectations-and-exchange-rate-dynamics-2lt9rxxs2n",
+   "original": "perfect capital mobility, a slow adjustment of goods markets relative to asset markets, and consistent expectations"
+  }
+ ]
+}

@@ -1,0 +1,112 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-09",
+ "slug": "dimon-bigger-job-know-less",
+ "radar_origin": "Fortune: Jamie Dimon says the bigger your job gets, ‘the less you know—literally.’ The CEOs too ins",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8ZW1wdHklMjBib2FyZHJvb218ZW58MHwwfHx8MTc5NDE1Nzg4OHww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "GWe0dlVD9e0",
+  "credit": "Unsplash / Benjamin Child"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Jamie Dimon says insecurity, not arrogance, is a CEO's biggest threat",
+   "url": "https://fortune.com/article/jamie-dimon-ceo-advice-insecurity-humility-ted-lasso-c-suite-corporate-leaders-jpmorgan-chase-banks-workplace-culture/"
+  },
+  {
+   "name": "앙트러프러너",
+   "title": "Jamie Dimon Says This Problem Is Killing Companies — and He Blames 'Jerks' Who Won't Fix It (2026-05-01)",
+   "url": "https://www.entrepreneur.com/business-news/jamie-dimon-says-bureaucracy-is-killing-companies"
+  }
+ ],
+ "tags": [
+  "제이미다이먼",
+  "제이피모건",
+  "조직문화"
+ ],
+ "ko": {
+  "title": "다이먼이 파워포인트 보고서를 의심하는 이유",
+  "title_candidates": [
+   "직원 30만 명 은행의 CEO는 왜 자기가 가장 모른다고 할까",
+   "다이먼이 파워포인트 보고서를 의심하는 이유",
+   "나쁜 소식이 위로 올라가지 않는 회사에서 벌어지는 일"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "직원 30만 명이 넘는 은행의 CEO가 자기 일을 이렇게 말했습니다. 자리가 높아질수록 그 일에 대해 아는 것이 줄어든다고요.\n말한 사람은 제이피모건체이스를 2006년부터 이끌어 온 제이미 다이먼입니다.\n가장 많은 정보를 가졌을 것 같은 사람이 가장 모른다면, 그 정보는 위로 올라가는 길 어디에서 사라질까요?"
+   },
+   {
+    "heading": "가장 높은 자리의 사각지대",
+    "body": "다이먼은 한 팟캐스트에서 진행자 윌프리드 프로스트에게 이렇게 설명했습니다. 경제지 포춘이 그 대화를 옮겼습니다.\n승진할수록 한 분야를 잘 아는 전문가에서, 잘 모르는 분야까지 책임지는 사람으로 바뀐다는 이야기입니다.\n“자리가 커질수록 그 일에 대해 아는 것은, 말 그대로, 줄어듭니다.”\n어떤 CEO는 모르는 분야의 전문가를 곁에 두고, 모른다는 사실을 부끄러워하지 않습니다.\n다른 CEO에게는 이 변화가 불안의 씨앗이 된다는 것이 그의 설명입니다."
+   },
+   {
+    "heading": "불안한 리더가 만드는 파워포인트",
+    "body": "불안한 리더 밑에서는 보고의 모양이 달라진다는 것이 다이먼의 진단입니다.\n“그러면 파워포인트가 됩니다. 윗사람이 좋아 보이게 만들고, 나쁜 소식은 전하지 않는 거죠. 문제는 거기서 생깁니다.”\n보고서가 현실을 전하는 도구에서 윗사람을 기쁘게 하는 도구로 바뀐다는 뜻입니다.\n다이먼은 이런 불안이 오만보다 더 깊은 리더십의 약점을 보여 준다고 말했습니다."
+   },
+   {
+    "heading": "나쁜 소식을 환영하는 법",
+    "body": "그가 고른 처방은 반대 방향입니다. 나쁜 소식을 오히려 반기는 쪽입니다.\n“제품이 형편없다고 말해 줘도 제 기분은 상하지 않습니다.”\n“말씀이 맞다면, 알려 줘서 고맙다고 하겠습니다.”\n포춘에 따르면 그는 이사회 회의 때마다 자리를 비우는 일을 지난 20년 동안 이어 왔습니다.\n자신의 강한 성격이 이사들의 토론을 누르지 않게 하려는 장치입니다."
+   },
+   {
+    "heading": "절차를 좋아하는 사람들",
+    "body": "같은 이야기를 다이먼은 관료주의라는 말로도 했습니다. 노르웨이 국부펀드 운용사의 투자 콘퍼런스였고, 기업가 매체 앙트러프러너가 전했습니다.\n“관료주의와 안일함, 오만이 회사를 무너뜨립니다.”\n“관료주의는 정치와 온갖 것이 자라는 배양접시 같은 곳입니다.”\n그가 내놓은 해법은 문제를 바라보며 감탄만 하는 사람부터 걷어 내는 것입니다.\n“그들은 과정은 좋아하고 결과는 좋아하지 않습니다.”\n보고서가 매끄러워질수록 위에서 보이는 것은 줄어듭니다.\n여러분 회사에서 나쁜 소식은 어느 길로 올라가나요, 아니면 올라가기 전에 멈추나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "직원 30만 명이 넘는 은행",
+   "url": "https://www.entrepreneur.com/business-news/jamie-dimon-says-bureaucracy-is-killing-companies",
+   "original": "which employs over 300,000 people globally"
+  },
+  {
+   "claim": "2006년부터 이끌어 온",
+   "url": "https://www.entrepreneur.com/business-news/jamie-dimon-says-bureaucracy-is-killing-companies",
+   "original": "Dimon has led JPMorgan since 2006"
+  },
+  {
+   "claim": "자리가 커질수록 그 일에 대해 아는 것은, 말 그대로, 줄어듭니다.",
+   "url": "https://fortune.com/article/jamie-dimon-ceo-advice-insecurity-humility-ted-lasso-c-suite-corporate-leaders-jpmorgan-chase-banks-workplace-culture/",
+   "original": "The bigger job you get, the less you know"
+  },
+  {
+   "claim": "그러면 파워포인트가 됩니다. 윗사람이 좋아 보이게 만들고, 나쁜 소식은 전하지 않는 거죠. 문제는 거기서 생깁니다.",
+   "url": "https://fortune.com/article/jamie-dimon-ceo-advice-insecurity-humility-ted-lasso-c-suite-corporate-leaders-jpmorgan-chase-banks-workplace-culture/",
+   "original": "make them look good, don’t tell them the bad news. And that is what causes the problem"
+  },
+  {
+   "claim": "제품이 형편없다고 말해 줘도 제 기분은 상하지 않습니다.",
+   "url": "https://fortune.com/article/jamie-dimon-ceo-advice-insecurity-humility-ted-lasso-c-suite-corporate-leaders-jpmorgan-chase-banks-workplace-culture/",
+   "original": "You’re not going to hurt my feelings by telling me we have a crappy product"
+  },
+  {
+   "claim": "말씀이 맞다면, 알려 줘서 고맙다고 하겠습니다.",
+   "url": "https://fortune.com/article/jamie-dimon-ceo-advice-insecurity-humility-ted-lasso-c-suite-corporate-leaders-jpmorgan-chase-banks-workplace-culture/",
+   "original": "If you’re right, I’m gonna thank you for letting me know"
+  },
+  {
+   "claim": "지난 20년 동안 이어 왔습니다",
+   "url": "https://fortune.com/article/jamie-dimon-ceo-advice-insecurity-humility-ted-lasso-c-suite-corporate-leaders-jpmorgan-chase-banks-workplace-culture/",
+   "original": "For the past 20 years, he has stepped out of every board meeting"
+  },
+  {
+   "claim": "관료주의와 안일함, 오만이 회사를 무너뜨립니다.",
+   "url": "https://www.entrepreneur.com/business-news/jamie-dimon-says-bureaucracy-is-killing-companies",
+   "original": "Bureaucracy, complacency and arrogance will take down a company"
+  },
+  {
+   "claim": "관료주의는 정치와 온갖 것이 자라는 배양접시 같은 곳입니다.",
+   "url": "https://www.entrepreneur.com/business-news/jamie-dimon-says-bureaucracy-is-killing-companies",
+   "original": "Bureaucracy is like the petri dish of politics and everything else"
+  },
+  {
+   "claim": "그들은 과정은 좋아하고 결과는 좋아하지 않습니다.",
+   "url": "https://www.entrepreneur.com/business-news/jamie-dimon-says-bureaucracy-is-killing-companies",
+   "original": "They like the process, not the outcome"
+  }
+ ]
+}
