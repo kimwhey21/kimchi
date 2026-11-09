@@ -160,8 +160,10 @@ def blocks_to_html(blocks: list[tuple[str, str]], resolve) -> tuple[str, list[st
             parts.append(f"<h2>{_esc(value)}</h2>")
         elif kind == "q":
             parts.append("<blockquote>" + _esc(value).replace("\n", "<br>") + "</blockquote>")
-        else:
-            parts.append("<p>" + _esc(value).replace("\n", "<br>") + "</p>")
+        elif kind == "hr":   # 출처 앞 구분선(2026-11-09 새 꼴)
+            parts.append("<hr>")
+        else:   # 문단 안 <b>…</b>는 굵게로 살린다(2026-11-09 새 꼴) — 나머지는 그대로 이스케이프
+            parts.append("<p>" + _esc(value).replace("&lt;b&gt;", "<b>").replace("&lt;/b&gt;", "</b>").replace("\n", "<br>") + "</p>")
     return "\n".join(parts), images
 
 

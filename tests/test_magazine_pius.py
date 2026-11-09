@@ -6,6 +6,7 @@
 """
 import copy
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -101,9 +102,15 @@ class DefaultForm(unittest.TestCase):
         heads = [t for k, t in post["blocks"] if k == "h"]
         self.assertEqual(heads, [s["heading"] for s in _doc()["ko"]["narrative"][1:]] + ["자료 출처"])
         body = [t for k, t in post["blocks"] if k == "p"][: -len(_doc()["sources"])]
-        self.assertTrue(all(len(p) <= 170 for p in body))
-        self.assertGreaterEqual(len(body), 20)
+        # 새 꼴(2026-11-09): 한 문장짜리 줄을 두세 문장 문단으로 묶는다 — 220자 안, 인용 문단은 따로.
+        self.assertTrue(all(len(re.sub(r"</?b>", "", p)) <= 220 for p in body), [len(p) for p in body])
+        self.assertLess(len(body), sum(len([x for x in s["body"].split("\n") if x.strip()]) for s in _doc()["ko"]["narrative"]))
         self.assertTrue(any(p.startswith("“") for p in body))      # 인용 문단이 그대로 따로 실린다
+        kinds = [k for k, _ in post["blocks"]]
+        for i, (k, _) in enumerate(post["blocks"]):                # 소제목 다음 첫 문단은 첫 문장이 굵다
+            if k == "h" and i + 1 < len(kinds) and kinds[i + 1] == "p" and post["blocks"][i][1] != "자료 출처":
+                self.assertTrue(post["blocks"][i + 1][1].startswith("<b>"), post["blocks"][i + 1][1][:40])
+        self.assertEqual(kinds[kinds.index("h", len(kinds) - len(_doc()["sources"]) - 2) - 1], "hr")   # 출처 앞 구분선
 
 
 class HookForm(unittest.TestCase):

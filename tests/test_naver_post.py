@@ -171,3 +171,27 @@ class PhotoCoverTest(unittest.TestCase):
         self.assertEqual(imgs[0], str(tmp / "00-photo-cover.jpg"))
         self.assertEqual(imgs[1], str(tmp / "01-cover.png"))       # 남색·베이지 틀은 사진 다음에 그대로 간다(2026-09-26)
         self.assertEqual(imgs.count(str(tmp / "01-cover.png")), 1)
+
+
+class NewLookTest(unittest.TestCase):
+    """새 꼴(2026-11-09): 줄 묶기·굵게·구분선. 이미 올라간 글은 고치지 않고 새 글부터 적용된다."""
+
+    def test_group_keeps_quotes_apart_and_caps_three_sentences(self) -> None:
+        from scripts.naver_post import _group
+        out = _group(["첫 문장입니다.", "둘째 문장입니다.", "“인용입니다.”", "셋째입니다.", "넷째입니다.", "다섯째입니다.", "여섯째입니다."])
+        self.assertEqual(out[0], "첫 문장입니다. 둘째 문장입니다.")
+        self.assertEqual(out[1], "“인용입니다.”")
+        self.assertEqual(out[2], "셋째입니다. 넷째입니다. 다섯째입니다.")
+
+    def test_bold_first_respects_existing_bold(self) -> None:
+        from scripts.naver_post import _bold_first
+        blocks = [("h", "소제목"), ("p", "첫 문장. 둘째 문장.")]
+        _bold_first(blocks, 1)
+        self.assertEqual(blocks[1][1], "<b>첫 문장.</b> 둘째 문장.")
+        mine = [("h", "소제목"), ("p", "첫 문장."), ("p", "<b>원고가 고른 문장.</b>")]
+        _bold_first(mine, 1)
+        self.assertEqual(mine[1][1], "첫 문장.")
+
+    def test_plain_keeps_bold_and_drops_other_tags(self) -> None:
+        from scripts.naver_post import _plain
+        self.assertEqual(_plain("<strong>굵게</strong> <i>보통</i>\n둘째"), ["<b>굵게</b> 보통", "둘째"])

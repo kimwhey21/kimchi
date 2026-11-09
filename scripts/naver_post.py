@@ -42,8 +42,41 @@ TELEGRAM_URL = "https://t.me/fermata_kr"
 _TAG = re.compile(r"<[^>]+>")
 
 
+# 굵게(<b>)는 남긴다(2026-11-09 새 꼴: 절마다 핵심 문장 하나를 굵게). 편집기 입력(post_fill)이 <b>…</b>를 굵게 친다.
+_TAG_BUT_BOLD = re.compile(r"<(?!/?b>)[^>]+>")
+
+
 def _plain(text: str) -> list[str]:
-    return [p.strip() for p in _TAG.sub("", str(text or "")).split("\n") if p.strip()]
+    text = re.sub(r"<(/?)strong>", r"<\1b>", str(text or ""))
+    return [p.strip() for p in _TAG_BUT_BOLD.sub("", text).split("\n") if p.strip()]
+
+
+def _group(paragraphs: list[str], max_sentences: int = 3, max_chars: int = 220) -> list[str]:
+    """한두 문장짜리 줄을 두세 문장 문단으로 묶는다(2026-11-09 새 꼴 — 한 문장마다 빈 줄이면 휴대폰 화면이 듬성듬성하다).
+    인용(“로 시작하는 줄)은 앞뒤와 섞지 않고 따로 둔다."""
+    out: list[str] = []
+    cur: list[str] = []
+    count = lambda x: max(1, len([t for t in _SENTENCE.split(x) if t.strip()]))   # noqa: E731
+    for para in paragraphs:
+        quote = para.startswith(("“", '"'))
+        if cur and (quote or sum(count(c) for c in cur) + count(para) > max_sentences or len(" ".join(cur)) + len(para) > max_chars):
+            out.append(" ".join(cur)); cur = []
+        cur.append(para)
+        if quote:
+            out.append(" ".join(cur)); cur = []
+    if cur:
+        out.append(" ".join(cur))
+    return out
+
+
+def _bold_first(blocks: list[tuple[str, str]], start: int) -> None:
+    """절에 굵은 문장이 없으면 첫 문단의 첫 문장을 굵게 한다(2026-11-09 새 꼴). 원고가 <b>를 직접 달았으면 그대로 둔다."""
+    paras = [i for i in range(start, len(blocks)) if blocks[i][0] == "p"]
+    if not paras or any("<b>" in blocks[i][1] for i in paras):
+        return
+    i = paras[0]
+    first, *rest = _SENTENCE.split(blocks[i][1], maxsplit=1)
+    blocks[i] = ("p", f"<b>{first}</b>" + (f" {rest[0]}" if rest else ""))
 
 
 _SENTENCE = re.compile(r"(?<=[.!?])\s+")
@@ -148,7 +181,7 @@ def _source_blocks(doc: dict) -> list[tuple[str, str]]:
             if isinstance(x, dict) and x.get("name")]
     if not srcs:
         return []
-    blocks: list[tuple[str, str]] = [("h", "자료 확인")]
+    blocks: list[tuple[str, str]] = [("hr", ""), ("h", "자료 확인")]   # 출처 앞 구분선(2026-11-09 새 꼴)
     for x in srcs:
         title = str(x.get("title") or "").strip()
         blocks.append(("p", f"{x['name']}, {title}" if title else str(x["name"])))
@@ -304,7 +337,7 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         tags = list(FIXED_TAGS["feature"])
     base_title = str(ko.get("title", ""))
     title = naver_title(base_title, prefix, doc.get("series"), _kdate(date_str))
-    # 블록 종류: img(그림) · h(소제목) · q(인용구 — Fermata's Take) · p(문단, 2~3문장). 표지가 맨 앞(2026-09-12).
+    # 블록 종류: img(그림) · h(소제목) · q(인용구 — Fermata's Take) · p(문단, 2~3문장, <b> 굵게 허용) · hr(구분선, 2026-11-09). 표지가 맨 앞(2026-09-12).
     blocks: list[tuple[str, str]] = []
     cover = _cover(graphics_dir)
     if cover:
@@ -352,7 +385,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
             if heading or not (pius or column):   # 피우스형·칼럼 도입은 소제목 없이 문단만(빈 소제목을 빈 줄로 찍지 않는다)
                 blocks.append(("h", heading))
             paras = _plain(section.get("body", ""))
-            blocks += [("p", p) for p in (_chunks(paras, max_sentences=2, max_chars=170) if pius else _chunks(paras))]
+            start = len(blocks)
+            blocks += [("p", p) for p in (_group(paras) if pius else _chunks(paras))]
+            if heading:
+                _bold_first(blocks, start)
             for media in by_section.get(i, []):
                 blocks.append(("img", media))
             if not by_section and i < len(leftovers):
@@ -389,6 +425,7 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         # 우리 판단을 덧붙이는 글이 아니다. 원고에 closing이 있어도 싣지 않는다.
         srcs = [x for x in (doc.get("sources") or []) if isinstance(x, dict) and x.get("name")]
         if srcs:
+            blocks.append(("hr", ""))   # 출처 앞 구분선(2026-11-09 새 꼴)
             blocks.append(("h", "자료 출처"))
             blocks += [("p", f"{x['name']}, {x['title']}" if x.get("title") else str(x["name"])) for x in srcs]
     else:
