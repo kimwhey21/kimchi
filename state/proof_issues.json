@@ -1,7 +1,10 @@
 {
- "base": {},
- "day": "2026-11-08",
- "issues": {
+ "base": {
   "글 없음: 오늘의 칼럼 (editorial/columns/#_* #편)": 1
+ },
+ "day": "2026-11-09",
+ "issues": {
+  "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 1,
+  "작업 stock_db.yml (#): 실패": 1
  }
 }
