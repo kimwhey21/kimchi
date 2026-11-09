@@ -1,0 +1,141 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-11-10",
+ "slug": "santa-rally-seven-days",
+ "radar_origin": "목록 순서",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1575863499308-87b1b1fc3dac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8d2ludGVyJTIwZGVjZW1iZXIlMjBjYWxlbmRhcnxlbnwwfDB8fHwxNzk0MjQ0NDc4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "6gMrc3eeWUw",
+  "credit": "Unsplash / Guneet Jassal"
+ },
+ "sources": [
+  {
+   "name": "파이낸셜뉴스",
+   "title": "코스피 산타랠리 기사 (2025-12-24)",
+   "url": "https://www.fnnews.com/news/202512241848485258"
+  },
+  {
+   "name": "헤럴드경제",
+   "title": "코스피도 ‘산타랠리’ 찾아올까…연말 기대감 ‘솔솔’ (2025-12-13)",
+   "url": "https://www.heraldk.com/article/2025121317215655256"
+  },
+  {
+   "name": "야후파이낸셜",
+   "title": "The extraordinary history of the Santa Claus Rally: Morning Brief (2020-12-24)",
+   "url": "https://finance.yahoo.com/news/stock-market-santa-claus-rally-morning-brief-105758501.html"
+  }
+ ],
+ "tags": [
+  "산타랠리",
+  "연말증시",
+  "캘린더효과"
+ ],
+ "ko": {
+  "search_phrase": "산타랠리",
+  "title": "산타랠리는 왜 미국에서 더 잘 맞을까",
+  "title_candidates": [
+   "산타랠리는 왜 미국에서 더 잘 맞을까",
+   "산타랠리 기다리는 투자자가 볼 것 세 가지",
+   "산타랠리까지 한 달, 기다려도 될까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "산타랠리는 크리스마스 선물이 아니라 달력에 정해 둔 짧은 구간의 통계입니다.\n연말마다 기사에 오르는데, 정작 그 구간이 언제부터 언제까지인지 아는 투자자는 많지 않습니다.\n그 구간은 정말 매년 주가를 밀어 올릴까요, 아니면 기다리는 사람이 만든 믿음일까요?"
+   },
+   {
+    "heading": "산타는 달력 위에 정해져 있습니다",
+    "body": "파이낸셜뉴스는 산타랠리를 한 해의 마지막 5거래일과 새해 첫 2거래일 동안 증시가 강세를 보이는 현상으로 설명했습니다.\n이름을 붙인 사람은 주식 연감 ‘스톡 트레이더스 알머낵(Stock Trader’s Almanac)’의 창립자 예일 허쉬(Yale Hirsch)입니다. 야후파이낸셜은 이 이름이 그에게서 나왔다고 적었습니다.\n기준이 날짜로 정해져 있으니, 주가가 올랐는지는 계산만 하면 확인됩니다."
+   },
+   {
+    "heading": "미국에서는 열 번에 여덟 번 가까이 올랐습니다",
+    "body": "야후파이낸셜이 2020년 연말에 전한 미국 투자회사 LPL파이낸셜의 집계를 보면, 1950년 이후 이 7거래일은 77.9%의 해에 올랐습니다.\n7거래일 평균 상승률은 1.33%로, 연중 일곱 거래일 묶음 가운데 두 번째로 좋았습니다.\n그래도 매번 오지는 않았습니다. 1990년대 중반 이후 산타가 오지 않은 해는 여섯 번이었다고 같은 기사는 짚었습니다.\nLPL의 라이언 디트릭(Ryan Detrick)은 이 현상을 이렇게 정리했습니다.\n“강세장을 믿는 쪽은 산타도 믿는 경향이 있다.”"
+   },
+   {
+    "heading": "코스피의 산타는 더 변덕스럽습니다",
+    "body": "한국에서는 확률이 낮아집니다. 헤럴드경제에 따르면 2015년부터 2024년까지 10년 중 연말 코스피 수익률이 플러스였던 해는 5번이었습니다.\n파이낸셜뉴스가 1995년부터 2024년까지 30년을 분석했더니 산타랠리가 찾아온 해는 16번이었습니다.\n가장 강했던 해는 2001년으로, 코스피가 7거래일 동안 12.87% 뛰었습니다.\n같은 구간이라도 어떤 해에는 선물이고 어떤 해에는 빈 양말입니다."
+   },
+   {
+    "heading": "왜 오른다고들 말할까",
+    "body": "설명은 여럿이지만 어느 것도 증명된 원인은 아닙니다. 디트릭은 새해에 대한 낙관, 연말 소비, 휴가 간 거래자, 연말 장부를 정리하려는 기관을 가능한 이유로 꼽았습니다.\n헤럴드경제는 성탄절 전후로 기업 보너스가 몰리고 소비와 실적이 좋아지는 ‘캘린더 효과’로 풀었습니다.\n한국 증권가는 다른 이유를 짚었습니다. 다올투자증권 김지현 연구원은 이렇게 말했습니다.\n“최근 하락세가 뚜렷한 종목에 내년 초 대주주 및 개인의 재매수가 유입될 가능성이 있다”\n많이 하락한 종목을 다시 사들이는 수요가 연초에 몰릴 수 있다는 뜻입니다."
+   },
+   {
+    "heading": "숫자는 어느 쪽 편일까",
+    "body": "미국 숫자는 산타를 믿는 쪽에 가깝고, 한국 숫자는 반반에 가깝습니다.\n다만 두 통계 모두 짧은 구간의 평균과 확률이지, 한 해의 손익을 약속한 것이 아닙니다.\n그 구간을 놓치면 손해라는 말도, 그 구간만 보고 사면 이득이라는 말도 이 숫자에서는 나오지 않습니다."
+   },
+   {
+    "heading": "올해 달력에서 확인할 것",
+    "body": "산타랠리가 시작되는 날은 12월의 마지막 5거래일 첫날입니다. 휴장일이 끼면 날짜가 밀리니 거래소 휴장 달력을 먼저 확인해야 합니다.\n그 구간에 오른 것이 시장 전체였는지, 연말 전에 크게 하락했던 일부 종목이었는지도 나눠 볼 수 있습니다.\n평균이 말해 주지 않는 것은 내 종목이 그 평균 안에 있었느냐는 것입니다. 올해 산타가 온다면, 내 계좌에도 왔을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "마지막 5거래일과 새해 첫 2거래일",
+   "url": "https://www.fnnews.com/news/202512241848485258",
+   "original": "산타랠리는 통상 한 해의 마지막 5거래일과 새해 첫 2거래일 동안 증시가 강세를 보이는 현상을 말한다."
+  },
+  {
+   "claim": "1950년 이후",
+   "url": "https://finance.yahoo.com/news/stock-market-santa-claus-rally-morning-brief-105758501.html",
+   "original": "the 77.9% of the time higher we've seen previously during the Santa Claus Rally"
+  },
+  {
+   "claim": "77.9%의 해에 올랐습니다",
+   "url": "https://finance.yahoo.com/news/stock-market-santa-claus-rally-morning-brief-105758501.html",
+   "original": "the 77.9% of the time higher we've seen previously during the Santa Claus Rally"
+  },
+  {
+   "claim": "평균 상승률은 1.33%",
+   "url": "https://finance.yahoo.com/news/stock-market-santa-claus-rally-morning-brief-105758501.html",
+   "original": "Additionally, these seven days are up an average of 1.33%, which is the second-best seven-day combo of the year."
+  },
+  {
+   "claim": "1990년대 중반 이후 산타가 오지 않은 해는 여섯 번",
+   "url": "https://finance.yahoo.com/news/stock-market-santa-claus-rally-morning-brief-105758501.html",
+   "original": "Going back to the mid-1990s, there have been only six times Santa failed to show in December,"
+  },
+  {
+   "claim": "강세장을 믿는 쪽은 산타도 믿는 경향이 있다",
+   "url": "https://finance.yahoo.com/news/stock-market-santa-claus-rally-morning-brief-105758501.html",
+   "original": "the bottom line is that bulls tend to believe in Santa,"
+  },
+  {
+   "claim": "2015년부터 2024년까지 10년 중",
+   "url": "https://www.heraldk.com/article/2025121317215655256",
+   "original": "최근 10년(2015∼2024년)간 연말 코스피 수익률이 플러스(+)를 기록한 것은 10번 중 5번으로 집계됐다."
+  },
+  {
+   "claim": "1995년부터 2024년까지 30년",
+   "url": "https://www.fnnews.com/news/202512241848485258",
+   "original": "최근 30년간(1995~2024년) 코스피 흐름을 분석한 결과, 산타랠리가 찾아온 해는 16번이다."
+  },
+  {
+   "claim": "산타랠리가 찾아온 해는 16번",
+   "url": "https://www.fnnews.com/news/202512241848485258",
+   "original": "최근 30년간(1995~2024년) 코스피 흐름을 분석한 결과, 산타랠리가 찾아온 해는 16번이다."
+  },
+  {
+   "claim": "2001년으로, 코스피가 7거래일 동안 12.87% 뛰었습니다",
+   "url": "https://www.fnnews.com/news/202512241848485258",
+   "original": "당시 코스피 지수는 7거래일 동안 12.87% 뛰었다."
+  },
+  {
+   "claim": "최근 하락세가 뚜렷한 종목에 내년 초 대주주 및 개인의 재매수가 유입될 가능성이 있다",
+   "url": "https://www.fnnews.com/news/202512241848485258",
+   "original": "최근 하락세가 뚜렷한 종목에 내년 초 대주주 및 개인의 재매수가 유입될 가능성이 있다"
+  },
+  {
+   "claim": "산타랠리가 시작되는 날은 12월의 마지막 5거래일 첫날",
+   "url": "https://www.fnnews.com/news/202512241848485258",
+   "original": "산타랠리는 통상 한 해의 마지막 5거래일과 새해 첫 2거래일 동안 증시가 강세를 보이는 현상을 말한다."
+  },
+  {
+   "claim": "열 번에 여덟 번",
+   "url": "https://finance.yahoo.com/news/stock-market-santa-claus-rally-morning-brief-105758501.html",
+   "original": "the 77.9% of the time higher we've seen previously during the Santa Claus Rally"
+  }
+ ]
+}

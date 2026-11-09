@@ -1,0 +1,141 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-10",
+ "slug": "jwst-smallest-failed-stars",
+ "radar_origin": "Big Think: In a big star-forming nebula, JWST finds the smallest failed stars",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1462332420958-a05d1e002413?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8bmVidWxhJTIwc3BhY2UlMjBzdGFyc3xlbnwwfDB8fHwxNzk0MjQ0NTczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "-hI5dX2ObAs",
+  "credit": "Unsplash / NASA"
+ },
+ "sources": [
+  {
+   "name": "어스닷컴",
+   "title": "Tiny brown dwarfs discovered inside the Flame Nebula",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula"
+  },
+  {
+   "name": "AAS 노바",
+   "title": "Featured Image: Low-Mass Brown Dwarfs in a Class of Their Own? (2025-07-14)",
+   "url": "https://aasnova.org/2025/07/14/featured-image-low-mass-brown-dwarfs-in-a-class-of-their-own/"
+  }
+ ],
+ "tags": [
+  "갈색왜성",
+  "제임스웹",
+  "플레임성운"
+ ],
+ "ko": {
+  "title": "별이 되다 만 천체는 얼마나 작아질 수 있을까",
+  "title_candidates": [
+   "별이 되다 만 천체는 얼마나 작아질 수 있을까",
+   "갈색왜성이 알려 주는 별의 최소 크기, 볼 것 세 가지",
+   "웹 망원경이 본 갈색왜성, 별의 최소 크기는 어디일까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "별이 되지 못한 천체에도 바닥이 있을 수 있다는 단서가 나왔습니다.\n제임스웹우주망원경으로 새로 태어나는 별들의 요람을 들여다봤더니, 목성보다 훨씬 가벼운 ‘실패한 별’은 거의 보이지 않았습니다.\n천체는 얼마나 가벼워질 때까지 별 비슷한 것으로 태어날 수 있을까요?"
+   },
+   {
+    "heading": "별이 되다 만 천체란 무엇일까",
+    "body": "천문학자들은 이런 천체를 갈색왜성(brown dwarf)이라고 부릅니다. 별처럼 가스 구름이 뭉쳐 태어나지만 별이 되기엔 모자란 천체입니다.\n어스닷컴은 갈색왜성이 핵에서 수소를 핵융합(수소 원자핵이 합쳐지며 에너지를 내는 반응)하기에는 질량이 부족하다고 설명했습니다.\n그래서 갈색왜성은 스스로 빛을 내며 버티지 못하고 점점 식으며 흐려집니다."
+   },
+   {
+    "heading": "오리온자리의 성운에서 무엇이 보였나",
+    "body": "무대는 오리온자리 방향으로 약 1,400광년 떨어진 플레임 성운입니다. 새 별이 한창 태어나는 곳입니다.\n연구팀은 이곳에서 목성의 두세 배쯤 되는 천체를 찾아냈다고 어스닷컴은 전했습니다.\n논문을 이끈 텍사스대 오스틴의 매슈 데푸리오는 연구의 목표를 이렇게 말했습니다.\n“이 연구의 목표는 별과 갈색왜성이 만들어지는 과정의 근본적인 질량 하한을 알아보는 것이었습니다.”"
+   },
+   {
+    "heading": "목성보다 작은 천체는 왜 안 보일까",
+    "body": "흥미로운 것은 작은 쪽의 숫자입니다. 연구팀은 목성 5개 질량의 천체가 10개 질량의 천체보다 적다고 밝혔습니다.\n이 망원경은 목성 질량의 절반까지도 가려낼 수 있는데, 목성의 두세 배보다 가벼운 천체는 사실상 찾지 못했습니다.\n그래서 한계가 실제로 있다면 어떤 일이 벌어질까요? 미시간대 마이클 마이어는 이렇게 말했습니다.\n“그 한계가 진짜라면, 우주를 떠도는 목성 질량 하나짜리 천체는 있어서는 안 됩니다.”"
+   },
+   {
+    "heading": "다른 성운의 기록은 어디까지 내려갔나",
+    "body": "비슷한 바닥은 다른 성운에서도 보입니다. 미국천문학회 소식지 AAS 노바(AAS Nova)는 별무리 IC 348 주변에서 목성의 2배 질량까지 내려간 후보를 JWST가 찾았다고 소개했습니다.\n후속 분광 관측으로 질량이 확인돼, 지금까지 알려진 가장 가벼운 갈색왜성이 됐다고 합니다.\n대기에서는 아직 정체를 모르는 탄화수소(수소와 탄소로 이루어진 분자) 신호도 나왔습니다. 연구진은 이런 천체를 위해 ‘H(hydrocarbon)’라는 새 분광형을 제안했고, 그중 둘에서는 원반이 있는 흔적도 발견했습니다."
+   },
+   {
+    "heading": "숫자는 아직 결론이 아닙니다",
+    "body": "두 성운에서 나온 바닥은 목성의 두세 배 언저리로 비슷합니다.\n그러나 어스닷컴이 전한 연구는 한 성운의 관측이고, 한계가 정말 우주 전체의 값인지는 더 많은 성운에서 확인해야 합니다.\n별과 행성 사이에 그어 온 선이 관측으로 조금씩 좁혀지고 있습니다. 가벼운 쪽 끝에서 천체가 태어나지 못하는 이유는 무엇일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "약 1,400광년 떨어진 플레임 성운",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "Deep within the Flame Nebula, about 1,400 light-years away in the Orion constellation,"
+  },
+  {
+   "claim": "목성의 두세 배쯤 되는 천체",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "spotted objects around two to three times the mass of Jupiter"
+  },
+  {
+   "claim": "이 연구의 목표는 별과 갈색왜성이 만들어지는 과정의 근본적인 질량 하한을 알아보는 것이었습니다",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "The goal of this project was to explore the fundamental low-mass limit of the star and brown dwarf formation process."
+  },
+  {
+   "claim": "목성 5개 질량의 천체가 10개 질량의 천체보다 적다",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "We find fewer five-Jupiter-mass objects than ten-Jupiter-mass objects"
+  },
+  {
+   "claim": "목성 질량의 절반까지도",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "masses down to half of Jupiter's mass"
+  },
+  {
+   "claim": "목성의 두세 배보다 가벼운 천체",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "We don't really find any objects below two or three Jupiter masses"
+  },
+  {
+   "claim": "그 한계가 진짜라면, 우주를 떠도는 목성 질량 하나짜리 천체는 있어서는 안 됩니다",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "there really shouldn't be any one-Jupiter-mass objects free-floating"
+  },
+  {
+   "claim": "목성의 2배 질량까지",
+   "url": "https://aasnova.org/2025/07/14/featured-image-low-mass-brown-dwarfs-in-a-class-of-their-own/",
+   "original": "discovered multiple candidates with masses down to just twice the mass of Jupiter."
+  },
+  {
+   "claim": "지금까지 알려진 가장 가벼운 갈색왜성",
+   "url": "https://aasnova.org/2025/07/14/featured-image-low-mass-brown-dwarfs-in-a-class-of-their-own/",
+   "original": "Follow-up JWST spectroscopy confirmed the masses of these objects, making them the lowest-mass brown dwarfs known to date."
+  },
+  {
+   "claim": "아직 정체를 모르는 탄화수소",
+   "url": "https://aasnova.org/2025/07/14/featured-image-low-mass-brown-dwarfs-in-a-class-of-their-own/",
+   "original": "their spectra show evidence of hydrocarbon molecules, the exact identities of which are not yet known."
+  },
+  {
+   "claim": "그중 둘에서는 원반이 있는 흔적도",
+   "url": "https://aasnova.org/2025/07/14/featured-image-low-mass-brown-dwarfs-in-a-class-of-their-own/",
+   "original": "the authors also discovered signs of circumstellar disks around two of them"
+  },
+  {
+   "claim": "목성의 두세 배 언저리",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "We don't really find any objects below two or three Jupiter masses"
+  },
+  {
+   "claim": "한계가 정말 우주 전체의 값인지는",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "We don't really find any objects below two or three Jupiter masses"
+  },
+  {
+   "claim": "두 성운에서 나온 바닥",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "We don't really find any objects below two or three Jupiter masses"
+  },
+  {
+   "claim": "한계가 실제로 있다면",
+   "url": "https://www.earth.com/news/tiny-brown-dwarfs-discovered-inside-the-flame-nebula",
+   "original": "there really shouldn't be any one-Jupiter-mass objects free-floating"
+  }
+ ]
+}
