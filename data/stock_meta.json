@@ -6206,10 +6206,14 @@
 "web": "www.sgcetec.co.kr"
 },
 "0162D0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "00784184",
+"en": "Dongwon PARTS.Co., Ltd.",
+"founded": "1997",
+"industry": "Machinery",
+"ksic": "29271",
+"name": "Dongwon PARTS",
+"pref": false,
+"web": "www.dwparts.net/"
 },
 "016360": {
 "corp": "00104856",
