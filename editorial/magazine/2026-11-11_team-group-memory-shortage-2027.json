@@ -1,0 +1,126 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-11",
+ "slug": "team-group-memory-shortage-2027",
+ "radar_origin": "Fortune: Memory chip CEO warns 2027 shortage will be so bad that ‘even money can’t buy goods’",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1672307613484-3254a04651fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8bWVtb3J5JTIwY2hpcHxlbnwwfDB8fHwxNzk0MzMxMjQ3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "7hR3FrFs4Q0",
+  "credit": "Unsplash / Maxence Pira"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Memory chip CEO warns 2027 shortage will be so bad that 'even money can't buy goods'",
+   "url": "https://fortune.com/2026/11/10/team-group-ceo-memory-chip-shortage-2027-even-money-cant-buy-goods/"
+  },
+  {
+   "name": "하드웨어 버스터스",
+   "title": "Team Group Posts a Record Quarter, Then Warns the Memory Shortage Won't Ease Before 2028",
+   "url": "https://hwbusters.com/news/team-group-posts-a-record-quarter-then-warns-the-memory-shortage-wont-ease-before-2028/"
+  },
+  {
+   "name": "PC 게이머",
+   "title": "'How can prices fall when there's nothing left?' TeamGroup CEO reckons supply-demand memory equilibrium may not happen until late 2028",
+   "url": "https://pcgamer.com/hardware/memory/how-can-prices-fall-when-theres-nothing-left-teamgroup-ceo-reckons-supply-demand-memory-equilibrium-may-not-happen-until-late-2028-at-the-earliest"
+  }
+ ],
+ "tags": [
+  "메모리반도체",
+  "D램가격",
+  "메모리부족"
+ ],
+ "ko": {
+  "title": "메모리 품귀의 끝은 언제일까, 업체 사장이 꼽은 시점",
+  "title_candidates": [
+   "사상 최고 실적을 낸 사장은 왜 '살 물건이 없다'고 말할까",
+   "D램 값이 다섯 배 뛴 이유, 돈으로도 못 사는 날이 온다",
+   "메모리 품귀의 끝은 언제일까, 업체 사장이 꼽은 시점"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "지금은 비싸도 살 수 있습니다. 그런데 곧 돈이 있어도 못 살 수 있다고 경고한 사람이 있습니다.\n말한 사람은 대만 메모리 모듈 업체 팀그룹의 최고경영자입니다. 그는 회사 역사상 가장 좋은 분기 실적을 낸 직후에 이 말을 꺼냈습니다.\n잘 팔고 있는 회사의 사장이 왜 살 물건이 없다고 말할까요?"
+   },
+   {
+    "heading": "값이 내릴 수 없다고 보는 이유",
+    "body": "팀그룹 CEO 제리 천은 내년에도 가격이 내려가는 흐름은 전혀 없을 것이라고 내다봤습니다.\n하드웨어 버스터스는 그가 가장 어두운 대목으로 이 말을 꼽았다고 전합니다.\n“지금은 비싸도 물건을 살 수 있습니다. 조금 지나면 물건을 아예 살 수 없을지도 모릅니다.”\n그러고는 스스로 묻고 답했습니다.\n“바닥난 시장에서 값이 어떻게 내려가겠습니까?”"
+   },
+   {
+    "heading": "계약을 맺어도 물량이 모자랍니다",
+    "body": "문제는 돈이 아니라 물량입니다. 팀그룹은 공급 계약이 있어도 약속한 물량을 다 받지 못한다고 말했습니다.\n“계약은 있는데 물량이 충분치 않아서, 현물 시장에 가서 웃돈을 주고 물건을 잡아야 합니다.”\n포춘에 따르면 현물 가격은 계약 가격보다 30%에서 50% 높습니다.\n계약서가 있어도 안심할 수 없는 시장이라는 뜻입니다."
+   },
+   {
+    "heading": "값은 얼마나 올랐을까",
+    "body": "대표적인 메모리 반도체인 16기가비트 DDR5 칩의 계약 가격은 2025년 10월 8.70달러에서 2026년 9월 48달러로 올랐습니다.\n1년이 안 되는 사이 다섯 배가 넘게 뛴 값입니다.\nDDR5는 컴퓨터가 작업 중인 데이터를 잠시 올려 두는 D램의 최신 규격입니다.\n이 값이 휴대폰과 PC 가격에 얼마나 반영될지는 제조사마다 다르지만, 부품값이 오른 것만은 숫자로 확인됩니다."
+   },
+   {
+    "heading": "왜 일반 D램이 모자랄까",
+    "body": "하드웨어 버스터스는 삼성전자와 SK하이닉스, 마이크론이 생산 능력을 AI 서버용 HBM과 고급 DDR5 쪽으로 돌리고 있다고 정리합니다.\nHBM은 D램을 여러 겹 쌓아 데이터가 오가는 길을 넓힌 고대역폭 메모리입니다.\nAI 서버가 이 칩을 빨아들이는 동안 일반 D램에 돌아갈 웨이퍼, 곧 반도체 원판이 줄어드는 구조입니다.\n새 공장이 해답이 되려면 시간이 걸립니다. 팀그룹의 뉴타이베이 공장도 2027년 2분기에야 가동을 시작합니다."
+   },
+   {
+    "heading": "균형은 언제 올까",
+    "body": "PC 게이머는 제리 천이 수요와 공급이 맞아떨어지는 시점을 빨라야 2028년 하반기로 본다고 소개합니다.\n내년 상반기가 지나도 곧바로 풀리지 않는다는 뜻입니다.\n공급하는 쪽의 사정이 사는 쪽의 가격표로 옮겨 가는 이 시차를 지켜본 독자라면, 다음 질문이 남습니다.\n부품값이 이렇게 오른 뒤에도 소비자는 같은 제품을 같은 값에 살 수 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "“바닥난 시장에서 값이 어떻게 내려가겠습니까?”",
+   "url": "https://fortune.com/2026/11/10/team-group-ceo-memory-chip-shortage-2027-even-money-cant-buy-goods/",
+   "original": "How can prices fall when there’s nothing left?"
+  },
+  {
+   "claim": "“지금은 비싸도 물건을 살 수 있습니다. 조금 지나면 물건을 아예 살 수 없을지도 모릅니다.”",
+   "url": "https://hwbusters.com/news/team-group-posts-a-record-quarter-then-warns-the-memory-shortage-wont-ease-before-2028/",
+   "original": "Right now you can still buy goods, they’re just expensive,” Chen said. “In a little while, you may not be able to buy goods at all."
+  },
+  {
+   "claim": "“계약은 있는데 물량이 충분치 않아서, 현물 시장에 가서 웃돈을 주고 물건을 잡아야 합니다.”",
+   "url": "https://fortune.com/2026/11/10/team-group-ceo-memory-chip-shortage-2027-even-money-cant-buy-goods/",
+   "original": "We have contracts but can’t get enough volume, so we have to go to the spot market and pay a premium to grab supply"
+  },
+  {
+   "claim": "현물 가격은 계약 가격보다 30%에서 50% 높습니다",
+   "url": "https://fortune.com/2026/11/10/team-group-ceo-memory-chip-shortage-2027-even-money-cant-buy-goods/",
+   "original": "He put the gap between spot and contract prices at 30% to 50%."
+  },
+  {
+   "claim": "2025년 10월 8.70달러에서 2026년 9월 48달러로 올랐습니다",
+   "url": "https://fortune.com/2026/11/10/team-group-ceo-memory-chip-shortage-2027-even-money-cant-buy-goods/",
+   "original": "Contract prices for a 16-gigabit DDR5 chip rose from $8.70 in October 2025 to $48 in September 2026"
+  },
+  {
+   "claim": "1년이 안 되는 사이 다섯 배가 넘게 뛴 값",
+   "url": "https://hwbusters.com/news/team-group-posts-a-record-quarter-then-warns-the-memory-shortage-wont-ease-before-2028/",
+   "original": "roughly 5.5 times the price in under a year"
+  },
+  {
+   "claim": "2027년 2분기에야 가동을 시작합니다",
+   "url": "https://hwbusters.com/news/team-group-posts-a-record-quarter-then-warns-the-memory-shortage-wont-ease-before-2028/",
+   "original": "a new plant in New Taipei is due to start production in Q2 2027 and lift capacity by around 50%"
+  },
+  {
+   "claim": "2028년 하반기",
+   "url": "https://fortune.com/2026/11/10/team-group-ceo-memory-chip-shortage-2027-even-money-cant-buy-goods/",
+   "original": "doesn’t expect supply and demand to balance until the second half of 2028 at the earliest"
+  },
+  {
+   "claim": "16기가비트 DDR5 칩의 계약 가격",
+   "url": "https://fortune.com/2026/11/10/team-group-ceo-memory-chip-shortage-2027-even-money-cant-buy-goods/",
+   "original": "Contract prices for a 16-gigabit DDR5 chip rose from $8.70 in October 2025 to $48 in September 2026"
+  },
+  {
+   "claim": "DDR5는 컴퓨터가 작업 중인 데이터를 잠시 올려 두는 D램의",
+   "url": "https://hwbusters.com/news/team-group-posts-a-record-quarter-then-warns-the-memory-shortage-wont-ease-before-2028/",
+   "original": "Samsung, SK hynix and Micron are pouring wafer capacity into HBM and high-end DDR5 for AI servers"
+  },
+  {
+   "claim": "AI 서버용 HBM과 고급 DDR5 쪽으로",
+   "url": "https://hwbusters.com/news/team-group-posts-a-record-quarter-then-warns-the-memory-shortage-wont-ease-before-2028/",
+   "original": "Samsung, SK hynix and Micron are pouring wafer capacity into HBM and high-end DDR5 for AI servers"
+  }
+ ]
+}

@@ -1,0 +1,91 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "만약에",
+ "date": "2026-11-11",
+ "slug": "yamamoto-knew-america",
+ "radar_origin": "Big Think: How America helped shape the man who attacked Pearl Harbor",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/flagged/photo-1554131297-39877b87bddf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8YmF0dGxlc2hpcHxlbnwwfDB8fHwxNzk0MzMwOTI1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "C57lmA3a5zY",
+  "credit": "Unsplash / Thomas Park"
+ },
+ "sources": [
+  {
+   "name": "위키백과 영어판",
+   "title": "Isoroku Yamamoto",
+   "url": "https://en.wikipedia.org/wiki/Isoroku_Yamamoto"
+  },
+  {
+   "name": "히스토리 이즈 나우 매거진",
+   "title": "The Man Who Attacked Pearl Harbor: One Nation's Enemy, Another Nation's Hero",
+   "url": "https://www.historyisnowmagazine.com/blog/2014/7/5/the-man-who-attacked-pearl-harbor-one-nations-enemy-another-nations-hero"
+  }
+ ],
+ "tags": [
+  "야마모토이소로쿠",
+  "진주만",
+  "역사"
+ ],
+ "ko": {
+  "title": "반대하던 사람이 계획을 맡을 때, 야마모토의 6개월 계산",
+  "title_candidates": [
+   "반대하던 사람이 계획을 맡을 때, 야마모토의 6개월 계산",
+   "미국을 잘 아는 제독은 왜 진주만 작전을 짰을까",
+   "야마모토의 6개월 계산, 진주만 작전은 어떻게 나왔을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "미국을 가장 가까이서 본 일본 제독이 미국과의 전쟁을 가장 두려워했습니다.\n그런데 진주만 공격 계획을 짠 사람도 바로 그 제독, 야마모토 이소로쿠입니다.\n전쟁을 말리던 사람이 왜 가장 대담한 작전을 설계했을까요?"
+   },
+   {
+    "heading": "야마모토는 워싱턴에서 무엇을 봤을까",
+    "body": "위키백과 영어판에 따르면 야마모토는 워싱턴에서 해군 무관으로 두 차례 근무했습니다.\n1919년부터 1921년까지는 하버드 대학 유학과 겹쳤고, 1926년부터 1928년까지가 두 번째였습니다.\n히스토리 이즈 나우 매거진은 이 시절에 그가 미국의 생산력과 보급 능력을 이해하게 됐다고 설명합니다.\n책으로 읽은 미국이 아니라, 공장과 석유와 사람을 직접 눈으로 본 미국이었습니다."
+   },
+   {
+    "heading": "동맹에 반대한 군인",
+    "body": "야마모토는 일본 군부가 밀어붙인 길에 줄곧 반대했습니다. 1931년 중국 북동부 침공과 1937년 전면전에도 반대했습니다.\n1940년 독일·이탈리아와 맺은 삼국동맹도 그가 반대한 일이었습니다.\n이유는 분명했습니다. 이 동맹이 거의 틀림없이 미국과의 전면 충돌로 이어질 것이라고 보았기 때문입니다.\n그 반대 때문에 암살 위협까지 받았다고 위키백과는 적습니다."
+   },
+   {
+    "heading": "총리 앞에서 한 계산",
+    "body": "공격을 몇 달 앞두고 고노에 후미마로 총리가 미국과 싸우면 어떻게 되겠느냐고 묻자, 야마모토는 이렇게 답했다고 위키백과가 전합니다.\n“싸우라고 명령하시면 첫 6개월에서 1년은 마음껏 날뛰어 보이겠습니다. 그러나 2년째, 3년째에는 전혀 자신이 없습니다.”\n이기겠다는 약속이 아니라 이길 수 있는 기간을 못 박은 말이었습니다.\n그는 그 짧은 기간 안에 결정적 타격을 주는 길로 기습을 택했습니다."
+   },
+   {
+    "heading": "시작은 쉽고 끝은 어렵습니다",
+    "body": "히스토리 이즈 나우 매거진이 인용한 군사 격언은 이렇습니다. 전쟁은 시작하기보다 끝내기가 어렵다는 것입니다.\n야마모토는 미국의 생산력을 경고했지만, 그 경고는 나약하고 애국심 없는 소리로 받아들여졌다고 같은 글은 적습니다.\n미국을 아는 사람의 숫자는 정책이 되지 못했고, 남은 선택지는 가장 짧은 시간 안에 가장 큰 도박을 거는 일이었습니다."
+   },
+   {
+    "heading": "우리가 가져갈 질문",
+    "body": "전문가의 경고가 결정을 바꾸지 못하면, 그 전문가는 경고와 함께 계획까지 맡게 되기도 합니다.\n여러분이 속한 조직에서는 반대하던 사람이 결국 실행 책임자가 되는 일이 없습니까?\n그때 필요한 것은 더 큰 자신감일까요, 처음 계산을 끝까지 기억하는 일일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1919년부터 1921년까지는 하버드 대학 유학과 겹쳤고, 1926년부터 1928년까지",
+   "url": "https://en.wikipedia.org/wiki/Isoroku_Yamamoto",
+   "original": "his two postings as a naval attaché (1919-1921, concurrent with studying at Harvard; and 1926-1928) in Washington, D.C."
+  },
+  {
+   "claim": "1931년 중국 북동부 침공과 1937년 전면전에도 반대했습니다",
+   "url": "https://en.wikipedia.org/wiki/Isoroku_Yamamoto",
+   "original": "Yamamoto opposed the Japanese invasion of northeast China in 1931, the subsequent full-scale land war with China in 1937, and the Tripartite Pact with Nazi Germany and Fascist Italy in 1940."
+  },
+  {
+   "claim": "1940년 독일·이탈리아와 맺은 삼국동맹",
+   "url": "https://en.wikipedia.org/wiki/Isoroku_Yamamoto",
+   "original": "Yamamoto opposed the Japanese invasion of northeast China in 1931, the subsequent full-scale land war with China in 1937, and the Tripartite Pact with Nazi Germany and Fascist Italy in 1940."
+  },
+  {
+   "claim": "싸우라고 명령하시면 첫 6개월에서 1년은 마음껏 날뛰어 보이겠습니다",
+   "url": "https://en.wikipedia.org/wiki/Isoroku_Yamamoto",
+   "original": "I shall run wild considerably for the first six months or a year"
+  },
+  {
+   "claim": "그러나 2년째, 3년째에는 전혀 자신이 없습니다",
+   "url": "https://en.wikipedia.org/wiki/Isoroku_Yamamoto",
+   "original": "but I have utterly no confidence for the second and third years"
+  }
+ ]
+}
