@@ -1,0 +1,177 @@
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/base.py:716: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={'Surprise (%)': 'Surprise(%)'}, inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  quotes.sort_index(inplace=True)
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/utils.py:514: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.drop(
+/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/yfinance/utils.py:518: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={
+[밸류에이션] KR · 2026-11-10 · FWD PER 중앙값 12.3
+  (목표가까지 = 목표주가가 지금 주가보다 몇 % 높은가 · 주가 위치 = 지금 주가가 목표주가보다 몇 % 낮은가 — 둘은 다른 숫자)
+  (FWD PER·목표가는 야후 — 기준 연도가 달라 한국 증권 앱과 다르다. 글에는 오른쪽 네이버 추정PER(올해 예상 이익)·네이버 컨센서스 목표가를 쓰고 출처를 '네이버 금융 컨센서스'로 밝힌다)
+  종목            FWD PER      목표가까지      주가 위치     52주고점 대비    애널 네이버추정PER   네이버목표가까지
+  SK하이닉스            2.3    +158.0%     -61.2%       -59.4%    39      3.4    +152.0%
+  삼성전자              2.6    +139.1%     -58.2%       -46.9%    35      4.3    +137.5%
+  기아                4.8     +74.9%     -42.8%       -54.8%    30      5.4     +68.0%
+  신한지주              6.4     +52.2%     -34.3%       -26.6%    22      7.0     +56.4%
+  현대차               6.5     +92.6%     -48.1%       -64.9%    31      8.2     +91.1%
+  KB금융              7.6     +40.5%     -28.8%       -21.5%    22      8.2     +43.2%
+  HD현대중공업           7.9    +132.2%     -56.9%       -65.0%    22      9.9    +126.0%
+  삼성생명              8.6     +60.7%     -37.8%       -52.7%    17     14.2     +61.9%
+  에이피알             12.2     +87.3%     -46.6%       -47.2%    27     17.2     +83.4%
+  한화에어로스페이스        12.3     +98.2%     -49.5%       -60.2%    21     19.5     +98.5%
+  네이버              13.7     +48.5%     -32.7%       -36.5%    26     15.7     +65.6%
+  카카오              17.8     +37.5%     -27.3%       -51.9%    25     27.6     +43.4%
+  삼성전기             17.9    +175.2%     -63.7%       -63.5%    27     39.5    +173.4%
+  셀트리온             25.9     +35.6%     -26.3%       -15.1%    22     33.6     +41.8%
+  삼성바이오로직스         31.6     +28.0%     -21.9%       -26.1%    27     37.1     +32.6%
+  알테오젠             32.3    +111.8%     -52.8%       -59.7%     6     45.4    +159.0%
+  한미반도체            38.2     +31.0%     -23.7%       -59.3%     7        -     +44.2%
+  LG에너지솔루션         46.3     +46.2%     -31.6%       -33.6%    30    -76.8     +56.5%
+  두산에너빌리티          49.4    +139.6%     -58.3%       -66.3%    21    108.4    +116.4%
+  (추정치 없음: 에코프로비엠, 레인보우로보틱스)
+
+[의견 변경] KR · 최근 7일 · 상향 0 하향 0 (의견 유지 0건은 뺐습니다)
+  야후는 한국 증권사 의견을 거의 주지 않습니다 — 0건은 '변경이 없었다'가 아니라 '자료가 없다'입니다(감사 F-106). 한국 목표가 변경은 뉴스·증권사 리포트에서 찾으십시오.
+
+[실적 일정] KR · 앞으로 21일
+  D-2   2026-11-12  삼성생명  (시각 미정)
+  D-2   2026-11-12  네이버  (시각 미정)
+
+[한국 내부자 매수] 최근 7일 · 공시 15건을 열어 장내매수 14건
+  ※ 목록에서 15건만 나왔습니다(요청 40건) — 그 기간 공시가 그만큼이거나 목록 형식이 바뀐 것입니다.
+  변동 2026-11-03 (공시 2026-11-10) 인성정보             99,814,664원  에스넷 (95,243주 @ 1,048)
+  변동 2026-11-04 (공시 2026-11-10) 인성정보             96,508,088원  에스넷 (87,496주 @ 1,103)
+  변동 2026-11-06 (공시 2026-11-10) 인성정보             61,051,355원  에스넷 (56,165주 @ 1,087)
+  변동 2026-11-10 (공시 2026-11-10) 인성정보             31,668,448원  에스넷 (30,568주 @ 1,036)
+  변동 2026-11-10 (공시 2026-11-10) 남성               14,762,177원  윤종호 (2,789주 @ 5,293)
+  변동 2026-11-10 (공시 2026-11-10) 메가터치             13,920,000원  이은주 (2,000주 @ 6,960)
+  변동 2026-11-10 (공시 2026-11-10) 남성               12,052,000원  윤성호 (2,300주 @ 5,240)
+  변동 2026-11-10 (공시 2026-11-10) 남성                9,505,360원  윤성호 (1,814주 @ 5,240)
+  변동 2026-11-09 (공시 2026-11-10) 제로투세븐             8,965,000원  권석중 (5,000주 @ 1,793)
+  변동 2026-11-05 (공시 2026-11-10) 인성정보              8,856,000원  에스넷 (8,000주 @ 1,107)
+  변동 2026-11-09 (공시 2026-11-10) 제로투세븐             8,855,000원  김광웅 (5,000주 @ 1,771)
+  변동 2026-11-10 (공시 2026-11-10) 더네이쳐홀딩스           8,700,000원  박영준 (1,500주 @ 5,800)
+  변동 2026-11-10 (공시 2026-11-10) 남성                6,331,200원  윤종호 (1,200주 @ 5,276)
+  변동 2026-11-10 (공시 2026-11-10) 더네이쳐홀딩스           2,033,500원  안재우 (350주 @ 5,810)
+  ★ = 우리 코어 워치리스트 종목
+  장내매수만 담았습니다. 상속·증여·대여주식상환·스톡옵션 행사는 본인이 값을 치르고 산 것이 아니라 신호가 되지 않습니다.
+
+[업종 등락] 2026-11-10 · 업종 79개
+  오른 쪽
+    항공사             +12.92%    9종목 중 상승   8 / 하락   0
+    전기장비             +9.68%   35종목 중 상승  31 / 하락   1
+    통신장비             +7.51%   55종목 중 상승  47 / 하락   3
+    건설               +7.13%   76종목 중 상승  61 / 하락   6
+    기계               +6.87%  106종목 중 상승  90 / 하락   8
+    화학               +6.46%  122종목 중 상승  93 / 하락  22
+    IT서비스            +6.10%  119종목 중 상승  95 / 하락  20
+    전기제품             +5.72%   68종목 중 상승  56 / 하락   6
+  내린 쪽
+    복합유틸리티           -5.69%    1종목 중 상승   0 / 하락   1
+    담배               -3.29%    1종목 중 상승   0 / 하락   1
+    음료               -3.16%   16종목 중 상승   8 / 하락   7
+    다각화된통신서비스        -2.63%    3종목 중 상승   2 / 하락   1
+    방송과엔터테인먼트        -1.48%   58종목 중 상승  34 / 하락  17
+    게임엔터테인먼트         -0.97%   34종목 중 상승  20 / 하락   8
+    카드               -0.84%    1종목 중 상승   0 / 하락   1
+    제약               -0.63%  174종목 중 상승 129 / 하락  32
+  업종 등락률만 보지 말고 그 안에서 몇 종목이 올랐는지 함께 보십시오. 한 종목이 끌어올린 업종과 여럿이 함께 오른 업종은 다릅니다.
+
+[미 거시] 최근 90일
+  미 10년물 국채금리           4.86  [2026-11-06 기준]  (+0.18) 기간 최저 4.63(2026-08-13) 최고 5.31(2026-10-05)
+  미 2년물 국채금리            4.51  [2026-11-06 기준]  (+0.31) 기간 최저 4.15(2026-08-13) 최고 4.92(2026-09-28)
+  장단기 금리차(10년-2년)       0.32  [2026-11-09 기준]  (-0.16) 기간 최저 0.20(2026-09-21) 최고 0.53(2026-08-17)
+  연방기금금리                3.88  [2026-10-01 기준]  (+0.25) 기간 최저 3.63(2026-08-01) 최고 3.88(2026-10-01)
+  미 소비자물가지수           336.30  [2026-09-01 기준]  (+2.17) 기간 최저 334.13(2026-08-01) 최고 336.30(2026-09-01)
+
+[한국은행 ECOS] 시장금리(일별) (817Y002, 주기 D)
+  20261109  CD(91일)                          3.36 연%  (+0.02)
+  20261109  CMA(수시형)                         2.45 연%  (+0.0)
+  20261109  CP(91일)                          3.87 연%  (+0.0)
+  20261106  KOFR(공시RFR)                      3.06 연%  (+0.015)
+  20261110  KORIBOR(12개월)                    3.96 연%  (-0.01)
+  20261110  KORIBOR(3개월)                     3.44 연%  (+0.0)
+  20261110  KORIBOR(6개월)                     3.83 연%  (-0.01)
+  20261109  MMF(7일)                          3.35 연%  (+0.0)
+  20261109  국고채(10년)                        3.863 연%  (+0.01)
+  20261109  국고채(1년)                         3.568 연%  (+0.017)
+  20261109  국고채(20년)                         3.98 연%  (+0.011)
+  20261109  국고채(2년)                         3.629 연%  (+0.028)
+  20261109  국고채(30년)                        3.977 연%  (+0.006)
+  20261109  국고채(3년)                         3.639 연%  (+0.026)
+
+[수급 엇갈림] 2026-11-10 · 반대 0종목 / 같은 방향 0종목
+
+[계절성] ^KS11 · 최근 20년
+   1월  평균  +0.80%  중앙  +1.34%  상승확률  55%  (n=20)
+   2월  평균  +1.13%  중앙  +1.20%  상승확률  65%  (n=20)
+   3월  평균  +0.74%  중앙  +1.89%  상승확률  65%  (n=20)
+   4월  평균  +4.26%  중앙  +2.86%  상승확률  70%  (n=20)
+   5월  평균  +1.86%  중앙  +1.57%  상승확률  55%  (n=20)
+   6월  평균  +0.04%  중앙  +0.18%  상승확률  55%  (n=20)
+   7월  평균  +0.98%  중앙  +1.94%  상승확률  65%  (n=20)
+   8월  평균  -1.35%  중앙  -0.65%  상승확률  40%  (n=20)
+   9월  평균  +0.39%  중앙  +0.66%  상승확률  65%  (n=20)
+  10월  평균  -1.47%  중앙  -1.58%  상승확률  45%  (n=20)
+  11월  평균  +0.38%  중앙  -1.23%  상승확률  47%  (n=19)  ←이번 달
+  12월  평균  +1.89%  중앙  +2.17%  상승확률  53%  (n=19)
+
