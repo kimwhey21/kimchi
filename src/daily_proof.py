@@ -68,15 +68,16 @@ MAC_JOBS = {"naver_sync": 30, "gsc_queries": "10:30",
             "daily_summary": "22:30", "bench_nightly": "23:10"}
 # 쉬게 한 루틴 — 이 기간에는 그 원고를 기다리지 않는다(2026-10-06 결정: 한국어 글이 나갈 곳이 없는 동안).
 # 기간이 지나도 루틴을 다시 켜지 않았으면 증명서·원고 감시가 다시 '없음'을 알린다 — 그것이 다시 정하라는 신호다.
-# 그만둔 루틴 — 기다리지 않는다(2026-10-13 한국어 가이드 중단: 시황 블로그의 하루 한 편을 다른 글로 바꾸기로).
-STOPPED_ARTIFACTS = {"한국어 가이드": dt.date(2026, 10, 14)}   # 이 날부터 기다리지 않는다
+# 그만둔 루틴 — 그 기간에는 기다리지 않는다(2026-10-13 한국어 가이드 중단: 시황 블로그의 하루 한 편을 다른 글로 바꾸기로;
+# 2026-11-07부터 다시 돈다 — 매일 13:00, 칼럼과 함께 하루 두 편).
+STOPPED_ARTIFACTS = {"한국어 가이드": (dt.date(2026, 10, 14), dt.date(2026, 11, 6))}   # (처음, 끝) — 끝 다음 날부터 다시 기다린다
 COLUMN_FROM = dt.date(2026, 10, 14)
 COLUMN_DAILY_FROM = dt.date(2026, 10, 17)   # 이 날부터 칼럼은 주말·휴장일에도 돈다(매일 20:00)
 EN_GUIDE_TWICE_FROM = dt.date(2026, 10, 15)   # 영어 가이드가 주 2편(화·금)이 된 뒤 — 그 밖의 요일은 기다리지 않는다
-EN_GUIDE_PAUSED = (dt.date(2026, 10, 25), dt.date(2026, 11, 8))   # 영어 가이드 루틴을 끄고 기존 세 편을 고쳐 색인을 잰다 — 11/8에 다시 정한다
+EN_GUIDE_PAUSED = (dt.date(2026, 10, 25), dt.date(2026, 12, 10))   # 영어 가이드 루틴을 끄고 기존 세 편을 고쳐 색인을 잰다 — 11/11 연장: 12/10에 다시 정한다
 EN_GUIDE_DAYS = (1, 4)                         # 화·금(월=0)   # 오늘의 한 편(칼럼) 루틴 첫 실행일 — 이 날부터 한국장이 열린 날마다 기다린다
 PAUSED_ARTIFACTS = ({"미국장 프리뷰", "주말 Checkpoint", "주간 결산", "다음 주 일정"},   # 한국어 가이드는 10/7 저녁 다시 켬(시황 블로그에 가이드만 올린다)
-                    dt.date(2026, 10, 7), dt.date(2026, 11, 8))   # 10/28 연장: 구글 색인 문제가 풀릴 때까지 보류 — 11/8 색인 측정 때 다시 정한다
+                    dt.date(2026, 10, 7), dt.date(2026, 12, 10))   # 10/28·11/11 연장: 구글 색인 문제가 풀릴 때까지 보류 — 12/10에 다시 정한다
 MAC_WEEKLY = {"threads_refresh": (6, "21:30"), "search_snapshot": (6, "22:00")}   # 월요일 네이버 전수 점검은 10/8 내렸다   # (weekday, 시각)
 
 
@@ -259,7 +260,7 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
     names, start, end = PAUSED_ARTIFACTS
     if start <= day <= end:
         out = [row for row in out if row[0] not in names]
-    out = [row for row in out if not (row[0] in STOPPED_ARTIFACTS and day >= STOPPED_ARTIFACTS[row[0]])]
+    out = [row for row in out if not (row[0] in STOPPED_ARTIFACTS and STOPPED_ARTIFACTS[row[0]][0] <= day <= STOPPED_ARTIFACTS[row[0]][1])]
     if EN_GUIDE_PAUSED[0] <= day <= EN_GUIDE_PAUSED[1]:
         out = [row for row in out if row[0] != "영어 가이드"]
     if now is not None and now.date() == day:

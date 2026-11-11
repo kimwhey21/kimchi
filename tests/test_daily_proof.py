@@ -161,8 +161,11 @@ class ExpectedArtifactsTest(unittest.TestCase):
         self.assertIn("영어 가이드", sat); self.assertIn("잡지 3편", sat)
         wed = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 21), set(), root)]
         self.assertNotIn("미국장 프리뷰", wed); self.assertNotIn("한국어 가이드", wed)   # 10/21 — 연장된 쉬는 기간, 가이드는 그만둔 뒤
-        after = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 11, 10), set(), root)]
-        self.assertIn("미국장 프리뷰", after)   # 11/10 — 기간이 끝나면 다시 기다린다
+        still = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 11, 11), set(), root)]
+        self.assertNotIn("미국장 프리뷰", still)   # 11/11 — 12/10까지 연장된 쉬는 기간
+        self.assertIn("한국어 가이드", still)   # 11/7부터 가이드가 다시 돈다 — 다시 기다린다
+        after = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 12, 14), set(), root)]
+        self.assertIn("미국장 프리뷰", after)   # 12/14 — 기간이 끝나면 다시 기다린다
 
     @mock.patch.object(daily_proof, "PAUSED_ARTIFACTS", (set(), dt.date(2000, 1, 1), dt.date(2000, 1, 1)))
     def test_holiday_and_weekend(self) -> None:
@@ -177,6 +180,7 @@ class ExpectedArtifactsTest(unittest.TestCase):
         mon = [n for n, _, _ in daily_proof.expected_artifacts(dt.date(2026, 10, 12), set(), root)]
         self.assertIn("주간 점검", mon)
 
+    @mock.patch.object(daily_proof, "PAUSED_ARTIFACTS", (set(), dt.date(2000, 1, 1), dt.date(2000, 1, 1)))   # 휴장일 규칙만 본다(쉬는 기간과 무관)
     def test_us_holiday_expects_no_us_pieces(self) -> None:
         """추수감사절(11/26 목): 그날 밤 프리뷰도, 다음 날 아침 미국장 시세·시황도 기대하지 않는다."""
         root = self._root([])
