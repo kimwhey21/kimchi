@@ -1,0 +1,206 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-12",
+ "slug": "pension-index-korea-grade-c",
+ "radar_origin": "Visual Capitalist: Ranked: Countries With the Best Pensions in 2026",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1631511258193-252ab3da6b8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8bW9uZXklMjBjYWxjdWxhdG9yfGVufDB8MHx8fDE3OTQ0MTcxMTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "X4VwfPzy_2o",
+  "credit": "Unsplash"
+ },
+ "sources": [
+  {
+   "name": "머서(마시) CFA 협회 글로벌 연금 지수",
+   "title": "Marsh CFA Institute Global Pension Index 2026",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/"
+  },
+  {
+   "name": "CIO",
+   "title": "Netherlands, Iceland, Denmark Named World's Best Pension Systems (2025 index)",
+   "url": "https://www.ai-cio.com/news/netherlands-iceland-denmark-named-worlds-best-pension-systems/"
+  },
+  {
+   "name": "뉴시스",
+   "title": "'더 내고 더 받는' 국민연금 개정안 국회 통과…18년 만에 연금개혁",
+   "url": "https://www.newsis.com/view/NISX20250320_0003106817"
+  },
+  {
+   "name": "데일리안",
+   "title": "더 내고 더 받는 연금개혁…보험료율 13%·소득대체율 43%로 [국민연금 해부①]",
+   "url": "https://www.dailian.co.kr/news/view/1645616/%EB%8D%94-%EB%82%B4%EA%B3%A0-%EB%B0%9B%EB%8A%94-%EC%97%B0%EA%B8%88%EA%B0%9C%ED%98%81%EB%B3%B4%ED%97%98%EB%A3%8C%EC%9C%A8-13%EC%86%8C-2026"
+  }
+ ],
+ "tags": [
+  "글로벌연금지수",
+  "국민연금",
+  "연금개혁"
+ ],
+ "ko": {
+  "title": "연금 점수 세계 1위와 한국, 볼 것 세 가지",
+  "title_candidates": [
+   "연금 점수 세계 1위와 한국, 볼 것 세 가지",
+   "국민연금 개혁 뒤에도 한국이 C등급인 이유",
+   "연금 세계 1위 네덜란드와 한국, 점수는 얼마나 벌어졌을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "세계에서 연금이 가장 낫다는 나라는 85.8점이고, 한국은 56.4점입니다.\n한국은 지난해 연금개혁까지 했는데도 점수표에서는 여전히 C등급입니다.\n연금 제도에 성적을 매긴다는 것은 무슨 뜻일까요? 읽을 것은 셋입니다. 점수가 무엇을 재는지, 한국이 무엇을 바꿨는지, 점수가 말해 주지 못하는 것입니다."
+   },
+   {
+    "heading": "연금에도 성적표가 있습니다",
+    "body": "마시 CFA협회 글로벌 연금 지수는 55개 나라의 연금 제도를 한 줄로 세운 분석입니다. 올해로 18번째입니다.\n제도 하나를 50개가 넘는 지표로 평가하고, 점수를 A부터 E까지 등급으로 나눕니다.\n올해 지수를 낸 마시는 제도가 고령화로 어떤 압력을 받는지를 올해의 주제로 잡았습니다."
+   },
+   {
+    "heading": "점수는 세 가지를 합쳐 나옵니다",
+    "body": "CIO가 정리한 2025년 지수 설명을 보면 점수는 세 부분으로 나뉩니다. 노후에 충분히 받는지를 보는 충분성이 40%입니다.\n제도가 오래 버틸 수 있는지를 보는 지속가능성은 35%이고, 인구 구조·경제 성장·정부 부채·가입 범위 같은 지표가 들어갑니다.\n나머지 25%는 운영이 믿을 만한지를 보는 건전성입니다.\nCFA협회 최고경영자 마거릿 프랭클린은 같은 지수를 발표하며 이렇게 말했습니다.\n“세금 정책에서 투자 의무에 이르기까지 규제와 정부 조치는 연금 기금이 자본을 어떻게 배분할 수 있는지를 크게 좌우합니다.”"
+   },
+   {
+    "heading": "1위부터 한국까지는 어느 정도 거리일까",
+    "body": "올해 지수에서 네덜란드는 A등급 85.8점, 덴마크는 84.1점입니다.\n싱가포르는 82.0점, 호주는 80.6점으로 A등급에 들었습니다.\n한국은 C등급 56.4점입니다. 일본은 58.0점, 중국은 60.6점이고 홍콩은 71.2점으로 B등급입니다.\n한국의 점수는 지난해보다 올랐지만, A등급과는 30점 가까이 벌어져 있습니다."
+   },
+   {
+    "heading": "한국은 지난해 무엇을 바꿨을까",
+    "body": "뉴시스에 따르면 여야는 2025년 3월 보험료율 13%, 소득대체율 43%를 골자로 하는 국민연금법 개정안을 의결했습니다.\n개정안에 따라 보험료율은 현행 9%에서 13%로 오르고, 기준 41.5%인 소득대체율은 2026년부터 43%가 됩니다.\n데일리안은 보험료율이 해마다 0.5%포인트씩 올라 2033년 13%가 된다고 정리했습니다."
+   },
+   {
+    "heading": "숫자가 말하지 않는 것은 무엇일까",
+    "body": "국민연금은 1988년 보험료율 3%, 소득대체율 70%로 출발했습니다. 이후 개혁을 거치며 소득대체율은 40%까지 낮아졌습니다.\n데일리안은 이전 체계에서는 2041년 수지 적자 전환, 2056년 기금 소진이 예상됐다고 전했습니다.\n등급표는 이런 장기 곡선 가운데 한 해의 단면입니다. 그래서 한국의 점수가 올랐다는 사실은 방향을 알려 주지만, 도착점을 알려 주지는 않습니다.\n더 내고 더 받는 개혁 뒤에도 점수는 C에 머물러 있습니다. 여러분은 노후를 책임지는 몫을 제도와 개인 중 어느 쪽에 더 두고 계십니까?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "세계에서 연금이 가장 낫다는 나라는 85.8점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "Netherlands A (85.8 ▲)"
+  },
+  {
+   "claim": "한국은 56.4점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "Korea (South) C (56.4 ▲)"
+  },
+  {
+   "claim": "55개 나라의 연금 제도",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "An analysis of 55 pension systems around the world"
+  },
+  {
+   "claim": "올해로 18번째",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "An analysis of 55 pension systems around the world"
+  },
+  {
+   "claim": "50개가 넘는 지표",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "The report evaluates each system across more than 50 indicators"
+  },
+  {
+   "claim": "충분성이 40%",
+   "url": "https://www.ai-cio.com/news/netherlands-iceland-denmark-named-worlds-best-pension-systems/",
+   "original": "Adequacy (40% weight):"
+  },
+  {
+   "claim": "지속가능성은 35%",
+   "url": "https://www.ai-cio.com/news/netherlands-iceland-denmark-named-worlds-best-pension-systems/",
+   "original": "Sustainability (35% weight): demographics; economic growth; government debt; pension coverage; public expenditure; and total assets; and"
+  },
+  {
+   "claim": "나머지 25%",
+   "url": "https://www.ai-cio.com/news/netherlands-iceland-denmark-named-worlds-best-pension-systems/",
+   "original": "and integrity (25% weight):"
+  },
+  {
+   "claim": "네덜란드는 A등급 85.8점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "Netherlands A (85.8 ▲)"
+  },
+  {
+   "claim": "싱가포르는 82.0점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "Singapore A (82.0 ▲)"
+  },
+  {
+   "claim": "호주는 80.6점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "Australia A (80.6 ▲)"
+  },
+  {
+   "claim": "한국은 C등급 56.4점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "Korea (South) C (56.4 ▲)"
+  },
+  {
+   "claim": "A등급과는 30점 가까이",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "Netherlands A (85.8 ▲)"
+  },
+  {
+   "claim": "보험료율 13%, 소득대체율 43%",
+   "url": "https://www.newsis.com/view/NISX20250320_0003106817",
+   "original": "여야는 이날 오후 서울 여의도 국회에서 본회의를 열고 '보험료율(내는 돈) 13%·소득대체율(받는 돈) 43%'를 골자로 하는 국민연금법 일부개정안을 재석 277명 중 찬성 193명, 반대 40명, 기권 44명으로 의결했다."
+  },
+  {
+   "claim": "보험료율은 현행 9%에서 13%로",
+   "url": "https://www.newsis.com/view/NISX20250320_0003106817",
+   "original": "개정안에 따라 연금개혁의 한 축인 모수개혁 중 보험료율이 현행 9%에서 13%로 오른다."
+  },
+  {
+   "claim": "기준 41.5%인 소득대체율은 2026년부터 43%",
+   "url": "https://www.newsis.com/view/NISX20250320_0003106817",
+   "original": "올해 기준 41.5%인 소득대체율 역시 2026년부터 43%로 오른다."
+  },
+  {
+   "claim": "해마다 0.5%포인트씩 올라 2033년 13%",
+   "url": "https://www.dailian.co.kr/news/view/1645616/%EB%8D%94-%EB%82%B4%EA%B3%A0-%EB%B0%9B%EB%8A%94-%EC%97%B0%EA%B8%88%EA%B0%9C%ED%98%81%EB%B3%B4%ED%97%98%EB%A3%8C%EC%9C%A8-13%EC%86%8C-2026",
+   "original": "앞으로 매년 0.5%p씩 인상돼 2033년 13%가 된다."
+  },
+  {
+   "claim": "1988년 보험료율 3%, 소득대체율 70%",
+   "url": "https://www.dailian.co.kr/news/view/1645616/%EB%8D%94-%EB%82%B4%EA%B3%A0-%EB%B0%9B%EB%8A%94-%EC%97%B0%EA%B8%88%EA%B0%9C%ED%98%81%EB%B3%B4%ED%97%98%EB%A3%8C%EC%9C%A8-13%EC%86%8C-2026",
+   "original": "국민연금은 1988년 보험료율 3%, 소득대체율 70%로 출발했다."
+  },
+  {
+   "claim": "소득대체율은 40%까지",
+   "url": "https://www.dailian.co.kr/news/view/1645616/%EB%8D%94-%EB%82%B4%EA%B3%A0-%EB%B0%9B%EB%8A%94-%EC%97%B0%EA%B8%88%EA%B0%9C%ED%98%81%EB%B3%B4%ED%97%98%EB%A3%8C%EC%9C%A8-13%EC%86%8C-2026",
+   "original": "2007년 2차 개혁에서는 소득대체율을 50%로 즉시 낮춘 뒤 40%까지 단계적으로 인하하는 구조를 만들었다."
+  },
+  {
+   "claim": "2041년 수지 적자 전환, 2056년 기금 소진",
+   "url": "https://www.dailian.co.kr/news/view/1645616/%EB%8D%94-%EB%82%B4%EA%B3%A0-%EB%B0%9B%EB%8A%94-%EC%97%B0%EA%B8%88%EA%B0%9C%ED%98%81%EB%B3%B4%ED%97%98%EB%A3%8C%EC%9C%A8-13%EC%86%8C-2026",
+   "original": "보험료율 9%와 소득대체율 40% 체계 아래서는 2041년 수지적자 전환, 2056년 기금 소진이 예상됐다."
+  },
+  {
+   "claim": "덴마크는 84.1점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "Denmark A (84.1 ▲) Finland B+ (77.6 ▲)"
+  },
+  {
+   "claim": "일본은 58.0점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "Japan C (58.0 ▲) Korea (South) C (56.4 ▲)"
+  },
+  {
+   "claim": "중국은 60.6점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "China C+ (60.6 ▲) Hong Kong SAR B (71.2 ▲)"
+  },
+  {
+   "claim": "홍콩은 71.2점",
+   "url": "https://www.mercer.com/en-us/insights/investments/market-outlook-and-trends/mercer-cfa-global-pension-index/",
+   "original": "China C+ (60.6 ▲) Hong Kong SAR B (71.2 ▲)"
+  },
+  {
+   "claim": "점수는 세 부분으로 나뉩니다",
+   "url": "https://www.ai-cio.com/news/netherlands-iceland-denmark-named-worlds-best-pension-systems/",
+   "original": "Each country was scored according to three metrics, based on the characteristics listed:"
+  },
+  {
+   "claim": "규제와 정부 조치는 연금 기금이 자본을 어떻게 배분할 수 있는지를 크게 좌우합니다",
+   "url": "https://www.ai-cio.com/news/netherlands-iceland-denmark-named-worlds-best-pension-systems/",
+   "original": "Regulations and government actions — from tax policies to investment mandates — profoundly shape how pension funds can allocate capital"
+  }
+ ]
+}
