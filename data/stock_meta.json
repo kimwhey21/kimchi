@@ -6076,10 +6076,14 @@
 "web": "www.inveni.com"
 },
 "0153R0": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01835829",
+"en": "Baropharm Co., Ltd.",
+"founded": "2019",
+"industry": "Internet & information services",
+"ksic": "639",
+"name": "Baropharm",
+"pref": false,
+"web": "corp.baropharm.com/"
 },
 "015590": {
 "corp": "00108746",
