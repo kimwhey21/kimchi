@@ -1,12 +1,12 @@
 {
  "base": {
-  "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 1,
-  "작업 stock_db.yml (#): 실패": 1
- },
- "day": "2026-11-10",
- "issues": {
   "글 없음: 미국장 프리뷰 (editorial/previews/us_#json)": 2,
   "글 없음: 영어 가이드 (editorial/guides/en_* 오늘 커밋)": 1,
   "지수 대조 실패: HTTPSConnectionPool(host='ecos.bok.or.kr', port=#): Max retries exceeded with url: /api/StatisticSearch/#MZG#UTHRWHL#VOSEA/json/kr": 1
+ },
+ "day": "2026-11-11",
+ "issues": {
+  "글 없음: 한국어 가이드 (editorial/guides/ko_* 오늘 커밋)": 1,
+  "작업 publish_check.yml (#): 실패": 1
  }
 }
