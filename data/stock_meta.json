@@ -27656,10 +27656,14 @@
 "web": "www.gfi-aegis.com"
 },
 "493410": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01863318",
+"en": "NEX-I, Inc.",
+"founded": "2021",
+"industry": "Research & development",
+"ksic": "70113",
+"name": "NEX-I",
+"pref": false,
+"web": "nex-i.co.kr/"
 },
 "493790": {
 "corp": "01872219",
