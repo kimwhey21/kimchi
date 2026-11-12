@@ -1,0 +1,91 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-13",
+ "slug": "treasuries-lose-haven-korea-bottom",
+ "radar_origin": "Treasuries lose their haven status",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1462045504115-6c1d931f07d1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8YmFuayUyMHZhdWx0fGVufDB8MHx8fDE3OTQ1MDM2Mjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "Uf-c4u1usFQ",
+  "credit": "Unsplash"
+ },
+ "sources": [
+  {
+   "name": "요아힘 클레멘트",
+   "title": "Treasuries lose their haven status (2026-11-11)",
+   "url": "https://klementoninvesting.substack.com/p/treasuries-lose-their-haven-status"
+  },
+  {
+   "name": "프랑스 중앙은행(Banque de France) 연구 보고서",
+   "title": "Have U.S. Treasuries Lost Their Momentum? Evidence From a New Taxonomy of Safe Assets",
+   "url": "https://econpapers.repec.org/RePEc:bfr:banfra:1049"
+  }
+ ],
+ "tags": [
+  "미국국채",
+  "안전자산",
+  "한국국채"
+ ],
+ "ko": {
+  "title": "미국 국채는 아직 안전자산일까, 믿을 건 달러뿐일까",
+  "title_candidates": [
+   "위기 때 찾는 미국 국채, 왜 한국 국채는 꼴찌권일까",
+   "안전자산 순위에서 미국 국채가 밀려난 이유",
+   "미국 국채는 아직 안전자산일까, 믿을 건 달러뿐일까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "위기가 오면 사람들은 미국 국채부터 산다고들 합니다. 그런데 이번 연구의 순위표에서 그 국채는 왕좌에 없었습니다.\n스웨덴과 노르웨이 국채가 앞섰고, 맨 아래쪽에는 프랑스와 한국, 벨기에 국채가 있었습니다.\n안전자산이란 이름은 누가 붙여 주는 걸까요, 아니면 위기가 올 때마다 새로 가려지는 걸까요?"
+   },
+   {
+    "heading": "순위는 위기 때 움직임으로 매겼습니다",
+    "body": "프랑스 중앙은행 연구진은 시장이 크게 불안했던 시기에 자산들이 어떻게 움직였는지 상관관계를 쟀습니다.\n대상은 정부 채권과 회사채, 통화, 그리고 금·은·원유·비트코인 같은 대체자산입니다.\n투자 전문가 요아힘 클레멘트는 자신의 블로그에서 이 연구를 풀어 소개했습니다.\n금은 안전자산 성격이 있었지만 대부분의 정부 채권이나 달러보다는 한참 아래였고, 비트코인·원유·은에는 그런 성격이 없었습니다."
+   },
+   {
+    "heading": "달러는 맨 위, 국채는 뒤로",
+    "body": "클레멘트는 지난 3월 이미 국채가 흔들린다고 썼습니다.\n“투자자들은 미국 국채와 그 국채를 찍어 내는 정부에 대한 신뢰를 점점 잃고 있지만, 달러에 대한 믿음은 그대로 지키고 있다.”\n이번 연구는 그 감각에 숫자를 붙였습니다. 연구가 나눈 갈래는 이렇습니다.\n“미국 달러가 가장 뚜렷한 안전자산 성격을 가진 자산으로 맨 위에 있지만, 미국 국채는 글로벌 금융위기 때와 이후처럼 점점 뒤처지고 있다.”\n같은 미국 자산인데도 위기에 움직이는 방향이 달랐다는 이야기입니다."
+   },
+   {
+    "heading": "빚이 적을수록 안전했는데 미국만 예외였습니다",
+    "body": "클레멘트가 정리한 순위의 흐름은 단순합니다. 나라의 빚이 적을수록 그 나라 국채가 안전자산처럼 대접받았습니다.\n미국 국채는 이 규칙의 눈에 띄는 예외였습니다. 빚이 많은데도 오랫동안 안전자산 대접을 받아 왔다는 뜻입니다.\n스웨덴 국채가 미국 국채를 앞질렀고 노르웨이 국채가 그 뒤를 이었습니다.\n정부 채권 순위의 맨 아래쪽에는 프랑스, 한국, 벨기에 국채가 있었고, 클레멘트는 이들이 일본 회사채만큼만 안전자산처럼 움직인다고 적었습니다."
+   },
+   {
+    "heading": "반론은 논문 안에 이미 있었습니다",
+    "body": "프랑스 중앙은행 보고서의 요약은 결론을 한쪽으로만 기울이지 않습니다.\n연구진은 미국 국채를 포함한 주요 10개국(G10) 정부 채권이 전체 기간에는 가장 강한 안전자산 성격을 보였다고 정리합니다.\n코로나 이후 미국 국채가 약해진 것은 맞지만, 미국만의 추락이라기보다 세계 안전자산의 특성이 다시 짜이는 과정이라는 단서도 붙였습니다.\n“미국만의 하락이라기보다 전 세계 안전자산이 헤지 역할을 하는 방식이 재편된 결과다.”\n안전자산의 성격이 약해지는 조건으로는 높은 인플레이션, 높은 부채, 그리고 안전자산의 희소성을 꼽았습니다."
+   },
+   {
+    "heading": "한국 국채가 하위권이라는 말의 뜻",
+    "body": "한국 국채가 하위권에 있다는 말을 신용도가 낮다는 뜻으로 읽으면 안 됩니다.\n이 순위는 시장이 크게 흔들릴 때 그 채권이 안전자산답게 움직였는지를 잰 것이어서, 국가의 신용도 평가와는 다른 이야기입니다.\n그래도 연구가 던지는 질문은 한국 투자자에게 남습니다. 안전판이라고 믿는 자산이 위기에는 정말 안전판처럼 움직였을까요?\n지난 시장이 흔들린 날의 내 계좌를 열어, 믿던 자산이 어느 쪽으로 움직였는지 한 번 확인해 보면 어떨까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "지난 3월 이미 국채가 흔들린다고",
+   "url": "https://klementoninvesting.substack.com/p/treasuries-lose-their-haven-status",
+   "original": "In March, I wrote a post titled"
+  },
+  {
+   "claim": "투자자들은 미국 국채와 그 국채를 찍어 내는 정부에 대한 신뢰를 점점 잃고 있지만",
+   "url": "https://klementoninvesting.substack.com/p/treasuries-lose-their-haven-status",
+   "original": "investors are increasingly losing trust in the US Treasury and the paper it issues, but retain faith in the US dollar"
+  },
+  {
+   "claim": "미국 달러가 가장 뚜렷한 안전자산 성격을 가진 자산으로 맨 위에 있지만",
+   "url": "https://klementoninvesting.substack.com/p/treasuries-lose-their-haven-status",
+   "original": "while the US dollar remains on top as the asset with the most pronounced safe haven characteristics, Treasuries are increasingly falling behind, just like they did during and after the Global Financial Crisis"
+  },
+  {
+   "claim": "미국만의 하락이라기보다 전 세계 안전자산이 헤지 역할을 하는 방식이 재편된 결과다",
+   "url": "https://econpapers.repec.org/RePEc:bfr:banfra:1049",
+   "original": "although this reflects a broader reconfiguration of global safe-asset hedging properties rather than a uniquely U.S. decline"
+  },
+  {
+   "claim": "주요 10개국(G10) 정부 채권이 전체 기간에는",
+   "url": "https://econpapers.repec.org/RePEc:bfr:banfra:1049",
+   "original": "sovereign bonds issued by G10 economies, including U.S. Treasuries, consistently exhibit the strongest safe-haven behavior"
+  }
+ ]
+}

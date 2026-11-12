@@ -1,0 +1,112 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-13",
+ "slug": "el-nino-2026-health-preparation",
+ "radar_origin": "El Niño threatens health, too – early warnings done right can save lives",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1657069342866-2d11c2509b02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Zmxvb2RlZCUyMHN0cmVldHxlbnwwfDB8fHwxNzk0NTAzNTk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "eFzH4HGwcv4",
+  "credit": "Unsplash"
+ },
+ "sources": [
+  {
+   "name": "더 워처스(The Watchers)",
+   "title": "El Niño reaches 2.0°C on NOAA's index, a tenth of a degree behind 1997-98 (2026-11-10)",
+   "url": "https://watchers.news/2026/11/10/el-nino-2026-roni-2-0-behind-1997-record-forecast/"
+  },
+  {
+   "name": "더 컨버세이션(The Conversation)",
+   "title": "El Niño threatens health, too – early warnings done right can save lives (2026-11-12)",
+   "url": "https://theconversation.com/el-nino-threatens-health-too-early-warnings-done-right-can-save-lives-295379"
+  }
+ ],
+ "tags": [
+  "엘니뇨",
+  "기후와건강",
+  "재난대비"
+ ],
+ "ko": {
+  "title": "올겨울 엘니뇨, 지금 약 상자부터 열어 봐야 하는 이유",
+  "title_candidates": [
+   "올겨울 엘니뇨, 지금 약 상자부터 열어 봐야 하는 이유",
+   "역대급 엘니뇨, 약은 며칠 치가 집에 있을까",
+   "엘니뇨 정점 전에 집에서 확인할 것 세 가지"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "태평양 한복판의 바다가 데워지면, 먼 나라의 병원 가는 길이 끊깁니다.\n재난 모니터링 매체 더 워처스에 따르면 올해 엘니뇨 지수는 8~10월 평균 +2.0℃로, 1950년 기록을 시작한 뒤 같은 시기로는 두 번째로 높았습니다.\n이보다 높았던 해는 1997~98년뿐이고, 그 차이는 0.1℃였습니다.\n그렇다면 엘니뇨는 날씨 문제일까요, 병원 문제일까요?"
+   },
+   {
+    "heading": "역대 최강이 될지는 아직 정해지지 않았습니다",
+    "body": "미국 해양대기청(NOAA) 기후예측센터는 3개월 평균 지수가 +2.5℃ 이상이면 1950년 이후 가장 강한 엘니뇨로 봅니다.\n더 워처스가 전한 센터의 전망에서 10~12월에 그 선을 넘을 가능성은 83%였습니다.\n지수는 열대 바다 전체가 따뜻해진 효과를 빼고 계산한 것이어서, 요즘 엘니뇨가 옛 엘니뇨보다 세 보이는 착시를 줄입니다.\n올해가 1997~98년만큼만 더 오른다면 정점은 +2.18℃ 근처이고 기록에는 못 미칩니다.\n더 오를지 멈출지에 따라 올겨울의 이름이 달라집니다."
+   },
+   {
+    "heading": "마른 곳은 잠기고 젖은 곳은 마릅니다",
+    "body": "더 컨버세이션에 글을 쓴 메인대와 다트머스대 연구진은 엘니뇨 해에 지구 기온이 오르고 폭염이 잦아진다고 설명합니다.\n평소 건조하던 곳은 홍수가 나고, 평소 비가 많던 곳은 가뭄을 겪습니다.\n올 시즌 남부 아프리카는 가뭄이, 아프리카의 뿔 지역은 홍수와 모기 매개 질병이 걱정입니다. 동남아시아는 건조한 날씨가 산불을 키우고 있습니다.\n칠레 산티아고에서는 지난달 쏟아진 비로 산사태가 났습니다."
+   },
+   {
+    "heading": "홍수와 가뭄은 몸에도 옵니다",
+    "body": "물에 잠긴 거리는 감염병의 길이 됩니다. 연구진은 홍수가 간염, 크립토스포리디움증, 곰팡이 질환을 퍼뜨릴 수 있다고 짚었습니다.\n가뭄은 공기의 질을 떨어뜨리고 일부 지역에서는 영양실조를 낳습니다.\n세계보건기구(WHO)는 극단적 날씨의 후유증으로 불안과 외상후스트레스도 꼽습니다.\n무엇보다 병원에 닿는 길이 끊기는 것이 문제입니다. 미국에서만 약 250만 명이 전기로 돌아가는 가정용 의료기기에 기대고, 그중 7만 8,000명 가까이는 집에서 투석을 받습니다.\n농촌 주민은 가장 가까운 병원까지 평균 10.5마일(약 17㎞)을 가야 하고, 4명 중 1명은 길이 막히기 전에도 30분이 넘게 걸립니다."
+   },
+   {
+    "heading": "예보는 몇 달 앞서 옵니다",
+    "body": "엘니뇨의 신호는 몇 달 전에 잡힙니다. 연구진은 그 시간을 병원과 지자체가 쓰라고 말합니다.\n어디서 끊김이 응급으로 바뀔지 미리 찾고, 정기 진료나 이동 수단이 필요한 환자의 치료를 이어 가고, 안전한 물과 음식, 약 보관법, 이동·대피·정신건강 상담 연락처까지 담은 경보를 내자는 제안입니다.\n연구진은 이렇게 적었습니다.\n“쓸 수 있을 만큼 구체적이고 지역 사정에 맞는 정보는 사람을 살릴 수 있습니다.”\n우리 동네 하천이 넘치거나 도로가 막히는 날, 지금 집에 있는 약은 며칠 치일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "8~10월 평균 +2.0℃로, 1950년 기록을 시작한 뒤 같은 시기로는 두 번째로 높았습니다",
+   "url": "https://watchers.news/2026/11/10/el-nino-2026-roni-2-0-behind-1997-record-forecast/",
+   "original": "second-highest reading for that time of year since records began in 1950"
+  },
+  {
+   "claim": "1997~98년뿐이고, 그 차이는 0.1℃",
+   "url": "https://watchers.news/2026/11/10/el-nino-2026-roni-2-0-behind-1997-record-forecast/",
+   "original": "was higher at the same point, by a tenth of a degree"
+  },
+  {
+   "claim": "3개월 평균 지수가 +2.5℃ 이상",
+   "url": "https://watchers.news/2026/11/10/el-nino-2026-roni-2-0-behind-1997-record-forecast/",
+   "original": "three-month RONI of +2.5°C or more"
+  },
+  {
+   "claim": "10~12월에 그 선을 넘을 가능성은 83%",
+   "url": "https://watchers.news/2026/11/10/el-nino-2026-roni-2-0-behind-1997-record-forecast/",
+   "original": "It gave that outcome an 83% chance for October"
+  },
+  {
+   "claim": "정점은 +2.18℃ 근처",
+   "url": "https://watchers.news/2026/11/10/el-nino-2026-roni-2-0-behind-1997-record-forecast/",
+   "original": "it would peak near +2.18°C and fall short of the record"
+  },
+  {
+   "claim": "약 250만 명이 전기로 돌아가는 가정용 의료기기에 기대고",
+   "url": "https://theconversation.com/el-nino-threatens-health-too-early-warnings-done-right-can-save-lives-295379",
+   "original": "2.5 million Americans rely on in-home electricity-powered medical equipment"
+  },
+  {
+   "claim": "7만 8,000명 가까이는 집에서 투석을",
+   "url": "https://theconversation.com/el-nino-threatens-health-too-early-warnings-done-right-can-save-lives-295379",
+   "original": "including nearly 78,000 who receive dialysis at home"
+  },
+  {
+   "claim": "평균 10.5마일(약 17㎞)",
+   "url": "https://theconversation.com/el-nino-threatens-health-too-early-warnings-done-right-can-save-lives-295379",
+   "original": "10.5 miles (17 kilometers) from the nearest hospital"
+  },
+  {
+   "claim": "4명 중 1명은 길이 막히기 전에도 30분이 넘게",
+   "url": "https://theconversation.com/el-nino-threatens-health-too-early-warnings-done-right-can-save-lives-295379",
+   "original": "for 1 in 4 rural residents, the trip takes more than 30 minutes on average"
+  },
+  {
+   "claim": "쓸 수 있을 만큼 구체적이고 지역 사정에 맞는 정보는 사람을 살릴 수 있습니다",
+   "url": "https://theconversation.com/el-nino-threatens-health-too-early-warnings-done-right-can-save-lives-295379",
+   "original": "Information that is specific enough to use and relevant to the community can save lives."
+  }
+ ]
+}
