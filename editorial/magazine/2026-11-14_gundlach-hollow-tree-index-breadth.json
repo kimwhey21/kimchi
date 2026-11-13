@@ -1,0 +1,147 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-14",
+ "slug": "gundlach-hollow-tree-index-breadth",
+ "radar_origin": "24/7 Wall St.: Billionaire Jeffrey Gundlach Calls the Stock Market a ‘Hollow Tree’ as Weakness Spreads Beyond Big Tech",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1779637631586-cf1209bf0eb2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8aG9sbG93JTIwdHJlZSUyMHRydW5rfGVufDB8MHx8fDE3OTQ1ODk5MTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "rZNVcL7QyMY",
+  "credit": "Unsplash / Y"
+ },
+ "sources": [
+  {
+   "name": "24/7 월스트리트",
+   "title": "This Billionaire Investor Called the Stock Market a 'Hollow Tree' - Here Are the Disturbing Numbers That Say He's Right",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/"
+  },
+  {
+   "name": "야후파이낸스",
+   "title": "Jeffrey Gundlach sees a hidden danger beneath the S&P 500",
+   "url": "https://au.finance.yahoo.com/news/jeffrey-gundlach-sees-hidden-danger-133300019.html"
+  },
+  {
+   "name": "야후파이낸스",
+   "title": "DoubleLine's Jeffrey Gundlach warns stock market is weakening",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/doublelines-jeffrey-gundlach-warns-stock-123516832.html"
+  }
+ ],
+ "tags": [
+  "제프리건들락",
+  "S&P500",
+  "시장폭",
+  "회사채"
+ ],
+ "ko": {
+  "title": "지수는 오르는데 종목 38%가 약세장인 이유는 무엇일까",
+  "title_candidates": [
+   "지수는 오르는데 종목 38%가 약세장인 이유는 무엇일까",
+   "속 빈 나무를 닮은 시장, 건들락은 무엇을 보았을까",
+   "지수 속 약세장 종목 191개, 10월 16일의 숫자"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "백 년 된 단풍나무는 잎이 무성하고 가지도 넓게 뻗어 있었습니다.\n그러다 굵은 가지 하나가 꺾였고, 줄기 속이 텅 비어 있다는 사실이 그제야 드러났습니다.\n더블라인캐피털 창업자 제프리 건들락(Jeffrey Gundlach)은 미국 주식시장을 이 나무에 빗댔습니다.\n겉으로 멀쩡한 시장의 속은 정말 비어 있을까요?"
+   },
+   {
+    "heading": "건들락은 왜 나무 이야기를 꺼냈을까",
+    "body": "24/7 월스트리트(24/7 Wall St.)에 따르면 건들락은 10월 9일 경제학자 데이비드 로젠버그(David Rosenberg)와의 인터뷰에서 뉴욕주 버펄로 자택의 은단풍나무 이야기를 꺼냈습니다.\n백 년 된 나무였고, 잎이 풍성해 건강해 보였습니다.\n큰 가지가 부러지고 나서야 줄기가 완전히 비어 있다는 걸 알았고, 결국 나무를 베어야 했다고 합니다.\n주식도 같다는 것이 그의 말입니다. 대표 지수는 건강해 보이지만 그 지수를 받치는 개별 기업들은 다른 이야기를 한다는 것입니다."
+   },
+   {
+    "heading": "지수 밑의 숫자는 무엇을 말할까",
+    "body": "24/7 월스트리트는 10월 16일 기준으로 S&P 500 종목 191개, 약 38%가 52주 고점보다 20% 넘게 내려가 있다고 전했습니다.\n고점 대비 20% 하락은 전통적으로 약세장의 기준입니다.\n지수는 시가총액이 큰 기업이 더 큰 힘을 갖는 방식으로 계산됩니다.\n몇몇 초대형 기술주가 오르면 그 아래 수십 개 기업의 약세가 가려질 수 있다는 뜻입니다.\n야후파이낸스가 소개한 로이터 분석도 비슷합니다. S&P 500은 올해 약 14% 올랐는데도 구성 종목 200개 넘게가 올해 하락세였고, 중간 종목은 약 4% 오르는 데 그쳤습니다.\n건들락은 그 간극을 이렇게 표현했습니다.\n“가지가 떨어져 나가길 기다리는 수밖에 없습니다.”\n겉으로는 티가 나지 않다가 큰 가지가 꺾이는 순간에야 드러난다는 뜻입니다."
+   },
+   {
+    "heading": "돈을 빌려주는 쪽은 어떻게 볼까",
+    "body": "건들락은 주식뿐 아니라 회사채 시장도 짚었습니다.\nAI 관련 기업의 하이일드 채권 가산금리는 150bp 넘게 벌어졌다고 합니다.\n가산금리는 정부가 아닌 기업에 돈을 빌려주는 대가로 투자자가 더 요구하는 이자입니다.\n10월 기술주 매도 국면에서 코어위브(CoreWeave) 채권은 액면 1달러당 약 81센트까지 떨어졌습니다.\n국채 쪽도 압박이 있었습니다. 야후파이낸스는 10년물과 30년물 국채금리가 2002년 이후 처음 보는 수준까지 올랐다고 전했습니다."
+   },
+   {
+    "heading": "이 경고를 약하게 만드는 숫자는 무엇일까",
+    "body": "건들락의 말이 모든 종목이 곧 무너진다는 뜻은 아닙니다.\n24/7 월스트리트도 그가 모든 주식이 곧 무너진다고 주장하는 것이 아니라, 오르는 지수가 커지는 재무 압박을 가릴 수 있다고 경고하는 것이라고 정리했습니다.\n야후파이낸스가 짚은 점도 있습니다. 채권 압박이 과거에는 주식에 큰 손실로 이어졌는데, 이번에는 주식이 지금까지 대체로 버텨 왔다는 것입니다.\n그 버팀은 시장의 힘일 수도 있고, 건들락이 말한 껍데기일 수도 있습니다."
+   },
+   {
+    "heading": "내 종목은 어느 쪽에 서 있을까",
+    "body": "이 글의 숫자는 건들락의 인터뷰와 그 직후 보도를 기준으로 한 것이고, 그 뒤 시장이 어떻게 움직였는지는 들어 있지 않습니다.\n그래서 건들락의 경고는 맞다 틀리다를 가리는 말보다, 지수 하나만 보고 시장을 판단하지 않게 해 주는 점검표에 가깝습니다.\n지수가 오를 때 내가 가진 종목도 함께 올랐는지 돌아본 적이 있나요?\n내 종목이 지수를 받치는 쪽인지, 지수 밑에서 가려진 쪽인지부터 확인해 보셨나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "약 14% 올랐는데도 구성 종목 200개 넘게가 올해 하락세",
+   "url": "https://au.finance.yahoo.com/news/jeffrey-gundlach-sees-hidden-danger-133300019.html",
+   "original": "It found that the S&P 500 was up roughly 14% in 2026, even though more than 200 of its members were down for the year."
+  },
+  {
+   "claim": "중간 종목은 약 4%",
+   "url": "https://au.finance.yahoo.com/news/jeffrey-gundlach-sees-hidden-danger-133300019.html",
+   "original": "A quarter of the index had fallen at least 11%, while the median S&P 500 stock was up only about 4%."
+  },
+  {
+   "claim": "가지가 떨어져 나가길 기다리는 수밖에 없습니다",
+   "url": "https://au.finance.yahoo.com/news/jeffrey-gundlach-sees-hidden-danger-133300019.html",
+   "original": "\"You've got to wait for the branch to fall off,\" said"
+  },
+  {
+   "claim": "백 년 된 나무",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "the DoubleLine Capital founder compared the stock market to a century-old silver maple tree at his Buffalo home."
+  },
+  {
+   "claim": "10월 9일",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "the DoubleLine Capital founder compared the stock market to a century-old silver maple tree at his Buffalo home."
+  },
+  {
+   "claim": "대표 지수는 건강해 보이지만 그 지수를 받치는 개별 기업들은 다른 이야기를 한다",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "The headline indexes look healthy, but the individual companies supporting them tell another story."
+  },
+  {
+   "claim": "큰 가지가 부러지고 나서야 줄기가 완전히 비어 있다는 걸 알았고, 결국 나무를 베어야 했다",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "But after an enormous limb broke off, Gundlach discovered the trunk was completely hollow. The tree had to come down."
+  },
+  {
+   "claim": "191개, 약 38%",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "reported that 191 S&P 500 stocks, or approximately 38% of the index, were trading at least 20% below their 52-week highs."
+  },
+  {
+   "claim": "고점 대비 20% 하락은 전통적으로 약세장의 기준",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "That’s the traditional definition of a bear market."
+  },
+  {
+   "claim": "시가총액이 큰 기업이 더 큰 힘",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "Yet the index is weighted by market capitalization, meaning companies with the largest valuations exert the greatest influence."
+  },
+  {
+   "claim": "150bp 넘게",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "AI high-yield debt spreads widened over 150 basis points, with CoreWeave bonds falling to 81 cents on the dollar during October's tech sell-off."
+  },
+  {
+   "claim": "약 81센트",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "saw its bonds fall to approximately 81 cents on the dollar during October’s technology sell-off, according to MarketWatch."
+  },
+  {
+   "claim": "2002년 이후",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/doublelines-jeffrey-gundlach-warns-stock-123516832.html",
+   "original": "His warning arrived against a backdrop of fresh bond market turbulence to start October and the fourth quarter, with 10- and 30-year Treasury yields climbing back to levels not touched since 2002."
+  },
+  {
+   "claim": "모든 주식이 곧 무너진다고 주장하는 것이 아니라",
+   "url": "https://247wallst.com/investing/2026/10/20/this-billionaire-investor-called-the-stock-market-a-hollow-tree-here-are-the-disturbing-numbers-that-say-hes-right/",
+   "original": "Gundlach isn’t arguing that every stock is about to collapse. He’s warning that a rising index can disguise growing financial stress."
+  },
+  {
+   "claim": "주식이 지금까지 대체로 버텨",
+   "url": "https://finance.yahoo.com/markets/stocks/articles/doublelines-jeffrey-gundlach-warns-stock-123516832.html",
+   "original": "stocks have largely held their ground despite bond pressure that has historically triggered significant equity losses."
+  }
+ ]
+}
