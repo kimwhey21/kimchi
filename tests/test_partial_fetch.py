@@ -9,6 +9,7 @@
 """
 from __future__ import annotations
 
+import datetime as dt
 import unittest
 from unittest import mock
 
@@ -275,6 +276,44 @@ class UsSecondSourcesTest(unittest.TestCase):
                     mock.patch.object(fetch_us, "_check_change", return_value=None):
                 problems = fetch_us._verify_second_source({"^TYX": entry})
             self.assertEqual(problems == [], ok, (yahoo, problems))
+
+    def _quote(self, price, stamp):
+        resp = mock.Mock(); resp.json.return_value = {"data": {"current_price": price, "close": price, "last_trade_time": stamp}}
+        return resp
+
+    def test_cboe_quote_close_only_for_that_day_after_the_close(self):
+        """Cboe 당일 시세: 마지막 체결일이 그날이고 지금이 16:00 ET 뒤일 때만 값(10으로 나눈 금리). 장중·다른 날·못 받음은 None."""
+        from zoneinfo import ZoneInfo
+        et = ZoneInfo("America/New_York")
+        after = dt.datetime(2026, 11, 12, 17, 20, tzinfo=et)
+        with mock.patch.object(fetch_us.requests, "get", return_value=self._quote(51.03, "2026-11-12T13:59:54.097000-06:00")):
+            self.assertEqual(fetch_us.cboe_quote_close("^TNX", "2026-11-12", now=after), 5.103)
+            self.assertIsNone(fetch_us.cboe_quote_close("^TNX", "2026-11-13", now=after))                                    # 다른 날
+            self.assertIsNone(fetch_us.cboe_quote_close("^TNX", "2026-11-12", now=dt.datetime(2026, 11, 12, 15, 30, tzinfo=et)))   # 장중
+        with mock.patch.object(fetch_us.requests, "get", side_effect=fetch_us.requests.ConnectionError("down")):
+            self.assertIsNone(fetch_us.cboe_quote_close("^TNX", "2026-11-12", now=after))
+        with mock.patch.object(fetch_us.requests, "get", return_value=self._quote(None, None)):
+            self.assertIsNone(fetch_us.cboe_quote_close("^TNX", "2026-11-12", now=after))
+
+    def test_yields_prefer_cboe_quote_over_cnbc_and_stay_strict(self):
+        """2026-11-12 실측: 이력에 그날 줄이 없는 아침 10년물 야후 5.1·CNBC 5.133(3.3bp)로 수집이 멈췄다 — 같은 지수인 Cboe 당일 시세(5.103)를
+        먼저 본다. 그때 허용 오차는 0.011 그대로이고 꼬리표는 cboe_quote. 당일 시세가 없으면 종전대로 CNBC·3bp. 금리가 아닌 것은 CNBC 그대로."""
+        prior = {"2026-11-11": 4.998}
+        def run(yahoo, quote, cnbc=5.133, ticker="^TNX"):
+            entry = {"name": "美 10년물 금리", "price": yahoo, "change_pct": 0.0, "trading_date": "2026-11-12"}
+            with mock.patch.object(fetch_us, "_official_series", return_value=dict(prior)), \
+                    mock.patch.object(fetch_us, "cboe_quote_close", return_value=quote) as q, \
+                    mock.patch.object(fetch_us, "cnbc_close", return_value=cnbc) as c, \
+                    mock.patch.object(fetch_us, "_check_change", return_value=None):
+                problems = fetch_us._verify_second_source({ticker: entry})
+            return problems, entry.get("close_sources"), q.called, c.called
+        self.assertEqual(run(5.1, 5.103), ([], ["yahoo", "cboe_quote"], True, False))       # 11/12 그대로: 통과, CNBC는 묻지도 않는다
+        problems, sources, _, _ = run(5.1, 5.133)
+        self.assertEqual((len(problems), sources), (1, None))                                # 당일 시세와는 0.011 — 3.3bp는 막는다
+        self.assertEqual(run(5.1, None, cnbc=5.12), ([], ["yahoo", "cnbc"], True, True))    # 당일 시세가 없으면 CNBC·3bp
+        self.assertEqual(len(run(5.1, None, cnbc=5.133)[0]), 1)
+        problems, sources, asked_quote, asked_cnbc = run(20.5, 99.0, cnbc=20.5, ticker="^VIX")
+        self.assertEqual((problems, sources, asked_quote, asked_cnbc), ([], ["yahoo", "cnbc"], False, True))
 
     def test_yields_checked_against_cnbc_get_three_basis_points(self):
         """2026-11-04 실측: Cboe 줄이 없는 아침 10년물 야후 4.95·CNBC 4.966 — CNBC로 임시 대조할 때만 0.03까지 받는다. Cboe와는 그대로 0.011."""

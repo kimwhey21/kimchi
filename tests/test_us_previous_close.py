@@ -74,3 +74,15 @@ class UsRecheckTest(unittest.TestCase):
         self.assertEqual(missing, ["애플"])                 # 공식 값을 못 받으면 '못 맞춤'
         self.assertEqual(len(wrong), 1)                    # CNBC로만 확인했던 엔비디아 190 / 공식 191
         self.assertIn("엔비디아", wrong[0])
+
+    def test_recheck_skips_yields_on_bond_holiday(self):
+        """채권만 쉰 날의 금리는 전 거래일 공식값·등락 0으로 일부러 적는다 — Cboe 그날 줄(2026-11-11: 4.998)과 달라도 알리지 않는다."""
+        from unittest import mock
+        from src import close_check, fetch_us
+        doc = {"trading_date": "2026-11-11",
+               "macro": {"^TNX": {"ticker": "^TNX", "name": "10년물", "price": 4.983, "change_pct": 0.0, "bond_market_closed": True},
+                         "^VIX": {"ticker": "^VIX", "name": "VIX", "price": 15.52}}}
+        cboe = {"^TNX": {"2026-11-11": 4.998}, "^VIX": {"2026-11-11": 15.52}}
+        with mock.patch.object(fetch_us, "cboe_closes", side_effect=lambda t: cboe[t]):
+            wrong, checked, missing = close_check.us_recheck(doc)
+        self.assertEqual((wrong, checked, missing), ([], 1, []))

@@ -17,6 +17,7 @@ import os
 import re
 import time
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 import yaml
@@ -209,6 +210,31 @@ def cboe_closes(ticker: str) -> dict[str, float]:
     return {r["date"]: round(float(r["close"]) / scale, 4) for r in rows[-40:] if r.get("date") and r.get("close")}
 
 
+_CBOE_QUOTE = "https://cdn.cboe.com/api/global/delayed_quotes/quotes/{symbol}.json"
+
+
+def cboe_quote_close(ticker: str, day: str, now: dt.datetime | None = None) -> float | None:
+    """Cboe 당일 시세의 그날 마지막 값 — 일별 이력(`cboe_closes`)에 그날 줄이 아직 없는 아침에 **금리**를 같은 원천으로 맞추려고 쓴다
+    (2026-11-13). 마지막 체결일이 그날이고, 지금이 그날 16:00 ET 뒤일 때만(금리 지수의 마지막 값은 15:00 ET에 찍힌다 — 장중 값은 쓰지 않는다).
+    못 받거나 조건이 안 맞으면 None(그때는 종전대로 CNBC로 임시 대조한다)."""
+    symbol, scale = _CBOE_SYMBOLS[ticker]
+    try:
+        data = requests.get(_CBOE_QUOTE.format(symbol=symbol), headers=_NASDAQ_HEADERS, timeout=30).json().get("data") or {}
+        stamp = dt.datetime.fromisoformat(str(data.get("last_trade_time")))
+        price = float(data.get("current_price"))
+    except (requests.RequestException, ValueError, TypeError) as exc:
+        print(f"[안내] Cboe 당일 시세 {symbol}: {exc}")
+        return None
+    eastern = ZoneInfo("America/New_York")
+    if stamp.tzinfo is None:
+        stamp = stamp.replace(tzinfo=ZoneInfo("America/Chicago"))
+    now = now or dt.datetime.now(eastern)
+    closed = dt.datetime.combine(dt.date.fromisoformat(day), dt.time(16, 0), tzinfo=eastern)
+    if stamp.astimezone(eastern).date().isoformat() != day or now.astimezone(eastern) < closed or price <= 0:
+        return None
+    return round(price / scale, 4)
+
+
 def naver_future_closes(ticker: str) -> dict[str, float]:
     """네이버 시장지표의 뉴욕 선물 연결물 일별 종가 {날짜: 값}. 못 받으면 빈 dict."""
     path = _FUTURES[ticker][0]
@@ -342,8 +368,17 @@ def second_series(ticker: str, day: str) -> dict[str, float]:
     """두 번째 원천의 최근 일별 종가 {날짜: 값}(그날 포함, 없으면 빈 dict). 금·원유는 _settle_futures가 따로 맞춘다.
     공식 일별 종가(FRED·Cboe·나스닥)에 그날 줄이 아직 없으면 CNBC의 그날 종가를 더한다(전일 값은 공식 원천 그대로)."""
     series = _official_series(ticker, day)
+    _CNBC_USED.discard(ticker)
+    _CBOE_QUOTE_USED.discard(ticker)
     if ticker in _FUTURES or day in series:
         return series
+    if ticker in _YIELDS:
+        # 금리는 CNBC보다 Cboe 당일 시세를 먼저 본다(2026-11-13) — 야후 ^TNX·^TYX가 바로 이 Cboe 지수라 같은 숫자다. CNBC의 '마감'은 더 늦게 잰
+        # 국채 수익률이라 금리가 크게 움직인 날 3bp 넘게 갈렸다(11/4 1.6bp, 11/12 3.3bp — 두 번 다 야후가 맞았고 수집이 네 시간 멈췄다).
+        quote = cboe_quote_close(ticker, day)
+        if quote is not None:
+            _CBOE_QUOTE_USED.add(ticker)
+            return {**series, day: quote}
     close = cnbc_close(ticker, day)
     if close is not None:
         _CNBC_USED.add(ticker)
@@ -352,6 +387,7 @@ def second_series(ticker: str, day: str) -> dict[str, float]:
 
 
 _CNBC_USED: set[str] = set()
+_CBOE_QUOTE_USED: set[str] = set()
 
 
 def _official_series(ticker: str, day: str) -> dict[str, float]:
@@ -467,7 +503,7 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
         if bad_change:
             problems.append(bad_change)
             continue
-        entry["close_sources"] = ["yahoo", "cnbc" if ticker in _CNBC_USED else "fred" if ticker == "^DJI"
+        entry["close_sources"] = ["yahoo", "cboe_quote" if ticker in _CBOE_QUOTE_USED else "cnbc" if ticker in _CNBC_USED else "fred" if ticker == "^DJI"
                                   else "cboe" if ticker in _CBOE_SYMBOLS else "nasdaq"]
     return problems
 

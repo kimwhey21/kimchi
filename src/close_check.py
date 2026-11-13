@@ -176,6 +176,10 @@ def us_recheck(doc: dict) -> tuple[list[str], int, list[str]]:
             ticker = str(entry.get("ticker") or ticker)
             if ticker in fetch_us._FUTURES or entry.get("price") is None:
                 continue
+            if entry.get("bond_market_closed"):
+                # 채권만 쉰 날의 금리는 전 거래일 공식값·등락 0으로 일부러 적은 것이다(fetch_us._bond_holiday) — Cboe가 그날 줄에 찍는
+                # 값과 다르다고 알리지 않는다(2026-11-11 재향군인의 날: 파일 4.983·그날 줄 4.998로 이틀 밤 경고가 떴다).
+                continue
             try:
                 if ticker in fetch_us._CBOE_SYMBOLS:
                     other = fetch_us.cboe_closes(ticker).get(day)
