@@ -1,0 +1,216 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-11-15",
+ "slug": "earnings-peak-bull-market",
+ "radar_origin": "Goldman Sachs sees S&P 500 rising to 8,700 next year despite slower earnings growth - Reuters",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1689582236730-fa3076847f45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8YnVsbCUyMHN0YXR1ZXxlbnwwfDB8fHwxNzk0Njc2Mjg4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "ZQZMJ0y7FDo",
+  "credit": "Unsplash / Harri P"
+ },
+ "sources": [
+  {
+   "name": "인베스팅라이브",
+   "title": "Goldman: Don't try to time the S&P 500 top as EPS growth seen slowing to 11%",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/"
+  },
+  {
+   "name": "24/7 Wall St.",
+   "title": "The AI Boom Just Drove S&P 500 Profits 51% Higher, but Its Biggest Tailwind Is Fading (2026-09-26)",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/"
+  },
+  {
+   "name": "블룸버그 린에아",
+   "title": "Las ganancias por acción del S&P 500 irán cayendo, pero no colapsarán: Goldman Sachs (2026-09-27)",
+   "url": "https://www.bloomberglinea.com/mercados/las-ganancias-por-accion-del-sp-500-iran-cayendo-pero-no-colapsaran-goldman-sachs/"
+  }
+ ],
+ "tags": [
+  "골드만삭스",
+  "S&P500",
+  "이익성장",
+  "강세장"
+ ],
+ "ko": {
+  "title": "S&P 500 이익 둔화, 골드만삭스가 꼽은 변수 세 가지",
+  "title_candidates": [
+   "S&P 500 이익 둔화, 골드만삭스가 꼽은 변수 세 가지",
+   "골드만삭스는 왜 이익 정점 뒤에도 수익이 남는다고 할까",
+   "골드만삭스의 이익 둔화 경고, 강세장은 어디서 흔들릴까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "이익이 가장 빨리 늘던 때가 강세장의 꼭대기일 것 같지만, 골드만삭스의 계산은 반대로 나왔습니다.\n이전 강세장에서 전체 수익의 40~60%는 이익 증가율이 정점을 찍은 뒤에 나왔다는 것입니다.\n이익이 꺾이기 시작하면 정말 팔아야 할 때일까요, 아니면 정점을 맞히려다 수익을 놓치는 걸까요?"
+   },
+   {
+    "heading": "지금 이익은 얼마나 빠를까",
+    "body": "먼저 지금의 속도부터 확인해야 합니다. 24/7 Wall St.는 S&P 500 기업의 주당순이익이 2분기에 1년 전보다 51% 늘었다고 정리했습니다.\n최근 12개월로 보면 26% 증가로, 지난 30년 평균 연 7%와 비교가 되지 않는 속도입니다.\n골드만삭스는 올해 이익 증가분의 거의 절반이 인공지능(AI) 관련 투자에서 나왔다고 추정합니다."
+   },
+   {
+    "heading": "골드만삭스가 그린 감속의 길",
+    "body": "인베스팅라이브가 전한 골드만삭스 자산운용의 전망은 이렇습니다. S&P 500 주당순이익 증가율이 올해 36%에서 2027년과 2028년에는 각각 11%로 떨어진다는 것입니다.\n이유는 AI 설비투자가 이익을 끌어올리던 힘이 약해지기 때문입니다.\n그렇다고 이익이 무너진다고 보지는 않습니다. 블룸버그 린에아가 소개한 골드만삭스 리서치의 벤 스나이더(Ben Snider) 수석 전략가의 문장입니다.\n“S&P 500 이익 증가율이 둔화하겠지만 무너지지는 않는다는 것이 우리의 기본 시나리오다.”"
+   },
+   {
+    "heading": "정점 뒤에도 수익은 남아 있었다",
+    "body": "골드만삭스가 근거로 든 것은 과거 강세장입니다. 인베스팅라이브가 정리한 블룸버그 자료 분석에서는 이익 증가율이 정점을 지난 뒤에 나온 수익이 전체의 40~60%였습니다.\n1994년부터 2000년 사이 강세장에서 S&P 500은 이익 정점 전에 112%, 정점 뒤에 166% 올랐습니다.\n2009년부터 2015년 구간은 정점 전 155%에 정점 뒤 105%, 2002년부터 2007년 구간은 75%에 46%였습니다.\n이익이 꺾인 뒤에도 주가가 더 오른 사례가 반복됐다는 이야기입니다."
+   },
+   {
+    "heading": "예외는 바깥에서 왔습니다",
+    "body": "같은 자료에는 반대의 사례도 있습니다. 2016년부터 2018년 강세장은 무역 갈등이 커지면서 이익 정점 뒤에 8% 오르는 데 그쳤습니다.\n2020년부터 2022년 구간도 공격적인 금리 인상이 이어지며 정점 뒤 수익이 10%였습니다.\n이익이 둔해지는 것만으로 강세장이 끝난 적은 드물었고, 끝낸 것은 바깥에서 온 충격이었다는 분석입니다."
+   },
+   {
+    "heading": "이익을 떠받친 힘은 어디서 약해질까",
+    "body": "그렇다면 지금의 이익을 떠받친 힘은 어디서 약해질까요? 앞서 본 골드만삭스 분석은 힘이 빠질 곳을 하나씩 짚습니다.\n첫째는 감가상각입니다. 데이터센터 설비가 늘수록 비용도 쌓여 2027년 이익 증가율에서 약 5%포인트를 깎고, 2028년에는 추가 AI 투자의 이익 기여를 모두 상쇄할 수 있다고 봅니다.\n둘째는 메모리 업체의 높은 마진입니다. 과거 수준의 수익성으로 돌아가면 S&P 500 이익이 약 10% 줄 수 있습니다.\n셋째는 AI 기업 지분의 평가이익입니다. 대형 기술기업이 2분기에 장부에 올린 약 1500억 달러는 S&P 500 주당순이익의 약 12%에 해당하고, 이것이 사라지면 2027년 이익 증가율이 8%포인트 낮아집니다."
+   },
+   {
+    "heading": "내 수익은 어느 쪽에 걸려 있을까",
+    "body": "정리하면 골드만삭스의 논리는 ‘이익이 둔해져도 곧바로 하락장은 아니다’이지, ‘앞으로도 오른다’는 약속이 아닙니다.\n정점을 맞히는 일보다 어려운 것은, 지금의 이익 중 얼마가 사라질 수 있는 몫인지 가려내는 일입니다.\n내 포트폴리오의 이익 가운데 AI 투자와 메모리 마진에 기댄 부분은 얼마나 될까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "2분기에 1년 전보다 51%",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "earnings per share jumped 51% year over year in Q2, while trailing 12-month EPS rose 26%, compared with an average annual gain of roughly 7% over the past 30 years."
+  },
+  {
+   "claim": "최근 12개월로 보면 26%",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "earnings per share jumped 51% year over year in Q2, while trailing 12-month EPS rose 26%, compared with an average annual gain of roughly 7% over the past 30 years."
+  },
+  {
+   "claim": "연 7%",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "earnings per share jumped 51% year over year in Q2, while trailing 12-month EPS rose 26%, compared with an average annual gain of roughly 7% over the past 30 years."
+  },
+  {
+   "claim": "거의 절반",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "Goldman Sachs chief U.S. equity strategist Ben Snider estimates that almost half of 2026 S&P 500 earnings growth can be attributed to AI-related investment."
+  },
+  {
+   "claim": "36%에서",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "it expects S&P 500 earnings per share growth to slow from 36% this year to 11% in both 2027 and 2028, as the lift to earnings from AI-related capital spending fades."
+  },
+  {
+   "claim": "각각 11%",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "it expects S&P 500 earnings per share growth to slow from 36% this year to 11% in both 2027 and 2028, as the lift to earnings from AI-related capital spending fades."
+  },
+  {
+   "claim": "S&P 500 이익 증가율이 둔화하겠지만 무너지지는 않는다",
+   "url": "https://www.bloomberglinea.com/mercados/las-ganancias-por-accion-del-sp-500-iran-cayendo-pero-no-colapsaran-goldman-sachs/",
+   "original": "“Nuestro escenario base es que el crecimiento de las ganancias del S&P 500 se desacelere, no colapse, en los próximos años”, escribió Ben Snider"
+  },
+  {
+   "claim": "40~60%",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "Across previous bull markets, roughly 40% to 60% of the total return came after earnings growth had peaked, according to analysis of Bloomberg data as of October 30."
+  },
+  {
+   "claim": "112%",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "In the 1994 to 2000 cycle, the S&P 500 returned 112% before the earnings peak and a further 166% after it."
+  },
+  {
+   "claim": "166%",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "In the 1994 to 2000 cycle, the S&P 500 returned 112% before the earnings peak and a further 166% after it."
+  },
+  {
+   "claim": "정점 전 155%",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "The 2009 to 2015 bull market delivered 155% before the peak and 105% after, while the 2002 to 2007 run produced 75% and 46% respectively."
+  },
+  {
+   "claim": "105%",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "The 2009 to 2015 bull market delivered 155% before the peak and 105% after, while the 2002 to 2007 run produced 75% and 46% respectively."
+  },
+  {
+   "claim": "75%에 46%",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "The 2009 to 2015 bull market delivered 155% before the peak and 105% after, while the 2002 to 2007 run produced 75% and 46% respectively."
+  },
+  {
+   "claim": "8% 오르는 데",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "The 2016 to 2018 bull market added just 8% after peak earnings growth as trade tensions escalated. The 2020 to 2022 cycle gained only 10% after its peak as aggressive interest rate hikes took hold."
+  },
+  {
+   "claim": "정점 뒤 수익이 10%",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "The 2016 to 2018 bull market added just 8% after peak earnings growth as trade tensions escalated. The 2020 to 2022 cycle gained only 10% after its peak as aggressive interest rate hikes took hold."
+  },
+  {
+   "claim": "약 5%포인트",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "Goldman estimates depreciation will subtract roughly 5 percentage points from S&P 500 earnings growth in 2027, nearly half of the approximately 11-point boost from continued AI capex."
+  },
+  {
+   "claim": "2028년에는",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "By 2028, depreciation could completely offset the earnings contribution from additional AI investment."
+  },
+  {
+   "claim": "약 10% 줄",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "A return toward historical profitability could reduce S&P 500 earnings by roughly 10%."
+  },
+  {
+   "claim": "약 1500억 달러",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "Large technology companies booked roughly $150 billion of unrealized investment gains in Q2 — equivalent to about 12% of S&P 500 EPS."
+  },
+  {
+   "claim": "약 12%",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "Large technology companies booked roughly $150 billion of unrealized investment gains in Q2 — equivalent to about 12% of S&P 500 EPS."
+  },
+  {
+   "claim": "8%포인트",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "Removing that contribution entirely would create an estimated 8-percentage-point drag on 2027 earnings growth versus 2026."
+  },
+  {
+   "claim": "1994년부터 2000년",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "In the 1994 to 2000 cycle, the S&P 500 returned 112% before the earnings peak and a further 166% after it."
+  },
+  {
+   "claim": "2009년부터 2015년",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "The 2009 to 2015 bull market delivered 155% before the peak and 105% after, while the 2002 to 2007 run produced 75% and 46% respectively."
+  },
+  {
+   "claim": "2002년부터 2007년",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "The 2009 to 2015 bull market delivered 155% before the peak and 105% after, while the 2002 to 2007 run produced 75% and 46% respectively."
+  },
+  {
+   "claim": "2016년부터 2018년",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "The 2016 to 2018 bull market added just 8% after peak earnings growth as trade tensions escalated. The 2020 to 2022 cycle gained only 10% after its peak as aggressive interest rate hikes took hold."
+  },
+  {
+   "claim": "2020년부터 2022년",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "The 2016 to 2018 bull market added just 8% after peak earnings growth as trade tensions escalated. The 2020 to 2022 cycle gained only 10% after its peak as aggressive interest rate hikes took hold."
+  },
+  {
+   "claim": "2027년과 2028년",
+   "url": "https://investinglive.com/stock-market-update/goldman-don-t-try-to-time-the-s-p-500-top-as-eps-growth-seen-slowing-to-11/",
+   "original": "it expects S&P 500 earnings per share growth to slow from 36% this year to 11% in both 2027 and 2028, as the lift to earnings from AI-related capital spending fades."
+  },
+  {
+   "claim": "2027년",
+   "url": "https://247wallst.com/investing/2026/09/26/the-ai-boom-just-drove-sp-500-profits-51-higher-but-its-biggest-tailwind-is-fading/",
+   "original": "Goldman estimates depreciation will subtract roughly 5 percentage points from S&P 500 earnings growth in 2027, nearly half of the approximately 11-point boost from continued AI capex."
+  }
+ ]
+}
