@@ -1,0 +1,112 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-16",
+ "slug": "nvidia-huang-resignation",
+ "radar_origin": "‘젠슨 황’ 사임에 코스피도 안갯속…엔비디아 실적, 반등 가를까[선데이 머니카페] - 서울경제",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1590945213328-ab2d0bbd1e88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8ZW1wdHklMjBvZmZpY2UlMjBjaGFpcnxlbnwwfDB8fHwxNzk0NzYyNjM5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "2ARQfzpg--E",
+  "credit": "Unsplash / Florian Schmetz"
+ },
+ "sources": [
+  {
+   "name": "엔비디아 공시",
+   "title": "NVIDIA Announces CEO Transition (Form 8-K, 2026-11-12)",
+   "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000082/nvidiaannouncesceotransiti.htm"
+  },
+  {
+   "name": "포춘",
+   "title": "Nvidia's power is built around Jensen Huang: scandal testing the formula (2026-11-09)",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/"
+  }
+ ],
+ "tags": [
+  "젠슨황사임",
+  "엔비디아",
+  "이사회",
+  "슈퍼의결권"
+ ],
+ "ko": {
+  "title": "젠슨 황 사임 뒤 엔비디아 이사회가 처음 한 일은 무엇일까",
+  "title_candidates": [
+   "젠슨 황 사임, 슈퍼 의결권 없는 CEO는 이사회 앞에서 약했나",
+   "젠슨 황 사임 뒤 엔비디아 이사회가 처음 한 일은 무엇일까",
+   "젠슨 황 사임, 한 사람에게 모인 회사의 후계는 비어 있었나"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "젠슨 황 사임으로 눈길을 끄는 숫자는 3.56%입니다. 엔비디아의 얼굴이던 그가 회사에서 쥐고 있던 지분입니다.\n그런데 엔비디아는 공시 한 장으로 그의 사임을 알렸고, 사임은 곧바로 효력이 생겼습니다.\n한 사람이 곧 회사처럼 보이던 곳에서 그는 어떻게 이렇게 빨리 물러났을까요? 그리고 이사회는 그 빈자리를 놓고 가장 먼저 무엇을 했을까요?"
+   },
+   {
+    "heading": "공시가 알린 것은 세 가지 직책입니다",
+    "body": "엔비디아 공시에 따르면 황은 사장과 최고경영자 자리, 이사회 구성원 자리에서 모두 물러났습니다. 효력은 즉시 발생했습니다.\n빈자리는 최고재무책임자(CFO) 콜레트 크레스가 임시 CEO로 채웁니다. 크레스는 후임이 정해질 때까지 CFO 일도 함께 맡습니다.\n이사회는 내부와 외부 후보를 모두 놓고 정식 CEO를 찾겠다고 밝혔습니다."
+   },
+   {
+    "heading": "이사회가 처음 한 일은 의장 임명입니다",
+    "body": "사임 발표에는 다른 소식이 붙어 있었습니다. 이사회가 하비 존스(Harvey C. Jones)를 회사 역사상 첫 이사회 의장으로 임명한 것입니다.\n첫 의장이라는 말은 그전까지 그 자리가 없었다는 뜻입니다. 엔비디아에 처음으로 이사회를 대표하는 얼굴이 생겼습니다."
+   },
+   {
+    "heading": "지분 3.56%, 슈퍼 의결권은 없었습니다",
+    "body": "포춘은 황이 엔비디아의 최대 개인 주주이지만 지분은 3.56%라고 전했습니다.\n포춘은 이런 설명도 붙였습니다. “그는 메타의 마크 저커버그가 가진 것 같은 슈퍼 의결권 주식을 하나도 갖고 있지 않다.”\n슈퍼 의결권 주식은 한 주에 보통주보다 훨씬 많은 표를 주는 주식입니다. 이런 장치가 있으면 지분이 작아도 이사회가 창업자를 움직이기 어렵습니다.\n장치가 없으면 이사회가 CEO를 바꿀 길이 열려 있습니다. 다만 공시는 ‘사임했다’고만 적었으니, 스스로 물러났는지 요구를 받았는지는 이 글도 단정하지 않습니다."
+   },
+   {
+    "heading": "직속 보고자 60명이 남긴 공백",
+    "body": "포춘은 황의 직속 보고자가 약 60명이라고 적었습니다. 누가 다음 자리에 서는지 불확실하다는 설명이 그 문장에 붙어 있습니다.\n이사회 자문 브라이언 버크는 이렇게 말했습니다.\n“엔비디아는 곧 그이고, 그는 곧 엔비디아입니다.”\n조지타운대 제이슨 슐로처 교수는 사임 전에 이미 이렇게 지적했습니다.\n“이사회는 후계 계획을 분명하게 세워 두지 않은 실수를 했다.”\n임시 CEO를 공시와 함께 바로 세운 것은 그 공백을 메우려는 조치로 보입니다."
+   },
+   {
+    "heading": "시장은 사임 전에 먼저 반응했습니다",
+    "body": "황이 논란을 인정한 월요일, 엔비디아 주가는 4% 넘게 하락했습니다.\n이사회는 같은 시기 그가 외국 정보 활동의 표적이었다는 보도를 조사한다고 밝혔습니다. 그러면서 이렇게 덧붙였습니다.\n“국가 안보도, 엔비디아의 기밀도 침해됐다고 믿을 이유가 없다.”\n여기까지가 공시와 보도로 확인되는 사실입니다. 사임의 이유를 더 읽어 내는 일은 이 글의 몫이 아닙니다."
+   },
+   {
+    "heading": "남은 질문은 후임과 구조입니다",
+    "body": "정식 CEO는 아직 정해지지 않았습니다. 사상 첫 의장이 생긴 이사회가 누구를 고르느냐가 다음 확인거리입니다.\n한 사람에게 모인 결정을 이사회가 나눠 가질 수 있다면 안전장치가 됩니다. 반대로 그 한 사람이 빠진 자리를 메우지 못하면 위험이 됩니다.\n이사회가 CEO를 바꿀 수 있다는 사실은 위험일까요, 안전장치일까요? 그리고 내가 가진 종목은 CEO를 바꿀 수 있는 회사일까요?"
+   }
+  ],
+  "search_phrase": "젠슨 황 사임"
+ },
+ "evidence": [
+  {
+   "claim": "3.56%",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "Huang is Nvidia’s largest individual shareholder, with a 3.56% stake,"
+  },
+  {
+   "claim": "그는 메타의 마크 저커버그가 가진 것 같은 슈퍼 의결권 주식을 하나도 갖고 있지 않다",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "but he doesn’t have any super-voting shares like Mark Zuckerberg has at Meta Platforms."
+  },
+  {
+   "claim": "지분은 3.56%라고",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "Huang is Nvidia’s largest individual shareholder, with a 3.56% stake,"
+  },
+  {
+   "claim": "약 60명",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "Huang has about 60 direct reports, creating uncertainty about who is next in line to lead."
+  },
+  {
+   "claim": "엔비디아는 곧 그이고, 그는 곧 엔비디아입니다",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "synonymous with Nvidia, and Nvidia is synonymous with him"
+  },
+  {
+   "claim": "이사회는 후계 계획을 분명하게 세워 두지 않은 실수를 했다",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "The board has made a mistake by not having a clearly outlined succession plan"
+  },
+  {
+   "claim": "4% 넘게 하락했습니다",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "(Its shares sank more than 4% on Monday after he admitted to the affair.)"
+  },
+  {
+   "claim": "국가 안보도, 엔비디아의 기밀도 침해됐다고 믿을 이유가 없다",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "no reason to believe that either national security or NVIDIA secrets were compromised,"
+  }
+ ]
+}

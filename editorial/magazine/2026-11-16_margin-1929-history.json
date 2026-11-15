@@ -1,0 +1,162 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장의 역사",
+ "date": "2026-11-16",
+ "slug": "margin-1929-history",
+ "radar_origin": "The Big Picture (배리 리트홀츠): 10 Sunday Reads",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1703381132774-caeab4f6a9db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8b2xkJTIwbmV3c3BhcGVyfGVufDB8MHx8fDE3OTQ3NjI2NTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "izRQ870yJO8",
+  "credit": "Unsplash / Jonathan Gong"
+ },
+ "sources": [
+  {
+   "name": "연준 역사 해설",
+   "title": "Stock Market Crash of 1929 (Federal Reserve History)",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929"
+  },
+  {
+   "name": "위키백과",
+   "title": "Regulation T",
+   "url": "https://en.wikipedia.org/wiki/Regulation_T"
+  },
+  {
+   "name": "뉴스퀘스트",
+   "title": "삼전·닉스 빚투 비중 3년새 3~4%→27%…하락장 뇌관 되나",
+   "url": "https://www.newsquest.co.kr/news/articleView.html?idxno=305038"
+  }
+ ],
+ "tags": [
+  "1929년대공황",
+  "증거금",
+  "레귤레이션T",
+  "빚투"
+ ],
+ "ko": {
+  "title": "1929년의 빚투가 남긴 규칙, 연준은 어디에 선을 그었나",
+  "title_candidates": [
+   "주가의 10%만 내던 1929년, 지금 미국은 절반을 내게 합니다",
+   "빚내서 산 주식은 1929년 10월에 어떻게 끝났을까",
+   "1929년의 빚투가 남긴 규칙, 연준은 어디에 선을 그었나"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "주식값의 10%만 내고 나머지는 빌려서 사던 시절이 있었습니다. 대공황 직전의 미국입니다.\n빌린 돈이 몰려들며 주가는 치솟았고, 그 끝은 1929년 10월에 왔습니다.\n빚내서 주식을 사는 일에 미국은 그 뒤 어떤 선을 그었을까요? 그 선은 지금 한국의 담보비율과 무엇이 다를까요?"
+   },
+   {
+    "heading": "빌린 돈이 주가를 밀어 올린 시절",
+    "body": "연준 역사 해설은 당시 풍경을 이렇게 적습니다.\n“매수자들은 가격의 일부, 보통 10%만 내고 나머지를 빌렸다.”\n“그들이 산 주식은 그 대출의 담보가 됐다.”\n“빌린 돈이 주식시장으로 쏟아져 들어왔고, 주가는 치솟았다.”\n담보가 산 주식 자체라는 점이 핵심입니다. 주가가 오르면 담보가 불어나 더 빌릴 수 있고, 하락하면 담보가 줄어듭니다."
+   },
+   {
+    "heading": "연준은 처음부터 말리고 있었습니다",
+    "body": "연준 이사회는 투기를 위한 신용에 반대했습니다. 주식 투기꾼에게 돈을 빌려주는 회원은행에는 준비은행이 신용을 내주지 말라고 요청했습니다.\n8월에는 뉴욕 연은의 할인율이 6%까지 올랐습니다."
+   },
+   {
+    "heading": "검은 월요일과 화요일",
+    "body": "1929년 10월 28일 검은 월요일에 다우지수는 13% 가까이 하락했습니다.\n이튿날 검은 화요일에는 12% 가까이 더 하락했습니다.\n11월 중순에 다우지수는 가치의 절반 가까이를 잃었습니다.\n연준은 위기 동안 국채를 사들이고 할인 창구 대출을 서둘렀으며, 상업은행에 필요한 준비금을 공급하겠다고 약속했습니다."
+   },
+   {
+    "heading": "지금 미국은 절반까지만 빌리게 합니다",
+    "body": "위키백과는 레귤레이션 T(Regulation T)를 증권사와 딜러의 신용 제공을 규율하는 연준 규칙으로 정리합니다.\n주식을 신용으로 살 때 처음 내야 하는 돈은 가격의 50%입니다. 이 기준은 1974년부터 그대로입니다.\n연준에 이 비율을 바꿀 권한이 있지만, 1974년 이후로는 조정할 필요가 없다고 봤습니다.\n10%에서 50%까지, 그 사이에 놓인 것이 빚투 규제의 역사입니다."
+   },
+   {
+    "heading": "한국의 선은 담보비율 140%입니다",
+    "body": "한국은 증권사의 신용공여에 담보비율 140% 이상을 유지하게 합니다. 다만 뉴스퀘스트에 따르면 금융당국이 이 의무를 내년 1월 31일까지 한시적으로 유예했습니다.\n미국의 50%는 살 때 처음 내는 돈이고, 한국의 140%는 산 뒤에 유지해야 하는 담보입니다. 잣대는 다르지만 둘 다 빚이 주가를 흔드는 일을 막으려는 선입니다.\n1929년에는 담보가 산 주식 하나였습니다. 선을 잠시 풀어 둔 지금, 내 계좌의 담보는 무엇일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "주식값의 10%만 내고 나머지는 빌려서",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "Purchasers put down a fraction of the price, typically 10 percent, and borrowed the rest."
+  },
+  {
+   "claim": "그 끝은 1929년 10월에 왔습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "On Black Monday, October 28, 1929, the Dow declined nearly 13 percent."
+  },
+  {
+   "claim": "매수자들은 가격의 일부, 보통 10%만 내고 나머지를 빌렸다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "Purchasers put down a fraction of the price, typically 10 percent, and borrowed the rest."
+  },
+  {
+   "claim": "그들이 산 주식은 그 대출의 담보가 됐다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "The stocks that they bought served as collateral for the loan."
+  },
+  {
+   "claim": "빌린 돈이 주식시장으로 쏟아져 들어왔고, 주가는 치솟았다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "Borrowed money poured into equity markets, and stock prices soared."
+  },
+  {
+   "claim": "뉴욕 연은의 할인율이 6%까지 올랐습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "New York's discount rate reached 6 percent."
+  },
+  {
+   "claim": "10월 28일 검은 월요일에 다우지수는 13% 가까이 하락했습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "On Black Monday, October 28, 1929, the Dow declined nearly 13 percent."
+  },
+  {
+   "claim": "12% 가까이 더 하락했습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "On the following day, Black Tuesday, the market dropped nearly 12 percent."
+  },
+  {
+   "claim": "11월 중순에 다우지수는 가치의 절반 가까이를 잃었습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "By mid-November, the Dow had lost almost half of its value."
+  },
+  {
+   "claim": "가격의 50%입니다",
+   "url": "https://en.wikipedia.org/wiki/Regulation_T",
+   "original": "The initial margin requirement for such margin stock purchases has been 50%"
+  },
+  {
+   "claim": "1974년 이후로는 조정할 필요가 없다고 봤습니다",
+   "url": "https://en.wikipedia.org/wiki/Regulation_T",
+   "original": "Since 1974, the Federal Reserve has not deemed it necessary to adjust the margin requirement"
+  },
+  {
+   "claim": "10%에서 50%까지",
+   "url": "https://en.wikipedia.org/wiki/Regulation_T",
+   "original": "The initial margin requirement for such margin stock purchases has been 50%"
+  },
+  {
+   "claim": "이 기준은 1974년부터 그대로입니다",
+   "url": "https://en.wikipedia.org/wiki/Regulation_T",
+   "original": "Since 1974, the Federal Reserve has not deemed it necessary to adjust the margin requirement"
+  },
+  {
+   "claim": "담보비율 140% 이상을 유지하게 합니다",
+   "url": "https://www.newsquest.co.kr/news/articleView.html?idxno=305038",
+   "original": "금융당국은 급격한 주가 하락에 따른 반대매매 부담을 덜기 위해 지난 9일부터 내년 1월 31일까지 증권사의 신용공여 담보비율 140% 이상 유지 의무를 한시적으로 유예했다."
+  },
+  {
+   "claim": "내년 1월 31일까지 한시적으로 유예했습니다",
+   "url": "https://www.newsquest.co.kr/news/articleView.html?idxno=305038",
+   "original": "금융당국은 급격한 주가 하락에 따른 반대매매 부담을 덜기 위해 지난 9일부터 내년 1월 31일까지 증권사의 신용공여 담보비율 140% 이상 유지 의무를 한시적으로 유예했다."
+  },
+  {
+   "claim": "한국의 140%는",
+   "url": "https://www.newsquest.co.kr/news/articleView.html?idxno=305038",
+   "original": "증권사의 신용공여 담보비율 140% 이상 유지 의무를 한시적으로 유예했다."
+  },
+  {
+   "claim": "미국의 50%는",
+   "url": "https://en.wikipedia.org/wiki/Regulation_T",
+   "original": "The initial margin requirement for such margin stock purchases has been 50%"
+  },
+  {
+   "claim": "1929년에는 담보가 산 주식 하나였습니다",
+   "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
+   "original": "The stocks that they bought served as collateral for the loan."
+  }
+ ]
+}
