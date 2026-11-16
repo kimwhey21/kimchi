@@ -210,7 +210,7 @@ KEPCO 기사가 난 날에 쓴다고 더 오르지 않습니다.
 
 ## 절차
 
-1. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`
+1. `python -m scripts.sandbox_ready`
 2. **주제.** `python -m src.search_queue` — 맨 위에서 아직 안 한 것을 고릅니다(위 「주제는 검색어 큐가
    정합니다」). 고르기가 "글 고치기"면 「기존 글 고치기」 절차로 가고, 그 주에 이미 두 편을 고쳤으면
    다음 "새 글" 줄로 내려갑니다. 큐가 비면 「주제 목록」에서 어제와 다른 갈래의 위에서부터.

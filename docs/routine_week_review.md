@@ -50,7 +50,7 @@
 
 ## 절차
 
-1. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`(샌드박스에는 한글 폰트가
+1. `python -m scripts.sandbox_ready`(샌드박스에는 한글 폰트가
    없어 이걸 빼면 그래픽 렌더가 첫 번에 실패합니다)
 2. **숫자.** `python -m scripts.weekly_stats --json output/weekly/<오늘>.json` — 두 시장의 지수·
    환율·금리(주간 등락, 날짜별 등락, 주중 최고·최저), 종목 폭, 업종(한국장 코어 종목 평균),

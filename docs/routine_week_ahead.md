@@ -43,7 +43,7 @@
 
 ## 절차
 
-1. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`
+1. `python -m scripts.sandbox_ready`
 2. **다음 주 일정.** 월요일부터 금요일까지, 두 시장:
    - 미국: 경제지표(CPI·PPI·소매판매·고용·PCE 등, 발표 시각), FOMC·연준 인사 발언, 주요 실적
      (개장 전/마감 후), 휴장일. WebSearch로 **서로 다른 출처 2곳 이상**에서 확인한 것만 씁니다.

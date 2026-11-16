@@ -103,7 +103,7 @@ WebSearch·WebFetch는 별도 경로라 늘 됩니다.
 2. **읽을 것.** `docs/editorial-style.md`(전부), 시장별 파일,
    `src/publish_editorial.py` 상단 주석(원고 형식). 기존 `editorial/` 원고는
    형식만 참고하고 문체·분량의 목표로 삼지 않습니다.
-3. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`(샌드박스에는 한글 폰트가 없어 이걸 빼면 그래픽 렌더가 첫 번에 실패합니다. 환경에 셋업 스크립트가 등록돼 있으면 몇 초에 끝납니다)
+3. `python -m scripts.sandbox_ready` — 의존성·Pillow·한글 폰트를 한 번에 맞춥니다(샌드박스에는 한글 폰트가 없어 이걸 빼면 그래픽 렌더가 첫 번에 실패합니다. 이미 되어 있으면 몇 초에 끝납니다). 마지막 줄이 `준비됨`이어야 합니다 — `pip install`·`apt-get`을 따로 짜 맞추지 않습니다(이 샌드박스의 `pip`는 `python`과 판본이 달라 엉뚱한 곳에 깔리고, `apt-get install`은 목록을 먼저 받지 않으면 꾸러미를 못 찾습니다).
 4. **재료를 먼저 읽습니다.** `data/engines_<market>_<거래일>.txt` — 시세 수집 워크플로가
    시세 파일과 같은 커밋에 넣어 둡니다(2026-09-08부터). 밸류에이션(FWD PER·목표주가 대비)·
    의견 변경·실적 일정·내부자 매수·수급 엇갈림·업종 폭·금리·계절성. 파일이 없을 때만

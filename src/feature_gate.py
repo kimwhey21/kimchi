@@ -108,6 +108,11 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     blocking = []
     notes: list[str] = []
     blocking.extend(placement_issues(doc))
+    if str(doc.get("series") or "") != "매거진":
+        # 그림 데이터(2026-11-16): 발행이 그리기 직전에 멈추는 검사를 커밋 전에 먼저 돌린다 — 그림을 그려 보지 못한
+        # 실행이 관문만 통과한 원고를 올리면 본진 발행도 네이버 동기화도 멈춰 그날 글이 빠진다. 그리지 않으므로 폰트가 없어도 돈다.
+        from src import publish_feature
+        blocking.extend(f"그림 데이터 — {issue}" for issue in publish_feature.graphic_data_issues(doc))
     if not str(doc.get("series") or "").strip():
         # 시리즈 칸이 없으면 머리말·태그·관문은 기준표(Checkpoint)로 보는데 발행은 공개로 올린다(2026-09-26 점검) —
         # 한국어 Checkpoint가 본진에 공개로 나가고 알림까지 갈 수 있으므로 커밋 전에 막는다.

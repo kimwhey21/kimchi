@@ -78,7 +78,7 @@
 
 ## 절차
 
-1. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`(샌드박스에는 한글 폰트가 없어 이걸 빼면 그래픽 렌더가 첫 번에 실패합니다)
+1. `python -m scripts.sandbox_ready`(샌드박스에는 한글 폰트가 없어 이걸 빼면 그래픽 렌더가 첫 번에 실패합니다)
 2. **재료.** 토요일이면 먼저 `python -m scripts.magazine_radar --set ko,magazine --hours 48`로 이번 주 화제를
    훑습니다(일요일 검색형 질문 글에는 돌리지 않습니다 — 주제를 「임무」의 후보 목록에서 고릅니다).
    그다음 `ls data/engines_*_$(TZ=Asia/Seoul date +%F).txt`를 봅니다. GitHub

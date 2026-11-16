@@ -184,7 +184,7 @@
 
 ## 절차
 
-1. `pip install -r requirements.txt && apt-get install -y -qq fonts-nanum`
+1. `python -m scripts.sandbox_ready`
 2. **주제.** 「주제 목록」의 고르는 법대로 — 어제와 다른 갈래에서, 그 갈래의 위에서부터
    (`python -m scripts.magazine_radar --set ko`로 오늘 뉴스에 걸린 것이 있으면 그것을 먼저). 이미 쓴 것은 뺍니다.
    `https://fermata.it.kr/wp-json/wp/v2/posts?search=<검색어>&_fields=title,link`로 같은 주제의 글이 이미

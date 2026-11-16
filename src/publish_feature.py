@@ -173,37 +173,61 @@ def _refresh_related(related: list | None) -> list[dict]:
     return rows
 
 
+def _graphic_inputs(doc: dict, index: int, spec: dict) -> tuple[str, dict, str, dict, str | None]:
+    """그래픽 선언 하나가 쓸 것 — (종류, 인자, 제목, 시세, 붙을 절 본문). 시세 파일이 필요한데 없으면 ValueError."""
+    sections = (doc.get("ko") or doc).get("narrative") or []
+    kind, args = spec["kind"], dict(spec.get("args") or {})
+    title = str(args.get("title") or spec.get("alt") or "")
+    price_data: dict = {}
+    if getattr(feature_graphics, kind, None) is None and kind in data_graphics.BUILDERS:
+        # 시황용 데이터 그래픽(price_history·number_cards·movers_list 등)을 기준표·
+        # 프리뷰에서도 씁니다(2026-09-08). 원고에는 시세가 없으므로 `price_file`로
+        # 시세 파일을 가리킵니다 — "price_file": "data/price_us_2026-09-04.json".
+        price_file = spec.get("price_file")
+        if kind in data_graphics.PRICELESS_KINDS and not price_file:
+            price_data = {}   # 표·수급 그림은 조사 값으로만 그린다(출처 필수)
+        else:
+            if not price_file:
+                raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 필요합니다 — "
+                                 "\"price_file\": \"data/price_<market>_<날짜>.json\"을 적으십시오.")
+            price_path = ROOT / price_file
+            if not price_path.exists():
+                raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 없습니다: {price_file}")
+            price_data = json.loads(price_path.read_text(encoding="utf-8"))
+    # 제목↔데이터·그린 종목↔절 본문·표 셀 폭 검사(2026-09-25). 시세를 먼저 읽어야 제목 주장을 잴 수 있다.
+    body = None
+    if "section" in spec:
+        try:
+            body = str(sections[int(spec["section"])].get("body") or "")
+        except (IndexError, ValueError, AttributeError):
+            body = None   # 절 번호가 틀린 것은 아래 배치 검사가 따로 잡는다
+    return kind, args, title, price_data, body
+
+
+def graphic_data_issues(doc: dict) -> list[str]:
+    """그림을 그리지 않고 잴 수 있는 것 — 시세 파일 유무, 제목↔데이터, 그린 종목↔절 본문.
+
+    발행(`_build_graphics`)이 그리기 직전에 멈추는 것과 같은 검사다. 관문(`feature_gate`)이 커밋 전에 불러,
+    그림을 그려 보지 못한 실행(한글 폰트가 없는 샌드박스)에서도 발행이 멈출 원고를 먼저 막는다."""
+    issues: list[str] = []
+    for index, spec in enumerate(doc.get("graphics") or []):
+        label = f"그림 {index + 1}({spec.get('kind')})"
+        try:
+            kind, args, title, price_data, body = _graphic_inputs(doc, index, spec)
+            found = graphic_checks.collect_spec_issues(kind, args, title, price_data=price_data or None,
+                                                       section_body=body)
+        except (ValueError, KeyError, TypeError, OSError) as exc:
+            found = [str(exc)]
+        issues += [f"{label} — {message}" for message in found]
+    return issues
+
+
 def _build_graphics(doc: dict, output: Path) -> tuple[list[dict], dict[int, dict], dict | None]:
     """JSON의 graphics 선언을 실제 PNG와 절 번호별 figure로 바꾼다."""
     generated, figures, cover = [], {}, None
-    sections = (doc.get("ko") or doc).get("narrative") or []
     for index, spec in enumerate(doc.get("graphics") or []):
-        kind, args = spec["kind"], dict(spec.get("args") or {})
-        title = str(args.get("title") or spec.get("alt") or "")
+        kind, args, title, price_data, body = _graphic_inputs(doc, index, spec)
         feature_builder = getattr(feature_graphics, kind, None)
-        price_data: dict = {}
-        if feature_builder is None and kind in data_graphics.BUILDERS:
-            # 시황용 데이터 그래픽(price_history·number_cards·movers_list 등)을 기준표·
-            # 프리뷰에서도 씁니다(2026-09-08). 원고에는 시세가 없으므로 `price_file`로
-            # 시세 파일을 가리킵니다 — "price_file": "data/price_us_2026-09-04.json".
-            price_file = spec.get("price_file")
-            if kind in data_graphics.PRICELESS_KINDS and not price_file:
-                price_data = {}   # 표·수급 그림은 조사 값으로만 그린다(출처 필수)
-            else:
-                if not price_file:
-                    raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 필요합니다 — "
-                                     "\"price_file\": \"data/price_<market>_<날짜>.json\"을 적으십시오.")
-                price_path = ROOT / price_file
-                if not price_path.exists():
-                    raise ValueError(f"그래픽 {index + 1}({kind}): 시세 파일이 없습니다: {price_file}")
-                price_data = json.loads(price_path.read_text(encoding="utf-8"))
-        # 제목↔데이터·그린 종목↔절 본문·표 셀 폭 검사(2026-09-25). 시세를 먼저 읽어야 제목 주장을 잴 수 있다.
-        body = None
-        if "section" in spec:
-            try:
-                body = str(sections[int(spec["section"])].get("body") or "")
-            except (IndexError, ValueError, AttributeError):
-                body = None   # 절 번호가 틀린 것은 아래 배치 검사가 따로 잡는다
         notes: list[str] = []
         issues = graphic_checks.collect_spec_issues(kind, args, title, price_data=price_data or None,
                                                     section_body=body, notes_out=notes)

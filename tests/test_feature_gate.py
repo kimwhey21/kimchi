@@ -72,3 +72,55 @@ class PlacementTest(unittest.TestCase):
     def test_distinct_sections_pass_and_magazine_is_skipped(self) -> None:
         self.assertEqual(feature_gate.placement_issues(self._doc([0, 2, 4])), [])
         self.assertEqual(feature_gate.placement_issues(self._doc([4, 4], series="매거진")), [])
+
+
+class GraphicDataTest(unittest.TestCase):
+    """그림 데이터(2026-11-16): 발행이 그리기 직전에 멈추는 검사를 관문이 커밋 전에 돌린다.
+    그림을 그려 보지 못한 실행이 관문만 통과한 원고를 올려 그날 글이 빠진 일이 있었다."""
+
+    def _doc(self, body: str, price_file: str | None, series: str = "칼럼") -> dict:
+        spec = {"kind": "movers_list", "section": 1, "args": {"title": "오늘의 등락"}}
+        if price_file:
+            spec["price_file"] = price_file
+        return {"series": series,
+                "ko": {"narrative": [{"heading": "h", "body": "첫 절입니다."}, {"heading": "h", "body": body}]},
+                "graphics": [{"kind": "cover", "featured": True, "args": {}}, spec]}
+
+    def _price_file(self) -> str:
+        import json
+        import tempfile
+        from pathlib import Path
+        from tests.test_graphic_checks_2026_09_25 import _kr_price_data
+        path = Path(tempfile.mkdtemp()) / "price_kr_2026-09-05.json"
+        path.write_text(json.dumps(_kr_price_data()), encoding="utf-8")
+        return str(path)
+
+    def test_drawn_stocks_missing_from_the_section_are_reported(self) -> None:
+        from src import publish_feature
+        issues = publish_feature.graphic_data_issues(self._doc("은행주가 무거웠습니다.", self._price_file()))
+        self.assertEqual(len(issues), 1, issues)
+        self.assertIn("그림 2(movers_list)", issues[0])
+        self.assertIn("하나도 없습니다", issues[0])
+
+    def test_section_that_names_the_stocks_passes(self) -> None:
+        from src import publish_feature
+        body = "대우건설과 두산에너빌리티가 내렸고 삼성전자와 에이피알은 올랐습니다."
+        self.assertEqual(publish_feature.graphic_data_issues(self._doc(body, self._price_file())), [])
+
+    def test_missing_price_file_is_an_issue_not_a_crash(self) -> None:
+        from src import publish_feature
+        issues = publish_feature.graphic_data_issues(self._doc("b", None))
+        self.assertTrue(issues and "price_file" in issues[0], issues)
+        issues = publish_feature.graphic_data_issues(self._doc("b", "data/price_kr_1999-01-01.json"))
+        self.assertTrue(issues and "시세 파일이 없습니다" in issues[0], issues)
+
+    def test_gate_blocks_on_graphic_data_and_skips_the_magazine(self) -> None:
+        doc = self._doc("은행주가 무거웠습니다.", self._price_file())
+        with self.assertRaises(feature_gate.FeatureGateError) as caught:
+            feature_gate.run(doc, graphics=2)
+        self.assertIn("그림 데이터 — 그림 2(movers_list)", str(caught.exception))
+        magazine = self._doc("은행주가 무거웠습니다.", self._price_file(), series="매거진")
+        try:
+            feature_gate.run(magazine, graphics=2)
+        except feature_gate.FeatureGateError as exc:
+            self.assertNotIn("그림 데이터", str(exc))
