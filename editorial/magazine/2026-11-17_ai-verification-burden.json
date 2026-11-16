@@ -1,0 +1,121 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-17",
+ "slug": "ai-verification-burden",
+ "radar_origin": "The Conversation: Catching AI’s mistakes is a mental burden – and a drag on productivity",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1773047747721-f75d546d7290?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8bWFnbmlmeWluZyUyMGdsYXNzJTIwZG9jdW1lbnR8ZW58MHwwfHx8MTc5NDg0OTI3M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "pCwb5OuObls",
+  "credit": "Unsplash / Sasun Bughdaryan"
+ },
+ "sources": [
+  {
+   "name": "더 컨버세이션",
+   "title": "Catching AI's mistakes is a mental burden – and a drag on productivity (2026-11-16)",
+   "url": "https://theconversation.com/catching-ais-mistakes-is-a-mental-burden-and-a-drag-on-productivity-291748"
+  },
+  {
+   "name": "METR",
+   "title": "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity (2025-07-10)",
+   "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
+  },
+  {
+   "name": "METR",
+   "title": "We are Changing our Developer Productivity Experiment Design (2026-02-24)",
+   "url": "https://metr.org/blog/2026-02-24-uplift-update/"
+  }
+ ],
+ "tags": [
+  "AI생산성",
+  "검증부담",
+  "METR"
+ ],
+ "ko": {
+  "title": "AI가 만든 초안을 확인하는 시간은 누가 셀까",
+  "title_candidates": [
+   "AI가 만든 초안을 확인하는 시간은 누가 셀까",
+   "AI 검증 부담: 생산성 계산에서 빠진 한 가지",
+   "AI를 쓰면 빨라졌다고 느끼는 이유, 시간을 재 보니 달랐습니다"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "한 실험에서 AI 도구를 쓸 수 있게 허락받은 숙련 개발자 열여섯 명은 일이 24% 빨라질 것이라 예상했습니다.\n결과는 정반대였습니다. 작업 시간은 오히려 19% 길어졌고, 실험이 끝난 뒤에도 이들은 AI 덕에 20% 빨라졌다고 믿었습니다.\n빨라졌다는 느낌과 시계 사이는 왜 이렇게 벌어졌을까요?"
+   },
+   {
+    "heading": "늘어난 시간은 어디로 갔을까",
+    "body": "학자와 연구자가 기고하는 매체 더 컨버세이션에 글을 쓴 조지아공대 인지공학 교수 Karen Feigh는 그 틈을 ‘검증 부담’이라 부릅니다.\nAI가 답을 빨리 내놓아도, 그 답이 맞고 적절한지 가려내는 데 드는 시간과 정신적 에너지가 이득을 도로 가져간다는 뜻입니다.\n그는 AI를 쓰는 일을 아주 빠르고 말쑥한 인턴을 감독하는 일에 빗댑니다.\n“이 인턴은 좋은 결과물과 나쁜 결과물을 똑같이 자신 있는 목소리로 내놓고, 어디를 살펴봐야 하는지 단서도 거의 주지 않으며, 결과에 책임도 지지 않습니다.”"
+   },
+   {
+    "heading": "만드는 일과 확인하는 일은 다릅니다",
+    "body": "확인은 만들기보다 쉬운 일이 아닙니다. 메타분석, 곧 여러 연구 결과를 묶어 다시 계산한 분석에서 86개 연구를 보니 사람은 직접 만든 내용을 읽기만 한 내용보다 훨씬 잘 기억했습니다.\n읽기 쉬운 글일수록 더 믿을 만하게 느껴지는 경향도 있어서, 매끈한 AI 답변은 의심을 덜 받습니다.\n만드는 쪽은 언제 끝났는지 압니다. 확인하는 쪽은 오류가 있는지, 어디에 있는지, 어떤 모양인지도 모른 채 시작합니다.\nFeigh는 이것을 공항 보안 검색에 견줍니다. 드문 위협일수록 검사관이 ‘없을 것’이라 짐작해 더 자주 놓친다는 점이 닮았습니다."
+   },
+   {
+    "heading": "전문 분야 밖에서는 더 어렵습니다",
+    "body": "AI가 자기 전문 밖의 일을 만들어 줄 때 확인은 더 어려워집니다.\n컨설팅 팀을 본 대규모 연구에서는 전문 분야 밖에서 AI를 쓴 사람들이 잘못된 결론에 닿는 경우가 더 많았습니다.\n다른 연구에서는 AI가 내놓은 추론 설명이 쉬운 문제의 실수는 잡게 도왔지만, 도움이 가장 필요한 어려운 문제에서는 그렇지 못했습니다."
+   },
+   {
+    "heading": "처음 숫자는 지금도 맞을까",
+    "body": "실험을 한 연구기관 METR는 이 결과를 2025년 초 AI 도구와 한 가지 상황을 찍은 스냅숏이라고 밝혔습니다.\n그리고 이 결과가 지금 개발자의 생산성에 미치는 영향을 더는 반영하지 않는다고 못박아 두었습니다.\n2026년 2월 METR가 낸 후속 실험에서는 AI 없이 일하기 싫다며 참여를 거절하는 개발자가 늘어, 믿고 쓰기 어려운 값이 나왔습니다. 설문에서 개발자의 30~50%는 AI 없이 하기 싫은 과제는 내지 않았다고 답했습니다.\nMETR는 2026년 초에는 개발자들이 더 빨라졌을 가능성이 크다고 보면서도, 그 크기는 아주 약한 증거로만 말할 수 있다고 했습니다."
+   },
+   {
+    "heading": "일터에서 달라져야 할 것은 무엇일까",
+    "body": "그렇다면 이 이야기는 ‘AI는 느리다’가 아닙니다. 확인에 드는 시간을 재지 않으면 생산성을 말하기 어렵다는 이야기입니다.\n더 컨버세이션 글은 AI 결과물에 책임을 지는 사람에게 확인할 시간과 훈련, 권한도 함께 줘야 한다고 말합니다.\n생산성은 초안이 얼마나 빨리 나오느냐가 아니라, 사람과 AI의 전체 작업 흐름이 믿을 만한 결과를 더 낮은 총비용으로 내느냐로 재야 한다는 것입니다.\n여러분의 일터에서는 AI가 줄여 준 시간과 AI를 확인하느라 쓴 시간 중 어느 쪽을 더 정확히 재고 있나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "일이 24% 빨라질 것이라",
+   "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/",
+   "original": "developers expected ai to speed them up by 24%, and even after experiencing the slowdown, they still believed ai had sped them up by 20%."
+  },
+  {
+   "claim": "작업 시간은 오히려 19% 길어졌고",
+   "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/",
+   "original": "surprisingly, we find that when developers use ai tools, they take 19% longer than without—ai makes them slower."
+  },
+  {
+   "claim": "AI 덕에 20% 빨라졌다고 믿었습니다",
+   "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/",
+   "original": "developers expected ai to speed them up by 24%, and even after experiencing the slowdown, they still believed ai had sped them up by 20%."
+  },
+  {
+   "claim": "숙련 개발자 열여섯 명",
+   "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/",
+   "original": "we recruited 16 experienced developers from large open-source repositories"
+  },
+  {
+   "claim": "이 인턴은 좋은 결과물과 나쁜 결과물을 똑같이 자신 있는 목소리로 내놓고",
+   "url": "https://theconversation.com/catching-ais-mistakes-is-a-mental-burden-and-a-drag-on-productivity-291748",
+   "original": "this intern delivers both good and bad work in the same confident voice, provides few clues about where scrutiny is needed, and bears no responsibility for the consequences."
+  },
+  {
+   "claim": "86개 연구를 보니",
+   "url": "https://theconversation.com/catching-ais-mistakes-is-a-mental-burden-and-a-drag-on-productivity-291748",
+   "original": "a meta-analyis of 86 studies revealed that people remember what they produced far better than anything they only read"
+  },
+  {
+   "claim": "2025년 초 AI 도구와 한 가지 상황을 찍은 스냅숏",
+   "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/",
+   "original": "we view this result as a snapshot of early-2025 ai capabilities in one relevant setting"
+  },
+  {
+   "claim": "2026년 2월 METR가 낸 후속 실험",
+   "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/",
+   "original": "update: in february 2026, we published new data on the productivity impact of late-2025 ai tools."
+  },
+  {
+   "claim": "개발자의 30~50%는",
+   "url": "https://metr.org/blog/2026-02-24-uplift-update/",
+   "original": "when surveyed, 30% to 50% of developers told us that they were choosing not to submit some tasks because they did not want to do them without ai."
+  },
+  {
+   "claim": "2026년 초에는 개발자들이 더 빨라졌을 가능성이 크다고",
+   "url": "https://metr.org/blog/2026-02-24-uplift-update/",
+   "original": "based on conversations with study participants, we believe it is likely that developers are more sped up from ai tools now"
+  }
+ ]
+}
