@@ -70,7 +70,7 @@ def _post_stats(doc: dict) -> dict:
         "visuals": graphics + photos,
         "title_len": len(title), "title_pct": len(_PCT.findall(title)),
         "sentences": len(sentences), "polite_pct": round(100 * polite / len(sentences)) if sentences else 0,
-        "has_check": bool(((ko.get("closing") or {}).get("check") or {}).get("due")),
+        "has_check": isinstance(check := (ko.get("closing") or {}).get("check"), dict) and bool(check.get("due")),
         "has_review": bool(doc.get("review")),
         "beginner": "초보자" in plain, "institution": bool(_INSTITUTION.search(plain)),
         # 같은 틀 반복(2026-09-09, 네 번째 지적) — 제목의 끝말·대비 꼴, 소제목의 문장 비율

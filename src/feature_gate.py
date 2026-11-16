@@ -102,6 +102,21 @@ def placement_issues(doc: dict) -> list[str]:
     return [f"그림 자리 — {i}" for i in issues]
 
 
+def naver_build_issues(doc: dict, path: Path | None = None) -> list[str]:
+    """맥의 동기화가 네이버에 올리려고 원고를 블록으로 바꾸는 길을 커밋 전에 한 번 밟아 본다(2026-11-16).
+
+    왜: 관문과 본진 발행은 통과했는데 이 변환이 멈춰 그 글이 네이버에 못 올라간 날이 있었다 — `closing.check`를
+    {"due", "what"} 대신 문장 하나로 적은 가이드. 그 꼴은 이제 받아 주지만, 같은 종류(칸의 꼴이 달라 변환이 멈춤)는
+    여기서 먼저 걸린다. 그림 폴더 없이 돌리므로 그리지 않고, 네트워크도 쓰지 않는다."""
+    from scripts import naver_post
+    try:
+        naver_post.build_doc(doc, Path(path) if path is not None else Path("manuscript.json"), None)
+    except Exception as exc:  # noqa: BLE001 — 어떤 오류든 동기화를 멈추게 하므로 전부 막는다
+        return [f"네이버 원고 — 블록으로 바꾸다 멈춥니다({type(exc).__name__}: {exc}). 맥의 동기화가 이 글을 올리지 못합니다 — "
+                "오류가 가리키는 칸의 꼴을 다른 원고와 맞추십시오."]
+    return []
+
+
 def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
     """다섯 검사를 모두 호출하고, 막아야 할 오류와 참고 보고를 분리한다."""
     ko = doc.get("ko") or doc
@@ -113,6 +128,7 @@ def run(doc: dict, graphics: int, path: Path | None = None) -> dict:
         # 실행이 관문만 통과한 원고를 올리면 본진 발행도 네이버 동기화도 멈춰 그날 글이 빠진다. 그리지 않으므로 폰트가 없어도 돈다.
         from src import publish_feature
         blocking.extend(f"그림 데이터 — {issue}" for issue in publish_feature.graphic_data_issues(doc))
+    blocking.extend(naver_build_issues(doc, path))
     if not str(doc.get("series") or "").strip():
         # 시리즈 칸이 없으면 머리말·태그·관문은 기준표(Checkpoint)로 보는데 발행은 공개로 올린다(2026-09-26 점검) —
         # 한국어 Checkpoint가 본진에 공개로 나가고 알림까지 갈 수 있으므로 커밋 전에 막는다.

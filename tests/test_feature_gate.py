@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from src import feature_gate
@@ -11,7 +12,7 @@ class FeatureGateWiringTest(unittest.TestCase):
         # 출처 검사는 mock으로 막지 않습니다 — 이 검사가 게이트에 실제로 걸려
         # 있는지가 이 테스트의 관심사이기도 합니다. 그래서 본문에 출처를 넣어
         # 통과시키고, 빠졌을 때 막는지는 아래 테스트가 봅니다.
-        doc = {"series": "기준표", "ko": {"title": "제목",
+        doc = {"series": "기준표", "date": "2026-11-16", "ko": {"title": "제목",
                       "narrative": [{"heading": "1.", "body":
                           "트렌드포스 전망입니다. 모건스탠리가 상향했습니다. "
                           "관세청 통계도 같습니다."}],
@@ -124,3 +125,33 @@ class GraphicDataTest(unittest.TestCase):
             feature_gate.run(magazine, graphics=2)
         except feature_gate.FeatureGateError as exc:
             self.assertNotIn("그림 데이터", str(exc))
+
+
+class NaverBuildTest(unittest.TestCase):
+    """네이버 블록으로 바꾸는 길을 관문이 먼저 밟아 본다."""
+
+    def _doc(self, closing):
+        return {"kind": "feature", "series": "가이드", "date": "2026-11-16", "slug": "ko_x",
+                "ko": {"title": "제목", "lead": "머리말입니다.",
+                       "narrative": [{"heading": "절", "body": "본문입니다."}], "closing": closing}}
+
+    def test_sentence_check_is_carried_not_crashed(self) -> None:
+        from scripts import naver_post
+        doc = self._doc({"body": "우리는 이렇게 봅니다.", "check": "12월에 세율을 확인하겠습니다."})
+        self.assertEqual(feature_gate.naver_build_issues(doc), [])
+        blocks = [tuple(b) for b in naver_post.build_doc(doc, Path("ko_x.json"))["blocks"]]
+        self.assertIn(("h", "다음 확인 지점"), blocks)
+        self.assertIn(("p", "12월에 세율을 확인하겠습니다."), blocks)
+
+    def test_dict_check_still_uses_what(self) -> None:
+        from scripts import naver_post
+        self.assertEqual(naver_post.check_what({"closing": {"check": {"due": "2026-12-01", "what": "세율 확인"}}}), "세율 확인")
+        self.assertEqual(naver_post.check_what({"closing": {}}), "")
+        self.assertEqual(naver_post.check_what({"closing": "문장"}), "")
+
+    def test_broken_shape_is_reported_not_raised(self) -> None:
+        doc = self._doc({"body": "우리는 이렇게 봅니다."})
+        doc["ko"]["closing"] = ["맺음이 목록으로 적힘"]
+        issues = feature_gate.naver_build_issues(doc)
+        self.assertEqual(len(issues), 1)
+        self.assertIn("네이버 원고", issues[0])

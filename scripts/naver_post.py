@@ -271,8 +271,22 @@ def naver_title(base: str, prefix: str, series: str | None, kdate: str) -> str:
     return (base or "").strip()
 
 
+def check_what(ko: dict) -> str:
+    """확인 지점 문장. `closing.check`는 {"due", "what"} 꼴이지만 문장 하나로 적힌 원고도 있다(2026-11-16 가이드) —
+    그때 멈추면 그 글이 네이버에 올라가지 못하므로 그 문장을 그대로 쓴다."""
+    closing = ko.get("closing")
+    check = closing.get("check") if isinstance(closing, dict) else None
+    if isinstance(check, dict):
+        return str(check.get("what") or "").strip()
+    return check.strip() if isinstance(check, str) else ""
+
+
 def build(path: Path, graphics_dir: Path | None = None) -> dict:
-    doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    return build_doc(json.loads(Path(path).read_text(encoding="utf-8")), path, graphics_dir)
+
+
+def build_doc(doc: dict, path: Path, graphics_dir: Path | None = None) -> dict:
+    """이미 읽은 원고로 네이버 블록을 만든다 — 관문이 커밋 전에 같은 길을 한 번 밟아 보려고 따로 뗐다(2026-11-16)."""
     ko = doc.get("ko") or {}
     market = doc.get("market")
     date_str = str(doc.get("date"))
@@ -416,10 +430,10 @@ def build(path: Path, graphics_dir: Path | None = None) -> dict:
         # 칼럼은 마무리 절 이름을 원고에서 받는다(기본 「Fermata의 시선」, 2026-10-13).
         blocks.append(("h", str((ko.get("closing") or {}).get("heading") or "Fermata의 시선") if column else "Fermata's Take"))
         blocks += [("p", x) for x in _chunks(take)]
-    check = ((ko.get("closing") or {}).get("check") or {}).get("what")
+    check = check_what(ko)
     if check:
         blocks.append(("h", "다음 확인 지점"))
-        blocks.append(("p", str(check)))
+        blocks.append(("p", check))
     if magazine:
         # 잡지에는 Fermata's Take가 없다(2026-09-13). 배경을 읽는 글이지
         # 우리 판단을 덧붙이는 글이 아니다. 원고에 closing이 있어도 싣지 않는다.

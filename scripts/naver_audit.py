@@ -54,6 +54,15 @@ def probe_of(value) -> str:
     return plain(first)[:40]
 
 
+def _check_what(ko: dict) -> str:
+    """확인 지점 문장 — `closing.check`가 {"due", "what"} 꼴이 아니고 문장 하나여도 멈추지 않는다(`naver_post.check_what`과 같은 뜻)."""
+    closing = ko.get("closing")
+    check = closing.get("check") if isinstance(closing, dict) else None
+    if isinstance(check, dict):
+        return str(check.get("what") or "")
+    return check if isinstance(check, str) else ""
+
+
 def check(manuscript: Path, logno: str) -> list[str]:
     doc = json.loads(manuscript.read_text(encoding="utf-8"))
     ko = doc.get("ko") or {}
@@ -77,7 +86,7 @@ def check(manuscript: Path, logno: str) -> list[str]:
                     missing.append(f"narrative[{i}] {label}")
     for label, value in (("outlook", (ko.get("outlook") or {}).get("body")),
                          ("closing(Take)", (ko.get("closing") or {}).get("body")),
-                         ("확인 지점", ((ko.get("closing") or {}).get("check") or {}).get("what"))):
+                         ("확인 지점", _check_what(ko))):
         probe = squash(probe_of(value))
         if probe:
             checked += 1
