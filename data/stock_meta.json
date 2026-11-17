@@ -27646,10 +27646,14 @@
 "web": ""
 },
 "493260": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01658035",
+"en": "Optonics Co., Ltd.",
+"founded": "2004",
+"industry": "Medical & precision instruments",
+"ksic": "272",
+"name": "Optonics",
+"pref": false,
+"web": "www.optonics.biz"
 },
 "493280": {
 "corp": "01859500",
