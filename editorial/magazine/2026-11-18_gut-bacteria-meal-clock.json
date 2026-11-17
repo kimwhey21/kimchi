@@ -1,0 +1,147 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-18",
+ "slug": "gut-bacteria-meal-clock",
+ "radar_origin": "The Conversation: Your gut bacteria helps your body keep track of time, and when you eat influences how much",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1547573854-74d2a71d0826?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8ZGlubmVyJTIwcGxhdGV8ZW58MHwwfHx8MTc5NDkzNTYwNXww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "Q_Moi2xjieU",
+  "credit": "Unsplash / Stefan Vladimirov"
+ },
+ "sources": [
+  {
+   "name": "카네기멜런대",
+   "title": "CMU Researchers Find Gut Bacteria Signal When to Absorb Nutrients (2026-10)",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients"
+  },
+  {
+   "name": "MDedge",
+   "title": "You Are When You Eat: Microbiome Rhythm and Metabolic Health (2025-07-22)",
+   "url": "https://mdedge.com/content/you-are-when-you-eat-microbiome-rhythm-and-metabolic-health"
+  }
+ ],
+ "tags": [
+  "장내세균",
+  "생체시계",
+  "식사시간",
+  "미생물"
+ ],
+ "ko": {
+  "title": "장 속 세균은 우리가 밥 먹는 시각을 어떻게 알까",
+  "title_candidates": [
+   "장 속 세균은 우리가 밥 먹는 시각을 어떻게 알까",
+   "빛이 닿지 않는 장 속 세균은 무엇으로 시간을 알까",
+   "장 속 세균에게 식사는 시계일까 알람일까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "우리 몸의 시계는 빛으로 맞춰진다고들 합니다.\n그런데 장 속에 사는 세균에게는 빛이 닿지 않습니다.\n빛이 없는 곳의 세균은 무엇으로 시간을 알까요?"
+   },
+   {
+    "heading": "세균은 밥으로 시간을 읽었습니다",
+    "body": "카네기멜런대는 장내 세균이 사람이 언제 먹는지 알아채고, 장 세포가 알맞은 때에 영양분을 흡수하도록 신호를 보낸다는 연구를 소개했습니다.\n연구를 이끈 생물과학과의 Zheng Kuang 부교수는 세균의 시계를 이렇게 설명했습니다.\n“이 세균들에게는 빛이 닿지 않습니다. 대신 음식을 시간을 알려 주는 신호로 씁니다.”\n“우리가 먹으면 세균은 장 세포와 소통하는 분자를 만들고, 영양분 흡수를 조율하도록 돕습니다.”"
+   },
+   {
+    "heading": "신호를 만드는 재료는 견과류와 곡물입니다",
+    "body": "연구진이 다룬 세균은 피테이트(phytate)를 분해합니다.\n피테이트는 견과류·씨앗·곡물에 들어 있는 천연 화합물입니다.\n세균이 이것을 분해하며 만든 분자가 장 세포의 단백질을 활성화하고, 그 단백질이 영양분 흡수를 맡은 유전자를 켭니다.\n그래서 Zheng Kuang 부교수는 먹는 때와 몸이 음식을 기대하는 때가 어긋나지 않는 것을 핵심으로 봅니다.\n“우리가 먹는 때와 몸이 음식을 기대하는 때가 맞아떨어지는 것이 매우 중요해 보입니다”"
+   },
+   {
+    "heading": "굶던 시절에는 이로웠던 장치입니다",
+    "body": "생쥐 실험에서 이 경로를 켜는 세균은 열량이 높은 먹이를 먹은 동물에게 지방을 쌓게 했습니다.\n해로워 보이지만 Zheng Kuang 부교수는 먹을 것이 귀했던 시대에는 이 장치가 생존에 유리했다고 풉니다.\n“과거에는 이 관계가 우리가 자라고 살아남도록 도왔습니다.”\n영양이 모자란 먹이를 준 동물에게서는 이 세균과 분자가 성장을 도왔습니다.\n다만 영양과 농업 분야의 응용은 아직 몇 해 뒤의 이야기라고 연구진은 선을 그었습니다."
+   },
+   {
+    "heading": "다른 연구실도 같은 곳을 바라봅니다",
+    "body": "소화기 전문 매체 MDedge는 미국 UC 샌디에이고의 연구를 전했습니다.\n이 연구를 이끈 Amir Zarrinpar 박사는 장내 미생물에도 리듬이 있다고 말합니다.\n“우리 몸이 내부 시계(서캐디언 리듬, 하루 주기 생체 리듬)를 따르듯, 장내 미생물도 고유한 리듬이 있어 하루 중 때와 우리가 먹는 때에 따라 활동을 조절합니다.”\n연구진은 생쥐를 세 무리로 나눠 고지방 먹이를 자유롭게 먹게 하거나, 하루 8시간 안에만 먹게 하거나, 일반 먹이를 먹게 했습니다.\n8주 동안 관찰한 결과 자유롭게 먹은 쥐는 낮에도 깨어 먹으며 교대근무자와 비슷한 시간 어긋남을 겪었습니다.\n먹는 시간을 제한한 쥐는 지방 증가·염증·인슐린 저항성이 덜했습니다."
+   },
+   {
+    "heading": "사람에게 옮기기엔 아직 이릅니다",
+    "body": "두 연구는 모두 동물 실험에서 나왔습니다.\n이 연구에 참여하지 않은 비만대사 외과의 Mitchell Roslin 박사도 선을 그었습니다.\n“소동물 연구는 꼭 필요하지만, 결과가 사람에게 그대로 옮겨지는지는 매우 추측에 가깝습니다.”\nZheng Kuang 부교수도 처방 대신 방향만 말했습니다.\n“우리 연구는 일정한 식사 패턴을 유지하는 것이 미생물과 몸 사이의 건강한 관계를 뒷받침할 수 있음을 시사합니다.”\n빛 대신 식사를 시계로 쓰는 세균이 정말 우리 안에 있다면, 오늘 불규칙하게 보낸 하루는 그 세균에게 어떤 시간으로 읽혔을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "장내 세균이 사람이 언제 먹는지 알아채고",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "gut bacteria can detect when people eat and send signals that help intestinal cells absorb nutrients at the right time of day"
+  },
+  {
+   "claim": "이 세균들에게는 빛이 닿지 않습니다. 대신 음식을 시간을 알려 주는 신호로 씁니다.",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "These bacteria don't have access to light,\" Kuang said. \"Instead, they use food as a signal to tell time."
+  },
+  {
+   "claim": "우리가 먹으면 세균은 장 세포와 소통하는 분자를 만들고, 영양분 흡수를 조율하도록 돕습니다.",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "When we eat, they produce molecules that communicate with our intestinal cells and help coordinate nutrient absorption."
+  },
+  {
+   "claim": "피테이트(phytate)를 분해",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "the strain of bacteria they were working with metabolizes phytate, a naturally occurring compound found in foods such as nuts, seeds and grains"
+  },
+  {
+   "claim": "세균이 이것을 분해하며 만든 분자가",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "As they break down phytate, the bacteria produce molecules that activate a protein in intestinal cells, which then switches on genes responsible for nutrient absorption."
+  },
+  {
+   "claim": "우리가 먹는 때와 몸이 음식을 기대하는 때가 맞아떨어지는 것이 매우 중요해 보입니다",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "The alignment between when we eat and when our bodies expect food appears to be very important"
+  },
+  {
+   "claim": "생쥐 실험에서 이 경로를 켜는 세균은 열량이 높은 먹이를 먹은 동물에게 지방을 쌓게 했습니다",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "Using mouse models, the researchers found that bacteria capable of activating this pathway promoted fat accumulation when animals consumed high-calorie diets."
+  },
+  {
+   "claim": "과거에는 이 관계가 우리가 자라고 살아남도록 도왔습니다.",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "In the past, this relationship helped us grow and survive"
+  },
+  {
+   "claim": "영양이 모자란 먹이를 준 동물에게서는 이 세균과 분자가 성장을 도왔습니다",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "In those animals, the bacteria and the molecules they produced improved growth, helping the animals gain more nutrients from limited food."
+  },
+  {
+   "claim": "응용은 아직 몇 해 뒤의 이야기",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "While applications in nutrition and agriculture remain years away"
+  },
+  {
+   "claim": "우리 몸이 내부 시계(서캐디언 리듬, 하루 주기 생체 리듬)를 따르듯, 장내 미생물도 고유한 리듬이 있어 하루 중 때와 우리가 먹는 때에 따라 활동을 조절합니다.",
+   "url": "https://mdedge.com/content/you-are-when-you-eat-microbiome-rhythm-and-metabolic-health",
+   "original": "Much like how our bodies follow an internal clock (circadian rhythm), gut microbes also have their own rhythms, adjusting their activities based on the time of day and when we eat"
+  },
+  {
+   "claim": "하루 8시간 안에만 먹게 하거나",
+   "url": "https://mdedge.com/content/you-are-when-you-eat-microbiome-rhythm-and-metabolic-health",
+   "original": "We chose an 8-hour feeding window based on earlier research showing this time period allows mice to consume the same total calories as those with unlimited food access"
+  },
+  {
+   "claim": "8주 동안 관찰한 결과",
+   "url": "https://mdedge.com/content/you-are-when-you-eat-microbiome-rhythm-and-metabolic-health",
+   "original": "After monitoring these groups of mice for 8 weeks, the results were revealed."
+  },
+  {
+   "claim": "낮에도 깨어 먹으며 교대근무자와 비슷한 시간 어긋남",
+   "url": "https://mdedge.com/content/you-are-when-you-eat-microbiome-rhythm-and-metabolic-health",
+   "original": "the animals experience circadian misalignment, a condition similar to what human shift workers experience when their sleep-wake and eating cycles don’t match their internal biological clocks"
+  },
+  {
+   "claim": "소동물 연구는 꼭 필요하지만, 결과가 사람에게 그대로 옮겨지는지는 매우 추측에 가깝습니다.",
+   "url": "https://mdedge.com/content/you-are-when-you-eat-microbiome-rhythm-and-metabolic-health",
+   "original": "Small animal research is mandatory, but how the findings convert to humans is highly speculative"
+  },
+  {
+   "claim": "우리 연구는 일정한 식사 패턴을 유지하는 것이 미생물과 몸 사이의 건강한 관계를 뒷받침할 수 있음을 시사합니다.",
+   "url": "https://www.cmu.edu/news/stories/archives/2026/october/cmu-researchers-find-gut-bacteria-signal-when-to-absorb-nutrients",
+   "original": "Our work suggests that maintaining consistent eating patterns may help support a healthy relationship between the microbiome and the body."
+  }
+ ]
+}
