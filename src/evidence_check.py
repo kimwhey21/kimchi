@@ -112,7 +112,7 @@ def _second_look(url: str, original: str = "") -> str | None:
     # 크롬이 빈 화면이라도 글자를 돌려주면 읽기 서비스로 넘어가지 않았다(wpxi: 크롬 90자, 읽기 서비스 4,514자) — 원문이 있는 쪽을 쓴다
     if url not in _SECOND:
         browser = _browser_text(url)
-        _SECOND[url] = browser if browser and original and normalize(original) in browser else (_reader_text(url) or browser)
+        _SECOND[url] = browser if original and found_in(original, browser) else (_reader_text(url) or browser)
     return _SECOND[url]
 
 
@@ -192,6 +192,15 @@ def number_mismatches(claim: str, original: str) -> list[tuple[float, float]]:
 NO_FETCH_DOMAINS = ("autoevolution.com", "stocktwits.com", "freedom969.com")
 
 
+def found_in(original: str, text: str | None) -> bool:
+    """원문이 출처 본문에 있는가 — 띄어쓰기는 보지 않는다(2026-11-18: 기사 '스페이스x처럼'을 원고가 '스페이스x 처럼'으로 옮겨
+    맞는 잡지 글이 게시 직전에 막혔다). 글자·숫자·문장부호는 그대로 대조한다."""
+    if not text:
+        return False
+    want = normalize(original)
+    return want in text or want.replace(" ", "") in text.replace(" ", "")
+
+
 def _blocked_domain(url: str) -> str | None:
     host = re.sub(r"^https?://(www\.)?", "", url).split("/")[0].lower()
     return next((d for d in NO_FETCH_DOMAINS if host == d or host.endswith("." + d)), None)
@@ -224,11 +233,11 @@ def evidence_issues(doc: dict, fetch=None, numbers: bool = True, events: bool = 
                           " — 같은 사실을 담은 다른 출처를 쓰십시오")
             continue
         text = fetch(url)
-        if text is not None and normalize(original) not in text and fetch is page_text:
+        if text is not None and not found_in(original, text) and fetch is page_text:
             text = _second_look(url, original) or text
         if text is None:
             issues.append(f"근거 '{str(e.get('claim'))[:40]}'의 출처를 열 수 없습니다 — 열리는 출처를 쓰십시오: {url[:80]}")
-        elif normalize(original) not in text:
+        elif not found_in(original, text):
             issues.append(f"근거 '{str(e.get('claim'))[:40]}'의 원문이 출처 페이지에 없습니다: '{original[:60]}'")
         for value, nearest in number_mismatches(str(e.get("claim") or ""), original):
             issues.append(f"근거 '{str(e.get('claim'))[:40]}'의 숫자 {value:,.10g}이(가) 원문의 {nearest:,.10g}과 다릅니다 — 원문 숫자를 그대로 옮기십시오")

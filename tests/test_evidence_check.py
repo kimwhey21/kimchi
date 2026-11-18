@@ -45,6 +45,21 @@ class EvidenceTest(unittest.TestCase):
         self.assertIn("금리가 더 오를 수", issues[0])
 
 
+class SpacingTest(unittest.TestCase):
+    """띄어쓰기만 다른 원문은 막지 않고, 글자·숫자가 다르면 그대로 막는다(2026-11-18)."""
+
+    PAGE = ec.normalize("6월 상장한 스페이스X처럼 IPO 이후 주가가 공모가격보다 최대 30% 하락할 위험도 감수해야 한다.")
+
+    def test_spacing_only_passes(self) -> None:
+        self.assertTrue(ec.found_in("6월 상장한 스페이스x 처럼 ipo 이후 주가가 공모가격보다 최대 30% 하락할 위험도", self.PAGE))
+
+    def test_different_number_still_blocks(self) -> None:
+        self.assertFalse(ec.found_in("6월 상장한 스페이스x 처럼 ipo 이후 주가가 공모가격보다 최대 40% 하락할 위험도", self.PAGE))
+
+    def test_missing_page_is_not_found(self) -> None:
+        self.assertFalse(ec.found_in("아무 문장이나 스무 자를 넘게 적어 봅니다", None))
+
+
 if __name__ == "__main__":
     unittest.main()
 
