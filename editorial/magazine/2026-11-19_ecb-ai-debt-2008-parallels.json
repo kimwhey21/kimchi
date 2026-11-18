@@ -1,0 +1,127 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-19",
+ "slug": "ecb-ai-debt-2008-parallels",
+ "radar_origin": "Fortune: European Central Bank sees ‘historical parallels with the dotcom and subprime bubbles’ because of AI’s ‘rapid shift’ into debt finance",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1701434001217-16428abc6309?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8ZXVyb3BlYW4lMjBjZW50cmFsJTIwYmFua3xlbnwwfDB8fHwxNzk1MDIxODkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "tNW_p9KZmjA",
+  "credit": "Unsplash / Masood Aslami"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "European Central Bank sees ‘historical parallels with the dotcom and subprime bubbles’ because of AI’s ‘rapid shift’ into debt finance (2026-11-18)",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/"
+  },
+  {
+   "name": "유럽중앙은행",
+   "title": "Financial Stability Review, November 2026",
+   "url": "https://www.ecb.europa.eu/press/financial-stability-publications/fsr/html/index.en.html"
+  }
+ ],
+ "tags": [
+  "유럽중앙은행",
+  "AI버블",
+  "금융안정보고서",
+  "서브프라임"
+ ],
+ "ko": {
+  "search_phrase": "",
+  "title": "유럽중앙은행은 왜 AI 붐에서 서브프라임을 떠올렸을까",
+  "title_candidates": [
+   "유럽중앙은행은 왜 AI 붐에서 서브프라임을 떠올렸을까",
+   "AI 투자의 빚은 2008년과 얼마나 닮았을까",
+   "AI 투자 뉴스에서 이제 빚의 만기를 먼저 읽어야 하는 이유"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "닷컴과 서브프라임. 투자자가 가장 듣기 싫어하는 두 단어를 유럽중앙은행이 한 문장에 넣었습니다.\n그 문장의 주어는 AI 투자입니다. 경고가 겨눈 곳은 주가가 아니라 빚입니다.\n주식으로 하던 투자가 빚으로 옮겨 가고 있다는 것입니다.\n이 경고는 시장을 흔들 만큼 무거울까요, 중앙은행이 늘 하는 잔소리일까요?"
+   },
+   {
+    "heading": "ECB는 어떤 문장을 썼을까",
+    "body": "경제지 포춘에 따르면 유럽중앙은행(ECB)은 반기마다 내는 금융안정 보고서에 이렇게 적었습니다.\n“The rapid shift towards debt finance invokes historical parallels with the dotcom and subprime bubbles”\n빚으로 돈을 대는 쪽으로 빠르게 옮겨 가는 흐름이 닷컴 버블과 서브프라임 버블을 떠올리게 한다는 뜻입니다.\n보고서 첫머리의 요약도 같은 방향입니다. ECB는 AI 가치평가와 재정 불균형, 지정학 긴장이 금융안정 전망을 흐리게 한다고 적었습니다."
+   },
+   {
+    "heading": "장부에는 없고 계약서에는 있는 빚",
+    "body": "ECB는 빅테크 여덟 곳의 공시를 읽었습니다. 알파벳·아마존·메타·마이크로소프트·엔비디아·오라클·브로드컴·앤트로픽입니다.\n포춘이 옮긴 계산으로는 장부 밖 약정이 2026년 2분기 기준 4조 달러가 넘었습니다.\n빅테크가 데이터센터와 칩을 남에게 빌려 쓰기로 약속하면, 주인이 그 약속을 담보로 돈을 빌립니다. 경제적으로는 빚이지만 미국 회계 기준으로는 부채로 적히지 않습니다.\n메타가 루이지애나에 지은 데이터센터 하이페리온이 예입니다. 포춘에 따르면 270억 달러짜리 이 시설은 합작 회사로 지어졌고 블루아울 캐피털이 80%를 쥐었습니다."
+   },
+   {
+    "heading": "2007년 시티그룹의 장면과 닮았을까",
+    "body": "2007년 12월 시티그룹은 장부 밖에 만들어 둔 투자 전용 회사의 자산 490억 달러를 장부 안으로 가져왔습니다. 등급 강등과 투매를 막으려는 조치였습니다.\nECB가 그린 나쁜 시나리오도 모양이 비슷합니다. 실적이 기대에 못 미치면 AI 설비에 쓴 빚이 장부에 서서히 올라오고 레버리지와 신용등급이 나빠진다는 것입니다.\n다만 이 장면은 아직 일어나지 않은 가정입니다."
+   },
+   {
+    "heading": "같은 수요를 두 번 세고 있지는 않을까",
+    "body": "클라우드 회사와 AI 연구소가 칩을 사거나 빌릴 때, 그 돈을 칩 회사가 대 주는 일이 많습니다.\nECB는 이런 거래가 칩 회사와 서비스 회사 양쪽의 기대 매출을 부풀린다고 봅니다. 보고되는 수요 일부가 그 회사 자신의 금융 결정에서 나오기 때문입니다.\nECB 부총재 보리스 부이치치는 보고서 머리글에서 이렇게 썼습니다.\n“circular financing is making intrinsic demand hard to gauge”\n돌고 도는 자금 때문에 진짜 수요가 얼마인지 가늠하기 어렵다는 말입니다."
+   },
+   {
+    "heading": "칩의 수명보다 빚이 더 길다면",
+    "body": "ECB 저자들은 빚의 만기가 그 돈으로 산 설비의 경제적 수명보다 긴 경우가 적지 않다고 지적합니다.\nECB가 인용한 시장 관계자들은 AI 장비가 한 해에서 세 해쯤 쓰인다고 말합니다.\n포춘은 국제통화기금이 GPU 수명을 약 2년으로 본다고 전했습니다. 일반 설비는 7년입니다.\n그런데 대형 클라우드 기업 대부분은 서버의 회계상 수명을 2020년 3년에서 2026년 6년으로 늘렸습니다.\n장부에서는 오래 쓰는 설비인데 현실에서는 빨리 낡는다면, 어느 쪽이 맞는 걸까요?"
+   },
+   {
+    "heading": "닷컴과 다르다고 적은 부분, 그리고 읽는 순서",
+    "body": "ECB는 닮은 점만 적지 않았습니다. 지금까지 대형 클라우드 기업의 이익은 대체로 기대를 따라왔다고 인정합니다.\n닷컴 버블이 꺼졌을 때 경기 후퇴가 얕았던 것은 주식으로 조달한 돈이 많았기 때문이라고도 설명합니다. 빚으로 쌓은 호황이 꺼진 경우에는 실질 국내총생산이 더 깊고 길게 줄었다는 것입니다.\nECB가 던진 질문은 결국 하나입니다. 이번 AI 건설은 주식의 돈으로 끝날까요, 빚의 돈으로 이어질까요?\n우리는 AI 투자 뉴스에서 늘 얼마를 쓰는지를 먼저 봐 왔습니다.\nECB가 묻는 것은 그 돈을 누가, 언제까지 갚느냐입니다.\nAI 설비 소식에 올라탄 종목을 가진 투자자라면 다음 실적 발표에서 매출보다 약정과 만기를 먼저 열어 보시겠습니까?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "2026년 2분기 기준 4조 달러가 넘었습니다",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "total off-balance-sheet commitments of more than usd 4 trillion as of the second quarter of 2026"
+  },
+  {
+   "claim": "The rapid shift towards debt finance invokes historical parallels with the dotcom and subprime bubbles",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "the rapid shift towards debt finance invokes historical parallels with the dotcom and subprime bubbles"
+  },
+  {
+   "claim": "270억 달러짜리",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "meta's $27 billion hyperion data center in louisiana"
+  },
+  {
+   "claim": "80%를 쥐었습니다",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "a joint venture in which blue owl capital owned 80%"
+  },
+  {
+   "claim": "2007년 12월 시티그룹은",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "in december 2007, citigroup said it would take $49 billion of assets from its structured investment vehicles onto its balance sheet"
+  },
+  {
+   "claim": "490억 달러",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "in december 2007, citigroup said it would take $49 billion of assets from its structured investment vehicles onto its balance sheet"
+  },
+  {
+   "claim": "circular financing is making intrinsic demand hard to gauge",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "circular financing is making intrinsic demand hard to gauge"
+  },
+  {
+   "claim": "약 2년",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "the imf puts gpus at about two years, against seven for standard equipment"
+  },
+  {
+   "claim": "7년입니다",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "the imf puts gpus at about two years, against seven for standard equipment"
+  },
+  {
+   "claim": "2020년 3년에서 2026년 6년으로",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "most hyperscalers, meanwhile, have stretched the accounting life of their servers from three years in 2020 to six years in 2026"
+  },
+  {
+   "claim": "한 해에서 세 해쯤",
+   "url": "https://fortune.com/2026/11/18/ecb-financial-stability-review-ai-debt-subprime-2008-off-balance-sheet/",
+   "original": "the ecb cites market intelligence that ai equipment lasts one to three years"
+  }
+ ]
+}

@@ -1,0 +1,133 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-19",
+ "slug": "nvidia-no-super-voting-shares",
+ "radar_origin": "조선비즈 증권: 젠슨 황·저커버그 운명 가른 ‘차등 의결권’",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Ym9hcmRyb29tJTIwdGFibGV8ZW58MHwwfHx8MTc5NTAyMTg4Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "GWe0dlVD9e0",
+  "credit": "Unsplash / Benjamin Child"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Nvidia built itself around one man. A scandal is testing that bet (2026-11-09)",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/"
+  },
+  {
+   "name": "포춘",
+   "title": "Jensen Huang and Nvidia's $5.7 trillion downfall (2026-11-14)",
+   "url": "https://fortune.com/2026/11/14/jensen-huang-nvidia-ai-5-7-trillion-downfall/"
+  },
+  {
+   "name": "위키백과",
+   "title": "Dual-class share structure",
+   "url": "https://en.wikipedia.org/wiki/Dual-class_share_structure"
+  },
+  {
+   "name": "뉴시스",
+   "title": "1주당 최대 10개 의결권…복수의결권, 오늘부터 허용 (2023-11-17)",
+   "url": "https://www.newsis.com/view/NISX20231115_0002523073"
+  }
+ ],
+ "tags": [
+  "차등의결권",
+  "젠슨황",
+  "엔비디아",
+  "복수의결권"
+ ],
+ "ko": {
+  "search_phrase": "차등의결권",
+  "title": "차등의결권 없는 창업자는 이사회 앞에서 무엇을 잃을까",
+  "title_candidates": [
+   "차등의결권 없는 창업자는 이사회 앞에서 무엇을 잃을까",
+   "차등의결권, 3.56% 지분의 창업자가 남긴 질문",
+   "차등의결권: 내 종목 창업자의 표를 먼저 세어 볼 이유"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "33년 동안 엔비디아를 이끈 창업자가 쥔 지분은 3.56%였습니다.\n그 창업자 젠슨 황이 최근 CEO 자리에서 물러났습니다. 같은 시기 메타의 마크 저커버그는 이런 일을 걱정하지 않아도 되는 구조 안에 있습니다.\n차이가 갈리는 곳은 주식 한 장이 가진 표의 수입니다. 차등의결권이 있느냐 없느냐입니다.\n창업자의 표는 회사를 지키는 방패일까요, 이사회가 할 일을 막는 벽일까요?"
+   },
+   {
+    "heading": "주식마다 표가 다르다는 게 무슨 뜻일까",
+    "body": "보통 주식 한 장은 표 한 장입니다. 차등의결권은 이 약속을 깨고, 어떤 주식에는 표를 열 장, 어떤 주식에는 한 장만 줍니다.\n위키백과는 알파벳의 경우를 이렇게 정리합니다.\n“in Alphabet's case Class A shares have 1 vote, class B shares have 10 votes, and class C shares have zero votes”\n풀어 쓰면 A주는 한 표, 창업자 쪽에 몰린 B주는 열 표, 일반 투자자가 사는 C주는 표가 없다는 뜻입니다.\n지분이 적어도 회사의 방향을 정하는 표는 창업자가 쥘 수 있는 구조입니다."
+   },
+   {
+    "heading": "엔비디아에는 그런 방패가 없었습니다",
+    "body": "경제지 포춘은 황이 엔비디아에서 가장 큰 개인 주주이지만 지분이 3.56%에 그친다고 전했습니다.\n특별한 표도 없습니다. 메타에서 저커버그가 쥔 것과는 다르다는 비교입니다.\n그 자리에 남은 것은 이사회였고, 이사회는 조사를 시작했습니다. 황이 물러날 때 엔비디아에는 사장도, 최고운영책임자도, 뚜렷한 2인자도 없었다고 포춘은 적었습니다."
+   },
+   {
+    "heading": "한 사람에게 묶인 회사는 어떻게 보일까",
+    "body": "황에게 직접 보고하는 임원이 60명쯤 된다고 포춘은 전했습니다.\n기업 이사회 자문역 브라이언 버크는 포춘에 이렇게 말했습니다.\n“그는 다른 사례보다 훨씬 더 회사의 정체성에 묶여 있습니다.”\n조지타운대 제이슨 슐로처 교수는 이사회가 승계 계획을 미리 세워 두지 않은 실수를 했다고 짚었습니다.\n“이사회는 이제 결산의 날을 맞았는데, 그것도 갑작스럽고 어쩌면 떠밀린 날입니다.”"
+   },
+   {
+    "heading": "방패가 있었다면 더 안전했을까",
+    "body": "시장의 첫 반응은 숫자로 나왔습니다. 퇴임 직후 거래에서 엔비디아 주가는 한때 14%까지 빠졌다고 포춘은 전했습니다.\n시퍼트리서치 애널리스트 제이 골드버그는 황의 큰 베팅 정신이 사라질 때를 걱정했습니다.\n“그걸 잃으면 그저 그런 반도체 회사가 될 겁니다.”\n그렇다면 차등의결권이 있었을 때 황은 자리를 지켰을까요? 그 답은 아무도 모릅니다.\n분명한 것은 하나입니다. 창업자에게 몰린 표는 위기에서 회사를 붙들 수도 있고, 이사회가 창업자를 조사하는 일 자체를 어렵게 만들 수도 있습니다."
+   },
+   {
+    "heading": "우리 쪽 상장사는 어느 편일까",
+    "body": "한국에서는 비상장 벤처기업 창업자에게만 복수의결권이 열려 있습니다. 뉴시스 보도로는 1주당 최대 10개의 의결권을 주는 제도입니다.\n상장하는 순간 이 표의 기한은 최대 3년으로 줄어듭니다. 상장사 창업자는 대체로 한 주에 한 표입니다.\n미국 대형 기술주의 창업자 표 구조는 한국 투자자에게는 아직 낯선 풍경입니다.\n내가 가진 회사의 창업자는 몇 퍼센트의 지분으로 몇 표를 쥐고 있을까요? 주가 차트보다 먼저 확인할 숫자일지도 모릅니다."
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "3.56%에 그친다고",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "huang is nvidia's largest individual shareholder, with a 3.56% stake"
+  },
+  {
+   "claim": "in Alphabet's case Class A shares have 1 vote, class B shares have 10 votes, and class C shares have zero votes",
+   "url": "https://en.wikipedia.org/wiki/Dual-class_share_structure",
+   "original": "in Alphabet's case Class A shares have 1 vote, class B shares have 10 votes, and class C shares have zero votes"
+  },
+  {
+   "claim": "33년",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "his 33-year reign as ceo"
+  },
+  {
+   "claim": "60명쯤",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "huang has about 60 direct reports"
+  },
+  {
+   "claim": "그는 다른 사례보다 훨씬 더 회사의 정체성에 묶여 있습니다.",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "he's bound up in the company's identity much more than other cases"
+  },
+  {
+   "claim": "이사회는 이제 결산의 날을 맞았는데",
+   "url": "https://fortune.com/2026/11/09/nvidia-power-built-around-jensen-huang-scandal-testing-formula/",
+   "original": "they find themselves at the day of reckoning, and it's a sudden and perhaps forced one"
+  },
+  {
+   "claim": "14%까지",
+   "url": "https://fortune.com/2026/11/14/jensen-huang-nvidia-ai-5-7-trillion-downfall/",
+   "original": "nvidia stock dove as much as 14%"
+  },
+  {
+   "claim": "그걸 잃으면 그저 그런 반도체 회사가 될 겁니다.",
+   "url": "https://fortune.com/2026/11/14/jensen-huang-nvidia-ai-5-7-trillion-downfall/",
+   "original": "they're going to become just another chip company"
+  },
+  {
+   "claim": "사장도, 최고운영책임자도, 뚜렷한 2인자도 없었다고",
+   "url": "https://fortune.com/2026/11/14/jensen-huang-nvidia-ai-5-7-trillion-downfall/",
+   "original": "nvidia had no president, no chief operating officer, and no obvious no. 2"
+  },
+  {
+   "claim": "1주당 최대 10개의 의결권",
+   "url": "https://www.newsis.com/view/NISX20231115_0002523073",
+   "original": "복수의결권은 1주당 최대 10개의 의결권이 부여되는 제도다"
+  },
+  {
+   "claim": "최대 3년으로 줄어듭니다",
+   "url": "https://www.newsis.com/view/NISX20231115_0002523073",
+   "original": "비상장기업에서 상장기업으로 올라설 경우 기한은 최대 3년으로 줄어든다"
+  }
+ ]
+}

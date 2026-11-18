@@ -1,0 +1,138 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-19",
+ "slug": "anthropic-ipo-retail-allocation",
+ "radar_origin": "스페이스X보다 뜨거운데 시총은 20% 낮다…앤트로픽 공모주 청약이 던진 질문 - 국제뉴스",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1645226880663-81561dcab0ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8M3x8c21hcnRwaG9uZSUyMHRyYWRpbmclMjBhcHB8ZW58MHwwfHx8MTc5NTAyMTkwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "K5mPtONmpHM",
+  "credit": "Unsplash / Adam Śmigielski"
+ },
+ "sources": [
+  {
+   "name": "인베스팅라이브",
+   "title": "Anthropic IPO six times oversubscribed: what retail investors can realistically expect (2026-11-13)",
+   "url": "https://investinglive.com/stocks/anthropic-ipo-six-times-oversubscribed-what-retail-investors-can-realistically-expect/"
+  },
+  {
+   "name": "인베스팅라이브",
+   "title": "Anthropic reserves up to 20% of its $64 billion IPO for retail investors (2026-11-10)",
+   "url": "https://investinglive.com/stocks/anthropic-reserves-up-to-20-of-its-64-billion-ipo-for-retail-investors/"
+  },
+  {
+   "name": "파이낸셜뉴스",
+   "title": "앤트로픽 IPO에 5천억달러 뭉칫돈…공모가 80달러 넘나 (2026-11-19)",
+   "url": "https://www.fnnews.com/news/202611190107597834"
+  }
+ ],
+ "tags": [
+  "앤트로픽상장",
+  "공모주",
+  "개인투자자",
+  "IPO배정"
+ ],
+ "ko": {
+  "search_phrase": "앤트로픽 상장",
+  "title": "앤트로픽 상장 첫날, 이익은 배정받은 사람 몫일까",
+  "title_candidates": [
+   "앤트로픽 상장 첫날, 이익은 배정받은 사람 몫일까",
+   "앤트로픽 상장, 개인 주문은 왜 대부분 못 채워질까",
+   "앤트로픽 상장: 배정에서 떨어진 개인이 첫날 알아야 할 것"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "공모주 청약에서 가장 큰 승부는 주식을 사기 전에 끝납니다. 배정을 받았느냐, 못 받았느냐입니다.\n앤트로픽 상장은 이 승부를 눈앞에서 보여 줍니다. 개인에게 이례적으로 많은 몫을 내놓았는데도 신청이 그보다 훨씬 많이 몰렸기 때문입니다.\n개인투자자에게 20%를 열어 줬다는 소식과 대부분은 못 받는다는 소식 가운데 어느 쪽이 진실에 가까울까요?"
+   },
+   {
+    "heading": "개인 몫 20%는 얼마나 큰 숫자일까",
+    "body": "인베스팅라이브에 따르면 앤트로픽은 공모 주식 8억 2,500만 주 가운데 최대 20%를 개인투자자 몫으로 잡았습니다. 미국 대형 상장에서 개인이 받는 몫은 보통 5~10%입니다.\n비교 사례도 있습니다. 같은 매체는 2023년 암홀딩스가 개인 몫으로 약 10%, 인스타카트가 최대 5%를 뒀다고 정리합니다.\n개인에게 이만큼 열어 준 상장은 흔치 않다는 이야기입니다."
+   },
+   {
+    "heading": "그런데 신청은 그 몫의 몇 배일까",
+    "body": "파이낸셜뉴스는 CNBC를 인용해 개인투자자의 주문 수요가 1000억 달러에 육박했다고 전했습니다. 기관투자자 주문은 약 4000억 달러입니다.\n공모 규모는 당초 최대 643억 5000만 달러였습니다. 20%를 곱하면 개인 몫은 약 129억 달러이니, 개인 주문이 그 몫의 일곱 배를 넘는 셈입니다(우리가 한 계산입니다).\n다만 이 주문은 법적 구속력이 없는 투자 의향이어서 실제 배정과 차이가 있을 수 있다고 파이낸셜뉴스는 덧붙였습니다."
+   },
+   {
+    "heading": "배정은 증권사마다 다른 방식으로 이뤄집니다",
+    "body": "인베스팅라이브는 증권사마다 규칙이 다르다고 정리합니다. 피델리티는 자산 2만 5,000달러, 슈왑은 5만 달러가 있어야 신청할 수 있고, 배정은 비례식이거나 정액이거나 추첨일 수 있습니다.\n신청이 곧 구매를 보장하지는 않습니다. 신청한 주식을 전부 살 준비가 돼 있어야 하고, 주문이 몰리면 대부분은 신청한 양의 일부만 받거나 아예 못 받습니다."
+   },
+   {
+    "heading": "첫날의 이익은 누구 주머니로 갈까",
+    "body": "인베스팅라이브가 인용한 학술 자료에 따르면 미국 상장 주식은 1975년 이후 첫날 평균 20% 가까이 올랐습니다. 그 이익은 대부분 공모가로 주식을 배정받은 사람에게 돌아갑니다.\n배정에서 떨어진 사람은 장이 열린 뒤 시장에서 사야 합니다. 그때 값은 이미 첫날 오른 값일 수 있습니다.\n그래서 같은 상장 소식이 배정받은 사람에게는 이익이고, 못 받은 사람에게는 추격 매수의 이유가 됩니다."
+   },
+   {
+    "heading": "개인 몫이 크다는 것은 꼭 좋은 소식일까",
+    "body": "인베스팅라이브가 전한 한 애널리스트의 평가는 이렇습니다.\n“a great deal for the company, but not necessarily for the people buying”\n회사에는 훌륭한 거래이지만 사는 사람에게는 꼭 그렇지 않다는 말입니다.\n개인은 기관보다 값에 덜 민감해 최종 공모가가 높아질 수 있고, 그러면 상장 뒤 오를 여지가 줄어든다는 것이 같은 매체의 설명입니다.\n내가 배정받은 것은 행운일까요, 비싼 값을 받아 든 것일까요? 첫날 시장이 매기는 값이 그 답을 먼저 보여 줄 것입니다."
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "개인투자자에게 20%를",
+   "url": "https://investinglive.com/stocks/anthropic-ipo-six-times-oversubscribed-what-retail-investors-can-realistically-expect/",
+   "original": "up to 20% of the 825 million shares on offer is set aside for retail investors"
+  },
+  {
+   "claim": "8억 2,500만 주 가운데 최대 20%",
+   "url": "https://investinglive.com/stocks/anthropic-ipo-six-times-oversubscribed-what-retail-investors-can-realistically-expect/",
+   "original": "up to 20% of the 825 million shares on offer is set aside for retail investors"
+  },
+  {
+   "claim": "5~10%",
+   "url": "https://investinglive.com/stocks/anthropic-ipo-six-times-oversubscribed-what-retail-investors-can-realistically-expect/",
+   "original": "against a typical 5% to 10% in large us ipos"
+  },
+  {
+   "claim": "2023년 암홀딩스가 개인 몫으로 약 10%",
+   "url": "https://investinglive.com/stocks/anthropic-reserves-up-to-20-of-its-64-billion-ipo-for-retail-investors/",
+   "original": "arm holdings set aside about 10% of its shares for retail investors in 2023"
+  },
+  {
+   "claim": "최대 5%",
+   "url": "https://investinglive.com/stocks/anthropic-reserves-up-to-20-of-its-64-billion-ipo-for-retail-investors/",
+   "original": "instacart offered up to 5%"
+  },
+  {
+   "claim": "1000억 달러에 육박했다",
+   "url": "https://www.fnnews.com/news/202611190107597834",
+   "original": "개인투자자의 주문 수요는 1000억달러에 육박했다"
+  },
+  {
+   "claim": "약 4000억 달러",
+   "url": "https://www.fnnews.com/news/202611190107597834",
+   "original": "기관투자자의 주문 수요는 약 4000억달러"
+  },
+  {
+   "claim": "최대 643억 5000만 달러",
+   "url": "https://www.fnnews.com/news/202611190107597834",
+   "original": "앤트로픽은 당초 총 8억2500만주를 공모해 최대 643억5000만달러를"
+  },
+  {
+   "claim": "20%를 곱하면 개인 몫은 약 129억 달러",
+   "url": "https://investinglive.com/stocks/anthropic-ipo-six-times-oversubscribed-what-retail-investors-can-realistically-expect/",
+   "original": "up to 20% of the 825 million shares on offer is set aside for retail investors"
+  },
+  {
+   "claim": "법적 구속력이 없는 투자 의향",
+   "url": "https://www.fnnews.com/news/202611190107597834",
+   "original": "이 같은 주문은 법적 구속력이 없는 투자 의향"
+  },
+  {
+   "claim": "피델리티는 자산 2만 5,000달러, 슈왑은 5만 달러",
+   "url": "https://investinglive.com/stocks/anthropic-ipo-six-times-oversubscribed-what-retail-investors-can-realistically-expect/",
+   "original": "fidelity requires $25,000 in assets and schwab $50,000, and allocations may be pro rata, fixed or by lottery"
+  },
+  {
+   "claim": "1975년 이후 첫날 평균 20% 가까이",
+   "url": "https://investinglive.com/stocks/anthropic-ipo-six-times-oversubscribed-what-retail-investors-can-realistically-expect/",
+   "original": "us ipos have risen almost 20% on average on day one since 1975, a gain that mostly goes to those allocated shares at the offer price"
+  },
+  {
+   "claim": "a great deal for the company, but not necessarily for the people buying",
+   "url": "https://investinglive.com/stocks/anthropic-reserves-up-to-20-of-its-64-billion-ipo-for-retail-investors/",
+   "original": "a great deal for the company, but not necessarily for the people buying"
+  }
+ ]
+}
