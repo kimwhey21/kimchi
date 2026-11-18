@@ -552,7 +552,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -869394,
+      "institution_net": 1104534,
+      "foreign_ratio": 45.95
     },
     "000660": {
       "ticker": "000660",
@@ -725,7 +728,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -42531,
+      "institution_net": 27949,
+      "foreign_ratio": 49.38
     },
     "009150": {
       "ticker": "009150",
@@ -898,7 +904,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -15273,
+      "institution_net": 84849,
+      "foreign_ratio": 34.96
     },
     "042700": {
       "ticker": "042700",
@@ -1071,7 +1080,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 51085,
+      "institution_net": -55770,
+      "foreign_ratio": 7.87
     },
     "105560": {
       "ticker": "105560",
@@ -1244,7 +1256,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -49033,
+      "institution_net": 53139,
+      "foreign_ratio": 78.14
     },
     "055550": {
       "ticker": "055550",
@@ -1417,7 +1432,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -102028,
+      "institution_net": 78300,
+      "foreign_ratio": 61.57
     },
     "032830": {
       "ticker": "032830",
@@ -1590,7 +1608,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -55428,
+      "institution_net": 75597,
+      "foreign_ratio": 22.63
     },
     "005380": {
       "ticker": "005380",
@@ -1763,7 +1784,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 44426,
+      "institution_net": 23366,
+      "foreign_ratio": 24.01
     },
     "000270": {
       "ticker": "000270",
@@ -1936,7 +1960,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -96443,
+      "institution_net": 73979,
+      "foreign_ratio": 38.52
     },
     "329180": {
       "ticker": "329180",
@@ -2109,7 +2136,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 17455,
+      "institution_net": -13053,
+      "foreign_ratio": 13.95
     },
     "012450": {
       "ticker": "012450",
@@ -2282,7 +2312,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 5412,
+      "institution_net": -2158,
+      "foreign_ratio": 44.9
     },
     "034020": {
       "ticker": "034020",
@@ -2455,7 +2488,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 58366,
+      "institution_net": -185887,
+      "foreign_ratio": 22.1
     },
     "373220": {
       "ticker": "373220",
@@ -2628,7 +2664,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 43647,
+      "institution_net": -46337,
+      "foreign_ratio": 5.43
     },
     "247540": {
       "ticker": "247540",
@@ -2801,7 +2840,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -64906,
+      "institution_net": 52073,
+      "foreign_ratio": 13.39
     },
     "207940": {
       "ticker": "207940",
@@ -2974,7 +3016,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -4225,
+      "institution_net": -482,
+      "foreign_ratio": 12.52
     },
     "196170": {
       "ticker": "196170",
@@ -3147,7 +3192,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -6889,
+      "institution_net": 19704,
+      "foreign_ratio": 16.98
     },
     "068270": {
       "ticker": "068270",
@@ -3320,7 +3368,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 35508,
+      "institution_net": -29935,
+      "foreign_ratio": 25.67
     },
     "035420": {
       "ticker": "035420",
@@ -3493,7 +3544,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 17793,
+      "institution_net": -28957,
+      "foreign_ratio": 36.21
     },
     "035720": {
       "ticker": "035720",
@@ -3666,7 +3720,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -191962,
+      "institution_net": -39991,
+      "foreign_ratio": 28.72
     },
     "278470": {
       "ticker": "278470",
@@ -3839,7 +3896,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 34407,
+      "institution_net": -23504,
+      "foreign_ratio": 39.64
     },
     "277810": {
       "ticker": "277810",
@@ -4012,7 +4072,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 8149,
+      "institution_net": 53892,
+      "foreign_ratio": 5.71
     },
     "402340": {
       "ticker": "402340",
@@ -4185,7 +4248,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -3852,
+      "institution_net": 64974,
+      "foreign_ratio": 46.01
     },
     "030530": {
       "ticker": "030530",
@@ -4358,7 +4424,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": 348654,
+      "institution_net": 304235,
+      "foreign_ratio": 5.34
     },
     "028050": {
       "ticker": "028050",
@@ -4531,7 +4600,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -206741,
+      "institution_net": -116169,
+      "foreign_ratio": 40.26
     },
     "006400": {
       "ticker": "006400",
@@ -4704,7 +4776,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -77027,
+      "institution_net": -45747,
+      "foreign_ratio": 24.22
     },
     "036930": {
       "ticker": "036930",
@@ -4877,7 +4952,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -116705,
+      "institution_net": 22857,
+      "foreign_ratio": 8.44
     },
     "000250": {
       "ticker": "000250",
@@ -5050,7 +5128,10 @@
         "daum",
         "krx"
       ],
-      "data_source": "KRX regular-session close (daum + krx)"
+      "data_source": "KRX regular-session close (daum + krx)",
+      "foreign_net": -13380,
+      "institution_net": -66985,
+      "foreign_ratio": 2.36
     }
   },
   "trading_date": "2026-11-18",
