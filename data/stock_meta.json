@@ -26865,10 +26865,14 @@
 "web": ""
 },
 "471800": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01797635",
+"en": "AL Robot Co., Ltd.",
+"founded": "2017",
+"industry": "Machinery",
+"ksic": "292",
+"name": "AL Robot",
+"pref": false,
+"web": "al-robot.com/ko"
 },
 "471820": {
 "corp": "01448544",
