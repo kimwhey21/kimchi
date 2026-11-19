@@ -1,16 +1,16 @@
 {
  "beats": {
-  "bench_nightly": "2026-11-18T23:10:26+09:00",
+  "bench_nightly": "2026-11-19T23:10:23+09:00",
   "blogger_sync": "2026-10-06T23:08:20+09:00",
-  "daily_summary": "2026-11-18T22:31:06+09:00",
+  "daily_summary": "2026-11-19T22:31:09+09:00",
   "expose_weekly": "2026-10-05T08:37:00+09:00",
   "gsc_daily_index": "2026-10-06T15:16:52+09:00",
-  "gsc_queries": "2026-11-18T10:30:24+09:00",
-  "naver_sync": "2026-11-18T23:16:33+09:00",
+  "gsc_queries": "2026-11-19T10:30:23+09:00",
+  "naver_sync": "2026-11-19T23:21:03+09:00",
   "search_snapshot": "2026-11-15T22:04:51+09:00",
   "threads_refresh": "2026-11-15T21:30:03+09:00"
  },
- "generated_at": "2026-11-18T23:22:05+09:00",
+ "generated_at": "2026-11-19T23:22:02+09:00",
  "posted": {
   "blogger_blocked_today": 0,
   "blogger_today": 0,
