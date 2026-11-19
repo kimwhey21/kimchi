@@ -1,0 +1,187 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-20",
+ "slug": "vix-jump-after-midterms",
+ "radar_origin": "Wall Street’s Fear Gauge Went From 16.61 to 28.18 in a Single Day in November. Why It Keeps … - 24/7 Wall St.",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c3RvY2slMjBjaGFydCUyMHN0b3JtfGVufDB8MHx8fDE3OTUxMDgyMjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "fiXLQXAhCfk",
+  "credit": "Unsplash / Maxim Hopman"
+ },
+ "sources": [
+  {
+   "name": "24/7 Wall St.",
+   "title": "Wall Street’s Fear Gauge Just Had Its Third-Biggest Jump Since 1990 (2026-11-06)",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/"
+  },
+  {
+   "name": "thetrading.tools",
+   "title": "VIX rose 70% in a day, the third-largest jump since 2010 (2026-11-05)",
+   "url": "https://www.thetrading.tools/chart-of-the-day/2026-11-05-vix-up-70-percent-in-a-day"
+  }
+ ],
+ "tags": [
+  "VIX",
+  "공포지수",
+  "미국증시"
+ ],
+ "ko": {
+  "title": "지금 VIX 20 아래냐 30 위냐, 이것만 보세요",
+  "search_phrase": "",
+  "title_candidates": [
+   "지금 VIX 20 아래냐 30 위냐, 이것만 보세요",
+   "공포지수는 왜 가장 조용한 날 가장 크게 뛰었나",
+   "VIX 급등 뒤 한 달, 과거 일곱 번의 답은 어땠나",
+   "공포지수 28, 12월 4일까지 확인할 것 둘"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "VIX가 가장 크게 뛴 날은 시장이 가장 조용해 보이던 날이었습니다.\n11월 5일 장이 열릴 때만 해도 VIX는 몇 주 만에 가장 차분한 수준 근처에 있었습니다.\n그런데 장이 끝났을 때 VIX는 전날 16.61에서 28.18이 돼 있었습니다.\n이렇게 하루에 공포가 치솟은 날 뒤에는 시장이 어떻게 움직였을까요?"
+   },
+   {
+    "heading": "VIX는 무엇을 재는 숫자일까",
+    "body": "VIX는 S&P 500 옵션 가격으로 계산하는 지수로, 앞으로 한 달 동안 시장이 얼마나 출렁일지 옵션 투자자들이 예상하는 크기를 나타냅니다.\n직접 살 수는 없고, 흔히 공포지수라고 부릅니다.\n24/7 Wall St.에 따르면 10월 7일부터 11월 4일까지 VIX는 14.84에서 21.15 사이를 오갔습니다.\n이번 급등으로 VIX는 평소 범위를 벗어나 불확실성이 커졌다고 읽는 20에서 30 구간에 들어섰습니다."
+   },
+   {
+    "heading": "계기는 중간선거였습니다",
+    "body": "11월 3일 중간선거에서 민주당이 상·하원을 모두 차지했습니다.\n투자자들은 새 의회가 시장 주도주를 떠받치는 AI 데이터센터 확대를 늦출 수 있다는 위험을 가격에 반영했습니다.\n그날 S&P 500은 약 4.36%, 나스닥-100은 6.4% 밀렸습니다.\n정책 충격이 AI·반도체 종목에 떨어졌는데, 시장은 조용함에 맞춰 가격이 매겨져 있던 때였습니다."
+   },
+   {
+    "heading": "역대 세 번째로 큰 하루였습니다",
+    "body": "종가 기준 상승률은 69.66%로, 1990년 이후 세 번째로 큽니다.\n이보다 큰 날은 2018년 2월 5일의 약 116%, 2024년 12월 18일의 약 74% 둘뿐입니다.\n2020년 팬데믹 때가 목록에 없다는 점도 눈에 띕니다. 그때는 하루에 50%를 넘긴 날 없이, 3주 안에 40% 넘게 오른 날이 나흘 있었습니다.\n공포가 한 번에 터진 날과 여러 날에 걸쳐 쌓인 날은 이렇게 다릅니다."
+   },
+   {
+    "heading": "그 뒤 시장은 어디로 갔을까",
+    "body": "thetrading.tools는 2009년 말부터 쌓은 기록에서 VIX가 하루에 50% 이상 오른 날이 이번을 포함해 여덟 번이라고 정리했습니다.\n앞선 일곱 번 뒤 21거래일 시점에는 SPY(S&P 500을 따라가는 상장지수펀드)가 일곱 번 모두 올라 있었고, 가운데 값은 3.9%였습니다.\n63거래일 뒤에는 일곱 번 중 다섯 번 올랐고 가운데 값은 10.4%였습니다.\n24/7 Wall St.도 최근 열 번 가운데 아홉 번은 한 달 뒤 S&P 500이 더 높았다고 셉니다."
+   },
+   {
+    "heading": "숫자가 편들지 못하는 곳",
+    "body": "하지만 표본은 일곱 번이고, 그중 두 번은 63거래일 뒤 오히려 내려가 있었습니다.\n2021년 11월(2022년 하락장의 시작)과 2024년 12월입니다.\nthetrading.tools는 스스로 선을 긋습니다.\n“이만한 급등은 시장이 하루 만에 위험을 다시 매겼다는 것을 말해 줍니다. 일곱 번의 사례는 그때 무엇이 뒤따랐는지만 말할 뿐, 여덟 번째에 대해서는 아무것도 말해 주지 않습니다.”\n이번에는 변수가 하나 더 있습니다. 의회가 데이터센터 인허가나 전력 접근을 제한하면 AI 이익 추정치가 내려갈 수 있고, 그러면 낮아진 주가가 실제 이익 훼손을 반영하게 됩니다."
+   },
+   {
+    "heading": "12월 4일까지 볼 숫자",
+    "body": "이 기사가 내세운 기준은 단순합니다.\n12월 4일까지 VIX 종가가 20 아래로 내려오면 과거 패턴이 이어지는 것이고, 30 위에 머물면 공포가 더 남았다는 뜻입니다.\n매수·매도 신호가 아니라, 지금의 공포가 한 번 놀란 가슴인지 이익이 실제로 달라질 일인지 가르는 눈금일 뿐입니다.\n12월 4일, 이 숫자는 어느 쪽을 가리키고 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "11월 5일",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "at the open on thursday, november 5, 2026, wall street's fear gauge sat near its calmest level in weeks."
+  },
+  {
+   "claim": "16.61에서 28.18",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "by the close, the cboe volatility index (vix) stood at 28.18, up from 16.61 the day before."
+  },
+  {
+   "claim": "S&P 500 옵션",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "the vix is an index calculated from s&p 500 options prices, and it reflects how much volatility options traders expect over the coming month."
+  },
+  {
+   "claim": "14.84에서 21.15",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "from october 7 through november 4, the vix ran from 14.84 to 21.15."
+  },
+  {
+   "claim": "20에서 30 구간",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "thursday's jump moved it out of the normal range and into the 20 to 30 band that signals higher uncertainty."
+  },
+  {
+   "claim": "11월 3일",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "democrats won both chambers of congress in the tuesday, november 3 midterms"
+  },
+  {
+   "claim": "4.36%",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "the s&p 500 fell 334.89 points, about 4.36%, to 7,353.73."
+  },
+  {
+   "claim": "6.4%",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "the dow dropped 1,833.06 points to 51,523.06, the nasdaq composite lost 1,421.52 points to 24,315.00, and the nasdaq-100 fell 6.4%."
+  },
+  {
+   "claim": "69.66%",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "that rise of 11.57 points, or 69.66%, ranks as the vix's third-biggest one-day percentage increase since 1990, measured close to close."
+  },
+  {
+   "claim": "2018년 2월 5일의 약 116%",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "only two sessions since 1990 beat thursday's move: about 116% on february 5, 2018, and about 74% on december 18, 2024."
+  },
+  {
+   "claim": "50%를 넘긴 날 없이",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "because the vix never rose more than 50% in a single session that year."
+  },
+  {
+   "claim": "2020년 팬데믹",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "the 2020 pandemic sell-off days do not rank in the top ten, because the vix never rose more than 50% in a single session that year."
+  },
+  {
+   "claim": "3주 안에 40% 넘게",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "instead, it rose 40% or more on four days within three weeks as fear built over many sessions."
+  },
+  {
+   "claim": "열 번 가운데 아홉 번",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "the s&p 500 was higher a month later after nine of the past 10 days when the vix rose 50% or more."
+  },
+  {
+   "claim": "12월 4일까지 VIX 종가가 20 아래",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "a vix close below 20 by december 4, 2026 would show the historical pattern holding, while a close above 30 would mean fear has further to run."
+  },
+  {
+   "claim": "12월 4일, 이 숫자",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "a vix close below 20 by december 4, 2026 would show the historical pattern holding, while a close above 30 would mean fear has further to run."
+  },
+  {
+   "claim": "AI 이익 추정치",
+   "url": "https://247wallst.com/investing/2026/11/06/wall-streets-fear-gauge-just-had-its-third-biggest-jump-since-1990/",
+   "original": "if the new congress limits data-center permitting or power access, ai earnings estimates could fall, and lower stock prices would then reflect real damage to earnings."
+  },
+  {
+   "claim": "2009년 말",
+   "url": "https://www.thetrading.tools/chart-of-the-day/2026-11-05-vix-up-70-percent-in-a-day",
+   "original": "in our daily record, which begins at the end of 2009, only two sessions saw a larger one-day rise: february 5, 2018, at 115.6%, and december 18, 2024, at 74.0%."
+  },
+  {
+   "claim": "21거래일",
+   "url": "https://www.thetrading.tools/chart-of-the-day/2026-11-05-vix-up-70-percent-in-a-day",
+   "original": "after the seven earlier jumps spy was higher 21 sessions later every time, by a median of 3.9%"
+  },
+  {
+   "claim": "63거래일 뒤에는",
+   "url": "https://www.thetrading.tools/chart-of-the-day/2026-11-05-vix-up-70-percent-in-a-day",
+   "original": "and higher 63 sessions later in five of the seven, by a median of 10.4%."
+  },
+  {
+   "claim": "63거래일 뒤 오히려",
+   "url": "https://www.thetrading.tools/chart-of-the-day/2026-11-05-vix-up-70-percent-in-a-day",
+   "original": "the two that were lower a quarter on were november 2021, the start of the 2022 decline, and december 2024."
+  },
+  {
+   "claim": "2021년 11월",
+   "url": "https://www.thetrading.tools/chart-of-the-day/2026-11-05-vix-up-70-percent-in-a-day",
+   "original": "the two that were lower a quarter on were november 2021, the start of the 2022 decline, and december 2024."
+  },
+  {
+   "claim": "하루 만에 위험을 다시 매겼다",
+   "url": "https://www.thetrading.tools/chart-of-the-day/2026-11-05-vix-up-70-percent-in-a-day",
+   "original": "a jump of this size says the market repriced risk in one session; seven cases say what followed on those occasions and nothing about the eighth."
+  }
+ ]
+}
