@@ -25,6 +25,7 @@ import json
 import os
 import re
 import sys
+import time
 from pathlib import Path
 
 import requests
@@ -59,13 +60,23 @@ def _latest_trading_date(market: str) -> str | None:
 def _wordpress_post(slug: str) -> dict | None:
     base_url = os.environ["WORDPRESS_URL"].rstrip("/")
     auth = (os.environ["WORDPRESS_USERNAME"], os.environ["WORDPRESS_APP_PASSWORD"])
-    response = requests.get(
-        f"{base_url}/wp-json/wp/v2/posts",
-        auth=auth,
-        params=[("slug", slug), ("context", "edit"), ("per_page", "1"),
-                *(("status[]", s) for s in ("publish", "draft", "pending", "future", "private"))],
-        timeout=TIMEOUT_SECONDS,
-    )
+    # 2026-11-19 아침: 서버가 응답을 중간에 끊어(ChunkedEncodingError) 글은 멀쩡한데 확인이 빨간 X로 끝났다.
+    # 연결이 끊긴 것만 10초 쉬고 두 번 더 묻는다 — 글이 없거나 권한이 틀린 응답은 그대로 실패한다.
+    for attempt in range(3):
+        try:
+            response = requests.get(
+                f"{base_url}/wp-json/wp/v2/posts",
+                auth=auth,
+                params=[("slug", slug), ("context", "edit"), ("per_page", "1"),
+                        *(("status[]", s) for s in ("publish", "draft", "pending", "future", "private"))],
+                timeout=TIMEOUT_SECONDS,
+            )
+            break
+        except (requests.ConnectionError, requests.Timeout, requests.exceptions.ChunkedEncodingError) as exc:
+            if attempt == 2:
+                raise
+            print(f"워드프레스 응답이 끊김({type(exc).__name__}) — 10초 뒤 다시 묻습니다.")
+            time.sleep(10)
     response.raise_for_status()
     posts = response.json()
     return posts[0] if posts else None

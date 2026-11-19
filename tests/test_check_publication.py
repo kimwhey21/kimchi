@@ -170,3 +170,31 @@ class CollectorDayTest(unittest.TestCase):
         at = dt.datetime(2026, 10, 8, 22, 20, tzinfo=utc)                       # 뉴욕 10/8 18:20, 서울 10/9 07:20
         self.assertEqual(last_collected_us_day(at, closed_after=dt.time(16, 0)), "2026-10-08")
         self.assertEqual(last_collected_us_day(at), "2026-10-07")             # 증명서 기준(18:50)은 그대로
+
+
+class WordpressRetryTest(unittest.TestCase):
+    """2026-11-19: 응답이 중간에 끊긴 한 번 때문에 확인 전체가 실패하지 않는다."""
+
+    def _ok(self):
+        response = mock.Mock()
+        response.json.return_value = [{"id": 1}]
+        response.raise_for_status.return_value = None
+        return response
+
+    def test_a_cut_response_is_asked_again(self) -> None:
+        import requests
+        env = {"WORDPRESS_URL": "https://x", "WORDPRESS_USERNAME": "u", "WORDPRESS_APP_PASSWORD": "p"}
+        cut = requests.exceptions.ChunkedEncodingError("Response ended prematurely")
+        with mock.patch.dict("os.environ", env), mock.patch.object(cp.time, "sleep"), \
+             mock.patch.object(cp.requests, "get", side_effect=[cut, self._ok()]) as get:
+            self.assertEqual(cp._wordpress_post("slug"), {"id": 1})
+        self.assertEqual(get.call_count, 2)
+
+    def test_three_cuts_still_fail(self) -> None:
+        import requests
+        env = {"WORDPRESS_URL": "https://x", "WORDPRESS_USERNAME": "u", "WORDPRESS_APP_PASSWORD": "p"}
+        cut = requests.exceptions.ChunkedEncodingError("Response ended prematurely")
+        with mock.patch.dict("os.environ", env), mock.patch.object(cp.time, "sleep"), \
+             mock.patch.object(cp.requests, "get", side_effect=[cut, cut, cut]):
+            with self.assertRaises(requests.exceptions.ChunkedEncodingError):
+                cp._wordpress_post("slug")
