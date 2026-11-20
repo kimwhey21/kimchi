@@ -78,8 +78,40 @@ def required_trading_date(macro: dict) -> str:
     return next(iter(dates.values()))
 
 
+class NewListing(ValueError):
+    """상장 첫날이라 일봉이 하나뿐인 종목 — 전일 종가가 없어 등락률을 낼 수 없다."""
+
+
+def _fill_closed_session(hist, quote_metadata: dict, ticker: str):
+    """마지막 일봉 종가가 비었는데(NaN) 그날 정규장이 끝난 뒤의 regularMarketPrice가 있으면 그 값으로 채웁니다.
+
+    2026-11-20: 장 마감 열 시간 뒤에도 야후가 SPCX·PANW의 11/19 종가 칸을 비워 둬, 하루 전(11/18) 값이 남아
+    미국장 수집이 다섯 번 멈췄다. 같은 시각 메타데이터에는 16:00 ET 기준 정규장 가격이 있었다. 채운 값은 뒤에서
+    공식 원천(_verify_second_source)과 종가·등락률을 그대로 대조하므로, 틀린 값이면 거기서 멈춘다.
+    """
+    if hist.empty or not math.isnan(float(hist["Close"].iloc[-1])):
+        return hist
+    price, when = (quote_metadata or {}).get("regularMarketPrice"), (quote_metadata or {}).get("regularMarketTime")
+    if price is None or when is None:
+        return hist
+    try:
+        import pandas as pd
+        stamp = pd.Timestamp(when, unit="s", tz="UTC") if isinstance(when, (int, float)) else pd.Timestamp(when)
+        stamp = (stamp if stamp.tzinfo else stamp.tz_localize("UTC")).tz_convert("America/New_York")
+        price = float(price)
+    except (TypeError, ValueError):
+        return hist
+    last_day = hist.index[-1].date()
+    if stamp.date() != last_day or (stamp.hour, stamp.minute) < (16, 0) or not math.isfinite(price):
+        return hist
+    print(f"[안내] {ticker}: 야후 일봉의 {last_day} 종가가 비어 정규장 마감 가격 {price}로 채웁니다(공식 원천과 뒤에서 대조)")
+    hist = hist.copy()
+    hist.iloc[-1, hist.columns.get_loc("Close")] = price
+    return hist
+
+
 def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_yield: bool = False,
-                unit: str = "", **_ignore) -> dict:
+               unit: str = "", fill_closed_nan: bool = False, **_ignore) -> dict:
     """종목/지수 하나의 최근 시세를 가져와 카드에 필요한 형태로 정리합니다."""
     closes: list[float] | None = None
     ticker_client = yf.Ticker(ticker)
@@ -94,8 +126,12 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
         # 조정하지 않은 실제 종가(2026-10-06) — 기본값(auto_adjust=True)은 배당을 뺀 조정 종가라 지난 값이 공식 종가와 달랐다
         # (석 달 대조: 머크 66일 중 52일·월마트 36일 다름, 실제 종가는 0일). 주간 등락·3개월 차트가 이 이력을 쓴다.
         hist = ticker_client.history(period="4mo", auto_adjust=False)
+        if len(hist) == 1:
+            raise NewListing(f"{ticker}: 일봉이 하나뿐입니다(상장 첫날로 보임, {hist.index[-1].date()}).")
         if hist.empty or len(hist) < 2:
             raise ValueError(f"{ticker}: 시세 데이터를 가져오지 못했습니다.")
+        if fill_closed_nan:
+            hist = _fill_closed_session(hist, quote_metadata, ticker)
 
         # 최신 행이나 중간 거래일에 빈 종가가 섞여도, 실제 원고에 사용하는
         # 유효 종가가 두 개 이상이면 안전하게 최근 흐름과 등락률을 계산합니다.
@@ -632,8 +668,13 @@ def _fetch_dynamic_tier(
             )
         try:
             entry = _fetch_one(
-                ticker=ticker, name=name_ko or name_en, name_en=name_en
+                ticker=ticker, name=name_ko or name_en, name_en=name_en, fill_closed_nan=True
             )
+        except NewListing as exc:
+            # 2026-11-20: 앤트로픽(ANT)이 상장 첫날 거래대금 상위에 들었는데 일봉이 하나라 전일 종가가 없었고, '빼지 않고 멈춘다'
+            # 규칙 때문에 그날 미국장 글 전체가 다섯 번 멈췄다. 상장 첫날 종목은 등락률을 낼 수 없으니 이름을 적고 뺀다.
+            print(f"[안내] {name_en}({ticker})는 상장 첫날이라 편입 카드에서 뺍니다 — {exc}")
+            continue
         except Exception as exc:  # noqa: BLE001 — 센다: 아래에서 모아 멈춘다
             failed.append(f"{name_en}({ticker}): {exc}")
             continue

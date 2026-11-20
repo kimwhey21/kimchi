@@ -414,3 +414,50 @@ class UsAuditFixesTest(unittest.TestCase):
                 mock.patch.object(fetch_us, "cnbc_settle", return_value=("2026-10-02", 90.0)), mock.patch("builtins.print"):
             self.assertEqual(fetch_us._settle_futures(entries), [])
         self.assertEqual(entries["CL=F"]["change_pct"], 2.27)
+
+
+class UsDynamicEdgeTest(unittest.TestCase):
+    """2026-11-20: 상장 첫날 종목(일봉 하나)과 비어 있는 그날 종가 때문에 미국장 수집이 다섯 번 멈췄다."""
+
+    CONFIG = {"dynamic": {"enabled": True, "count": 3}, "name_ko_map": {}}
+
+    def _movers(self, *tickers):
+        return [{"ticker": t, "name": t, "trading_value": 1, "sector": "x"} for t in tickers]
+
+    def test_first_day_listing_is_left_out_not_stopped(self) -> None:
+        def fake_one(ticker, **_):
+            if ticker == "ANT":
+                raise fetch_us.NewListing("ANT: 일봉이 하나뿐입니다")
+            return {"ticker": ticker, "name": ticker, "price": 1.0, "trading_date": "2026-11-19"}
+        with mock.patch.object(fetch_us.fetch_movers, "fetch_top_dollar_volume_us", return_value=self._movers("AMD", "ANT")), \
+             mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one):
+            added = fetch_us._fetch_dynamic_tier(self.CONFIG, {"NVDA": {"price": 1.0}}, "2026-11-19")
+        self.assertEqual(list(added), ["AMD"])
+
+    def test_other_failures_still_stop(self) -> None:
+        with mock.patch.object(fetch_us.fetch_movers, "fetch_top_dollar_volume_us", return_value=self._movers("PANW")), \
+             mock.patch.object(fetch_us, "_fetch_one", side_effect=ValueError("PANW: 시세 데이터를 가져오지 못했습니다.")):
+            with self.assertRaises(ValueError):
+                fetch_us._fetch_dynamic_tier(self.CONFIG, {}, "2026-11-19")
+
+    def _hist(self, last):
+        import pandas as pd
+        index = pd.to_datetime(["2026-11-18", "2026-11-19"]).tz_localize("America/New_York")
+        return pd.DataFrame({"Close": [143.5, last]}, index=index)
+
+    def test_empty_close_after_the_bell_is_filled(self) -> None:
+        import pandas as pd
+        meta = {"regularMarketPrice": 138.43, "regularMarketTime": pd.Timestamp("2026-11-19 16:00:01", tz="America/New_York")}
+        filled = fetch_us._fill_closed_session(self._hist(float("nan")), meta, "SPCX")
+        self.assertEqual(float(filled["Close"].iloc[-1]), 138.43)
+
+    def test_empty_close_is_left_alone_during_the_session_or_other_day(self) -> None:
+        import math
+        import pandas as pd
+        for when in (pd.Timestamp("2026-11-19 14:00", tz="America/New_York"),
+                     pd.Timestamp("2026-11-18 16:00:01", tz="America/New_York")):
+            out = fetch_us._fill_closed_session(self._hist(float("nan")), {"regularMarketPrice": 1.0, "regularMarketTime": when}, "X")
+            self.assertTrue(math.isnan(float(out["Close"].iloc[-1])))
+        out = fetch_us._fill_closed_session(self._hist(150.0), {"regularMarketPrice": 1.0,
+                                            "regularMarketTime": int(pd.Timestamp("2026-11-19 21:01", tz="UTC").timestamp())}, "X")
+        self.assertEqual(float(out["Close"].iloc[-1]), 150.0)
