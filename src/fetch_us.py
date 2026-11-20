@@ -550,14 +550,17 @@ _REQUIRED = {"^DJI", "^GSPC", "^IXIC"}
 
 
 
-def _fetch_group(rows, extra=None) -> tuple[dict, list[str]]:
-    """설정의 각 줄을 받아온다. 실패한 항목은 (이유와 함께) 따로 돌려준다 — 2026-10-05부터 부른 쪽이 하나라도 있으면 멈춘다."""
+def _fetch_group(rows, extra=None, fill_closed_nan: bool = False) -> tuple[dict, list[str]]:
+    """설정의 각 줄을 받아온다. 실패한 항목은 (이유와 함께) 따로 돌려준다 — 2026-10-05부터 부른 쪽이 하나라도 있으면 멈춘다.
+
+    fill_closed_nan은 종목에만 켠다(2026-11-20 메타·모더나·코인베이스 11/19 종가 칸이 비었다). 지수·선물·금리는 마감 시각과
+    결제가 규칙이 달라 그대로 둔다."""
     out: dict[str, dict] = {}
     missing: list[str] = []
     for row in rows:
         ticker = row["ticker"]
         try:
-            entry = _fetch_one(**row)
+            entry = _fetch_one(**{**row, "fill_closed_nan": fill_closed_nan or row.get("fill_closed_nan", False)})
         except Exception as exc:  # noqa: BLE001 — 센다: 부른 쪽이 모아서 멈춘다
             missing.append(f"{row.get('name', ticker)}({ticker}): {exc}")
             continue
@@ -576,7 +579,7 @@ def fetch_all() -> dict:
     config = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
     macro, miss_macro = _fetch_group(config["macro"])
     watchlist, miss_stock = _fetch_group(
-        config["watchlist"], extra=lambda row: {"source": "core"}
+        config["watchlist"], extra=lambda row: {"source": "core"}, fill_closed_nan=True
     )
     # 2026-10-05: 하나도 빼지 않는다. 전에는 지수 셋만 필수였고 코어는 80%까지 빠져도 글을 냈다 — 데이터가 중요한 사이트에서
     # 빼는 것은 누락이다. 야후는 항목마다 4분까지 다시 묻는다(_fetch_one). 그래도 못 받은 항목은 이름을 모두 적고 멈춘다.
