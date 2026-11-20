@@ -1,0 +1,197 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-21",
+ "slug": "anthropic-ipo-who-popped-champagne",
+ "radar_origin": "Fortune: Anthropic’s IPO is a bellwether—and a warning",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1651340981821-b519ad14da7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c3RvY2slMjBleGNoYW5nZSUyMHNjcmVlbnxlbnwwfDB8fHwxNzk1MTk0NjQ4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "tcJ6sJTtTWI",
+  "credit": "Unsplash / Anne Nygård"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Anthropic’s IPO is a bellwether—and a warning",
+   "url": "https://fortune.com/2026/11/20/anthropic-ipo-bellwether-warning/"
+  },
+  {
+   "name": "서울경제",
+   "title": "하루아침에 직원들 돈벼락 맞았다…1인 평균 580억 대박난 앤트로픽",
+   "url": "https://www.sedaily.com/article/20116837"
+  },
+  {
+   "name": "더페어뉴스",
+   "title": "[뉴욕증시 개장] 앤트로픽 10%↓·반도체지수 7%↓…나스닥 2%대 하락",
+   "url": "https://www.thefairnews.co.kr/news/articleView.html?idxno=95009"
+  }
+ ],
+ "tags": [
+  "앤트로픽상장",
+  "AI주",
+  "공모주"
+ ],
+ "ko": {
+  "search_phrase": "앤트로픽 상장",
+  "title": "앤트로픽 상장 첫날 샴페인을 딴 사람은 누구였을까",
+  "title_candidates": [
+   "앤트로픽 상장 첫날 샴페인을 딴 사람은 누구였을까",
+   "앤트로픽 상장 나흘 전 가격표와 이틀째 가격표",
+   "앤트로픽 상장 이틀째, 기술이 맞아도 주가는 틀릴 수 있을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "같은 앤트로픽 주식을 손에 넣은 값이 사람마다 달랐습니다.\n직원들은 평균 행사가격이 주당 2.91달러인 스톡옵션을 받았고, 기관은 공모가 83달러에 주문을 냈고, 시장에서 첫 거래가 이뤄진 값은 111.50달러였습니다.\n앤트로픽 상장 첫날 샴페인을 딴 사람은 누구였을까요?"
+   },
+   {
+    "heading": "공모가에는 절반 넘는 기관이 못 들어갔습니다",
+    "body": "경제지 포춘에 따르면 약 1200곳의 기관투자자가 공모가에 주문을 냈지만, 그중 절반 넘게는 주식을 받지 못했습니다.\n개인 투자자 몫은 공모 물량의 약 15%였고, 포춘은 이를 공모주 역사상 가장 큰 개인 수요라고 적었습니다.\n공모가로 받는 일부터가 이미 경쟁이었다는 뜻입니다."
+   },
+   {
+    "heading": "가장 싸게 받은 쪽은 직원이었습니다",
+    "body": "서울경제는 앤트로픽이 직원 약 5300명에게 평균 행사가격이 주당 2.91달러인 스톡옵션 17억7000만주를 줬다고 전했습니다.\n여기에 양도제한조건부주식(RSU) 10억주 이상이 더해집니다. 일정 기간이 지나야 팔 수 있는 주식입니다.\n공모가로 환산한 총가치는 약 2320억달러이고, 직원 수로 나눈 단순 평균은 1인당 4400만달러입니다.\n미국 방송 CNBC는 초기 직원 가운데 최소 400명이 1억달러 이상의 주식 자산을 갖게 된다고 추산했습니다.\n공동창업자를 뺀 임직원은 상장 첫날 보유 주식의 최대 10%까지 팔 수 있습니다."
+   },
+   {
+    "heading": "시초가에 산 사람은 첫날부터 밀렸습니다",
+    "body": "첫 거래는 공모가보다 34.3% 높은 111.50달러에서 시작해 장중 114.99달러까지 올랐습니다.\n그러나 장이 끝났을 때 종가는 97.17달러였습니다.\n111.50달러에 샀다면 첫날이 가기도 전에 값이 그보다 낮아진 셈입니다.\n83달러에 받은 사람의 평가이익과 개장 직후 산 사람의 평가손실이 같은 하루에 나란히 생겼습니다."
+   },
+   {
+    "heading": "이틀째에는 업종 전체가 흔들렸습니다",
+    "body": "더페어뉴스에 따르면 20일 미국 증시에서 나스닥이 2% 넘게 떨어졌고, 상장 둘째 날인 앤트로픽은 10% 넘게 하락했습니다.\n한때 앤트로픽은 전날보다 10.33% 낮은 87.14달러에 거래됐습니다. 공모가 83달러보다 겨우 몇 달러 높은 값입니다.\n필라델피아반도체지수는 7%대 급락했고, 시장의 불안을 재는 변동성지수(VIX)는 30선에 올라섰습니다."
+   },
+   {
+    "heading": "기술이 맞아도 주가는 틀릴 수 있습니다",
+    "body": "포춘 해설이 이번 상장에서 가장 먼저 붙든 문장은 이것입니다.\n“기술이 옳아도 주가는 여전히 틀릴 수 있다.”\n기술에 대한 확신과 주가에 대한 확신은 서로 다른 것이라는 설명이 뒤따릅니다.\n샴페인은 가장 싸게 받은 쪽에서 먼저 터졌고, 비싼 값을 치른 쪽은 이틀 만에 잔을 내려놓아야 했습니다.\n앤트로픽의 다음 가격은 누가 치르게 될까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "평균 행사가격이 주당 2.91달러인 스톡옵션",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "앤트로픽은 직원 약 5300명에게 평균 행사가격이 주당 2.91달러인 스톡옵션 17억7000만주와 양도제한조건부주식(RSU) 10억주 이상을 부여했다."
+  },
+  {
+   "claim": "공모가 83달러",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "공모가는 희망 범위(70~78달러)를 웃도는 주당 83달러로 확정됐고 이를 기준으로 한 기업가치는 1조4000억달러(약 1860조원)를 넘었다."
+  },
+  {
+   "claim": "111.50달러",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "첫 거래는 공모가보다 34.3% 높은 111.50달러에 시작해 장중 114.99달러까지 올랐지만 상승폭의 상당 부분을 반납했다."
+  },
+  {
+   "claim": "약 1200곳의 기관투자자",
+   "url": "https://fortune.com/2026/11/20/anthropic-ipo-bellwether-warning/",
+   "original": "About 1,200 institutional investors submitted orders at the $83 IPO price, more than half of whom didn't get shares."
+  },
+  {
+   "claim": "약 15%",
+   "url": "https://fortune.com/2026/11/20/anthropic-ipo-bellwether-warning/",
+   "original": "Retail demand was the largest for any IPO on record, with individuals getting about 15% of the offering."
+  },
+  {
+   "claim": "약 5300명에게",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "앤트로픽은 직원 약 5300명에게 평균 행사가격이 주당 2.91달러인 스톡옵션 17억7000만주와 양도제한조건부주식(RSU) 10억주 이상을 부여했다."
+  },
+  {
+   "claim": "17억7000만주",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "앤트로픽은 직원 약 5300명에게 평균 행사가격이 주당 2.91달러인 스톡옵션 17억7000만주와 양도제한조건부주식(RSU) 10억주 이상을 부여했다."
+  },
+  {
+   "claim": "10억주 이상",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "앤트로픽은 직원 약 5300명에게 평균 행사가격이 주당 2.91달러인 스톡옵션 17억7000만주와 양도제한조건부주식(RSU) 10억주 이상을 부여했다."
+  },
+  {
+   "claim": "약 2320억달러",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "공모가로 환산하면 임직원 주식 보상의 총가치는 약 2320억달러이고 직원 수로 나눈 단순 평균은 1인당 4400만달러(약 580억원)다."
+  },
+  {
+   "claim": "1인당 4400만달러",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "공모가로 환산하면 임직원 주식 보상의 총가치는 약 2320억달러이고 직원 수로 나눈 단순 평균은 1인당 4400만달러(약 580억원)다."
+  },
+  {
+   "claim": "최소 400명이 1억달러 이상",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "CNBC는 초기 직원 가운데 최소 400명이 1억달러(약 1300억원) 이상의 주식 자산을 갖게 되고 일부는 10억달러를 넘어 억만장자 반열에 오를 수 있다고 추산했다."
+  },
+  {
+   "claim": "최대 10%까지",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "앤트로픽은 공동창업자를 제외한 임직원이 상장 첫날 보유 주식의 최대 10%를 팔 수 있게 했다."
+  },
+  {
+   "claim": "34.3% 높은 111.50달러에서 시작해 장중 114.99달러",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "첫 거래는 공모가보다 34.3% 높은 111.50달러에 시작해 장중 114.99달러까지 올랐지만 상승폭의 상당 부분을 반납했다."
+  },
+  {
+   "claim": "종가는 97.17달러",
+   "url": "https://fortune.com/2026/11/20/anthropic-ipo-bellwether-warning/",
+   "original": "Then it surrendered a lot of those gains during intraday trading before closing at $97.17."
+  },
+  {
+   "claim": "111.50달러에 샀다면",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "첫 거래는 공모가보다 34.3% 높은 111.50달러에 시작해 장중 114.99달러까지 올랐지만 상승폭의 상당 부분을 반납했다."
+  },
+  {
+   "claim": "83달러에 받은",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "공모가는 희망 범위(70~78달러)를 웃도는 주당 83달러로 확정됐고 이를 기준으로 한 기업가치는 1조4000억달러(약 1860조원)를 넘었다."
+  },
+  {
+   "claim": "나스닥이 2% 넘게 떨어졌고",
+   "url": "https://www.thefairnews.co.kr/news/articleView.html?idxno=95009",
+   "original": "미국 뉴욕증시에서 20일(현지시간) 장 초반 인공지능(AI)·반도체주 하락이 이어지며 나스닥지수가 2% 넘게 떨어졌다."
+  },
+  {
+   "claim": "10% 넘게 하락했습니다",
+   "url": "https://www.thefairnews.co.kr/news/articleView.html?idxno=95009",
+   "original": "상장 둘째 날을 맞은 AI 기업 앤트로픽(Anthropic·NASDAQ: ANT)은 10% 넘게 내렸다."
+  },
+  {
+   "claim": "10.33% 낮은 87.14달러",
+   "url": "https://www.thefairnews.co.kr/news/articleView.html?idxno=95009",
+   "original": "앤트로픽은 오전 11시 19분께 전날보다 10.33% 내린 87.14달러에 거래됐다."
+  },
+  {
+   "claim": "공모가 83달러보다",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "공모가는 희망 범위(70~78달러)를 웃도는 주당 83달러로 확정됐고 이를 기준으로 한 기업가치는 1조4000억달러(약 1860조원)를 넘었다."
+  },
+  {
+   "claim": "7%대 급락",
+   "url": "https://www.thefairnews.co.kr/news/articleView.html?idxno=95009",
+   "original": "필라델피아반도체지수는 7%대 급락했고, 변동성지수(VIX)는 30선에 올라섰다."
+  },
+  {
+   "claim": "30선에 올라섰습니다",
+   "url": "https://www.thefairnews.co.kr/news/articleView.html?idxno=95009",
+   "original": "필라델피아반도체지수는 7%대 급락했고, 변동성지수(VIX)는 30선에 올라섰다."
+  },
+  {
+   "claim": "20일 미국 증시",
+   "url": "https://www.thefairnews.co.kr/news/articleView.html?idxno=95009",
+   "original": "미국 뉴욕증시에서 20일(현지시간) 장 초반 인공지능(AI)·반도체주 하락이 이어지며 나스닥지수가 2% 넘게 떨어졌다."
+  },
+  {
+   "claim": "기술이 옳아도 주가는 여전히 틀릴 수 있다",
+   "url": "https://fortune.com/2026/11/20/anthropic-ipo-bellwether-warning/",
+   "original": "The technology can be right and the stock can still be wrong."
+  },
+  {
+   "claim": "앤트로픽 상장 첫날",
+   "url": "https://www.sedaily.com/article/20116837",
+   "original": "첫 거래는 공모가보다 34.3% 높은 111.50달러에 시작해 장중 114.99달러까지 올랐지만 상승폭의 상당 부분을 반납했다."
+  }
+ ]
+}

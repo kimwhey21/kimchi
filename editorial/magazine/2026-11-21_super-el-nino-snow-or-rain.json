@@ -1,0 +1,136 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-21",
+ "slug": "super-el-nino-snow-or-rain",
+ "radar_origin": "The Conversation: El Niño created a skiers’ paradise in Chile – now it’s Sierra Nevada and Southern Rockies’",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1762746445663-67887f9183d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c25vd3klMjBtb3VudGFpbiUyMHNraSUyMHNsb3BlfGVufDB8MHx8fDE3OTUxOTQ2NTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "QGf3WVDdvOo",
+  "credit": "Unsplash / Damian Kravchuk"
+ },
+ "sources": [
+  {
+   "name": "KQED",
+   "title": "El Niño snow weather forecast Sierra Nevada Tahoe, winter 2026-2027",
+   "url": "https://www.kqed.org/news/12096560/el-nino-snow-weather-forecast-sierra-nevada-tahoe-california-ski-pass-winter-2026-2027"
+  },
+  {
+   "name": "디저렛뉴스",
+   "title": "Super El Niño: West ski resorts, snowpack forecast, snowfall (2026-09-16)",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/"
+  },
+  {
+   "name": "미국 지질조사국(USGS)",
+   "title": "El Niño and snow",
+   "url": "https://www.usgs.gov/programs/climate-adaptation-science-centers/el-nino-and-snow"
+  }
+ ],
+ "tags": [
+  "슈퍼엘니뇨",
+  "적설량",
+  "기후"
+ ],
+ "ko": {
+  "title": "슈퍼 엘니뇨의 눈은 왜 비로 바뀔까",
+  "title_candidates": [
+   "슈퍼 엘니뇨의 눈은 왜 비로 바뀔까",
+   "슈퍼 엘니뇨가 와도 올겨울 눈이 더 온다고 장담 못 하는 이유",
+   "슈퍼 엘니뇨는 올겨울 눈을 얼마나 보장할까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "올겨울에는 ‘슈퍼 엘니뇨’가 온다는 예보가 나와 있습니다.\n바닷물이 유난히 뜨거워지는 해라서 눈을 기대하는 사람도 많습니다.\n하지만 역대 가장 강했던 엘니뇨 네 번 가운데 미국 서부에 눈이 평년보다 많이 쌓인 겨울은 두 번뿐이었습니다.\n더 센 엘니뇨가 더 많은 눈을 뜻하지 않는다면, 눈은 무엇이 가를까요?"
+   },
+   {
+    "heading": "예보관은 ‘매우 강하다’고 자신합니다",
+    "body": "엘니뇨는 적도 태평양의 바닷물이 평년보다 따뜻해지는 현상이고, 유난히 강하면 슈퍼 엘니뇨라 부릅니다.\n스키 예보 업체 오픈스노의 앨런 스미스는 KQED에서 올해 현상을 이렇게 말했습니다.\n“아주 강하고, 기록을 세울 수도 있는 엘니뇨가 될 것이라고 확신합니다.”\n같은 업체의 샘 콜레틴은 디저렛뉴스에서 이번 가을과 겨울에 매우 강한 엘니뇨가 나타날 확률이 90%를 넘는다고 말했습니다."
+   },
+   {
+    "heading": "그런데 기록은 반반이었습니다",
+    "body": "디저렛뉴스가 가장 강했던 엘니뇨 네 번의 겨울을 정리했습니다.\n서부 적설량은 평년 대비 1982~83년 139%, 1991~92년 73%, 1997~98년 104%, 2015~16년 98%였습니다.\n평년보다 많았던 겨울은 두 번뿐이었고, 한 번은 평년의 4분의 3에도 못 미쳤습니다."
+   },
+   {
+    "heading": "눈이 될지 비가 될지는 폭풍의 온도가 정합니다",
+    "body": "미국 지질조사국(USGS)은 엘니뇨로 강수량이 늘어도 눈이 그만큼 늘어난다고 단정하지 않습니다.\n중요한 것은 계절 평균 기온이 아니라 폭풍이 지나가는 동안의 기온이라는 설명입니다.\n엘니뇨가 평년보다 따뜻한 폭풍을 데려오면 비는 많은데 눈은 오히려 적을 수 있습니다.\n아주 추운 곳이 아니면 따뜻할수록 눈 대신 비로 내리는 몫이 커집니다.\n쌓인 눈도 따뜻한 해에는 평년보다 일찍 녹기 시작할 수 있습니다."
+   },
+   {
+    "heading": "예보관도 ‘감정을 싣지 말라’고 합니다",
+    "body": "스미스는 시에라네바다에는 평년보다 눈이 많을 쪽으로 확률이 기운다고 봅니다. 그러면서 선을 그었습니다.\n“꼭 2023년 같은 폭설의 겨울이 된다는 뜻은 아닙니다.”\n따뜻한 겨울이 되기 쉬워서 무겁고 젖은 눈과 비가 섞일 것이라는 전망입니다. 그는 이렇게 덧붙였습니다.\n“이 전망에 너무 감정을 실어서는 안 됩니다.”"
+   },
+   {
+    "heading": "결국 눈은 때에 달렸습니다",
+    "body": "콜레틴은 스키에 관해서라면 이렇게 말했습니다.\n“스키에 관한 한, 모든 것은 타이밍에 달려 있습니다.”\n시즌 전체의 눈이 많은 해에도 폭풍이 따뜻하게 오는 주에는 비가 내립니다.\n올겨울 눈 소식은 슈퍼 엘니뇨라는 이름보다 폭풍이 오는 그 주의 기온을 먼저 보고 읽어야 하지 않을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "네 번 가운데",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "So, only two of the four resulted in higher-than-average snowpacks."
+  },
+  {
+   "claim": "두 번뿐",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "So, only two of the four resulted in higher-than-average snowpacks."
+  },
+  {
+   "claim": "아주 강하고, 기록을 세울 수도 있는 엘니뇨가 될 것이라고 확신합니다",
+   "url": "https://www.kqed.org/news/12096560/el-nino-snow-weather-forecast-sierra-nevada-tahoe-california-ski-pass-winter-2026-2027",
+   "original": "We’re so confident that this is going to be a very strong and potentially record-setting El Niño"
+  },
+  {
+   "claim": "90%를 넘는다",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "there's a greater than 90% chance of a very strong event"
+  },
+  {
+   "claim": "1982~83년 139%",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "Here's are the western snowpack levels during the four strongest El Niño episodes on record:"
+  },
+  {
+   "claim": "1991~92년 73%",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "Here's are the western snowpack levels during the four strongest El Niño episodes on record:"
+  },
+  {
+   "claim": "1997~98년 104%",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "Here's are the western snowpack levels during the four strongest El Niño episodes on record:"
+  },
+  {
+   "claim": "2015~16년 98%",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "Here's are the western snowpack levels during the four strongest El Niño episodes on record:"
+  },
+  {
+   "claim": "두 번뿐이었고",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "So, only two of the four resulted in higher-than-average snowpacks."
+  },
+  {
+   "claim": "꼭 2023년 같은 폭설의 겨울이 된다는 뜻은 아닙니다",
+   "url": "https://www.kqed.org/news/12096560/el-nino-snow-weather-forecast-sierra-nevada-tahoe-california-ski-pass-winter-2026-2027",
+   "original": "It doesn’t necessarily mean it’s going to be, like, a massive 2023-style winter"
+  },
+  {
+   "claim": "이 전망에 너무 감정을 실어서는 안 됩니다",
+   "url": "https://www.kqed.org/news/12096560/el-nino-snow-weather-forecast-sierra-nevada-tahoe-california-ski-pass-winter-2026-2027",
+   "original": "Don’t get too emotionally attached to these outlooks."
+  },
+  {
+   "claim": "스키에 관한 한, 모든 것은 타이밍에 달려 있습니다",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "when it comes to skiing, it's all about timing"
+  },
+  {
+   "claim": "평년의 4분의 3",
+   "url": "https://www.deseret.com/lifestyle/2026/09/16/super-el-nino-west-ski-resorts-snowpack-forecast-snowfall/",
+   "original": "Here's are the western snowpack levels during the four strongest El Niño episodes on record:"
+  }
+ ]
+}
