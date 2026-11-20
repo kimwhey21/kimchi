@@ -21507,10 +21507,14 @@
 "web": "www.newtree.co.kr"
 },
 "271160": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01025617",
+"en": "Hana Aero Dynamics Co., Ltd.",
+"founded": "2007",
+"industry": "Shipbuilding, aerospace & rail",
+"ksic": "31322",
+"name": "Hana Aero Dynamics",
+"pref": false,
+"web": "www.hanaaero.com"
 },
 "271560": {
 "corp": "01238169",
