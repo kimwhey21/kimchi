@@ -198,3 +198,20 @@ class WordpressRetryTest(unittest.TestCase):
              mock.patch.object(cp.requests, "get", side_effect=[cut, cut, cut]):
             with self.assertRaises(requests.exceptions.ChunkedEncodingError):
                 cp._wordpress_post("slug")
+
+
+class UsSkippedDayTest(unittest.TestCase):
+    def test_owner_skipped_day_is_not_a_problem(self) -> None:
+        from src import daily_proof
+        self.assertIn("2026-11-19", daily_proof.US_SKIPPED)
+        with mock.patch.object(cp, "_latest_trading_date", return_value="2026-11-18"), \
+             mock.patch.object(cp, "_actual_trading_date", return_value="2026-11-19"), \
+             mock.patch.object(cp.EDITORIAL_DIR.__class__, "exists", return_value=True):
+            problems = cp.check_market("us", check_site=False)
+        self.assertFalse(any("최신 시세 파일" in p for p in problems), problems)
+
+    def test_proof_does_not_wait_for_the_skipped_day(self) -> None:
+        import datetime as dt
+        from src import daily_proof
+        rows = daily_proof.expected_artifacts(dt.date(2026, 11, 20), set(), root=Path(tempfile.mkdtemp()))
+        self.assertFalse(any(r[0] in ("미국장 시세", "미국장 시황") for r in rows), rows)

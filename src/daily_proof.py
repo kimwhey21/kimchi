@@ -50,6 +50,9 @@ US_HOLIDAYS = {
     "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31", "2027-06-18", "2027-07-05",
     "2027-09-06", "2027-11-25", "2027-12-24",
 }
+# 장은 열렸지만 사장님이 미국장 글을 건너뛰기로 정한 날 — 증명서·발행 확인이 그날 시세·원고를 기다리지 않는다.
+# 휴장일 표(US_HOLIDAYS)에 넣으면 다음 날 전 거래일 계산이 틀어지므로 따로 둔다.
+US_SKIPPED = {"2026-11-19"}   # 2026-11-20 결정: 야후 SNDK 이력이 8분의 1로 틀어져 공식 값과 안 맞음 — 그날 글 없이 넘어간다
 
 load_dotenv()
 
@@ -234,7 +237,7 @@ def expected_artifacts(day: dt.date, changed: set[str], root: Path = ROOT,
         if COLUMN_FROM <= day < COLUMN_DAILY_FROM:
             n_col = len(list((root / "editorial" / "columns").glob(f"{d}_*.json")))
             out.append(("오늘의 칼럼", n_col >= 1, f"editorial/columns/{d}_* {n_col}편"))
-    if 1 <= wd <= 5 and prev not in US_HOLIDAYS:
+    if 1 <= wd <= 5 and prev not in US_HOLIDAYS and prev not in US_SKIPPED:
         if has(f"data/price_us_{prev}.json"):
             out.append(("미국장 시황", has(f"editorial/us_{prev}.json"), f"editorial/us_{prev}.json"))
         else:

@@ -163,7 +163,10 @@ def check_market(market: str, check_site: bool, sitemap_urls: set[str] | None = 
         return [f"{market}: 시세 파일이 하나도 없습니다 (data/price_{market}_*.json)."]
 
     actual = _actual_trading_date(market)
-    if actual and actual > trading_date:
+    from src.daily_proof import US_SKIPPED
+    if market == "us" and actual in US_SKIPPED and actual > trading_date:
+        print(f"us {actual}: 사장님이 건너뛰기로 정한 날이라 시세·원고를 기다리지 않습니다(daily_proof.US_SKIPPED).")
+    elif actual and actual > trading_date:
         problems.append(
             f"{market}: 마지막 거래일은 {actual}인데 저장소의 최신 시세 파일은 "
             f"{trading_date}입니다. 그날 시세 수집이 실패했거나 커밋되지 않았습니다."
