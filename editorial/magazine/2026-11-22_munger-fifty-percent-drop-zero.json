@@ -1,0 +1,116 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "투자 심리",
+ "date": "2026-11-22",
+ "slug": "munger-fifty-percent-drop-zero",
+ "radar_origin": "24/7 Wall St.: The S&P 500 Just Plunged 9% in a Week. Charlie Munger Once Lost 53% in Two Years. Here’s H",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1524679166686-04237b4667b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8c3Rvcm15JTIwc2VhJTIwd2F2ZXN8ZW58MHwwfHx8MTc5NTI4MTEzMXww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "KrQJzrZiCak",
+  "credit": "Unsplash / Torsten Dederichs"
+ },
+ "sources": [
+  {
+   "name": "CNBC",
+   "title": "Charlie Munger's advice for volatile markets: If you can't handle swings, you deserve the mediocre result (NBC 로스앤젤레스 전재)",
+   "url": "https://www.nbclosangeles.com/news/business/money-report/charlie-mungers-advice-for-volatile-markets-if-you-cant-handle-swings-you-deserve-the-mediocre-result/3675495"
+  },
+  {
+   "name": "야후파이낸스",
+   "title": "Charlie Munger's Brutal Truth For Investors",
+   "url": "https://finance.yahoo.com/news/charlie-mungers-brutal-truth-investors-131630883.html"
+  }
+ ],
+ "tags": [
+  "찰리멍거",
+  "하락장",
+  "투자심리"
+ ],
+ "ko": {
+  "title": "버크셔가 반토막 나도 멍거가 걱정하지 않은 이유",
+  "title_candidates": [
+   "찰리 멍거는 왜 절반 하락 앞에서 제로라고 답했을까",
+   "버크셔가 반토막 나도 멍거가 걱정하지 않은 이유",
+   "내 계좌가 절반이 되는 날, 먼저 물어볼 것 세 가지"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "보유 종목이 반토막 나도 걱정이 없다고 답한 투자자가 있습니다.\n버크셔 해서웨이 부회장이던 찰리 멍거는 자신의 주식이 절반으로 떨어지는 일을 한 번이 아니라 세 번 겪었습니다.\n그런데도 걱정되느냐는 물음에 숫자 하나로 답했습니다. 어떻게 그런 대답이 가능할까요?"
+   },
+   {
+    "heading": "질문은 짧았고 대답은 더 짧았습니다",
+    "body": "CNBC가 전한 2009년 영국 BBC 인터뷰에서 멍거는 버크셔 주가가 빠지는 것이 걱정되느냐는 물음을 받았습니다.\n대답은 한 단어였습니다.\n“Zero.”\n이어서 그는 이 일이 처음이 아니라고 설명했습니다.\n“이번이 워런과 내가 버크셔 주식이 고점에서 저점까지 50% 떨어지는 것을 보는 세 번째입니다.”"
+   },
+   {
+    "heading": "세 번을 겪으면 걱정이 줄어드는 걸까",
+    "body": "야후파이낸스에 따르면 버크셔 주가는 2008년 금융위기 때 50% 넘게 떨어졌습니다.\n멍거의 ‘제로’는 배짱이 아니라 경험에서 나온 대답으로 읽힙니다.\n한 번 겪은 사람은 하락이 영원할까 두렵고, 세 번 겪은 사람은 하락이 지나가는 일이라는 것을 압니다.\n다만 이 설명은 멍거의 말에서 읽어 낸 해석이지, 그가 직접 밝힌 이유는 아닙니다."
+   },
+   {
+    "heading": "그가 놓은 조건은 하나였습니다",
+    "body": "멍거가 투자자에게 건넨 말은 위로가 아니라 조건이었습니다.\n“장기 투자자는 보유 주식의 평가액이 이를테면 50%쯤 떨어지는 일을 겪는다.”\n그 하락을 견디지 못하는 사람에게는 이런 결과가 돌아간다고 했습니다.\n“당신은 그에 걸맞은 평범한 결과를 얻을 것이다.”\n하락을 피하는 법이 아니라 하락을 통과하는 값을 말한 것입니다."
+   },
+   {
+    "heading": "하락장은 드문 일이 아닙니다",
+    "body": "야후파이낸스는 S&P 500이 1929년 이후 약세장을 13번 겪었다고 짚었습니다.\n같은 기사에는 투자자의 73%가 변동성을 걱정하고 58%는 하락을 매수 기회로 보고 있다는 조사도 나옵니다.\n하락은 예외가 아니라 일정에 가깝고, 흔들리는 사람도 흔들리지 않는 사람도 한 시장에 같이 있습니다.\n그래서 질문은 하락이 오느냐가 아니라 왔을 때 내가 어떻게 하느냐가 됩니다."
+   },
+   {
+    "heading": "내 돈에서 ‘제로’라고 답할 수 있는 몫",
+    "body": "멍거의 대답이 가능했던 것은 그가 잃어도 되는 돈으로 하락을 겪었기 때문이라고 볼 수 있습니다. 이 역시 해석입니다.\n같은 하락이라도 곧 쓸 돈이 절반이 되면 대답은 달라집니다.\n내 계좌 가운데 절반이 되어도 ‘제로’라고 답할 수 있는 돈은 얼마이고, 그렇게 답할 수 없는 돈은 얼마일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "Zero",
+   "url": "https://finance.yahoo.com/news/charlie-mungers-brutal-truth-investors-131630883.html",
+   "original": "Munger cut in with a firm, \"Zero.\""
+  },
+  {
+   "claim": "이번이 워런과 내가 버크셔 주식이 고점에서 저점까지 50% 떨어지는 것을 보는 세 번째입니다",
+   "url": "https://finance.yahoo.com/news/charlie-mungers-brutal-truth-investors-131630883.html",
+   "original": "This is the third time that Warren and I have seen our holdings in Berkshire go down, top tick to bottom tick, by 50%"
+  },
+  {
+   "claim": "장기 투자자는 보유 주식의 평가액이 이를테면 50%쯤 떨어지는 일을 겪는다",
+   "url": "https://www.nbclosangeles.com/news/business/money-report/charlie-mungers-advice-for-volatile-markets-if-you-cant-handle-swings-you-deserve-the-mediocre-result/3675495",
+   "original": "the long-term holder has the quoted value of his stocks go down by, say, 50%"
+  },
+  {
+   "claim": "당신은 그에 걸맞은 평범한 결과를 얻을 것이다",
+   "url": "https://www.nbclosangeles.com/news/business/money-report/charlie-mungers-advice-for-volatile-markets-if-you-cant-handle-swings-you-deserve-the-mediocre-result/3675495",
+   "original": "you deserve the mediocre result you're going to get"
+  },
+  {
+   "claim": "2008년 금융위기 때 50% 넘게",
+   "url": "https://finance.yahoo.com/news/charlie-mungers-brutal-truth-investors-131630883.html",
+   "original": "Berkshire's stock had fallen by more than 50% during the 2008 financial crisis"
+  },
+  {
+   "claim": "1929년 이후 약세장을 13번",
+   "url": "https://finance.yahoo.com/news/charlie-mungers-brutal-truth-investors-131630883.html",
+   "original": "The S&P 500 has endured 13 bear markets since 1929"
+  },
+  {
+   "claim": "73%가 변동성을 걱정하고 58%",
+   "url": "https://finance.yahoo.com/news/charlie-mungers-brutal-truth-investors-131630883.html",
+   "original": "found that 73% of investors are worried about market volatility"
+  },
+  {
+   "claim": "2009년 영국 BBC 인터뷰",
+   "url": "https://www.nbclosangeles.com/news/business/money-report/charlie-mungers-advice-for-volatile-markets-if-you-cant-handle-swings-you-deserve-the-mediocre-result/3675495",
+   "original": "Munger told a BBC interviewer in 2009"
+  },
+  {
+   "claim": "세 번",
+   "url": "https://finance.yahoo.com/news/charlie-mungers-brutal-truth-investors-131630883.html",
+   "original": "This is the third time that Warren and I have seen our holdings in Berkshire go down, top tick to bottom tick, by 50%"
+  },
+  {
+   "claim": "50% 넘게 떨어졌습니다",
+   "url": "https://finance.yahoo.com/news/charlie-mungers-brutal-truth-investors-131630883.html",
+   "original": "Berkshire's stock had fallen by more than 50% during the 2008 financial crisis"
+  }
+ ]
+}

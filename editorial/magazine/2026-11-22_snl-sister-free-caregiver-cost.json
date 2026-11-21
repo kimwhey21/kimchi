@@ -1,0 +1,141 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-22",
+ "slug": "snl-sister-free-caregiver-cost",
+ "radar_origin": "Fortune: The $120,500 cost of being ‘Sister’: SNL sketch puts a face on America’s caregiving crisis",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1616029674726-cdca48fab853?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8ZWxkZXJseSUyMGhhbmRzJTIwaG9sZGluZ3xlbnwwfDB8fHwxNzk1MjgxMTIyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "d9Emsd3zM3I",
+  "credit": "Unsplash / Hunt Han"
+ },
+ "sources": [
+  {
+   "name": "보스턴닷컴",
+   "title": "That SNL sketch about 'Sister'? It's more like nonfiction (2026-11-19)",
+   "url": "https://www.boston.com/news/national-news/2026/11/19/that-snl-sketch-about-sister-its-more-like-nonfiction/"
+  },
+  {
+   "name": "NBC 보스턴",
+   "title": "SNL 'Sister' caregiving sketch response (TODAY.com, 2026-11-18)",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/"
+  },
+  {
+   "name": "펜실베이니아대 LDI",
+   "title": "A comprehensive measure of the costs of caring for a parent",
+   "url": "https://ldi.upenn.edu/our-work/research-updates/a-comprehensive-measure-of-the-costs-of-caring-for-a-parent-differences-according-to-functional-status/"
+  }
+ ],
+ "tags": [
+  "SNL시스터",
+  "가족돌봄",
+  "돌봄비용"
+ ],
+ "ko": {
+  "title": "아버지 돌봄, 왜 딸에게 먼저 전화가 올까",
+  "title_candidates": [
+   "무료에 24시간 상주하는 돌봄 서비스의 진짜 요금은 누가 낼까",
+   "SNL 가짜 광고 ‘시스터’가 웃긴 이유, 숫자로 보면 웃을 수 없습니다",
+   "아버지 돌봄, 왜 딸에게 먼저 전화가 올까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "요금은 0원이고, 24시간 집에 상주하며, 심지어 내 동생입니다.\n미국 코미디 프로그램 SNL이 내보낸 가짜 광고 ‘시스터(Sister)’는 이런 돌봄 서비스를 팔았습니다.\n웃음은 짧았고 질문은 길게 남았습니다. 이 서비스의 요금은 정말 0원일까요?"
+   },
+   {
+    "heading": "광고 속 오빠는 걱정이 없습니다",
+    "body": "NBC 보스턴이 전한 콩트는 이렇습니다. 진행자 존 멀레이니가 아버지를 돌볼 서비스를 소개합니다.\n“‘시스터’는 24시간 상주하는 노인 돌봄 서비스입니다. 완전히 무료이고, 심지어 내 동생입니다.”\n광고 속 오빠는 이렇게 덧붙입니다.\n“이제 아빠가 필요한 돌봄과 관심을 받는지 걱정하지 않아도 됩니다.”\n광고에서 아무도 요금 이야기를 하지 않는다는 점이 이 콩트의 농담입니다."
+   },
+   {
+    "heading": "0원 뒤에는 청구서가 있습니다",
+    "body": "펜실베이니아대 LDI의 연구가 그 청구서를 계산했습니다. 어머니가 살아 있는 40~70세 여성이 가족을 돌보며 포기한 임금만 따지면 중간값이 두 해 동안 2만 4,500달러였습니다.\n여기에 돌보는 사람의 삶의 질 손실을 돈으로 환산한 복지 비용을 더하면 이야기가 달라집니다.\n연구진은 이 경우 중간값이 약 일곱 배인 두 해 동안 18만 달러라고 밝혔습니다.\n임금 명세서에는 안 찍히지만 가계에는 실제로 빠져나가는 돈입니다."
+   },
+   {
+    "heading": "청구서는 왜 딸에게 먼저 갈까",
+    "body": "보스턴닷컴은 토론토대 안젤리나 그리고리예바의 연구를 소개했습니다. 딸은 한 달에 약 14시간을 부모 돌봄에 쓰고 아들은 약 여섯 시간을 쓴다는 결과입니다.\n자매가 있는 아들은 돌봄을 더 적게 한다는 점도 함께 나왔습니다.\n연구자는 이 구조가 쉽게 바뀌지 않을 것이라고 내다봤습니다.\n“사회적 변화가 온다고 해도 몇 해가 아니라 수십 년이 걸릴 것이라고 생각합니다.”"
+   },
+   {
+    "heading": "웃으며 공유한 사람들이 있었습니다",
+    "body": "콩트가 퍼진 뒤 NBC 보스턴이 만난 사람들은 비슷한 말을 했습니다. 부모를 오래 돌본 크리스틴 프루든은 이렇게 말했습니다.\n“우리 여성 다수가 느끼면서도 한 번도 드러내도 된다고 허락받지 못한 모든 것을 그 콩트가 말해 줍니다.”\n웃음은 허락이 되었습니다. 돈 이야기를 꺼내도 된다는 허락까지 된 것은 아닙니다."
+   },
+   {
+    "heading": "돌보는 사람은 10년 만에 절반 늘었습니다",
+    "body": "NBC 보스턴이 인용한 미국은퇴자협회(AARP) 조사에 따르면 2025년 미국의 가족 돌봄 인구는 6,300만 명입니다. 2015년보다 50% 늘었습니다.\n돌봄을 맡는 사람이 늘수록 ‘누가 맡을지’는 가족 안의 협상이 되고, 협상에서 밀린 쪽이 임금과 시간을 내놓습니다.\n우리 가족 단톡방에서 이 서비스의 요금은 지금 누가 내고 있을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "‘시스터’는 24시간 상주하는 노인 돌봄 서비스입니다",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/",
+   "original": "Sister is a live-in, 24/7 elder care provider that is completely free and also your sister"
+  },
+  {
+   "claim": "요금은 0원이고, 24시간 집에 상주하며",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/",
+   "original": "Sister is a live-in, 24/7 elder care provider that is completely free and also your sister"
+  },
+  {
+   "claim": "이 서비스의 요금은 정말 0원일까요",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/",
+   "original": "Sister is a live-in, 24/7 elder care provider that is completely free and also your sister"
+  },
+  {
+   "claim": "완전히 무료이고, 심지어 내 동생입니다",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/",
+   "original": "Sister is a live-in, 24/7 elder care provider that is completely free and also your sister"
+  },
+  {
+   "claim": "이제 아빠가 필요한 돌봄과 관심을 받는지 걱정하지 않아도 됩니다",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/",
+   "original": "Now I don't have to worry about dad getting the care and attention he needs"
+  },
+  {
+   "claim": "2만 4,500달러",
+   "url": "https://ldi.upenn.edu/our-work/research-updates/a-comprehensive-measure-of-the-costs-of-caring-for-a-parent-differences-according-to-functional-status/",
+   "original": "the median cost of informal caregiving is $24,500 over two years"
+  },
+  {
+   "claim": "약 일곱 배인 두 해 동안 18만 달러",
+   "url": "https://ldi.upenn.edu/our-work/research-updates/a-comprehensive-measure-of-the-costs-of-caring-for-a-parent-differences-according-to-functional-status/",
+   "original": "the median cost of informal caregiving is about seven times more – $180,000 over two years"
+  },
+  {
+   "claim": "한 달에 약 14시간을 부모 돌봄에 쓰고 아들은 약 여섯 시간",
+   "url": "https://www.boston.com/news/national-news/2026/11/19/that-snl-sketch-about-sister-its-more-like-nonfiction/",
+   "original": "daughters spend 14 hours a month, on average, caring for parents, compared with six hours for sons"
+  },
+  {
+   "claim": "사회적 변화가 온다고 해도 몇 해가 아니라 수십 년이 걸릴 것이라고 생각합니다",
+   "url": "https://www.boston.com/news/national-news/2026/11/19/that-snl-sketch-about-sister-its-more-like-nonfiction/",
+   "original": "I think if there will be social change, it will take decades and not years"
+  },
+  {
+   "claim": "우리 여성 다수가 느끼면서도 한 번도 드러내도 된다고 허락받지 못한 모든 것을 그 콩트가 말해 줍니다",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/",
+   "original": "It says everything so many of us women feel and never were really allowed to express"
+  },
+  {
+   "claim": "2025년 미국의 가족 돌봄 인구는 6,300만 명입니다",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/",
+   "original": "63 million Americans are caregivers in 2025, up 50% since 2015"
+  },
+  {
+   "claim": "2015년보다 50% 늘었습니다",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/",
+   "original": "63 million Americans are caregivers in 2025, up 50% since 2015"
+  },
+  {
+   "claim": "10년 만에 절반 늘었습니다",
+   "url": "https://www.nbcboston.com/entertainment/entertainment-news/snl-sister-caregiving-sketch-response-family-group-chats/4051575/",
+   "original": "63 million Americans are caregivers in 2025, up 50% since 2015"
+  },
+  {
+   "claim": "두 해 동안 18만 달러",
+   "url": "https://ldi.upenn.edu/our-work/research-updates/a-comprehensive-measure-of-the-costs-of-caring-for-a-parent-differences-according-to-functional-status/",
+   "original": "the median cost of informal caregiving is about seven times more – $180,000 over two years"
+  }
+ ]
+}
