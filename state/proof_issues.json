@@ -1,9 +1,13 @@
 {
- "base": {},
- "day": "2026-11-20",
- "issues": {
+ "base": {
   "미국장 # 공식 원천으로 다시 맞추지 못한 값 #개 — S&P# 러셀# VIX, 美 #년물 금리, 美 #년물 금리": 1,
   "작업 market_brief.yml (us) (#): 실패": 1,
   "작업 publish_check.yml (#): 실패": 1
+ },
+ "day": "2026-11-21",
+ "issues": {
+  "# 페이지에서 가격·날짜를 못 읽었습니다(HTTP #)": 1,
+  "작업 market_brief.yml (us) (#): 실패": 2,
+  "작업 publish_check.yml (#): 실패": 2
  }
 }
