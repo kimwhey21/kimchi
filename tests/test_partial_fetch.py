@@ -461,3 +461,26 @@ class UsDynamicEdgeTest(unittest.TestCase):
         out = fetch_us._fill_closed_session(self._hist(150.0), {"regularMarketPrice": 1.0,
                                             "regularMarketTime": int(pd.Timestamp("2026-11-19 21:01", tz="UTC").timestamp())}, "X")
         self.assertEqual(float(out["Close"].iloc[-1]), 150.0)
+
+
+class TreasuryYieldTest(unittest.TestCase):
+    """2026-11-21: Cboe가 막힌 날 금리는 CNBC보다 재무부 공식 수익률로 먼저 맞춘다."""
+
+    CSV = 'Date,"10 Yr","30 Yr"\n11/20/2026,4.92,5.31\n11/19/2026,5.04,5.40\n'
+
+    def test_treasury_value_is_read_for_the_day(self) -> None:
+        response = mock.Mock(text=self.CSV)
+        with mock.patch.object(fetch_us.requests, "get", return_value=response):
+            self.assertEqual(fetch_us.treasury_yield("^TNX", "2026-11-20"), 4.92)
+            self.assertEqual(fetch_us.treasury_yield("^TYX", "2026-11-20"), 5.31)
+            self.assertIsNone(fetch_us.treasury_yield("^TNX", "2026-11-21"))
+            self.assertIsNone(fetch_us.treasury_yield("^GSPC", "2026-11-20"))
+
+    def test_treasury_comes_before_cnbc_when_cboe_is_blocked(self) -> None:
+        with mock.patch.object(fetch_us, "_official_series", return_value={}), \
+             mock.patch.object(fetch_us, "cboe_quote_close", return_value=None), \
+             mock.patch.object(fetch_us, "treasury_yield", return_value=4.92), \
+             mock.patch.object(fetch_us, "cnbc_close", return_value=4.95) as cnbc:
+            self.assertEqual(fetch_us.second_series("^TNX", "2026-11-20"), {"2026-11-20": 4.92})
+        cnbc.assert_not_called()
+        self.assertIn("^TNX", fetch_us._TREASURY_USED)

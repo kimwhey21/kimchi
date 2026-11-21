@@ -271,6 +271,33 @@ def cboe_quote_close(ticker: str, day: str, now: dt.datetime | None = None) -> f
     return round(price / scale, 4)
 
 
+_TREASURY = ("https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/{year}/all"
+             "?type=daily_treasury_yield_curve&field_tdr_date_value={year}&page&_format=csv")
+_TREASURY_COLUMN = {"^TNX": "10 Yr", "^TYX": "30 Yr"}
+
+
+def treasury_yield(ticker: str, day: str) -> float | None:
+    """미 재무부 공식 일별 수익률(par yield curve)의 그날 값 — Cboe가 막힌 날 금리를 맞출 원천(2026-11-21).
+
+    11/20 오후부터 Cboe가 맥·러너 모두에 403을 돌려 금리가 CNBC로만 대조됐고, 금리가 12bp 내린 날 CNBC '마감'(4.95·5.337)이
+    야후(4.91·5.30)와 3bp 넘게 갈려 미국장 수집이 여섯 번 멈췄다. 재무부 값은 4.92·5.31로 야후와 맞았다. 7~11월 87일 대조에서
+    야후와의 차이는 중간값 0.5bp·95%가 1.7bp 안(넘은 날은 7/29 하루, 4.8bp). 그날 줄이 아직 없거나 못 받으면 None."""
+    column = _TREASURY_COLUMN.get(ticker)
+    if not column:
+        return None
+    year = day[:4]
+    try:
+        text = requests.get(_TREASURY.format(year=year), headers=_NASDAQ_HEADERS, timeout=30).text
+        import csv
+        import io
+        for row in csv.DictReader(io.StringIO(text)):
+            if dt.datetime.strptime(row["Date"], "%m/%d/%Y").date().isoformat() == day and row.get(column):
+                return round(float(row[column]), 4)
+    except (requests.RequestException, ValueError, KeyError) as exc:
+        print(f"[안내] 재무부 수익률 {ticker}: {exc}")
+    return None
+
+
 def naver_future_closes(ticker: str) -> dict[str, float]:
     """네이버 시장지표의 뉴욕 선물 연결물 일별 종가 {날짜: 값}. 못 받으면 빈 dict."""
     path = _FUTURES[ticker][0]
@@ -406,6 +433,7 @@ def second_series(ticker: str, day: str) -> dict[str, float]:
     series = _official_series(ticker, day)
     _CNBC_USED.discard(ticker)
     _CBOE_QUOTE_USED.discard(ticker)
+    _TREASURY_USED.discard(ticker)
     if ticker in _FUTURES or day in series:
         return series
     if ticker in _YIELDS:
@@ -415,6 +443,10 @@ def second_series(ticker: str, day: str) -> dict[str, float]:
         if quote is not None:
             _CBOE_QUOTE_USED.add(ticker)
             return {**series, day: quote}
+        official = treasury_yield(ticker, day)
+        if official is not None:
+            _TREASURY_USED.add(ticker)
+            return {**series, day: official}
     close = cnbc_close(ticker, day)
     if close is not None:
         _CNBC_USED.add(ticker)
@@ -424,6 +456,7 @@ def second_series(ticker: str, day: str) -> dict[str, float]:
 
 _CNBC_USED: set[str] = set()
 _CBOE_QUOTE_USED: set[str] = set()
+_TREASURY_USED: set[str] = set()
 
 
 def _official_series(ticker: str, day: str) -> dict[str, float]:
@@ -527,7 +560,7 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
         # 차이를 반올림해 잰다(2026-10-28) — 30년물 야후 5.3·공식 5.311은 차이가 딱 0.011인데 부동소수점으로 0.01100000000000012가 되어
         # 허용 안의 값이 막혔고 그날 아침 미국장 시세가 나가지 못했다.
         tolerance = max(0.011, abs(other) * 0.00001)
-        if ticker in _YIELDS and ticker in _CNBC_USED:
+        if ticker in _YIELDS and (ticker in _CNBC_USED or ticker in _TREASURY_USED):
             # 금리를 CNBC로 임시 대조할 때만 3bp(2026-11-04) — Cboe 줄이 아직 없는 아침에 CNBC '마감'은 Cboe 종가(15시 ET)보다 늦게 잰
             # 값이라 10년물이 야후 4.95·CNBC 4.966으로 갈려 수집이 네 시간 멈췄다(뒤에 나온 Cboe 공식은 4.952, 야후가 맞았다). 밤 증명서는
             # Cboe 공식 값으로 0.011 안에서 다시 맞춘다(close_check.us_recheck).
@@ -539,7 +572,7 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
         if bad_change:
             problems.append(bad_change)
             continue
-        entry["close_sources"] = ["yahoo", "cboe_quote" if ticker in _CBOE_QUOTE_USED else "cnbc" if ticker in _CNBC_USED else "fred" if ticker == "^DJI"
+        entry["close_sources"] = ["yahoo", "cboe_quote" if ticker in _CBOE_QUOTE_USED else "treasury" if ticker in _TREASURY_USED else "cnbc" if ticker in _CNBC_USED else "fred" if ticker == "^DJI"
                                   else "cboe" if ticker in _CBOE_SYMBOLS else "nasdaq"]
     return problems
 
