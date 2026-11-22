@@ -1,0 +1,146 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-23",
+ "slug": "taiwan-short-selling-curbs",
+ "radar_origin": "서울경제 (구글뉴스 경유 — RSS 404): 일주일 새 17.5% ‘와르르’…결국 공매도 제한 카드 꺼낸 대만 - 서울경제",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1598935898639-81586f7d2129?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8dGFpcGVpJTIwMTAxfGVufDB8MHx8fDE3OTUzNjc0MDN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "phjpsNFw6pM",
+  "credit": "Unsplash / Timo Volz"
+ },
+ "sources": [
+  {
+   "name": "포커스 타이완",
+   "title": "Taiwan further tightens short-selling amid stock market volatility (2026-11-19)",
+   "url": "https://focustaiwan.tw/business/202611190022"
+  },
+  {
+   "name": "포커스 타이완",
+   "title": "Taiwan stocks tumble, Taiex closes below 40,000 (2026-11-19)",
+   "url": "https://focustaiwan.tw/business/202611190016"
+  },
+  {
+   "name": "FourWeekMBA",
+   "title": "After TSMC Rout, Taiwan Cuts Short Sales 90%, Taps $15B Fund",
+   "url": "https://fourweekmba.com/ai-after-tsmc-rout-taiwan-cuts-short-sales-90-taps-15b-fund/"
+  },
+  {
+   "name": "뉴시스",
+   "title": "자사주로 수급 채우고 공매도·반대매매 조여 매도압력 누른다…'검은 월요일' 막을까 (2026-11-22)",
+   "url": "https://www.newsis.com/view/NISX20261122_0003878341"
+  }
+ ],
+ "tags": [
+  "대만공매도제한",
+  "공매도",
+  "반대매매"
+ ],
+ "ko": {
+  "title": "대만 공매도 제한, 파는 쪽을 묶으면 하락도 멈출까",
+  "title_candidates": [
+   "대만 공매도 제한, 파는 쪽을 묶으면 하락도 멈출까",
+   "대만 공매도 제한: 파는 쪽을 묶은 나라, 사는 쪽을 연 나라",
+   "대만 공매도 제한 두 번, 서울은 왜 사는 쪽을 열었나"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "대만은 이번 달에만 공매도의 문을 두 번 좁혔습니다.\n같은 급락을 맞은 서울의 처방은 자사주 매입 한도를 풀고 불법 공매도를 들여다보는 쪽에 무게가 실렸습니다.\n같은 폭풍 앞에서 처방은 왜 갈렸을까요, 어느 쪽이 시장을 더 오래 받쳐 줄까요?"
+   },
+   {
+    "heading": "대만이 먼저 건드린 것은 빌리는 주식이었습니다",
+    "body": "공매도는 주식을 빌려 먼저 팔고, 값이 떨어진 뒤 싸게 사서 갚는 거래입니다.\n값이 떨어질수록 이익이 나기 때문에 급락장에서는 하락에 속도를 붙인다는 비판을 받습니다.\nFourWeekMBA는 대만 금융감독위원회가 이달 초 하루 중 빌린 주식으로 낼 수 있는 매도 주문을 종목의 30일 평균 거래량 3%로 묶었다고 정리했습니다.\n한도는 30%에서 3%로 내려갔습니다.\n빌린 주식으로 공매도할 때 내야 하는 최소 증거금 비율도 90%에서 130%로 올랐습니다.\n증거금은 공매도하는 쪽이 맡겨 두는 담보라서, 비율이 오르면 같은 거래에 더 많은 돈이 묶입니다."
+   },
+   {
+    "heading": "4.4% 급락이 두 번째 문을 열었습니다",
+    "body": "그 뒤에도 시장은 버티지 못했습니다.\n포커스 타이완에 따르면 목요일 대만 가권지수는 1,768.02포인트, 4.4% 떨어져 3만8,426.89로 마감했습니다.\n같은 매체는 이 하락으로 지수가 4만 선 아래로 내려왔고 연 평균선 구실을 하는 240일 이동평균선도 깼다고 적었습니다.\n"
+   },
+   {
+    "heading": "전날 종가 아래로는 팔 수 없게 했습니다",
+    "body": "급락 직후 대만 금융감독위원회가 꺼낸 카드는 가격 제한이었습니다.\n하루 3.5% 이상 떨어진 종목은 다음 거래일에 전날 종가 아래 가격으로 공매도할 수 없습니다.\n제한은 그 종목이 제한 중에 다시 3.5% 이상 떨어지면 하루 더 이어집니다.\n하루 중 빌린 주식으로 낼 수 있는 공매도 주문 한도도 3%에서 1%로 낮아졌습니다.\n증권사가 영업이나 위험 회피를 위해 거래하는 경우는 제한에서 빠집니다."
+   },
+   {
+    "heading": "서울의 처방은 사는 쪽을 열어 줬습니다",
+    "body": "뉴시스가 정리한 서울의 조치는 방향이 다릅니다.\n상장사의 하루 자사주 매수 주문 한도를 24일부터 3개월간 완화합니다.\n금융감독원과 한국거래소는 3개월 동안 불법 공매도 특별 집중 감시 기간을 운영합니다.\n공매도를 막는 것이 아니라 불법 공매도를 찾아내는 쪽입니다.\n강제로 팔려 나오는 물량을 줄이는 장치도 있습니다.\n빚내서 산 주식이 담보 부족에 걸리면 증권사가 강제로 파는 것이 반대매매인데, 지난 6일에는 증권사의 신용융자담보비율 유지 의무를 3개월간 면제했습니다."
+   },
+   {
+    "heading": "묶어도 전망은 쉽게 바뀌지 않았습니다",
+    "body": "제한이 시장 분위기를 곧바로 바꿨다는 근거는 아직 없습니다.\n포커스 타이완에는 리팡궈 프레지던트캐피털매니지먼트 회장의 말이 실렸습니다.\n“시장이 악재를 완전히 소화할 때까지 투자자들은 계속 조심스러울 가능성이 큽니다.”\n공매도 제한은 하락의 속도를 늦추는 장치이지 하락의 원인을 지우는 장치는 아닙니다."
+   },
+   {
+    "heading": "내 계좌에 이어지는 곳은 어디일까",
+    "body": "서울의 처방에서 개인 투자자와 가장 가까운 항목은 반대매매입니다.\n뉴시스는 당국이 신용융자와 미수거래, 반대매매 동향을 면밀히 모니터링해 연쇄적인 매도 압력을 낮추려 한다고 정리했습니다.\n파는 쪽을 묶는 처방과 사는 쪽을 열어 주는 처방 가운데, 어느 쪽이 더 오래 버틸까요?"
+   }
+  ],
+  "search_phrase": "대만 공매도 제한"
+ },
+ "evidence": [
+  {
+   "claim": "30일 평균 거래량 3%",
+   "url": "https://fourweekmba.com/ai-after-tsmc-rout-taiwan-cuts-short-sales-90-taps-15b-fund/",
+   "original": "cap daily intraday sell orders of borrowed shares at 3% of a stock’s 30-day average trading volume"
+  },
+  {
+   "claim": "30%에서 3%로",
+   "url": "https://fourweekmba.com/ai-after-tsmc-rout-taiwan-cuts-short-sales-90-taps-15b-fund/",
+   "original": "cap daily intraday sell orders of borrowed shares at 3% of a stock’s 30-day average trading volume"
+  },
+  {
+   "claim": "90%에서 130%로",
+   "url": "https://fourweekmba.com/ai-after-tsmc-rout-taiwan-cuts-short-sales-90-taps-15b-fund/",
+   "original": "The minimum margin for short sales of listed and over-the-counter stocks rises to 130% from 90%."
+  },
+  {
+   "claim": "1,768.02포인트, 4.4%",
+   "url": "https://focustaiwan.tw/business/202611190022",
+   "original": "plunged 1,768.02 points, or 4.4 percent, to close at 38,426.89 Thursday"
+  },
+  {
+   "claim": "4만 선 아래",
+   "url": "https://focustaiwan.tw/business/202611190016",
+   "original": "closing below the 40,000-point mark"
+  },
+  {
+   "claim": "240일 이동평균선",
+   "url": "https://focustaiwan.tw/business/202611190016",
+   "original": "The drop sent the Taiex below its 240-day moving average"
+  },
+  {
+   "claim": "하루 3.5% 이상 떨어진 종목",
+   "url": "https://focustaiwan.tw/business/202611190022",
+   "original": "a ban on short selling below the previous closing price for stocks that fell 3.5 percent or more"
+  },
+  {
+   "claim": "다시 3.5% 이상 떨어지면",
+   "url": "https://focustaiwan.tw/business/202611190022",
+   "original": "It remains in effect for another session if they fall another 3.5 percent or more while the restriction is in place"
+  },
+  {
+   "claim": "3%에서 1%로",
+   "url": "https://focustaiwan.tw/business/202611190022",
+   "original": "cuts the daily limit on intraday short-selling orders using borrowed shares from 3 percent to 1 percent"
+  },
+  {
+   "claim": "24일부터 3개월간",
+   "url": "https://www.newsis.com/view/NISX20261122_0003878341",
+   "original": "먼저, 상장기업의 1일 자사주 매수주문 수량한도 제한을 오는 24일부터 3개월간 완화한다."
+  },
+  {
+   "claim": "3개월 동안",
+   "url": "https://www.newsis.com/view/NISX20261122_0003878341",
+   "original": "금융감독원과 한국거래소는 앞으로 3개월간 불법 공매도 특별 집중 감시 기간을 운영하고"
+  },
+  {
+   "claim": "지난 6일에는 증권사의 신용융자담보비율 유지 의무를 3개월간 면제",
+   "url": "https://www.newsis.com/view/NISX20261122_0003878341",
+   "original": "앞서 정부는 지난 6일 열린 F4 회의에서 반대매매 압력을 낮추기 위해 증권사의 신용융자담보비율 유지 의무를 3개월간 면제한 바 있다."
+  },
+  {
+   "claim": "시장이 악재를 완전히 소화할 때까지 투자자들은 계속 조심스러울 가능성이 큽니다",
+   "url": "https://focustaiwan.tw/business/202611190016",
+   "original": "investors are likely to remain cautious until the market fully absorbs the negative news"
+  }
+ ]
+}

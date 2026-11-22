@@ -1,0 +1,121 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-23",
+ "slug": "petrodollar-deal-myth",
+ "radar_origin": "Fortune: 2 years ago, Saudi Arabia quietly canceled the ‘petrodollar’ deal with America that wired",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1598408745613-178751e2ccde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8b2lsJTIwdGFua2VyJTIwc2hpcHxlbnwwfDB8fHwxNzk1MzY3NDEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "U9_pRASawlc",
+  "credit": "Unsplash / Fredrick F."
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "What is the petrodollar? (2026-04-07)",
+   "url": "https://fortune.com/2026/04/07/what-is-petrodollar-petroyuan-saudi-china-dollar-strength/"
+  },
+  {
+   "name": "자유아시아방송(RFA)",
+   "title": "Did a deal between Saudi Arabia and US to sell oil in dollars expire? (2024-07-08)",
+   "url": "https://www.rfa.org/english/news/afcl/afcl-us-saudi-oil-deal-07082024043619.html"
+  },
+  {
+   "name": "키트코",
+   "title": "Saudi Arabia ends petrodollar agreement: What it means for the USD, Bitcoin, and gold (2024-06-13)",
+   "url": "https://www.kitco.com/news/article/2024-06-13/saudi-arabia-ends-petrodollar-agreement-what-it-means-usd-bitcoin-and-gold"
+  }
+ ],
+ "tags": [
+  "페트로달러",
+  "사우디아라비아",
+  "달러패권"
+ ],
+ "ko": {
+  "title": "사우디의 달러 결제 약속은 정말 있었을까",
+  "title_candidates": [
+   "사우디의 달러 결제 약속은 정말 있었을까",
+   "페트로달러: 2년째 되풀이되는 종료설의 정체",
+   "페트로달러가 끝났다는 말은 왜 2년째 되풀이될까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "사우디가 석유를 달러로만 팔겠다고 공식 합의한 적은 알려진 바 없습니다.\n그런데 2024년 6월, 그 합의가 끝났다는 글이 온라인을 뒤덮었습니다.\n없던 약속이 끝날 수 있을까요, 그렇다면 무엇이 끝난 것일까요?"
+   },
+   {
+    "heading": "1974년에 오간 것은 서류가 아니었습니다",
+    "body": "페트로달러는 석유를 사는 나라들이 달러로 값을 치르면서 달러가 세계 경제의 기둥이 된 구조를 가리키는 말입니다.\n자유아시아방송(RFA)은 1974년 미국과 사우디가 석유를 달러로 거래하기로 한 비공식 합의를 이야기합니다.\n그 존재는 2016년 블룸버그 보도로 드러났다고 합니다.\n포춘은 미국이 사우디에 군사 지원과 안보를 주고, 사우디는 석유를 달러로 팔기로 했다는 이야기로 정리합니다.\n다만 이 합의는 비밀이었고 공식적인 의무는 아니었다고 덧붙였습니다."
+   },
+   {
+    "heading": "끝난 것은 다른 서류였습니다",
+    "body": "RFA는 2024년 6월 9일에 끝난 것이 달러 결제 합의가 아니라 1974년 6월에 만들어진 위원회라고 짚었습니다.\n석유를 달러로 팔도록 사우디에 의무를 지운 공식 합의는 알려진 것이 없고, 종료설은 거짓이라는 판정입니다.\n같은 시기 금 시장 매체 키트코는 합의가 만료됐다고 적었습니다.\n그러면서도 한 문장을 덧붙였습니다.\n“현재 사우디는 여전히 석유 대금으로 미국 달러를 받고 있다.”"
+   },
+   {
+    "heading": "그래도 달러 결제의 문은 열렸습니다",
+    "body": "포춘은 2024년 사우디가 석유 가격을 달러로만 매기겠다는 약속을 공식적으로 갱신하지 않았다고 정리했습니다.\n같은 기사는 현재 상황을 이렇게 묘사합니다.\n“사우디는 지금도 대체로 달러로 거래하고 있다. 중국과도 마찬가지다. 다만 이제 문은 열려 있다.”\nEBC파이낸셜그룹의 애널리스트 마이클 해리스는 흐름이 바뀐 이유를 거래 상대에서 찾았습니다.\n“중국이 미국을 제치고 사우디아라비아의 최대 석유 고객이 됐다.”"
+   },
+   {
+    "heading": "그렇다고 달러가 무너진다는 말도 과합니다",
+    "body": "포춘은 반대 방향의 과장도 짚었습니다.\n미국 데니슨대 경제학 부교수 파델 카부브의 말입니다.\n“나는 페트로달러가 죽었다고 말하지는 않겠다. 그건 틀린 말이다.”\n노스캐롤라이나대 그린즈버러 캠퍼스의 역사학자 데이비드 와이트는 하나의 변화만으로 체제가 무너지지는 않는다고 봤습니다.\n“그 자체만으로는 전체 체제가 무너지지 않을 것이다.”"
+   },
+   {
+    "heading": "서류가 없는 약속을 읽는 법",
+    "body": "RFA와 포춘, 키트코가 같은 사건을 서로 다르게 부르는 이유는 하나입니다.\n문서가 아니라 관행이 대상이기 때문입니다.\n달러로 값이 매겨진 석유를 사 오는 나라의 독자라면, 이 논쟁은 환율과 기름값으로 이어집니다.\n서류로 남지 않은 약속이 흔들릴 때, 우리가 지켜볼 것은 문서일까요, 거래 통화일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "2024년 6월",
+   "url": "https://www.rfa.org/english/news/afcl/afcl-us-saudi-oil-deal-07082024043619.html",
+   "original": "The commission was formed in June 1974 and expired on June 9, 2024."
+  },
+  {
+   "claim": "1974년 미국과 사우디가 석유를 달러로 거래하기로 한 비공식 합의",
+   "url": "https://www.rfa.org/english/news/afcl/afcl-us-saudi-oil-deal-07082024043619.html",
+   "original": "made an \"informal\" agreement in 1974 to trade oil in U.S. dollars"
+  },
+  {
+   "claim": "2016년 블룸버그 보도",
+   "url": "https://www.rfa.org/english/news/afcl/afcl-us-saudi-oil-deal-07082024043619.html",
+   "original": "a secret deal revealed by Bloomberg in May 2016"
+  },
+  {
+   "claim": "2024년 6월 9일에 끝난 것이 달러 결제 합의가 아니라 1974년 6월에 만들어진 위원회",
+   "url": "https://www.rfa.org/english/news/afcl/afcl-us-saudi-oil-deal-07082024043619.html",
+   "original": "The commission was formed in June 1974 and expired on June 9, 2024."
+  },
+  {
+   "claim": "현재 사우디는 여전히 석유 대금으로 미국 달러를 받고 있다",
+   "url": "https://www.kitco.com/news/article/2024-06-13/saudi-arabia-ends-petrodollar-agreement-what-it-means-usd-bitcoin-and-gold",
+   "original": "At present, the Kingdom is still accepting U.S. dollars in exchange for oil"
+  },
+  {
+   "claim": "2024년 사우디가 석유 가격을 달러로만 매기겠다는 약속을 공식적으로 갱신하지 않았다",
+   "url": "https://fortune.com/2026/04/07/what-is-petrodollar-petroyuan-saudi-china-dollar-strength/",
+   "original": "In 2024, Saudi Arabia did not formally renew its commitment to pricing oil exclusively with dollars."
+  },
+  {
+   "claim": "사우디는 지금도 대체로 달러로 거래하고 있다. 중국과도 마찬가지다. 다만 이제 문은 열려 있다",
+   "url": "https://fortune.com/2026/04/07/what-is-petrodollar-petroyuan-saudi-china-dollar-strength/",
+   "original": "The Saudis are largely still doing deals in dollars, even with China, but the door is now open."
+  },
+  {
+   "claim": "중국이 미국을 제치고 사우디아라비아의 최대 석유 고객이 됐다",
+   "url": "https://fortune.com/2026/04/07/what-is-petrodollar-petroyuan-saudi-china-dollar-strength/",
+   "original": "China displaced the United States as Saudi Arabia's largest oil customer."
+  },
+  {
+   "claim": "나는 페트로달러가 죽었다고 말하지는 않겠다. 그건 틀린 말이다",
+   "url": "https://fortune.com/2026/04/07/what-is-petrodollar-petroyuan-saudi-china-dollar-strength/",
+   "original": "I’m not going to say that the petrodollar is dead, because that’s wrong"
+  },
+  {
+   "claim": "그 자체만으로는 전체 체제가 무너지지 않을 것이다",
+   "url": "https://fortune.com/2026/04/07/what-is-petrodollar-petroyuan-saudi-china-dollar-strength/",
+   "original": "That, in and of itself, is not going to cause the whole system to collapse"
+  }
+ ]
+}
