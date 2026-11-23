@@ -303,6 +303,7 @@ class UsSecondSourcesTest(unittest.TestCase):
             entry = {"name": "美 10년물 금리", "price": yahoo, "change_pct": 0.0, "trading_date": "2026-11-12"}
             with mock.patch.object(fetch_us, "_official_series", return_value=dict(prior)), \
                     mock.patch.object(fetch_us, "cboe_quote_close", return_value=quote) as q, \
+                    mock.patch.object(fetch_us, "treasury_yield", return_value=None), \
                     mock.patch.object(fetch_us, "cnbc_close", return_value=cnbc) as c, \
                     mock.patch.object(fetch_us, "_check_change", return_value=None):
                 problems = fetch_us._verify_second_source({ticker: entry})
