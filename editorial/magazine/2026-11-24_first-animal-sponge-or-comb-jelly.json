@@ -1,0 +1,111 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "과학",
+ "date": "2026-11-24",
+ "slug": "first-animal-sponge-or-comb-jelly",
+ "radar_origin": "The Conversation: What was the first animal that ever lived on Earth?",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1551899934-0581e61d3de9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Y29tYiUyMGplbGx5fGVufDB8MHx8fDE3OTU0NTM5OTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "jGFqc8JcCfc",
+  "credit": "Unsplash / Jonathan Diemel"
+ },
+ "sources": [
+  {
+   "name": "UC 버클리 뉴스",
+   "title": "What did the earliest animals look like? (Robert Sanders)",
+   "url": "https://news.berkeley.edu/?p=113150"
+  },
+  {
+   "name": "라이브사이언스",
+   "title": "What was the first animal on Earth?",
+   "url": "https://www.livescience.com/animals/what-was-the-first-animal-on-earth"
+  }
+ ],
+ "tags": [
+  "최초의동물",
+  "해면",
+  "빗해파리",
+  "진화"
+ ],
+ "ko": {
+  "title": "인간의 가장 먼 친척은 해면과 빗해파리 중 누구일까",
+  "title_candidates": [
+   "인간의 가장 먼 친척은 해면과 빗해파리 중 누구일까",
+   "첫 동물 논쟁: 버클리가 끝냈다던 싸움이 안 끝난 까닭",
+   "해면이 우리 조상이라면 신경과 근육은 어디서 왔을까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "가장 오래된 동물의 후보는 둘입니다.\n한자리에 붙어 물을 거르는 해면, 그리고 빗살 같은 섬모를 노처럼 저으며 사냥하는 빗해파리(comb jelly, 학계 이름은 ctenophore)입니다.\n신경도 근육도 없는 해면이 더 원시적으로 보이지만, 버클리 연구진은 먼저 갈라진 쪽이 빗해파리라고 했습니다.\n우리 몸의 신경과 근육은 대체 누구에게서 온 것일까요?"
+   },
+   {
+    "heading": "해면 먼저라는 이야기는 그럴듯했습니다",
+    "body": "UC 버클리 뉴스에 따르면 분자세포생물학자 다니엘 로크사르는 해면이 오래 맨 앞자리를 지킨 이유를 이렇게 설명합니다.\n“전통적으로 해면은 신경계도 근육도 없고, 단세포 원생생물이 모인 군체와 조금 닮아 보여서 동물 가계도에서 가장 먼저 갈라진 가지로 여겨져 왔습니다.”\n단세포 생물에서 해면 같은 군체로, 다시 모든 동물로 이어진다는 그림이 깔끔했다는 뜻입니다.\n해면에 없는 신경과 근육은 그 뒤에 따로 생겼다는 이야기가 됩니다."
+   },
+   {
+    "heading": "유전자 비교는 둘로 갈렸습니다",
+    "body": "동물 사이의 유전자 서열을 견주어 가계도를 그리는 연구도 이 문제를 풀지 못했습니다.\n두 동물군이 갈라진 시점이 너무 오래전이라서입니다.\n로크사르는 정교한 서열 연구들의 결과가 사실상 갈렸다고 설명했습니다.\n“일부 연구자는 잘 설계된 분석에서 해면이 먼저 갈라졌다고 했습니다. 다른 연구자들도 똑같이 정교하고 타당한 연구로 빗해파리라는 답을 얻었습니다.”\n같은 질문에 같은 수준의 방법이 서로 다른 답을 낸 셈입니다."
+   },
+   {
+    "heading": "염색체 배치로 다시 따져 보았습니다",
+    "body": "버클리 연구진은 네이처에 실린 연구에서 유전자 서열 대신 염색체 구조를 비교했습니다.\n종마다 염색체 수가 정해져 있고, 그 위의 유전자 배치도 종마다 특징이 있습니다. 사람은 23쌍입니다.\n이 배치를 단세포 생물 세 무리와 견주자 빗해파리가 가장 먼저 갈라졌고, 해면이 그다음, 이어서 인간으로 가는 나머지 동물이 나뉘었다는 결론이 나왔습니다.\n공동 연구자 로크사르는 이렇게 말했습니다.\n“모든 동물의 가장 가까운 공통 조상은 아마 6억~7억 년 전에 살았을 것입니다. 몸이 부드러운 동물이어서 직접 남은 화석이 없습니다.”"
+   },
+   {
+    "heading": "끝난 싸움이라고 보지 않는 사람도 있습니다",
+    "body": "라이브사이언스에 따르면 케임브리지대 고지질생물학자 닉 버터필드는 이 결과를 확정으로 받아들이지 않습니다.\n분자시계에 의존한 해석이라는 점 때문입니다.\n“분자시계는 자료를 주지 않습니다. 가설을 줍니다.”\n라이브사이언스는 연구마다 쓰는 유전자에 따라 빗해파리를 지지하는 결과와 해면을 지지하는 결과가 엇갈려 왔다고 정리합니다.\n화석 쪽에서도 터너 연구진이 8억 9000만 년 전 해면 화석이라 주장했지만 모두가 동의하는 것은 아닙니다."
+   },
+   {
+    "heading": "첫 동물은 지금 모습이 아닐 수도 있습니다",
+    "body": "빗해파리가 먼저 갈라졌다고 해서 첫 동물이 오늘의 빗해파리와 닮았다는 뜻은 아닙니다.\n버터필드는 오늘의 빗해파리에는 근육계와 신경계 같은 복잡한 구조가 있다는 점을 짚었습니다.\n“가장 단순한 동물의 방식은 해면 같은 여과 섭식자가 되는 것입니다. 시작은 그렇게 할 수밖에 없습니다.”\n빗해파리가 먼저라는 쪽도, 해면이 먼저라는 쪽도 첫 동물의 얼굴은 아직 그리지 못했습니다."
+   },
+   {
+    "heading": "이 논쟁이 우리 몸에 닿는 곳",
+    "body": "연구진은 동물 가지의 순서를 알아야 신경계와 근육, 소화관 같은 핵심 특징이 어떻게 진화했는지 이해할 수 있다고 말합니다.\n신경도 근육도 없는 해면이 먼저였다면, 그 특징은 나중에 생겼다는 이야기가 됩니다.\n빗해파리가 먼저였다면 질문이 달라집니다.\n우리 몸의 신경과 근육은 처음부터 있던 것을 물려받았을까요, 도중에 새로 얻었을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "전통적으로 해면은 신경계도 근육도 없고, 단세포 원생생물이 모인 군체와 조금 닮아 보여서 동물 가계도에서 가장 먼저 갈라진 가지로 여겨져 왔습니다",
+   "url": "https://news.berkeley.edu/?p=113150",
+   "original": "Traditionally, sponges have been widely considered to be the earliest surviving branch of the animal tree, because sponges don’t have a nervous system, they don’t have muscles, and they look a little bit like colonial versions of some unicellular protozoans"
+  },
+  {
+   "claim": "일부 연구자는 잘 설계된 분석에서 해면이 먼저 갈라졌다고 했습니다. 다른 연구자들도 똑같이 정교하고 타당한 연구로 빗해파리라는 답을 얻었습니다",
+   "url": "https://news.berkeley.edu/?p=113150",
+   "original": "Some researchers did well-designed analyses and found that sponges branched first. Others did equally complex and justifiable studies and got ctenophores."
+  },
+  {
+   "claim": "사람은 23쌍입니다",
+   "url": "https://news.berkeley.edu/?p=113150",
+   "original": "Each species has a characteristic chromosome number — humans have 23 pairs — and a characteristic distribution of genes along chromosomes."
+  },
+  {
+   "claim": "모든 동물의 가장 가까운 공통 조상은 아마 6억~7억 년 전에 살았을 것입니다. 몸이 부드러운 동물이어서 직접 남은 화석이 없습니다",
+   "url": "https://news.berkeley.edu/?p=113150",
+   "original": "The most recent common ancestor of all animals probably lived 600 or 700 million years ago. It’s hard to know what they were like because they were soft-bodied animals and didn’t leave a direct fossil record."
+  },
+  {
+   "claim": "분자시계는 자료를 주지 않습니다. 가설을 줍니다",
+   "url": "https://www.livescience.com/animals/what-was-the-first-animal-on-earth",
+   "original": "Molecular clocks don't provide data; they provide hypotheses"
+  },
+  {
+   "claim": "터너 연구진이 8억 9000만 년 전 해면 화석이라 주장했지만 모두가 동의하는 것은 아닙니다",
+   "url": "https://www.livescience.com/animals/what-was-the-first-animal-on-earth",
+   "original": "Turner presented what she proposes as the oldest known animal — a fossil specimen of what she says is an 890 million-year-old sponge — in a 2021 paper in the journal Nature. However, not everyone agrees with her hypothesis."
+  },
+  {
+   "claim": "가장 단순한 동물의 방식은 해면 같은 여과 섭식자가 되는 것입니다. 시작은 그렇게 할 수밖에 없습니다",
+   "url": "https://www.livescience.com/animals/what-was-the-first-animal-on-earth",
+   "original": "The simplest way of being an animal is to be a sponge-like filter feeder. That's how you have to start off."
+  },
+  {
+   "claim": "모든 동물의 가장 가까운 공통 조상은 아마 6억~7억 년 전에 살았을 것입니다",
+   "url": "https://news.berkeley.edu/?p=113150",
+   "original": "The most recent common ancestor of all animals probably lived 600 or 700 million years ago."
+  }
+ ]
+}

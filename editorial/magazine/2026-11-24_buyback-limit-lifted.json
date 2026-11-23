@@ -1,0 +1,177 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장 읽기",
+ "date": "2026-11-24",
+ "slug": "buyback-limit-lifted",
+ "radar_origin": "금융위, ‘자사주 1일 취득 한도’ 3개월 동안 푼다",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8c3RvY2slMjBjaGFydCUyMG1vbml0b3J8ZW58MHwwfHx8MTc5NTQ1NDAyMnww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "fiXLQXAhCfk",
+  "credit": "Unsplash / Maxim Hopman"
+ },
+ "sources": [
+  {
+   "name": "세계일보",
+   "title": "내일부터 상장사 자사주 하루 매수한도 3개월간 완화 (2026-11-23)",
+   "url": "http://www.segyebiz.com/newsView/20261123515943"
+  },
+  {
+   "name": "파이낸셜뉴스",
+   "title": "증안펀드·자사주 완화 카드 ‘역부족’… 외국인 매도에 휘청 (2026-11-23)",
+   "url": "https://www.fnnews.com/news/202611231826494381"
+  },
+  {
+   "name": "서울경제",
+   "title": "위험회피에 원·달러 장중 1350원 돌파 [김혜란의 FX] (2026-11-23)",
+   "url": "https://www.sedaily.com/article/20117842"
+  },
+  {
+   "name": "미국 증권거래위원회",
+   "title": "17 CFR 240.10b-18 Purchases of certain equity securities by the issuer and others",
+   "url": "https://www.law.cornell.edu/cfr/text/17/240.10b-18"
+  }
+ ],
+ "search_phrase": "자사주 취득 한도",
+ "tags": [
+  "자사주취득한도",
+  "자사주매입",
+  "증시안정대책",
+  "금융위원회"
+ ],
+ "ko": {
+  "title": "자사주 취득 한도를 풀어 줘도 기업이 안 사면 어떻게 될까",
+  "title_candidates": [
+   "자사주 취득 한도를 풀어 줘도 기업이 안 사면 어떻게 될까",
+   "자사주 취득 한도: 3개월 동안 지켜볼 것 세 가지",
+   "자사주 취득 한도, 미국은 25%에 묶는데 한국은 왜 풀었나"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "정부가 기업에 자기 주식을 더 사도 좋다고 허락한 날, 코스피는 3.31% 하락해 4708.54로 마감했습니다.\n금융위원회는 상장사의 자사주 하루 매수 한도를 3개월 동안 풀기로 했습니다.\n허락은 주문을 늘려도 된다는 뜻이지, 주문하라는 명령이 아닙니다.\n풀어 준 자사주 취득 한도를 기업은 실제로 쓸까요, 그대로 둘까요?"
+   },
+   {
+    "heading": "한도는 원래 얼마였을까요",
+    "body": "세계일보에 따르면 지금까지 상장사가 자사주를 직접 살 때 하루 주문량은 취득신고 주식 수의 10%와 이사회 결의 전 1개월간 일평균 거래량의 25% 가운데 많은 쪽으로 정해졌습니다.\n그 값도 발행주식 총수의 1%를 넘을 수 없었습니다.\n신탁계약으로 사는 경우에는 하루 주문량이 발행주식 총수의 1% 이내로 묶여 있었습니다.\n이 제한이 24일부터 내년 2월 23일까지 사라집니다.\n특례 기간에는 취득신고한 주식 수 전체를 하루에 주문할 수 있습니다."
+   },
+   {
+    "heading": "풀리지 않은 것이 더 많습니다",
+    "body": "풀린 것은 하루 주문량의 상한입니다. 살 수 있는 돈의 한도는 그대로입니다.\n자사주 취득은 이번에도 상법상 배당가능이익 한도 안에서만 가능하고, 취득 신고와 공시 의무도 면제되지 않습니다.\n배당가능이익이 넉넉하지 않은 회사는 주문 한도가 풀려도 살 수 있는 총량이 달라지지 않는다는 뜻입니다."
+   },
+   {
+    "heading": "시장은 이 카드를 믿었을까요",
+    "body": "파이낸셜뉴스는 자사주 한도 완화와 증안펀드 가동 준비에도 코스피가 2거래일 연속 급락했다고 전했습니다.\n장 초반 순매수하던 외국인은 장중 매도로 돌아서 순매도를 7거래일 연속 이어 갔습니다.\n서울경제는 이날 장중 급락에 올해 들어 32번째 매도 사이드카가 발동됐다고 적었습니다.\n사겠다는 허락이 나온 날에도 팔겠다는 주문이 더 컸다는 이야기입니다."
+   },
+   {
+    "heading": "한도가 병목이던 기업만 속도를 냅니다",
+    "body": "한 증권업계 관계자의 설명은 이렇습니다.\n“기존 한도에 가깝게 주문해 온 기업이라면 남은 물량을 앞당겨 사들일 수 있다”\n반대로 이런 경우도 같은 사람이 짚었습니다.\n“평소 하루 주문량이 한도에 크게 못 미쳤던 기업은 한도가 풀려도 매입 규모를 그대로 유지할 수 있다”\n한도가 병목이던 기업은 서두를 수 있고, 처음부터 한도에 못 미치게 사던 기업은 달라질 이유가 없다는 말입니다.\n관건은 시가총액 상위 기업 가운데 공시한 취득 예정 수량이 남아 있는 곳이 얼마나 되느냐입니다."
+   },
+   {
+    "heading": "미국은 어디에 선을 그어 둘까요",
+    "body": "미국 증권거래위원회의 규칙 10b-18도 기업의 자사주 매수에 하루 상한을 둡니다.\n기업과 그 특수관계인의 하루 매수량은 해당 종목 평균 거래량(ADTV)의 25%를 넘을 수 없다는 조건입니다.\n다만 일주일에 한 번은 그 상한 대신 큰 덩어리(블록) 한 건을 살 수 있습니다.\n이 규칙은 시세 조종 책임을 피하는 안전지대(세이프 하버)이고, 지키는 것은 자율입니다.\n한국의 기존 한도도 한 축은 일평균 거래량의 25%였습니다. 이번 특례는 그 선을 3개월 동안 걷어 내는 셈입니다."
+   },
+   {
+    "heading": "3개월 뒤 남을 숫자는 무엇일까요",
+    "body": "허락된 한도와 기업이 실제로 쓴 양의 차이가 이 대책의 크기입니다.\n내년 2월 23일까지 이어지는 기간에 올라오는 자사주 취득 공시가 그 차이를 보여 줍니다.\n공시한 수량 가운데 며칠 만에 얼마나 소화됐는지 보면, 허락이 주문으로 바뀌었는지 알 수 있습니다.\n내가 가진 회사는 풀린 한도를 얼마나 썼을까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "코스피는 3.31% 하락해 4708.54로 마감했습니다",
+   "url": "https://www.sedaily.com/article/20117842",
+   "original": "코스피는 이날 전 거래일보다 161.42포인트(3.31%) 내린 4708.54에 거래를 마쳤다."
+  },
+  {
+   "claim": "취득신고 주식 수의 10%와 이사회 결의 전 1개월간 일평균 거래량의 25% 가운데 많은 쪽",
+   "url": "http://www.segyebiz.com/newsView/20261123515943",
+   "original": "하루 매수주문 수량은 취득신고 주식 수의 10%와 이사회 결의 전 1개월간 일평균 거래량의 25% 가운데 많은 수량으로 정해진다."
+  },
+  {
+   "claim": "발행주식 총수의 1%를 넘을 수 없었습니다",
+   "url": "http://www.segyebiz.com/newsView/20261123515943",
+   "original": "이 역시 발행주식 총수의 1%를 넘을 수 없다."
+  },
+  {
+   "claim": "발행주식 총수의 1% 이내로 묶여 있었습니다",
+   "url": "http://www.segyebiz.com/newsView/20261123515943",
+   "original": "기존에는 하루 매수주문 수량이 발행주식 총수의 1% 이내로 묶여 있었지만"
+  },
+  {
+   "claim": "24일부터 내년 2월 23일까지",
+   "url": "http://www.segyebiz.com/newsView/20261123515943",
+   "original": "적용 기간은 24일부터 내년 2월 23일까지다."
+  },
+  {
+   "claim": "취득신고한 주식 수 전체를 하루에 주문할 수 있습니다",
+   "url": "http://www.segyebiz.com/newsView/20261123515943",
+   "original": "특례 기간에는 이 같은 제한 없이 취득신고한 주식 수 전체를 하루에 매수주문할 수 있다."
+  },
+  {
+   "claim": "코스피가 2거래일 연속 급락했다",
+   "url": "https://www.fnnews.com/news/202611231826494381",
+   "original": "정부의 증시안정 대책에도 코스피가 2거래일 연속 급락했다."
+  },
+  {
+   "claim": "순매도를 7거래일 연속 이어 갔습니다",
+   "url": "https://www.fnnews.com/news/202611231826494381",
+   "original": "지난 20일까지 6거래일간 5조원 넘게 팔아치운 데 이어 7거래일 연속 순매도다."
+  },
+  {
+   "claim": "올해 들어 32번째 매도 사이드카가 발동됐다",
+   "url": "https://www.sedaily.com/article/20117842",
+   "original": "장중 급락세에 올해 들어 32번째 매도 사이드카도 발동됐다."
+  },
+  {
+   "claim": "기존 한도에 가깝게 주문해 온 기업이라면 남은 물량을 앞당겨 사들일 수 있다",
+   "url": "https://www.fnnews.com/news/202611231826494381",
+   "original": "기존 한도에 가깝게 주문해 온 기업이라면 남은 물량을 앞당겨 사들일 수 있다"
+  },
+  {
+   "claim": "평소 하루 주문량이 한도에 크게 못 미쳤던 기업은 한도가 풀려도 매입 규모를 그대로 유지할 수 있다",
+   "url": "https://www.fnnews.com/news/202611231826494381",
+   "original": "평소 하루 주문량이 한도에 크게 못 미쳤던 기업은 한도가 풀려도 매입 규모를 그대로 유지할 수 있다"
+  },
+  {
+   "claim": "해당 종목 평균 거래량(ADTV)의 25%를 넘을 수 없다",
+   "url": "https://www.law.cornell.edu/cfr/text/17/240.10b-18",
+   "original": "must not exceed 25 percent of the ADTV for that security"
+  },
+  {
+   "claim": "일주일에 한 번은 그 상한 대신 큰 덩어리(블록) 한 건을 살 수 있습니다",
+   "url": "https://www.law.cornell.edu/cfr/text/17/240.10b-18",
+   "original": "However, once each week, in lieu of purchasing under the 25 percent of ADTV limit for that day, the issuer or an affiliated purchaser of the issuer may effect one block purchase"
+  },
+  {
+   "claim": "지키는 것은 자율입니다",
+   "url": "https://www.law.cornell.edu/cfr/text/17/240.10b-18",
+   "original": "As a safe harbor , compliance with § 240.10b-18 is voluntary."
+  },
+  {
+   "claim": "한국의 기존 한도도 한 축은 일평균 거래량의 25%였습니다",
+   "url": "http://www.segyebiz.com/newsView/20261123515943",
+   "original": "이사회 결의 전 1개월간 일평균 거래량의 25% 가운데 많은 수량으로 정해진다."
+  },
+  {
+   "claim": "내년 2월 23일까지",
+   "url": "http://www.segyebiz.com/newsView/20261123515943",
+   "original": "적용 기간은 24일부터 내년 2월 23일까지다."
+  },
+  {
+   "claim": "규칙 10b-18도 기업의 자사주 매수에 하루 상한을 둡니다",
+   "url": "https://www.law.cornell.edu/cfr/text/17/240.10b-18",
+   "original": "Section 240.10b-18 provides an issuer (and its affiliated purchasers ) with a “ safe harbor ” from liability for manipulation"
+  },
+  {
+   "claim": "3개월 동안 풀기로 했습니다",
+   "url": "http://www.segyebiz.com/newsView/20261123515943",
+   "original": "금융위는 이번 특례를 3개월간 운영할 방침이다."
+  },
+  {
+   "claim": "3개월 동안 걷어 내는 셈입니다",
+   "url": "http://www.segyebiz.com/newsView/20261123515943",
+   "original": "금융위는 이번 특례를 3개월간 운영할 방침이다."
+  }
+ ]
+}
