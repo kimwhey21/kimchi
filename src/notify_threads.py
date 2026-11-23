@@ -59,6 +59,9 @@ def compose(doc: dict, title: str, link: str, limit: int = TEXT_LIMIT) -> str:
 
 
 def _post(path: str, params: dict) -> dict:
+    from src import live_guard
+    if live_guard.blocked("THREADS_ACCESS_TOKEN"):
+        raise RuntimeError(f"{path}: 시험 중 실제 발송 막음")
     params = dict(params, access_token=os.environ["THREADS_ACCESS_TOKEN"])
     response = requests.post(f"{GRAPH}/{path}", data=params, timeout=TIMEOUT)
     try:

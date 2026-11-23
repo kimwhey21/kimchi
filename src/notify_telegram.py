@@ -102,6 +102,9 @@ def is_republish(info: dict) -> bool:
 
 def send(text: str, image_url: str | None = None) -> dict:
     token, chat = os.environ["TELEGRAM_BOT_TOKEN"], os.environ["TELEGRAM_CHAT_ID"]
+    from src import live_guard
+    if live_guard.blocked("TELEGRAM_BOT_TOKEN"):
+        return {"ok": False, "description": "시험 중 실제 발송 막음"}
     api = f"https://api.telegram.org/bot{token}"
     if image_url:
         response = requests.post(f"{api}/sendPhoto", timeout=TIMEOUT,

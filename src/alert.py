@@ -34,6 +34,9 @@ def send(message: str, level: str = "info") -> bool:
     if not configured():
         print(f"[알림 미설정] {ICON.get(level, '')} {message}")
         return False
+    from src import live_guard
+    if live_guard.blocked("TELEGRAM_BOT_TOKEN"):
+        return False
     api = f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}"
     text = f"{ICON.get(level, '')} {message}".strip()
     try:

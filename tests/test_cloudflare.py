@@ -30,8 +30,10 @@ class PurgeTest(unittest.TestCase):
 
     def test_network_error_is_swallowed(self):
         with mock.patch.dict(os.environ, {"CLOUDFLARE_API_TOKEN": "t"}), \
-                mock.patch.object(cloudflare.requests, "get", side_effect=cloudflare.requests.ConnectionError("x")):
+                mock.patch.object(cloudflare.requests, "get", side_effect=cloudflare.requests.ConnectionError("x")), \
+                mock.patch("src.alert.send") as send:
             self.assertFalse(cloudflare.purge_all())
+        send.assert_called_once()   # 실패는 운영 대화로 알린다 — 시험에서는 가짜로(진짜로 나가면 사장님께 'x'가 간다)
 
     def test_wired_where_the_site_cache_is_cleared(self):
         for path in ("src/stock_db.py", "src/publish_wordpress.py", "scripts/deploy_list_style.py", "scripts/deploy_templates.py"):
