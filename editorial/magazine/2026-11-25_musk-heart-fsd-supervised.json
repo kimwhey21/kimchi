@@ -1,0 +1,112 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-25",
+ "slug": "musk-heart-fsd-supervised",
+ "radar_origin": "Fortune: Elon Musk says Tesla self-driving makes seniors safer. Tesla’s own fine print says the 93-year-old in its ad must watch the road",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8ZWxlY3RyaWMlMjBjYXIlMjBpbnRlcmlvcnxlbnwwfDB8fHwxNzk1NTQwMzUxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "4xM5cytsdMo",
+  "credit": "Unsplash / Bram Van Oost"
+ },
+ "sources": [
+  {
+   "name": "일렉트렉",
+   "title": "Musk promotes Tesla FSD misuse by a 98-year-old (2026-09-11)",
+   "url": "https://electrek.co/2026/09/11/musk-promotes-tesla-fsd-misuse-98-year-old/"
+  },
+  {
+   "name": "NPR",
+   "title": "A jury orders Tesla to pay more than $240 million in Autopilot crash (2025-08-02)",
+   "url": "https://npr.org/2025/08/02/nx-s1-5490930/tesla-autopilot-crash-jury-240-million-florida"
+  }
+ ],
+ "tags": [
+  "테슬라FSD",
+  "일론머스크",
+  "자율주행"
+ ],
+ "ko": {
+  "title": "98세 운전자는 왜 교차로를 쳐다보지 않게 됐을까",
+  "title_candidates": [
+   "98세 운전자는 왜 교차로를 쳐다보지 않게 됐을까",
+   "감독이 필요한 FSD, 머스크는 왜 하트를 눌렀을까",
+   "머스크의 하트가 테슬라의 법정 변론과 부딪히는 이유"
+  ],
+  "search_phrase": "",
+  "narrative": [
+   {
+    "heading": "",
+    "body": "‘나는 쳐다보지 않는다’고 말하는 98세 운전자의 영상에 일론 머스크가 하트를 눌렀습니다.\n그런데 테슬라가 그 기능에 붙인 이름은 ‘감독 필요’라는 꼬리표가 달린 완전자율주행, FSD(Supervised)입니다.\n이름은 감독을 요구하는데 영상은 감독하지 않는 모습을 자랑합니다.\n회사의 경고문과 최고경영자의 하트 가운데 어느 쪽이 테슬라의 진짜 입장일까요?"
+   },
+   {
+    "heading": "영상 속 래리는 이렇게 말합니다",
+    "body": "전기차 전문 매체 일렉트렉(Electrek)에 따르면 영상의 주인공은 뉴멕시코주 파밍턴에 사는 98세 래리입니다.\n머스크가 하트를 눌러 다시 퍼 나르면서 이 영상은 조회수 900만 회를 넘었습니다.\n래리는 운전 방식을 이렇게 설명합니다.\n“교차로마다 길이 비었는지, 뒤에 누가 있는지 살피고 싶지 않습니다. 그런 건 하고 싶지 않고, 실제로 하지도 않습니다.”\n진행자가 끝까지 믿느냐고 묻자 이렇게 답했습니다.\n“나는 100% 믿습니다.”"
+   },
+   {
+    "heading": "경고문은 정반대를 요구합니다",
+    "body": "테슬라가 쓰는 고지문은 이렇습니다.\n“현재 활성화된 기능은 운전자의 적극적인 감독을 필요로 하며, 차량을 자율주행차로 만들지 않는다.”\n일렉트렉은 이것이 형식적인 문구가 아니라고 짚었습니다. 교차로에서도 도로를 보고 언제든 운전대를 넘겨받을 준비를 해야 한다는 뜻인데, 래리가 눈을 떼는 곳이 바로 교차로라는 것입니다."
+   },
+   {
+    "heading": "법정에서는 이 간격이 돈으로 계산됩니다",
+    "body": "2025년 8월 미국 마이애미 배심원단은 오토파일럿(Autopilot, 테슬라의 운전자 보조 기술)이 연루된 2019년 플로리다 치명적 사고에서 테슬라에 일부 책임이 있다고 판단했습니다.\nNPR 보도에 따르면 징벌적 배상 2억 달러에 보상적 배상 일부 4,300만 달러가 더해져 테슬라가 부담할 금액은 모두 2억 4,300만 달러였습니다.\n테슬라는 성명에서 이렇게 반박했습니다.\n“오늘의 평결은 잘못됐습니다. 원고 측은 차를 탓하는 이야기를 지어냈지만, 운전자는 첫날부터 자기 책임을 인정하고 받아들였습니다.”\n테슬라는 항소하겠다고 밝혔습니다. 회사가 내세운 논리의 중심에는 책임이 감독해야 하는 운전자에게 있다는 주장이 있습니다."
+   },
+   {
+    "heading": "그래서 하트가 변론과 부딪힌다는 지적이 나옵니다",
+    "body": "일렉트렉은 머스크의 하트가 테슬라가 법정에서 내세우는 논리와 반대되는 장면을 키웠다고 비판합니다.\n소송 방어가 운전자는 감독해야 한다는 한 가지 주장에 서 있는데, 최고경영자가 감독하지 않는다고 말하는 소유주의 영상을 퍼 날랐다는 것입니다.\n이 부분은 일렉트렉의 논평이고 테슬라의 입장이 아닙니다. 같은 매체도 FSD가 인상적인 기술이라는 점은 인정합니다.\n다만 인상적인 기술과 감독이 필요 없는 기술은 다른 말입니다."
+   },
+   {
+    "heading": "책임은 누구 몫일까",
+    "body": "감독이 필요하다는 경고문은 책임을 운전자에게 지웁니다. 감독이 필요 없어 보이는 장면은 회사의 최고경영자가 퍼 나릅니다.\n두 메시지를 한꺼번에 받으면 운전자는 어느 쪽을 믿을까요?\n감독이 필요하다고 적어 두고 감독이 필요 없어 보이는 장면을 퍼 나를 때, 그 책임은 운전자의 몫일까요, 파는 회사의 몫일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "조회수 900만 회를 넘었습니다",
+   "url": "https://electrek.co/2026/09/11/musk-promotes-tesla-fsd-misuse-98-year-old/",
+   "original": "Sawyer Merritt, a Tesla stock pumper moonlighting as a news aggregator on X, clipped it, and Musk quote-tweeted the clip with a heart emoji, pushing it past 9 million views."
+  },
+  {
+   "claim": "영상의 주인공은 뉴멕시코주 파밍턴에 사는 98세 래리입니다",
+   "url": "https://electrek.co/2026/09/11/musk-promotes-tesla-fsd-misuse-98-year-old/",
+   "original": "The Fast Lane (TFL) published a video featuring Larry, a 98-year-old from Farmington, New Mexico, who bought a new Model Y and now uses FSD (Supervised) to drive him around town."
+  },
+  {
+   "claim": "98세 운전자의 영상에 일론 머스크가 하트를 눌렀습니다",
+   "url": "https://electrek.co/2026/09/11/musk-promotes-tesla-fsd-misuse-98-year-old/",
+   "original": "Musk quote-tweeted the clip with a heart emoji, pushing it past 9 million views."
+  },
+  {
+   "claim": "교차로마다 길이 비었는지, 뒤에 누가 있는지 살피고 싶지 않습니다. 그런 건 하고 싶지 않고, 실제로 하지도 않습니다.",
+   "url": "https://electrek.co/2026/09/11/musk-promotes-tesla-fsd-misuse-98-year-old/",
+   "original": "I don’t want to look at every intersection and see, ‘Is this intersection clear, and is that one clear? Is there anybody behind me?’ I don’t want any of that, and I don’t have any of it,” Larry says in the video."
+  },
+  {
+   "claim": "나는 100% 믿습니다.",
+   "url": "https://electrek.co/2026/09/11/musk-promotes-tesla-fsd-misuse-98-year-old/",
+   "original": "When the host asks if he trusts it all the way, Larry answers: “I trust it 100%.”"
+  },
+  {
+   "claim": "현재 활성화된 기능은 운전자의 적극적인 감독을 필요로 하며, 차량을 자율주행차로 만들지 않는다.",
+   "url": "https://electrek.co/2026/09/11/musk-promotes-tesla-fsd-misuse-98-year-old/",
+   "original": "Tesla’s own disclaimer spells it out: “Currently enabled features require active driver supervision and do not make the vehicle autonomous.”"
+  },
+  {
+   "claim": "2025년 8월 미국 마이애미 배심원단은 오토파일럿(Autopilot, 테슬라의 운전자 보조 기술)이 연루된 2019년 플로리다 치명적 사고에서 테슬라에 일부 책임이 있다고 판단했습니다",
+   "url": "https://npr.org/2025/08/02/nx-s1-5490930/tesla-autopilot-crash-jury-240-million-florida",
+   "original": "MIAMI — A Miami jury decided that Elon Musk's car company Tesla was partly responsible for a deadly crash in Florida involving its Autopilot driver assist technology and must pay the victims more than $240 million in damages."
+  },
+  {
+   "claim": "징벌적 배상 2억 달러에 보상적 배상 일부 4,300만 달러가 더해져 테슬라가 부담할 금액은 모두 2억 4,300만 달러였습니다",
+   "url": "https://npr.org/2025/08/02/nx-s1-5490930/tesla-autopilot-crash-jury-240-million-florida",
+   "original": "In addition to a punitive award of $200 million, the jury said Tesla must also pay $43 million of a total $129 million in compensatory damages for the crash, bringing the total borne by the company to $243 million."
+  },
+  {
+   "claim": "오늘의 평결은 잘못됐습니다. 원고 측은 차를 탓하는 이야기를 지어냈지만, 운전자는 첫날부터 자기 책임을 인정하고 받아들였습니다.",
+   "url": "https://npr.org/2025/08/02/nx-s1-5490930/tesla-autopilot-crash-jury-240-million-florida",
+   "original": "\"Today's verdict is wrong,\" Tesla said in a statement, \"and only works to set back automotive safety and jeopardize Tesla's and the entire industry's efforts to develop and implement lifesaving technology,\" They said the plaintiffs concocted a story \"blaming the car when the driver – from day one – admitted and accepted responsibility.\""
+  }
+ ]
+}
