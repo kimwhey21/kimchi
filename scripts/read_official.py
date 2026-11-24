@@ -57,10 +57,10 @@ def html_text(markup: str) -> str:
 def rendered_text(url: str, wait_ms: int = 4000) -> str:
     """브라우저로 띄워 자바스크립트가 채운 뒤의 글자. 크로미움이 없으면 한 번 설치한다."""
     try:
-        from playwright.sync_api import sync_playwright
+        from playwright.sync_api import TimeoutError as QuietTimeout, sync_playwright
     except ImportError:
         _pip("playwright")
-        from playwright.sync_api import sync_playwright
+        from playwright.sync_api import TimeoutError as QuietTimeout, sync_playwright
 
     def _read(p) -> str:
         last: Exception | None = None
@@ -77,8 +77,8 @@ def rendered_text(url: str, wait_ms: int = 4000) -> str:
                 page.goto(url, wait_until="domcontentloaded", timeout=60_000)
                 try:
                     page.wait_for_load_state("networkidle", timeout=15_000)
-                except Exception:  # noqa: BLE001 — 조용해지지 않는 페이지도 읽는다
-                    pass
+                except QuietTimeout:
+                    print("[안내] 페이지가 15초 안에 조용해지지 않아 그대로 읽습니다")
                 page.wait_for_timeout(wait_ms)
                 return page.inner_text("body")
             finally:
