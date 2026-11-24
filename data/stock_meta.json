@@ -27746,10 +27746,14 @@
 "web": ""
 },
 "498150": {
-"corp": null,
-"en": "",
-"name": "",
-"pref": false
+"corp": "01705740",
+"en": "MBD Co., Ltd.",
+"founded": "2015",
+"industry": "Medical & precision instruments",
+"ksic": "271",
+"name": "MBD",
+"pref": false,
+"web": "www.mbdbiotech.com"
 },
 "498390": {
 "corp": "01881800",
