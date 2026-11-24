@@ -72,7 +72,13 @@ def rendered_text(url: str, wait_ms: int = 4000) -> str:
                 continue
             try:
                 page = browser.new_page(user_agent=UA["User-Agent"], locale="ko-KR")
-                page.goto(url, wait_until="networkidle", timeout=60_000)
+                # 'networkidle'만 기다리면 거래소 페이지는 뒤에서 계속 묻느라 조용해지지 않아 60초 뒤 실패한다(2026-11-24) —
+                # 문서가 뜨면 조용해지기를 15초까지만 기다리고, 그래도 안 되면 그대로 읽는다
+                page.goto(url, wait_until="domcontentloaded", timeout=60_000)
+                try:
+                    page.wait_for_load_state("networkidle", timeout=15_000)
+                except Exception:  # noqa: BLE001 — 조용해지지 않는 페이지도 읽는다
+                    pass
                 page.wait_for_timeout(wait_ms)
                 return page.inner_text("body")
             finally:
