@@ -75,6 +75,27 @@ class UsRecheckTest(unittest.TestCase):
         self.assertEqual(len(wrong), 1)                    # CNBC로만 확인했던 엔비디아 190 / 공식 191
         self.assertIn("엔비디아", wrong[0])
 
+    def test_when_cboe_is_blocked_fred_and_treasury_stand_in(self):
+        """2026-11-20~ Cboe가 막혀 밤 증명서가 다섯 값을 '못 맞춤'으로 띄웠다 — S&P500·VIX는 FRED, 금리는 재무부(3bp), 러셀은 못 맞춤 그대로."""
+        from unittest import mock
+        from src import close_check, fetch_us
+        doc = {"trading_date": "2026-11-20",
+               "macro": {"^GSPC": {"ticker": "^GSPC", "name": "S&P500", "price": 6910.39},
+                         "^VIX": {"ticker": "^VIX", "name": "VIX", "price": 35.89},
+                         "^RUT": {"ticker": "^RUT", "name": "러셀2000", "price": 2581.79},
+                         "^TNX": {"ticker": "^TNX", "name": "10년물", "price": 4.91, "unit": "%"},
+                         "^TYX": {"ticker": "^TYX", "name": "30년물", "price": 5.30, "unit": "%"}}}
+        fred = {"^GSPC": {"2026-11-20": 6910.39}, "^VIX": {"2026-11-20": 35.89}}
+        treasury = {"^TNX": 4.92, "^TYX": 5.36}
+        with mock.patch.object(fetch_us, "cboe_closes", return_value={}), \
+                mock.patch.object(fetch_us, "fred_closes", side_effect=lambda t, d: fred[t]), \
+                mock.patch.object(fetch_us, "treasury_yield", side_effect=lambda t, d: treasury[t]):
+            wrong, checked, missing = close_check.us_recheck(doc)
+        self.assertEqual(checked, 4)
+        self.assertEqual(missing, ["러셀2000"])
+        self.assertEqual(len(wrong), 1)                    # 30년물 5.30 / 재무부 5.36 — 3bp를 넘으면 틀린 값
+        self.assertIn("30년물", wrong[0])
+
     def test_recheck_skips_yields_on_bond_holiday(self):
         """채권만 쉰 날의 금리는 전 거래일 공식값·등락 0으로 일부러 적는다 — Cboe 그날 줄(2026-11-11: 4.998)과 달라도 알리지 않는다."""
         from unittest import mock

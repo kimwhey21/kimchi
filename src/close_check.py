@@ -167,7 +167,7 @@ def us_recheck(doc: dict) -> tuple[list[str], int, list[str]]:
 
     전에는 FRED 네 지수와 '야후 하나'로 들어온 항목만 봤다 — 수집 때 CNBC로 확인한 값(10/5 파일 30개 중 25개)은 공식 종가와 한 번도
     맞춰 보지 않았고, VIX는 FRED에 없어 늘 건너뛰면서 '대조한 숫자'로 셌다. 원천: 다우·나스닥 종합은 FRED, S&P500·러셀·VIX·
-    금리는 Cboe, 종목·ETF는 나스닥. 금·원유는 결제가를 수집 때 둘 이상으로 맞췄고 공식 무료 원천이 없어 다시 보지 않는다.
+    금리는 Cboe(막히면 S&P500·VIX는 FRED, 금리는 재무부, 러셀은 대신할 무료 공식 원천이 없어 '못 맞춤'), 종목·ETF는 나스닥. 금·원유는 결제가를 수집 때 둘 이상으로 맞췄고 공식 무료 원천이 없어 다시 보지 않는다.
     돌려주는 것: (틀린 값, 다시 맞춘 수, 공식 값이 없어 못 맞춘 이름)."""
     day = str(doc.get("trading_date") or "")
     issues, checked, missing = [], 0, []
@@ -180,9 +180,16 @@ def us_recheck(doc: dict) -> tuple[list[str], int, list[str]]:
                 # 채권만 쉰 날의 금리는 전 거래일 공식값·등락 0으로 일부러 적은 것이다(fetch_us._bond_holiday) — Cboe가 그날 줄에 찍는
                 # 값과 다르다고 알리지 않는다(2026-11-11 재향군인의 날: 파일 4.983·그날 줄 4.998로 이틀 밤 경고가 떴다).
                 continue
+            loose = False
             try:
                 if ticker in fetch_us._CBOE_SYMBOLS:
                     other = fetch_us.cboe_closes(ticker).get(day)
+                    if other is None and ticker in fetch_us._FRED_SERIES:
+                        # Cboe가 막힌 동안(2026-11-20~ 맥·러너 모두 403) S&P500·VIX는 FRED 공식 종가로 — 11/20 값 둘 다 파일과 같았다
+                        other = fetch_us.fred_closes(ticker, day).get(day)
+                    elif other is None and ticker in fetch_us._TREASURY_COLUMN:
+                        # 금리는 재무부 공식 수익률로 — 수집 때와 같은 3bp(fetch_us._verify_second_source); 재는 방식이 달라 1bp 안팎 갈린다
+                        other, loose = fetch_us.treasury_yield(ticker, day), True
                 elif ticker in fetch_us._FRED_SERIES:
                     other = fetch_us.fred_closes(ticker, day).get(day)
                     if other is None and ticker == "^IXIC":   # FRED가 아직 안 올린 날은 나스닥 공식(COMP)
@@ -198,6 +205,8 @@ def us_recheck(doc: dict) -> tuple[list[str], int, list[str]]:
                 continue
             checked += 1
             tolerance = 0.0051 if str(entry.get("unit") or "") == "%" else max(0.011, abs(other) * 0.00001)
+            if loose:
+                tolerance = 0.03
             if round(abs(other - float(entry["price"])), 9) > tolerance:   # 경계값이 부동소수점으로 넘지 않게(2026-11-03, fetch_us와 같은 문제)
                 issues.append(f"[미국 {day}] {name}({ticker}): 파일 {entry['price']} / 공식 {other}")
     return issues, checked, missing
