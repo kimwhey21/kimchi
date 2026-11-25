@@ -1,0 +1,137 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-26",
+ "slug": "nvidia-huang-boomerang-ceo-board",
+ "radar_origin": "The Conversation: What are AI chips, and what’s so special about Nvidia’s?",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8Ym9hcmRyb29tJTIwZW1wdHklMjBjb25mZXJlbmNlJTIwdGFibGV8ZW58MHwwfHx8MTc5NTYyNjcxMXww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "GWe0dlVD9e0",
+  "credit": "Unsplash / Benjamin Child"
+ },
+ "sources": [
+  {
+   "name": "더컨버세이션(The Conversation)",
+   "title": "Jensen Huang’s controversial return to Nvidia poses the question – what’s the point of a board?",
+   "url": "https://theconversation.com/jensen-huangs-controversial-return-to-nvidia-poses-the-question-whats-the-point-of-a-board-297386"
+  },
+  {
+   "name": "더컨버세이션(The Conversation)",
+   "title": "Jensen Huang, Nvidia and the risks that come with ‘boomerang bosses’",
+   "url": "https://theconversation.com/jensen-huang-nvidia-and-the-risks-that-come-with-boomerang-bosses-297413"
+  },
+  {
+   "name": "뉴스핌",
+   "title": "[미국 특징주] 엔비디아, 시총 2조달러 증발… CEO 복귀에도 악재 첩첩",
+   "url": "https://www.newspim.com/news/view/20261126000017"
+  },
+  {
+   "name": "매일경제",
+   "title": "[단독] 박현주, 코스피 무너진날 “10조 증안펀드, 100조로 키우자” 제안",
+   "url": "https://www.mk.co.kr/article/12218470"
+  }
+ ],
+ "tags": [
+  "젠슨황",
+  "엔비디아",
+  "부메랑CEO",
+  "이사회"
+ ],
+ "ko": {
+  "title": "엔비디아 이사회는 왜 마음을 바꿨을까",
+  "title_candidates": [
+   "엔비디아 이사회는 왜 마음을 바꿨을까",
+   "젠슨 황을 되불러온 이사회는 심판일까 응원단일까",
+   "돌아온 CEO는 회사를 살릴까, 젠슨 황 복귀 뒤 볼 것 셋"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "이사회가 ‘복직시킬 뜻이 없다’고 밝힌 CEO를 며칠 뒤 만장일치로 다시 불러들였습니다.\n그 CEO는 엔비디아의 젠슨 황입니다. 1993년 회사를 공동 창업해 인공지능(AI) 열풍의 한가운데로 끌고 온 사람입니다.\n주가는 복귀 소식에 환호했습니다. 그런데 회사를 떠났다가 돌아온 경영자, 이른바 부메랑 CEO(boomerang CEO)를 따져 본 연구들은 그리 단순한 결론을 주지 않습니다.\n돌아온 CEO는 회사를 다시 살릴까요, 옛 방식에 회사를 묶어 둘까요?"
+   },
+   {
+    "heading": "‘복직 없다’던 이사회가 방향을 틀었습니다",
+    "body": "호주 매체 더컨버세이션의 해설을 보면 황은 이달 초 엔비디아의 사장과 CEO, 이사 자리에서 모두 물러났습니다. 불륜과 기업 스파이 의혹이 겹친 스캔들이 배경이었습니다.\n며칠 뒤 이사회는 그의 퇴장을 이렇게 설명했습니다.\n“회사의 행동 강령과 기준, 문화 규범에 맞지 않는 개인적 행동”\n이사회는 복직시킬 뜻이 없다고도 했습니다. 그러나 이번 주 미국 대통령 도널드 트럼프의 이례적인 개입이 이어지자 만장일치로 복귀를 의결했습니다.\n복귀를 결정한 이유를 이사회는 이렇게 밝혔습니다.\n“국가안보에 위험이 없다고 확신한다”\n미국 정부 고위층의 의견을 근거로 삼았다는 것이 해설의 설명입니다. 이사회가 정부의 영향을 크게 받았다고 스스로 인정한 셈입니다."
+   },
+   {
+    "heading": "돌아온 경영자의 성적표는 엇갈립니다",
+    "body": "더컨버세이션의 또 다른 해설은 부메랑 CEO 연구를 정리합니다. 마이클 델은 델에서, 스티브 잡스는 애플에서, 샘 올트먼은 오픈AI에서 돌아와 좋은 성과를 냈습니다.\n하지만 6,000명이 넘는 CEO를 분석한 한 연구는 돌아온 경영자가 다른 경영자보다 성과가 눈에 띄게 나빴다고 밝혔습니다. 세상이 변했는데 옛 전략으로 돌아가는 경우가 많았기 때문입니다.\n다만 그 연구에는 떠난 지 몇 년 만에 돌아온 창업자가 많이 들어 있었습니다. 황은 자리를 비운 기간이 11일뿐이라 전략이 낡았을 가능성은 낮습니다.\n짧게 떠났다 돌아온 CEO를 다룬 최근 논문은 오히려 영업 성과와 투자, 성장이 좋아졌다고 봤습니다. 평균은 비슷하지만 다시 떠날 확률이 높다는 연구도 있습니다."
+   },
+   {
+    "heading": "한 사람에게 기댄 회사의 약점",
+    "body": "더컨버세이션은 이 문제를 핵심 인물 위험(key person risk)이라 부릅니다. 한 사람에게 너무 크게 기대 그 사람이 빠지면 사업이 크게 흔들리는 위험입니다.\n엔비디아도 이 위험을 알고 있었습니다. 2026년 연차보고서에서 경영진에 크게 의존한다고 경고하면서도 후계 계획은 마련해 두지 않았습니다.\n독립성도 한계가 있었습니다. 엔비디아는 황이 물러난 날에야 처음으로 이사회 의장을 뽑았습니다.\n해설의 마지막 문장은 이렇게 끝납니다.\n“스스로 CEO를 내보내고 교체할 수 없는 독립 이사회는 심판이 아니라 응원단일 뿐이다”"
+   },
+   {
+    "heading": "복귀 효과는 하루 만에 식었습니다",
+    "body": "시장은 오래 기뻐하지 못했습니다. 뉴스핌이 블룸버그통신을 인용해 전한 바로는 엔비디아 주가가 지난 10월 6일 고점보다 35% 낮은 수준에 머물러 있고, 그동안 시가총액 2조 달러가 사라졌습니다.\n한국 증시도 같은 날 흔들렸습니다. 매일경제가 집계한 25일 마감 기준으로 삼성전자는 9.87%, SK하이닉스는 11.05% 하락했습니다."
+   },
+   {
+    "heading": "조사는 아직 끝나지 않았습니다",
+    "body": "더컨버세이션에 따르면 황이 중국 정보기관의 표적이 됐는지를 살피는 독립 이사 위원회의 조사는 계속되고 있습니다. 황은 12월 1일 미국 의원들의 비공개 질의에도 답해야 합니다.\n이사회는 그 두 가지가 끝나기 전에 그를 불러들였습니다.\n연금 등 전 세계의 많은 장기 자금도 엔비디아 주식을 들고 있습니다. 한 사람이 너무 중요해진 회사에서 이사회의 몫은 무엇일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "1993년",
+   "url": "https://theconversation.com/jensen-huangs-controversial-return-to-nvidia-poses-the-question-whats-the-point-of-a-board-297386",
+   "original": "Huang has led chipmaker Nvidia since co-founding it in 1993, turning it into a central player in the artificial intelligence (AI) boom."
+  },
+  {
+   "claim": "“회사의 행동 강령과 기준, 문화 규범에 맞지 않는 개인적 행동”",
+   "url": "https://theconversation.com/jensen-huangs-controversial-return-to-nvidia-poses-the-question-whats-the-point-of-a-board-297386",
+   "original": "the board linked his departure to “personal behavior inconsistent with the company’s code of conduct, standards and cultural norms”."
+  },
+  {
+   "claim": "복귀를 의결했습니다",
+   "url": "https://theconversation.com/jensen-huangs-controversial-return-to-nvidia-poses-the-question-whats-the-point-of-a-board-297386",
+   "original": "This week, however, it voted unanimously to bring him back, following a remarkable intervention by US President Donald Trump."
+  },
+  {
+   "claim": "“국가안보에 위험이 없다고 확신한다”",
+   "url": "https://theconversation.com/jensen-huangs-controversial-return-to-nvidia-poses-the-question-whats-the-point-of-a-board-297386",
+   "original": "It said it was “confident” Huang posed “no national security risk”, based on “input from senior US government levels”."
+  },
+  {
+   "claim": "6,000명이 넘는 CEO",
+   "url": "https://theconversation.com/jensen-huang-nvidia-and-the-risks-that-come-with-boomerang-bosses-297413",
+   "original": "one study of over 6,000 CEOs found that boomerang bosses tend to perform significantly worse than others"
+  },
+  {
+   "claim": "11일뿐",
+   "url": "https://theconversation.com/jensen-huang-nvidia-and-the-risks-that-come-with-boomerang-bosses-297413",
+   "original": "Huang was only out of the Nvidia saddle for 11 days"
+  },
+  {
+   "claim": "2026년 연차보고서에서 경영진에 크게 의존한다고 경고",
+   "url": "https://theconversation.com/jensen-huangs-controversial-return-to-nvidia-poses-the-question-whats-the-point-of-a-board-297386",
+   "original": "Its 2026 annual report warned the company was “highly dependent on the services” of its longstanding executive team"
+  },
+  {
+   "claim": "처음으로 이사회 의장을 뽑았습니다",
+   "url": "https://theconversation.com/jensen-huangs-controversial-return-to-nvidia-poses-the-question-whats-the-point-of-a-board-297386",
+   "original": "Nvidia only appointed its first-ever board chair on the day Huang resigned."
+  },
+  {
+   "claim": "“스스로 CEO를 내보내고 교체할 수 없는 독립 이사회는 심판이 아니라 응원단일 뿐이다”",
+   "url": "https://theconversation.com/jensen-huangs-controversial-return-to-nvidia-poses-the-question-whats-the-point-of-a-board-297386",
+   "original": "An independent board that isn’t able to fire and replace a chief executive is just a cheer squad – not the umpire it’s supposed to be."
+  },
+  {
+   "claim": "지난 10월 6일 고점보다 35% 낮은 수준에 머물러 있고, 그동안 시가총액 2조 달러가 사라졌습니다",
+   "url": "https://www.newspim.com/news/view/20261126000017",
+   "original": "주가는 지난 10월 6일 고점보다 35% 낮은 수준에 머물러 있으며, 이 기간 시가총액 2조 달러가 사라졌다."
+  },
+  {
+   "claim": "25일 마감 기준으로 삼성전자는 9.87%, SK하이닉스는 11.05% 하락했습니다",
+   "url": "https://www.mk.co.kr/article/12218470",
+   "original": "삼성전자는 9.87%, SK하이닉스는 11.05% 급락했다."
+  },
+  {
+   "claim": "12월 1일 미국 의원들의 비공개 질의",
+   "url": "https://theconversation.com/jensen-huangs-controversial-return-to-nvidia-poses-the-question-whats-the-point-of-a-board-297386",
+   "original": "Huang is also due to answer questions from US lawmakers behind closed doors on December 1."
+  }
+ ]
+}
