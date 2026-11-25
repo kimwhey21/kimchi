@@ -69,7 +69,7 @@ class UsRecheckTest(unittest.TestCase):
         cboe = {"^GSPC": {"2026-10-05": 7773.95}, "^VIX": {"2026-10-05": 15.52}, "^TNX": {"2026-10-05": 5.312}}
         with mock.patch.object(fetch_us, "cboe_closes", side_effect=lambda t: cboe[t]), \
                 mock.patch.object(fetch_us, "nasdaq_closes", side_effect=lambda t, d: {"NVDA": {d: 191.0}}.get(t, {})):
-            wrong, checked, missing = close_check.us_recheck(doc)
+            wrong, checked, missing, pending = close_check.us_recheck(doc)
         self.assertEqual(checked, 4)                       # S&P·VIX(전에는 FRED에 없어 건너뛰며 셌다)·10년물·엔비디아
         self.assertEqual(missing, ["애플"])                 # 공식 값을 못 받으면 '못 맞춤'
         self.assertEqual(len(wrong), 1)                    # CNBC로만 확인했던 엔비디아 190 / 공식 191
@@ -86,41 +86,44 @@ class UsRecheckTest(unittest.TestCase):
                          "^TNX": {"ticker": "^TNX", "name": "10년물", "price": 4.91, "unit": "%"},
                          "^TYX": {"ticker": "^TYX", "name": "30년물", "price": 5.30, "unit": "%"}}}
         fred = {"^GSPC": {"2026-11-20": 6910.39}, "^VIX": {"2026-11-20": 35.89}}
-        treasury = {"^TNX": 4.92, "^TYX": 5.36}
+        treasury = {"^TNX": {"2026-11-20": 4.92}, "^TYX": {"2026-11-20": 5.36}}
         with mock.patch.object(fetch_us, "cboe_closes", return_value={}), \
                 mock.patch.object(fetch_us, "fred_closes", side_effect=lambda t, d: fred[t]), \
-                mock.patch.object(fetch_us, "treasury_yield", side_effect=lambda t, d: treasury[t]):
-            wrong, checked, missing = close_check.us_recheck(doc)
+                mock.patch.object(fetch_us, "treasury_series", side_effect=lambda t, d: treasury[t]):
+            wrong, checked, missing, pending = close_check.us_recheck(doc)
         self.assertEqual(checked, 4)
-        self.assertEqual(missing, ["러셀2000"])
+        self.assertEqual(missing, ["러셀2000(공식 원천 없음)"])   # 원천이 없다는 것을 이름에 적는다 — '못 받음'과 다르다
+        self.assertEqual(pending, [])
         self.assertEqual(len(wrong), 1)                    # 30년물 5.30 / 재무부 5.36 — 3bp를 넘으면 틀린 값
         self.assertIn("30년물", wrong[0])
 
-    def test_nightly_defers_fred_late_pair_and_checks_the_previous_file(self):
-        """2026-11-25: FRED가 S&P500(09:26 CT)·VIX(08:37 CT)를 밤 증명서(23:30 KST) 뒤에 올린다 — 오늘 파일의 둘은 미루고
-        바로 앞 파일의 둘을 맞춘다. 앞 파일에서 틀리면 틀린 값, 앞 파일에도 없으면 날짜를 붙여 '못 맞춤'."""
+    def test_not_yet_published_is_told_apart_from_missing(self):
+        """2026-11-25: FRED가 S&P500을 다음 날 09:26 CT에 올려 밤 증명서(23:30 KST)가 늘 '못 맞춤'이라 했다 — 원천의 마지막 날짜가
+        그날보다 앞이면 '아직 안 올림'(다음 밤 다시), 뒷날 줄은 있는데 그날 줄만 없으면 '못 맞춤'. 시계로 짐작하지 않는다."""
         from unittest import mock
         from src import close_check, fetch_us
-        def doc(day, spx, vix):
-            return {"trading_date": day,
-                    "macro": {"^GSPC": {"ticker": "^GSPC", "name": "S&P500", "price": spx},
-                              "^VIX": {"ticker": "^VIX", "name": "VIX", "price": vix},
-                              "^RUT": {"ticker": "^RUT", "name": "러셀2000", "price": 2684.94},
-                              "^DJI": {"ticker": "^DJI", "name": "다우", "price": 47000.0}}}
-        fred = {"^GSPC": {"2026-11-23": 7237.17}, "^VIX": {"2026-11-23": 26.70}, "^DJI": {"2026-11-24": 47000.0}}
+        doc = {"trading_date": "2026-11-24",
+               "macro": {"^GSPC": {"ticker": "^GSPC", "name": "S&P500", "price": 7201.09},
+                         "^VIX": {"ticker": "^VIX", "name": "VIX", "price": 26.36},
+                         "^DJI": {"ticker": "^DJI", "name": "다우", "price": 47000.0}}}
+        fred = {"^GSPC": {"2026-11-23": 7237.17},                          # 아직 11/24를 안 올림
+                "^VIX": {"2026-11-23": 26.62, "2026-11-25": 28.29},         # 11/24만 빠짐
+                "^DJI": {"2026-11-24": 47000.0}}
         with mock.patch.object(fetch_us, "cboe_closes", return_value={}), \
-                mock.patch.object(fetch_us, "fred_closes", side_effect=lambda t, d: {k: v for k, v in fred[t].items() if k >= d}):
-            wrong, checked, missing, late = close_check.us_recheck_nightly(doc("2026-11-24", 7201.09, 26.36), doc("2026-11-23", 7237.17, 26.62))
-            self.assertEqual(late, ["S&P500", "VIX"])
-            self.assertEqual(missing, ["러셀2000"])          # 앞 파일의 러셀은 다시 보지 않는다(하루에 한 번만 경고)
-            self.assertEqual(checked, 3)                     # 오늘 다우 + 앞 파일 S&P500·VIX
-            self.assertEqual(len(wrong), 1)
-            self.assertIn("VIX", wrong[0])                   # 앞 파일 26.62 / FRED 26.70
-            fred["^VIX"] = {}
-            _, _, missing, _ = close_check.us_recheck_nightly(doc("2026-11-24", 7201.09, 26.36), doc("2026-11-23", 7237.17, 26.62))
-            self.assertEqual(missing, ["러셀2000", "VIX(2026-11-23)"])
-            _, _, missing, late = close_check.us_recheck_nightly(doc("2026-11-24", 7201.09, 26.36), None)
-            self.assertEqual((missing, late), (["S&P500", "VIX", "러셀2000"], []))   # 앞 파일이 없으면 미루지 않는다
+                mock.patch.object(fetch_us, "fred_closes", side_effect=lambda t, d: fred[t]):
+            wrong, checked, missing, pending = close_check.us_recheck(doc)
+        self.assertEqual((wrong, checked), ([], 1))
+        self.assertEqual(pending, ["S&P500"])
+        self.assertEqual(missing, ["VIX"])
+
+    def test_collection_and_recheck_share_one_source_map(self):
+        """수집과 밤 증명서가 원천을 따로 정해 어긋났다(2026-11-26) — 둘 다 official_series를 부른다."""
+        import inspect
+        from src import close_check, fetch_us
+        self.assertIn("official_series(", inspect.getsource(close_check.us_recheck))
+        self.assertIn("official_series(", inspect.getsource(fetch_us._official_series))
+        self.assertIn("official_series(", inspect.getsource(fetch_us._bond_holiday))
+        self.assertNotIn("cboe_closes(", inspect.getsource(close_check))
 
     def test_recheck_skips_yields_on_bond_holiday(self):
         """채권만 쉰 날의 금리는 전 거래일 공식값·등락 0으로 일부러 적는다 — Cboe 그날 줄(2026-11-11: 4.998)과 달라도 알리지 않는다."""
@@ -131,5 +134,5 @@ class UsRecheckTest(unittest.TestCase):
                          "^VIX": {"ticker": "^VIX", "name": "VIX", "price": 15.52}}}
         cboe = {"^TNX": {"2026-11-11": 4.998}, "^VIX": {"2026-11-11": 15.52}}
         with mock.patch.object(fetch_us, "cboe_closes", side_effect=lambda t: cboe[t]):
-            wrong, checked, missing = close_check.us_recheck(doc)
-        self.assertEqual((wrong, checked, missing), ([], 1, []))
+            wrong, checked, missing, pending = close_check.us_recheck(doc)
+        self.assertEqual((wrong, checked, missing, pending), ([], 1, [], []))

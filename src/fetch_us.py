@@ -181,7 +181,7 @@ def _fetch_one(ticker: str, name: str, name_en: str = "", lookback: int = 7, is_
 # ── 두 번째 원천(2026-10-05) ───────────────────────────────────────────────────────
 # 야후 하나로 받던 종가를 공식 원천과 맞춘다 — 개별 종목·ETF는 나스닥 공식 일별 종가(12개 파일 240건이 야후와 모두 같았다),
 # 나스닥 종합은 나스닥, 다우는 FRED(미국 18:02 ET에 올라온다). S&P500(20:01 ET)·VIX는 수집 시각(18:20 ET)에 아직 없어
-# 그날 밤 증명서(close_check.us_recheck)가 공식 원천으로 다시 맞춘다. 러셀·금리·VIX는 Cboe, 그날 줄이 아직 없으면 CNBC 마감 값,
+# 그날 밤 증명서(close_check.us_recheck)가 공식 원천(official_series 원천표)으로 다시 맞춘다. 그날 줄이 아직 없으면 CNBC 마감 값,
 # 금·원유는 결제가 셋 중 둘(2026-10-06 갱신 — 전에는 '두 번째 원천이 없다'였다).
 _NASDAQ = "https://api.nasdaq.com/api/quote/{symbol}/historical"
 _NASDAQ_HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/141 Safari/537.36",
@@ -276,26 +276,34 @@ _TREASURY = ("https://home.treasury.gov/resource-center/data-chart-center/intere
 _TREASURY_COLUMN = {"^TNX": "10 Yr", "^TYX": "30 Yr"}
 
 
+def treasury_series(ticker: str, day: str) -> dict[str, float]:
+    """미 재무부 공식 일별 수익률 {날짜: 값}(그해, 1월에는 전해까지). 못 받으면 빈 dict."""
+    column = _TREASURY_COLUMN.get(ticker)
+    if not column:
+        return {}
+    import csv
+    import io
+    years = {day[:4]} | ({str(int(day[:4]) - 1)} if day[5:7] == "01" else set())
+    out: dict[str, float] = {}
+    for year in sorted(years):
+        try:
+            text = requests.get(_TREASURY.format(year=year), headers=_NASDAQ_HEADERS, timeout=30).text
+            for row in csv.DictReader(io.StringIO(text)):
+                if row.get(column):
+                    out[dt.datetime.strptime(row["Date"], "%m/%d/%Y").date().isoformat()] = round(float(row[column]), 4)
+        except (requests.RequestException, ValueError, KeyError) as exc:
+            print(f"[안내] 재무부 수익률 {ticker} {year}: {exc}")
+            return {}
+    return dict(sorted(out.items()))
+
+
 def treasury_yield(ticker: str, day: str) -> float | None:
     """미 재무부 공식 일별 수익률(par yield curve)의 그날 값 — Cboe가 막힌 날 금리를 맞출 원천(2026-11-21).
 
     11/20 오후부터 Cboe가 맥·러너 모두에 403을 돌려 금리가 CNBC로만 대조됐고, 금리가 12bp 내린 날 CNBC '마감'(4.95·5.337)이
     야후(4.91·5.30)와 3bp 넘게 갈려 미국장 수집이 여섯 번 멈췄다. 재무부 값은 4.92·5.31로 야후와 맞았다. 7~11월 87일 대조에서
     야후와의 차이는 중간값 0.5bp·95%가 1.7bp 안(넘은 날은 7/29 하루, 4.8bp). 그날 줄이 아직 없거나 못 받으면 None."""
-    column = _TREASURY_COLUMN.get(ticker)
-    if not column:
-        return None
-    year = day[:4]
-    try:
-        text = requests.get(_TREASURY.format(year=year), headers=_NASDAQ_HEADERS, timeout=30).text
-        import csv
-        import io
-        for row in csv.DictReader(io.StringIO(text)):
-            if dt.datetime.strptime(row["Date"], "%m/%d/%Y").date().isoformat() == day and row.get(column):
-                return round(float(row[column]), 4)
-    except (requests.RequestException, ValueError, KeyError) as exc:
-        print(f"[안내] 재무부 수익률 {ticker}: {exc}")
-    return None
+    return treasury_series(ticker, day).get(day)
 
 
 def naver_future_closes(ticker: str) -> dict[str, float]:
@@ -430,10 +438,12 @@ def cnbc_close(ticker: str, day: str) -> float | None:
 def second_series(ticker: str, day: str) -> dict[str, float]:
     """두 번째 원천의 최근 일별 종가 {날짜: 값}(그날 포함, 없으면 빈 dict). 금·원유는 _settle_futures가 따로 맞춘다.
     공식 일별 종가(FRED·Cboe·나스닥)에 그날 줄이 아직 없으면 CNBC의 그날 종가를 더한다(전일 값은 공식 원천 그대로)."""
-    series = _official_series(ticker, day)
     _CNBC_USED.discard(ticker)
     _CBOE_QUOTE_USED.discard(ticker)
     _TREASURY_USED.discard(ticker)
+    series = _official_series(ticker, day)
+    if _SOURCE.get(ticker) == "treasury":
+        _TREASURY_USED.add(ticker)
     if ticker in _FUTURES or day in series:
         return series
     if ticker in _YIELDS:
@@ -443,7 +453,7 @@ def second_series(ticker: str, day: str) -> dict[str, float]:
         if quote is not None:
             _CBOE_QUOTE_USED.add(ticker)
             return {**series, day: quote}
-        official = treasury_yield(ticker, day)
+        official = None if _SOURCE.get(ticker) == "treasury" else treasury_yield(ticker, day)   # 이미 재무부 이력을 봤다
         if official is not None:
             _TREASURY_USED.add(ticker)
             return {**series, day: official}
@@ -457,20 +467,52 @@ def second_series(ticker: str, day: str) -> dict[str, float]:
 _CNBC_USED: set[str] = set()
 _CBOE_QUOTE_USED: set[str] = set()
 _TREASURY_USED: set[str] = set()
+_SOURCE: dict[str, str] = {}   # 티커 → 그 실행에서 쓴 공식 원천 이름(official_series)
+
+
+# 공식 일별 종가의 원천표 — 수집(second_series·_check_change·_bond_holiday)과 밤 증명서(close_check.us_recheck)가 **이 함수 하나**를 쓴다.
+# 2026-11-20부터 Cboe가 막혔다(cdn.cboe.com이 cdn-api.cboe.com으로 307, 거기서 Cloudflare 403 — 차단이라 우회하지 않는다). 그 뒤 두 곳이
+# 대체 원천을 따로 정해 수집 때는 등락률을 공식 전일 종가와 맞추지 못했다(이력이 비어 _check_change가 아무 말 없이 건너뜀).
+# Cboe가 비면: S&P500·VIX는 FRED(같은 공식 종가), 금리는 재무부(재는 방식이 달라 1bp 안팎 — 허용을 넓힌다), 러셀은 무료 공식 원천이 없다.
+NO_OFFICIAL = "공식 원천 없음"
+
+
+def official_series(ticker: str, day: str) -> tuple[dict[str, float], str]:
+    """(공식 일별 종가 {날짜: 값}, 원천 이름). 그날 뒤의 줄도 그대로 둔다 — 밤 증명서가 '아직 안 올림'과 '그날만 빠짐'을 가른다.
+    원천이 없으면 ({}, NO_OFFICIAL), 금·원유는 ({}, "settle")."""
+    start = (dt.date.fromisoformat(day) - dt.timedelta(days=14)).isoformat()
+    if ticker in _FUTURES:
+        return {}, "settle"
+    if ticker in _CBOE_SYMBOLS:
+        series = cboe_closes(ticker)
+        if series:
+            return series, "cboe"
+        if ticker in _FRED_SERIES:
+            ticker_source = "fred"
+        elif ticker in _TREASURY_COLUMN:
+            return treasury_series(ticker, day), "treasury"
+        else:
+            return {}, NO_OFFICIAL
+    elif ticker == "^DJI":
+        ticker_source = "fred"
+    else:
+        return nasdaq_closes(ticker, day), "nasdaq"
+    try:
+        return fred_closes(ticker, start), ticker_source
+    except requests.RequestException as exc:
+        print(f"[안내] FRED {ticker}: {exc}")
+        return {}, ticker_source
+
+
+# 재는 방식이 달라 값이 1bp 안팎 갈리는 원천 — 종가·전일 종가를 3bp 안에서 맞춘다(fetch_us.treasury_yield 실측: 중간값 0.5bp, 95%가 1.7bp 안)
+LOOSE_SOURCES = {"treasury"}
+LOOSE_TOLERANCE = 0.03
 
 
 def _official_series(ticker: str, day: str) -> dict[str, float]:
-    if ticker == "^DJI":
-        try:
-            return fred_closes(ticker, (dt.date.fromisoformat(day) - dt.timedelta(days=14)).isoformat())
-        except requests.RequestException as exc:
-            print(f"[안내] FRED {ticker}: {exc}")
-            return {}
-    if ticker in _CBOE_SYMBOLS:
-        return cboe_closes(ticker)
-    if ticker in _FUTURES:
-        return {}
-    return nasdaq_closes(ticker, day)
+    series, source = official_series(ticker, day)
+    _SOURCE[ticker] = source
+    return series
 
 
 def second_close(ticker: str, day: str) -> float | None:
@@ -500,12 +542,13 @@ def _bond_holiday(entries: dict[str, dict], trading_date: str) -> None:
     """채권 휴장일: 금리는 전 거래일 공식 종가 그대로·등락 0·표시를 붙인다 — 글이 그날 금리가 움직였다고 쓰지 않게."""
     for ticker in _YIELDS & set(entries):
         prev = previous_us_session(trading_date)
-        official = cboe_closes(ticker).get(prev)
+        series, source = official_series(ticker, prev)
+        official = series.get(prev)
         if official is None:
-            raise ValueError(f"{ticker}: 채권 휴장일({trading_date})인데 전 거래일({prev}) 공식 금리를 받지 못했습니다")
+            raise ValueError(f"{ticker}: 채권 휴장일({trading_date})인데 전 거래일({prev}) 공식 금리를 받지 못했습니다({source})")
         entry = entries[ticker]
         entry.update(price=round(official, 3), change_pct=0.0, trading_date=trading_date, bond_market_closed=True,
-                     close_sources=["cboe", "bond_market_closed"])
+                     close_sources=[source, "bond_market_closed"])
         print(f"[안내] {ticker}: {trading_date}는 채권 휴장일이라 전 거래일({prev}) 공식 금리 {official}를 그대로 둡니다(등락 0)")
 
 
@@ -532,6 +575,14 @@ def _check_change(ticker: str, entry: dict, series: dict[str, float], day: str) 
         # 공식 이력에 전 거래일 줄이 빠지면 이틀치 등락률을 '공식'이라며 덮어썼다(2026-10-06, 감사 F-061) — 고치지 않고 멈춘다
         return (f"{entry.get('name', ticker)}({ticker}): 공식 이력의 전일이 {prev_day}인데 전 거래일은 {expected}입니다 — "
                 "등락률을 확인하지 못했습니다")
+    if _SOURCE.get(ticker) in LOOSE_SOURCES:
+        # 재무부 수익률은 야후(Cboe 지수)와 1bp 안팎 다르게 잰 값이라 등락률끼리는 대조가 안 된다(4.9에서 1bp가 0.2%) —
+        # 야후 등락률이 가리키는 전일 값을 재무부 전일 값과 종가와 같은 허용(3bp)으로 맞춘다. 이틀치 등락이면 여기서 갈린다.
+        implied = float(entry["price"]) / (1 + float(entry["change_pct"]) / 100)
+        if round(abs(implied - series[prev_day]), 9) <= LOOSE_TOLERANCE:
+            return None
+        return (f"{entry.get('name', ticker)}({ticker}): 등락률 {entry['change_pct']}%가 가리키는 전일 값 {implied:.3f} / "
+                f"재무부 전일({prev_day}) {series[prev_day]}")
     official = round((series[day] / series[prev_day] - 1) * 100, 2)
     if abs(official - float(entry["change_pct"])) <= 0.015:
         return None
@@ -548,10 +599,14 @@ def _check_change(ticker: str, entry: dict, series: dict[str, float], day: str) 
 def _verify_second_source(entries: dict[str, dict]) -> list[str]:
     """야후 종가·등락률을 두 번째 원천과 맞춘다. 다르면 문제 목록에, 같으면 close_sources에 둘 다 적는다."""
     problems = []
+    no_history = []
     for ticker, entry in entries.items():
         day = str(entry.get("trading_date"))
         series = second_series(ticker, day)
         other = series.get(day)
+        if other is not None and not any(d < day for d in series) and entry.get("change_pct") is not None:
+            # 공식 이력이 없으면 등락률을 맞출 수 없다 — 전에는 아무 말 없이 건너뛰었다(2026-11-20~ 러셀·S&P500·VIX·금리). 세어서 찍는다.
+            no_history.append(f"{entry.get('name', ticker)}({_SOURCE.get(ticker) or '원천 모름'})")
         if other is None:
             # 공식 원천에 그날 값이 없으면 내보내지 않는다(2026-10-05) — 전에는 '야후 하나'로 조용히 통과했다(8/28·8/31 알파벳, 9/1 엔비디아가
             # 그렇게 틀린 채 나갔다). 재시도 예약(:27·:34)이 다시 묻는다.
@@ -572,8 +627,11 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
         if bad_change:
             problems.append(bad_change)
             continue
-        entry["close_sources"] = ["yahoo", "cboe_quote" if ticker in _CBOE_QUOTE_USED else "treasury" if ticker in _TREASURY_USED else "cnbc" if ticker in _CNBC_USED else "fred" if ticker == "^DJI"
-                                  else "cboe" if ticker in _CBOE_SYMBOLS else "nasdaq"]
+        # 그날 값을 준 원천을 적는다 — 전에는 원천표와 따로 'Cboe 지수면 cboe'로 적어 FRED로 맞춘 값도 cboe가 될 뻔했다
+        entry["close_sources"] = ["yahoo", "cboe_quote" if ticker in _CBOE_QUOTE_USED else "cnbc" if ticker in _CNBC_USED
+                                  else _SOURCE.get(ticker) or "nasdaq"]
+    if no_history:
+        print(f"[확인 못 함] 등락률을 공식 전일 종가와 맞추지 못한 항목 {len(no_history)}개 — {', '.join(no_history)}")
     return problems
 
 

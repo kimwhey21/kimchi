@@ -84,9 +84,13 @@ class UsPartialFetchTest(unittest.TestCase):
     def test_sources_are_recorded(self) -> None:
         def fake_one(ticker, name="", **kw):
             return _entry(ticker, name)
+
+        def fake_second(t, d):   # 진짜 second_series처럼 원천표(official_series)가 고른 원천을 남긴다
+            fetch_us._SOURCE[t] = "fred" if t == "^DJI" else "nasdaq"
+            return {} if t.startswith("GC") else {d: 100.0}
         with mock.patch.object(fetch_us, "_fetch_one", side_effect=fake_one), \
              mock.patch.object(fetch_us.yaml, "safe_load", return_value=self.CONFIG), \
-             mock.patch.object(fetch_us, "second_series", side_effect=lambda t, d: {} if t.startswith("GC") else {d: 100.0}), \
+             mock.patch.object(fetch_us, "second_series", side_effect=fake_second), \
              mock.patch.object(fetch_us, "naver_future_closes", return_value={"2026-09-03": 99.0, "2026-09-04": 100.0}), \
              mock.patch.object(fetch_us, "cnbc_settle", return_value=None), \
              mock.patch.object(fetch_us, "_fetch_dynamic_tier", return_value={}):

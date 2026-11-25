@@ -77,7 +77,7 @@ class BuildJobsTest(unittest.TestCase):
                     mock.patch.object(daily_proof.close_check, "check", return_value=[]), \
                     mock.patch.object(daily_proof.close_check, "pcv_day", return_value=None), \
                     mock.patch.object(daily_proof.close_check, "check_stocks", return_value=[]), \
-                    mock.patch.object(daily_proof.close_check, "us_recheck_nightly", return_value=([], 30, [], [])), \
+                    mock.patch.object(daily_proof.close_check, "us_recheck", return_value=([], 30, [], [])), \
                     mock.patch.object(daily_proof.check_publication, "check_market", return_value=[]), \
                     mock.patch.dict(os.environ, {"ECOS_API_KEY": "k", "WORDPRESS_URL": ""}):
                 text, issues, parts = daily_proof.build(dt.date(2026, 10, 6), now, screens=False)
@@ -86,7 +86,7 @@ class BuildJobsTest(unittest.TestCase):
 
 
 class WeekendCboeTest(unittest.TestCase):
-    def _build(self, now: dt.datetime, recheck=([], 24, ["S&P500", "VIX"], [])):
+    def _build(self, now: dt.datetime, recheck=(([], 24, ["S&P500", "VIX"], []), ([], 24, [], []))):
         with tempfile.TemporaryDirectory() as tmp:
             table = Path(tmp) / "jobs.json"
             table.write_text(json.dumps({"direct": [], "watch": []}), encoding="utf-8")
@@ -98,7 +98,7 @@ class WeekendCboeTest(unittest.TestCase):
                     mock.patch.object(daily_proof.close_check, "check", return_value=[]), \
                     mock.patch.object(daily_proof.close_check, "pcv_day", return_value=None), \
                     mock.patch.object(daily_proof.close_check, "check_stocks", return_value=[]), \
-                    mock.patch.object(daily_proof.close_check, "us_recheck_nightly", return_value=recheck), \
+                    mock.patch.object(daily_proof.close_check, "us_recheck", side_effect=list(recheck)), \
                     mock.patch.object(daily_proof.check_publication, "check_market", return_value=[]), \
                     mock.patch.dict(os.environ, {"ECOS_API_KEY": "k", "WORDPRESS_URL": ""}):
                 return daily_proof.build(now.date(), now, screens=False)
@@ -111,14 +111,22 @@ class WeekendCboeTest(unittest.TestCase):
         _, issues, _ = self._build(dt.datetime(2026, 10, 13, 23, 30, tzinfo=daily_proof.KST))         # 뉴욕 화 10:30
         self.assertTrue(any("다시 맞추지 못한" in i for i in issues), issues)
 
-    def test_fred_late_pair_is_deferred_to_the_next_night_not_warned(self) -> None:
-        """2026-11-25 밤: FRED가 S&P500·VIX를 23:30 KST 뒤에 올려 매일 '못 맞춤' — 미룬 둘은 경고가 아니라 안내, 러셀은 경고 그대로."""
-        _, issues, parts = self._build(dt.datetime(2026, 11, 25, 23, 30, tzinfo=daily_proof.KST),
-                                       recheck=([], 26, ["러셀2000"], ["S&P500", "VIX"]))
+    def test_not_yet_published_waits_a_night_and_the_previous_file_answers_for_it(self) -> None:
+        """2026-11-25 밤: FRED가 아직 안 올린 S&P500·VIX는 경고가 아니라 안내 — 대신 바로 앞 파일에서 하루 지나도 안 올라온 값은
+        못 맞춤으로 경고한다. 공식 원천이 없는 러셀은 기다리지 않고 경고(앞 파일에서는 거듭 알리지 않는다)."""
+        latest = ([], 26, ["러셀2000(공식 원천 없음)"], ["S&P500", "VIX"])
+        previous = ([], 3, ["러셀2000(공식 원천 없음)"], ["VIX"])
+        _, issues, parts = self._build(dt.datetime(2026, 11, 25, 23, 30, tzinfo=daily_proof.KST), recheck=(latest, previous))
         warned = [i for i in issues if "다시 맞추지 못한" in i]
         self.assertEqual(len(warned), 1, issues)
-        self.assertIn("1개 — 러셀2000", warned[0])
-        self.assertIn("내일 밤으로 미룸", parts["미국장 재대조"])
+        self.assertIn("2개 — 러셀2000(공식 원천 없음), VIX(", warned[0])
+        self.assertIn("아직 안 올림", parts["미국장 재대조"])
+
+    def test_no_source_is_not_deferred_on_a_weekend(self) -> None:
+        _, issues, parts = self._build(dt.datetime(2026, 11, 28, 23, 30, tzinfo=daily_proof.KST),
+                                       recheck=(([], 26, ["러셀2000(공식 원천 없음)", "애플"], []), ([], 3, [], [])))
+        self.assertIn("1개 월요일로 미룸", parts["미국장 재대조"])
+        self.assertTrue(any("1개 — 러셀2000" in i for i in issues), issues)
 
 
 class ExpectedArtifactsTest(unittest.TestCase):

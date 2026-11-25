@@ -520,21 +520,30 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
     if us_files:
         try:
             us_doc = json.loads(us_files[-1].read_text(encoding="utf-8"))
-            us_prev = json.loads(us_files[-2].read_text(encoding="utf-8")) if len(us_files) > 1 else None
-            us_wrong, us_checked, us_missing, us_late = close_check.us_recheck_nightly(us_doc, us_prev)
+            us_wrong, us_checked, us_missing, us_pending = close_check.us_recheck(us_doc)
+            if len(us_files) > 1:
+                # 바로 앞 파일도 다시 맞춘다 — 어젯밤 '아직 안 올림'이던 값(FRED S&P500·VIX는 다음 날 09:26 CT에 올린다)이 오늘은 있어야
+                # 한다. 하루 지나도 없으면 못 맞춤. 공식 원천이 아예 없는 항목(러셀)은 가장 최근 파일에서 한 번만 알린다.
+                prev_doc = json.loads(us_files[-2].read_text(encoding="utf-8"))
+                p_wrong, p_checked, p_missing, p_pending = close_check.us_recheck(prev_doc)
+                prev_day = us_files[-2].stem[-10:]
+                us_wrong += p_wrong
+                us_checked += p_checked
+                us_missing += [f"{name}({prev_day})" for name in p_missing + p_pending if close_check.fetch_us.NO_OFFICIAL not in name]
             issues += us_wrong
             n_numbers += us_checked   # 실제로 공식 원천과 다시 맞춘 수만 센다(감사 F-147: 전에는 꼬리표만 붙은 값까지 셌다)
             from zoneinfo import ZoneInfo
             ny_weekend = now.astimezone(ZoneInfo("America/New_York")).weekday() >= 5
-            if us_late and not ny_weekend:
-                # FRED가 S&P500·VIX 전 거래일 값을 23:30 KST 뒤에 올린다 — 오늘 밤은 바로 앞 파일의 두 값을 맞추고 이 파일은 내일 밤에
-                parts["미국장 재대조"] = f"{len(us_late)}개 내일 밤으로 미룸(FRED가 이 시각 뒤에 올림)"
-            if (us_missing or us_late) and ny_weekend:
-                us_missing = us_missing + us_late
-                # 뉴욕 주말에는 Cboe 공식 자료가 빈 응답을 준다(2026-10-10 토 10:30 ET 실측: 200·0바이트) — 수집 때 이미 두 원천으로 확인한
-                # 값이라 경고하지 않고 월요일 밤 증명서가 같은 파일을 다시 맞춘다(그때도 못 맞추면 경고).
-                parts["미국장 재대조"] = f"{len(us_missing)}개 월요일로 미룸(주말 Cboe 빈 응답)"
-            elif us_missing:
+            if us_pending:
+                parts["미국장 재대조"] = f"{len(us_pending)}개는 원천이 아직 안 올림({', '.join(us_pending[:5])}) — 다음 밤 다시"
+            no_source = [n for n in us_missing if close_check.fetch_us.NO_OFFICIAL in n]
+            if ny_weekend and len(no_source) < len(us_missing):
+                # 뉴욕 주말에는 Cboe 공식 자료가 빈 응답을 줬다(2026-10-10 토 10:30 ET 실측: 200·0바이트) — 수집 때 이미 두 원천으로 확인한
+                # 값이라 경고하지 않고 월요일 밤 증명서가 같은 파일을 다시 맞춘다(그때도 못 맞추면 경고). 원천이 아예 없는 항목은 기다려도
+                # 생기지 않으니 미루지 않는다.
+                parts["미국장 재대조"] = f"{len(us_missing) - len(no_source)}개 월요일로 미룸(주말 공식 원천 빈 응답)"
+                us_missing = no_source
+            if us_missing:
                 issues.append(f"미국장 {us_files[-1].stem[-10:]}: 공식 원천으로 다시 맞추지 못한 값 {len(us_missing)}개 — "
                               + ", ".join(us_missing[:10]))
         except Exception as exc:  # noqa: BLE001

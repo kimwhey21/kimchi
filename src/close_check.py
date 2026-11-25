@@ -162,75 +162,48 @@ def check(price_doc: dict, key: str) -> list[str]:
     return issues
 
 
-def us_recheck(doc: dict, only: set[str] | None = None) -> tuple[list[str], int, list[str]]:
-    """가장 최근 미국장 파일의 **모든** 값을 공식 원천으로 다시 맞춘다(2026-10-06, 감사 F-020·F-147·F-177).
+def us_recheck(doc: dict) -> tuple[list[str], int, list[str], list[str]]:
+    """미국장 파일의 **모든** 값을 공식 원천으로 다시 맞춘다(2026-10-06, 감사 F-020·F-147·F-177).
 
-    전에는 FRED 네 지수와 '야후 하나'로 들어온 항목만 봤다 — 수집 때 CNBC로 확인한 값(10/5 파일 30개 중 25개)은 공식 종가와 한 번도
-    맞춰 보지 않았고, VIX는 FRED에 없어 늘 건너뛰면서 '대조한 숫자'로 셌다. 원천: 다우·나스닥 종합은 FRED, S&P500·러셀·VIX·
-    금리는 Cboe(막히면 S&P500·VIX는 FRED, 금리는 재무부, 러셀은 대신할 무료 공식 원천이 없어 '못 맞춤'), 종목·ETF는 나스닥. 금·원유는 결제가를 수집 때 둘 이상으로 맞췄고 공식 무료 원천이 없어 다시 보지 않는다.
-    `only`를 주면 그 티커만 본다. 돌려주는 것: (틀린 값, 다시 맞춘 수, 공식 값이 없어 못 맞춘 이름)."""
+    원천은 수집과 같은 원천표 `fetch_us.official_series` 하나다(2026-11-26 — 전에는 여기서 따로 정해 수집과 어긋났다).
+    금·원유는 결제가를 수집 때 둘 이상으로 맞췄고 공식 무료 원천이 없어 다시 보지 않는다.
+    값마다 넷 중 하나다:
+    - 맞춤 / 틀림(허용 밖)
+    - **아직 안 올림**: 원천에 이 날짜 이후 줄이 하나도 없다 — 원천이 그날 값을 아직 내지 않은 것이다(FRED는 S&P500을 다음 날
+      09:26 CT에 올린다, 2026-11-25 실측). 시계로 짐작하지 않고 원천의 마지막 날짜로 가린다. 부르는 쪽이 다음 밤에 다시 맞춘다.
+    - **못 맞춤**: 원천이 없거나(러셀 — `NO_OFFICIAL`), 못 받았거나, 뒷날 줄은 있는데 이 날 줄만 없다.
+    돌려주는 것: (틀린 값, 다시 맞춘 수, 못 맞춘 이름, 아직 안 올린 이름)."""
     day = str(doc.get("trading_date") or "")
-    issues, checked, missing = [], 0, []
+    issues, checked, missing, pending = [], 0, [], []
     for group in ("macro", "watchlist"):
         for ticker, entry in (doc.get(group) or {}).items():
             ticker = str(entry.get("ticker") or ticker)
-            if ticker in fetch_us._FUTURES or entry.get("price") is None or (only is not None and ticker not in only):
+            if ticker in fetch_us._FUTURES or entry.get("price") is None:
                 continue
             if entry.get("bond_market_closed"):
-                # 채권만 쉰 날의 금리는 전 거래일 공식값·등락 0으로 일부러 적은 것이다(fetch_us._bond_holiday) — Cboe가 그날 줄에 찍는
+                # 채권만 쉰 날의 금리는 전 거래일 공식값·등락 0으로 일부러 적은 것이다(fetch_us._bond_holiday) — 원천이 그날 줄에 찍는
                 # 값과 다르다고 알리지 않는다(2026-11-11 재향군인의 날: 파일 4.983·그날 줄 4.998로 이틀 밤 경고가 떴다).
                 continue
-            loose = False
+            name = str(entry.get("name") or ticker)
             try:
-                if ticker in fetch_us._CBOE_SYMBOLS:
-                    other = fetch_us.cboe_closes(ticker).get(day)
-                    if other is None and ticker in fetch_us._FRED_SERIES:
-                        # Cboe가 막힌 동안(2026-11-20~ 맥·러너 모두 403) S&P500·VIX는 FRED 공식 종가로 — 11/20 값 둘 다 파일과 같았다
-                        other = fetch_us.fred_closes(ticker, day).get(day)
-                    elif other is None and ticker in fetch_us._TREASURY_COLUMN:
-                        # 금리는 재무부 공식 수익률로 — 수집 때와 같은 3bp(fetch_us._verify_second_source); 재는 방식이 달라 1bp 안팎 갈린다
-                        other, loose = fetch_us.treasury_yield(ticker, day), True
-                elif ticker in fetch_us._FRED_SERIES:
-                    other = fetch_us.fred_closes(ticker, day).get(day)
-                    if other is None and ticker == "^IXIC":   # FRED가 아직 안 올린 날은 나스닥 공식(COMP)
-                        other = fetch_us.nasdaq_closes(ticker, day).get(day)
-                else:
-                    other = fetch_us.nasdaq_closes(ticker, day).get(day)
+                series, source = fetch_us.official_series(ticker, day)
             except Exception as exc:  # noqa: BLE001 — 못 받은 것은 '못 맞춤'으로 센다(통과로 읽지 않는다)
                 print(f"[안내] {ticker} 공식 원천: {exc}")
-                other = None
-            name = str(entry.get("name") or ticker)
+                series, source = {}, "받지 못함"
+            other = series.get(day)
             if other is None:
-                missing.append(name)
+                if series and max(series) < day:
+                    pending.append(name)
+                else:
+                    missing.append(f"{name}({source})" if source == fetch_us.NO_OFFICIAL else name)
                 continue
             checked += 1
             tolerance = 0.0051 if str(entry.get("unit") or "") == "%" else max(0.011, abs(other) * 0.00001)
-            if loose:
-                tolerance = 0.03
+            if source in fetch_us.LOOSE_SOURCES:
+                tolerance = fetch_us.LOOSE_TOLERANCE
             if round(abs(other - float(entry["price"])), 9) > tolerance:   # 경계값이 부동소수점으로 넘지 않게(2026-11-03, fetch_us와 같은 문제)
-                issues.append(f"[미국 {day}] {name}({ticker}): 파일 {entry['price']} / 공식 {other}")
-    return issues, checked, missing
-
-
-# FRED가 전 거래일 값을 올리는 시각이 밤 증명서(23:30 KST)보다 늦은 두 지수 — 2026-11-25 실측 SP500 09:26 CT·VIXCLS 08:37 CT
-# (한국 00:26·23:37). Cboe가 막혀 FRED로 맞추는 동안 가장 최근 파일의 이 둘은 그날 밤에 맞출 수 없다.
-LATE_FRED = {"^GSPC", "^VIX"}
-
-
-def us_recheck_nightly(latest: dict, previous: dict | None) -> tuple[list[str], int, list[str], list[str]]:
-    """밤 증명서용: 가장 최근 파일을 다 맞추고, FRED가 아직 안 올린 S&P500·VIX는 내일 밤으로 미루는 대신
-    **바로 앞 파일**의 두 값을 오늘 밤 맞춘다 — 하루 늦을 뿐 빠지는 값이 없다(앞 파일에서도 못 맞추면 '못 맞춤').
-    돌려주는 것: (틀린 값, 다시 맞춘 수, 못 맞춘 이름, 내일 밤으로 미룬 이름)."""
-    issues, checked, missing = us_recheck(latest)
-    late = {str(e.get("name") or t) for group in ("macro", "watchlist")
-            for t, e in (latest.get(group) or {}).items() if str(e.get("ticker") or t) in LATE_FRED}
-    deferred = [name for name in missing if name in late]
-    if previous is None:
-        return issues, checked, missing, []
-    missing = [name for name in missing if name not in late]
-    p_issues, p_checked, p_missing = us_recheck(previous, only=LATE_FRED)
-    day = str(previous.get("trading_date") or "")
-    return issues + p_issues, checked + p_checked, missing + [f"{name}({day})" for name in p_missing], deferred
+                issues.append(f"[미국 {day}] {name}({ticker}): 파일 {entry['price']} / 공식({source}) {other}")
+    return issues, checked, missing, pending
 
 
 def us_issues(doc: dict) -> list[str]:
