@@ -520,12 +520,17 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
     if us_files:
         try:
             us_doc = json.loads(us_files[-1].read_text(encoding="utf-8"))
-            us_wrong, us_checked, us_missing = close_check.us_recheck(us_doc)
+            us_prev = json.loads(us_files[-2].read_text(encoding="utf-8")) if len(us_files) > 1 else None
+            us_wrong, us_checked, us_missing, us_late = close_check.us_recheck_nightly(us_doc, us_prev)
             issues += us_wrong
             n_numbers += us_checked   # 실제로 공식 원천과 다시 맞춘 수만 센다(감사 F-147: 전에는 꼬리표만 붙은 값까지 셌다)
             from zoneinfo import ZoneInfo
             ny_weekend = now.astimezone(ZoneInfo("America/New_York")).weekday() >= 5
-            if us_missing and ny_weekend:
+            if us_late and not ny_weekend:
+                # FRED가 S&P500·VIX 전 거래일 값을 23:30 KST 뒤에 올린다 — 오늘 밤은 바로 앞 파일의 두 값을 맞추고 이 파일은 내일 밤에
+                parts["미국장 재대조"] = f"{len(us_late)}개 내일 밤으로 미룸(FRED가 이 시각 뒤에 올림)"
+            if (us_missing or us_late) and ny_weekend:
+                us_missing = us_missing + us_late
                 # 뉴욕 주말에는 Cboe 공식 자료가 빈 응답을 준다(2026-10-10 토 10:30 ET 실측: 200·0바이트) — 수집 때 이미 두 원천으로 확인한
                 # 값이라 경고하지 않고 월요일 밤 증명서가 같은 파일을 다시 맞춘다(그때도 못 맞추면 경고).
                 parts["미국장 재대조"] = f"{len(us_missing)}개 월요일로 미룸(주말 Cboe 빈 응답)"

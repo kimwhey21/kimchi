@@ -162,19 +162,19 @@ def check(price_doc: dict, key: str) -> list[str]:
     return issues
 
 
-def us_recheck(doc: dict) -> tuple[list[str], int, list[str]]:
+def us_recheck(doc: dict, only: set[str] | None = None) -> tuple[list[str], int, list[str]]:
     """가장 최근 미국장 파일의 **모든** 값을 공식 원천으로 다시 맞춘다(2026-10-06, 감사 F-020·F-147·F-177).
 
     전에는 FRED 네 지수와 '야후 하나'로 들어온 항목만 봤다 — 수집 때 CNBC로 확인한 값(10/5 파일 30개 중 25개)은 공식 종가와 한 번도
     맞춰 보지 않았고, VIX는 FRED에 없어 늘 건너뛰면서 '대조한 숫자'로 셌다. 원천: 다우·나스닥 종합은 FRED, S&P500·러셀·VIX·
     금리는 Cboe(막히면 S&P500·VIX는 FRED, 금리는 재무부, 러셀은 대신할 무료 공식 원천이 없어 '못 맞춤'), 종목·ETF는 나스닥. 금·원유는 결제가를 수집 때 둘 이상으로 맞췄고 공식 무료 원천이 없어 다시 보지 않는다.
-    돌려주는 것: (틀린 값, 다시 맞춘 수, 공식 값이 없어 못 맞춘 이름)."""
+    `only`를 주면 그 티커만 본다. 돌려주는 것: (틀린 값, 다시 맞춘 수, 공식 값이 없어 못 맞춘 이름)."""
     day = str(doc.get("trading_date") or "")
     issues, checked, missing = [], 0, []
     for group in ("macro", "watchlist"):
         for ticker, entry in (doc.get(group) or {}).items():
             ticker = str(entry.get("ticker") or ticker)
-            if ticker in fetch_us._FUTURES or entry.get("price") is None:
+            if ticker in fetch_us._FUTURES or entry.get("price") is None or (only is not None and ticker not in only):
                 continue
             if entry.get("bond_market_closed"):
                 # 채권만 쉰 날의 금리는 전 거래일 공식값·등락 0으로 일부러 적은 것이다(fetch_us._bond_holiday) — Cboe가 그날 줄에 찍는
@@ -210,6 +210,27 @@ def us_recheck(doc: dict) -> tuple[list[str], int, list[str]]:
             if round(abs(other - float(entry["price"])), 9) > tolerance:   # 경계값이 부동소수점으로 넘지 않게(2026-11-03, fetch_us와 같은 문제)
                 issues.append(f"[미국 {day}] {name}({ticker}): 파일 {entry['price']} / 공식 {other}")
     return issues, checked, missing
+
+
+# FRED가 전 거래일 값을 올리는 시각이 밤 증명서(23:30 KST)보다 늦은 두 지수 — 2026-11-25 실측 SP500 09:26 CT·VIXCLS 08:37 CT
+# (한국 00:26·23:37). Cboe가 막혀 FRED로 맞추는 동안 가장 최근 파일의 이 둘은 그날 밤에 맞출 수 없다.
+LATE_FRED = {"^GSPC", "^VIX"}
+
+
+def us_recheck_nightly(latest: dict, previous: dict | None) -> tuple[list[str], int, list[str], list[str]]:
+    """밤 증명서용: 가장 최근 파일을 다 맞추고, FRED가 아직 안 올린 S&P500·VIX는 내일 밤으로 미루는 대신
+    **바로 앞 파일**의 두 값을 오늘 밤 맞춘다 — 하루 늦을 뿐 빠지는 값이 없다(앞 파일에서도 못 맞추면 '못 맞춤').
+    돌려주는 것: (틀린 값, 다시 맞춘 수, 못 맞춘 이름, 내일 밤으로 미룬 이름)."""
+    issues, checked, missing = us_recheck(latest)
+    late = {str(e.get("name") or t) for group in ("macro", "watchlist")
+            for t, e in (latest.get(group) or {}).items() if str(e.get("ticker") or t) in LATE_FRED}
+    deferred = [name for name in missing if name in late]
+    if previous is None:
+        return issues, checked, missing, []
+    missing = [name for name in missing if name not in late]
+    p_issues, p_checked, p_missing = us_recheck(previous, only=LATE_FRED)
+    day = str(previous.get("trading_date") or "")
+    return issues + p_issues, checked + p_checked, missing + [f"{name}({day})" for name in p_missing], deferred
 
 
 def us_issues(doc: dict) -> list[str]:

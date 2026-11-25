@@ -96,6 +96,32 @@ class UsRecheckTest(unittest.TestCase):
         self.assertEqual(len(wrong), 1)                    # 30년물 5.30 / 재무부 5.36 — 3bp를 넘으면 틀린 값
         self.assertIn("30년물", wrong[0])
 
+    def test_nightly_defers_fred_late_pair_and_checks_the_previous_file(self):
+        """2026-11-25: FRED가 S&P500(09:26 CT)·VIX(08:37 CT)를 밤 증명서(23:30 KST) 뒤에 올린다 — 오늘 파일의 둘은 미루고
+        바로 앞 파일의 둘을 맞춘다. 앞 파일에서 틀리면 틀린 값, 앞 파일에도 없으면 날짜를 붙여 '못 맞춤'."""
+        from unittest import mock
+        from src import close_check, fetch_us
+        def doc(day, spx, vix):
+            return {"trading_date": day,
+                    "macro": {"^GSPC": {"ticker": "^GSPC", "name": "S&P500", "price": spx},
+                              "^VIX": {"ticker": "^VIX", "name": "VIX", "price": vix},
+                              "^RUT": {"ticker": "^RUT", "name": "러셀2000", "price": 2684.94},
+                              "^DJI": {"ticker": "^DJI", "name": "다우", "price": 47000.0}}}
+        fred = {"^GSPC": {"2026-11-23": 7237.17}, "^VIX": {"2026-11-23": 26.70}, "^DJI": {"2026-11-24": 47000.0}}
+        with mock.patch.object(fetch_us, "cboe_closes", return_value={}), \
+                mock.patch.object(fetch_us, "fred_closes", side_effect=lambda t, d: {k: v for k, v in fred[t].items() if k >= d}):
+            wrong, checked, missing, late = close_check.us_recheck_nightly(doc("2026-11-24", 7201.09, 26.36), doc("2026-11-23", 7237.17, 26.62))
+            self.assertEqual(late, ["S&P500", "VIX"])
+            self.assertEqual(missing, ["러셀2000"])          # 앞 파일의 러셀은 다시 보지 않는다(하루에 한 번만 경고)
+            self.assertEqual(checked, 3)                     # 오늘 다우 + 앞 파일 S&P500·VIX
+            self.assertEqual(len(wrong), 1)
+            self.assertIn("VIX", wrong[0])                   # 앞 파일 26.62 / FRED 26.70
+            fred["^VIX"] = {}
+            _, _, missing, _ = close_check.us_recheck_nightly(doc("2026-11-24", 7201.09, 26.36), doc("2026-11-23", 7237.17, 26.62))
+            self.assertEqual(missing, ["러셀2000", "VIX(2026-11-23)"])
+            _, _, missing, late = close_check.us_recheck_nightly(doc("2026-11-24", 7201.09, 26.36), None)
+            self.assertEqual((missing, late), (["S&P500", "VIX", "러셀2000"], []))   # 앞 파일이 없으면 미루지 않는다
+
     def test_recheck_skips_yields_on_bond_holiday(self):
         """채권만 쉰 날의 금리는 전 거래일 공식값·등락 0으로 일부러 적는다 — Cboe 그날 줄(2026-11-11: 4.998)과 달라도 알리지 않는다."""
         from unittest import mock
