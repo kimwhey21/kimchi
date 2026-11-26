@@ -523,7 +523,7 @@ def build(day: dt.date, now: dt.datetime, *, session: requests.Session | None = 
             us_wrong, us_checked, us_missing, us_pending = close_check.us_recheck(us_doc)
             if len(us_files) > 1:
                 # 바로 앞 파일도 다시 맞춘다 — 어젯밤 '아직 안 올림'이던 값(FRED S&P500·VIX는 다음 날 09:26 CT에 올린다)이 오늘은 있어야
-                # 한다. 하루 지나도 없으면 못 맞춤. 공식 원천이 아예 없는 항목(러셀)은 가장 최근 파일에서 한 번만 알린다.
+                # 한다. 하루 지나도 없으면 못 맞춤. 공식 원천이 아예 없는 항목은 가장 최근 파일에서 한 번만 알린다(러셀은 규칙의 예외라 알리지 않는다 — close_check.us_recheck).
                 prev_doc = json.loads(us_files[-2].read_text(encoding="utf-8"))
                 p_wrong, p_checked, p_missing, p_pending = close_check.us_recheck(prev_doc)
                 prev_day = us_files[-2].stem[-10:]

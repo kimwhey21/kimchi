@@ -76,7 +76,8 @@ class UsRecheckTest(unittest.TestCase):
         self.assertIn("엔비디아", wrong[0])
 
     def test_when_cboe_is_blocked_fred_and_treasury_stand_in(self):
-        """2026-11-20~ Cboe가 막혀 밤 증명서가 다섯 값을 '못 맞춤'으로 띄웠다 — S&P500·VIX는 FRED, 금리는 재무부(3bp), 러셀은 못 맞춤 그대로."""
+        """2026-11-20~ Cboe가 막혀 밤 증명서가 다섯 값을 '못 맞춤'으로 띄웠다 — S&P500·VIX는 FRED, 금리는 재무부(3bp).
+        러셀은 규칙의 예외(2026-11-26 사장님 결정) — 수집 때 야후·CNBC 두 곳으로 맞췄고 다시 맞출 공식 원천이 없어 세지도 알리지도 않는다."""
         from unittest import mock
         from src import close_check, fetch_us
         doc = {"trading_date": "2026-11-20",
@@ -92,10 +93,42 @@ class UsRecheckTest(unittest.TestCase):
                 mock.patch.object(fetch_us, "treasury_series", side_effect=lambda t, d: treasury[t]):
             wrong, checked, missing, pending = close_check.us_recheck(doc)
         self.assertEqual(checked, 4)
-        self.assertEqual(missing, ["러셀2000(공식 원천 없음)"])   # 원천이 없다는 것을 이름에 적는다 — '못 받음'과 다르다
+        self.assertEqual(missing, [])
         self.assertEqual(pending, [])
         self.assertEqual(len(wrong), 1)                    # 30년물 5.30 / 재무부 5.36 — 3bp를 넘으면 틀린 값
         self.assertIn("30년물", wrong[0])
+
+    def test_only_russell_is_the_two_source_exception(self):
+        from src import fetch_us
+        self.assertEqual(fetch_us.TWO_SOURCE_ONLY, {"^RUT"})   # 넓히려면 사장님께 묻는다
+        from unittest import mock
+        with mock.patch.object(fetch_us, "cboe_closes", return_value={}):
+            self.assertEqual(fetch_us.official_series("^RUT", "2026-11-25"), ({}, fetch_us.TWO_SOURCE))
+        with mock.patch.object(fetch_us, "cboe_closes", return_value={"2026-11-25": 2704.06}):   # Cboe가 열리면 공식 값이 먼저
+            self.assertEqual(fetch_us.official_series("^RUT", "2026-11-25")[1], "cboe")
+
+    def test_russell_close_and_change_must_match_cnbc(self):
+        """예외라도 종가와 등락률을 둘 다 CNBC와 맞춘다 — 다르면 멈추고(재시도), 같으면 두 원천을 적는다."""
+        from unittest import mock
+        from src import fetch_us
+
+        def run(cnbc_change):
+            entry = {"name": "러셀2000", "trading_date": "2026-11-25", "price": 2704.06, "change_pct": 0.71}
+            def fake_cnbc(ticker, day):
+                fetch_us._CNBC_CHANGE[ticker] = cnbc_change
+                return 2704.061
+            with mock.patch.object(fetch_us, "cboe_closes", return_value={}), \
+                    mock.patch.object(fetch_us, "cnbc_close", side_effect=fake_cnbc):
+                problems = fetch_us._verify_second_source({"^RUT": entry})
+            return problems, entry
+
+        problems, entry = run(0.71)
+        self.assertEqual(problems, [])
+        self.assertEqual(entry["close_sources"], ["yahoo", "cnbc"])
+        problems, entry = run(0.95)
+        self.assertEqual(len(problems), 1)
+        self.assertIn("등락률 야후 0.71% / CNBC 0.95%", problems[0])
+        self.assertNotIn("close_sources", entry)
 
     def test_not_yet_published_is_told_apart_from_missing(self):
         """2026-11-25: FRED가 S&P500을 다음 날 09:26 CT에 올려 밤 증명서(23:30 KST)가 늘 '못 맞춤'이라 했다 — 원천의 마지막 날짜가

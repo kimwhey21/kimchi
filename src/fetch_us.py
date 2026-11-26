@@ -419,7 +419,9 @@ def _cnbc_number(text) -> float | None:
 
 
 def cnbc_close(ticker: str, day: str) -> float | None:
-    """CNBC의 그날 종가. 마지막 체결 시각이 그날 정규장 마감(16:00 ET) 이후일 때만 — 장중 값은 쓰지 않는다. 못 받으면 None."""
+    """CNBC의 그날 종가. 마지막 체결 시각이 그날 정규장 마감(16:00 ET) 이후일 때만 — 장중 값은 쓰지 않는다. 못 받으면 None.
+    CNBC가 준 그날 등락률(%)은 `_CNBC_CHANGE[ticker]`에 둔다 — 공식 원천이 없는 예외 항목(TWO_SOURCE_ONLY)의 등락률을 맞출 때 쓴다."""
+    _CNBC_CHANGE.pop(ticker, None)
     symbol = _CNBC_INDEX.get(ticker) or ticker.replace("-", ".")
     try:
         quote = requests.get(_CNBC_QUOTE, params={"symbols": symbol, "requestMethod": "itv", "noform": 1, "partnerId": 2, "fund": 1,
@@ -432,6 +434,9 @@ def cnbc_close(ticker: str, day: str) -> float | None:
         return None
     if when.date().isoformat() != day or when.time() < dt.time(16, 0):   # 시각은 CNBC가 준 뉴욕 현지 시각 그대로
         return None
+    change = _cnbc_number(quote.get("change_pct"))
+    if change is not None:
+        _CNBC_CHANGE[ticker] = change
     return _cnbc_number(quote.get("last"))
 
 
@@ -465,6 +470,7 @@ def second_series(ticker: str, day: str) -> dict[str, float]:
 
 
 _CNBC_USED: set[str] = set()
+_CNBC_CHANGE: dict[str, float] = {}   # 티커 → CNBC가 준 그날 등락률(cnbc_close)
 _CBOE_QUOTE_USED: set[str] = set()
 _TREASURY_USED: set[str] = set()
 _SOURCE: dict[str, str] = {}   # 티커 → 그 실행에서 쓴 공식 원천 이름(official_series)
@@ -473,8 +479,14 @@ _SOURCE: dict[str, str] = {}   # 티커 → 그 실행에서 쓴 공식 원천 �
 # 공식 일별 종가의 원천표 — 수집(second_series·_check_change·_bond_holiday)과 밤 증명서(close_check.us_recheck)가 **이 함수 하나**를 쓴다.
 # 2026-11-20부터 Cboe가 막혔다(cdn.cboe.com이 cdn-api.cboe.com으로 307, 거기서 Cloudflare 403 — 차단이라 우회하지 않는다). 그 뒤 두 곳이
 # 대체 원천을 따로 정해 수집 때는 등락률을 공식 전일 종가와 맞추지 못했다(이력이 비어 _check_change가 아무 말 없이 건너뜀).
-# Cboe가 비면: S&P500·VIX는 FRED(같은 공식 종가), 금리는 재무부(재는 방식이 달라 1bp 안팎 — 허용을 넓힌다), 러셀은 무료 공식 원천이 없다.
+# Cboe가 비면: S&P500·VIX는 FRED(같은 공식 종가), 금리는 재무부(재는 방식이 달라 1bp 안팎 — 허용을 넓힌다), 러셀은 무료 공식 원천이 없어
+# 규칙의 예외로 야후·CNBC 두 곳을 맞춘다(TWO_SOURCE_ONLY).
 NO_OFFICIAL = "공식 원천 없음"
+# 규칙의 예외(2026-11-26 사장님 결정): 무료 공식 일별 원천이 없는 항목은 야후·CNBC 두 곳의 **종가와 등락률이 같으면** 낸다.
+# 러셀2000 하나뿐이다 — 나스닥 지수 API에 없고(Symbol not exists), FRED에도 없고(변동성 RVXCLS뿐), FTSE Russell 무료 자료는 월말 값뿐.
+# Cboe가 다시 열리면 Cboe 공식 종가가 먼저다(아래 official_series). 이 목록을 넓히지 말 것 — 넓히려면 사장님께 묻는다.
+TWO_SOURCE = "두 곳 대조"
+TWO_SOURCE_ONLY = {"^RUT"}
 
 
 def official_series(ticker: str, day: str) -> tuple[dict[str, float], str]:
@@ -492,7 +504,7 @@ def official_series(ticker: str, day: str) -> tuple[dict[str, float], str]:
         elif ticker in _TREASURY_COLUMN:
             return treasury_series(ticker, day), "treasury"
         else:
-            return {}, NO_OFFICIAL
+            return {}, TWO_SOURCE if ticker in TWO_SOURCE_ONLY else NO_OFFICIAL
     elif ticker == "^DJI":
         ticker_source = "fred"
     else:
@@ -604,7 +616,8 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
         day = str(entry.get("trading_date"))
         series = second_series(ticker, day)
         other = series.get(day)
-        if other is not None and not any(d < day for d in series) and entry.get("change_pct") is not None:
+        two_source = _SOURCE.get(ticker) == TWO_SOURCE and ticker in _CNBC_USED
+        if other is not None and not any(d < day for d in series) and entry.get("change_pct") is not None and not two_source:
             # 공식 이력이 없으면 등락률을 맞출 수 없다 — 전에는 아무 말 없이 건너뛰었다(2026-11-20~ 러셀·S&P500·VIX·금리). 세어서 찍는다.
             no_history.append(f"{entry.get('name', ticker)}({_SOURCE.get(ticker) or '원천 모름'})")
         if other is None:
@@ -624,6 +637,14 @@ def _verify_second_source(entries: dict[str, dict]) -> list[str]:
             problems.append(f"{entry.get('name', ticker)}({ticker}): 야후 {entry['price']} / 공식 {other}")
             continue
         bad_change = _check_change(ticker, entry, series, day)
+        if two_source and entry.get("change_pct") is not None:
+            # 공식 원천이 없는 예외 항목(러셀)은 등락률도 CNBC와 맞춘다 — 종가만 같고 전일 종가가 다르면 등락률이 틀린 채 나간다.
+            # 둘 다 소수 둘째 자리로 반올림한 값이라 같은 전일 종가에서 나왔으면 똑같다.
+            theirs = _CNBC_CHANGE.get(ticker)
+            if theirs is None:
+                bad_change = f"{entry.get('name', ticker)}({ticker}): CNBC 등락률을 받지 못해 등락률을 확인하지 못했습니다"
+            elif round(abs(theirs - float(entry["change_pct"])), 9) > 0.011:
+                bad_change = f"{entry.get('name', ticker)}({ticker}): 등락률 야후 {entry['change_pct']}% / CNBC {theirs}%"
         if bad_change:
             problems.append(bad_change)
             continue

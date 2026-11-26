@@ -171,7 +171,9 @@ def us_recheck(doc: dict) -> tuple[list[str], int, list[str], list[str]]:
     - 맞춤 / 틀림(허용 밖)
     - **아직 안 올림**: 원천에 이 날짜 이후 줄이 하나도 없다 — 원천이 그날 값을 아직 내지 않은 것이다(FRED는 S&P500을 다음 날
       09:26 CT에 올린다, 2026-11-25 실측). 시계로 짐작하지 않고 원천의 마지막 날짜로 가린다. 부르는 쪽이 다음 밤에 다시 맞춘다.
-    - **못 맞춤**: 원천이 없거나(러셀 — `NO_OFFICIAL`), 못 받았거나, 뒷날 줄은 있는데 이 날 줄만 없다.
+    - **못 맞춤**: 원천이 없거나(`NO_OFFICIAL`), 못 받았거나, 뒷날 줄은 있는데 이 날 줄만 없다.
+    공식 원천이 없는 예외 항목(`fetch_us.TWO_SOURCE_ONLY` — 러셀2000, 2026-11-26 사장님 결정)은 수집 때 야후·CNBC 두 곳의 종가·등락률을
+    맞춘 것으로 끝이다 — 다시 맞출 공식 원천이 없으니 세지도 알리지도 않는다(둘째 원천이 적혔는지는 증명서의 원천 꼬리표 검사가 본다).
     돌려주는 것: (틀린 값, 다시 맞춘 수, 못 맞춘 이름, 아직 안 올린 이름)."""
     day = str(doc.get("trading_date") or "")
     issues, checked, missing, pending = [], 0, [], []
@@ -190,6 +192,8 @@ def us_recheck(doc: dict) -> tuple[list[str], int, list[str], list[str]]:
             except Exception as exc:  # noqa: BLE001 — 못 받은 것은 '못 맞춤'으로 센다(통과로 읽지 않는다)
                 print(f"[안내] {ticker} 공식 원천: {exc}")
                 series, source = {}, "받지 못함"
+            if source == fetch_us.TWO_SOURCE:
+                continue
             other = series.get(day)
             if other is None:
                 if series and max(series) < day:

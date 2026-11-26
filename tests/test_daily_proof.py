@@ -113,20 +113,20 @@ class WeekendCboeTest(unittest.TestCase):
 
     def test_not_yet_published_waits_a_night_and_the_previous_file_answers_for_it(self) -> None:
         """2026-11-25 밤: FRED가 아직 안 올린 S&P500·VIX는 경고가 아니라 안내 — 대신 바로 앞 파일에서 하루 지나도 안 올라온 값은
-        못 맞춤으로 경고한다. 공식 원천이 없는 러셀은 기다리지 않고 경고(앞 파일에서는 거듭 알리지 않는다)."""
-        latest = ([], 26, ["러셀2000(공식 원천 없음)"], ["S&P500", "VIX"])
-        previous = ([], 3, ["러셀2000(공식 원천 없음)"], ["VIX"])
+        못 맞춤으로 경고한다. 공식 원천이 없는 항목(예외 목록 밖)은 기다리지 않고 경고(앞 파일에서는 거듭 알리지 않는다)."""
+        latest = ([], 26, ["어떤지수(공식 원천 없음)"], ["S&P500", "VIX"])
+        previous = ([], 3, ["어떤지수(공식 원천 없음)"], ["VIX"])
         _, issues, parts = self._build(dt.datetime(2026, 11, 25, 23, 30, tzinfo=daily_proof.KST), recheck=(latest, previous))
         warned = [i for i in issues if "다시 맞추지 못한" in i]
         self.assertEqual(len(warned), 1, issues)
-        self.assertIn("2개 — 러셀2000(공식 원천 없음), VIX(", warned[0])
+        self.assertIn("2개 — 어떤지수(공식 원천 없음), VIX(", warned[0])
         self.assertIn("아직 안 올림", parts["미국장 재대조"])
 
     def test_no_source_is_not_deferred_on_a_weekend(self) -> None:
         _, issues, parts = self._build(dt.datetime(2026, 11, 28, 23, 30, tzinfo=daily_proof.KST),
-                                       recheck=(([], 26, ["러셀2000(공식 원천 없음)", "애플"], []), ([], 3, [], [])))
+                                       recheck=(([], 26, ["어떤지수(공식 원천 없음)", "애플"], []), ([], 3, [], [])))
         self.assertIn("1개 월요일로 미룸", parts["미국장 재대조"])
-        self.assertTrue(any("1개 — 러셀2000" in i for i in issues), issues)
+        self.assertTrue(any("1개 — 어떤지수" in i for i in issues), issues)
 
 
 class ExpectedArtifactsTest(unittest.TestCase):
