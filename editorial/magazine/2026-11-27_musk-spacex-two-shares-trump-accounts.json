@@ -1,0 +1,208 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "돈의 상식",
+ "date": "2026-11-27",
+ "slug": "musk-spacex-two-shares-trump-accounts",
+ "radar_origin": "머스크·스페이스X, 트럼프 계좌에 24조원 주식 기부…\"누적액의 2배\" - 마켓인",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1517976487492-5750f3195933?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8cm9ja2V0JTIwbGF1bmNofGVufDB8MHx8fDE3OTU3MTMxMTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "OHOU-5UVIYQ",
+  "credit": "Unsplash / SpaceX"
+ },
+ "sources": [
+  {
+   "name": "경향신문",
+   "title": "머스크 “미 어린이 1명당 스페이스X 주식 2주 주겠다” (2026-11-26)",
+   "url": "https://www.khan.co.kr/article/202611262036001"
+  },
+  {
+   "name": "뉴스핌",
+   "title": "[미국 특징주] 머스크, 美 어린이에 스페이스X 주식 2주씩 '통 큰 선물'…180억달러 규모 (2026-11-26)",
+   "url": "https://www.newspim.com/news/view/20261126001359"
+  },
+  {
+   "name": "알자지라",
+   "title": "Musk pledges $10bn in SpaceX shares for US children: Who really gains? (2026-10-21)",
+   "url": "https://aljazeera.com/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains"
+  }
+ ],
+ "tags": [
+  "머스크기부트럼프계좌",
+  "스페이스X",
+  "트럼프계좌",
+  "신주발행"
+ ],
+ "ko": {
+  "title": "머스크 기부 트럼프계좌 발표가 위성 승인 직후였던 이유",
+  "title_candidates": [
+   "머스크 기부 트럼프계좌, 새로 찍은 1주는 누구 몫일까",
+   "머스크 기부 트럼프계좌 발표가 위성 승인 직후였던 이유",
+   "머스크 기부 트럼프계좌, 값이 내려간 날 2주는 얼마일까"
+  ],
+  "search_phrase": "머스크 기부 트럼프계좌",
+  "narrative": [
+   {
+    "heading": "",
+    "body": "한 달 전 일론 머스크는 미국 아이들에게 스페이스X 주식을 1주씩 주겠다고 했습니다.\n이번에는 2주입니다. 그런데 늘어난 1주는 머스크의 주머니에서 나오지 않습니다.\n회사가 새로 찍어 내는 주식이기 때문입니다.\n선물이 커진 날, 아이들과 기존 주주 가운데 누가 무엇을 얻고 누가 무엇을 내놓는 걸까요?"
+   },
+   {
+    "heading": "1주가 2주가 되기까지",
+    "body": "지난달 머스크는 내년에 미국 모든 어린이에게 자신의 스페이스X 주식을 1주씩 주겠다고 X에 썼습니다. 알자지라가 전한 그의 말은 이렇습니다.\n“이번 일은 많은 선물 가운데 첫 번째가 될 것입니다.”\n25일(현지시간) 그는 같은 약속을 고쳐 다시 올렸습니다. 경향신문이 옮긴 글입니다.\n“미국의 모든 어린이는 스페이스X 주식 2주를 받게 된다. 1주는 회사에서, 1주는 내가 개인적으로 줄 것”\n받는 쪽은 미국 18세 이하 어린이 7,200만 명입니다."
+   },
+   {
+    "heading": "새로 찍은 주식의 값은 누가 낼까",
+    "body": "스페이스X는 같은 날 개설된 모든 트럼프 계좌에 신규 발행한 A종 보통주를 1주씩 내놓겠다고 발표했습니다. 뉴스핌 기사에 나오는 내용입니다.\n이미 있는 주식을 사서 나눠 주는 것이 아니라, 주식 수 자체를 늘려서 준다는 뜻입니다.\n발행 주식이 늘면 기존 주주가 가진 지분의 비율은 그만큼 조금씩 낮아집니다.\n머스크가 나눠 주는 1주는 자기 보유분에서 나가므로 주식 수는 그대로입니다. 다만 이 1주는 내년 6월 보호예수(락업)가 끝나야 넘어갑니다."
+   },
+   {
+    "heading": "약속하던 날보다 값은 내려와 있습니다",
+    "body": "알자지라에 따르면 지난달 약속 직전 거래일 스페이스X 종가는 146.03달러였습니다.\n25일 종가는 127.44달러였습니다. 상장 때 공모가 135달러보다도 낮은 값입니다.\n그 값으로 7,200만 명이 2주씩 받으면 180억 달러에 육박합니다. 한 달 전 약속은 1주씩 해서 107억 달러쯤이었습니다.\n선물의 크기가 커졌다고 하지만, 1주의 값은 그 사이 내려갔습니다."
+   },
+   {
+    "heading": "왜 하필 그날이었을까",
+    "body": "로이터 보도를 옮긴 뉴스핌 기사를 보면 발표는 스페이스X가 우주 데이터센터용 위성 100만 기 배치 승인을 받은 지 몇 시간 뒤였습니다.\n기술 업계를 향한 여론과 정치권의 감시가 거센 때라는 점도 함께 짚었습니다.\n싱가포르 OCBC의 체즈 안부 자산자문 총괄은 이렇게 말했습니다.\n“어린이들에게 회사에 대한 직접적인 경제적 지분을 주면, AI와 우주 경제의 혜택을 더 많은 사람이 함께 누린다는 강력한 서사가 만들어진다”\n이 평가는 선물이 곧 서사라는 말과도 같습니다."
+   },
+   {
+    "heading": "아이 계좌에는 무엇이 언제 들어올까",
+    "body": "회사가 주는 1주는 다음 달 중 이전될 예정이라고 머스크는 설명했습니다. 머스크 개인의 1주는 내년 6월 이후입니다.\n백악관은 지난 10월 약 7,000만 개의 트럼프 계좌가 열렸다고 밝혔습니다.\n먼저 들어오는 1주는 회사가 새로 찍은 주식이고, 나중에 오는 1주는 머스크가 쥔 주식입니다.\n두 번째 1주가 도착할 때 첫 번째 1주의 값이 지금보다 더 내려가 있다면, 이 선물은 누구의 서사를 완성하는 걸까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "한 달 전",
+   "url": "https://www.khan.co.kr/article/202611262036001",
+   "original": "머스크는 지난달에도 미국 모든 어린이에게 스페이스X 주식 1주씩을 지급하겠다고 밝힌 바 있다."
+  },
+  {
+   "claim": "1주씩 주겠다고",
+   "url": "https://www.khan.co.kr/article/202611262036001",
+   "original": "머스크는 지난달에도 미국 모든 어린이에게 스페이스X 주식 1주씩을 지급하겠다고 밝힌 바 있다."
+  },
+  {
+   "claim": "이번에는 2주입니다",
+   "url": "https://www.khan.co.kr/article/202611262036001",
+   "original": "일론 머스크 스페이스X 최고경영자가 미국 어린이 1명당 스페이스X 주식 2주를 기부하겠다고 약속했다."
+  },
+  {
+   "claim": "1주가 2주가 되기까지",
+   "url": "https://www.khan.co.kr/article/202611262036001",
+   "original": "일론 머스크 스페이스X 최고경영자가 미국 어린이 1명당 스페이스X 주식 2주를 기부하겠다고 약속했다."
+  },
+  {
+   "claim": "1주씩 주겠다고 X에 썼습니다",
+   "url": "https://www.khan.co.kr/article/202611262036001",
+   "original": "머스크는 지난달에도 미국 모든 어린이에게 스페이스X 주식 1주씩을 지급하겠다고 밝힌 바 있다."
+  },
+  {
+   "claim": "이번 일은 많은 선물 가운데 첫 번째가 될 것입니다",
+   "url": "https://aljazeera.com/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "“This will be the first of many,” the world’s richest man wrote on X on Monday."
+  },
+  {
+   "claim": "25일(현지시간)",
+   "url": "https://www.khan.co.kr/article/202611262036001",
+   "original": "머스크는 25일(현지시간) 엑스에 “미국의 모든 어린이는 스페이스X 주식 2주를 받게 된다."
+  },
+  {
+   "claim": "미국의 모든 어린이는 스페이스X 주식 2주를 받게 된다",
+   "url": "https://www.khan.co.kr/article/202611262036001",
+   "original": "미국의 모든 어린이는 스페이스X 주식 2주를 받게 된다. 1주는 회사에서, 1주는 내가 개인적으로 줄 것"
+  },
+  {
+   "claim": "1주는 회사에서, 1주는 내가 개인적으로 줄 것",
+   "url": "https://www.khan.co.kr/article/202611262036001",
+   "original": "미국의 모든 어린이는 스페이스X 주식 2주를 받게 된다. 1주는 회사에서, 1주는 내가 개인적으로 줄 것"
+  },
+  {
+   "claim": "7,200만 명",
+   "url": "https://www.khan.co.kr/article/202611262036001",
+   "original": "로이터통신은 머스크의 구상이 실현된다면 미국 내 18세 이하 미성년자 7200만명이 스페이스X 주식 2주씩을 받게 될 것이라고 전했다."
+  },
+  {
+   "claim": "늘어난 1주는 머스크의 주머니에서 나오지 않습니다",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "앞서 스페이스X는 25일, 현재 개설된 모든 '트럼프 계좌'에 신규 발행 A종 보통주 1주씩을 출연하겠다고 발표했다."
+  },
+  {
+   "claim": "신규 발행한 A종 보통주를 1주씩",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "앞서 스페이스X는 25일, 현재 개설된 모든 '트럼프 계좌'에 신규 발행 A종 보통주 1주씩을 출연하겠다고 발표했다."
+  },
+  {
+   "claim": "자기 보유분에서 나가므로",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "머스크는 X(옛 트위터)에 올린 짧은 게시물에서 어린이들이 스페이스X로부터 1주, 자신으로부터 개인적으로 1주를 받게 된다고 밝혔다."
+  },
+  {
+   "claim": "내년 6월 보호예수(락업)가 끝나야",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "내가 직접 주는 주식은 내년 6월 내 보호예수(락업)가 끝나면 이전될 것"
+  },
+  {
+   "claim": "146.03달러",
+   "url": "https://aljazeera.com/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "At Friday’s closing price of $146.03, the pledge would be worth about $10.7bn."
+  },
+  {
+   "claim": "127.44달러",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "25일 스페이스X 종가는 127.44달러로, 이를 기준으로 한 증여 규모는 180억달러에 육박한다."
+  },
+  {
+   "claim": "공모가 135달러",
+   "url": "https://aljazeera.com/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "began trading on the Nasdaq in June at an initial public offering price of $135 per share."
+  },
+  {
+   "claim": "180억 달러에 육박합니다",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "25일 스페이스X 종가는 127.44달러로, 이를 기준으로 한 증여 규모는 180억달러에 육박한다."
+  },
+  {
+   "claim": "107억 달러쯤",
+   "url": "https://aljazeera.com/news/2026/10/21/musk-pledges-10bn-in-spacex-shares-for-us-children-who-really-gains",
+   "original": "At Friday’s closing price of $146.03, the pledge would be worth about $10.7bn."
+  },
+  {
+   "claim": "1주의 값은 그 사이 내려갔습니다",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "25일 스페이스X 종가는 127.44달러로, 이를 기준으로 한 증여 규모는 180억달러에 육박한다."
+  },
+  {
+   "claim": "위성 100만 기",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "발표 시점은 스페이스X가 지난 25일 우주 데이터센터용 위성 100만 기 배치에 대해 미국 당국의 승인을 받은 지 불과 몇 시간 뒤였다."
+  },
+  {
+   "claim": "어린이들에게 회사에 대한 직접적인 경제적 지분을 주면, AI와 우주 경제의 혜택을 더 많은 사람이 함께 누린다는 강력한 서사가 만들어진다",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "어린이들에게 회사에 대한 직접적인 경제적 지분을 주면, AI와 우주 경제의 혜택을 더 많은 사람이 함께 누린다는 강력한 서사가 만들어진다"
+  },
+  {
+   "claim": "회사가 주는 1주는 다음 달 중 이전될",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "그는 별도 게시물을 통해 스페이스X 회사분 주식은 다음 달 이전된다고 설명했다."
+  },
+  {
+   "claim": "내년 6월 이후",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "내가 직접 주는 주식은 내년 6월 내 보호예수(락업)가 끝나면 이전될 것"
+  },
+  {
+   "claim": "약 7,000만 개의 트럼프 계좌가 열렸다고",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "백악관은 지난 10월 약 7000만 개의 계좌가 개설됐다고 밝혔다."
+  },
+  {
+   "claim": "나중에 오는 1주는 머스크가 쥔 주식입니다",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "내가 직접 주는 주식은 내년 6월 내 보호예수(락업)가 끝나면 이전될 것"
+  },
+  {
+   "claim": "첫 번째 1주의 값이 지금보다 더 내려가 있다면",
+   "url": "https://www.newspim.com/news/view/20261126001359",
+   "original": "25일 스페이스X 종가는 127.44달러로, 이를 기준으로 한 증여 규모는 180억달러에 육박한다."
+  }
+ ]
+}

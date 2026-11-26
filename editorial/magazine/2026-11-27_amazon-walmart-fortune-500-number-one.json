@@ -1,0 +1,197 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "시장의 역사",
+ "date": "2026-11-27",
+ "slug": "amazon-walmart-fortune-500-number-one",
+ "radar_origin": "Visual Capitalist: America’s Largest Company by Revenue, Every Year Since 1955",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8MXx8d2FyZWhvdXNlJTIwc2hlbHZlcyUyMHBhY2thZ2VzfGVufDB8MHx8fDE3OTU3MTMxMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "BNBA1h-NgdY",
+  "credit": "Unsplash / CHUTTERSNAP"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Amazon takes the No. 1 spot on the Fortune 500, ending Walmart’s 13-year run (2026-06)",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/"
+  },
+  {
+   "name": "포춘",
+   "title": "Fortune 500 list: the top companies (70th anniversary)",
+   "url": "https://fortune.com/article/fortune-500-list-top-companies/"
+  },
+  {
+   "name": "스포크스맨리뷰",
+   "title": "Amazon wrestles No. 1 spot away from Walmart on Fortune 500 list (2026-06-04)",
+   "url": "https://www.spokesman.com/stories/2026/jun/04/amazon-wrestles-no-1-spot-away-from-walmart-on-for/"
+  }
+ ],
+ "tags": [
+  "아마존",
+  "월마트",
+  "포춘500",
+  "매출1위"
+ ],
+ "ko": {
+  "title": "아마존이 월마트를 앞선 격차는 매출 1%도 안 됐다",
+  "title_candidates": [
+   "아마존이 월마트를 앞선 격차는 매출 1%도 안 됐다",
+   "아마존은 왜 월마트보다 서버로 먼저 이겼을까",
+   "월마트를 13년 만에 내린 아마존, 같은 ‘고객이 사장’은 어디서 갈렸나"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "월마트를 37억 달러 차이로 앞선 회사가 올해 미국 매출 1위가 됐습니다.\n아마존입니다. 1955년 포춘 500대 기업 순위가 처음 나온 뒤 1위에 올라 본 회사는 이제 네 곳이 됐습니다.\n13년을 지킨 월마트도, 아마존도 ‘고객이 사장’이라고 말해 온 회사입니다.\n같은 말을 한 회사 가운데 왜 한 곳만 자리를 가져갔을까요?"
+   },
+   {
+    "heading": "같은 말을 한 두 창업자",
+    "body": "월마트 창업자 샘 월턴이 즐겨 한 말을 포춘이 옮겼습니다.\n“사장은 단 한 명, 고객입니다. 고객은 다른 곳에서 돈을 쓰는 것만으로 회사 사람 모두를 해고할 수 있습니다.”\n1998년 아마존 주주 서한에서 제프 베이조스도 거의 같은 말을 썼습니다.\n“우리는 세상에서 가장 고객 중심적인 회사를 만들려 합니다.”\n말은 같았는데 두 회사가 걸어온 길은 달랐습니다."
+   },
+   {
+    "heading": "격차는 반올림 수준이었습니다",
+    "body": "월마트는 2월 19일 회계연도 매출 7,132억 달러를 발표했습니다. 전년보다 4.7% 늘어 사상 최고였습니다.\n그런데 두 주 전 아마존이 낸 7,169억 달러에는 아주 조금 모자랐습니다.\n차이는 37억 달러로 아마존 매출의 1%에도 못 미칩니다. 이 뺄셈은 우리가 한 것입니다.\n월마트가 13년 연속, 지난 24년 가운데 21번을 지킨 자리가 이 차이로 넘어갔습니다."
+   },
+   {
+    "heading": "아마존이 더한 것은 매장이 아니었습니다",
+    "body": "포춘은 2006년 시작한 클라우드 사업 AWS를 아마존 역사에서 가장 중요한 결정일 수 있다고 봅니다.\n2025년 AWS 매출은 20% 늘어 1,287억 달러였고, 영업이익은 456억 달러였습니다.\nAWS는 아마존 매출의 5분의 1이 안 되지만 영업이익은 절반이 넘게 냅니다.\n스포크스맨리뷰 기사 속 성장률은 더 눈에 띕니다. 2025년 AWS 매출은 20% 늘어 북미 소매 부문의 두 배였고, 올해 1분기에는 28% 대 12%였습니다."
+   },
+   {
+    "heading": "2010년에는 열두 배가 넘게 컸습니다",
+    "body": "2010년 아마존 매출은 342억 달러였고, 월마트는 약 4,220억 달러로 열두 배가 넘게 컸습니다.\n2018년부터 2025년까지 아마존의 연평균 성장률은 월마트의 약 세 배였다고 포춘은 적었습니다.\n포춘은 이를 두고, 월마트가 1980년대에 시어스와 K마트에 한 일을 이번에는 아마존이 월마트에 했다고 풀이합니다.\n1955년 첫 목록 꼭대기에는 제너럴모터스, 저지스탠더드, US스틸, 크라이슬러가 있었습니다."
+   },
+   {
+    "heading": "같은 해에 아마존은 3만 명과 헤어졌습니다",
+    "body": "스포크스맨리뷰는 아마존이 1위가 된 매출을 올린 그 해에 정리해고도 시작했다고 짚습니다.\n지난해 10월부터 올해 1월까지 3만 명이 일자리를 잃었습니다.\n회사는 비용을 메우려는 것이 아니라 앤디 재시 CEO가 벌이는 관료주의와의 싸움이라고 설명합니다.\n다음 순위가 나올 때 맨 위에 있을 회사는 가장 많이 파는 회사일까요, 가장 빨리 바꾸는 회사일까요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "월마트를 37억 달러 차이로 앞선 회사가 올해 미국 매출 1위가 됐습니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "But it was a hair less than the $716.9 billion full-year revenue Amazon reported two weeks ago"
+  },
+  {
+   "claim": "1955년 포춘 500대 기업 순위가 처음 나온 뒤 1위에 올라 본 회사는 이제 네 곳이 됐습니다",
+   "url": "https://www.spokesman.com/stories/2026/jun/04/amazon-wrestles-no-1-spot-away-from-walmart-on-for/",
+   "original": "only four companies have ever held the top spot: Amazon, Walmart, ExxonMobil and General Motors."
+  },
+  {
+   "claim": "13년을 지킨 월마트도",
+   "url": "https://www.spokesman.com/stories/2026/jun/04/amazon-wrestles-no-1-spot-away-from-walmart-on-for/",
+   "original": "ending the Arkansas-based retailer’s 13-year reign on top."
+  },
+  {
+   "claim": "정리해고도 시작했다고",
+   "url": "https://www.spokesman.com/stories/2026/jun/04/amazon-wrestles-no-1-spot-away-from-walmart-on-for/",
+   "original": "Amazon dethroned Walmart based on last year’s revenue, the same year it kicked off a wave of layoffs."
+  },
+  {
+   "claim": "1955년에 첫 순위가 나온 뒤",
+   "url": "https://fortune.com/article/fortune-500-list-top-companies/",
+   "original": "The first edition was published in 1955, with companies like General Motors, Jersey Standard, U.S. Steel, and Chrysler topping the list."
+  },
+  {
+   "claim": "1위에 오른 회사는 네 곳뿐입니다",
+   "url": "https://www.spokesman.com/stories/2026/jun/04/amazon-wrestles-no-1-spot-away-from-walmart-on-for/",
+   "original": "only four companies have ever held the top spot: Amazon, Walmart, ExxonMobil and General Motors."
+  },
+  {
+   "claim": "13년 동안 자리를 지킨 월마트",
+   "url": "https://www.spokesman.com/stories/2026/jun/04/amazon-wrestles-no-1-spot-away-from-walmart-on-for/",
+   "original": "ending the Arkansas-based retailer’s 13-year reign on top."
+  },
+  {
+   "claim": "사장은 단 한 명, 고객입니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "“There is only one boss: the customer,” Walton loved to say. “They can fire everyone in the company simply by spending their money elsewhere.”"
+  },
+  {
+   "claim": "고객은 다른 곳에서 돈을 쓰는 것만으로 회사 사람 모두를 해고할 수 있습니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "“There is only one boss: the customer,” Walton loved to say. “They can fire everyone in the company simply by spending their money elsewhere.”"
+  },
+  {
+   "claim": "1998년 아마존 주주 서한에서",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "In a 1998 letter to Amazon.com investors, founder Jeff Bezos wrote what became a mantra and a management leitmotif."
+  },
+  {
+   "claim": "우리는 세상에서 가장 고객 중심적인 회사를 만들려 합니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "“We intend to build the world’s most customer-centric company,” Bezos declared."
+  },
+  {
+   "claim": "월마트는 2월 19일 회계연도 매출 7,132억 달러를 발표했습니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "Early on Feb. 19, Walmart reported total revenue of $713.2 billion for the recently ended fiscal year. That’s up 4.7% from the prior year and the company’s all-time highest top line."
+  },
+  {
+   "claim": "전년보다 4.7% 늘어 사상 최고였습니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "Early on Feb. 19, Walmart reported total revenue of $713.2 billion for the recently ended fiscal year. That’s up 4.7% from the prior year and the company’s all-time highest top line."
+  },
+  {
+   "claim": "두 주 전 아마존이 낸 7,169억 달러에는 아주 조금 모자랐습니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "But it was a hair less than the $716.9 billion full-year revenue Amazon reported two weeks ago"
+  },
+  {
+   "claim": "차이는 37억 달러로 아마존 매출의 1%에도 못 미칩니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "But it was a hair less than the $716.9 billion full-year revenue Amazon reported two weeks ago"
+  },
+  {
+   "claim": "13년 연속, 지난 24년 가운데 21번",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "for the past 13 years, and 21 of the past 24, Walmart has been on top, in the No. 1 spot on the Fortune 500."
+  },
+  {
+   "claim": "2006년 시작한 클라우드 사업 AWS",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "perhaps the most pivotal move in Amazon’s history was the launch in 2006 of Amazon Web Services—the company’s entrance into the IT infrastructure and cloud computing business."
+  },
+  {
+   "claim": "2025년 AWS 매출은 20% 늘어 1,287억 달러였고, 영업이익은 456억 달러였습니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "in 2025 AWS generated operating income of $45.6 billion, on revenue that rose 20% to $128.7 billion from the prior year. While AWS generates less than a fifth of Amazon’s revenue, it is the source of more than half of its operating profit"
+  },
+  {
+   "claim": "AWS는 아마존 매출의 5분의 1이 안 되지만 영업이익은 절반이 넘게 냅니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "in 2025 AWS generated operating income of $45.6 billion, on revenue that rose 20% to $128.7 billion from the prior year. While AWS generates less than a fifth of Amazon’s revenue, it is the source of more than half of its operating profit"
+  },
+  {
+   "claim": "2025년 AWS 매출은 20% 늘어 북미 소매 부문의 두 배였고, 올해 1분기에는 28% 대 12%였습니다",
+   "url": "https://www.spokesman.com/stories/2026/jun/04/amazon-wrestles-no-1-spot-away-from-walmart-on-for/",
+   "original": "In 2025, AWS showed 20% sales growth year-over-year, double what the North American retail division reported. That trend is continuing this year, as AWS sales grew 28% in the first quarter year-over-year, while retail sales in North America grew 12%."
+  },
+  {
+   "claim": "2010년 아마존 매출은 342억 달러였고, 월마트는 약 4,220억 달러로 열두 배가 넘게 컸습니다",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "In 2010, its revenue was $34.2 billion, while Walmart, founded in 1962 in Rogers, Ark., was more than 12 times that size, with about $422 billion in revenue."
+  },
+  {
+   "claim": "2018년부터 2025년까지 아마존의 연평균 성장률은 월마트의 약 세 배였다고",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "Between 2018 and 2025, Amazon achieved a cumulative annual growth rate about three times that of Walmart."
+  },
+  {
+   "claim": "1980년대에 시어스와 K마트에 한 일",
+   "url": "https://fortune.com/article/amazon-overtakes-walmart-fortune-500-doug-mcmilon-andy-jassy-retail-tech/",
+   "original": "Arguably, the upstart has done to Walmart what Walmart itself did to Sears and Kmart in the 1980s."
+  },
+  {
+   "claim": "1955년 첫 목록 꼭대기에는 제너럴모터스, 저지스탠더드, US스틸, 크라이슬러가 있었습니다",
+   "url": "https://fortune.com/article/fortune-500-list-top-companies/",
+   "original": "The first edition was published in 1955, with companies like General Motors, Jersey Standard, U.S. Steel, and Chrysler topping the list."
+  },
+  {
+   "claim": "지난해 10월부터 올해 1월까지 3만 명이 일자리를 잃었습니다",
+   "url": "https://www.spokesman.com/stories/2026/jun/04/amazon-wrestles-no-1-spot-away-from-walmart-on-for/",
+   "original": "Between October and January, Amazon ended the employment of 30,000 workers in a bid to flatten layers throughout the company."
+  }
+ ]
+}
