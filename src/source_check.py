@@ -62,7 +62,8 @@ OUR_ENGINES = (
 MIN_DISTINCT_SOURCES = 3
 # 짧은 시리즈는 하한이 낮다. 프리뷰는 2026-09-17부터 그날 미국장의 메인 글(12절)이라 출처 4곳 — 9/15 실험 글이 5곳이었다.
 SERIES_MIN_SOURCES = {"프리뷰": 4, "주간 결산": 2, "다음 주 일정": 2,   # 주말 편성(2026-09-12): 숫자는 우리 시세에서, 밖의 사실은 둘이면 된다
-                      "가이드": 2, "Guide": 2, "이벤트": 2,            # 유입 편성(2026-09-12): 규정·일정은 공식 출처 둘이면 된다
+                      "가이드": 1,   # 2026-11-26: 사실 확인에 실제로 쓴 문서만 센다(아래 collect) — 개수를 채우려고 안 쓴 기관을 넣지 않게
+                      "Guide": 2, "이벤트": 2,            # 유입 편성(2026-09-12): 규정·일정은 공식 출처 둘이면 된다
                       "매거진": 2,
                       "칼럼": 3}                            # 두 번째 블로그(2026-09-13): 번역이 아니라 종합이라는 증거가 출처 둘
 
@@ -110,6 +111,19 @@ def collect(doc: dict) -> dict:
         if missing:
             found["목록에만 있고 본문에 없는 출처"] = missing
         return {"found": found, "distinct": len(hits)}
+    if str(doc.get("series") or "") == "가이드" and str(doc.get("lang") or "ko") != "en":
+        # 한국어 가이드(2026-11-26)는 원고 `sources`에 주소를 적은 곳을 **서로 다른 사이트 수**로 센다. 전에는 본문에 기관 이름
+        # (DART·금융감독원 …)이 나오기만 하면 셌고 하한이 둘이었다 — 그래서 루틴이 사실 확인에 쓰지 않은 기관 이름을 본문에 넣어
+        # 개수를 채웠고(11/24 스스로 보고), 정작 실제로 읽은 금융위원회·국가법령정보센터는 목록에 없어 세지 못했다.
+        from urllib.parse import urlparse
+        domains = sorted({urlparse(str(x.get("url"))).netloc.lower().removeprefix("www.")
+                          for x in (doc.get("sources") or []) if isinstance(x, dict) and str(x.get("url") or "").startswith("http")})
+        if domains:
+            found["sources"] = domains
+        named = sorted({name for name in OFFICIAL + MEDIA + INSTITUTIONS if name in text})
+        if named:
+            found["본문에 이름이 나온 기관(세지 않음)"] = named
+        return {"found": found, "distinct": len(domains)}
     if str(doc.get("lang") or "ko") == "en":
         # 영어 가이드는 원고의 `sources`(주소가 있는 것)를 **서로 다른 사이트 수**로 센다(2026-10-06, 감사 F-175). 전에는 본문에 기관 이름이
         # 나오기만 하면 셌다 — 출처 목록이 빈 가이드 4편이 통과했고, ETF 가이드는 지수 이름(MSCI·FTSE Russell)이 '출처'가 됐다.
@@ -141,6 +155,9 @@ def collect_issues(doc: dict) -> list[str]:
     if result["distinct"] >= minimum:
         return []
     have = ", ".join(f"{k}: {', '.join(v)}" for k, v in result["found"].items())
+    if str(doc.get("series") or "") == "가이드":
+        return [f"출처 목록(`sources`)에 주소가 있는 곳이 없습니다({have or '없음'}). "
+                "숫자·규정을 실제로 확인한 문서의 이름과 주소를 적으십시오 — 확인에 쓰지 않은 곳은 넣지 않습니다."]
     return [
         f"밖에서 가져온 사실이 {result['distinct']}곳뿐입니다"
         f"({have or '없음'}). 최소 {minimum}곳이 필요합니다.\n"

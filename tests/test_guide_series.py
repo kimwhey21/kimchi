@@ -94,6 +94,24 @@ class EnglishGateTest(unittest.TestCase):
         with self.assertRaises(feature_gate.FeatureGateError):
             feature_gate.run(doc, graphics=2)
 
+    def test_korean_guide_counts_only_sources_it_actually_lists(self) -> None:
+        # 2026-11-26 사장님 결정: 출처 개수를 채우지 않는다. 본문에 기관 이름만 넣어서는 세지 않고(전에는 'DART' 한 단어가
+        # 출처 하나였다), 실제로 확인한 문서 한 곳이면 된다.
+        body = "한국거래소 공지에 따르면 정기변경은 6월과 12월입니다. DART와 금융감독원에서도 볼 수 있습니다."
+        doc = {"series": "가이드", "lang": "ko", "ko": {"narrative": [{"heading": "a", "body": body}]}}
+        self.assertEqual(source_check.collect(doc)["distinct"], 0)
+        self.assertTrue(source_check.collect_issues(doc))
+        self.assertIn("확인에 쓰지 않은 곳은 넣지 않습니다", source_check.collect_issues(doc)[0])
+        doc["sources"] = [{"name": "한국거래소", "url": "https://kind.krx.co.kr/notice"},
+                          {"name": "한국거래소", "url": "https://www.kind.krx.co.kr/other"}]
+        self.assertEqual(source_check.collect(doc)["distinct"], 1)
+        self.assertEqual(source_check.collect_issues(doc), [])
+
+    def test_korean_guide_instructions_do_not_ask_for_a_source_count(self) -> None:
+        text = (ROOT / "docs" / "routine_guide_ko.md").read_text(encoding="utf-8")
+        self.assertNotIn("2곳", text)
+        self.assertIn("출처 개수를 채우지 않습니다", text)
+
     def test_english_tags_and_template(self) -> None:
         doc = _en_doc()
         doc["ko"]["narrative"][0]["body"] += " Samsung Electronics dominates the index."
