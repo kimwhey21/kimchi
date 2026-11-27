@@ -462,7 +462,9 @@ def upload_featured_image(base_url: str, auth: tuple[str, str], image: dict) -> 
             timeout=TIMEOUT_SECONDS,
         )
         if upload.status_code >= 400:
-            print(f"[경고] 대표 이미지 업로드 실패: {upload.text[:200]}", file=sys.stderr)
+            # 대표 이미지·본문 그래픽·정사각 썸네일이 모두 이 함수를 쓴다 — 어느 그림인지 파일 이름을 적는다(2026-11-27: 정사각
+            # 썸네일이 실패했는데 '대표 이미지 업로드 실패'로만 찍혀 대표 이미지가 빠진 줄로 읽혔다)
+            print(f"[경고] 그림 업로드 실패({filename}): {upload.text[:200]}", file=sys.stderr)
             return None
         media_id = upload.json()["id"]
 
