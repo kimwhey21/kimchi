@@ -1,0 +1,138 @@
+{
+ "kind": "feature",
+ "series": "매거진",
+ "group": "기업과 기술",
+ "date": "2026-11-28",
+ "slug": "peanut-butter-raises",
+ "radar_origin": "Fortune: In 2026, many employers are ditching merit-based pay bumps in favor of ‘peanut butter raises’",
+ "featured_photo": {
+  "url": "https://images.unsplash.com/photo-1699294049916-05caf7277f7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMDQzMzk2fDB8MXxzZWFyY2h8Mnx8cGVhbnV0JTIwYnV0dGVyJTIwdG9hc3R8ZW58MHwwfHx8MTc5NTc5OTUzNXww&ixlib=rb-4.1.0&q=80&w=1080",
+  "unsplash_id": "aoL9hUhSnHQ",
+  "credit": "Unsplash / The Design Lady"
+ },
+ "sources": [
+  {
+   "name": "포춘",
+   "title": "Over a third of employers handed out ‘peanut butter raises’ this year (2026-08-06)",
+   "url": "https://fortune.com/2026/08/06/over-a-third-employers-handed-out-peanut-butter-raises-2026-quarter-of-bosses-admit-losing-top-talent-bad-pay/"
+  },
+  {
+   "name": "포춘",
+   "title": "Nearly half of companies are turning to poor ‘peanut butter’ raises (2026-02-24)",
+   "url": "https://fortune.com/2026/02/24/nearly-half-companies-ditching-merit-based-bumps-peanut-butter-raises-same-tactic-2008-recession/"
+  },
+  {
+   "name": "CBS뉴스",
+   "title": "Why you might get a \"peanut butter\"-style pay raise in 2026",
+   "url": "https://www.cbsnews.com/news/pay-raise-2026-peanut-butter-style"
+  }
+ ],
+ "tags": [
+  "땅콩버터인상",
+  "연봉인상",
+  "성과급",
+  "페이스케일"
+ ],
+ "ko": {
+  "title": "땅콩버터 인상, 모두에게 똑같이 올려 주면 공평한 걸까",
+  "title_candidates": [
+   "땅콩버터 인상, 모두에게 똑같이 올려 주면 공평한 걸까",
+   "땅콩버터 인상이 2008년 금융위기 뒤에 다시 돌아온 이유",
+   "땅콩버터 인상, 일 잘하는 직원은 왜 먼저 떠날까"
+  ],
+  "narrative": [
+   {
+    "heading": "",
+    "body": "직원 모두에게 같은 폭으로 월급을 올려 주면 공평해 보입니다. 그런데 그 공평함이 회사에서 일 잘하는 사람을 내보내고 있다는 조사가 나왔습니다.\n이 방식에는 ‘땅콩버터 인상(peanut butter raise)’이라는 별명이 붙었습니다. 빵 전체에 땅콩버터를 고르게 펴 바르듯, 성과와 상관없이 모든 직원에게 같은 폭을 올린다는 뜻입니다.\n경제지 포춘이 소개한 보상 컨설팅 회사 페이스케일(Payscale) 보고서에서, 올해 미국 기업의 36%가 이런 일률 인상을 했다고 답했습니다.\n공평함은 모두를 만족시켰을까요, 아니면 일 잘하는 사람부터 떠나게 했을까요?"
+   },
+   {
+    "heading": "왜 갑자기 모두에게 같은 폭으로 올릴까",
+    "body": "페이스케일의 보상 전략 책임자 루스 토머스는 이 방식이 경제가 불안하고 임금 물가 상승이 낮은 때 나타난다고 설명했습니다.\n마지막으로 크게 퍼졌던 때는 2008년 금융위기 이후였습니다.\n올해 초 포춘 보도에서는 기업의 44%가 성과 기반 인상 대신 전 직원에게 같은 폭을 올릴 계획이라고 나왔습니다.\nCBS뉴스가 소개한 같은 조사에는 이유도 나옵니다. 성과 평가가 주관적이고 편향될 수 있다는 걱정, 그리고 행정적으로 더 쉽다는 점입니다.\n그래도 성과 기반 인상을 쓰겠다는 곳이 48%로 더 많았습니다."
+   },
+   {
+    "heading": "3.5%는 월급에서 얼마나 큰 차이일까",
+    "body": "올해 인상 폭은 평균 3.5%로 2025년과 같았습니다.\n연봉 6만 5,000달러라면 1년에 2,275달러가 더 붙는 셈입니다.\n2008년 이후 임금 예산이 오랫동안 3% 안팎에 묶였던 때와 크게 다르지 않은 폭입니다.\n규모가 작은 회사는 더 많이 올렸습니다. 직원 100명 미만 회사는 4%, 1만~5만 명 규모 대기업은 3%를 계획했습니다."
+   },
+   {
+    "heading": "공평하다는 말이 늘 공평하게 들리진 않습니다",
+    "body": "토머스는 일률 인상이 흔히 가장 공정한 방식으로 내세워진다고 말합니다. 모두가 같은 폭을 받기 때문입니다.\n하지만 직원들이 공정함을 따지는 기준은 다르다고 했습니다.\n“직원들은 보통 모두가 같은 폭을 받았는지로 공정함을 판단하지 않습니다. 자기 기여에 걸맞은 보상을 받았는지로 판단합니다.”\n그녀는 이렇게 덧붙였습니다.\n“보상이 영향력의 차이를 반영하지 못하면 조직은 성과가 중요하지 않다는 메시지를 보내게 되고, 동기는 거기서부터 약해지기 시작합니다.”\n숫자도 이 걱정과 맞닿아 있습니다. 페이스케일 보고서에서 임금 인상이 부족해 인재를 잃고 있다고 인정한 회사는 약 25%였습니다.\n반대로 일률 인상을 옹호하는 이야기도 있습니다. 일률 인상은 편향을 줄이고 모든 직원이 돈을 받게 하므로, 물가 부담이 큰 직원에게는 생명줄이 될 수 있다는 것입니다."
+   },
+   {
+    "heading": "한국 직장인에게 남는 물음",
+    "body": "이 조사는 미국 기업의 이야기이고, 한국 회사의 연봉 인상 방식을 말해 주지는 않습니다.\n다만 ‘같은 폭의 인상’과 ‘성과에 따른 인상’ 사이의 긴장은 어느 직장에서나 낯설지 않습니다.\n일률 인상이 되풀이되면 일 잘하는 직원은 무엇을 근거로 남을지 정할까요?\n그리고 회사는 무엇을 근거로 한 사람에게 더 줄까요?\n내가 다니는 회사의 ‘공평한 인상’은 누구에게 공평했나요?"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "claim": "36%",
+   "url": "https://fortune.com/2026/08/06/over-a-third-employers-handed-out-peanut-butter-raises-2026-quarter-of-bosses-admit-losing-top-talent-bad-pay/",
+   "original": "Around 36% of U.S. companies say they gave out standard, across-the-board pay increases this year, according to a recent Payscale report."
+  },
+  {
+   "claim": "2008년 금융위기 이후",
+   "url": "https://fortune.com/2026/02/24/nearly-half-companies-ditching-merit-based-bumps-peanut-butter-raises-same-tactic-2008-recession/",
+   "original": "The last time we really saw this was post the Great Recession, after the financial crisis in 2008 [and] 2009."
+  },
+  {
+   "claim": "44%",
+   "url": "https://fortune.com/2026/02/24/nearly-half-companies-ditching-merit-based-bumps-peanut-butter-raises-same-tactic-2008-recession/",
+   "original": "And just like during the Great Recession, many employers—around 44%—plan to roll out one uniform, across-the-board wage bump in 2026 in lieu of merit-based raises."
+  },
+  {
+   "claim": "48%",
+   "url": "https://www.cbsnews.com/news/pay-raise-2026-peanut-butter-style",
+   "original": "Still, merit-based pay hikes remain the predominant method used by companies, with 48% of organizations saying they plan to rely on performance-based raises, Payscale said."
+  },
+  {
+   "claim": "3.5%는",
+   "url": "https://www.cbsnews.com/news/pay-raise-2026-peanut-butter-style",
+   "original": "Pay hikes will hold steady at 3.5% in 2026, unchanged from 2025, the group found."
+  },
+  {
+   "claim": "평균 3.5%로 2025년과",
+   "url": "https://www.cbsnews.com/news/pay-raise-2026-peanut-butter-style",
+   "original": "Pay hikes will hold steady at 3.5% in 2026, unchanged from 2025, the group found."
+  },
+  {
+   "claim": "6만 5,000달러",
+   "url": "https://www.cbsnews.com/news/pay-raise-2026-peanut-butter-style",
+   "original": "For a worker earning $65,000, a 3.5% annual raise would amount to an additional $2,275 a year."
+  },
+  {
+   "claim": "2,275달러",
+   "url": "https://www.cbsnews.com/news/pay-raise-2026-peanut-butter-style",
+   "original": "For a worker earning $65,000, a 3.5% annual raise would amount to an additional $2,275 a year."
+  },
+  {
+   "claim": "2008년 이후 임금 예산이 오랫동안 3% 안팎",
+   "url": "https://fortune.com/2026/02/24/nearly-half-companies-ditching-merit-based-bumps-peanut-butter-raises-same-tactic-2008-recession/",
+   "original": "pay budget increases were stuck at about 3% for a long time: close to the 3.5% bump also expected this year"
+  },
+  {
+   "claim": "직원 100명 미만 회사는 4%",
+   "url": "https://www.cbsnews.com/news/pay-raise-2026-peanut-butter-style",
+   "original": "Smaller establishments with fewer than 100 employees are offering higher pay increases — 4% — compared to their larger counterparts."
+  },
+  {
+   "claim": "1만~5만 명 규모 대기업은 3%",
+   "url": "https://www.cbsnews.com/news/pay-raise-2026-peanut-butter-style",
+   "original": "Businesses with between about 10,000 to 50,000 workers said they plan to hand out 3% raises in 2026"
+  },
+  {
+   "claim": "직원들은 보통 모두가 같은 폭을 받았는지로 공정함을 판단하지 않습니다. 자기 기여에 걸맞은 보상을 받았는지로 판단합니다",
+   "url": "https://fortune.com/2026/08/06/over-a-third-employers-handed-out-peanut-butter-raises-2026-quarter-of-bosses-admit-losing-top-talent-bad-pay/",
+   "original": "But employees don’t typically judge fairness by whether everyone got the same—they judge it by whether they were rewarded appropriately for their individual contribution."
+  },
+  {
+   "claim": "보상이 영향력의 차이를 반영하지 못하면 조직은 성과가 중요하지 않다는 메시지를 보내게 되고, 동기는 거기서부터 약해지기 시작합니다",
+   "url": "https://fortune.com/2026/08/06/over-a-third-employers-handed-out-peanut-butter-raises-2026-quarter-of-bosses-admit-losing-top-talent-bad-pay/",
+   "original": "When pay increases fail to reflect differences in impact, organizations risk sending the message that performance doesn’t make a difference, and that’s where motivation starts to erode"
+  },
+  {
+   "claim": "약 25%",
+   "url": "https://fortune.com/2026/08/06/over-a-third-employers-handed-out-peanut-butter-raises-2026-quarter-of-bosses-admit-losing-top-talent-bad-pay/",
+   "original": "Around 25% of companies admitted they were losing talent in 2026 due to insufficient wage increases, according to the Payscale report."
+  }
+ ]
+}
