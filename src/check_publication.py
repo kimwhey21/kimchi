@@ -188,8 +188,8 @@ def check_market(market: str, check_site: bool, sitemap_urls: set[str] | None = 
     for lang in ("ko", "en"):
         if lang not in doc:
             continue
-        if lang == "ko" and not publish_editorial.KO_DAILY_TO_WORDPRESS:
-            print(f"{market} {trading_date} [ko]: 워드프레스에 올리지 않는 설정이라 건너뜁니다.")
+        if not (publish_editorial.KO_DAILY_TO_WORDPRESS if lang == "ko" else publish_editorial.EN_DAILY_TO_WORDPRESS):
+            print(f"{market} {trading_date} [{lang}]: 워드프레스에 올리지 않는 설정이라 건너뜁니다.")
             continue
         # 한국어 시황은 본진에 **비공개**로 올린다(2026-09-16, 사용자 지시) — 네이버에 전문이
         # 나가므로 두 곳에 공개돼 있으면 안 된다. 그래서 기대 상태가 언어마다 다르다.

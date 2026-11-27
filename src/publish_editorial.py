@@ -508,6 +508,10 @@ def _previous_daily_post(market: str, date_str: str, lang: str) -> dict | None:
 # 네이버가 원고를 빠짐없이 옮기게 되면서(test_naver_completeness·naver_audit) 사라졌다. 한국어 그림도 올리지 않는다 —
 # 다만 본문·인사이트 **사진**은 영어판이 같은 것을 쓰므로 그대로 올린다. 되돌리려면 True로.
 KO_DAILY_TO_WORDPRESS = False
+# 영어 시황도 2026-11-27부터 본진에 올리지 않는다(사장님 결정). 10/14부터 검색 제외(noindex·사이트맵 제외)라 구글 유입이 없었고,
+# 날마다 그림 20여 장이 서버에 쌓였다(그날 정사각 썸네일 업로드가 서버 500으로 실패). 원고·검사·렌더는 그대로 한다 —
+# 워드프레스에 쓰는 일(그림·사진·글)만 하지 않는다. 되돌리려면 True로(check_publication·site_audit도 이 값을 본다).
+EN_DAILY_TO_WORDPRESS = False
 # 본진 영어 시황의 분류(2026-09-27). Daily(121) 아래 하위 분류로 시장을 나눠
 # 목록 이름표가 한국장(초록)·미국장(주황)·가이드(파랑) 세 색이 된다. Daily는 그대로 붙인다 — /daily/ 목록·탭·
 # 색인 요청 순서가 121을 읽는다. 숫자 id라 이름 검색·생성을 하지 않는다.
@@ -553,6 +557,9 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
     price_data = doc["price_data"]
     ko = doc["ko"]
     en = doc.get("en")
+    if not (KO_DAILY_TO_WORDPRESS or EN_DAILY_TO_WORDPRESS) and not render_only:
+        print("본진 매일 시황: 한국어·영어 모두 워드프레스에 올리지 않는 설정입니다 — 검사와 렌더만 하고 끝냅니다.")
+        render_only = True
 
     # 문체·제목·구조 검사는 여기서 **경고**로만 남깁니다(2026-09-08). 이 검사들은 루틴이 커밋 전에
     # `python -m src.editorial_gate <원고>`로 통과시키는 것이고, 발행 단계는 놓친 것을
@@ -596,7 +603,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
             _attach_section_graphics(
                 en.get("narrative"), price_data, market, date_str,
                 _previous_price_data(market, date_str),
-                upload=not render_only, lang="en",
+                upload=not render_only and EN_DAILY_TO_WORDPRESS, lang="en",
             )
 
     # 인사이트 스토리 사진. 한국어판에서 찾은 사진을 영어판이 그대로 쓰도록
@@ -726,7 +733,7 @@ def publish(path: Path, publish_live: bool = False, render_only: bool = False, o
     # 가장 최근 글인데, 한국어판 몇 초 뒤에 나가던 영어판이 그 자리를 차지했다(2026-09-08
     # 실측: /all/ 히어로가 "Daewoo E&C jumps 8.47%…"). 영어판이 먼저 나가면 한국어판이
     # 늘 최신 글이 된다. 두 발행은 서로의 결과를 쓰지 않아 순서만 바꿨다.
-    if en:
+    if en and EN_DAILY_TO_WORDPRESS:
         en_result = publish_wordpress.publish_draft(
             en["title"],
             html_en,

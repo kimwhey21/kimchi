@@ -19,6 +19,12 @@ DOC = {"ko": {"title": "제목"}, "en": {"title": "Title"}}
 
 
 class CheckPublicationTest(unittest.TestCase):
+    # 영어 시황이 본진에 올라가던 때의 검사(2026-11-27부터 기본은 꺼짐 — 되돌리면 이 검사가 그대로 돈다)
+    def setUp(self) -> None:
+        patcher = mock.patch.object(cp.publish_editorial, "EN_DAILY_TO_WORDPRESS", True)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
     @staticmethod
     def _posts(modified: str) -> dict:
         """언어별 조회 결과. 한국어 시황은 본진에 비공개로 올라간다(2026-09-16)."""
@@ -157,6 +163,13 @@ class UsLastCollectedDayTest(unittest.TestCase):
         self.assertEqual(at("2026-11-03T23:40"), "2026-11-02")   # 서머타임 뒤 뉴욕 18:40
 
 
+class EnglishDailyOffTest(unittest.TestCase):
+    def test_english_daily_is_not_looked_for_when_off(self) -> None:
+        self.assertFalse(cp.publish_editorial.EN_DAILY_TO_WORDPRESS)
+        from scripts import site_audit
+        self.assertEqual(site_audit.english_problems(get=lambda url: (_ for _ in ()).throw(AssertionError(url))), [])
+
+
 if __name__ == "__main__":
     unittest.main()
 
@@ -215,3 +228,4 @@ class UsSkippedDayTest(unittest.TestCase):
         from src import daily_proof
         rows = daily_proof.expected_artifacts(dt.date(2026, 11, 20), set(), root=Path(tempfile.mkdtemp()))
         self.assertFalse(any(r[0] in ("미국장 시세", "미국장 시황") for r in rows), rows)
+

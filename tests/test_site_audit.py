@@ -3,6 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from scripts import site_audit
 
@@ -13,6 +14,13 @@ class _Resp:
 
 
 class EnglishTest(unittest.TestCase):
+    # 영어 시황이 본진에 올라가던 때의 점검(2026-11-27부터 기본은 꺼짐)
+    def setUp(self) -> None:
+        from src import publish_editorial
+        patcher = mock.patch.object(publish_editorial, "EN_DAILY_TO_WORDPRESS", True)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
     def _root(self, tmp: str) -> Path:
         root = Path(tmp)
         (root / "editorial").mkdir()

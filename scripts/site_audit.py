@@ -44,6 +44,11 @@ def figure_count(html: str) -> int:
 
 def english_problems(root: Path = ROOT, get=_get) -> list[str]:
     problems: list[str] = []
+    from src import publish_editorial
+    if not publish_editorial.EN_DAILY_TO_WORDPRESS:
+        # 2026-11-27부터 영어 시황을 본진에 올리지 않는다 — 가장 최근 원고의 글이 없는 것이 정상이다
+        print("영어 시황: 본진에 올리지 않는 설정(EN_DAILY_TO_WORDPRESS) — 건너뜀")
+        return problems
     for market in ("kr", "us"):
         docs = []
         for path in sorted((root / "editorial").glob(f"{market}_*.json")):

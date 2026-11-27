@@ -18,6 +18,7 @@ MANUSCRIPT = ROOT / "editorial" / "kr_2026-09-08.json"
 
 
 class PublishOrderTest(unittest.TestCase):
+    @patch.object(publish_editorial, "EN_DAILY_TO_WORDPRESS", True)
     @patch.object(publish_editorial, "KO_DAILY_TO_WORDPRESS", True)   # 스위치를 켰을 때의 순서(2026-09-26부터 기본은 꺼짐)
     def test_english_goes_out_before_korean(self) -> None:
         calls: list[dict] = []
@@ -50,6 +51,7 @@ class KoreanOffWordPressTest(unittest.TestCase):
     """2026-09-26부터 한국어 글은 본진에 올리지 않는다(사장님 결정). 비공개로 두던 이유(9/16, 네이버 사본이 세 절을 빠뜨림)는 네이버가 원고를
     빠짐없이 옮기게 되며 사라졌다. 영어 시황은 그대로 공개로 올라가야 한다."""
 
+    @patch.object(publish_editorial, "EN_DAILY_TO_WORDPRESS", True)   # 영어를 켰을 때(2026-11-27부터 기본은 꺼짐)
     def test_default_is_off_and_english_still_goes_out(self) -> None:
         self.assertFalse(publish_editorial.KO_DAILY_TO_WORDPRESS)
         calls: list[dict] = []
@@ -70,6 +72,20 @@ class KoreanOffWordPressTest(unittest.TestCase):
         captions = [c.args[0].get("caption", "") for c in upload.call_args_list if c.args]
         self.assertTrue(any("Data graphic" in x for x in captions), captions)                  # 영어 그림은 올린다
         self.assertFalse([x for x in captions if "데이터 그래픽" in x], captions)              # 한국어 그림은 안 올린다
+
+    def test_english_daily_is_off_and_nothing_touches_wordpress(self) -> None:
+        # 2026-11-27 사장님 결정: 영어 시황도 본진에 올리지 않는다 — 글도 그림도 사진도 쓰지 않는다
+        self.assertFalse(publish_editorial.EN_DAILY_TO_WORDPRESS)
+        env = {"WORDPRESS_URL": "https://example.com", "WORDPRESS_USERNAME": "u", "WORDPRESS_APP_PASSWORD": "p"}
+        with patch.dict(os.environ, env), \
+             patch.object(publish_wordpress, "publish_draft") as draft, \
+             patch.object(publish_wordpress, "upload_image_url") as upload, \
+             patch.object(publish_wordpress, "upload_featured_image") as featured, \
+             patch.object(publish_wordpress, "set_square_thumb") as square, \
+             patch.object(publish_wordpress, "_find_existing_post_by_slug", return_value=None):
+            publish_editorial.publish(ROOT / "editorial" / "kr_2026-10-02.json", publish_live=True)
+        for fake in (draft, upload, featured, square):
+            fake.assert_not_called()
 
     def test_feature_series_in_korean_skip_wordpress(self) -> None:
         from src import publish_feature
